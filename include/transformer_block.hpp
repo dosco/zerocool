@@ -5,6 +5,7 @@
 #include "quantiz/quant_linear.hpp"
 #include "attention.hpp"
 #include "kv_cache.hpp"
+#include "thread_pool.hpp"
 #include <memory>
 #include <optional>
 
@@ -82,14 +83,19 @@ public:
         if (use_swiglu_) {
             // SwiGLU: Gated FFN with SiLU activation
 
-            // Step 1: Gate projection and activation
-            // x @ W_gate -> [seq_len, d_ff]
-            Tensor gate = quant::linear_forward(x, W_gate_, W_gate_quant_);
-            Tensor gate_activated = ops::silu(gate);
+            // Launch Gate and Up projections in parallel
+            auto future_gate = ThreadPool::instance().enqueue([&] {
+                Tensor gate = quant::linear_forward(x, W_gate_, W_gate_quant_);
+                return ops::silu(gate);
+            });
 
-            // Step 2: Up projection (no activation)
-            // x @ W_up -> [seq_len, d_ff]
-            Tensor up = quant::linear_forward(x, W_up_, W_up_quant_);
+            auto future_up = ThreadPool::instance().enqueue([&] {
+                return quant::linear_forward(x, W_up_, W_up_quant_);
+            });
+
+            // Wait for results
+            Tensor gate_activated = future_gate.get();
+            Tensor up = future_up.get();
 
             // Step 3: Gating (element-wise multiplication)
             // SiLU(gate) ⊙ up -> [seq_len, d_ff]

@@ -5,6 +5,7 @@
 #include "rope.hpp"
 #include "quantiz/quant_linear.hpp"
 #include "kv_cache.hpp"
+#include "thread_pool.hpp"
 #include <memory>
 #include <cmath>
 #include <limits>
@@ -109,14 +110,9 @@ inline Tensor scaled_dot_product_attention(
     // Each head is computed independently and stored in the output
     Tensor output({seq_len_q, n_heads, head_dim});
 
-    // Process each attention head independently
-    // Multi-head attention allows the model to attend to different aspects
-    // of the input simultaneously (e.g., syntax, semantics, position)
-    //
-    // For GQA: multiple Q heads share the same K/V head
-    // Example: 32 Q heads with 4 K/V heads means Q heads 0-7 use K/V head 0,
-    //          Q heads 8-15 use K/V head 1, etc.
-    for (size_t q_head = 0; q_head < n_heads; ++q_head) {
+    // Process each attention head independently IN PARALLEL
+    // Uses ThreadPool to distribute heads across available cores
+    ThreadPool::instance().parallel_for(0, n_heads, [&](size_t q_head) {
         // For GQA: calculate which K/V head this Q head uses
         // For MHA: kv_head == q_head (num_queries_per_kv == 1)
         size_t kv_head = q_head / num_queries_per_kv;
@@ -247,7 +243,7 @@ inline Tensor scaled_dot_product_attention(
                 output.at({i, q_head, j}) = output_h[i * head_dim + j];
             }
         }
-    }
+    });
 
     // Return combined output from all heads: [seq_len_q, n_heads, head_dim]
     return output;
