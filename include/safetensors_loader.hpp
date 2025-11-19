@@ -3,10 +3,13 @@
 #include "tensor.hpp"
 #include "model_loader.hpp"
 #include "safetensors.hh"
+#include "parallel_tensor_loader.hpp"
+#include "quantiz/types.hpp"
 #include <string>
 #include <stdexcept>
 #include <cstdint>
 #include <cstring>
+#include <optional>
 
 namespace freellm {
 
@@ -245,6 +248,77 @@ inline WeightMap load_safetensors(const std::string& filepath) {
     std::println("  ✓ Successfully loaded {} tensors", loaded_count);
 
     return weights;
+}
+
+/**
+ * @brief Load weights from safetensors file using parallel pipeline
+ *
+ * This is the high-performance version that uses:
+ * - Memory-mapping (mmap) for zero-copy I/O
+ * - Producer-consumer pattern with bounded queue
+ * - Thread pool for parallel dtype conversion
+ * - Optional parallel quantization
+ *
+ * Performance characteristics:
+ * - I/O and CPU work are overlapped (producer reads while workers convert)
+ * - All CPU cores are utilized for data conversion
+ * - Bounded queue prevents unbounded memory growth
+ * - mmap allows OS to manage paging efficiently
+ *
+ * This is particularly effective for:
+ * - Large models (multi-GB files)
+ * - Systems with many CPU cores
+ * - Mixed-precision models (BF16, FP16 → F32 conversion)
+ * - Quantization workflows (F32 → Q4_K, Q8_0, etc.)
+ *
+ * @param filepath Path to .safetensors file
+ * @param num_threads Number of worker threads (default: hardware concurrency)
+ * @return WeightMap with loaded tensors (F32, no quantization)
+ */
+inline WeightMap load_safetensors_parallel(
+    const std::string& filepath,
+    size_t num_threads = std::thread::hardware_concurrency()
+) {
+    ParallelTensorLoader loader(num_threads);
+
+    // Use the map_hf_name_to_freellm function for name mapping
+    auto name_mapper = [](const std::string& hf_name) -> std::string {
+        return map_hf_name_to_freellm(hf_name);
+    };
+
+    // No quantization in this basic loader
+    return loader.load(filepath, name_mapper, nullptr);
+}
+
+/**
+ * @brief Load weights with parallel quantization
+ *
+ * Extended version that performs quantization in parallel during loading.
+ * This is significantly faster than loading F32 and quantizing sequentially.
+ *
+ * The quantization resolver is called for each tensor to determine its
+ * quantization type based on the tensor name.
+ *
+ * @param filepath Path to .safetensors file
+ * @param quant_resolver Function that returns QuantType for each tensor name
+ * @param num_threads Number of worker threads (default: hardware concurrency)
+ * @return Tuple of (F32 WeightMap, Quantized results map)
+ */
+inline std::pair<WeightMap, std::unordered_map<std::string, QuantizedTensor>>
+load_safetensors_parallel_quantized(
+    const std::string& filepath,
+    std::function<std::optional<quant::QuantType>(const std::string&)> quant_resolver,
+    size_t num_threads = std::thread::hardware_concurrency()
+) {
+    ParallelTensorLoader loader(num_threads);
+
+    // Use the map_hf_name_to_freellm function for name mapping
+    auto name_mapper = [](const std::string& hf_name) -> std::string {
+        return map_hf_name_to_freellm(hf_name);
+    };
+
+    // Load with quantization
+    return loader.load_with_quantization(filepath, name_mapper, quant_resolver);
 }
 
 } // namespace freellm

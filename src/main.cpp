@@ -63,19 +63,55 @@ void test_load_tinyllama() {
     LLMModel model(config, quant_config);
     // LLMModel model(config);
 
-    // Load weights from safetensors
-    std::println("Loading weights from safetensors file...");
+    // Load weights from safetensors with parallel quantization
+    std::println("Loading weights from safetensors file (with parallel quantization)...");
     auto load_start = std::chrono::high_resolution_clock::now();
 
-    WeightMap weights = load_safetensors(model_path);
+    WeightMap weights;
+    std::unordered_map<std::string, QuantizedTensor> quantized_weights;
+
+    try {
+        // Create quantization resolver based on tensor names
+        auto quant_resolver = [&quant_config](const std::string& tensor_name) -> std::optional<quant::QuantType> {
+            // Determine quantization type based on tensor name
+            if (tensor_name == "token_embedding" || tensor_name == "final_norm_weight") {
+                return std::nullopt;  // Don't quantize embeddings or norms
+            }
+            if (tensor_name == "lm_head") {
+                return quant_config.resolve_lm_head();
+            }
+            if (tensor_name.find(".attn.W_") != std::string::npos) {
+                return quant_config.resolve_attention();
+            }
+            if (tensor_name.find(".ffn.W_") != std::string::npos) {
+                return quant_config.resolve_feed_forward();
+            }
+            if (tensor_name.find("_norm_weight") != std::string::npos) {
+                return std::nullopt;  // Don't quantize layer norms
+            }
+            return std::nullopt;  // Default: no quantization
+        };
+
+        // Load with parallel quantization
+        auto [f32_weights, quant_weights] = load_safetensors_parallel_quantized(
+            model_path, quant_resolver
+        );
+        weights = std::move(f32_weights);
+        quantized_weights = std::move(quant_weights);
+
+    } catch (const std::exception& e) {
+        std::println(stderr, "Error loading weights: {}", e.what());
+        std::println("Falling back to sequential loader...");
+        weights = load_safetensors(model_path);
+    }
 
     auto load_end = std::chrono::high_resolution_clock::now();
     auto load_duration = std::chrono::duration_cast<std::chrono::milliseconds>(load_end - load_start);
 
-    std::println("Weight loading took {} ms\n", load_duration.count());
+    std::println("Weight loading + quantization took {} ms\n", load_duration.count());
 
-    // Load weights into model
-    model.load_weights(weights);
+    // Load weights into model (with pre-quantized tensors)
+    model.load_weights(weights, &quantized_weights);
 
     // Test generation with real weights
     std::println("\n========================================");

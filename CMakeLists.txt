@@ -31,6 +31,11 @@ if(NOT MSVC)
         add_compile_options(-mavx2 -mfma)
         message(STATUS "Enabling AVX2 and FMA optimizations")
     endif()
+
+    # Enable C++20 experimental library features (needed for jthread on libc++ sometimes)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang")
+        add_compile_options(-fexperimental-library)
+    endif()
 endif()
 
 # Include directories
@@ -84,6 +89,7 @@ message(STATUS "SentencePiece will be built from source (no manual installation 
 set(SOURCES
     src/main.cpp
     src/tensor.cpp
+    src/parallel_tensor_loader.cpp
 )
 
 # Create executable

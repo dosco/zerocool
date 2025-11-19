@@ -320,9 +320,14 @@ public:
      * - "lm_head": Language modeling head [d_model, vocab_size]
      *
      * @param weights WeightMap containing loaded weights (from safetensors)
+     * @param pre_quantized Optional pointer to map of pre-quantized tensors
+     *                      If provided, these will be used instead of quantizing during load
      * @throws std::runtime_error if required weights are missing or have wrong shapes
      */
-    void load_weights(const WeightMap& weights) {
+    void load_weights(
+        const WeightMap& weights,
+        const std::unordered_map<std::string, QuantizedTensor>* pre_quantized = nullptr
+    ) {
         std::println("Loading weights into model...");
 
         size_t loaded_count = 0;
@@ -365,27 +370,27 @@ public:
             // Load attention weights (W_q, W_k, W_v, W_o)
             load_attention_weight(weights, layer_prefix, "W_q", block->attention().W_q(), attn_qtype,
                 [&](QuantizedTensor tensor) { block->attention().set_quantized_W_q(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
             load_attention_weight(weights, layer_prefix, "W_k", block->attention().W_k(), attn_qtype,
                 [&](QuantizedTensor tensor) { block->attention().set_quantized_W_k(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
             load_attention_weight(weights, layer_prefix, "W_v", block->attention().W_v(), attn_qtype,
                 [&](QuantizedTensor tensor) { block->attention().set_quantized_W_v(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
             load_attention_weight(weights, layer_prefix, "W_o", block->attention().W_o(), attn_qtype,
                 [&](QuantizedTensor tensor) { block->attention().set_quantized_W_o(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
 
             // Load FFN weights (W_gate, W_up, W_down for SwiGLU)
             load_ffn_weight(weights, layer_prefix, "W_gate", block->ffn().W_gate(), ffn_qtype,
                 [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_gate(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
             load_ffn_weight(weights, layer_prefix, "W_up", block->ffn().W_up(), ffn_qtype,
                 [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_up(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
             load_ffn_weight(weights, layer_prefix, "W_down", block->ffn().W_down(), ffn_qtype,
                 [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_down(std::move(tensor)); },
-                loaded_count);
+                loaded_count, pre_quantized);
 
             // Load normalization weights
             load_norm_weight(weights, layer_prefix, "attn_norm_weight", block->attn_norm_weight(), loaded_count);
@@ -437,10 +442,18 @@ public:
             // Transpose lm_head weight
             Tensor weight_T = ops::transpose(weight);
             std::memcpy(lm_head_.data(), weight_T.data(), weight_T.size() * sizeof(float));
+
+            // Use pre-quantized if available, otherwise quantize now
             if (lm_qtype != quant::QuantType::NONE) {
-                // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
-                // weight from safetensors already has shape [out_features, in_features]
-                lm_head_quant_ = QuantizedTensor::from_tensor(weight, lm_qtype);
+                if (pre_quantized && pre_quantized->count("lm_head")) {
+                    // Use pre-quantized tensor (already quantized in parallel)
+                    // Make a copy since QuantizedTensor's copy constructor is deleted
+                    lm_head_quant_ = pre_quantized->at("lm_head").copy();
+                } else {
+                    // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
+                    // weight from safetensors already has shape [out_features, in_features]
+                    lm_head_quant_ = QuantizedTensor::from_tensor(weight, lm_qtype);
+                }
             }
             loaded_count++;
         } else {
@@ -543,7 +556,8 @@ private:
                                Tensor& target,
                                quant::QuantType qtype,
                                QuantSetter&& quant_setter,
-                               size_t& loaded_count) {
+                               size_t& loaded_count,
+                               const std::unordered_map<std::string, QuantizedTensor>* pre_quantized = nullptr) {
         std::string full_name = layer_prefix + "attn." + weight_name;
         auto it = weights.find(full_name);
         if (it != weights.end()) {
@@ -568,10 +582,18 @@ private:
             // Transpose the weight matrix
             Tensor weight_T = ops::transpose(weight);
             std::memcpy(target.data(), weight_T.data(), weight_T.size() * sizeof(float));
+
+            // Use pre-quantized if available, otherwise quantize now
             if (qtype != quant::QuantType::NONE) {
-                // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
-                // weight from safetensors already has shape [out_features, in_features] = [256, 2048] for W_k
-                quant_setter(QuantizedTensor::from_tensor(weight, qtype));
+                if (pre_quantized && pre_quantized->count(full_name)) {
+                    // Use pre-quantized tensor (already quantized in parallel)
+                    // Make a copy since QuantizedTensor's copy constructor is deleted
+                    quant_setter(pre_quantized->at(full_name).copy());
+                } else {
+                    // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
+                    // weight from safetensors already has shape [out_features, in_features] = [256, 2048] for W_k
+                    quant_setter(QuantizedTensor::from_tensor(weight, qtype));
+                }
             }
             loaded_count++;
         } else {
@@ -589,7 +611,8 @@ private:
                         Tensor& target,
                         quant::QuantType qtype,
                         QuantSetter&& quant_setter,
-                        size_t& loaded_count) {
+                        size_t& loaded_count,
+                        const std::unordered_map<std::string, QuantizedTensor>* pre_quantized = nullptr) {
         std::string full_name = layer_prefix + "ffn." + weight_name;
         auto it = weights.find(full_name);
         if (it != weights.end()) {
@@ -611,10 +634,18 @@ private:
             // Transpose the weight matrix
             Tensor weight_T = ops::transpose(weight);
             std::memcpy(target.data(), weight_T.data(), weight_T.size() * sizeof(float));
+
+            // Use pre-quantized if available, otherwise quantize now
             if (qtype != quant::QuantType::NONE) {
-                // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
-                // weight from safetensors already has shape [out_features, in_features] = [256, 2048] for W_k
-                quant_setter(QuantizedTensor::from_tensor(weight, qtype));
+                if (pre_quantized && pre_quantized->count(full_name)) {
+                    // Use pre-quantized tensor (already quantized in parallel)
+                    // Make a copy since QuantizedTensor's copy constructor is deleted
+                    quant_setter(pre_quantized->at(full_name).copy());
+                } else {
+                    // Quantize the original weight (not transposed) because matvec expects [out_features, in_features]
+                    // weight from safetensors already has shape [out_features, in_features] = [256, 2048] for W_k
+                    quant_setter(QuantizedTensor::from_tensor(weight, qtype));
+                }
             }
             loaded_count++;
         } else {
