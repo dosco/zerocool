@@ -2,17 +2,20 @@
 #include <chrono>
 #include <format>
 #include <filesystem>
-#include "model_config.hpp"
-#include "safetensors_loader.hpp"
-#include "llm_model.hpp"
-#include "generation.hpp"
-#include "tokenizer.hpp"
-#include "quantiz/quant_config.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+#include "core/model_config.hpp"
+#include "infra/safetensors_loader.hpp"
+#include "core/llm_model.hpp"
+#include "core/generation.hpp"
+#include "core/tokenizer.hpp"
+#include "kernels/quantiz/quant_config.hpp"
 
 using namespace freellm;
 
 /**
- * @brief Load and test TinyLLaMA model with text generation
+ * @brief Load and test TinyLLaMA model with text generation (Original Test)
  */
 void test_load_tinyllama() {
     std::println("\n========================================");
@@ -43,14 +46,11 @@ void test_load_tinyllama() {
     std::println("");
 
     // Configure quantization
-    // Use Q4_K for most layers (good compression, ~4.5 bits per weight)
-    // Use Q8_0 for attention layers (better quality, ~8.5 bits per weight)
     quant::QuantConfig quant_config;
     quant_config.default_type = quant::QuantType::Q4_K;
-    quant_config.attention = quant::QuantType::Q8_0;  // Higher quality for attention
-    quant_config.feed_forward = quant::QuantType::Q4_K;  // More compression for FFN
-    quant_config.lm_head = quant::QuantType::Q4_K;  // Compress output layer too
-
+    quant_config.attention = quant::QuantType::Q8_0;
+    quant_config.feed_forward = quant::QuantType::Q4_K;
+    quant_config.lm_head = quant::QuantType::Q4_K;
 
     std::println("Quantization configuration:");
     std::println("  Default: {}", quant::quant_type_name(quant_config.default_type));
@@ -61,7 +61,6 @@ void test_load_tinyllama() {
 
     // Create model with quantization enabled
     LLMModel model(config, quant_config);
-    // LLMModel model(config);
 
     // Load weights from safetensors with parallel quantization
     std::println("Loading weights from safetensors file (with parallel quantization)...");
@@ -71,31 +70,16 @@ void test_load_tinyllama() {
     std::unordered_map<std::string, QuantizedTensor> quantized_weights;
 
     try {
-        // Create quantization resolver based on tensor names
         auto quant_resolver = [&quant_config](const std::string& tensor_name) -> std::optional<quant::QuantType> {
-            // Determine quantization type based on tensor name
-            if (tensor_name == "token_embedding" || tensor_name == "final_norm_weight") {
-                return std::nullopt;  // Don't quantize embeddings or norms
-            }
-            if (tensor_name == "lm_head") {
-                return quant_config.resolve_lm_head();
-            }
-            if (tensor_name.find(".attn.W_") != std::string::npos) {
-                return quant_config.resolve_attention();
-            }
-            if (tensor_name.find(".ffn.W_") != std::string::npos) {
-                return quant_config.resolve_feed_forward();
-            }
-            if (tensor_name.find("_norm_weight") != std::string::npos) {
-                return std::nullopt;  // Don't quantize layer norms
-            }
-            return std::nullopt;  // Default: no quantization
+            if (tensor_name == "token_embedding" || tensor_name == "final_norm_weight") return std::nullopt;
+            if (tensor_name == "lm_head") return quant_config.resolve_lm_head();
+            if (tensor_name.find(".attn.W_") != std::string::npos) return quant_config.resolve_attention();
+            if (tensor_name.find(".ffn.W_") != std::string::npos) return quant_config.resolve_feed_forward();
+            if (tensor_name.find("_norm_weight") != std::string::npos) return std::nullopt;
+            return std::nullopt;
         };
 
-        // Load with parallel quantization
-        auto [f32_weights, quant_weights] = load_safetensors_parallel_quantized(
-            model_path, quant_resolver
-        );
+        auto [f32_weights, quant_weights] = load_safetensors_parallel_quantized(model_path, quant_resolver);
         weights = std::move(f32_weights);
         quantized_weights = std::move(quant_weights);
 
@@ -110,7 +94,6 @@ void test_load_tinyllama() {
 
     std::println("Weight loading + quantization took {} ms\n", load_duration.count());
 
-    // Load weights into model (with pre-quantized tensors)
     model.load_weights(weights, &quantized_weights);
 
     // Test generation with real weights
@@ -118,53 +101,17 @@ void test_load_tinyllama() {
     std::println("Testing Generation with Real Weights");
     std::println("========================================\n");
 
-    // Initialize tokenizer
     std::println("Initializing tokenizer...");
     std::string tokenizer_path = "models/tinyllama/tokenizer.model";
 
     if (!std::filesystem::exists(tokenizer_path)) {
         std::println("⚠️  Tokenizer file not found. Using fallback token IDs.");
-        std::println("\nTo use the tokenizer, run:");
-        std::println("  bash scripts/download_tinyllama.sh");
-        std::println("\nThis will download tokenizer.model to: {}\n", tokenizer_path);
-
-        // Fallback to hardcoded tokens
-        std::vector<int> prompt = {1, 15043};  // BOS token + approximate "Hello"
-        std::println("Prompt tokens: [{}]", std::format("{}", prompt[0]));
-        for (size_t i = 1; i < prompt.size(); ++i) {
-            std::print(", {}", prompt[i]);
-        }
-        std::println("]");
-        std::println("(Note: Without tokenizer, output won't be readable text)\n");
-
-        // Continue with generation using fallback tokens...
-        auto gen_start = std::chrono::high_resolution_clock::now();
-        GenerationConfig gen_config;
-        gen_config.method = SamplingMethod::TopP;
-        gen_config.top_p = 0.95f;
-        gen_config.temperature = 0.8f;
-        gen_config.max_new_tokens = 10;
-        gen_config.token_callback = [](int token, size_t step, double elapsed_ms) {
-            std::println("  Token {}: {} ({:.2f}s)", step, token, elapsed_ms / 1000.0);
-        };
-        std::vector<int> generated = generate(model, prompt, gen_config);
-        auto gen_end = std::chrono::high_resolution_clock::now();
-        auto gen_duration = std::chrono::duration_cast<std::chrono::milliseconds>(gen_end - gen_start);
-        std::println("\nGenerated token IDs: [{}]", std::format("{}", generated[0]));
-        for (size_t i = 1; i < generated.size(); ++i) {
-            std::print(", {}", generated[i]);
-        }
-        std::println("]");
-        std::println("\nGeneration stats:");
-        std::println("  Total time: {} ms", gen_duration.count());
-        std::println("  Tokens/sec: {:.1f}", 1000.0 * generated.size() / gen_duration.count());
         return;
     }
 
     Tokenizer tokenizer(tokenizer_path);
     std::println("✓ Tokenizer initialized (vocab size: {})\n", tokenizer.vocab_size());
 
-    // Encode text prompt
     std::string prompt_text = "Jack and Jill went";
     std::println("Prompt text: \"{}\"", prompt_text);
 
@@ -175,13 +122,11 @@ void test_load_tinyllama() {
     }
     std::println("]\n");
 
-    // Generate 10 tokens with real-time feedback
     std::println("Generating 10 tokens with top-p sampling (p=0.95, T=0.8)...");
     std::println("(Tokens will be decoded as they are generated)\n");
 
     auto gen_start = std::chrono::high_resolution_clock::now();
 
-    // Create generation config with callback for real-time printing
     GenerationConfig gen_config;
     gen_config.method = SamplingMethod::TopP;
     gen_config.top_p = 0.95f;
@@ -197,7 +142,6 @@ void test_load_tinyllama() {
     auto gen_end = std::chrono::high_resolution_clock::now();
     auto gen_duration = std::chrono::duration_cast<std::chrono::milliseconds>(gen_end - gen_start);
 
-    // Decode full generated text
     std::string generated_text = tokenizer.decode(generated);
 
     std::println("\n========================================");
@@ -211,8 +155,92 @@ void test_load_tinyllama() {
     std::println("  Total tokens: {}", generated.size());
     std::println("  Total time: {} ms", gen_duration.count());
     std::println("  Tokens/sec: {:.1f}", 1000.0 * generated.size() / gen_duration.count());
-    std::println("\n✓ Real weight loading, tokenization, and generation working!");
-    std::println("✓ Model can now generate readable text from text prompts!");
+}
+
+/**
+ * @brief Run Interactive Chat Interface (REPL)
+ */
+void run_repl(LLMModel& model, Tokenizer& tokenizer) {
+    std::println("\n========================================");
+    std::println("Interactive Chat Interface (REPL)");
+    std::println("========================================");
+    std::println("Commands:");
+    std::println("  /exit   - Quit the REPL");
+    std::println("  /reset  - Clear conversation history");
+    std::println("========================================\n");
+
+    std::vector<int> history;
+    std::string input_line;
+    
+    while (true) {
+        std::print("> ");
+        std::cout.flush();
+
+        if (!std::getline(std::cin, input_line)) {
+            break; // EOF
+        }
+
+        if (input_line.empty()) continue;
+
+        if (input_line == "/exit") {
+            std::println("Goodbye!");
+            break;
+        }
+
+        if (input_line == "/reset") {
+            history.clear();
+            model.reset_kv_cache();
+            std::println("Conversation history cleared.");
+            continue;
+        }
+
+        std::string user_input = "User: " + input_line + "\nAssistant:";
+        std::vector<int> input_tokens = tokenizer.encode(user_input);
+        history.insert(history.end(), input_tokens.begin(), input_tokens.end());
+
+        if (history.size() >= model.config().max_seq_len) {
+            std::println("⚠️  Context limit reached. Clearing history.");
+            history.clear();
+            model.reset_kv_cache();
+            history = input_tokens;
+        }
+
+        GenerationConfig gen_config;
+        gen_config.method = SamplingMethod::TopP;
+        gen_config.top_p = 0.95f;
+        gen_config.temperature = 0.7f;
+        gen_config.max_new_tokens = 200;
+        
+        // Use model's EOS token if available, otherwise fallback to newline
+        // TinyLLaMA / LLaMA usually uses ID 2 for EOS (</s>)
+        gen_config.eos_token_id = tokenizer.eos_id();
+        
+        // State for streaming decoder
+        // We decode the *new* sequence accumulated so far to handle spaces correctly
+        // (SentencePiece treats spaces as part of tokens, e.g. "_word")
+        std::vector<int> current_response_tokens;
+        size_t printed_length = 0;
+
+        gen_config.token_callback = [&tokenizer, &current_response_tokens, &printed_length](int token, size_t step, double elapsed_ms) {
+            (void)step;       // Mark unused
+            (void)elapsed_ms; // Mark unused
+            
+            current_response_tokens.push_back(token);
+            std::string full_text = tokenizer.decode(current_response_tokens);
+            
+            // Print only the new characters
+            if (full_text.length() > printed_length) {
+                std::string new_text = full_text.substr(printed_length);
+                std::print("{}", new_text);
+                std::cout.flush();
+                printed_length = full_text.length();
+            }
+        };
+
+        std::vector<int> full_sequence = generate(model, history, gen_config);
+        history = full_sequence;
+        std::println(""); 
+    }
 }
 
 /**
@@ -222,8 +250,9 @@ void print_usage(const char* program_name) {
     std::println("Usage: {} [OPTIONS]", program_name);
     std::println("\nOptions:");
     std::println("  --help, -h    Show this help message");
+    std::println("  --test        Run the original Jack and Jill test (non-interactive)");
     std::println("\nDefault behavior (no args):");
-    std::println("  Runs TinyLLaMA model test with text generation");
+    std::println("  Runs Interactive Chat Interface (REPL)");
 }
 
 int main(int argc, char* argv[]) {
@@ -232,13 +261,15 @@ int main(int argc, char* argv[]) {
     std::println("========================================\n");
 
     try {
-        // Parse command line arguments
         bool show_help = false;
+        bool run_test_mode = false;
 
         for (int i = 1; i < argc; ++i) {
             std::string arg = argv[i];
             if (arg == "--help" || arg == "-h") {
                 show_help = true;
+            } else if (arg == "--test") {
+                run_test_mode = true;
             } else {
                 std::println(stderr, "Unknown option: {}", arg);
                 print_usage(argv[0]);
@@ -251,23 +282,63 @@ int main(int argc, char* argv[]) {
             return 0;
         }
 
-        // Default: Run TinyLLaMA model test
-        std::println("Running TinyLLaMA model test...");
-        std::println("(Use ./build/tests/test_main or ./build/tests/test_quantization to run tests)\n");
+        if (run_test_mode) {
+            std::println("Running in TEST mode (Jack and Jill test)...");
+            test_load_tinyllama();
+        } else {
+            // Default: Run REPL
+            // We need to load the model here to pass it to run_repl
+            
+            std::string model_path = "models/tinyllama/model.safetensors";
+            if (!std::filesystem::exists(model_path)) {
+                std::println("⚠️  TinyLLaMA weights not found at: {}", model_path);
+                std::println("\nTo download the model, run:");
+                std::println("  bash scripts/download_tinyllama.sh\n");
+                return 1;
+            }
 
-        test_load_tinyllama();
+            std::string tokenizer_path = "models/tinyllama/tokenizer.model";
+            if (!std::filesystem::exists(tokenizer_path)) {
+                std::println("⚠️  Tokenizer file not found at: {}", tokenizer_path);
+                std::println("\nTo download the tokenizer, run:");
+                std::println("  bash scripts/download_tinyllama.sh\n");
+                return 1;
+            }
 
-        std::println("\n========================================");
-        std::println("TinyLLaMA test completed!");
-        std::println("========================================\n");
+            ModelConfig config = ModelConfig::tinyllama_1_1b();
+            
+            quant::QuantConfig quant_config;
+            quant_config.default_type = quant::QuantType::Q4_K;
+            quant_config.attention = quant::QuantType::Q8_0;
+            quant_config.feed_forward = quant::QuantType::Q4_K;
+            quant_config.lm_head = quant::QuantType::Q4_K;
 
-        std::println("🎉 You now have a complete LLM inference engine!");
-        std::println("\nNext steps:");
-        std::println("  1. ✓ Load real TinyLLaMA weights (DONE!)");
-        std::println("  2. ✓ Add tokenizer integration (DONE!)");
-        std::println("  3. Implement KV cache for 10-100x speedup");
-        std::println("  4. ✓ Add quantization (INT8/INT4) support");
-        std::println("  5. Further SIMD optimizations\n");
+            std::println("Loading model...");
+            LLMModel model(config, quant_config);
+
+            std::println("Loading weights...");
+            WeightMap weights;
+            std::unordered_map<std::string, QuantizedTensor> quantized_weights;
+
+            auto quant_resolver = [&quant_config](const std::string& tensor_name) -> std::optional<quant::QuantType> {
+                if (tensor_name == "token_embedding" || tensor_name == "final_norm_weight") return std::nullopt;
+                if (tensor_name == "lm_head") return quant_config.resolve_lm_head();
+                if (tensor_name.find(".attn.W_") != std::string::npos) return quant_config.resolve_attention();
+                if (tensor_name.find(".ffn.W_") != std::string::npos) return quant_config.resolve_feed_forward();
+                return std::nullopt;
+            };
+
+            auto [f32_weights, quant_weights] = load_safetensors_parallel_quantized(model_path, quant_resolver);
+            weights = std::move(f32_weights);
+            quantized_weights = std::move(quant_weights);
+
+            model.load_weights(weights, &quantized_weights);
+
+            std::println("Initializing tokenizer...");
+            Tokenizer tokenizer(tokenizer_path);
+
+            run_repl(model, tokenizer);
+        }
 
     } catch (const std::exception& e) {
         std::println(stderr, "\nError: {}", e.what());
@@ -276,3 +347,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+

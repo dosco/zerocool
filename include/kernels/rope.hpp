@@ -1,8 +1,12 @@
 #pragma once
 
-#include "tensor.hpp"
+#include "core/tensor.hpp"
 #include <cmath>
 #include <vector>
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    #include <arm_neon.h>
+#endif
 
 namespace freellm {
 
@@ -94,7 +98,38 @@ public:
             size_t cache_pos = position_offset + pos;
 
             for (size_t h = 0; h < n_heads; ++h) {
-                for (size_t i = 0; i < head_dim / 2; ++i) {
+                size_t i = 0;
+
+                #if defined(__aarch64__) || defined(_M_ARM64)
+                // NEON optimization: process 4 pairs (8 elements) at a time
+                for (; i + 4 <= head_dim / 2; i += 4) {
+                    size_t idx_base = pos * (n_heads * head_dim) + h * head_dim + 2 * i;
+                    
+                    // Load 8 floats (4 pairs) deinterleaved:
+                    // x_pairs.val[0] = evens, x_pairs.val[1] = odds
+                    float32x4x2_t x_pairs = vld2q_f32(&data[idx_base]);
+                    float32x4_t x_even = x_pairs.val[0];
+                    float32x4_t x_odd = x_pairs.val[1];
+                    
+                    // Load cos and sin (contiguous in cache)
+                    float32x4_t cos_vals = vld1q_f32(&cos_cache_.at({cache_pos, i}));
+                    float32x4_t sin_vals = vld1q_f32(&sin_cache_.at({cache_pos, i}));
+                    
+                    // Compute rotation
+                    // out_even = x_even * cos - x_odd * sin
+                    float32x4_t out_even = vmlsq_f32(vmulq_f32(x_even, cos_vals), x_odd, sin_vals);
+                    // out_odd  = x_even * sin + x_odd * cos
+                    float32x4_t out_odd  = vmlaq_f32(vmulq_f32(x_even, sin_vals), x_odd, cos_vals);
+                    
+                    // Store interleaved
+                    float32x4x2_t out_pairs;
+                    out_pairs.val[0] = out_even;
+                    out_pairs.val[1] = out_odd;
+                    vst2q_f32(&data[idx_base], out_pairs);
+                }
+                #endif
+
+                for (; i < head_dim / 2; ++i) {
                     size_t idx_even = pos * (n_heads * head_dim) + h * head_dim + 2 * i;
                     size_t idx_odd = idx_even + 1;
 

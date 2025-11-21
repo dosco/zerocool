@@ -1,7 +1,8 @@
 #pragma once
 
-#include "tensor.hpp"
+#include "core/tensor.hpp"
 #include <cmath>
+#include <algorithm>
 #include <algorithm>
 
 // Platform-specific SIMD intrinsics
@@ -16,6 +17,8 @@
 #elif defined(__aarch64__) || defined(_M_ARM64)
     #include <arm_neon.h>       // ARM NEON intrinsics
 #endif
+
+#include "kernels/tensor_ops_simd.hpp"
 
 namespace freellm {
 namespace ops {
@@ -38,7 +41,7 @@ enum class Activation {
  * @brief Element-wise addition: result = a + b
  * Broadcasting not yet supported - tensors must have same shape
  */
-inline Tensor add(const Tensor& a, const Tensor& b) {
+inline Tensor add_naive(const Tensor& a, const Tensor& b) {
     if (a.shape() != b.shape()) {
         throw std::invalid_argument("Tensors must have same shape for addition");
     }
@@ -74,7 +77,7 @@ inline Tensor add_scalar(const Tensor& tensor, float scalar) {
 /**
  * @brief Element-wise multiplication: result = a * b (Hadamard product)
  */
-inline Tensor multiply(const Tensor& a, const Tensor& b) {
+inline Tensor multiply_naive(const Tensor& a, const Tensor& b) {
     if (a.shape() != b.shape()) {
         throw std::invalid_argument("Tensors must have same shape for multiplication");
     }
@@ -364,7 +367,7 @@ inline float mean(const Tensor& tensor) {
  * @param dim Dimension to apply softmax (-1 for last dimension)
  * @return Output tensor with same shape as input
  */
-inline Tensor softmax(const Tensor& input, int dim = -1) {
+inline Tensor softmax_naive(const Tensor& input, int dim = -1) {
     if (input.empty()) {
         throw std::invalid_argument("softmax: input tensor is empty");
     }
@@ -406,6 +409,66 @@ inline Tensor softmax(const Tensor& input, int dim = -1) {
     }
 
     return result;
+}
+
+
+
+/**
+ * @brief Element-wise addition with SIMD dispatch
+ */
+inline Tensor add(const Tensor& a, const Tensor& b) {
+    #if defined(__x86_64__) || defined(_M_X64)
+        #include "kernels/cpu_features.hpp"
+        const auto& features = cpu::get_cpu_features();
+        if (features.avx2) {
+            return simd::add_avx2(a, b);
+        }
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        return simd::add_neon(a, b);
+    #endif
+    return add_naive(a, b);
+}
+
+/**
+ * @brief Element-wise multiplication with SIMD dispatch
+ */
+inline Tensor multiply(const Tensor& a, const Tensor& b) {
+    #if defined(__x86_64__) || defined(_M_X64)
+        #include "kernels/cpu_features.hpp"
+        const auto& features = cpu::get_cpu_features();
+        if (features.avx2) {
+            return simd::multiply_avx2(a, b);
+        }
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        return simd::multiply_neon(a, b);
+    #endif
+    return multiply_naive(a, b);
+}
+
+/**
+ * @brief Numerically stable softmax along last dimension
+ *
+ * softmax(x)_i = exp(x_i - max(x)) / sum(exp(x_j - max(x)))
+ *
+ * Subtracting max prevents overflow for large values
+ *
+ * @param input Input tensor (any shape)
+ * @param dim Dimension to apply softmax (-1 for last dimension)
+ * @return Output tensor with same shape as input
+ */
+inline Tensor softmax(const Tensor& input, int dim = -1) {
+    #if defined(__x86_64__) || defined(_M_X64)
+        #include "kernels/cpu_features.hpp"
+        const auto& features = cpu::get_cpu_features();
+        if (features.avx2) {
+            return simd::softmax_avx2(input, dim);
+        }
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        // ARM NEON is mandatory on ARM64 (Apple Silicon, etc.)
+        return simd::softmax_neon(input, dim);
+    #endif
+
+    return softmax_naive(input, dim);
 }
 
 /**
@@ -486,7 +549,7 @@ inline Tensor layer_norm(const Tensor& input, const Tensor& weight, const Tensor
  * @param eps Small constant for numerical stability
  * @return Normalized tensor with same shape as input
  */
-inline Tensor rms_norm(const Tensor& input, const Tensor& weight, float eps = 1e-6f) {
+inline Tensor rms_norm_naive(const Tensor& input, const Tensor& weight, float eps = 1e-6f) {
     // For now, support 2D: [batch_size, features]
     if (input.ndim() != 2) {
         throw std::invalid_argument("rms_norm: currently only supports 2D tensors");
@@ -525,17 +588,24 @@ inline Tensor rms_norm(const Tensor& input, const Tensor& weight, float eps = 1e
     return result;
 }
 
+/**
+ * @brief RMS (Root Mean Square) Normalization with SIMD dispatch
+ */
+inline Tensor rms_norm(const Tensor& input, const Tensor& weight, float eps = 1e-6f) {
+    #if defined(__x86_64__) || defined(_M_X64)
+        // AVX2 implementation not yet added, fall back to naive
+        // if (features.avx2) return simd::rms_norm_avx2(input, weight, eps);
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        return simd::rms_norm_neon(input, weight, eps);
+    #endif
+    return rms_norm_naive(input, weight, eps);
+}
+
 // ============================================================================
 // Smart Dispatch Wrappers (Forward declarations for SIMD ops)
 // ============================================================================
 
-// Forward declarations from tensor_ops_simd.hpp
-namespace simd {
-    Tensor matmul_avx2(const Tensor& a, const Tensor& b);
-    Tensor matvec_avx2(const Tensor& mat, const Tensor& vec);
-    Tensor add_avx2(const Tensor& a, const Tensor& b);
-    Tensor multiply_avx2(const Tensor& a, const Tensor& b);
-}
+// Forward declarations from tensor_ops_simd.hpp are now included directly
 
 /**
  * @brief Smart matrix multiplication dispatcher
@@ -550,11 +620,13 @@ namespace simd {
 inline Tensor matmul(const Tensor& a, const Tensor& b) {
     #if defined(__x86_64__) || defined(_M_X64)
         // Include cpu_features.hpp for detection
-        #include "cpu_features.hpp"
+        #include "kernels/cpu_features.hpp"
         const auto& features = cpu::get_cpu_features();
         if (features.avx2) {
             return simd::matmul_avx2(a, b);
         }
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        return simd::matmul_neon(a, b);
     #endif
     return matmul_naive(a, b);
 }
@@ -564,11 +636,13 @@ inline Tensor matmul(const Tensor& a, const Tensor& b) {
  */
 inline Tensor matvec(const Tensor& mat, const Tensor& vec) {
     #if defined(__x86_64__) || defined(_M_X64)
-        #include "cpu_features.hpp"
+        #include "kernels/cpu_features.hpp"
         const auto& features = cpu::get_cpu_features();
         if (features.avx2) {
             return simd::matvec_avx2(mat, vec);
         }
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        return simd::matvec_neon(mat, vec);
     #endif
     return matvec_naive(mat, vec);
 }

@@ -65,6 +65,13 @@ public:
         return processor_.GetPieceSize();
     }
 
+    /**
+     * @brief Get EOS token ID
+     */
+    int eos_id() const {
+        return processor_.eos_id();
+    }
+
 private:
     sentencepiece::SentencePieceProcessor processor_;
 };

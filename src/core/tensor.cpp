@@ -7,10 +7,10 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wstrict-aliasing"
-#include "safetensors.hh"
+#include "infra/safetensors.hh"
 #pragma GCC diagnostic pop
 
-#include "tensor.hpp"
+#include "core/tensor.hpp"
 #include <iostream>
 #include <iomanip>
 

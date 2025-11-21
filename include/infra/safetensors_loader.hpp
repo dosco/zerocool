@@ -1,10 +1,10 @@
 #pragma once
 
-#include "tensor.hpp"
-#include "model_loader.hpp"
-#include "safetensors.hh"
-#include "parallel_tensor_loader.hpp"
-#include "quantiz/types.hpp"
+#include "core/tensor.hpp"
+#include "infra/model_loader.hpp"
+#include "infra/safetensors.hh"
+#include "infra/parallel_tensor_loader.hpp"
+#include "kernels/quantiz/types.hpp"
 #include <string>
 #include <stdexcept>
 #include <cstdint>

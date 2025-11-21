@@ -16,6 +16,10 @@
     #endif
 #endif
 
+#if defined(__ARM_NEON)
+    #include <arm_neon.h>
+#endif
+
 /**
  * @file quantiz/q4_K/ops_simd.hpp
  * @brief Q4_K SIMD-optimized operations (AVX2)
@@ -90,6 +94,60 @@ inline void matvec_avx2(const block_q4_K* weights, size_t rows, size_t cols,
 }
 
 #endif // __AVX2__
+
+#if defined(__ARM_NEON)
+
+inline void dequantize_row_neon(const block_q4_K* src, float* dst, size_t k) {
+    const size_t nb = num_blocks(k);
+    size_t offset = 0;
+    std::array<float, QK_K> scratch{};
+
+    for (size_t ib = 0; ib < nb; ++ib) {
+        detail::dequantize_block(src[ib], scratch.data());
+        const size_t block_elems = std::min(static_cast<size_t>(QK_K), k - offset);
+        std::memcpy(dst + offset, scratch.data(), block_elems * sizeof(float));
+        offset += block_elems;
+    }
+}
+
+inline float dot_row_neon(const block_q4_K* row, const float* vec, size_t cols) {
+    const size_t blocks = num_blocks(cols);
+    std::array<float, QK_K> scratch{};
+    float32x4_t acc = vdupq_n_f32(0.0f);
+    float tail = 0.0f;
+    size_t col = 0;
+
+    for (size_t b = 0; b < blocks; ++b) {
+        detail::dequantize_block(row[b], scratch.data());
+        const size_t block_elems = std::min(static_cast<size_t>(QK_K), cols - col);
+
+        size_t i = 0;
+        for (; i + 4 <= block_elems; i += 4) {
+            float32x4_t vals = vld1q_f32(scratch.data() + i);
+            float32x4_t vec_vals = vld1q_f32(vec + col + i);
+            acc = vmlaq_f32(acc, vals, vec_vals);
+        }
+
+        for (; i < block_elems; ++i) {
+            tail += scratch[i] * vec[col + i];
+        }
+
+        col += block_elems;
+    }
+
+    return tail + vaddvq_f32(acc);
+}
+
+inline void matvec_neon(const block_q4_K* weights, size_t rows, size_t cols,
+                        const float* vec, float* dst) {
+    const size_t blocks_per_row = num_blocks(cols);
+    for (size_t r = 0; r < rows; ++r) {
+        const block_q4_K* row = weights + r * blocks_per_row;
+        dst[r] = dot_row_neon(row, vec, cols);
+    }
+}
+
+#endif // __ARM_NEON
 
 } // namespace simd
 } // namespace freellm::quant::q4_K

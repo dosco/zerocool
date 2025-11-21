@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include <iostream>
 
 namespace freellm {
 namespace cpu {
@@ -131,16 +132,14 @@ inline const CPUFeatures& get_cpu_features() {
 }
 
 inline void print_cpu_features(const CPUFeatures& features) {
-    #include <print>
-
-    std::println("CPU Features Detected:");
-    std::println("  Brand: {}", features.cpu_brand);
-    std::println("  AVX:          {}", features.avx ? "Yes" : "No");
-    std::println("  AVX2:         {}", features.avx2 ? "Yes" : "No");
-    std::println("  FMA:          {}", features.fma ? "Yes" : "No");
-    std::println("  AVX-512F:     {}", features.avx512f ? "Yes" : "No");
-    std::println("  AVX-512 VNNI: {}", features.avx512_vnni ? "Yes" : "No");
-    std::println("  ARM NEON:     {}", features.neon ? "Yes" : "No");
+    std::cout << "CPU Features Detected:" << std::endl;
+    std::cout << "  Brand: " << features.cpu_brand << std::endl;
+    std::cout << "  AVX:          " << (features.avx ? "Yes" : "No") << std::endl;
+    std::cout << "  AVX2:         " << (features.avx2 ? "Yes" : "No") << std::endl;
+    std::cout << "  FMA:          " << (features.fma ? "Yes" : "No") << std::endl;
+    std::cout << "  AVX-512F:     " << (features.avx512f ? "Yes" : "No") << std::endl;
+    std::cout << "  AVX-512 VNNI: " << (features.avx512_vnni ? "Yes" : "No") << std::endl;
+    std::cout << "  ARM NEON:     " << (features.neon ? "Yes" : "No") << std::endl;
 }
 
 } // namespace cpu

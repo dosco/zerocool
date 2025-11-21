@@ -1,7 +1,7 @@
 #pragma once
 
-#include "llm_model.hpp"
-#include "sampling.hpp"
+#include "core/llm_model.hpp"
+#include "core/sampling.hpp"
 #include <vector>
 #include <string>
 #include <stdexcept>

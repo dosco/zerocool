@@ -1,6 +1,6 @@
-#include "parallel_tensor_loader.hpp"
-#include "safetensors.hh"
-#include "safetensors_loader.hpp"  // For bf16_to_f32, fp16_to_f32
+#include "infra/parallel_tensor_loader.hpp"
+#include "infra/safetensors.hh"
+#include "infra/safetensors_loader.hpp"  // For bf16_to_f32, fp16_to_f32
 #include <algorithm>
 #include <stdexcept>
 

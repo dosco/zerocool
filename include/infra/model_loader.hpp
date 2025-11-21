@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tensor.hpp"
+#include "core/tensor.hpp"
 #include <string>
 #include <unordered_map>
 #include <fstream>

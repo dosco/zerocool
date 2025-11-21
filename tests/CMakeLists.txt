@@ -3,7 +3,7 @@
 # Quantization API unit tests
 add_executable(test_quantization
     test_quantization.cpp
-    ${CMAKE_SOURCE_DIR}/src/tensor.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tensor.cpp
 )
 
 # Link required libraries
@@ -26,7 +26,7 @@ set_target_properties(test_quantization PROPERTIES
 # Main tests (from main.cpp)
 add_executable(test_main
     test_main.cpp
-    ${CMAKE_SOURCE_DIR}/src/tensor.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tensor.cpp
 )
 
 # Link required libraries

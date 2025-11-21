@@ -30,6 +30,14 @@ if(NOT MSVC)
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(amd64)|(AMD64)")
         add_compile_options(-mavx2 -mfma)
         message(STATUS "Enabling AVX2 and FMA optimizations")
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)")
+        message(STATUS "Enabling ARM64 NEON optimizations")
+        # NEON is enabled by default on ARM64, but -mcpu=native optimizes for the specific chip
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang")
+            add_compile_options(-mcpu=native)
+        elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+            add_compile_options(-march=native)
+        endif()
     endif()
 
     # Enable C++20 experimental library features (needed for jthread on libc++ sometimes)
@@ -88,8 +96,8 @@ message(STATUS "SentencePiece will be built from source (no manual installation 
 # Source files
 set(SOURCES
     src/main.cpp
-    src/tensor.cpp
-    src/parallel_tensor_loader.cpp
+    src/core/tensor.cpp
+    src/infra/parallel_tensor_loader.cpp
 )
 
 # Create executable

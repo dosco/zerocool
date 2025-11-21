@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../tensor.hpp"
+#include "core/tensor.hpp"
 #include "types.hpp"
 #include "quantize.hpp"
 #include "ops.hpp"

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "tensor.hpp"
-#include "tensor_ops.hpp"
-#include "model_config.hpp"
-#include "transformer_block.hpp"
-#include "kv_cache.hpp"
-#include "quantiz/quant_config.hpp"
-#include "quantiz/quant_linear.hpp"
+#include "core/tensor.hpp"
+#include "kernels/tensor_ops.hpp"
+#include "core/model_config.hpp"
+#include "core/transformer_block.hpp"
+#include "core/kv_cache.hpp"
+#include "kernels/quantiz/quant_config.hpp"
+#include "kernels/quantiz/quant_linear.hpp"
 #include <vector>
 #include <memory>
 #include <optional>

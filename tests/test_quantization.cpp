@@ -6,14 +6,14 @@
 #include <vector>
 #include <random>
 #include <chrono>
-#include "../include/tensor.hpp"
-#include "../include/tensor_ops.hpp"
-#include "../include/quantiz/types.hpp"
-#include "../include/quantiz/quantized_tensor.hpp"
-#include "../include/quantiz/quant_linear.hpp"
-#include "../include/quantiz/quant_config.hpp"
-#include "../include/quantiz/quantize.hpp"
-#include "../include/quantiz/ops.hpp"
+#include "../include/core/tensor.hpp"
+#include "../include/kernels/tensor_ops.hpp"
+#include "../include/kernels/quantiz/types.hpp"
+#include "../include/kernels/quantiz/quantized_tensor.hpp"
+#include "../include/kernels/quantiz/quant_linear.hpp"
+#include "../include/kernels/quantiz/quant_config.hpp"
+#include "../include/kernels/quantiz/quantize.hpp"
+#include "../include/kernels/quantiz/ops.hpp"
 
 using namespace freellm;
 using namespace freellm::ops;

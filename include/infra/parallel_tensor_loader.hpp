@@ -1,11 +1,11 @@
 #pragma once
 
-#include "tensor.hpp"
-#include "model_loader.hpp"
-#include "bounded_queue.hpp"
-#include "quantiz/quantized_tensor.hpp"
-#include "quantiz/types.hpp"
-#include "safetensors.hh"
+#include "core/tensor.hpp"
+#include "infra/model_loader.hpp"
+#include "infra/bounded_queue.hpp"
+#include "kernels/quantiz/quantized_tensor.hpp"
+#include "kernels/quantiz/types.hpp"
+#include "infra/safetensors.hh"
 #include <string>
 #include <thread>
 #include <vector>

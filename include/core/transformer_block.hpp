@@ -1,11 +1,11 @@
 #pragma once
 
-#include "tensor.hpp"
-#include "tensor_ops.hpp"
-#include "quantiz/quant_linear.hpp"
-#include "attention.hpp"
-#include "kv_cache.hpp"
-#include "thread_pool.hpp"
+#include "core/tensor.hpp"
+#include "kernels/tensor_ops.hpp"
+#include "kernels/quantiz/quant_linear.hpp"
+#include "core/layers/attention.hpp"
+#include "core/kv_cache.hpp"
+#include "infra/thread_pool.hpp"
 #include <memory>
 #include <optional>
 

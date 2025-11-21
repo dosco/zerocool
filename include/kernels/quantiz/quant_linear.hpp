@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../tensor.hpp"
-#include "../tensor_ops.hpp"
+#include "core/tensor.hpp"
+#include "kernels/tensor_ops.hpp"
 #include "quantized_tensor.hpp"
 #include "ops.hpp"
 
@@ -23,7 +23,7 @@ inline Tensor linear_forward(const Tensor& input,
                              const Tensor& weight,
                              const std::optional<QuantizedTensor>& quantized) {
     if (!quantized) {
-        return ops::matmul_naive(input, weight);
+        return ops::matmul(input, weight);
     }
 
     if (input.ndim() != 2) {

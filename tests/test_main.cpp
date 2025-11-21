@@ -7,22 +7,22 @@
 #include <filesystem>
 #include <cmath>
 #include <optional>
-#include "../include/tensor.hpp"
-#include "../include/tensor_ops.hpp"
-#include "../include/tensor_ops_simd.hpp"
-#include "../include/cpu_features.hpp"
-#include "../include/rope.hpp"
-#include "../include/attention.hpp"
-#include "../include/model_config.hpp"
-#include "../include/model_loader.hpp"
-#include "../include/safetensors_loader.hpp"
-#include "../include/transformer_block.hpp"
-#include "../include/llm_model.hpp"
-#include "../include/sampling.hpp"
-#include "../include/generation.hpp"
-#include "../include/tokenizer.hpp"
-#include "../include/quantiz/quant_linear.hpp"
-#include "../include/quantiz/quant_config.hpp"
+#include "../include/core/tensor.hpp"
+#include "../include/kernels/tensor_ops.hpp"
+#include "../include/kernels/tensor_ops_simd.hpp"
+#include "../include/kernels/cpu_features.hpp"
+#include "../include/kernels/rope.hpp"
+#include "../include/core/layers/attention.hpp"
+#include "../include/core/model_config.hpp"
+#include "../include/infra/model_loader.hpp"
+#include "../include/infra/safetensors_loader.hpp"
+#include "../include/core/transformer_block.hpp"
+#include "../include/core/llm_model.hpp"
+#include "../include/core/sampling.hpp"
+#include "../include/core/generation.hpp"
+#include "../include/core/tokenizer.hpp"
+#include "../include/kernels/quantiz/quant_linear.hpp"
+#include "../include/kernels/quantiz/quant_config.hpp"
 
 using namespace freellm;
 using namespace freellm::ops;

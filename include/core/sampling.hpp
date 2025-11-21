@@ -1,7 +1,7 @@
 #pragma once
 
-#include "tensor.hpp"
-#include "tensor_ops.hpp"
+#include "core/tensor.hpp"
+#include "kernels/tensor_ops.hpp"
 #include <vector>
 #include <algorithm>
 #include <random>
