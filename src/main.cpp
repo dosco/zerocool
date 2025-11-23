@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
+
 #include "core/model_config.hpp"
 #include "infra/safetensors_loader.hpp"
 #include "core/llm_model.hpp"

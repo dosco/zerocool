@@ -4,7 +4,7 @@
 #include "kernels/tensor_ops.hpp"
 #include "core/model_config.hpp"
 #include "core/transformer_block.hpp"
-#include "core/kv_cache.hpp"
+#include "core/paged_kv_cache.hpp"
 #include "kernels/quantiz/quant_config.hpp"
 #include "kernels/quantiz/quant_linear.hpp"
 #include <vector>
@@ -226,8 +226,8 @@ public:
             //   - Residual connections (preserve information flow)
             //   - Normalizations (stabilize activations)
 
-            // Pass KV cache pointer if available
-            KVCache* cache_ptr = kv_cache_initialized_ ? &kv_caches_[layer_idx] : nullptr;
+            // Pass Paged KV cache pointer if available
+            PagedKVCache* cache_ptr = kv_cache_initialized_ ? &kv_caches_[layer_idx] : nullptr;
             hidden_states = blocks_[layer_idx]->forward(hidden_states, position_offset, cache_ptr);
 
             // Shape: still [seq_len, d_model]
@@ -463,87 +463,9 @@ public:
         std::println("  ✓ Successfully loaded {} weights into model", loaded_count);
     }
 
-    /**
-     * @brief Initialize KV caches for all layers
-     *
-     * Allocates memory for KV caches with the specified maximum sequence length.
-     * This should be called once before starting autoregressive generation.
-     *
-     * Memory allocated per layer:
-     *   2 * max_seq_len * n_kv_heads * head_dim * sizeof(float)
-     *
-     * For TinyLLaMA (22 layers, 4 KV heads, head_dim=64, max_seq_len=2048):
-     *   Total memory: ~92 MB
-     *
-     * @param max_seq_len Maximum sequence length to cache
-     */
-    void init_kv_cache(size_t max_seq_len) {
-        if (kv_cache_initialized_) {
-            // Already initialized - just reset
-            reset_kv_cache();
-            return;
-        }
 
-        std::println("Initializing KV cache (max_seq_len={})...", max_seq_len);
 
-        // Clear existing caches (if any)
-        kv_caches_.clear();
-        kv_caches_.reserve(config_.n_layers);
 
-        // Calculate dimensions
-        size_t head_dim = config_.d_model / config_.n_heads;
-
-        // Create one KVCache per layer
-        for (size_t i = 0; i < config_.n_layers; ++i) {
-            kv_caches_.emplace_back(max_seq_len, config_.n_kv_heads, head_dim);
-        }
-
-        kv_cache_initialized_ = true;
-
-        // Calculate total memory usage
-        size_t memory_per_layer = kv_caches_[0].memory_bytes();
-        size_t total_memory = memory_per_layer * config_.n_layers;
-        double total_mb = static_cast<double>(total_memory) / (1024.0 * 1024.0);
-
-        std::println("  ✓ KV cache initialized: {:.1f} MB ({} layers × {:.1f} MB)",
-                    total_mb, config_.n_layers, static_cast<double>(memory_per_layer) / (1024.0 * 1024.0));
-    }
-
-    /**
-     * @brief Reset KV caches to empty state
-     *
-     * Call this before processing a new prompt/sequence.
-     * Does not deallocate memory, just resets the length counters.
-     */
-    void reset_kv_cache() {
-        if (!kv_cache_initialized_) {
-            return;
-        }
-
-        for (auto& cache : kv_caches_) {
-            cache.reset();
-        }
-    }
-
-    /**
-     * @brief Check if KV cache is initialized
-     */
-    bool has_kv_cache() const {
-        return kv_cache_initialized_;
-    }
-
-    /**
-     * @brief Get current KV cache length (number of cached positions)
-     *
-     * Returns the number of tokens currently cached. All layers should have
-     * the same cache length.
-     */
-    size_t kv_cache_length() const {
-        if (!kv_cache_initialized_ || kv_caches_.empty()) {
-            return 0;
-        }
-        return kv_caches_[0].current_length();
-    }
 
 private:
     /**
@@ -690,10 +612,77 @@ private:
     Tensor lm_head_;  // Output projection: [d_model, vocab_size]
     std::optional<QuantizedTensor> lm_head_quant_;
 
-    // KV Cache (one per layer)
-    std::vector<KVCache> kv_caches_;  // KV caches for each transformer layer
-    bool kv_cache_initialized_ = false;  // Whether KV caches are initialized
+    // KV Cache (Paged)
+    std::unique_ptr<KVCacheManager> kv_manager_;
+    std::vector<PagedKVCache> kv_caches_;  // One per layer
+    bool kv_cache_initialized_ = false;
     quant::QuantConfig quant_config_;
-};
+
+public:
+    /**
+     * @brief Initialize Paged KV caches for all layers
+     *
+     * Allocates memory for the global KV pool and creates paged caches for each layer.
+     *
+     * @param max_seq_len Maximum sequence length (used to calculate total memory budget)
+     * @param block_size Block size for paged attention (default 16)
+     */
+    void init_kv_cache(size_t max_seq_len, size_t block_size = 16) {
+        if (kv_cache_initialized_) {
+            reset_kv_cache();
+            return;
+        }
+
+        std::println("Initializing Paged KV cache (max_seq_len={}, block_size={})...", max_seq_len, block_size);
+
+        // Calculate total blocks needed
+        // We need enough blocks for n_layers * max_seq_len
+        // Total tokens capacity = n_layers * max_seq_len
+        // Total blocks = ceil(Total tokens / block_size)
+        // We add a small buffer (e.g. 10%) for fragmentation/overhead if we were handling multiple requests,
+        // but for single sequence, exact calculation is fine.
+        
+        size_t total_tokens = config_.n_layers * max_seq_len;
+        size_t max_num_blocks = (total_tokens + block_size - 1) / block_size;
+
+        KVCacheConfig cache_config;
+        cache_config.block_size = block_size;
+        cache_config.max_num_blocks = max_num_blocks;
+        cache_config.n_kv_heads = config_.n_kv_heads;
+        cache_config.head_dim = config_.d_model / config_.n_heads;
+
+        // Create manager
+        kv_manager_ = std::make_unique<KVCacheManager>(cache_config);
+
+        // Create one PagedKVCache per layer
+        kv_caches_.clear();
+        kv_caches_.reserve(config_.n_layers);
+        for (size_t i = 0; i < config_.n_layers; ++i) {
+            kv_caches_.emplace_back(kv_manager_.get());
+        }
+
+        kv_cache_initialized_ = true;
+
+        // Calculate total memory usage
+        size_t total_elements = max_num_blocks * block_size * cache_config.n_kv_heads * cache_config.head_dim * 2; // K+V
+        size_t total_memory = total_elements * sizeof(float);
+        double total_mb = static_cast<double>(total_memory) / (1024.0 * 1024.0);
+
+        std::println("  ✓ Paged KV cache initialized: {:.1f} MB ({} blocks)", total_mb, max_num_blocks);
+    }
+
+    void reset_kv_cache() {
+        if (!kv_cache_initialized_) return;
+        for (auto& cache : kv_caches_) {
+            cache.reset();
+        }
+    }
+
+    bool has_kv_cache() const { return kv_cache_initialized_; }
+
+    size_t kv_cache_length() const {
+        if (!kv_cache_initialized_ || kv_caches_.empty()) return 0;
+        return kv_caches_[0].current_length();
+    }
 
 } // namespace freellm

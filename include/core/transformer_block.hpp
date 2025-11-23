@@ -4,7 +4,7 @@
 #include "kernels/tensor_ops.hpp"
 #include "kernels/quantiz/quant_linear.hpp"
 #include "core/layers/attention.hpp"
-#include "core/kv_cache.hpp"
+#include "core/paged_kv_cache.hpp"
 #include "infra/thread_pool.hpp"
 #include <memory>
 #include <optional>
@@ -259,7 +259,7 @@ public:
      * @param cache Optional KV cache for this layer. Passed through to attention.
      * @return Output tensor with shape [seq_len, d_model]
      */
-    Tensor forward(const Tensor& x, size_t position_offset = 0, KVCache* cache = nullptr) {
+    Tensor forward(const Tensor& x, size_t position_offset = 0, PagedKVCache* cache = nullptr) {
         // Validate input shape
         if (x.ndim() != 2 || x.shape()[1] != d_model_) {
             throw std::invalid_argument("TransformerBlock: input must be [seq_len, d_model]");

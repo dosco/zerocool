@@ -54,3 +54,26 @@ add_test(NAME MainTests COMMAND test_main)
 message(STATUS "Configured tests with doctest framework:")
 message(STATUS "  - test_quantization")
 message(STATUS "  - test_main")
+
+# Paged KV Cache Test
+add_executable(test_paged_kv_cache
+    test_paged_kv_cache.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tensor.cpp
+)
+
+target_link_libraries(test_paged_kv_cache PRIVATE sentencepiece-static)
+
+target_include_directories(test_paged_kv_cache PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external
+    ${sentencepiece_SOURCE_DIR}/src
+)
+
+set_target_properties(test_paged_kv_cache PROPERTIES
+    CXX_STANDARD 23
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+add_test(NAME PagedKVCacheTests COMMAND test_paged_kv_cache)
+message(STATUS "  - test_paged_kv_cache")

@@ -4,7 +4,8 @@
 #include "kernels/rope.hpp"
 #include "kernels/quantiz/quant_linear.hpp"
 #include "kernels/attention/scaled_dot_product.hpp"
-#include "core/kv_cache.hpp"
+#include "kernels/attention/paged_attention.hpp"
+#include "core/paged_kv_cache.hpp"
 #include <memory>
 #include <optional>
 #include <cmath>
@@ -92,155 +93,92 @@ public:
      * 5. Reshape: concatenate heads back to d_model
      * 6. Output projection: final learned transformation
      *
-     * KV CACHE SUPPORT:
-     * -----------------
-     * When cache != nullptr, the function uses KV cache for efficient generation:
+     * PAGED KV CACHE SUPPORT:
+     * -----------------------
+     * When cache != nullptr, the function uses Paged KV cache for efficient generation:
      * - Computes K/V only for NEW tokens (seq_len positions)
-     * - Retrieves cached K/V from previous tokens
-     * - Concatenates: [cached_K; new_K] and [cached_V; new_V]
-     * - Updates cache with new K/V values
-     * - Attention uses full sequence length (cached + new)
-     *
-     * This avoids recomputing K/V for all previous tokens, giving 10-100x speedup!
-     *
-     * When cache == nullptr, uses original behavior (no caching).
+     * - Updates paged cache with new K/V values (allocating blocks if needed)
+     * - Uses paged_scaled_dot_product_attention to read from non-contiguous memory
      *
      * @param x Input tensor with shape [seq_len, d_model]
-     *          NOTE: No batch dimension - single sequence only
-     *          With cache: typically seq_len=1 (one new token)
-     *          Without cache: seq_len=full sequence
-     * @param position_offset Position offset for RoPE (used in incremental generation)
-     *                        When generating token-by-token, this tracks position in sequence
-     * @param cache Optional KV cache pointer. If provided, uses cached K/V values.
+     * @param position_offset Position offset for RoPE
+     * @param cache Optional Paged KV cache pointer.
      * @return Output tensor with shape [seq_len, d_model]
      */
-    Tensor forward(const Tensor& x, size_t position_offset = 0, KVCache* cache = nullptr) {
+    Tensor forward(const Tensor& x, size_t position_offset = 0, PagedKVCache* cache = nullptr) {
         // Validate input shape: must be 2D [seq_len, d_model]
-        // This enforces single-sequence processing (no batch dimension)
         if (x.ndim() != 2) {
             throw std::invalid_argument("MultiHeadAttention: input must be 2D [seq_len, d_model]");
         }
 
-        size_t seq_len = x.shape()[0];  // Sequence length (can vary)
+        size_t seq_len = x.shape()[0];
 
         // Step 1: Linear projections to create Query, Key, Value
-        // Each projection is a learned matrix: W_q, W_k, W_v: [d_model, d_model]
-        // x @ W_q -> Q: [seq_len, d_model]
-        // These projections allow the model to learn what to attend to
-        Tensor Q = quant::linear_forward(x, W_q_, W_q_quant_);  // Query: what am I looking for?
+        Tensor Q = quant::linear_forward(x, W_q_, W_q_quant_);
 
         // Step 2: Reshape Q to separate heads
-        // Q: [seq_len, d_model] -> [seq_len, n_heads, head_dim]
         Q.reshape({seq_len, n_heads_, head_dim_});
 
-        // Step 3: Apply Rotary Position Embeddings (RoPE) to Q if enabled
-        // RoPE encodes positional information directly into Q and K by rotating them
-        // This is more efficient than adding positional embeddings
-        // position_offset is used during incremental generation (token-by-token)
-        // to correctly position new tokens in the sequence
+        // Step 3: Apply RoPE to Q
         if (use_rope_ && rope_cache_) {
             Q = rope_cache_->apply(Q, position_offset);
         }
 
-        // Step 4: Compute K and V (with or without cache)
-        // ================================================
-        Tensor K;
-        Tensor V;
+        Tensor output;
 
         if (cache != nullptr) {
-            // KV CACHE PATH: Only compute K/V for NEW tokens
-            // -----------------------------------------------
-            // During generation, we only need to compute K/V for the new token(s).
-            // Previous K/V values are retrieved from cache.
-            //
-            // Example: Generating 4th token
-            //   - Input: x [1, d_model] (just the new token)
-            //   - Cache contains: K[0:3], V[0:3] (positions 0, 1, 2)
-            //   - Compute: K[3], V[3] (just position 3)
-            //   - Concatenate: K_full = [K[0:3]; K[3]] -> [4, n_kv_heads, head_dim]
-            //   - Update cache with K[3], V[3]
-            //
-            // This is the KEY optimization: O(1) K/V computation instead of O(N)!
-
+            // PAGED KV CACHE PATH
+            // -------------------
+            
             // Compute K/V for NEW tokens only
-            Tensor K_new = quant::linear_forward(x, W_k_, W_k_quant_);  // [seq_len, n_kv_heads * head_dim]
-            Tensor V_new = quant::linear_forward(x, W_v_, W_v_quant_);  // [seq_len, n_kv_heads * head_dim]
+            Tensor K_new = quant::linear_forward(x, W_k_, W_k_quant_);
+            Tensor V_new = quant::linear_forward(x, W_v_, W_v_quant_);
 
             // Reshape to separate heads
             K_new.reshape({seq_len, n_kv_heads_, head_dim_});
             V_new.reshape({seq_len, n_kv_heads_, head_dim_});
 
-            // Apply RoPE to K_new (with correct position offset!)
+            // Apply RoPE to K_new
             if (use_rope_ && rope_cache_) {
                 K_new = rope_cache_->apply(K_new, position_offset);
             }
 
-            // Update cache with new K/V values
+            // Update paged cache with new K/V values
             cache->update(K_new, V_new);
 
-            // Retrieve FULL K/V (cached + new)
-            // After update, cache contains all positions: 0 to (current_length - 1)
-            K = cache->get_keys();    // [current_length, n_kv_heads, head_dim]
-            V = cache->get_values();  // [current_length, n_kv_heads, head_dim]
+            // Compute attention using paged kernel
+            float scale = 1.0f / std::sqrt(static_cast<float>(head_dim_));
+            Tensor attn_output = paged_scaled_dot_product_attention(Q, *cache, scale, n_kv_heads_, position_offset);
+            
+            // Reshape back to combine all heads
+            attn_output.reshape({seq_len, d_model_});
+            
+            // Output projection
+            output = quant::linear_forward(attn_output, W_o_, W_o_quant_);
 
-            // Note: seq_len_k (used in attention) is now cache->current_length()
-            // This is typically much larger than seq_len (which is often 1 for new token)
         } else {
-            // NON-CACHED PATH: Compute K/V for entire sequence (original behavior)
-            // ---------------------------------------------------------------------
-            // This path is used for:
-            // 1. Initial prompt processing (no cache yet)
-            // 2. Testing/debugging (to verify cache correctness)
-            // 3. Single forward passes (not autoregressive generation)
+            // STANDARD PATH (No Cache)
+            // ------------------------
+            // Used for initial prompt processing if not using cache immediately, or testing.
+            // Note: In a real paged system, we might want to always use the cache even for prompt.
+            // But for now, let's keep the non-cached path for flexibility/testing.
+            
+            Tensor K = quant::linear_forward(x, W_k_, W_k_quant_);
+            Tensor V = quant::linear_forward(x, W_v_, W_v_quant_);
 
-            K = quant::linear_forward(x, W_k_, W_k_quant_);  // Key: what can I match against?
-            V = quant::linear_forward(x, W_v_, W_v_quant_);  // Value: what information do I provide?
-
-            // Reshape to separate heads
-            // K: [seq_len, n_kv_heads * head_dim] -> [seq_len, n_kv_heads, head_dim]
-            // V: [seq_len, n_kv_heads * head_dim] -> [seq_len, n_kv_heads, head_dim]
-            //
-            // For GQA: K and V have fewer heads than Q
-            // Example: d_model=2048, n_heads=32, n_kv_heads=4, head_dim=64
-            //   Q: [seq_len, 32, 64]
-            //   K: [seq_len, 4, 64]
-            //   V: [seq_len, 4, 64]
             K.reshape({seq_len, n_kv_heads_, head_dim_});
             V.reshape({seq_len, n_kv_heads_, head_dim_});
 
-            // Apply RoPE to K
             if (use_rope_ && rope_cache_) {
                 K = rope_cache_->apply(K, position_offset);
             }
+
+            float scale = 1.0f / std::sqrt(static_cast<float>(head_dim_));
+            Tensor attn_output = scaled_dot_product_attention(Q, K, V, scale, n_kv_heads_, position_offset);
+
+            attn_output.reshape({seq_len, d_model_});
+            output = quant::linear_forward(attn_output, W_o_, W_o_quant_);
         }
-
-        // Step 5: Compute scaled dot-product attention for all heads
-        // This is the core attention mechanism - see scaled_dot_product_attention()
-        // Scale factor prevents attention scores from becoming too large
-        // For GQA: pass n_kv_heads so attention function knows to share K/V heads
-        //
-        // Note: When using cache, K/V have shape [cache_length, n_kv_heads, head_dim]
-        //       where cache_length can be much larger than seq_len (Q's length)
-        //       The attention function handles different seq_len_q and seq_len_k correctly
-        //
-        // IMPORTANT: Pass position_offset for correct causal masking with KV cache!
-        // This tells the attention function the absolute position of Q[0] in the sequence.
-        float scale = 1.0f / std::sqrt(static_cast<float>(head_dim_));
-        Tensor attn_output = scaled_dot_product_attention(Q, K, V, scale, n_kv_heads_, position_offset);
-        // Output shape: [seq_len, n_heads, head_dim]
-        // (Note: output has n_heads, not n_kv_heads - all Q heads produce output)
-
-        // Step 6: Reshape back to combine all heads
-        // Concatenate all head outputs: [seq_len, n_heads, head_dim] -> [seq_len, d_model]
-        // This merges the parallel attention heads back into a single representation
-        attn_output.reshape({seq_len, d_model_});
-
-        // Step 7: Output projection (learned linear transformation)
-        // W_o: [d_model, d_model] projects the combined head outputs
-        // This final projection allows the model to learn how to combine information
-        // from different attention heads
-        Tensor output = quant::linear_forward(attn_output, W_o_, W_o_quant_);
-        // Final output: [seq_len, d_model]
 
         return output;
     }

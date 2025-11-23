@@ -11,7 +11,7 @@ namespace freellm {
  * @brief SentencePiece Tokenizer wrapper for TinyLLaMA
  *
  * TinyLLaMA uses a SentencePiece BPE tokenizer, which is different from GPT-2 BPE:
- * - Uses ▁ (U+2581) to represent spaces
+ * - Uses   (U+2581) to represent spaces
  * - Uses <0xNN> format for byte fallback tokens
  * - Different merge algorithm
  *
