@@ -31,7 +31,7 @@ namespace freellm {
  *                           ↓
  * ┌──────────────────────────────────────────────────────────────┐
  * │ Transformer Block 0                                           │
- * │   RMSNorm → Attention → Residual → RMSNorm → FFN → Residual │
+ * │   RMSNorm → Attention → Residual → RMSNorm → F→ Residual │
  * └──────────────────────────────────────────────────────────────┘
  *                           ↓
  * ┌──────────────────────────────────────────────────────────────┐
@@ -684,5 +684,7 @@ public:
         if (!kv_cache_initialized_ || kv_caches_.empty()) return 0;
         return kv_caches_[0].current_length();
     }
+
+}; // class LLMModel
 
 } // namespace freellm

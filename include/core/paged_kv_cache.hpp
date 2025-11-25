@@ -29,7 +29,7 @@ public:
     KVCacheManager(const KVCacheConfig& config) : config_(config) {
         // Calculate total size for pre-allocation
         // Shape: [max_num_blocks, block_size, n_kv_heads, head_dim]
-        size_t total_elements = config.max_num_blocks * config.block_size * config.n_kv_heads * config.head_dim;
+        // size_t total_elements = config.max_num_blocks * config.block_size * config.n_kv_heads * config.head_dim;
         
         // Allocate global storage
         global_keys_ = Tensor({config.max_num_blocks, config.block_size, config.n_kv_heads, config.head_dim});

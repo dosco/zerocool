@@ -25,7 +25,8 @@ void test_allocation_deallocation() {
     {
         // 2. Create Sequence (Scope Start)
         std::vector<int> prompt = {1, 2, 3};
-        Sequence seq(prompt, &manager);
+        // Pass n_layers = 1
+        Sequence seq(prompt, &manager, 1);
 
         // Simulate prefill/generation that triggers allocation
         // We need to manually trigger cache updates since Sequence doesn't do it automatically yet
@@ -39,13 +40,14 @@ void test_allocation_deallocation() {
         Tensor k_dummy({n_tokens, config.n_kv_heads, config.head_dim});
         Tensor v_dummy({n_tokens, config.n_kv_heads, config.head_dim});
 
-        seq.kv_cache()->update(k_dummy, v_dummy);
+        // Access layer 0
+        seq.kv_cache(0)->update(k_dummy, v_dummy);
 
         // Verify allocation
         size_t current_free = manager.free_blocks_count();
         std::cout << "  Free blocks after allocation: " << current_free << std::endl;
         assert(current_free == 98); // Used 2 blocks
-        assert(seq.kv_cache()->block_table().size() == 2);
+        assert(seq.kv_cache(0)->block_table().size() == 2);
 
     } // 3. Sequence Destroyed (Scope End)
 
@@ -70,11 +72,11 @@ void test_reuse() {
 
     // Sequence A uses all memory
     {
-        Sequence seqA({1}, &manager);
+        Sequence seqA({1}, &manager, 1);
         // Add 32 tokens -> 2 blocks (full pool)
         Tensor k({32, 4, 64});
         Tensor v({32, 4, 64});
-        seqA.kv_cache()->update(k, v);
+        seqA.kv_cache(0)->update(k, v);
         
         assert(manager.free_blocks_count() == 0);
         std::cout << "  Sequence A used all blocks." << std::endl;
@@ -85,11 +87,11 @@ void test_reuse() {
 
     // Sequence B reuses memory
     {
-        Sequence seqB({1}, &manager);
+        Sequence seqB({1}, &manager, 1);
         // Add 16 tokens -> 1 block
         Tensor k({16, 4, 64});
         Tensor v({16, 4, 64});
-        seqB.kv_cache()->update(k, v);
+        seqB.kv_cache(0)->update(k, v);
 
         assert(manager.free_blocks_count() == 1);
         std::cout << "  Sequence B successfully reused a block." << std::endl;

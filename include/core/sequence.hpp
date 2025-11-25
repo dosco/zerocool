@@ -22,13 +22,15 @@ public:
      * 
      * @param prompt_tokens Initial prompt tokens
      * @param kv_manager Global KV cache manager
+     * @param n_layers Number of transformer layers
      */
-    Sequence(const std::vector<int>& prompt_tokens, KVCacheManager* kv_manager)
+    Sequence(const std::vector<int>& prompt_tokens, KVCacheManager* kv_manager, size_t n_layers)
         : tokens_(prompt_tokens) {
-        // Allocate a new Paged KV Cache for this sequence
-        // The PagedKVCache constructor doesn't allocate blocks yet;
-        // blocks are allocated on demand during update()
-        kv_cache_ = std::make_unique<PagedKVCache>(kv_manager);
+        // Allocate Paged KV Caches for each layer
+        kv_caches_.reserve(n_layers);
+        for (size_t i = 0; i < n_layers; ++i) {
+            kv_caches_.push_back(std::make_unique<PagedKVCache>(kv_manager));
+        }
     }
 
     // Disable copying to prevent double-free or shared ownership confusion
@@ -40,8 +42,7 @@ public:
     Sequence& operator=(Sequence&&) = default;
 
     ~Sequence() {
-        // kv_cache_ destructor will automatically call reset()
-        // and free all allocated blocks back to the manager
+        // kv_caches_ destructors will automatically call reset()
     }
 
     /**
@@ -61,10 +62,13 @@ public:
     }
 
     /**
-     * @brief Get the Paged KV Cache for this sequence
+     * @brief Get the Paged KV Cache for a specific layer
      */
-    PagedKVCache* kv_cache() {
-        return kv_cache_.get();
+    PagedKVCache* kv_cache(size_t layer_idx) {
+        if (layer_idx >= kv_caches_.size()) {
+            throw std::out_of_range("Layer index out of bounds");
+        }
+        return kv_caches_[layer_idx].get();
     }
 
     /**
@@ -74,9 +78,31 @@ public:
         return tokens_.size();
     }
 
+    /**
+     * @brief Get number of layers
+     */
+    size_t n_layers() const {
+        return kv_caches_.size();
+    }
+
+    /**
+     * @brief Mark the sequence as finished
+     */
+    void set_finished() {
+        finished_ = true;
+    }
+
+    /**
+     * @brief Check if the sequence is finished
+     */
+    bool is_finished() const {
+        return finished_;
+    }
+
 private:
     std::vector<int> tokens_;
-    std::unique_ptr<PagedKVCache> kv_cache_;
+    std::vector<std::unique_ptr<PagedKVCache>> kv_caches_;
+    bool finished_ = false;
 };
 
 } // namespace freellm
