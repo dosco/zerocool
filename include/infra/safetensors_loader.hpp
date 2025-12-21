@@ -4,12 +4,19 @@
 #include "infra/model_loader.hpp"
 #include "infra/safetensors.hh"
 #include "infra/parallel_tensor_loader.hpp"
+#include "infra/quantized_cache.hpp"
 #include "kernels/quantiz/types.hpp"
+#include "utils/terminal_ui.hpp"
+#include "utils/cache_utils.hpp"
 #include <string>
+#include <filesystem>
+#include <algorithm>
 #include <stdexcept>
 #include <cstdint>
 #include <cstring>
 #include <optional>
+#include <sstream>
+#include <iomanip>
 
 namespace freellm {
 
@@ -150,7 +157,7 @@ inline std::string map_hf_name_to_freellm(const std::string& hf_name) {
  * @return WeightMap with loaded tensors
  */
 inline WeightMap load_safetensors(const std::string& filepath) {
-    std::println("Loading safetensors from: {}", filepath);
+    ui::print_loading("Loading: " + filepath);
 
     // Load using safetensors-cpp library
     safetensors::safetensors_t st;
@@ -162,7 +169,7 @@ inline WeightMap load_safetensors(const std::string& filepath) {
     }
 
     if (!warn.empty()) {
-        std::println("  Warning: {}", warn);
+        ui::print_warning(warn);
     }
 
     // Validate data offsets
@@ -170,8 +177,10 @@ inline WeightMap load_safetensors(const std::string& filepath) {
         throw std::runtime_error("Invalid safetensors data offsets: " + err);
     }
 
-    std::println("  File size: {:.2f} GB", st.storage.size() / (1024.0 * 1024.0 * 1024.0));
-    std::println("  Found {} tensors", st.tensors.size());
+    std::ostringstream size_ss;
+    size_ss << std::fixed << std::setprecision(2) << (st.storage.size() / (1024.0 * 1024.0 * 1024.0)) << " GB";
+    ui::print_status("File size: " + size_ss.str());
+    ui::print_status("Found " + std::to_string(st.tensors.size()) + " tensors");
 
     // Load tensors
     WeightMap weights;
@@ -232,7 +241,7 @@ inline WeightMap load_safetensors(const std::string& filepath) {
             }
 
             default: {
-                std::println("  Warning: Skipping {} (unsupported dtype)", hf_name);
+                ui::print_warning("Skipping " + hf_name + " (unsupported dtype)");
                 continue;
             }
         }
@@ -241,11 +250,11 @@ inline WeightMap load_safetensors(const std::string& filepath) {
         loaded_count++;
 
         if (loaded_count % 50 == 0) {
-            std::println("  Loaded {} tensors...", loaded_count);
+            ui::print_progress_bar(loaded_count, tensor_keys.size());
         }
     }
 
-    std::println("  ✓ Successfully loaded {} tensors", loaded_count);
+    ui::print_success("Loaded " + std::to_string(loaded_count) + " tensors");
 
     return weights;
 }
@@ -319,6 +328,165 @@ load_safetensors_parallel_quantized(
 
     // Load with quantization
     return loader.load_with_quantization(filepath, name_mapper, quant_resolver);
+}
+
+/**
+ * @brief Load weights from a file or directory
+ * 
+ * If filepath is a directory, it loads all .safetensors files in it and merges them.
+ * If filepath is a file, it loads that file.
+ * 
+ * @param path Path to file or directory
+ * @param quant_resolver Quantization resolver
+ * @param num_threads Num threads
+ * @return Merged weights
+ */
+inline std::pair<WeightMap, std::unordered_map<std::string, QuantizedTensor>>
+load_model_from_path(
+    const std::string& path,
+    std::function<std::optional<quant::QuantType>(const std::string&)> quant_resolver,
+    size_t num_threads = std::thread::hardware_concurrency()
+) {
+    namespace fs = std::filesystem;
+    std::vector<std::string> files;
+
+    if (fs::is_directory(path)) {
+        ui::print_subsection("Scanning: " + path);
+        for (const auto& entry : fs::directory_iterator(path)) {
+            if (entry.path().extension() == ".safetensors") {
+                files.push_back(entry.path().string());
+            }
+        }
+        std::sort(files.begin(), files.end()); // Ensure deterministic order
+        if (files.empty()) {
+            throw std::runtime_error("No .safetensors files found in directory: " + path);
+        }
+        ui::print_status("Found " + std::to_string(files.size()) + " weight shards");
+    } else {
+        files.push_back(path);
+    }
+
+    // 1. Pre-scan headers to discover tensor names and categorize them
+    std::vector<std::string> all_quant_names;
+    std::unordered_map<std::string, std::vector<std::string>> file_to_f32_tensors;
+    
+    ui::print_status("Scanning headers...");
+    for(const auto& file : files) {
+         safetensors::safetensors_t st;
+         std::string w, e;
+         // Perform lightweight header parse
+         if(!safetensors::load_from_file(file, &st, &w, &e)) continue;
+         
+         for(const auto& key : st.tensors.keys()) {
+             std::string name = map_hf_name_to_freellm(key);
+             if(name.empty()) continue;
+             
+             if(quant_resolver && quant_resolver(name)) {
+                 all_quant_names.push_back(name);
+             } else {
+                 file_to_f32_tensors[file].push_back(name);
+             }
+         }
+    }
+
+    // Generate cache key
+    std::string quant_config_hash = "default"; 
+    std::string cache_key = cache::generate_quant_cache_key(files[0], quant_config_hash);
+    
+    WeightMap total_f32;
+    std::unordered_map<std::string, QuantizedTensor> total_quant;
+    bool cache_loaded = false;
+
+    // 2. Try loading quantized weights from cache
+    if (quant_resolver && !all_quant_names.empty()) {
+        std::string source_hash = cache::compute_file_hash(files[0]);
+        if (cache::is_quant_cache_valid(cache_key, source_hash, quant_config_hash)) {
+             ui::print_status("Found valid quantized weight cache");
+             ui::print_loading("Loading from cache...");
+             
+             total_quant = cache::load_quantized_cache(cache_key, all_quant_names);
+             
+             if (!total_quant.empty()) {
+                 ui::print_success("Loaded " + std::to_string(total_quant.size()) + " quantized tensors from cache");
+                 cache_loaded = true;
+                 
+                 // 3. Load remaining F32 tensors from original files
+                 ui::print_loading("Loading remaining F32 tensors...");
+                 size_t f32_count = 0;
+                 
+                 for (const auto& [file, names] : file_to_f32_tensors) {
+                     if (names.empty()) continue;
+                     
+                     safetensors::safetensors_t st;
+                     std::string w, e;
+                     if(!safetensors::load_from_file(file, &st, &w, &e)) continue;
+                     
+                     for (const auto& name : names) {
+                         // Reverse mapping is hard, but we iterate st keys to find matches?
+                         // Or we store HF names in file_to_f32_tensors?
+                         // We stored 'name' (internal).
+                         // We need HF keys to look up in st.
+                         // Optimization: Store HF key -> internal name in separate map during scan?
+                         // Let's re-scan keys of this file.
+                         for (const auto& hf_key : st.tensors.keys()) {
+                             if (map_hf_name_to_freellm(hf_key) == name) {
+                                  // Found it
+                                  safetensors::tensor_t info;
+                                  st.tensors.at(hf_key, &info);
+                                  
+                                  Tensor tensor(info.shape);
+                                  const uint8_t* raw = st.storage.data() + info.data_offsets[0];
+                                  
+                                  // Copy/Convert
+                                  if (info.dtype == safetensors::dtype::kFLOAT32) {
+                                      std::memcpy(tensor.data(), raw, tensor.size() * sizeof(float));
+                                  } else if (info.dtype == safetensors::dtype::kBFLOAT16) {
+                                      const uint16_t* ptr = (const uint16_t*)raw;
+                                      float* dst = tensor.data();
+                                      for(size_t k=0; k<tensor.size(); ++k) dst[k] = bf16_to_f32(ptr[k]);
+                                  } else if (info.dtype == safetensors::dtype::kFLOAT16) {
+                                      const uint16_t* ptr = (const uint16_t*)raw;
+                                      float* dst = tensor.data();
+                                      for(size_t k=0; k<tensor.size(); ++k) dst[k] = fp16_to_f32(ptr[k]);
+                                  }
+                                  
+                                  total_f32[name] = std::move(tensor);
+                                  f32_count++;
+                                  break;
+                             }
+                         }
+                     }
+                 }
+                 ui::print_success("Loaded " + std::to_string(f32_count) + " F32 tensors");
+             }
+        }
+    }
+    
+    // 4. Fallback: Full Parallel Load
+    if (!cache_loaded) {
+        for (size_t i = 0; i < files.size(); ++i) {
+            const auto& file = files[i];
+            std::string filename = fs::path(file).filename().string();
+            ui::print_loading("[" + std::to_string(i + 1) + "/" + std::to_string(files.size()) + "] " + filename);
+            auto [f32, quant] = load_safetensors_parallel_quantized(file, quant_resolver, num_threads);
+            
+            for (auto& [k, v] : f32) total_f32[k] = std::move(v);
+            for (auto& [k, v] : quant) total_quant[k] = std::move(v);
+        }
+        
+        ui::print_success("Loaded " + std::to_string(total_f32.size()) + " F32 tensors, " + std::to_string(total_quant.size()) + " quantized");
+        
+        if (quant_resolver && !total_quant.empty()) {
+            ui::print_loading("Caching quantized weights...");
+            std::string source_hash = cache::compute_file_hash(files[0]);
+            bool saved = cache::save_quantized_cache(cache_key, total_quant, source_hash, quant_config_hash);
+            if (saved) {
+                ui::print_success("Cached " + std::to_string(total_quant.size()) + " quantized tensors");
+            }
+        }
+    }
+    
+    return {std::move(total_f32), std::move(total_quant)};
 }
 
 } // namespace freellm
