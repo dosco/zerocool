@@ -33,7 +33,7 @@ struct ModelConfig {
     size_t d_ff = 5632;             // Feed-forward hidden dimension
 
     // Architecture specifics
-    float norm_eps = 1e-6f;         // RMSNorm epsilon
+    float norm_eps = 1e-5;
     float rope_theta = 10000.0f;    // RoPE base frequency
 
     /**

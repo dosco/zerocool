@@ -227,7 +227,7 @@ public:
             //   - Normalizations (stabilize activations)
 
             // Pass Paged KV cache pointer if available
-            PagedKVCache* cache_ptr = kv_cache_initialized_ ? &kv_caches_[layer_idx] : nullptr;
+            PagedKVCache* cache_ptr = kv_cache_initialized_ ? kv_caches_[layer_idx].get() : nullptr;
             hidden_states = blocks_[layer_idx]->forward(hidden_states, position_offset, cache_ptr);
 
             // Shape: still [seq_len, d_model]
@@ -614,7 +614,7 @@ private:
 
     // KV Cache (Paged)
     std::unique_ptr<KVCacheManager> kv_manager_;
-    std::vector<PagedKVCache> kv_caches_;  // One per layer
+    std::vector<std::unique_ptr<PagedKVCache>> kv_caches_;  // One per layer
     bool kv_cache_initialized_ = false;
     quant::QuantConfig quant_config_;
 
@@ -658,7 +658,7 @@ public:
         kv_caches_.clear();
         kv_caches_.reserve(config_.n_layers);
         for (size_t i = 0; i < config_.n_layers; ++i) {
-            kv_caches_.emplace_back(kv_manager_.get());
+            kv_caches_.push_back(std::make_unique<PagedKVCache>(kv_manager_.get()));
         }
 
         kv_cache_initialized_ = true;
@@ -674,7 +674,7 @@ public:
     void reset_kv_cache() {
         if (!kv_cache_initialized_) return;
         for (auto& cache : kv_caches_) {
-            cache.reset();
+            cache->reset();
         }
     }
 
@@ -682,7 +682,7 @@ public:
 
     size_t kv_cache_length() const {
         if (!kv_cache_initialized_ || kv_caches_.empty()) return 0;
-        return kv_caches_[0].current_length();
+        return kv_caches_[0]->current_length();
     }
 
 }; // class LLMModel

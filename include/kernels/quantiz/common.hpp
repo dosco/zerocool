@@ -85,6 +85,7 @@ inline uint16_t fp32_to_fp16(float f) {
 enum class QuantType {
     NONE,    // Not quantized (FP32)
     Q8_0,    // 8-bit symmetric
+    Q4_0,    // 4-bit symmetric (Metal friendly)
     Q4_K,    // 4-bit k-quant hierarchical
 };
 
@@ -93,6 +94,7 @@ inline const char* quant_type_name(QuantType type) {
     switch (type) {
         case QuantType::NONE: return "FP32";
         case QuantType::Q8_0: return "Q8_0";
+        case QuantType::Q4_0: return "Q4_0";
         case QuantType::Q4_K: return "Q4_K";
         default: return "Unknown";
     }

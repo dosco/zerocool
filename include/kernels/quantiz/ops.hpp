@@ -2,6 +2,7 @@
 
 #include "q8_0/ops.hpp"
 #include "q4_K/ops.hpp"
+#include "q4_0/ops.hpp"
 
 /**
  * @file quantiz/ops.hpp
@@ -39,6 +40,11 @@ inline float dot_row_q4_K(const block_q4_K* row, const float* vec, size_t cols) 
 inline void matvec_q4_K(const void* weights, size_t rows, size_t cols,
                         const float* vec, float* dst) {
     q4_K::matvec(weights, rows, cols, vec, dst);
+}
+
+// Q4_0 operations (Scalar only for now)
+inline void dequantize_row_q4_0(const void* src, float* dst, size_t k) {
+    q4_0::dequantize_row(src, dst, k);
 }
 
 } // namespace freellm::quant

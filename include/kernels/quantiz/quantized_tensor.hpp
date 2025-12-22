@@ -112,6 +112,22 @@ public:
                 }
                 break;
 
+            case quant::QuantType::Q4_0:
+                if (num_rows == 0) {
+                    break;
+                }
+                {
+                    const size_t row_stride_bytes = quant::quant_row_bytes(qtype, row_size);
+                    for (size_t row = 0; row < num_rows; ++row) {
+                        quant::quantize_row_q4_0(
+                            src + row * row_size,
+                            static_cast<uint8_t*>(dst) + row * row_stride_bytes,
+                            row_size
+                        );
+                    }
+                }
+                break;
+
             default:
                 throw std::runtime_error("Unsupported quantization type");
         }
@@ -161,6 +177,19 @@ public:
                     }
                 }
                 break;
+
+            case quant::QuantType::Q4_0:
+                 if (num_rows != 0) {
+                    const size_t row_stride_bytes = quant::quant_row_bytes(qtype_, row_size);
+                    for (size_t row = 0; row < num_rows; ++row) {
+                        quant::dequantize_row_q4_0(
+                            static_cast<const uint8_t*>(src) + row * row_stride_bytes,
+                            dst + row * row_size,
+                            row_size
+                        );
+                    }
+                 }
+                 break;
 
             default:
                 throw std::runtime_error("Unsupported quantization type");
@@ -237,6 +266,20 @@ public:
             throw std::runtime_error("Not a Q4_K tensor");
         }
         return blocks<quant::block_q4_K>();
+    }
+
+    quant::block_q4_0* blocks_q4_0() {
+        if (qtype_ != quant::QuantType::Q4_0) {
+            throw std::runtime_error("Not a Q4_0 tensor");
+        }
+        return blocks<quant::block_q4_0>();
+    }
+
+    const quant::block_q4_0* blocks_q4_0() const {
+        if (qtype_ != quant::QuantType::Q4_0) {
+            throw std::runtime_error("Not a Q4_0 tensor");
+        }
+        return blocks<quant::block_q4_0>();
     }
 
     // Get memory usage info

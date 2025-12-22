@@ -2,6 +2,7 @@
 
 #include "q8_0/quantize.hpp"
 #include "q4_K/quantize.hpp"
+#include "q4_0/quantize.hpp"
 
 /**
  * @file quantiz/quantize.hpp
@@ -29,6 +30,11 @@ inline void quantize_row_q4_K(const float* src, void* dst, size_t k) {
 
 inline void quantize_matrix_q4_K(const float* src, size_t rows, size_t cols, void* dst) {
     q4_K::quantize_matrix(src, rows, cols, dst);
+}
+
+// Q4_0 quantization
+inline void quantize_row_q4_0(const float* src, void* dst, size_t k) {
+    q4_0::quantize(src, dst, k);
 }
 
 } // namespace freellm::quant
