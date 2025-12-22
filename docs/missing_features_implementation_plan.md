@@ -3,59 +3,16 @@
 This document outlines the implementation strategy for key features currently missing from `freellm`. These features are selected based on their impact on inference performance, memory efficiency, and functional capabilities.
 
 ## 1. Paged KV Cache
-
-**Status**: Missing (Current implementation uses contiguous memory allocation per layer).
-**Impact**: Essential for efficient memory usage and enabling Inflight Batching. Eliminates memory fragmentation.
-
-### Implementation Strategy
-
-1.  **Data Structure Changes**:
-    *   Create a `Block` struct representing a fixed-size chunk of tokens (e.g., 16 or 32 tokens).
-    *   Create a `BlockTable` mapping: `SequenceID -> List<BlockPointer>`.
-    *   Replace `KVCache::cached_keys_` and `cached_values_` (contiguous tensors) with a global `BlockManager` that allocates blocks from a pre-allocated pool.
-
-2.  **Logic Updates**:
-    *   **Allocation**: When a sequence needs more space, the `BlockManager` allocates a new block.
-    *   **Attention Kernel**: Update `attention.hpp` to read K/V data from non-contiguous blocks.
-        *   *Current*: `K[i]` is at `base + i * stride`.
-        *   *New*: `K[i]` logic:
-            ```cpp
-            block_idx = i / block_size;
-            offset = i % block_size;
-            block_ptr = block_table[block_idx];
-            data = block_ptr->data + offset * head_dim;
-            ```
-
-3.  **Refactoring**:
-    *   Modify `KVCache` class to hold a `std::vector<Block*>` instead of owning a large `Tensor`.
+**Status**: **Complete** (Implemented in `include/core/paged_kv_cache.hpp` and `src/core/paged_kv_cache.cpp`).
+**Impact**: Enabling Inflight Batching and efficient memory usage.
 
 ## 2. Quantized KV Cache (INT8/FP8)
-
-**Status**: Missing (Current implementation uses `float`).
-**Impact**: Reduces memory usage by 2x-4x, allowing longer context lengths or larger batch sizes.
-
-### Implementation Strategy
-
-1.  **Storage Format**:
-    *   Store K and V as `int8_t` (or `fp8` if hardware supports) instead of `float`.
-    *   Store a `scale` (float) and `zero_point` (int8/float) per head or per block.
-
-2.  **Quantization Logic**:
-    *   In `KVCache::update()`:
-        *   Compute min/max of the incoming `new_keys` and `new_values`.
-        *   Calculate `scale = (max - min) / 255.0`.
-        *   Quantize: `q_val = (val / scale)`.
-        *   Store `q_val` and `scale`.
-
-3.  **Dequantization in Attention**:
-    *   In `attention.hpp`, before the dot product (or during, if using integer SIMD):
-        *   `val = q_val * scale`.
-    *   *Optimization*: Use SIMD instructions (AVX2/NEON) to perform dot products on INT8 data directly, accumulating into INT32, then scaling to float.
+**Status**: **Planned** (Next Priority).
+**Impact**: Reduces memory usage by 2x-4x.
 
 ## 3. Inflight Batching (Continuous Batching)
-
-**Status**: Missing (Current implementation supports single-sequence inference only).
-**Impact**: Drastically improves throughput by processing multiple sequences simultaneously, adding new ones as soon as others finish.
+**Status**: **Complete** (Implemented in `GenerationEngine` and `Scheduler`).
+**Impact**: Drastically improves throughput.
 
 ### Implementation Strategy
 

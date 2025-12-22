@@ -70,6 +70,28 @@ include(FetchContent)
 #
 # message(STATUS "RE2 will be built from source (no manual installation needed)")
 
+FetchContent_Declare(
+    re2
+    GIT_REPOSITORY https://github.com/google/re2.git
+    GIT_TAG        2024-07-02
+    GIT_SHALLOW    TRUE
+)
+
+# Disable RE2 tests to speed up build
+set(RE2_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+
+# Download and build RE2
+FetchContent_MakeAvailable(re2)
+
+# Fetch nlohmann/json
+FetchContent_Declare(
+    json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG        v3.11.3
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(json)
+
 # Fetch SentencePiece for tokenization
 FetchContent_Declare(
     sentencepiece
@@ -95,28 +117,67 @@ message(STATUS "SentencePiece will be built from source (no manual installation 
 
 # Source files
 set(SOURCES
-    src/main.cpp
+    # src/main.cpp - Moved to executable target
     src/core/tensor.cpp
     src/infra/parallel_tensor_loader.cpp
+    src/infra/compute_backend.cpp
+    src/infra/cuda_backend.cpp
+    src/infra/pjrt_backend.cpp
+    src/core/scheduler.cpp
+    src/core/generation_engine.cpp
+    src/core/bpe_tokenizer.cpp
+)
+
+if(APPLE)
+    list(APPEND SOURCES src/infra/metal_backend.mm)
+    set_source_files_properties(src/infra/metal_backend.mm PROPERTIES COMPILE_FLAGS "-fobjc-arc")
+    message(STATUS "Metal backend enabled (macOS detected)")
+endif()
+
+# Find CUDA Toolkit
+find_package(CUDAToolkit)
+if(CUDAToolkit_FOUND)
+    message(STATUS "CUDA Toolkit found")
+    add_compile_definitions(FREELM_ENABLE_CUDA)
+else()
+    message(WARNING "CUDA Toolkit not found - CUDA backend will be disabled")
+endif()
+
+# Create executable
+# Create library
+add_library(freellm_lib STATIC ${SOURCES})
+
+# Apply warnings only to our source files, not third-party libraries
+target_compile_options(freellm_lib PRIVATE ${PROJECT_WARNINGS})
+
+# Link libraries - CMake handles include dirs automatically
+target_link_libraries(freellm_lib PRIVATE
+    re2::re2
+    nlohmann_json::nlohmann_json
+    sentencepiece-static
+    ${CMAKE_DL_LIBS}
+)
+
+if(APPLE)
+    find_library(METAL_LIB Metal)
+    find_library(MPS_LIB MetalPerformanceShaders)
+    find_library(FOUNDATION_LIB Foundation)
+    target_link_libraries(freellm_lib PRIVATE ${METAL_LIB} ${MPS_LIB} ${FOUNDATION_LIB})
+endif()
+
+if(CUDAToolkit_FOUND)
+    target_link_libraries(freellm_lib PRIVATE CUDA::cudart CUDA::cuda_driver)
+endif()
+message(STATUS "Linking SentencePiece library for tokenizer")
+
+# Ensure SentencePiece headers are available to this target and consumers
+target_include_directories(freellm_lib PUBLIC
+    ${sentencepiece_SOURCE_DIR}/src
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-# Apply warnings only to our source files, not third-party libraries
-target_compile_options(${PROJECT_NAME} PRIVATE ${PROJECT_WARNINGS})
-
-# Link libraries - CMake handles include dirs automatically
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    # re2::re2  # Commented out - not used by SentencePiece. Uncomment if adding HuggingFace tokenizers
-    sentencepiece-static
-)
-message(STATUS "Linking SentencePiece library for tokenizer")
-
-# Ensure SentencePiece headers are available to this target
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${sentencepiece_SOURCE_DIR}/src
-)
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE freellm_lib)
 
 # Set output directory
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -126,3 +187,22 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # Optional: Enable testing
 enable_testing()
 add_subdirectory(tests)
+
+# Metal-specific examples
+if(APPLE)
+
+
+    # Continuous Batching Example
+    add_executable(continuous_batching src/examples/continuous_batching.cpp)
+    target_link_libraries(continuous_batching PRIVATE freellm_lib)
+    set_target_properties(continuous_batching PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    )
+
+    # Simple Chat Example (using GenerationEngine)
+    add_executable(simple_chat src/examples/simple_chat.cpp)
+    target_link_libraries(simple_chat PRIVATE freellm_lib)
+    set_target_properties(simple_chat PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    )
+endif()

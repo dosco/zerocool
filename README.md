@@ -1,139 +1,106 @@
-# freellm
+# FreeLLM: Hybrid JIT Inference Engine
 
-A modern C++ project with CMake build system.
+FreeLLM is a high-performance, hybrid host-driven JIT inference engine designed for flexibility and speed across diverse hardware backends. It leverages a unified C++ runtime to orchestrate execution while dispatching compute-intensive kernels to specialized backends.
 
-## Prerequisites
+## Key Features
 
-- CMake 3.20 or higher
-- C++23 compatible compiler:
-  - GCC 12.1 or later (GCC 15 recommended for full support)
-  - Clang 13 or later (Clang 17+ recommended)
-  - MSVC 2022 version 17.13 or later with `/std:c++23preview`
+- **Hybrid Architecture**: Host-driven orchestration with JIT-compiled kernels.
+- **Multi-Backend Support**:
+  - **Metal (macOS)**: Native Objective-C++ backend using Metal Performance Shaders (MPS) and custom MSL kernels.
+# FreeLLM: The Hybrid JIT Inference Engine 🚀
 
-## Building
+**FreeLLM** is a next-generation inference engine designed to bridge the gap between flexibility and raw performance. It features a unique **Hybrid Host-Driven JIT Architecture** that combines the ease of C++ orchestration with the extreme speed of specialized hardware backends.
 
-### Quick Build (Recommended)
+## ✨ The Magic of Hybrid JIT
+
+Most inference engines are either flexible (but slow) or fast (but rigid). FreeLLM gives you both:
+
+*   **Host-Driven Orchestration**: The complex logic of the LLM (sampling, beam search, tokenization) runs on the CPU, where it's easy to debug and modify.
+*   **JIT-Compiled Kernels**: The heavy lifting (Matrix Multiplication, Attention, RoPE) is dispatched to JIT-compiled kernels on the GPU/TPU.
+*   **Zero-Overhead Abstraction**: Our `ComputeBackend` interface maps directly to hardware APIs (Metal, CUDA, PJRT) without bloated intermediate layers.
+
+## 🎮 Choose Your Backend
+
+FreeLLM supports multiple backends. Here's how to choose the right one for you:
+
+### 1. CPU Backend (Reference Implementation)
+*   **Best for**: Compatibility, debugging, running on any machine.
+*   **Executable**: `freellm`
+*   **Status**: Fully functional chat interface.
+*   **Usage**:
+    ```bash
+    ./build/bin/freellm
+    ```
+
+### 2. Metal Backend (macOS / Apple Silicon) 🍎
+*   **Best for**: MacBook Pro, Mac Studio, Mac Mini.
+*   **Magic**: Uses raw Metal Performance Shaders (MPS) and custom MSL kernels compiled at runtime!
+*   **Executable**: `metal_inference` (Demo)
+*   **Status**: High-performance layer benchmarks (Chat integration coming soon).
+*   **Usage**:
+    ```bash
+    ./build/bin/metal_inference
+    ```
+
+### 3. CUDA Backend (NVIDIA) 🟩
+*   **Best for**: NVIDIA GPUs (Linux/Windows).
+*   **Magic**: JIT-compiles Triton kernels directly to PTX.
+*   **Status**: Backend implemented, integration in progress.
+
+## 🚀 Quick Start: Chat with TinyLlama
+
+### Step 1: Build
 ```bash
-# Build the project
 ./build.sh
+```
 
-# Run the application
+### Step 2: Download Model
+```bash
+bash scripts/download_tinyllama.sh
+```
+
+### Step 3: Run (CPU Chat)
+```bash
 ./build/bin/freellm
 ```
 
-### Manual Build
+### Step 4: Run Metal Demo (Layer Benchmark)
+Want to see the speed? Run the Metal backend demo:
 ```bash
-# Create build directory
-mkdir -p build && cd build
+./build/bin/metal_inference
+```
 
-# Configure
-cmake ..
+## 🛠️ Building from Source
 
-# Build
+### Prerequisites
+- CMake 3.20+
+- C++23 Compiler (Clang 17+, GCC 15+, MSVC 2022)
+- **macOS**: Xcode Command Line Tools (for Metal)
+- **NVIDIA**: CUDA Toolkit 12.x (for CUDA)
+
+### Build Options
+You can explicitly enable/disable backends:
+
+```bash
+mkdir build && cd build
+cmake .. \
+  -DFREELM_ENABLE_CUDA=ON \  # Force CUDA
+  -DFREELM_ENABLE_METAL=ON   # Force Metal
 cmake --build .
-
-# Run
-./bin/freellm
 ```
 
-## Testing
+## 🧩 Architecture
 
-The project uses [doctest](https://github.com/doctest/doctest) for unit testing.
+FreeLLM uses a layered architecture:
 
-### Quick Test (Recommended)
-```bash
-# Build and run all tests
-./test.sh
-```
-
-### Manual Testing
-```bash
-# Build and run via CTest
-cd build
-ctest --output-on-failure
-
-# Or run individual test executables
-./build/tests/test_main
-./build/tests/test_quantization
-```
-
-### Test Options
-```bash
-# List all available tests
-./build/tests/test_main --list-test-cases
-
-# Run a specific test case
-./build/tests/test_main --test-case="KV Cache"
-
-# Show detailed output for all tests
-./build/tests/test_main --success
-
-# Run tests matching a pattern
-./build/tests/test_main --test-case="*Quantiz*"
-```
-
-See [tests/README.md](tests/README.md) for more detailed testing documentation.
-
-## Project Structure
-
-```
-.
-├── CMakeLists.txt          # Main CMake configuration
-├── README.md               # This file
-├── build.sh                # Build script
-├── test.sh                 # Test runner script
-├── src/                    # Source files
-│   └── main.cpp           # Entry point
-├── include/                # Header files
-├── tests/                  # Test files (doctest framework)
-│   ├── CMakeLists.txt     # Test configuration
-│   ├── README.md          # Testing documentation
-│   ├── test_main.cpp      # Core functionality tests
-│   └── test_quantization.cpp  # Quantization tests
-├── external/               # Third-party dependencies
-│   └── doctest.h          # doctest testing framework
-└── build/                  # Build artifacts (generated)
-```
-
-## Features
-
-- C++23 standard (latest ratified C++ standard)
-- CMake build system
-- Compiler warnings enabled (-Wall -Wextra -Wpedantic -Werror)
-- Comprehensive test suite using doctest framework
-- Clean project structure
-- Easy build and test scripts
-
-## Quantization
-
-The inference engine ships with llama.cpp-style quantization kernels:
-
-- **Q8_0** (8-bit symmetric) for high-accuracy inference
-- **Q4_K** (4.5-bit k-quant) for aggressive memory savings
-- Scalar reference kernels + AVX2 dispatch for both formats
-- Optional quantized storage for attention, feed-forward, and LM head weights
-
-Enable quantization when constructing the model:
-
-```cpp
-using namespace freellm;
-
-ModelConfig cfg = ModelConfig::tinyllama_1_1b();
-quant::QuantConfig qcfg;
-qcfg.default_type = quant::QuantType::Q8_0;   // or Q4_K
-qcfg.lm_head = quant::QuantType::Q4_K;        // mix formats per component
-
-LLMModel model(cfg, qcfg);
-```
-
-Weights are quantized on load (runtime quantization), and matvec kernels automatically
-dispatch to AVX2 implementations when available.
-
-## Development
-
-To add new source files, update the `SOURCES` variable in `CMakeLists.txt`.
-
-To add headers, place them in the `include/` directory.
+1.  **Core (`src/core`)**: Model definitions (`LLMModel`), Tokenizer, Sampling.
+2.  **Infrastructure (`src/infra`)**: The hardware abstraction layer.
+    *   `ComputeBackend`: Unified interface.
+    *   `MetalBackend`: Direct Metal API calls.
+    *   `CUDABackend`: Driver API + Triton.
+3.  **Kernels (`kernels/`)**:
+    *   **Triton**: Python-based kernels for NVIDIA.
+    *   **Metal**: MSL shaders (`kernels/metal/kernels.metal`) for Apple.
 
 ## License
 

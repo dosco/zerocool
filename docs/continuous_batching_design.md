@@ -93,7 +93,8 @@ The core inference loop operates as follows:
 
 3.  **Model Execution**:
     *   Call `model.forward()` with the flattened input and metadata.
-    *   The `Attention` layers use the `paged_scaled_dot_product_attention` kernel, reading directly from the non-contiguous blocks specified by the `block_tables`.
+    *   **Backend Integration**: The model uses the `ComputeBackend` interface (from `hybrid_jit_design.md`) to dispatch kernels.
+    *   The `Attention` layers dispatch the `paged_attention` kernel (via `execute_kernel`), reading directly from the non-contiguous blocks specified by the `block_tables`.
 
 4.  **Sampling & Update**:
     *   Extract logits for the last token of each sequence.
@@ -101,7 +102,38 @@ The core inference loop operates as follows:
     *   Append the new token to the `Sequence` object.
     *   Check for EOS or max length; mark sequence as `finished` if condition met.
 
-## 4. Future Optimizations
+## 4. Ragged Continuous Batching & Kernel Infrastructure
+
+To achieve maximum efficiency, the system implements **Ragged Continuous Batching**, which eliminates the need for padding tokens. This allows processing sequences of varying lengths (during prefill) and varying positions (during decode) in a single kernel launch.
+
+### 4.1 Concept: Ragged Batching
+Instead of padding sequences to the same length (e.g., `[B, Max_L]`), we flatten all tokens from all active sequences into a single 1D tensor `[Total_Tokens]`.
+-   **Batched Prefill**: Multiple new prompts ($S_1, S_2, \dots$) are processed similarly to a single long sequence, but with attention masks respecting sequence boundaries.
+-   **Ragged Decode**: Multiple sequences are generating tokens at different current positions ($P_1, P_2, \dots$).
+
+### 4.2 Kernel Infrastructure Changes
+To support this, standard kernels (which often assume batch size 1 or fixed sequence length) are replaced or augmented with "Ragged" versions.
+
+#### 4.2.1 `rope_ragged`
+*   **Problem**: Standard RoPE kernels often take a scalar `start_pos`. In continuous batching, every sequence in the batch is at a different position in its generation (e.g., Seq A at token 10, Seq B at token 2048).
+*   **Solution**: The `rope_ragged` kernel accepts a `positions` buffer of size `[batch_size]`.
+    *   **Input**: `buffer(0)` input, `buffer(3)` positions.
+    *   **Logic**: Thread $t$ for Batch $b$ reads `pos = positions[b]` and applies rotary embedding for that specific position.
+
+#### 4.2.2 `gqa_attention_prefill_ragged`
+*   **Problem**: Standard prefill attention (FlashAttention/GQA) processes a single sequence with causal masking `[0..t]`. We want to process $N$ prompts in parallel.
+*   **Solution**: The kernel treats the input as one large stream of tokens but uses `cu_seqlens` (Cumulative Sequence Lengths) to identify boundaries.
+*   **Inputs**:
+    *   `q`, `k`, `v`, `block_tables` (all flattened)
+    *   `cu_seqlens`: Array `[0, L_1, L_1+L_2, ..., Total_Tokens]`.
+*   **Logic**:
+    1.  Kernel launched with `Total_Tokens` threads (or groups).
+    2.  Each thread determines which sequence $S$ it belongs to (via binary search or linear scan on `cu_seqlens`).
+    3.  Calculates local position `local_pos = global_pos - cu_seqlens[S]`.
+    4.  Fetches `block_table[S]` to access Paged KV Cache.
+    5.  Performs Causal Attention over `[0..local_pos]`.
+
+## 5. Future Optimizations
 - **Chunked Prefill**: Split long prompts to avoid head-of-line blocking.
 - **Prefix Sharing**: Reuse KV blocks for common prefixes.
 - **Speculative Decoding**: Verify draft tokens in batch.
