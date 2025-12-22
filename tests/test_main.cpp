@@ -376,7 +376,7 @@ TEST_CASE("TinyLLaMA Weight Loading") {
     // Test with tokenizer if available
     std::string tokenizer_path = "models/tinyllama/tokenizer.model";
     if (std::filesystem::exists(tokenizer_path)) {
-        Tokenizer tokenizer(tokenizer_path);
+        SentencePieceTokenizer tokenizer(tokenizer_path);
         CHECK(tokenizer.vocab_size() > 0);
 
         std::string prompt_text = "Hello";

@@ -1,8 +1,11 @@
 #include "infra/parallel_tensor_loader.hpp"
 #include "infra/safetensors.hh"
 #include "infra/safetensors_loader.hpp"  // For bf16_to_f32, fp16_to_f32
+#include "utils/terminal_ui.hpp"
 #include <algorithm>
 #include <stdexcept>
+#include <sstream>
+#include <iomanip>
 
 namespace freellm {
 
@@ -19,9 +22,8 @@ WeightMap ParallelTensorLoader::load(
     std::function<std::string(const std::string&)> name_mapper,
     std::function<std::optional<quant::QuantType>(const std::string&)> quant_resolver
 ) {
-    std::println("Loading safetensors with parallel pipeline: {}", filepath);
-    std::println("  Worker threads: {}", num_threads_);
-    std::println("  Queue capacity: {}", queue_capacity_);
+    // Suppress verbose logging for parallel loader - main logger handles it
+    // ui::print_status("Parallel loader: " + std::to_string(num_threads_) + " threads");
 
     // Create work queue
     BoundedQueue<TensorWorkItem> work_queue(queue_capacity_);
@@ -32,7 +34,7 @@ WeightMap ParallelTensorLoader::load(
     // ================================================================
     // Start Consumer Threads
     // ================================================================
-    std::println("  Starting {} consumer threads...", num_threads_);
+    // Quiet startup - no per-thread logging
     std::vector<std::jthread> workers;
     workers.reserve(num_threads_);
 
@@ -45,12 +47,12 @@ WeightMap ParallelTensorLoader::load(
     // ================================================================
     // Run Producer (in this thread)
     // ================================================================
-    std::println("  Producer: memory-mapping file and enqueueing work items...");
+    // Quiet operation
     try {
         producer_thread(filepath, work_queue, name_mapper, quant_resolver);
     } catch (const std::exception& e) {
         // Error in producer - shut down queue and wait for workers
-        std::println(stderr, "  Producer error: {}", e.what());
+        ui::print_error("Producer error: " + std::string(e.what()));
         work_queue.shutdown();
         // No need to manually join workers; jthread destructor handles it
         throw;
@@ -58,7 +60,6 @@ WeightMap ParallelTensorLoader::load(
 
     // Producer finished - signal workers to finish
     work_queue.shutdown();
-    std::println("  Producer finished, waiting for workers...");
 
     // ================================================================
     // Wait for All Workers
@@ -69,7 +70,7 @@ WeightMap ParallelTensorLoader::load(
         worker.join();
     }
 
-    std::println("  All workers finished, assembling WeightMap...");
+    // Quiet completion
 
     // ================================================================
     // Assemble Final WeightMap
@@ -85,7 +86,7 @@ WeightMap ParallelTensorLoader::load(
     // Clear mmap handle now that all workers are done
     current_mmap_.reset();
 
-    std::println("  ✓ Loaded {} tensors using parallel pipeline", weights.size());
+    // Quiet success - main loader reports final status
     return weights;
 }
 
@@ -95,9 +96,7 @@ ParallelTensorLoader::load_with_quantization(
     std::function<std::string(const std::string&)> name_mapper,
     std::function<std::optional<quant::QuantType>(const std::string&)> quant_resolver
 ) {
-    std::println("Loading safetensors with parallel pipeline + quantization: {}", filepath);
-    std::println("  Worker threads: {}", num_threads_);
-    std::println("  Queue capacity: {}", queue_capacity_);
+    // Quiet mode - main loader handles user-facing messages
 
     // Create work queue
     BoundedQueue<TensorWorkItem> work_queue(queue_capacity_);
@@ -108,7 +107,6 @@ ParallelTensorLoader::load_with_quantization(
     // ================================================================
     // Start Consumer Threads
     // ================================================================
-    std::println("  Starting {} consumer threads...", num_threads_);
     std::vector<std::jthread> workers;
     workers.reserve(num_threads_);
 
@@ -121,20 +119,16 @@ ParallelTensorLoader::load_with_quantization(
     // ================================================================
     // Run Producer (in this thread)
     // ================================================================
-    std::println("  Producer: memory-mapping file and enqueueing work items...");
     try {
         producer_thread(filepath, work_queue, name_mapper, quant_resolver);
     } catch (const std::exception& e) {
-        // Error in producer - shut down queue and wait for workers
-        std::println(stderr, "  Producer error: {}", e.what());
+        ui::print_error("Producer error: " + std::string(e.what()));
         work_queue.shutdown();
-        // No need to manually join workers; jthread destructor handles it
         throw;
     }
 
     // Producer finished - signal workers to finish
     work_queue.shutdown();
-    std::println("  Producer finished, waiting for workers...");
 
     // ================================================================
     // Wait for All Workers
@@ -144,8 +138,6 @@ ParallelTensorLoader::load_with_quantization(
     for (auto& worker : workers) {
         worker.join();
     }
-
-    std::println("  All workers finished, assembling results...");
 
     // ================================================================
     // Assemble Final Results
@@ -168,9 +160,7 @@ ParallelTensorLoader::load_with_quantization(
     // Clear mmap handle now that all workers are done
     current_mmap_.reset();
 
-    std::println("  ✓ Loaded {} tensors ({} quantized) using parallel pipeline",
-                 weights.size(), quantized_count);
-
+    (void)quantized_count; // Suppress unused variable warning
     return {std::move(weights), std::move(quantized_weights)};
 }
 
@@ -191,7 +181,9 @@ void ParallelTensorLoader::producer_thread(
     // Store mmap handle in member variable to keep it alive
     current_mmap_ = mmap;
 
-    std::println("    Memory-mapped {:.2f} GB", mmap->size() / (1024.0 * 1024.0 * 1024.0));
+    std::ostringstream size_ss;
+    size_ss << std::fixed << std::setprecision(2) << (mmap->size() / (1024.0 * 1024.0 * 1024.0));
+    ui::print_status("Memory-mapped " + size_ss.str() + " GB");
 
     // ================================================================
     // Parse safetensors format using mmap
@@ -207,7 +199,7 @@ void ParallelTensorLoader::producer_thread(
     }
 
     if (!warn.empty()) {
-        std::println("    Warning: {}", warn);
+        ui::print_warning(warn);
     }
 
     // Validate
@@ -215,7 +207,7 @@ void ParallelTensorLoader::producer_thread(
         throw std::runtime_error("Invalid data offsets: " + err);
     }
 
-    std::println("    Found {} tensors in metadata", st.tensors.size());
+    ui::print_status("Processing " + std::to_string(st.tensors.size()) + " tensors...");
 
     // ================================================================
     // Enqueue Work Items (with pointers to mmap region)
@@ -267,14 +259,9 @@ void ParallelTensorLoader::producer_thread(
         }
 
         enqueued_count++;
-
-        // Progress indicator
-        if (enqueued_count % 50 == 0) {
-            std::println("    Enqueued {} work items...", enqueued_count);
-        }
     }
 
-    std::println("    Producer finished: enqueued {} work items", enqueued_count);
+    (void)enqueued_count; // Suppress unused variable warning
 
     // Note: mmap handle is kept alive via shared_ptr in work items and current_mmap_
     // It will be released when all work items are processed and current_mmap_ is cleared
@@ -300,10 +287,7 @@ void ParallelTensorLoader::consumer_thread(
             thread_results.push_back(std::move(result));
         }
     } catch (const std::exception& e) {
-        // In a real app we should propagate this error to main thread
-        // For now, just print and exit the thread
-        std::println(stderr, "Worker thread error: {}", e.what());
-        // Logic to stop other threads could be added here (e.g. shutdown queue)
+        ui::print_error("Worker thread error: " + std::string(e.what()));
         work_queue.shutdown();
     }
 }

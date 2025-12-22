@@ -111,7 +111,7 @@ void test_load_tinyllama() {
         return;
     }
 
-    Tokenizer tokenizer(tokenizer_path);
+    SentencePieceTokenizer tokenizer(tokenizer_path);
     std::println("✓ Tokenizer initialized (vocab size: {})\n", tokenizer.vocab_size());
 
     std::string prompt_text = "Jack and Jill went";
@@ -162,7 +162,7 @@ void test_load_tinyllama() {
 /**
  * @brief Run Interactive Chat Interface (REPL)
  */
-void run_repl(LLMModel& model, Tokenizer& tokenizer) {
+void run_repl(LLMModel& model, SentencePieceTokenizer& tokenizer) {
     std::println("\n========================================");
     std::println("Interactive Chat Interface (REPL)");
     std::println("========================================");
@@ -337,7 +337,7 @@ int main(int argc, char* argv[]) {
             model.load_weights(weights, &quantized_weights);
 
             std::println("Initializing tokenizer...");
-            Tokenizer tokenizer(tokenizer_path);
+            SentencePieceTokenizer tokenizer(tokenizer_path);
 
             run_repl(model, tokenizer);
         }
