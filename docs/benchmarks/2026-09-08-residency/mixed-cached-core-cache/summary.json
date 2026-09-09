@@ -1,0 +1,20 @@
+{
+  "complete": true,
+  "build_fingerprint": "a019141b9cff57922cf945a4e951294ac2c7394408b43b53db1a6267db53c7f3",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "reports": [
+    {
+      "prompt_tokens": 2048,
+      "report": "2048.json",
+      "sha256": "9d0d7e1c2f6309fd7c4c7679623136e1c5bc63acae8599d4714f596705d45c94",
+      "forward_ms": [
+        431.942167,
+        445.066792,
+        472.696541,
+        470.464375,
+        433.082916
+      ]
+    }
+  ],
+  "normal_request_latency_qualified": false
+}

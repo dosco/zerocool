@@ -7,9 +7,22 @@
 #include "core/paged_kv_cache.hpp"
 #include "kernels/quantiz/quant_config.hpp"
 #include "kernels/quantiz/quant_linear.hpp"
+#include "utils/terminal_ui.hpp"
+#include <vector>
+#include <memory>
+#include "core/transformer_block.hpp"
+#include "core/paged_kv_cache.hpp"
+#include "kernels/quantiz/quant_config.hpp"
+#include "kernels/quantiz/quant_linear.hpp"
+#include "utils/terminal_ui.hpp"
 #include <vector>
 #include <memory>
 #include <optional>
+#include <cmath>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+
 
 namespace freellm {
 
@@ -113,7 +126,10 @@ public:
                 config.norm_eps,         // RMSNorm epsilon
                 true,                    // Use rotary position embeddings (always true for modern LLMs)
                 config.rope_theta,       // RoPE base frequency
-                config.max_seq_len       // Maximum sequence length
+                config.max_seq_len,      // Maximum sequence length
+                config.num_experts,      // Number of experts (0 = dense)
+                config.num_experts_per_token, // Active experts per token
+                config.norm_topk_prob
             ));
         }
 
@@ -204,6 +220,11 @@ public:
         // At this point: hidden_states shape = [seq_len, d_model]
         // Each row is a dense representation of the corresponding token
 
+        // Debug: Dump embeddings
+        if (dump_activations_) {
+            dump_tensor("embeddings", hidden_states);
+        }
+
         // ================================================================
         // Step 2: Pass through Transformer Blocks
         // ================================================================
@@ -230,8 +251,20 @@ public:
             PagedKVCache* cache_ptr = kv_cache_initialized_ ? kv_caches_[layer_idx].get() : nullptr;
             hidden_states = blocks_[layer_idx]->forward(hidden_states, position_offset, cache_ptr);
 
+            // Debug: Dump block outputs (first, middle, last)
+            if (dump_activations_) {
+                if (layer_idx == 0) {
+                    dump_tensor("block_0_output", hidden_states);
+                } else if (layer_idx == config_.n_layers / 2) {
+                    dump_tensor("block_" + std::to_string(layer_idx) + "_output (middle)", hidden_states);
+                } else if (layer_idx == config_.n_layers - 1) {
+                    dump_tensor("block_" + std::to_string(layer_idx) + "_output (last)", hidden_states);
+                }
+            }
+
             // Shape: still [seq_len, d_model]
         }
+
 
         // After all blocks: hidden_states contains refined contextual representations
         // Each position's vector encodes information from the entire sequence
@@ -243,7 +276,21 @@ public:
         // This ensures stable inputs to the LM head
         // Shape: [seq_len, d_model] → [seq_len, d_model]
 
+        Tensor ffn_norm_out; // Unused, but for consistency if needed
         hidden_states = ops::rms_norm(hidden_states, final_norm_weight_, config_.norm_eps);
+
+        // Debug: Dump final norm output
+        if (dump_activations_) {
+            dump_tensor("final_norm", hidden_states);
+
+            // Also dump the LAST position's hidden state specifically
+            size_t last_pos = seq_len - 1;
+            std::cout << "[DUMP] final_norm LAST position first 10 values: ";
+            for (size_t i = 0; i < 10 && i < config_.d_model; ++i) {
+                std::cout << hidden_states.at({last_pos, i}) << " ";
+            }
+            std::cout << std::endl;
+        }
 
         // ================================================================
         // Step 4: Language Modeling Head (Project to Vocabulary)
@@ -261,6 +308,32 @@ public:
         // To get probabilities: apply softmax(logits[i])
 
         Tensor logits = quant::linear_forward(hidden_states, lm_head_, lm_head_quant_);
+
+        // Debug: Dump logits and top-5 predictions for last token
+        if (dump_activations_) {
+            dump_tensor("logits", logits);
+
+            // Check specific tokens for comparison with HuggingFace
+            size_t last_pos = seq_len - 1;
+            std::cout << "[DUMP] Specific token logits at last position:\n";
+            std::cout << "  token 7785 (' Paris'): " << logits.at({last_pos, 7785}) << "\n";
+            std::cout << "  token 6181 (' France'): " << logits.at({last_pos, 6181}) << "\n";
+            std::cout << "  token 253 (' the'): " << logits.at({last_pos, 253}) << "\n";
+            std::cout << "  token 5347 (' capital'): " << logits.at({last_pos, 5347}) << "\n";
+
+            // Top-5 predictions for last position
+            std::vector<std::pair<float, int>> top_tokens;
+            for (size_t i = 0; i < config_.vocab_size; ++i) {
+                top_tokens.push_back({logits.at({last_pos, i}), static_cast<int>(i)});
+            }
+            std::partial_sort(top_tokens.begin(), top_tokens.begin() + 5, top_tokens.end(),
+                              [](auto& a, auto& b) { return a.first > b.first; });
+            std::cout << "[DUMP] Top 5 predictions for last position: ";
+            for (int k = 0; k < 5; ++k) {
+                std::cout << top_tokens[k].second << "(logit=" << top_tokens[k].first << ") ";
+            }
+            std::cout << "\n";
+        }
 
         // Final output shape: [seq_len, vocab_size]
         // During generation, we typically use logits[-1] (last position)
@@ -328,7 +401,7 @@ public:
         const WeightMap& weights,
         const std::unordered_map<std::string, QuantizedTensor>* pre_quantized = nullptr
     ) {
-        std::println("Loading weights into model...");
+        ui::print_loading("Loading weights into model...");
 
         size_t loaded_count = 0;
         const quant::QuantType attn_qtype = quant_config_.resolve_attention();
@@ -355,6 +428,7 @@ public:
 
             // Copy data
             std::memcpy(token_embedding_.data(), weight.data(), weight.size() * sizeof(float));
+
             loaded_count++;
         } else {
             std::println("  Warning: token_embedding not found in weights");
@@ -381,26 +455,44 @@ public:
                 [&](QuantizedTensor tensor) { block->attention().set_quantized_W_o(std::move(tensor)); },
                 loaded_count, pre_quantized);
 
-            // Load FFN weights (W_gate, W_up, W_down for SwiGLU)
-            load_ffn_weight(weights, layer_prefix, "W_gate", block->ffn().W_gate(), ffn_qtype,
-                [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_gate(std::move(tensor)); },
-                loaded_count, pre_quantized);
-            load_ffn_weight(weights, layer_prefix, "W_up", block->ffn().W_up(), ffn_qtype,
-                [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_up(std::move(tensor)); },
-                loaded_count, pre_quantized);
-            load_ffn_weight(weights, layer_prefix, "W_down", block->ffn().W_down(), ffn_qtype,
-                [&](QuantizedTensor tensor) { block->ffn().set_quantized_W_down(std::move(tensor)); },
-                loaded_count, pre_quantized);
+            // Load QK-normalization weights if present (used by OLMoE)
+            {
+                auto q_norm_it = weights.find(layer_prefix + "attn.q_norm_weight");
+                if (q_norm_it != weights.end()) {
+                    block->attention().set_q_norm_weight(q_norm_it->second);
+                    loaded_count++;
+                }
+                auto k_norm_it = weights.find(layer_prefix + "attn.k_norm_weight");
+                if (k_norm_it != weights.end()) {
+                    block->attention().set_k_norm_weight(k_norm_it->second);
+                    loaded_count++;
+                }
+            }
+
+            // Load FFN or MoE weights
+            if (config_.num_experts > 0) {
+                load_moe_weights(weights, layer_prefix, *block->moe_layer(), ffn_qtype, loaded_count, pre_quantized);
+            } else {
+                // Load FFN weights (W_gate, W_up, W_down for SwiGLU)
+                load_ffn_weight(weights, layer_prefix, "W_gate", block->ffn()->W_gate(), ffn_qtype,
+                    [&](QuantizedTensor tensor) { block->ffn()->set_quantized_W_gate(std::move(tensor)); },
+                    loaded_count, pre_quantized);
+                load_ffn_weight(weights, layer_prefix, "W_up", block->ffn()->W_up(), ffn_qtype,
+                    [&](QuantizedTensor tensor) { block->ffn()->set_quantized_W_up(std::move(tensor)); },
+                    loaded_count, pre_quantized);
+                load_ffn_weight(weights, layer_prefix, "W_down", block->ffn()->W_down(), ffn_qtype,
+                    [&](QuantizedTensor tensor) { block->ffn()->set_quantized_W_down(std::move(tensor)); },
+                    loaded_count, pre_quantized);
+            }
 
             // Load normalization weights
             load_norm_weight(weights, layer_prefix, "attn_norm_weight", block->attn_norm_weight(), loaded_count);
             load_norm_weight(weights, layer_prefix, "ffn_norm_weight", block->ffn_norm_weight(), loaded_count);
 
             // Progress indicator
-            if ((layer_idx + 1) % 5 == 0) {
-                std::println("  Loaded weights for layer {}/{}", layer_idx + 1, config_.n_layers);
-            }
+            ui::print_progress_bar(layer_idx + 1, config_.n_layers);
         }
+        ui::print_progress_complete(config_.n_layers);
 
         // ================================================================
         // Load Final Norm Weight
@@ -457,10 +549,23 @@ public:
             }
             loaded_count++;
         } else {
-            std::println("  Warning: lm_head not found");
+            // lm_head not found - use tied embeddings (lm_head = token_embedding.T)
+            // This is the default behavior for many models (OLMoE, Gemma, etc.)
+            ui::print_info("lm_head not found - using tied embeddings (lm_head = token_embedding.T)");
+
+            // token_embedding_ is [vocab_size, d_model]
+            // lm_head_ needs to be [d_model, vocab_size] for linear_forward
+            Tensor embedding_T = ops::transpose(token_embedding_);
+            std::memcpy(lm_head_.data(), embedding_T.data(), embedding_T.size() * sizeof(float));
+
+            // Quantize if needed
+            if (lm_qtype != quant::QuantType::NONE) {
+                lm_head_quant_ = QuantizedTensor::from_tensor(token_embedding_, lm_qtype);
+            }
+            loaded_count++;
         }
 
-        std::println("  ✓ Successfully loaded {} weights into model", loaded_count);
+        ui::print_success("Successfully loaded " + std::to_string(loaded_count) + " weights into model");
     }
 
 
@@ -576,6 +681,125 @@ private:
     }
 
     /**
+     * @brief Helper method to load MoE weights
+     */
+    void load_moe_weights(const WeightMap& weights,
+                         const std::string& layer_prefix,
+                         MoELayer& moe_layer,
+                         quant::QuantType qtype,
+                         size_t& loaded_count,
+                         const std::unordered_map<std::string, QuantizedTensor>* pre_quantized = nullptr) {
+
+        // Track loading for validation
+        bool gate_loaded = false;
+        std::vector<size_t> expert_weights_loaded(moe_layer.num_experts(), 0);
+        std::vector<std::string> missing_weights;
+
+        // 1. Load Gating/Router Weight
+        // Expected name: "mlp.gate.weight" (e.g. model.layers.0.mlp.gate.weight)
+        std::string gate_full_name = layer_prefix + "mlp.gate.weight";
+        auto it = weights.find(gate_full_name);
+
+        if (it != weights.end()) {
+            const Tensor& weight = it->second;
+            Tensor& target = moe_layer.gate_weight();
+
+            // Check shape (allow transpose)
+            if (weight.shape()[0] != target.shape()[1] || weight.shape()[1] != target.shape()[0]) {
+                 auto shape_str = [](const std::vector<size_t>& s) {
+                     std::string res = "[";
+                     for(size_t i=0; i<s.size(); ++i) res += (i>0?", ":"") + std::to_string(s[i]);
+                     return res + "]";
+                 };
+                 throw std::runtime_error(
+                    gate_full_name + " shape mismatch: expected " +
+                    shape_str(target.shape()) + " (transposed), got " + shape_str(weight.shape())
+                 );
+            }
+
+            // Transpose and Copy
+            Tensor weight_T = ops::transpose(weight);
+            std::memcpy(target.data(), weight_T.data(), weight_T.size() * sizeof(float));
+
+            // Quantize if needed
+            if (qtype != quant::QuantType::NONE) {
+                 if (pre_quantized && pre_quantized->count(gate_full_name)) {
+                     moe_layer.set_quantized_gate(pre_quantized->at(gate_full_name).copy());
+                 } else {
+                     moe_layer.set_quantized_gate(QuantizedTensor::from_tensor(weight, qtype));
+                 }
+            }
+            loaded_count++;
+            gate_loaded = true;
+        } else {
+            missing_weights.push_back(gate_full_name);
+        }
+
+        // 2. Load Experts
+        // Expected name: "mlp.experts.{i}.gate_proj.weight" etc.
+        for (size_t i = 0; i < moe_layer.num_experts(); ++i) {
+            std::string expert_prefix = layer_prefix + "mlp.experts." + std::to_string(i) + ".";
+            auto& expert = moe_layer.expert(i);
+
+            // Use generic load logic.
+            // We can't reuse load_ffn_weight easily because it assumes "ffn." prefix.
+            // We'll mimic the logic here.
+
+            auto load_expert_weight = [&](const std::string& name, Tensor& target, auto&& setter) {
+                std::string full_name = expert_prefix + name;
+                auto it = weights.find(full_name);
+                if (it != weights.end()) {
+                    const Tensor& weight = it->second;
+                    // Shape check
+                     if (weight.shape()[0] != target.shape()[1] || weight.shape()[1] != target.shape()[0]) {
+                        throw std::runtime_error(full_name + " shape mismatch");
+                    }
+
+                    Tensor weight_T = ops::transpose(weight);
+                    std::memcpy(target.data(), weight_T.data(), weight_T.size() * sizeof(float));
+
+                    if (qtype != quant::QuantType::NONE) {
+                        if (pre_quantized && pre_quantized->count(full_name)) {
+                            setter(pre_quantized->at(full_name).copy());
+                        } else {
+                            setter(QuantizedTensor::from_tensor(weight, qtype));
+                        }
+                    }
+                    loaded_count++;
+                    expert_weights_loaded[i]++;
+                } else {
+                    missing_weights.push_back(full_name);
+                }
+            };
+
+            load_expert_weight("gate_proj.weight", expert.W_gate(), [&](QuantizedTensor t) { expert.set_quantized_W_gate(std::move(t)); });
+            load_expert_weight("up_proj.weight", expert.W_up(), [&](QuantizedTensor t) { expert.set_quantized_W_up(std::move(t)); });
+            load_expert_weight("down_proj.weight", expert.W_down(), [&](QuantizedTensor t) { expert.set_quantized_W_down(std::move(t)); });
+        }
+
+        // 3. Validate all weights were loaded
+        size_t experts_fully_loaded = 0;
+        for (size_t i = 0; i < moe_layer.num_experts(); ++i) {
+            if (expert_weights_loaded[i] == 3) {
+                experts_fully_loaded++;
+            }
+        }
+
+        if (!gate_loaded || experts_fully_loaded != moe_layer.num_experts()) {
+            std::string error_msg = "MoE weight loading failed for " + layer_prefix + ":\n";
+            error_msg += "  Gate loaded: " + std::string(gate_loaded ? "yes" : "NO") + "\n";
+            error_msg += "  Experts fully loaded: " + std::to_string(experts_fully_loaded) + "/" + std::to_string(moe_layer.num_experts()) + "\n";
+            if (!missing_weights.empty()) {
+                error_msg += "  Missing weights (first 5):\n";
+                for (size_t i = 0; i < std::min(missing_weights.size(), size_t(5)); ++i) {
+                    error_msg += "    - " + missing_weights[i] + "\n";
+                }
+            }
+            throw std::runtime_error(error_msg);
+        }
+    }
+
+    /**
      * @brief Helper method to load normalization weight
      */
     void load_norm_weight(const WeightMap& weights,
@@ -618,7 +842,27 @@ private:
     bool kv_cache_initialized_ = false;
     quant::QuantConfig quant_config_;
 
+    // Debug: Activation dumping
+    bool dump_activations_ = false;
+
 public:
+    // ================================================================
+    // Debug: Activation Dumping
+    // ================================================================
+    void set_dump_activations(bool dump) { dump_activations_ = dump; }
+    bool dump_activations() const { return dump_activations_; }
+
+    void dump_tensor(const std::string& name, const Tensor& t, size_t max_vals = 10) const {
+        std::cout << "[DUMP] " << name << " shape=[";
+        for (size_t i = 0; i < t.shape().size(); ++i) {
+            std::cout << (i > 0 ? "," : "") << t.shape()[i];
+        }
+        std::cout << "] first " << max_vals << " values: ";
+        for (size_t i = 0; i < std::min(max_vals, t.size()); ++i) {
+            std::cout << t.data()[i] << " ";
+        }
+        std::cout << "\n";
+    }
     /**
      * @brief Initialize Paged KV caches for all layers
      *
@@ -633,7 +877,7 @@ public:
             return;
         }
 
-        std::println("Initializing Paged KV cache (max_seq_len={}, block_size={})...", max_seq_len, block_size);
+        ui::print_loading("Initializing Paged KV cache (max_seq_len=" + std::to_string(max_seq_len) + ", block_size=" + std::to_string(block_size) + ")...");
 
         // Calculate total blocks needed
         // We need enough blocks for n_layers * max_seq_len
@@ -664,11 +908,13 @@ public:
         kv_cache_initialized_ = true;
 
         // Calculate total memory usage
-        size_t total_elements = max_num_blocks * block_size * cache_config.n_kv_heads * cache_config.head_dim * 2; // K+V
+        size_t total_elements = max_num_blocks * block_size * config_.n_kv_heads * (config_.d_model / config_.n_heads) * 2; // K+V
         size_t total_memory = total_elements * sizeof(float);
         double total_mb = static_cast<double>(total_memory) / (1024.0 * 1024.0);
 
-        std::println("  ✓ Paged KV cache initialized: {:.1f} MB ({} blocks)", total_mb, max_num_blocks);
+        std::ostringstream ss;
+        ss << "Paged KV cache initialized: " << std::fixed << std::setprecision(1) << total_mb << " MB (" << max_num_blocks << " blocks)";
+        ui::print_success(ss.str());
     }
 
     void reset_kv_cache() {
@@ -684,6 +930,12 @@ public:
         if (!kv_cache_initialized_ || kv_caches_.empty()) return 0;
         return kv_caches_[0]->current_length();
     }
+
+
+
+private:
+
+
 
 }; // class LLMModel
 

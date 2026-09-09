@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "repo": "pipenetwork/Qwen3.8-Flash-Next-MLX-mixed-4_8bit",
+  "revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "scope": "Bounded Q8 operator reference; not a complete checkpoint",
+  "files": [
+    {
+      "path": "config.json",
+      "size": 135742,
+      "sha256": "e3304833db1235a0368fd59bc66d7a8724943262c3e465e629e9e6a892e10ea1"
+    },
+    {
+      "path": "model-00011.safetensors",
+      "size": 4876940562,
+      "sha256": "8e7b68292208146a0298e8e07548efd25889ba1c36d39a5ed27ab46b0d635436"
+    }
+  ]
+}

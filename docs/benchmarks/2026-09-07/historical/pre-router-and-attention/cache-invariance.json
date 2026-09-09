@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "full_model_cache_and_chunk_invariance",
+      "passed": true,
+      "layers": 48,
+      "tokens": [
+        760,
+        6511,
+        314,
+        9338,
+        369
+      ],
+      "configurations": [
+        {
+          "chunk": 8,
+          "expert_slots": 32
+        },
+        {
+          "chunk": 1,
+          "expert_slots": 64
+        }
+      ],
+      "logits_sha256": "81aa8eb5663fe2daa9fc5a9425dc0fb9a3d4ee1632b2900bcedd16c94a255ab1"
+    }
+  ],
+  "build_fingerprint": "89c52d41f0cf80f4a5b63244d08a1f255f40bb23c5272d4a1e87f3db46ff0de9",
+  "reports": [
+    "native-diagnostic.json",
+    "native-split-diagnostic.json"
+  ]
+}

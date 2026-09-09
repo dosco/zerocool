@@ -1,0 +1,582 @@
+{
+  "kind": "diagnostic_operator_row_counts",
+  "rows": [
+    {
+      "phase": "decode",
+      "stage": "attention",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 756
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "attention",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "attention_input",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "attention_input",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 6048
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "gdn",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 4536
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "gdn",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 6804
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "logits",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 189
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "mlp_input",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "mlp_input",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 6048
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "mlp_residual",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 126
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "routed_expert",
+      "bits": 4,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 30240
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "routed_expert",
+      "bits": 4,
+      "format": "affine",
+      "fused": true,
+      "row_counts": {
+        "1": 30240
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "router",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "shared_expert",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "shared_expert",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "decode",
+      "stage": "shared_expert",
+      "bits": 8,
+      "format": "affine",
+      "fused": true,
+      "row_counts": {
+        "1": 3024
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "attention",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "128": 192
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "attention",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "128": 768
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "attention_input",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "128": 768
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "attention_input",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "128": 1536
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "expert_reduce",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "128": 8
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "gdn",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "128": 1152
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "gdn",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "128": 1728
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "logits",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 1,
+        "512": 2
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "mlp_input",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "128": 768
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "mlp_input",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "128": 1560
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "routed_expert",
+      "bits": 4,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "1": 11321,
+        "2": 7172,
+        "3": 5209,
+        "4": 4098,
+        "5": 3349,
+        "6": 2808,
+        "7": 2282,
+        "8": 1969,
+        "9": 1643,
+        "10": 1448,
+        "11": 1373,
+        "12": 1148,
+        "13": 1063,
+        "14": 992,
+        "15": 842,
+        "16": 741,
+        "17": 668,
+        "18": 638,
+        "19": 563,
+        "20": 533,
+        "21": 467,
+        "22": 468,
+        "23": 452,
+        "24": 388,
+        "25": 435,
+        "26": 357,
+        "27": 340,
+        "28": 318,
+        "29": 307,
+        "30": 275,
+        "31": 275,
+        "32": 275,
+        "33": 228,
+        "34": 226,
+        "35": 230,
+        "36": 221,
+        "37": 203,
+        "38": 213,
+        "39": 184,
+        "40": 164,
+        "41": 163,
+        "42": 187,
+        "43": 147,
+        "44": 156,
+        "45": 145,
+        "46": 162,
+        "47": 117,
+        "48": 139,
+        "49": 129,
+        "50": 143,
+        "51": 132,
+        "52": 115,
+        "53": 128,
+        "54": 101,
+        "55": 122,
+        "56": 84,
+        "57": 92,
+        "58": 99,
+        "59": 95,
+        "60": 102,
+        "61": 88,
+        "62": 89,
+        "63": 85,
+        "64": 93,
+        "65": 90,
+        "66": 88,
+        "67": 93,
+        "68": 82,
+        "69": 63,
+        "70": 68,
+        "71": 83,
+        "72": 57,
+        "73": 59,
+        "74": 57,
+        "75": 60,
+        "76": 59,
+        "77": 57,
+        "78": 51,
+        "79": 51,
+        "80": 58,
+        "81": 57,
+        "82": 64,
+        "83": 42,
+        "84": 54,
+        "85": 49,
+        "86": 45,
+        "87": 56,
+        "88": 30,
+        "89": 34,
+        "90": 41,
+        "91": 31,
+        "92": 47,
+        "93": 38,
+        "94": 39,
+        "95": 39,
+        "96": 44,
+        "97": 39,
+        "98": 41,
+        "99": 39,
+        "100": 52,
+        "101": 39,
+        "102": 31,
+        "103": 39,
+        "104": 41,
+        "105": 24,
+        "106": 22,
+        "107": 25,
+        "108": 24,
+        "109": 27,
+        "110": 28,
+        "111": 24,
+        "112": 32,
+        "113": 16,
+        "114": 24,
+        "115": 29,
+        "116": 20,
+        "117": 29,
+        "118": 30,
+        "119": 26,
+        "120": 24,
+        "121": 22,
+        "122": 19,
+        "123": 14,
+        "124": 18,
+        "125": 17,
+        "126": 12,
+        "127": 26,
+        "128": 1177
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "routed_expert",
+      "bits": 4,
+      "format": "affine",
+      "fused": true,
+      "row_counts": {
+        "1": 11321,
+        "2": 7172,
+        "3": 5209,
+        "4": 4098,
+        "5": 3349,
+        "6": 2808,
+        "7": 2282,
+        "8": 1969,
+        "9": 1643,
+        "10": 1448,
+        "11": 1373,
+        "12": 1148,
+        "13": 1063,
+        "14": 992,
+        "15": 842,
+        "16": 741,
+        "17": 668,
+        "18": 638,
+        "19": 563,
+        "20": 533,
+        "21": 467,
+        "22": 468,
+        "23": 452,
+        "24": 388,
+        "25": 435,
+        "26": 357,
+        "27": 340,
+        "28": 318,
+        "29": 307,
+        "30": 275,
+        "31": 275,
+        "32": 275,
+        "33": 228,
+        "34": 226,
+        "35": 230,
+        "36": 221,
+        "37": 203,
+        "38": 213,
+        "39": 184,
+        "40": 164,
+        "41": 163,
+        "42": 187,
+        "43": 147,
+        "44": 156,
+        "45": 145,
+        "46": 162,
+        "47": 117,
+        "48": 139,
+        "49": 129,
+        "50": 143,
+        "51": 132,
+        "52": 115,
+        "53": 128,
+        "54": 101,
+        "55": 122,
+        "56": 84,
+        "57": 92,
+        "58": 99,
+        "59": 95,
+        "60": 102,
+        "61": 88,
+        "62": 89,
+        "63": 85,
+        "64": 93,
+        "65": 90,
+        "66": 88,
+        "67": 93,
+        "68": 82,
+        "69": 63,
+        "70": 68,
+        "71": 83,
+        "72": 57,
+        "73": 59,
+        "74": 57,
+        "75": 60,
+        "76": 59,
+        "77": 57,
+        "78": 51,
+        "79": 51,
+        "80": 58,
+        "81": 57,
+        "82": 64,
+        "83": 42,
+        "84": 54,
+        "85": 49,
+        "86": 45,
+        "87": 56,
+        "88": 30,
+        "89": 34,
+        "90": 41,
+        "91": 31,
+        "92": 47,
+        "93": 38,
+        "94": 39,
+        "95": 39,
+        "96": 44,
+        "97": 39,
+        "98": 41,
+        "99": 39,
+        "100": 52,
+        "101": 39,
+        "102": 31,
+        "103": 39,
+        "104": 41,
+        "105": 24,
+        "106": 22,
+        "107": 25,
+        "108": 24,
+        "109": 27,
+        "110": 28,
+        "111": 24,
+        "112": 32,
+        "113": 16,
+        "114": 24,
+        "115": 29,
+        "116": 20,
+        "117": 29,
+        "118": 30,
+        "119": 26,
+        "120": 24,
+        "121": 22,
+        "122": 19,
+        "123": 14,
+        "124": 18,
+        "125": 17,
+        "126": 12,
+        "127": 26,
+        "128": 1177
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "router",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "512": 192
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "shared_expert",
+      "bits": null,
+      "format": "unquantized",
+      "fused": false,
+      "row_counts": {
+        "512": 192
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "shared_expert",
+      "bits": 8,
+      "format": "affine",
+      "fused": false,
+      "row_counts": {
+        "512": 192
+      }
+    },
+    {
+      "phase": "prefill",
+      "stage": "shared_expert",
+      "bits": 8,
+      "format": "affine",
+      "fused": true,
+      "row_counts": {
+        "512": 192
+      }
+    }
+  ],
+  "timing_qualified": false,
+  "note": "Historical build labelled unquantized matrices with the default bits value. Kernel names identify them here; their scalar dtype was not captured. Final code reports explicit BF16/F16/F32."
+}

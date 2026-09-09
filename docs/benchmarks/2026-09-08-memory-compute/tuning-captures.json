@@ -1,0 +1,79 @@
+{
+  "build": "6d60860fdeb4945ce8d6563add992dce83a89eb002d5da6a23e8d6bb2476ba34",
+  "complete": true,
+  "workload_sha256": "74690294e13e45f4e6e1ac814937d83eb4f53790b89f56a60f598e2599a2ead6",
+  "cases": [
+    {
+      "name": "prefill-0-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "10100bbd2dac8681cf25282c4d64b440e60564c0b85ff34cee6f3b6ec76d12b5",
+      "path": ".cache/benchmarks/phase-memory/tuning/prefill-0-gdn-operators.json"
+    },
+    {
+      "name": "prefill-30-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "c142055491aca01c6b2f8c5b4d2f39a23b074491e7511883a1ec1ff82fa2b20a",
+      "path": ".cache/benchmarks/phase-memory/tuning/prefill-30-gdn-operators.json"
+    },
+    {
+      "name": "prefill-31-attention",
+      "cases": 6,
+      "bytes": 108867584,
+      "comparisons": 195,
+      "sha256": "5021b0efb489701e3cb1e3e7c401eb9704cd38035f5d1dac850b55562d402385",
+      "path": ".cache/benchmarks/phase-memory/tuning/prefill-31-attention-operators.json"
+    },
+    {
+      "name": "append-30-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "61487b6303db5d4ea9676422918c5518af147e5b6423416b9deccb500376628c",
+      "path": ".cache/benchmarks/phase-memory/tuning/append-30-gdn-operators.json"
+    },
+    {
+      "name": "append-47-attention",
+      "cases": 6,
+      "bytes": 108867584,
+      "comparisons": 195,
+      "sha256": "27cf97e23ddcea462ec62502ef2ce262f7b5e2a686a9beb88f562c39fbe662a7",
+      "path": ".cache/benchmarks/phase-memory/tuning/append-47-attention-operators.json"
+    },
+    {
+      "name": "decode-0-gdn",
+      "cases": 3,
+      "bytes": 61321216,
+      "comparisons": 75,
+      "sha256": "29b26e19445f614de892586851d4f67dcf636c383a4f752d3732263f9e6cdaa6",
+      "path": ".cache/benchmarks/phase-memory/tuning/decode-0-gdn-operators.json"
+    },
+    {
+      "name": "decode-30-gdn",
+      "cases": 3,
+      "bytes": 61321216,
+      "comparisons": 75,
+      "sha256": "22af80ec42fc8a516ac57ce4fd46c8e68447b2f560896e00f0f07d16a1e092c9",
+      "path": ".cache/benchmarks/phase-memory/tuning/decode-30-gdn-operators.json"
+    },
+    {
+      "name": "decode-31-attention",
+      "cases": 3,
+      "bytes": 51572736,
+      "comparisons": 75,
+      "sha256": "f4bdc44797c8d3d3461d96f0504cea1ff1570bbad4f24244988df3eefa8e2a52",
+      "path": ".cache/benchmarks/phase-memory/tuning/decode-31-attention-operators.json"
+    },
+    {
+      "name": "decode-23-routed_expert",
+      "cases": 2,
+      "bytes": 2777600,
+      "comparisons": 50,
+      "sha256": "a2dc69766e14c49b68e11c13e13b7a3d72a8e176285dd6d3c6f521a67d4fb644",
+      "path": ".cache/benchmarks/phase-memory/tuning/decode-23-routed_expert-operators.json"
+    }
+  ]
+}

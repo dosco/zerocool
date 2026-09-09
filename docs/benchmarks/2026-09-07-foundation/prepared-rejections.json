@@ -1,0 +1,61 @@
+{
+  "kind": "prepared_rejection_checks",
+  "passed": true,
+  "checks": [
+    {
+      "name": "version",
+      "passed": true,
+      "error": "freellm: unverified or incompatible prepared artifact; run prepare_storage.py --verify"
+    },
+    {
+      "name": "source",
+      "passed": true,
+      "error": "freellm: unverified or incompatible prepared artifact; run prepare_storage.py --verify"
+    },
+    {
+      "name": "projection_offset",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "projection_format",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "duplicate_layer",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "expert_stride",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "ngram_mapping",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "ngram_fields",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "unsafe_path",
+      "passed": true,
+      "error": "freellm: prepared manifest differs from pinned lossless Q4 control"
+    },
+    {
+      "name": "manifest_hash",
+      "passed": true,
+      "error": "freellm: unverified or incompatible prepared artifact; run prepare_storage.py --verify"
+    },
+    {
+      "name": "truncated_payload",
+      "passed": true,
+      "error": "freellm: prepared file changed since verification: experts-00.bin"
+    }
+  ]
+}

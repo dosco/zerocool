@@ -1,5 +1,59 @@
 # Agent Instructions for FreeLLM
 
+## Current product direction (September 2026)
+
+The approved [Qwen/M1 plan](docs/qwen_plan.md) supersedes the historical roadmap
+below. FreeLLM targets Qwen3.8-Flash-Next on a 32GiB M1 Pro. The pinned affine-Q4
+checkpoint remains the unchanged control. The pinned mixed 4/8-bit artifact
+is the quality target; it must pass native validation before becoming a runtime
+default. Contiguous storage, completion-driven execution, layer-major prefill,
+and offline calibrated affine-Q3 experts are in scope, with separate provenance,
+correctness, quality, and M1 performance gates before promotion. Default builds use the
+native C++23/Metal engine; legacy models and backends require
+FREELLM_BUILD_LEGACY=ON. Do not expand model/backend coverage.
+
+Keep the total engine budget at or below 22GiB and the context at or below
+8192 tokens. Preserve each selected artifact's bytes and exact router-selected
+experts at runtime, plus its recurrent state. Offline candidate quantization
+must not overwrite the Q4 control; different recipes may produce different
+routes and require fresh session state. Never silently switch precision,
+substitute a smaller model, drop experts, or alter OS memory limits.
+Use existing nlohmann/json and the existing Objective-C++ Metal bridge style;
+the old no-JSON and pure-metal-cpp preferences do not require a host rewrite.
+Use ./build.sh. CPU references and model-free tests support correctness; a
+release claim requires the explicit real-model and M1 performance gates.
+Report measured performance separately from targets. See docs/qwen_engine.md
+for implemented behavior; planned quantization is not an implemented feature.
+
+The [residency and execution stage](docs/qwen_residency_stage.md) extends the
+benchmark-only exact-arithmetic work with bounded residency, complete cached-token
+replay, direct/grouped decode, double-workspace prefill and captured shape rules.
+Allocation and state lifetime checks remain mandatory; no candidate is a runtime
+default until normal-request qualification passes.
+
+The current [exact-arithmetic kernel stage](docs/qwen_next_stage.md) requires
+bit-for-bit logits, routes and persistent state within each artifact. Kernel
+experiments are benchmark-only; `auto` stays on original kernels until paired
+normal-request evidence qualifies a rule. Treat prompt and generation latency
+equally. Use fresh processes for independent measurements and sample-free
+priming for the exact 128-token append. Profiled timings and a single screen
+cannot qualify promotion.
+
+The [memory and computation stage](docs/qwen_memory_compute_stage.md) adds
+benchmark-only phase-memory reclamation and exact affine blocking. Preserve
+workspace completion ownership, survivor-preserving cache resizing, and the
+original hard admission limit. Fixed comparisons reject resizing; reclamation
+comparisons require complete declared transition evidence. Profiled or cached
+replay timings cannot qualify normal latency.
+
+The [cached decode computation stage](docs/qwen_decode_compute_stage.md) measures
+per-pass GPU timestamps only in explicit diagnostics. Packed Q8 decode remains
+benchmark-only and preserves the original lane partition and reduction order.
+Alternating cached replay is exact-state evidence, not normal-request latency.
+
+The sections below describe the preserved educational implementation and
+apply when working on that implementation, except where this direction differs.
+
 This document contains high-level guidelines for AI coding agents working on the FreeLLM project.
 
 ## Project Overview

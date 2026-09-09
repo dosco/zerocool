@@ -1,0 +1,21 @@
+{
+  "build_fingerprint": "a6e5e9cd4b744d3cf0a3f7cf6fe1d45763048876bcedfddc26e19eb0565b1aba",
+  "manifests": [
+    {
+      "manifest": ".cache/benchmarks/decode-compute/heldout/decode-0-gdn/manifest.json",
+      "sha256": "34e92a0a241b2c1e4b406f13c4643b89d9d918e8ad0f36c5abcea78c82326019",
+      "all_payload_hashes_checked": true,
+      "tuning_activations_disjoint": true
+    },
+    {
+      "manifest": ".cache/benchmarks/decode-compute/heldout/decode-31-attention/manifest.json",
+      "sha256": "c2f390788b00a2627d5fb6f5ed187d59cf8bc9fedcd41950f79aa02f148d1d17",
+      "all_payload_hashes_checked": true,
+      "tuning_activations_disjoint": true
+    }
+  ],
+  "capture_summary_path": ".cache/benchmarks/decode-compute/heldout/summary.json",
+  "capture_summary_sha256": "646e08e7d7aabc39cf5d6431f7dab648b809604a322e6ef833c2b0eb667ccd0b",
+  "workload_path": ".cache/benchmarks/decode-compute/heldout/workload.json",
+  "workload_sha256": "dccc43be5384203876edfbd1fabbcb99b79eda3fb4bfb5e8d73b70b38ee3e935"
+}

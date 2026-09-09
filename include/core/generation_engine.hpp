@@ -48,8 +48,11 @@ private:
     void initialize_buffers();
 
     // Kernels
-    void run_linear_batched(infra::DeviceBuffer* input, const std::string& weight_name, infra::DeviceBuffer* output, 
+    void run_linear_batched(infra::DeviceBuffer* input, const std::string& weight_name, infra::DeviceBuffer* output,
                            int in_features, int out_features, int batch_size);
+
+    // MoE forward pass (uses Metal MoE kernels)
+    void run_moe_forward(infra::DeviceBuffer* input, const std::string& layer_prefix, int batch_size);
 
     std::unique_ptr<infra::ComputeBackend> backend_;
     std::unique_ptr<KVCacheManager> kv_manager_;
@@ -75,6 +78,15 @@ private:
     std::unique_ptr<infra::DeviceBuffer> ffn_up_;
     std::unique_ptr<infra::DeviceBuffer> ffn_down_;
     std::unique_ptr<infra::DeviceBuffer> logits_; // [max_tokens, vocab_size]
+
+    // MoE buffers
+    std::unique_ptr<infra::DeviceBuffer> moe_probs_;        // [max_tokens, num_experts]
+    std::unique_ptr<infra::DeviceBuffer> moe_indices_;      // [max_tokens, k]
+    std::unique_ptr<infra::DeviceBuffer> moe_values_;       // [max_tokens, k]
+    std::unique_ptr<infra::DeviceBuffer> moe_expert_out_;   // [max_tokens, d_model] per expert
+    std::unique_ptr<infra::DeviceBuffer> moe_accum_;        // [max_tokens, d_model] accumulation
+    std::unique_ptr<infra::DeviceBuffer> moe_expert_gate_;  // [max_tokens, d_ff] expert FFN intermediate
+    std::unique_ptr<infra::DeviceBuffer> moe_expert_up_;    // [max_tokens, d_ff] expert FFN intermediate
     
     // Scalar buffers for kernel params (Metal constant fix)
     std::unique_ptr<infra::DeviceBuffer> scalar_head_dim_;

@@ -1,0 +1,1193 @@
+{
+  "kind": "checkpoint_storage_probe",
+  "revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+  "os_cache_policy": "F_NOCACHE",
+  "cases": [
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 1,
+      "repetition": 0,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 562.204541,
+      "bytes_per_second": 1258952477.9380963,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37184698568704,
+            "write_bytes": 17814632390656
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37185454354432,
+            "write_bytes": 17814633439232
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.810270713080799,
+      "optimistic_hit_rate_for_8tps": 0.8814191956754994
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 1,
+      "repetition": 0,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 1512.568041,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37185454419968,
+            "write_bytes": 17814633439232
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37185698308096,
+            "write_bytes": 17814643998720
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 1,
+      "repetition": 1,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 528.995625,
+      "bytes_per_second": 1337986112.8341088,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37185698312192,
+            "write_bytes": 17814643998720
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37186451025920,
+            "write_bytes": 17814645063680
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.7983600210934322,
+      "optimistic_hit_rate_for_8tps": 0.8739750131833951
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 1,
+      "repetition": 1,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 1496.422792,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37186451087360,
+            "write_bytes": 17814645063680
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37186702286848,
+            "write_bytes": 17814649225216
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 1,
+      "repetition": 2,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 553.777208,
+      "bytes_per_second": 1278111106.3711383,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37186702299136,
+            "write_bytes": 17814649225216
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37187458232320,
+            "write_bytes": 17814651322368
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.8073834294266103,
+      "optimistic_hit_rate_for_8tps": 0.8796146433916314
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 1,
+      "repetition": 2,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 1541.337167,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37187458285568,
+            "write_bytes": 17814651322368
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37187700428800,
+            "write_bytes": 17814681518080
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 4,
+      "repetition": 0,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 188.403375,
+      "bytes_per_second": 3756773465.443493,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37187700428800,
+            "write_bytes": 17814681518080
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37188448215040,
+            "write_bytes": 17814681518080
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.4338388754093887,
+      "optimistic_hit_rate_for_8tps": 0.646149297130868
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 4,
+      "repetition": 0,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 382.818292,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37188448415744,
+            "write_bytes": 17814681518080
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37188655153152,
+            "write_bytes": 17814682566656
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 4,
+      "repetition": 1,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 188.961333,
+      "bytes_per_second": 3745680604.401748,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37188655169536,
+            "write_bytes": 17814682566656
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37189402226688,
+            "write_bytes": 17814683615232
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.4355106149327034,
+      "optimistic_hit_rate_for_8tps": 0.6471941343329396
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 4,
+      "repetition": 1,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 380.679041,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37189402292224,
+            "write_bytes": 17814683615232
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37189609590784,
+            "write_bytes": 17814683615232
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 4,
+      "repetition": 2,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 192.366792,
+      "bytes_per_second": 3679371021.58464,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37189609598976,
+            "write_bytes": 17814683615232
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37190357270528,
+            "write_bytes": 17814684663808
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.4455037402366898,
+      "optimistic_hit_rate_for_8tps": 0.6534398376479311
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 4,
+      "repetition": 2,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 384.373958,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37190357331968,
+            "write_bytes": 17814684663808
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37190564732928,
+            "write_bytes": 17814684815360
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 8,
+      "repetition": 0,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 145.012041,
+      "bytes_per_second": 4880896752.566913,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37190564737024,
+            "write_bytes": 17814684815360
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37191311773696,
+            "write_bytes": 17814687236096
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.2644288989307676,
+      "optimistic_hit_rate_for_8tps": 0.5402680618317297
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 8,
+      "repetition": 0,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 225.284416,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37191311835136,
+            "write_bytes": 17814687236096
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37191516688384,
+            "write_bytes": 17814688325632
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 8,
+      "repetition": 1,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 142.095542,
+      "bytes_per_second": 4981076746.235994,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37191516692480,
+            "write_bytes": 17814688325632
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37192263524352,
+            "write_bytes": 17814688337920
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.2493313641981345,
+      "optimistic_hit_rate_for_8tps": 0.5308321026238341
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 8,
+      "repetition": 1,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 228.190084,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37192263581696,
+            "write_bytes": 17814688337920
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37192468561920,
+            "write_bytes": 17814689386496
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 8,
+      "repetition": 2,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 149.86275,
+      "bytes_per_second": 4722913465.821226,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37192468566016,
+            "write_bytes": 17814689386496
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37193216040960,
+            "write_bytes": 17814689386496
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.2882376263169689,
+      "optimistic_hit_rate_for_8tps": 0.5551485164481056
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 8,
+      "repetition": 2,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 224.137542,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37193216102400,
+            "write_bytes": 17814689386496
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37193420206080,
+            "write_bytes": 17814689394688
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 16,
+      "repetition": 0,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 123.167875,
+      "bytes_per_second": 5746537398.652043,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37193420214272,
+            "write_bytes": 17814689394688
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37194166939648,
+            "write_bytes": 17814690443264
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.13397331352297281,
+      "optimistic_hit_rate_for_8tps": 0.45873332095185804
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 16,
+      "repetition": 0,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 134.412,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37194166996992,
+            "write_bytes": 17814690443264
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37194370461696,
+            "write_bytes": 17814690443264
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 16,
+      "repetition": 1,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 126.261541,
+      "bytes_per_second": 5605735478.866047,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37194370473984,
+            "write_bytes": 17814690443264
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37195117596672,
+            "write_bytes": 17814690516992
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.15519273864504257,
+      "optimistic_hit_rate_for_8tps": 0.47199546165315165
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 16,
+      "repetition": 1,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 133.469208,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37195117649920,
+            "write_bytes": 17814690516992
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37195320930304,
+            "write_bytes": 17814690516992
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 16,
+      "repetition": 2,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 125.961959,
+      "bytes_per_second": 5619067896.522633,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37195320979456,
+            "write_bytes": 17814690516992
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37196067758080,
+            "write_bytes": 17814694711296
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.1531834887811908,
+      "optimistic_hit_rate_for_8tps": 0.4707396804882442
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 16,
+      "repetition": 2,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 154.110417,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37196067831808,
+            "write_bytes": 17814697136128
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37196282863616,
+            "write_bytes": 17814710939648
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 32,
+      "repetition": 0,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 121.04,
+      "bytes_per_second": 5847561136.814276,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37196282896384,
+            "write_bytes": 17814710939648
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197029085184,
+            "write_bytes": 17814710992896
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.11874862304472356,
+      "optimistic_hit_rate_for_8tps": 0.44921788940295226
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 32,
+      "repetition": 0,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 96.931542,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197029146624,
+            "write_bytes": 17814710992896
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197231919104,
+            "write_bytes": 17814710992896
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 32,
+      "repetition": 1,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 122.305833,
+      "bytes_per_second": 5787040426.763619,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197231947776,
+            "write_bytes": 17814710992896
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197978370048,
+            "write_bytes": 17814710992896
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.12786934154917484,
+      "optimistic_hit_rate_for_8tps": 0.45491833846823426
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 32,
+      "repetition": 1,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 95.717875,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37197978443776,
+            "write_bytes": 17814710992896
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37198180909056,
+            "write_bytes": 17814712041472
+          }
+        ]
+      }
+    },
+    {
+      "pattern": "nine_piece_real_experts",
+      "workers": 32,
+      "repetition": 2,
+      "records": 256,
+      "application_read_bytes": 707788800,
+      "elapsed_ms": 121.593458,
+      "bytes_per_second": 5820944741.944916,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37198180978688,
+            "write_bytes": 17814712041472
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37198927302656,
+            "write_bytes": 17814713090048
+          }
+        ]
+      },
+      "optimistic_hit_rate_for_5tps": 0.12275982259944729,
+      "optimistic_hit_rate_for_8tps": 0.4517248891246546
+    },
+    {
+      "pattern": "three_piece_real_ngram_rows",
+      "workers": 32,
+      "repetition": 2,
+      "rows": 4096,
+      "application_read_bytes": 409600,
+      "elapsed_ms": 98.244041,
+      "storage_before": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37198927360000,
+            "write_bytes": 17814713090048
+          }
+        ]
+      },
+      "storage_after": {
+        "scope": "internal device counters, including other processes",
+        "devices": [
+          {
+            "registry_id": 4294969813,
+            "read_bytes": 0,
+            "write_bytes": 0
+          },
+          {
+            "registry_id": 4294969822,
+            "read_bytes": 37199148789760,
+            "write_bytes": 17814714138624
+          }
+        ]
+      }
+    }
+  ],
+  "note": "Hit-rate bounds leave zero time for computation and are necessary, not sufficient. Device counters include other processes."
+}

@@ -1,0 +1,1230 @@
+{
+  "schema": 1,
+  "kind": "mixed_q8_operator_reference",
+  "source": {
+    "schema": 1,
+    "repo": "pipenetwork/Qwen3.8-Flash-Next-MLX-mixed-4_8bit",
+    "revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "scope": "Bounded Q8 operator reference; not a complete checkpoint",
+    "files": [
+      {
+        "path": "config.json",
+        "size": 135742,
+        "sha256": "e3304833db1235a0368fd59bc66d7a8724943262c3e465e629e9e6a892e10ea1"
+      },
+      {
+        "path": "model-00011.safetensors",
+        "size": 4876940562,
+        "sha256": "8e7b68292208146a0298e8e07548efd25889ba1c36d39a5ed27ab46b0d635436"
+      }
+    ]
+  },
+  "lock_sha256": "82395a6e4b6e7c753a969e9b89e2b9d070d17ee6a045972c018c6e09da6b5ab6",
+  "generator_sha256": "f9566b90cb7b157b2302228adee17605084cdab28cbaf4867cc9e71214b5318b",
+  "mlx": "0.31.1",
+  "files": {
+    "shared_gate.weight": {
+      "bytes": 1638400,
+      "sha256": "062108efbb7c5279628d0e3f0d0bc5d2f47566ed570301d813d0cf2d0916d1b7"
+    },
+    "shared_gate.scales": {
+      "bytes": 51200,
+      "sha256": "8480e26a71ba197d8043694bd625e5c4e235410c0f0e8c0b9d256f2ff7f5127d"
+    },
+    "shared_gate.biases": {
+      "bytes": 51200,
+      "sha256": "a65567e0566a81613eab40f929337399ae80efebe1fd410cd97a6da28828c56d"
+    },
+    "shared_up.weight": {
+      "bytes": 1638400,
+      "sha256": "6837c54f4c3c58a0407cadfa7f7a10a9ed955c24b3b51218c129bb7dbe6d1d2a"
+    },
+    "shared_up.scales": {
+      "bytes": 51200,
+      "sha256": "9b3a7c5e8465e08905e45c6bb845d7deeb4ac4d441d1d38c36a79f7098f71c9a"
+    },
+    "shared_up.biases": {
+      "bytes": 51200,
+      "sha256": "95aed282eb066c1cbbbc5c95f94240b49c052cbd6ff3da24dfba7545bf9f6717"
+    },
+    "shared_down.weight": {
+      "bytes": 20480,
+      "sha256": "6458d98419b7e1b82d5f105ccf1b356466461e3100c2f173362d78c823791b58"
+    },
+    "shared_down.scales": {
+      "bytes": 640,
+      "sha256": "4277950ea67c775efeff3cc66078906f6ee5da1703fc635c3a753b33d9621a3b"
+    },
+    "shared_down.biases": {
+      "bytes": 640,
+      "sha256": "159afda2ff64f011c9bd74be29056231c65203badff73d3ca69a621a45d2c444"
+    },
+    "hyper_down.weight": {
+      "bytes": 327680,
+      "sha256": "a3910f53065cf5813dd1aaab1a91dfd635799f8fb7faaeb50eb6910d2882efc0"
+    },
+    "hyper_down.scales": {
+      "bytes": 10240,
+      "sha256": "02284c53f6b1644963847d083987b18a6d4a4b4660a2b4ef58217f5b40543a12"
+    },
+    "hyper_down.biases": {
+      "bytes": 10240,
+      "sha256": "3ca3b75e12fc94cac87fa9e3ec7bd72803391d3aaeaaed9d345a0d5e136cb9db"
+    },
+    "hyper_up.weight": {
+      "bytes": 2240,
+      "sha256": "f6e9e30c9deec14dca975f2a8757e0f7693f1865257f1eb46f0f347913d7bbec"
+    },
+    "hyper_up.scales": {
+      "bytes": 70,
+      "sha256": "e3dc7e65655f2fff4e4a618504cbebf2791f79a368df1d2e95231312d2324d4e"
+    },
+    "hyper_up.biases": {
+      "bytes": 70,
+      "sha256": "1cb8a4d3e7dcfebfd5cf1d2df083fbda14717b159b7b46c9bacce80231a48643"
+    },
+    "attention_q.weight": {
+      "bytes": 81920,
+      "sha256": "892e83f762589cd69614ebeb508581e889b85528bd344e58060c74ce57a444e3"
+    },
+    "attention_q.scales": {
+      "bytes": 2560,
+      "sha256": "7cf2863f2d1747d7dfc77dfb132837202d8e460f613a7dde2128a7a5af5925b1"
+    },
+    "attention_q.biases": {
+      "bytes": 2560,
+      "sha256": "f7111558e14a1fe7cc8219ad51e185c2d34786542b3c3c88a9ddc93971a75d6f"
+    },
+    "attention_o.weight": {
+      "bytes": 43008,
+      "sha256": "9e05453fbab3d9eb9a3f62463dd8ce7f2140d88c38545b175764a57272d08efe"
+    },
+    "attention_o.scales": {
+      "bytes": 1344,
+      "sha256": "e6c4d8631cd09d026b5bcc49690a19391291602707b8e86c061cf92eca0b7fe0"
+    },
+    "attention_o.biases": {
+      "bytes": 1344,
+      "sha256": "7e126146791d61f52e0307dcc2e8b1579e17bb516c303c12856a872602ec26ef"
+    },
+    "gdn_qkv.weight": {
+      "bytes": 81920,
+      "sha256": "df7b00d5636d6710179c6b05be6c0f139a72f783f288c3f1b43c76539e7a61ce"
+    },
+    "gdn_qkv.scales": {
+      "bytes": 2560,
+      "sha256": "687b9fbfaaee5326906ee9f38de571bb3ecaa8234ea2ea780688bd3f67fd67c4"
+    },
+    "gdn_qkv.biases": {
+      "bytes": 2560,
+      "sha256": "67897f26dd0ee118059516645753eed11f1f9fdd76822f2c23a228fda9d7b5c2"
+    },
+    "embedding.weight": {
+      "bytes": 81920,
+      "sha256": "28295413eef4333ec6d6eaad18231de239165a66b1a56c47b65a7d1748d5a4e4"
+    },
+    "embedding.scales": {
+      "bytes": 2560,
+      "sha256": "ea9d50a33ff1f4737dda4e3854592c09d53eccba4115d3bac20e478c06e827d1"
+    },
+    "embedding.biases": {
+      "bytes": 2560,
+      "sha256": "a1576dcdaeef6104c39dfcdc3725a63069f182e5918ed37c499688600e6ccd1d"
+    },
+    "lm_head.weight": {
+      "bytes": 81920,
+      "sha256": "f15ee17327fb5ca87795e80b9e84667fd2e01a44423e7f3cbf9a08971b5cf6b2"
+    },
+    "lm_head.scales": {
+      "bytes": 2560,
+      "sha256": "53eec6631a8a85ab375e376d80ebcc3181c4a7517249a002632514bb46ace0fb"
+    },
+    "lm_head.biases": {
+      "bytes": 2560,
+      "sha256": "19c3577c5269d5775101fc0423260d94bcc0f318b27b698ec5ad03d80e91cf72"
+    },
+    "shared_gate-1.input": {
+      "bytes": 10240,
+      "sha256": "cc09351cedf0dd4dab7c90cd7decec2abeb7b7ddf6176ba6c7c287fddac2d505"
+    },
+    "shared_gate-1.expected": {
+      "bytes": 2560,
+      "sha256": "26beda00a23644473de353f1fc05c495a2ca590460b25c7a57a2c3fe5a94852e"
+    },
+    "shared_gate-1.batch": {
+      "bytes": 2560,
+      "sha256": "26beda00a23644473de353f1fc05c495a2ca590460b25c7a57a2c3fe5a94852e"
+    },
+    "shared_gate-1.fused": {
+      "bytes": 5120,
+      "sha256": "dbca76fea739b12a208c6ed2a47148cf1d82b468002d20fbd018fa153489f174"
+    },
+    "shared_gate-3.input": {
+      "bytes": 30720,
+      "sha256": "38970d259a01b606e5c69e3913b1cdaae9a2cd4b92c1406d954cd52bd60ec6e3"
+    },
+    "shared_gate-3.expected": {
+      "bytes": 7680,
+      "sha256": "5677d209a54f9b3d85aef8e950514e65c32c434c2fa1944ae9d4ebd5821f862b"
+    },
+    "shared_gate-3.batch": {
+      "bytes": 7680,
+      "sha256": "5677d209a54f9b3d85aef8e950514e65c32c434c2fa1944ae9d4ebd5821f862b"
+    },
+    "shared_gate-3.fused": {
+      "bytes": 10240,
+      "sha256": "0227f33e459c8a1bedd420c52f41a4a620505e9366d902af8cb1e4282fd0ab89"
+    },
+    "shared_gate-17.input": {
+      "bytes": 174080,
+      "sha256": "ade0e806f444dfcd3180c19bde5eee049905a369180fc6409b5638ccba0ca19c"
+    },
+    "shared_gate-17.expected": {
+      "bytes": 43520,
+      "sha256": "441efbaa9dfccdf9ed6124ac5c115e75e3650b4a29e759507abf541ef54bc16c"
+    },
+    "shared_gate-17.batch": {
+      "bytes": 43520,
+      "sha256": "26b462257261e2e06b8cae8efa61ad84bdc232b8d782d3eca9029f154134f064"
+    },
+    "shared_gate-17.fused": {
+      "bytes": 46080,
+      "sha256": "e9fe12749f3fef6a03d3fa660b16f2c72e3abb326c52bf18e269a20de04a5776"
+    },
+    "shared_up-1.input": {
+      "bytes": 10240,
+      "sha256": "defbfe468faee80fbdd598dddeac2bb12202175d0877c7f39b44a3ef6b5299d4"
+    },
+    "shared_up-1.expected": {
+      "bytes": 2560,
+      "sha256": "c853b2207c8f4622b756504cbccb6e044ad9c5f6e2a0d99f838f44716bfe05dc"
+    },
+    "shared_up-1.batch": {
+      "bytes": 2560,
+      "sha256": "c853b2207c8f4622b756504cbccb6e044ad9c5f6e2a0d99f838f44716bfe05dc"
+    },
+    "shared_up-3.input": {
+      "bytes": 30720,
+      "sha256": "127089b7038e5793cf7acb264025e4b575a34f0ce0b92eff902bc6070a4ed665"
+    },
+    "shared_up-3.expected": {
+      "bytes": 7680,
+      "sha256": "b70a9b67993d6b7a3df7e0269bd3792c0f4ac0272652d65e210d2c5a57031169"
+    },
+    "shared_up-3.batch": {
+      "bytes": 7680,
+      "sha256": "b70a9b67993d6b7a3df7e0269bd3792c0f4ac0272652d65e210d2c5a57031169"
+    },
+    "shared_up-17.input": {
+      "bytes": 174080,
+      "sha256": "e504f0b7d82a5a2538e757330ddffd73a68d53e5d6b69e799c9961ec59e0d607"
+    },
+    "shared_up-17.expected": {
+      "bytes": 43520,
+      "sha256": "fdc6f9b6c52d4e1baa1cf28c1907b7053f5cd5a3cd6f1ae9819cf6a701fc4edf"
+    },
+    "shared_up-17.batch": {
+      "bytes": 43520,
+      "sha256": "bbcd67e5598df9735897963cbd3f35c2b18f6645029eb9aa8459dba88c9c44ca"
+    },
+    "shared_down-1.input": {
+      "bytes": 2560,
+      "sha256": "357e8d7eb9134e5f0bf91bd34fdc4d1b14ab47f7caeaaad121f7776803dbc13b"
+    },
+    "shared_down-1.expected": {
+      "bytes": 128,
+      "sha256": "f33a1bea91c012f6165ab81d8e7b84f7a42c887bf866a729762dc1a7fe1a7ef0"
+    },
+    "shared_down-1.batch": {
+      "bytes": 128,
+      "sha256": "f33a1bea91c012f6165ab81d8e7b84f7a42c887bf866a729762dc1a7fe1a7ef0"
+    },
+    "shared_down-3.input": {
+      "bytes": 7680,
+      "sha256": "1a1fb2b38397418d9eea8f4de0814c10045b347916c46364946c4e034d9a7703"
+    },
+    "shared_down-3.expected": {
+      "bytes": 384,
+      "sha256": "302dd478c5a19dce4697a521e8263b6477b7cb22efe908e14815cf9fa6201d9a"
+    },
+    "shared_down-3.batch": {
+      "bytes": 384,
+      "sha256": "302dd478c5a19dce4697a521e8263b6477b7cb22efe908e14815cf9fa6201d9a"
+    },
+    "shared_down-17.input": {
+      "bytes": 43520,
+      "sha256": "9fcae05d6dacc540b02d7de40f136570c7d0fd23a5c24a08c37560556f3fab35"
+    },
+    "shared_down-17.expected": {
+      "bytes": 2176,
+      "sha256": "c57e18878cb5fe5341d5c14cc3726c0fbca070edafa26821783cd2a960047bd3"
+    },
+    "shared_down-17.batch": {
+      "bytes": 2176,
+      "sha256": "9d5ad9baeeab858ccd92d476d5d3f7e5376fe93931c90ce13186149fc6fbcccf"
+    },
+    "hyper_down-1.input": {
+      "bytes": 40960,
+      "sha256": "8c5352988ef1b1488b4c9dfb9c35093fe9bead071ba5bf771e8f1e9cb361d9be"
+    },
+    "hyper_down-1.expected": {
+      "bytes": 128,
+      "sha256": "908a6ca1ba9db4e98747c7f0ca6be8493175c9f808bb413669dd9b57276d9765"
+    },
+    "hyper_down-1.batch": {
+      "bytes": 128,
+      "sha256": "908a6ca1ba9db4e98747c7f0ca6be8493175c9f808bb413669dd9b57276d9765"
+    },
+    "hyper_down-3.input": {
+      "bytes": 122880,
+      "sha256": "a5fbaf2fc256ad762374d04248386d9c30181b4a93f2c9faba469e3e7580922f"
+    },
+    "hyper_down-3.expected": {
+      "bytes": 384,
+      "sha256": "f6226ef06e33ed7294df2d919b67775b9290ccaa450f1bd3b0ca95c0820c30fa"
+    },
+    "hyper_down-3.batch": {
+      "bytes": 384,
+      "sha256": "f6226ef06e33ed7294df2d919b67775b9290ccaa450f1bd3b0ca95c0820c30fa"
+    },
+    "hyper_down-17.input": {
+      "bytes": 696320,
+      "sha256": "9f751411038a96c8f9bc503a3cff965a1829af85a707a2665cb309cbacda282e"
+    },
+    "hyper_down-17.expected": {
+      "bytes": 2176,
+      "sha256": "2ef8f63ce9b3ad28f49b34a6b29e4988d19a040b610d2b982ea59939a4f14b54"
+    },
+    "hyper_down-17.batch": {
+      "bytes": 2176,
+      "sha256": "01e2458e700a40ebe8d2ef08ba8f169ea9d4cde4d6b6a5ea4321c4b57e930897"
+    },
+    "hyper_up-1.input": {
+      "bytes": 1280,
+      "sha256": "9792e14f2bd1b0ee06bac38c9b19c46944a4e47f67d30350717c8f191c05a44d"
+    },
+    "hyper_up-1.expected": {
+      "bytes": 28,
+      "sha256": "6b4b43ad4bda2a45ace68832df8b438c29215d2dc6fc354a7194ca9f9bb9f4d8"
+    },
+    "hyper_up-1.batch": {
+      "bytes": 28,
+      "sha256": "6b4b43ad4bda2a45ace68832df8b438c29215d2dc6fc354a7194ca9f9bb9f4d8"
+    },
+    "hyper_up-3.input": {
+      "bytes": 3840,
+      "sha256": "552f18600af13454d4df1bb80a39bc0469aa306cf90ececb0b5e7992ff5aeb2b"
+    },
+    "hyper_up-3.expected": {
+      "bytes": 84,
+      "sha256": "dfc2a2c8a51b8c646f77059a3b78543aeefd6ed4a0460a5abf6d92beb07ab23f"
+    },
+    "hyper_up-3.batch": {
+      "bytes": 84,
+      "sha256": "dfc2a2c8a51b8c646f77059a3b78543aeefd6ed4a0460a5abf6d92beb07ab23f"
+    },
+    "hyper_up-17.input": {
+      "bytes": 21760,
+      "sha256": "209e59f81f017b0daba5b0f354175ce60009d2377f4360f522ba88f3a365cb1d"
+    },
+    "hyper_up-17.expected": {
+      "bytes": 476,
+      "sha256": "0feb58badb408559f91e5ecd90fa35b3abe3747ea30edab06c0aa2f7f1e744fe"
+    },
+    "hyper_up-17.batch": {
+      "bytes": 476,
+      "sha256": "54b923733788850226dd368262d31b5304123e503c8e6b663913884268ed74e1"
+    },
+    "attention_q-1.input": {
+      "bytes": 10240,
+      "sha256": "7147dad4fe49a4ece76bea73987366908fedcb097ddf0432dbf8e6a16ae2c981"
+    },
+    "attention_q-1.expected": {
+      "bytes": 128,
+      "sha256": "483062c07379b3b2418016efca44f3288b0d5ee0681299931ef8cf042e19a648"
+    },
+    "attention_q-1.batch": {
+      "bytes": 128,
+      "sha256": "483062c07379b3b2418016efca44f3288b0d5ee0681299931ef8cf042e19a648"
+    },
+    "attention_q-3.input": {
+      "bytes": 30720,
+      "sha256": "2d080b31012eb27fa057be641cd672d09e64e8b8080c2027c00d8db028773d9e"
+    },
+    "attention_q-3.expected": {
+      "bytes": 384,
+      "sha256": "ae85ad5a857186a9054414e5ea7eab6863f71eafe5282d60e6687561ba17dc3c"
+    },
+    "attention_q-3.batch": {
+      "bytes": 384,
+      "sha256": "ae85ad5a857186a9054414e5ea7eab6863f71eafe5282d60e6687561ba17dc3c"
+    },
+    "attention_q-17.input": {
+      "bytes": 174080,
+      "sha256": "b05b016391c1b5cac4db1ca9a9cf75ddde43d554ccf0860b982e143cd1e0c29d"
+    },
+    "attention_q-17.expected": {
+      "bytes": 2176,
+      "sha256": "a2ad3e227362e8effbe62bb0e0599b667ccff3bc1ffcb1c029f93cd07dc12239"
+    },
+    "attention_q-17.batch": {
+      "bytes": 2176,
+      "sha256": "f90527b05c5d3040b4f32bec62bf06d7bb4aced88d2fbe1f6a1d0dd2504d74df"
+    },
+    "attention_o-1.input": {
+      "bytes": 24576,
+      "sha256": "88aeb7337981ab36ae440da322da70bb2dc05224f941d4f448c1665e1db7f16b"
+    },
+    "attention_o-1.expected": {
+      "bytes": 28,
+      "sha256": "053bd3519c5b4c6b9c8c772278ea83d2c3f895990274e429d659f85f0f659d4d"
+    },
+    "attention_o-1.batch": {
+      "bytes": 28,
+      "sha256": "053bd3519c5b4c6b9c8c772278ea83d2c3f895990274e429d659f85f0f659d4d"
+    },
+    "attention_o-3.input": {
+      "bytes": 73728,
+      "sha256": "450e5609f4aa51e7b88a3dfcd4dc5d9c13654197c1525c03d9247262e137f20e"
+    },
+    "attention_o-3.expected": {
+      "bytes": 84,
+      "sha256": "836e5d1afa188855aa795218dc8821ee336bb953e44371e0aff31033a500f038"
+    },
+    "attention_o-3.batch": {
+      "bytes": 84,
+      "sha256": "836e5d1afa188855aa795218dc8821ee336bb953e44371e0aff31033a500f038"
+    },
+    "attention_o-17.input": {
+      "bytes": 417792,
+      "sha256": "615a441c4b9b6ce6d13149e10f4d1b8eb40c16a9d2889874af3d534b7bf30536"
+    },
+    "attention_o-17.expected": {
+      "bytes": 476,
+      "sha256": "eb57b5f33c48cd9508f8c1be7a57f6ef77a3a45a5e844cda4bc99d7125b23a36"
+    },
+    "attention_o-17.batch": {
+      "bytes": 476,
+      "sha256": "befaaa964416d92f472c6ecf7d03e8782795d15e53c6aa9870b51c17c4a5410b"
+    },
+    "gdn_qkv-1.input": {
+      "bytes": 10240,
+      "sha256": "6da950baf8a7547cb33fa7d7b87724dd9da84b82fdf0b534bb9b0181453aee47"
+    },
+    "gdn_qkv-1.expected": {
+      "bytes": 128,
+      "sha256": "7c16c9f51260109d8dbabb5f4013d3ef99ad3420e933ada58e4da7f6c568ffa5"
+    },
+    "gdn_qkv-1.batch": {
+      "bytes": 128,
+      "sha256": "7c16c9f51260109d8dbabb5f4013d3ef99ad3420e933ada58e4da7f6c568ffa5"
+    },
+    "gdn_qkv-3.input": {
+      "bytes": 30720,
+      "sha256": "79fc513e475fa3e970ee59836499861680f449f04ccd8ee29998166b27568914"
+    },
+    "gdn_qkv-3.expected": {
+      "bytes": 384,
+      "sha256": "6481e5efb0f5b157e8031e4076fc7714b877bc4f99399c388432a504c4ff72be"
+    },
+    "gdn_qkv-3.batch": {
+      "bytes": 384,
+      "sha256": "6481e5efb0f5b157e8031e4076fc7714b877bc4f99399c388432a504c4ff72be"
+    },
+    "gdn_qkv-17.input": {
+      "bytes": 174080,
+      "sha256": "6fe20ece78f3523230027cd9771a7f3331e9ef808b87e4fec17966222a2795cd"
+    },
+    "gdn_qkv-17.expected": {
+      "bytes": 2176,
+      "sha256": "2a727e02631310b8593e77e2d621b155f3194037bb81bd61c6b332164b5dfbb5"
+    },
+    "gdn_qkv-17.batch": {
+      "bytes": 2176,
+      "sha256": "b365819e6c0ded8ed0b6c9efe7c95c0570a8918d544c6b47c003d21b110268d4"
+    },
+    "embedding-1.input": {
+      "bytes": 10240,
+      "sha256": "a9ce397981fcf6bca2bf0c219bf5468d3b575f5768c5d43b63eaba2b9e169178"
+    },
+    "embedding-1.expected": {
+      "bytes": 128,
+      "sha256": "c792dc7fb353153d4724d87de2a7a7969c39a39aa4c602b54d81307d6fe0b0f6"
+    },
+    "embedding-1.batch": {
+      "bytes": 128,
+      "sha256": "c792dc7fb353153d4724d87de2a7a7969c39a39aa4c602b54d81307d6fe0b0f6"
+    },
+    "embedding-3.input": {
+      "bytes": 30720,
+      "sha256": "180bed0eeda84a9ff3d071af92229ab9c208017a907b469501d46be81e710b8d"
+    },
+    "embedding-3.expected": {
+      "bytes": 384,
+      "sha256": "aff7c69813e35525a3fe07f5f7d80eae2f43ff875f8b90cfe80cd3203ff6ca11"
+    },
+    "embedding-3.batch": {
+      "bytes": 384,
+      "sha256": "aff7c69813e35525a3fe07f5f7d80eae2f43ff875f8b90cfe80cd3203ff6ca11"
+    },
+    "embedding-17.input": {
+      "bytes": 174080,
+      "sha256": "61274117f2c56be8b17c4ac1894eaaca6265f3c949567b8164e61799a1514e18"
+    },
+    "embedding-17.expected": {
+      "bytes": 2176,
+      "sha256": "8e7e97178d22c820747610738aaea42f9363d979fc55dd217935ce38b66b541b"
+    },
+    "embedding-17.batch": {
+      "bytes": 2176,
+      "sha256": "c9f2c9c8ff0752ce090186bc7394e34832a4398537fc61ed65f256d438b219af"
+    },
+    "embedding-copies1.expected": {
+      "bytes": 51200,
+      "sha256": "57b1aa9d43ebfe305d47cb635885b7b4217172e5852efb0605f7bce35acecbf2"
+    },
+    "embedding-copies4.expected": {
+      "bytes": 204800,
+      "sha256": "9677ecc95f19ecf2ca546f78828e7947ba24e73b4fd101356d0be9ffa9bf2055"
+    },
+    "lm_head-1.input": {
+      "bytes": 10240,
+      "sha256": "8a57ff6bb751d209c254c8cadc09bae4666f06172d482e5a59f8b7266b3e5fc9"
+    },
+    "lm_head-1.expected": {
+      "bytes": 128,
+      "sha256": "a0b17ec8fdb15c4045e197efaf540f408b197ebcfe2ddc3d49c87e79a42aa09b"
+    },
+    "lm_head-1.batch": {
+      "bytes": 128,
+      "sha256": "a0b17ec8fdb15c4045e197efaf540f408b197ebcfe2ddc3d49c87e79a42aa09b"
+    },
+    "lm_head-3.input": {
+      "bytes": 30720,
+      "sha256": "e434589eddec42a6c90ae894327bdd36d3ed303afac95a9725b9b5013d49fbff"
+    },
+    "lm_head-3.expected": {
+      "bytes": 384,
+      "sha256": "c0d806bd7d061cf18714fc5e8f606a0e77807becd49b25bc0d3d85ffae15095b"
+    },
+    "lm_head-3.batch": {
+      "bytes": 384,
+      "sha256": "c0d806bd7d061cf18714fc5e8f606a0e77807becd49b25bc0d3d85ffae15095b"
+    },
+    "lm_head-17.input": {
+      "bytes": 174080,
+      "sha256": "dac7f10f480ab22d5f09a1c091eaaef07f87befe3a2fbfb622a754e1ee3ef273"
+    },
+    "lm_head-17.expected": {
+      "bytes": 2176,
+      "sha256": "3ff062f45b252a55da769cc0fe5e57362c190d1b0a8dff0b38b20f29957b32a2"
+    },
+    "lm_head-17.batch": {
+      "bytes": 2176,
+      "sha256": "77e7df497ee1edf89d3c40f6b17fbb64e50709760da5032e51703815db0ac521"
+    }
+  },
+  "matrices": {
+    "shared_gate": {
+      "source_name": "model.layers.7.mlp.shared_expert.gate_proj",
+      "start_row": 0,
+      "rows": 640,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "shared_gate.weight",
+          "source_offset": 2734638418,
+          "shape": [
+            640,
+            640
+          ]
+        },
+        "scales": {
+          "file": "shared_gate.scales",
+          "source_offset": 2708219218,
+          "shape": [
+            640,
+            40
+          ]
+        },
+        "biases": {
+          "file": "shared_gate.biases",
+          "source_offset": 2708168018,
+          "shape": [
+            640,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    },
+    "shared_up": {
+      "source_name": "model.layers.7.mlp.shared_expert.up_proj",
+      "start_row": 0,
+      "rows": 640,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "shared_up.weight",
+          "source_offset": 4412361746,
+          "shape": [
+            640,
+            640
+          ]
+        },
+        "scales": {
+          "file": "shared_up.scales",
+          "source_offset": 2284324178,
+          "shape": [
+            640,
+            40
+          ]
+        },
+        "biases": {
+          "file": "shared_up.biases",
+          "source_offset": 2708372818,
+          "shape": [
+            640,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    },
+    "shared_down": {
+      "source_name": "model.layers.7.mlp.shared_expert.down_proj",
+      "start_row": 173,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "shared_down.weight",
+          "source_offset": 4342824146,
+          "shape": [
+            32,
+            160
+          ]
+        },
+        "scales": {
+          "file": "shared_down.scales",
+          "source_offset": 2704843478,
+          "shape": [
+            32,
+            10
+          ]
+        },
+        "biases": {
+          "file": "shared_down.biases",
+          "source_offset": 4397250870,
+          "shape": [
+            32,
+            10
+          ]
+        }
+      },
+      "input": 640
+    },
+    "hyper_down": {
+      "source_name": "model.layers.7.mlp_hyper_connection.input_mix_weight_down",
+      "start_row": 11,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "hyper_down.weight",
+          "source_offset": 4377801650,
+          "shape": [
+            32,
+            2560
+          ]
+        },
+        "scales": {
+          "file": "hyper_down.scales",
+          "source_offset": 4849162706,
+          "shape": [
+            32,
+            160
+          ]
+        },
+        "biases": {
+          "file": "hyper_down.biases",
+          "source_offset": 4338554386,
+          "shape": [
+            32,
+            160
+          ]
+        }
+      },
+      "input": 10240
+    },
+    "hyper_up": {
+      "source_name": "model.layers.7.mlp_hyper_connection.input_mix_weight_up",
+      "start_row": 319,
+      "rows": 7,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "hyper_up.weight",
+          "source_offset": 4372112402,
+          "shape": [
+            7,
+            80
+          ]
+        },
+        "scales": {
+          "file": "hyper_up.scales",
+          "source_offset": 4397895816,
+          "shape": [
+            7,
+            5
+          ]
+        },
+        "biases": {
+          "file": "hyper_up.biases",
+          "source_offset": 3279409864,
+          "shape": [
+            7,
+            5
+          ]
+        }
+      },
+      "input": 320
+    },
+    "attention_q": {
+      "source_name": "model.layers.7.self_attn.q_proj",
+      "start_row": 219,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "attention_q.weight",
+          "source_offset": 1712273810,
+          "shape": [
+            32,
+            640
+          ]
+        },
+        "scales": {
+          "file": "attention_q.scales",
+          "source_offset": 2703823298,
+          "shape": [
+            32,
+            40
+          ]
+        },
+        "biases": {
+          "file": "attention_q.biases",
+          "source_offset": 3917561026,
+          "shape": [
+            32,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    },
+    "attention_o": {
+      "source_name": "model.layers.7.self_attn.o_proj",
+      "start_row": 189,
+      "rows": 7,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "attention_o.weight",
+          "source_offset": 2738257490,
+          "shape": [
+            7,
+            1536
+          ]
+        },
+        "scales": {
+          "file": "attention_o.scales",
+          "source_offset": 4404021714,
+          "shape": [
+            7,
+            96
+          ]
+        },
+        "biases": {
+          "file": "attention_o.biases",
+          "source_offset": 4376634226,
+          "shape": [
+            7,
+            96
+          ]
+        }
+      },
+      "input": 6144
+    },
+    "gdn_qkv": {
+      "source_name": "model.layers.8.linear_attn.in_proj_qkv",
+      "start_row": 13,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "gdn_qkv.weight",
+          "source_offset": 1743695602,
+          "shape": [
+            32,
+            640
+          ]
+        },
+        "scales": {
+          "file": "gdn_qkv.scales",
+          "source_offset": 2736277858,
+          "shape": [
+            32,
+            40
+          ]
+        },
+        "biases": {
+          "file": "gdn_qkv.biases",
+          "source_offset": 3252189794,
+          "shape": [
+            32,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    },
+    "embedding": {
+      "source_name": "model.embed_tokens",
+      "start_row": 760,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "embedding.weight",
+          "source_offset": 112076690,
+          "shape": [
+            32,
+            640
+          ]
+        },
+        "scales": {
+          "file": "embedding.scales",
+          "source_offset": 90326290,
+          "shape": [
+            32,
+            40
+          ]
+        },
+        "biases": {
+          "file": "embedding.biases",
+          "source_offset": 70460690,
+          "shape": [
+            32,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    },
+    "lm_head": {
+      "source_name": "lm_head",
+      "start_row": 9338,
+      "rows": 32,
+      "bits": 8,
+      "group": 64,
+      "tensors": {
+        "weight": {
+          "file": "lm_head.weight",
+          "source_offset": 3303905874,
+          "shape": [
+            32,
+            640
+          ]
+        },
+        "scales": {
+          "file": "lm_head.scales",
+          "source_offset": 20633010,
+          "shape": [
+            32,
+            40
+          ]
+        },
+        "biases": {
+          "file": "lm_head.biases",
+          "source_offset": 767410,
+          "shape": [
+            32,
+            40
+          ]
+        }
+      },
+      "input": 2560
+    }
+  },
+  "cases": [
+    {
+      "name": "shared_gate-1",
+      "op": "linear",
+      "matrix": "shared_gate",
+      "tokens": 1,
+      "input": "shared_gate-1.input",
+      "expected": "shared_gate-1.expected",
+      "batch_expected": "shared_gate-1.batch"
+    },
+    {
+      "name": "shared_gate-1-fused",
+      "op": "gated",
+      "matrix": "shared_gate",
+      "up": "shared_up",
+      "tokens": 2,
+      "rows": [
+        0,
+        0
+      ],
+      "input": "shared_gate-1.input",
+      "expected": "shared_gate-1.fused"
+    },
+    {
+      "name": "shared_gate-3",
+      "op": "linear",
+      "matrix": "shared_gate",
+      "tokens": 3,
+      "input": "shared_gate-3.input",
+      "expected": "shared_gate-3.expected",
+      "batch_expected": "shared_gate-3.batch"
+    },
+    {
+      "name": "shared_gate-3-fused",
+      "op": "gated",
+      "matrix": "shared_gate",
+      "up": "shared_up",
+      "tokens": 4,
+      "rows": [
+        2,
+        1,
+        0,
+        0
+      ],
+      "input": "shared_gate-3.input",
+      "expected": "shared_gate-3.fused"
+    },
+    {
+      "name": "shared_gate-17",
+      "op": "linear",
+      "matrix": "shared_gate",
+      "tokens": 17,
+      "input": "shared_gate-17.input",
+      "expected": "shared_gate-17.expected",
+      "batch_expected": "shared_gate-17.batch"
+    },
+    {
+      "name": "shared_gate-17-fused",
+      "op": "gated",
+      "matrix": "shared_gate",
+      "up": "shared_up",
+      "tokens": 18,
+      "rows": [
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0,
+        0
+      ],
+      "input": "shared_gate-17.input",
+      "expected": "shared_gate-17.fused"
+    },
+    {
+      "name": "shared_up-1",
+      "op": "linear",
+      "matrix": "shared_up",
+      "tokens": 1,
+      "input": "shared_up-1.input",
+      "expected": "shared_up-1.expected",
+      "batch_expected": "shared_up-1.batch"
+    },
+    {
+      "name": "shared_up-3",
+      "op": "linear",
+      "matrix": "shared_up",
+      "tokens": 3,
+      "input": "shared_up-3.input",
+      "expected": "shared_up-3.expected",
+      "batch_expected": "shared_up-3.batch"
+    },
+    {
+      "name": "shared_up-17",
+      "op": "linear",
+      "matrix": "shared_up",
+      "tokens": 17,
+      "input": "shared_up-17.input",
+      "expected": "shared_up-17.expected",
+      "batch_expected": "shared_up-17.batch"
+    },
+    {
+      "name": "shared_down-1",
+      "op": "linear",
+      "matrix": "shared_down",
+      "tokens": 1,
+      "input": "shared_down-1.input",
+      "expected": "shared_down-1.expected",
+      "batch_expected": "shared_down-1.batch"
+    },
+    {
+      "name": "shared_down-3",
+      "op": "linear",
+      "matrix": "shared_down",
+      "tokens": 3,
+      "input": "shared_down-3.input",
+      "expected": "shared_down-3.expected",
+      "batch_expected": "shared_down-3.batch"
+    },
+    {
+      "name": "shared_down-17",
+      "op": "linear",
+      "matrix": "shared_down",
+      "tokens": 17,
+      "input": "shared_down-17.input",
+      "expected": "shared_down-17.expected",
+      "batch_expected": "shared_down-17.batch"
+    },
+    {
+      "name": "hyper_down-1",
+      "op": "linear",
+      "matrix": "hyper_down",
+      "tokens": 1,
+      "input": "hyper_down-1.input",
+      "expected": "hyper_down-1.expected",
+      "batch_expected": "hyper_down-1.batch"
+    },
+    {
+      "name": "hyper_down-3",
+      "op": "linear",
+      "matrix": "hyper_down",
+      "tokens": 3,
+      "input": "hyper_down-3.input",
+      "expected": "hyper_down-3.expected",
+      "batch_expected": "hyper_down-3.batch"
+    },
+    {
+      "name": "hyper_down-17",
+      "op": "linear",
+      "matrix": "hyper_down",
+      "tokens": 17,
+      "input": "hyper_down-17.input",
+      "expected": "hyper_down-17.expected",
+      "batch_expected": "hyper_down-17.batch"
+    },
+    {
+      "name": "hyper_up-1",
+      "op": "linear",
+      "matrix": "hyper_up",
+      "tokens": 1,
+      "input": "hyper_up-1.input",
+      "expected": "hyper_up-1.expected",
+      "batch_expected": "hyper_up-1.batch"
+    },
+    {
+      "name": "hyper_up-3",
+      "op": "linear",
+      "matrix": "hyper_up",
+      "tokens": 3,
+      "input": "hyper_up-3.input",
+      "expected": "hyper_up-3.expected",
+      "batch_expected": "hyper_up-3.batch"
+    },
+    {
+      "name": "hyper_up-17",
+      "op": "linear",
+      "matrix": "hyper_up",
+      "tokens": 17,
+      "input": "hyper_up-17.input",
+      "expected": "hyper_up-17.expected",
+      "batch_expected": "hyper_up-17.batch"
+    },
+    {
+      "name": "attention_q-1",
+      "op": "linear",
+      "matrix": "attention_q",
+      "tokens": 1,
+      "input": "attention_q-1.input",
+      "expected": "attention_q-1.expected",
+      "batch_expected": "attention_q-1.batch"
+    },
+    {
+      "name": "attention_q-3",
+      "op": "linear",
+      "matrix": "attention_q",
+      "tokens": 3,
+      "input": "attention_q-3.input",
+      "expected": "attention_q-3.expected",
+      "batch_expected": "attention_q-3.batch"
+    },
+    {
+      "name": "attention_q-17",
+      "op": "linear",
+      "matrix": "attention_q",
+      "tokens": 17,
+      "input": "attention_q-17.input",
+      "expected": "attention_q-17.expected",
+      "batch_expected": "attention_q-17.batch"
+    },
+    {
+      "name": "attention_o-1",
+      "op": "linear",
+      "matrix": "attention_o",
+      "tokens": 1,
+      "input": "attention_o-1.input",
+      "expected": "attention_o-1.expected",
+      "batch_expected": "attention_o-1.batch"
+    },
+    {
+      "name": "attention_o-3",
+      "op": "linear",
+      "matrix": "attention_o",
+      "tokens": 3,
+      "input": "attention_o-3.input",
+      "expected": "attention_o-3.expected",
+      "batch_expected": "attention_o-3.batch"
+    },
+    {
+      "name": "attention_o-17",
+      "op": "linear",
+      "matrix": "attention_o",
+      "tokens": 17,
+      "input": "attention_o-17.input",
+      "expected": "attention_o-17.expected",
+      "batch_expected": "attention_o-17.batch"
+    },
+    {
+      "name": "gdn_qkv-1",
+      "op": "linear",
+      "matrix": "gdn_qkv",
+      "tokens": 1,
+      "input": "gdn_qkv-1.input",
+      "expected": "gdn_qkv-1.expected",
+      "batch_expected": "gdn_qkv-1.batch"
+    },
+    {
+      "name": "gdn_qkv-3",
+      "op": "linear",
+      "matrix": "gdn_qkv",
+      "tokens": 3,
+      "input": "gdn_qkv-3.input",
+      "expected": "gdn_qkv-3.expected",
+      "batch_expected": "gdn_qkv-3.batch"
+    },
+    {
+      "name": "gdn_qkv-17",
+      "op": "linear",
+      "matrix": "gdn_qkv",
+      "tokens": 17,
+      "input": "gdn_qkv-17.input",
+      "expected": "gdn_qkv-17.expected",
+      "batch_expected": "gdn_qkv-17.batch"
+    },
+    {
+      "name": "embedding-1",
+      "op": "linear",
+      "matrix": "embedding",
+      "tokens": 1,
+      "input": "embedding-1.input",
+      "expected": "embedding-1.expected",
+      "batch_expected": "embedding-1.batch"
+    },
+    {
+      "name": "embedding-3",
+      "op": "linear",
+      "matrix": "embedding",
+      "tokens": 3,
+      "input": "embedding-3.input",
+      "expected": "embedding-3.expected",
+      "batch_expected": "embedding-3.batch"
+    },
+    {
+      "name": "embedding-17",
+      "op": "linear",
+      "matrix": "embedding",
+      "tokens": 17,
+      "input": "embedding-17.input",
+      "expected": "embedding-17.expected",
+      "batch_expected": "embedding-17.batch"
+    },
+    {
+      "name": "embedding-copies1",
+      "op": "embedding",
+      "matrix": "embedding",
+      "ids": [
+        31,
+        0,
+        13,
+        13,
+        7
+      ],
+      "copies": 1,
+      "expected": "embedding-copies1.expected"
+    },
+    {
+      "name": "embedding-copies4",
+      "op": "embedding",
+      "matrix": "embedding",
+      "ids": [
+        31,
+        0,
+        13,
+        13,
+        7
+      ],
+      "copies": 4,
+      "expected": "embedding-copies4.expected"
+    },
+    {
+      "name": "lm_head-1",
+      "op": "linear",
+      "matrix": "lm_head",
+      "tokens": 1,
+      "input": "lm_head-1.input",
+      "expected": "lm_head-1.expected",
+      "batch_expected": "lm_head-1.batch"
+    },
+    {
+      "name": "lm_head-3",
+      "op": "linear",
+      "matrix": "lm_head",
+      "tokens": 3,
+      "input": "lm_head-3.input",
+      "expected": "lm_head-3.expected",
+      "batch_expected": "lm_head-3.batch"
+    },
+    {
+      "name": "lm_head-17",
+      "op": "linear",
+      "matrix": "lm_head",
+      "tokens": 17,
+      "input": "lm_head-17.input",
+      "expected": "lm_head-17.expected",
+      "batch_expected": "lm_head-17.batch"
+    }
+  ],
+  "arithmetic": "BF16 inputs, fixed per-token MLX QMV; batch QMM is a separate tolerance comparison",
+  "full_model_verified": false,
+  "quality_qualified": false,
+  "reference_peak_bytes": 5608416
+}

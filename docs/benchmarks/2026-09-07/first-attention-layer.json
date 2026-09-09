@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "full_model_verified": false,
+  "build_fingerprint": "8c56e73ec097e9520f95e63a7bfe97c9b381cd5f94a233da95e1f7686b044107",
+  "checks": [
+    {
+      "name": "first_complete_attention_layer_on_identical_input",
+      "passed": true,
+      "layer": 3,
+      "token_count": 5,
+      "output_values": 12800,
+      "sha256": "04f40f7a6b592719df40a1676a0ec353773b1f4758a4586fda55d1023ff5e925"
+    }
+  ],
+  "reference": "/private/tmp/freellm-sept7-layer3",
+  "native": "/private/tmp/freellm-final-attention-replay"
+}

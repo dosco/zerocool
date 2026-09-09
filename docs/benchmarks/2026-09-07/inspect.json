@@ -1,0 +1,56 @@
+{
+  "model": "Qwen3.8-Flash-Next",
+  "revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+  "tensors": 3215,
+  "tensor_bytes": 103769745912,
+  "resident_allocation_bytes": 2937683968,
+  "expert_bytes": 67947724800,
+  "ngram_bytes": 32000153600,
+  "expert_record_bytes": 2764800,
+  "source_format": "MLX affine Q4",
+  "identity_status": "pinned hash receipt and current file fingerprints validated",
+  "memory_plan": {
+    "limit_bytes": 22906503168,
+    "resident_bytes": 2937683968,
+    "session_bytes": 133169152,
+    "scratch_bytes": 134217728,
+    "ngram_bytes": 67108864,
+    "reserve_bytes": 1073741824,
+    "expert_bytes": 18559909888,
+    "expert_slots": 6703,
+    "planned_bytes": 22905831424
+  },
+  "machine": {
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "33f1a986175d94cc8a7fc545d22f089fa70e7620d9a4e51acec91f325749057c",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 0,
+    "peak_buffer_bytes": 0,
+    "dispatches": 0,
+    "submissions": 0,
+    "waits": 0
+  },
+  "process": {
+    "physical_footprint_bytes": 6293056,
+    "resident_bytes": 13565952,
+    "compressed_bytes": 0,
+    "system_swap_used_bytes": 25208422400,
+    "reclaimable_bytes": 10073522176
+  },
+  "current_admission": {
+    "limit_bytes": 8462909440,
+    "resident_bytes": 2937683968,
+    "session_bytes": 133169152,
+    "scratch_bytes": 134217728,
+    "ngram_bytes": 67108864,
+    "reserve_bytes": 1073741824,
+    "expert_bytes": 4114579456,
+    "expert_slots": 1486,
+    "planned_bytes": 8460500992
+  }
+}

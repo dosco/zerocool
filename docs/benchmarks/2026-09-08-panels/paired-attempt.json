@@ -1,0 +1,11 @@
+{
+  "kind": "normal_request_panel_comparison",
+  "build_fingerprint": "86d30a8a70f848c55d18d9ceeb77750a918fee90ad8f55e8b2da2a600a6b2cc9",
+  "workload_sha256": "ee84a428e69d8104315ad57b170b93026c037e2f4d041dec889e57df9e77c766",
+  "generator_sha256": "526417910fb89e7885abd007885fb398dacee1fe4ccda934b52a76316056a7f3",
+  "pairs": 5,
+  "budget_bytes": 8053063680,
+  "complete": false,
+  "error": "Comparison cannot admit the requested memory/panel: {'error': 'memory admission requires at least 5275336704 bytes including 32 expert slots; available engine budget is 1644642304 bytes', 'reclaimable_bytes': 3255255040}",
+  "measurements": []
+}

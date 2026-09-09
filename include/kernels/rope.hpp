@@ -93,45 +93,49 @@ public:
         Tensor result = x.copy();
         float* data = result.data();
 
-        // Apply rotation for each position, head, and dimension pair
+        // Apply rotation for each position and head
         for (size_t pos = 0; pos < seq_len; ++pos) {
             size_t cache_pos = position_offset + pos;
 
             for (size_t h = 0; h < n_heads; ++h) {
-                size_t i = 0;
+                size_t head_start = pos * (n_heads * head_dim) + h * head_dim;
+                size_t half_dim = head_dim / 2;
 
+                size_t i = 0;
+                
                 #if defined(__aarch64__) || defined(_M_ARM64)
-                // NEON optimization: process 4 pairs (8 elements) at a time
-                for (; i + 4 <= head_dim / 2; i += 4) {
-                    size_t idx_base = pos * (n_heads * head_dim) + h * head_dim + 2 * i;
+                // NEON optimization: process 4 floats (2 pairs? No, 4 pairs if we load 4 from each half)
+                // We process 4 'i' indices at a time.
+                // Loads 4 floats from lower half, 4 from upper half.
+                for (; i + 4 <= half_dim; i += 4) {
+                    // Load 4 pairs (8 floats) de-interleaved
+                    // x_even gets [x0, x2, x4, x6], x_odd gets [x1, x3, x5, x7]
+                    float32x4x2_t loaded = vld2q_f32(&data[head_start + 2 * i]);
+                    float32x4_t x_even = loaded.val[0];
+                    float32x4_t x_odd = loaded.val[1];
                     
-                    // Load 8 floats (4 pairs) deinterleaved:
-                    // x_pairs.val[0] = evens, x_pairs.val[1] = odds
-                    float32x4x2_t x_pairs = vld2q_f32(&data[idx_base]);
-                    float32x4_t x_even = x_pairs.val[0];
-                    float32x4_t x_odd = x_pairs.val[1];
-                    
-                    // Load cos and sin (contiguous in cache)
+                    // Load cos and sin (contiguous in cache, 4 values corresponding to the 4 pairs)
                     float32x4_t cos_vals = vld1q_f32(&cos_cache_.at({cache_pos, i}));
                     float32x4_t sin_vals = vld1q_f32(&sin_cache_.at({cache_pos, i}));
                     
-                    // Compute rotation
+                    // Rotate
                     // out_even = x_even * cos - x_odd * sin
                     float32x4_t out_even = vmlsq_f32(vmulq_f32(x_even, cos_vals), x_odd, sin_vals);
-                    // out_odd  = x_even * sin + x_odd * cos
-                    float32x4_t out_odd  = vmlaq_f32(vmulq_f32(x_even, sin_vals), x_odd, cos_vals);
+                    // out_odd = x_even * sin + x_odd * cos
+                    float32x4_t out_odd = vmlaq_f32(vmulq_f32(x_odd, cos_vals), x_even, sin_vals);
                     
-                    // Store interleaved
-                    float32x4x2_t out_pairs;
-                    out_pairs.val[0] = out_even;
-                    out_pairs.val[1] = out_odd;
-                    vst2q_f32(&data[idx_base], out_pairs);
+                    // Store interleaved results
+                    float32x4x2_t out_interleaved;
+                    out_interleaved.val[0] = out_even;
+                    out_interleaved.val[1] = out_odd;
+                    vst2q_f32(&data[head_start + 2 * i], out_interleaved);
                 }
                 #endif
 
-                for (; i < head_dim / 2; ++i) {
-                    size_t idx_even = pos * (n_heads * head_dim) + h * head_dim + 2 * i;
-                    size_t idx_odd = idx_even + 1;
+                // Scalar fallback for interleaved RoPE
+                for (; i < half_dim; ++i) {
+                    size_t idx_even = head_start + 2 * i;
+                    size_t idx_odd = head_start + 2 * i + 1;
 
                     float x_even = data[idx_even];
                     float x_odd = data[idx_odd];
@@ -139,9 +143,8 @@ public:
                     float cos_val = cos_cache_.at({cache_pos, i});
                     float sin_val = sin_cache_.at({cache_pos, i});
 
-                    // Rotation matrix:
-                    // [cos  -sin] [x_even]
-                    // [sin   cos] [x_odd ]
+                    // [cos -sin] [x_even]
+                    // [sin  cos] [x_odd ]
                     data[idx_even] = x_even * cos_val - x_odd * sin_val;
                     data[idx_odd] = x_even * sin_val + x_odd * cos_val;
                 }

@@ -171,6 +171,13 @@ MetalBackend::MetalBackend(int device_id) {
             load_kernel("paged_attention");
             load_kernel("paged_attention_int8");
             load_kernel("quantize_store_kv");
+
+            // MoE kernels
+            load_kernel("moe_gate_softmax");
+            load_kernel("moe_topk_experts");
+            load_kernel("moe_aggregate");
+            load_kernel("moe_swiglu_ffn");
+            load_kernel("softmax");
         }
     }
 }

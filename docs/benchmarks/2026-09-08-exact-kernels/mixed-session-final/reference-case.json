@@ -1,0 +1,29 @@
+{
+  "context": 256,
+  "chunk": 1,
+  "memory_gib": 8.0,
+  "layers": 48,
+  "artifact": "mixed-4_8bit",
+  "expert_slots": 32,
+  "diagnostic_stream_trunk": false,
+  "require_exact_panel": true,
+  "panels": [
+    256
+  ],
+  "prefix": [
+    248045,
+    8678,
+    198,
+    24342,
+    286
+  ],
+  "append": [
+    248045,
+    8678,
+    198
+  ],
+  "continuation": [
+    760,
+    369
+  ]
+}

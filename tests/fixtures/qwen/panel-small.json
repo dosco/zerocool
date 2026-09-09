@@ -1,0 +1,10 @@
+{
+  "context": 256,
+  "chunk": 1,
+  "memory_gib": 3,
+  "layers": 48,
+  "panels": [0, 256, 512, 1024],
+  "prefix": [760, 6511, 314, 9338, 369],
+  "append": [248044, 760, 9338],
+  "continuation": [11751, 314]
+}

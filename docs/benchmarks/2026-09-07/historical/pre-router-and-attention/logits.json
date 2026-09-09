@@ -1,0 +1,43 @@
+{
+  "passed": false,
+  "layers": 48,
+  "native_tokens": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "reference_tokens": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "build_fingerprint": "89c52d41f0cf80f4a5b63244d08a1f255f40bb23c5272d4a1e87f3db46ff0de9",
+  "reference": {
+    "kind": "checkpoint_original_mlx_layers",
+    "layers": 48,
+    "tokens": [
+      760,
+      6511,
+      314,
+      9338,
+      369
+    ],
+    "mlx": "0.31.1",
+    "greedy_id": 11751,
+    "logits": "/private/tmp/freellm-original-mlx/logits.f32",
+    "elapsed_seconds": 17.218627667054534
+  },
+  "relative_l2": 0.172062486410141,
+  "cosine": 0.9864110946655273,
+  "reference_greedy_id": 11751,
+  "native_greedy_id": 11751,
+  "thresholds": {
+    "relative_l2_max": 0.02,
+    "cosine_min": 0.9998
+  },
+  "diagnostic_stream_trunk": true
+}

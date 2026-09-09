@@ -1,0 +1,33 @@
+{
+  "402c3a65": {
+    "build_fingerprint": "402c3a651b2f720b2ae48f9319408415c8746b566dfbcba5f6f5a40671d183b8",
+    "binary_sha256": "79306e6f7eee8b397295e0436bd1ecc87153f477c2f266bbd1f6d6c09f1543c5",
+    "source_archive_sha256": "75b5cc64fe820141af21a588adcccdaf199fcd3e03bdcaa5ba20d0785af6b707",
+    "metal_kernel_sha256": "36cded055767668d374d23a17f9d3c2c44796b6cb1f30d485598cba0907cc4d9",
+    "kernel_source_unchanged_from_measurement_build": "4a19a77ebcdb21506068e602310b740afa42df4b085365943ead5c28015643d4"
+  },
+  "a019141b": {
+    "build_fingerprint": "a019141b9cff57922cf945a4e951294ac2c7394408b43b53db1a6267db53c7f3",
+    "files": {
+      "qwen_panel_check": "95af6b4249f3e6854391a7cff4142693b5bd91fe9cd3859a980fdbfbd0e9c57d",
+      "native-sources.tar.gz": "108ff5aa75ca7c8226f83220a50d8ce29af69c3bb775985056db4850c4f2b218",
+      "freellm": "5175b599671a3b8bc188e3371eeadc12ce7c4cad21ff396889b9edf17140a5e7"
+    }
+  },
+  "f412c50f": {
+    "build_fingerprint": "f412c50f0c83182e28a0907473ca3d42b4c02451a6dc7cab104422806f346f8a",
+    "files": {
+      "qwen_panel_check": "90e2468bcafe16e7dfdec748e87dc0160564dc4ca7392de14a7f96535e5dfcd5",
+      "native-sources.tar.gz": "aa8051b7d6750acc55eed262c19049d135a96acf81fd5b100230421714dfeb3c",
+      "freellm": "99b8165b0494b05222fa06b3bfad0ceeb34c221c69f1f7f70706209c94f12ec4"
+    }
+  },
+  "b3d9e55d": {
+    "build_fingerprint": "b3d9e55d080f62026ded72ceaf135142814498e6d4f4e1844d81973fe73ac0fc",
+    "files": {
+      "freellm": "da59c21320edeb3f7abb0135842d68ce9dfe4bfc27e12bd7de6695a7c2476a16",
+      "native-sources.tar.gz": "1865608dc82ad951b9dc1d54d99c9c1ecfc4ffc1d9adbbbd7bbe04f9d5712fec",
+      "qwen_panel_check": "c5da8e00a4b2966ec2e5ae063aa1651536b5861b6f2109d13413aa7e8b3f170f"
+    }
+  }
+}

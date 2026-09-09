@@ -1,7 +1,13 @@
 # Build directories
 build/
+.cache/
 cmake-build-*/
 out/
+
+# Python runtime caches
+__pycache__/
+*.pyc
+*.pyo
 
 # CMake
 CMakeCache.txt
@@ -9,6 +15,7 @@ CMakeFiles/
 cmake_install.cmake
 Makefile
 *.cmake
+!cmake/*.cmake
 
 # Compiled Object files
 *.o

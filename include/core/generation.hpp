@@ -343,6 +343,9 @@ inline std::vector<int> generate(
         // --------------------------------------------------------------------
         tokens.push_back(next_token);
 
+
+
+
         // Calculate elapsed time for this step
         auto step_duration = std::chrono::duration_cast<std::chrono::milliseconds>(step_end - step_start);
         double elapsed_ms = step_duration.count();
@@ -362,17 +365,11 @@ inline std::vector<int> generate(
 
         // Stop if we hit end-of-sequence token
         if (config.eos_token_id >= 0 && next_token == config.eos_token_id) {
-            if (config.verbose) {
-                std::println("\nStopped: EOS token generated");
-            }
             break;
         }
 
         // Stop if we reach maximum context length
         if (tokens.size() >= model.config().max_seq_len) {
-            if (config.verbose) {
-                std::println("\nStopped: Reached maximum context length");
-            }
             break;
         }
 

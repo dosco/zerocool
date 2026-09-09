@@ -1,0 +1,25 @@
+{
+  "kind": "exact_kernel_normal_requests",
+  "mode": "screen",
+  "build": "4a19a77ebcdb21506068e602310b740afa42df4b085365943ead5c28015643d4",
+  "artifact": "mixed-4_8bit",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "workload_sha256": "ee84a428e69d8104315ad57b170b93026c037e2f4d041dec889e57df9e77c766",
+  "runner_sha256": "00784a29e76224d67977933987c53eec14084856b23f96cb37669f91adba4e90",
+  "configurations": [
+    {
+      "name": "tile8-precompute",
+      "kernel_policy": "candidate",
+      "token_tile": 8,
+      "gdn_path": "precompute",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8
+    }
+  ],
+  "budget_bytes": 12884901888,
+  "complete": false,
+  "error": "Changed or missing sampling settings",
+  "measurements": []
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "checkpoint_original_mlx_layers",
+  "layers": 48,
+  "tokens": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "mlx": "0.31.1",
+  "source_repo": "pipenetwork/Qwen3.8-Flash-Next-MLX-mixed-4_8bit",
+  "source_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "file_lock_sha256": "a8257f7f5feb9aa5ae9614c684d9ebb332988e3d3a9755368bbeb049aebdb187",
+  "generator_sha256": "64e3f9573c3b5c4fdedb58c350b40bb94a9a17124adb7f259753ff5acc248fac",
+  "reader_sha256": "1396c2acfe2880e5fa195a685a1699c458df606a0c96daf9566b857a35af6084",
+  "greedy_id": 11751,
+  "logits": "/private/tmp/freellm-mixed-original-mlx/logits.f32",
+  "elapsed_seconds": 15.709627833217382,
+  "reference_peak_metal_bytes": 151417852
+}

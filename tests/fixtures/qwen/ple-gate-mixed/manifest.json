@@ -1,0 +1,27 @@
+{
+  "source_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "mlx": "0.31.1",
+  "layer": 1,
+  "token": 4,
+  "hyper_head": 1,
+  "reference_product_sum": -312.0,
+  "old_fp32_product_sum": -314.0,
+  "files": {
+    "key.f32": {
+      "bytes": 10240,
+      "sha256": "45b55b452a33c393dffa53481c17e3729cd2f3cf4c628ecc258d8d4efd1827e0"
+    },
+    "query.f32": {
+      "bytes": 10240,
+      "sha256": "5dc0a229ed83ab61f250bdc2631a10826c63cc3b52a5826716eb2939e4a5d2d8"
+    },
+    "value.f32": {
+      "bytes": 10240,
+      "sha256": "96f08ffb2da84e18c3c92db1f6d840df3d99c75a685f31533cf9568b2934249a"
+    },
+    "expected.f32": {
+      "bytes": 10240,
+      "sha256": "794676d9c0189cea2e290f1d6cf750e3f12492da35795521a5647d9c36b1209f"
+    }
+  }
+}

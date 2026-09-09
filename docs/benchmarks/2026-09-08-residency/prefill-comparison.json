@@ -1,0 +1,67 @@
+{
+  "build": "b3d9e55d080f62026ded72ceaf135142814498e6d4f4e1844d81973fe73ac0fc",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "generated_tokens_equal": true,
+  "repetitions": 1,
+  "qualified": false,
+  "rows": [
+    {
+      "configuration": "reference",
+      "ttft_s": 225.318319375,
+      "tokens_per_s": 2.6423332426727404,
+      "p95_ms": 450.115625,
+      "expert_slots": 1848,
+      "footprint_gib": 10.416250586509705,
+      "peak_metal_gib": 10.527801513671875,
+      "phases": {
+        "ingest": {
+          "gpu_command_ns": 220042437809,
+          "cpu_encode_ns": 471616898,
+          "cpu_gpu_wait_ns": 145437596415,
+          "allocation_count": 277190,
+          "scratch_reuses": 0,
+          "dispatches": 214529,
+          "submissions": 32010
+        },
+        "decode": {
+          "gpu_command_ns": 14628270611,
+          "cpu_encode_ns": 304533701,
+          "cpu_gpu_wait_ns": 13625422320,
+          "allocation_count": 117810,
+          "scratch_reuses": 0,
+          "dispatches": 158275,
+          "submissions": 26161
+        }
+      }
+    },
+    {
+      "configuration": "double",
+      "ttft_s": 189.841468166,
+      "tokens_per_s": 2.5653990546597414,
+      "p95_ms": 454.0665,
+      "expert_slots": 1460,
+      "footprint_gib": 9.900425732135773,
+      "peak_metal_gib": 9.9443359375,
+      "phases": {
+        "ingest": {
+          "gpu_command_ns": 187895483076,
+          "cpu_encode_ns": 455118680,
+          "cpu_gpu_wait_ns": 113385944254,
+          "allocation_count": 255243,
+          "scratch_reuses": 21559,
+          "dispatches": 214529,
+          "submissions": 32011
+        },
+        "decode": {
+          "gpu_command_ns": 14537897086,
+          "cpu_encode_ns": 316665112,
+          "cpu_gpu_wait_ns": 13563881283,
+          "allocation_count": 117810,
+          "scratch_reuses": 0,
+          "dispatches": 160025,
+          "submissions": 27093
+        }
+      }
+    }
+  ]
+}

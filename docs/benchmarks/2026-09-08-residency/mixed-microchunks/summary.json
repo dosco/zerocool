@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "kind": "exact_native_session_parity",
+  "build_fingerprint": "b3d9e55d080f62026ded72ceaf135142814498e6d4f4e1844d81973fe73ac0fc",
+  "case": "microchunks",
+  "all_48_layers": true,
+  "all_logits_and_state_equal": true,
+  "all_routes_equal": true,
+  "session_prime_checked": false,
+  "independent_long_context_oracle": false,
+  "performance_qualified": false,
+  "report_hashes": {
+    "reference": "8a2884c056528afeea2b6020872360127a4af503b8beae87b6ece66350dec189",
+    "candidate": "d8583c944ac8fa2c744a2722fd6d0b3e0f634a620bd7a0360649634afaefa9c0"
+  }
+}

@@ -110,26 +110,8 @@ inline void print_loading(const std::string& message) {
 // ========================================================================
 
 inline void print_progress_bar(size_t current, size_t total, size_t width = 30) {
-    float progress = static_cast<float>(current) / static_cast<float>(total);
-    size_t filled = static_cast<size_t>(progress * width);
-    
-    std::cout << colors::DIM << "  │ " << colors::RESET;
-    std::cout << colors::BRIGHT_CYAN << "[" << colors::RESET;
-    
-    for (size_t i = 0; i < width; ++i) {
-        if (i < filled) {
-            std::cout << colors::BRIGHT_MAGENTA << "█" << colors::RESET;
-        } else if (i == filled) {
-            std::cout << colors::BRIGHT_CYAN << "▓" << colors::RESET;
-        } else {
-            std::cout << colors::DIM << "░" << colors::RESET;
-        }
-    }
-    
-    std::cout << colors::BRIGHT_CYAN << "]" << colors::RESET;
-    std::cout << colors::BRIGHT_WHITE << " " << std::fixed << std::setprecision(1) 
-              << (progress * 100.0f) << "%" << colors::RESET;
-    std::cout << " (" << current << "/" << total << ")\r" << std::flush;
+    (void)width; // unused in simple version
+    std::cout << "[" << current << "/" << total << "]\r" << std::flush;
 }
 
 inline void print_progress_complete(size_t total) {

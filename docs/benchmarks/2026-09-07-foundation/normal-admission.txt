@@ -1,0 +1,2 @@
+Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.
+freellm: memory admission requires at least 5275484160 bytes including 32 expert slots; available engine budget is 1163214848 bytes

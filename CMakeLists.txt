@@ -7,6 +7,14 @@ project(freellm
     LANGUAGES CXX
 )
 
+# The Qwen/M1 engine is the product. The existing educational runners remain
+# available explicitly, including work in progress in the legacy source tree.
+option(FREELLM_BUILD_LEGACY "Build the educational multi-backend runners" OFF)
+if(NOT FREELLM_BUILD_LEGACY)
+    include(cmake/qwen.cmake)
+    return()
+endif()
+
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -151,11 +159,13 @@ add_library(freellm_lib STATIC ${SOURCES})
 target_compile_options(freellm_lib PRIVATE ${PROJECT_WARNINGS})
 
 # Link libraries - CMake handles include dirs automatically
-target_link_libraries(freellm_lib PRIVATE
-    re2::re2
-    nlohmann_json::nlohmann_json
-    sentencepiece-static
-    ${CMAKE_DL_LIBS}
+target_link_libraries(freellm_lib 
+    PUBLIC 
+        nlohmann_json::nlohmann_json  # Needed in headers (safetensors_loader.hpp)
+    PRIVATE
+        re2::re2
+        sentencepiece-static
+        ${CMAKE_DL_LIBS}
 )
 
 if(APPLE)

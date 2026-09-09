@@ -29,8 +29,8 @@ add_executable(test_main
     ${CMAKE_SOURCE_DIR}/src/core/tensor.cpp
 )
 
-# Link required libraries
-target_link_libraries(test_main PRIVATE sentencepiece-static)
+# Link required libraries (freellm_lib provides nlohmann_json includes)
+target_link_libraries(test_main PRIVATE freellm_lib)
 
 # Include directories (include external for doctest.h)
 target_include_directories(test_main PRIVATE

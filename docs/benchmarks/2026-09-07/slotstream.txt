@@ -1,0 +1,11 @@
+slotstream memory plan (--experts-per-layer)
+  device: 34 GB RAM (7.2 GB reclaimable now), 22.9 GB Metal working set
+  cache:  ~13 of 512 experts per layer  (640 global slots = 1.8 GB pool)
+  expect: ~7.8 GB peak, ~3 tok/s warm decode (est. from M5 Pro anchors)
+  disk:   that estimate assumes an SSD like the one it was measured on (17.3 GB/s). A base-storage Mac mini M2 reads 1.5 GB/s and decoded at 1.41 tok/s against a ~4 estimate, so on base storage expect well under the number above — see docs/HARDWARE.md
+  prefill: 256 tokens per pass (~85 tok/s here; costs ~0.3 GB of the target)
+  context: up to 32768 tokens per request (prompt + reply); a full-length prompt takes ~6.4 min before its first token here, follow-up turns read only what is new
+  reuse:  up to 480 tokens across 4 conversations (~0.4 GB), so a follow-up turn re-prefills only what is new
+  note:   raised to the floor of 640 slots (~13/layer): below it a prefill chunk can pin every slot
+  note:   only 7.2 GB is reclaimable right now — expect paging until other apps release memory (auto would size to the machine)
+MLX error: Failed to load the default metallib. This library is using language version 4.0 which is not supported on this OS. library not found library not found library not found  at /Users/runner/work/slotstream/slotstream/.build/checkouts/mlx-swift/Source/Cmlx/mlx-c/mlx/c/memory.cpp:69

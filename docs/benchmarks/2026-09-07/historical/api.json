@@ -1,0 +1,231 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "chat",
+      "passed": true,
+      "seconds": 6.516365124844015,
+      "detail": {
+        "id": "chatcmpl-freellm-1",
+        "object": "chat.completion",
+        "model": "qwen3.8-flash-next:4bit",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "OK"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 2,
+          "total_tokens": 19,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "freellm": {
+          "prompt_tokens": 17,
+          "reused_tokens": 0,
+          "prefill_tokens": 17,
+          "output_tokens": 2,
+          "time_to_first_token_ms": 5475.460875,
+          "prefill_ms": 5475.017583,
+          "decode_ms": 1037.272041,
+          "tokens_per_second": 0.9640672460774444,
+          "p50_token_ms": 1037.272041,
+          "p95_token_ms": 1037.272041,
+          "p99_token_ms": 1037.272041,
+          "token_latency_ms": [
+            1037.272041
+          ],
+          "output_token_ids": [
+            3793,
+            248046
+          ],
+          "finish_reason": "stop",
+          "text": "OK"
+        }
+      }
+    },
+    {
+      "name": "stream",
+      "passed": true,
+      "seconds": 5.704019334167242,
+      "detail": {
+        "text": "OK",
+        "finished": true,
+        "done": true
+      }
+    },
+    {
+      "name": "invalid_requests",
+      "passed": true,
+      "seconds": 0.0014786245301365852,
+      "detail": "Both invalid requests were rejected before inference"
+    },
+    {
+      "name": "tool_call",
+      "passed": true,
+      "seconds": 93.53500895854086,
+      "detail": {
+        "id": "chatcmpl-freellm-3",
+        "object": "chat.completion",
+        "model": "qwen3.8-flash-next:4bit",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "chatcmpl-freellm-3-0",
+                  "type": "function",
+                  "function": {
+                    "name": "read_file",
+                    "arguments": "{\"path\":\"maths.py\"}"
+                  }
+                }
+              ]
+            },
+            "finish_reason": "tool_calls"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 281,
+          "completion_tokens": 27,
+          "total_tokens": 308,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "freellm": {
+          "prompt_tokens": 281,
+          "reused_tokens": 0,
+          "prefill_tokens": 281,
+          "output_tokens": 27,
+          "time_to_first_token_ms": 67738.210125,
+          "prefill_ms": 67737.762166,
+          "decode_ms": 25744.147252,
+          "tokens_per_second": 1.0099382879337797,
+          "p50_token_ms": 946.4605,
+          "p95_token_ms": 1264.331083,
+          "p99_token_ms": 1364.343833,
+          "token_latency_ms": [
+            1019.708584,
+            912.565209,
+            896.20725,
+            920.639666,
+            1233.758958,
+            971.556917,
+            918.160375,
+            901.141666,
+            965.780292,
+            954.286709,
+            1364.343833,
+            1264.331083,
+            1081.1755,
+            970.221291,
+            962.011667,
+            1041.412417,
+            1029.985458,
+            919.7695,
+            899.692917,
+            925.478167,
+            976.903,
+            946.4605,
+            901.929292,
+            921.720959,
+            930.218417,
+            914.687625
+          ],
+          "output_token_ids": [
+            248058,
+            198,
+            27,
+            1628,
+            86779,
+            2378,
+            29,
+            198,
+            27,
+            15704,
+            79114,
+            29,
+            198,
+            10065,
+            82,
+            6971,
+            198,
+            510,
+            15704,
+            29,
+            198,
+            510,
+            1628,
+            29,
+            198,
+            248059,
+            248046
+          ],
+          "finish_reason": "stop",
+          "text": "<tool_call>\n<function=read_file>\n<parameter=path>\nmaths.py\n</parameter>\n</function>\n</tool_call>"
+        }
+      }
+    },
+    {
+      "name": "disconnect_recovery",
+      "passed": true,
+      "seconds": 6.282578459009528,
+      "detail": {
+        "id": "chatcmpl-freellm-5",
+        "object": "chat.completion",
+        "model": "qwen3.8-flash-next:4bit",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "OK"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 2,
+          "total_tokens": 19,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "freellm": {
+          "prompt_tokens": 17,
+          "reused_tokens": 0,
+          "prefill_tokens": 17,
+          "output_tokens": 2,
+          "time_to_first_token_ms": 4889.783833,
+          "prefill_ms": 4889.2885,
+          "decode_ms": 1244.821708,
+          "tokens_per_second": 0.8033278931218639,
+          "p50_token_ms": 1244.821708,
+          "p95_token_ms": 1244.821708,
+          "p99_token_ms": 1244.821708,
+          "token_latency_ms": [
+            1244.821708
+          ],
+          "output_token_ids": [
+            3793,
+            248046
+          ],
+          "finish_reason": "stop",
+          "text": "OK"
+        }
+      }
+    }
+  ]
+}

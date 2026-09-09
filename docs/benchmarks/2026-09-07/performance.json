@@ -1,0 +1,8 @@
+{
+  "complete": false,
+  "passed": false,
+  "build_fingerprint": "8c56e73ec097e9520f95e63a7bfe97c9b381cd5f94a233da95e1f7686b044107",
+  "runs": [],
+  "attempt_report": "performance-startup.json",
+  "note": "No normal throughput measurement was produced; memory admission refused startup. Acceptance workloads remain unqualified."
+}

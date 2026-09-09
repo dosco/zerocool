@@ -1,0 +1,33 @@
+{
+  "kind": "paired_cached_decode_comparison",
+  "build_fingerprint": "a6e5e9cd4b744d3cf0a3f7cf6fe1d45763048876bcedfddc26e19eb0565b1aba",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "prompt_tokens": 2048,
+  "q8_decode_rows": 2,
+  "pairs": 5,
+  "control_ms": [
+    275.039792,
+    276.672542,
+    282.166084,
+    279.398,
+    270.687417
+  ],
+  "candidate_ms": [
+    194.315916,
+    188.885,
+    194.729292,
+    188.803667,
+    192.395959
+  ],
+  "control_median_ms": 276.672542,
+  "candidate_median_ms": 192.395959,
+  "latency_ratio": {
+    "median": 0.6901229560956021,
+    "low": 0.6757516768194475,
+    "high": 0.7107680184483789,
+    "pairs": 5
+  },
+  "exact": true,
+  "application_read_bytes": 0,
+  "normal_request_latency_qualified": false
+}

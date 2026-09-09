@@ -1,0 +1,423 @@
+{
+  "kind": "instrumented_cached_decode_attribution",
+  "build_fingerprint": "df72c5fc8798d8854cbd6bb00b13d62a27830ca7db32104984ac26f38a414ad3",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "repetitions": 3,
+  "instrumented_forward_median_ms": 339.646625,
+  "mean_dispatches": 2287.0,
+  "mean_submissions": 301.0,
+  "stages": [
+    {
+      "name": "gdn",
+      "mean_ms_per_token": 69.81729266666667
+    },
+    {
+      "name": "routed_expert",
+      "mean_ms_per_token": 32.254658
+    },
+    {
+      "name": "attention",
+      "mean_ms_per_token": 26.692486
+    },
+    {
+      "name": "attention_input",
+      "mean_ms_per_token": 20.905407333333333
+    },
+    {
+      "name": "mlp_input",
+      "mean_ms_per_token": 20.13983633333333
+    },
+    {
+      "name": "router",
+      "mean_ms_per_token": 19.503472666666667
+    },
+    {
+      "name": "logits",
+      "mean_ms_per_token": 18.592722666666667
+    },
+    {
+      "name": "shared_expert",
+      "mean_ms_per_token": 8.527151333333334
+    },
+    {
+      "name": "mlp_residual",
+      "mean_ms_per_token": 2.847485
+    },
+    {
+      "name": "expert_reduce",
+      "mean_ms_per_token": 0.3453073333333333
+    },
+    {
+      "name": "attention_residual",
+      "mean_ms_per_token": 0.26116933333333336
+    },
+    {
+      "name": "embedding",
+      "mean_ms_per_token": 0.018152666666666668
+    }
+  ],
+  "kernels": [
+    {
+      "name": "q8_mm_r2_t1",
+      "mean_ms_per_token": 117.53102166666667
+    },
+    {
+      "name": "plain_mm",
+      "mean_ms_per_token": 25.918291333333332
+    },
+    {
+      "name": "q4_expert_gate_group",
+      "mean_ms_per_token": 23.483955666666667
+    },
+    {
+      "name": "route",
+      "mean_ms_per_token": 17.64648366666667
+    },
+    {
+      "name": "q4_expert_down_group",
+      "mean_ms_per_token": 8.770702333333334
+    },
+    {
+      "name": "norm",
+      "mean_ms_per_token": 7.162987666666667
+    },
+    {
+      "name": "attention_values",
+      "mean_ms_per_token": 4.534500333333333
+    },
+    {
+      "name": "q8_gate_up",
+      "mean_ms_per_token": 3.1162216666666667
+    },
+    {
+      "name": "attention_scores",
+      "mean_ms_per_token": 2.5682633333333333
+    },
+    {
+      "name": "unary",
+      "mean_ms_per_token": 1.9066516666666666
+    },
+    {
+      "name": "router_mm",
+      "mean_ms_per_token": 1.610544
+    },
+    {
+      "name": "gdn_scan_prepared",
+      "mean_ms_per_token": 1.039792
+    },
+    {
+      "name": "hc_add",
+      "mean_ms_per_token": 0.520738
+    },
+    {
+      "name": "hc_mix",
+      "mean_ms_per_token": 0.49000166666666667
+    },
+    {
+      "name": "norm_rope",
+      "mean_ms_per_token": 0.446056
+    },
+    {
+      "name": "attention_softmax",
+      "mean_ms_per_token": 0.41637466666666667
+    },
+    {
+      "name": "gdn_prepare",
+      "mean_ms_per_token": 0.363318
+    },
+    {
+      "name": "gdn_gate",
+      "mean_ms_per_token": 0.3480823333333333
+    },
+    {
+      "name": "conv",
+      "mean_ms_per_token": 0.345554
+    },
+    {
+      "name": "moe_sum",
+      "mean_ms_per_token": 0.3453073333333333
+    },
+    {
+      "name": "gdn_qk",
+      "mean_ms_per_token": 0.297028
+    },
+    {
+      "name": "conv_update",
+      "mean_ms_per_token": 0.264709
+    },
+    {
+      "name": "router_accumulate",
+      "mean_ms_per_token": 0.246445
+    },
+    {
+      "name": "index_pool",
+      "mean_ms_per_token": 0.18308466666666665
+    },
+    {
+      "name": "index_scores",
+      "mean_ms_per_token": 0.13511066666666666
+    },
+    {
+      "name": "kv_store",
+      "mean_ms_per_token": 0.11419466666666667
+    },
+    {
+      "name": "index_store",
+      "mean_ms_per_token": 0.051347
+    },
+    {
+      "name": "affine_embedding",
+      "mean_ms_per_token": 0.018152666666666668
+    },
+    {
+      "name": "binary",
+      "mean_ms_per_token": 0.013486
+    },
+    {
+      "name": "ple_gate",
+      "mean_ms_per_token": 0.011569333333333334
+    },
+    {
+      "name": "gather_rows",
+      "mean_ms_per_token": 0.005167
+    }
+  ],
+  "layers": [
+    {
+      "name": -1,
+      "mean_ms_per_token": 18.610875333333333
+    },
+    {
+      "name": 0,
+      "mean_ms_per_token": 10.771404333333335
+    },
+    {
+      "name": 1,
+      "mean_ms_per_token": 5.333417
+    },
+    {
+      "name": 7,
+      "mean_ms_per_token": 4.450930333333333
+    },
+    {
+      "name": 47,
+      "mean_ms_per_token": 4.437402333333333
+    },
+    {
+      "name": 31,
+      "mean_ms_per_token": 4.400570333333333
+    },
+    {
+      "name": 15,
+      "mean_ms_per_token": 4.395764333333333
+    },
+    {
+      "name": 23,
+      "mean_ms_per_token": 4.317665666666667
+    },
+    {
+      "name": 2,
+      "mean_ms_per_token": 4.26586
+    },
+    {
+      "name": 35,
+      "mean_ms_per_token": 4.250639
+    },
+    {
+      "name": 3,
+      "mean_ms_per_token": 4.245847333333333
+    },
+    {
+      "name": 39,
+      "mean_ms_per_token": 4.235012666666667
+    },
+    {
+      "name": 12,
+      "mean_ms_per_token": 4.212572
+    },
+    {
+      "name": 36,
+      "mean_ms_per_token": 4.209556666666667
+    },
+    {
+      "name": 4,
+      "mean_ms_per_token": 4.207014
+    },
+    {
+      "name": 20,
+      "mean_ms_per_token": 4.196892
+    },
+    {
+      "name": 44,
+      "mean_ms_per_token": 4.188431
+    },
+    {
+      "name": 27,
+      "mean_ms_per_token": 4.1733883333333335
+    },
+    {
+      "name": 43,
+      "mean_ms_per_token": 4.153639
+    },
+    {
+      "name": 11,
+      "mean_ms_per_token": 4.135613666666666
+    },
+    {
+      "name": 19,
+      "mean_ms_per_token": 4.126959
+    },
+    {
+      "name": 28,
+      "mean_ms_per_token": 4.109179
+    },
+    {
+      "name": 25,
+      "mean_ms_per_token": 4.060751333333333
+    },
+    {
+      "name": 17,
+      "mean_ms_per_token": 4.023749666666666
+    },
+    {
+      "name": 46,
+      "mean_ms_per_token": 4.009279
+    },
+    {
+      "name": 26,
+      "mean_ms_per_token": 4.002211333333333
+    },
+    {
+      "name": 33,
+      "mean_ms_per_token": 3.952293
+    },
+    {
+      "name": 22,
+      "mean_ms_per_token": 3.9324826666666666
+    },
+    {
+      "name": 6,
+      "mean_ms_per_token": 3.9277773333333337
+    },
+    {
+      "name": 10,
+      "mean_ms_per_token": 3.919404
+    },
+    {
+      "name": 18,
+      "mean_ms_per_token": 3.9071376666666664
+    },
+    {
+      "name": 21,
+      "mean_ms_per_token": 3.8974446666666664
+    },
+    {
+      "name": 38,
+      "mean_ms_per_token": 3.8925276666666666
+    },
+    {
+      "name": 9,
+      "mean_ms_per_token": 3.891015
+    },
+    {
+      "name": 14,
+      "mean_ms_per_token": 3.8843303333333337
+    },
+    {
+      "name": 41,
+      "mean_ms_per_token": 3.8806516666666666
+    },
+    {
+      "name": 45,
+      "mean_ms_per_token": 3.8795266666666666
+    },
+    {
+      "name": 13,
+      "mean_ms_per_token": 3.8709153333333335
+    },
+    {
+      "name": 30,
+      "mean_ms_per_token": 3.8562346666666665
+    },
+    {
+      "name": 24,
+      "mean_ms_per_token": 3.7928493333333333
+    },
+    {
+      "name": 37,
+      "mean_ms_per_token": 3.78482
+    },
+    {
+      "name": 5,
+      "mean_ms_per_token": 3.7814836666666665
+    },
+    {
+      "name": 16,
+      "mean_ms_per_token": 3.7791783333333333
+    },
+    {
+      "name": 32,
+      "mean_ms_per_token": 3.7688636666666664
+    },
+    {
+      "name": 40,
+      "mean_ms_per_token": 3.7653043333333334
+    },
+    {
+      "name": 34,
+      "mean_ms_per_token": 3.7570586666666665
+    },
+    {
+      "name": 42,
+      "mean_ms_per_token": 3.75475
+    },
+    {
+      "name": 8,
+      "mean_ms_per_token": 3.7538896666666663
+    },
+    {
+      "name": 29,
+      "mean_ms_per_token": 3.7505783333333333
+    }
+  ],
+  "mean_kernel_counts": {
+    "affine_embedding": 1.0,
+    "norm": 100.0,
+    "q8_mm_r2_t1": 401.0,
+    "unary": 290.0,
+    "hc_mix": 97.0,
+    "plain_mm": 228.0,
+    "conv": 37.0,
+    "conv_update": 37.0,
+    "gdn_qk": 36.0,
+    "gdn_prepare": 36.0,
+    "gdn_scan_prepared": 36.0,
+    "gdn_gate": 36.0,
+    "hc_add": 96.0,
+    "router_mm": 48.0,
+    "router_accumulate": 48.0,
+    "route": 48.0,
+    "q8_gate_up": 48.0,
+    "q4_expert_gate_group": 240.0,
+    "q4_expert_down_group": 240.0,
+    "moe_sum": 48.0,
+    "ple_gate": 1.0,
+    "binary": 2.0,
+    "index_store": 12.0,
+    "norm_rope": 36.0,
+    "kv_store": 24.0,
+    "index_pool": 12.0,
+    "index_scores": 12.0,
+    "attention_scores": 12.0,
+    "attention_softmax": 12.0,
+    "attention_values": 12.0,
+    "gather_rows": 1.0
+  },
+  "normal_request_latency_qualified": false,
+  "note": "One dispatch per timed compute pass changes encoder overhead. GPU pass sums and CPU waits are not additive wall-time attribution. Confirm changes with unprofiled complete requests.",
+  "sources": {
+    ".cache/benchmarks/decode-compute/baseline-profile-run.json": "5330c9e421af893003939ee0b4ccf87d804b1c49d883bba6b456e92dd238a0ad",
+    ".cache/benchmarks/decode-compute/baseline-profile.json": "9484ecfd9f0ab3a8876216d16229b0dce788850e3b259e0fb984da1bd804716a"
+  }
+}

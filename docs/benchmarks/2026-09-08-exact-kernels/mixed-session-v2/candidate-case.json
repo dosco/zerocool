@@ -1,0 +1,34 @@
+{
+  "context": 256,
+  "chunk": 1,
+  "memory_gib": 8.0,
+  "layers": 48,
+  "artifact": "mixed-4_8bit",
+  "expert_slots": 32,
+  "diagnostic_stream_trunk": false,
+  "require_exact_panel": true,
+  "panels": [
+    256
+  ],
+  "prefix": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "append": [
+    760,
+    6511,
+    314
+  ],
+  "continuation": [
+    760,
+    369
+  ],
+  "kernel_policy": "candidate",
+  "token_tile": 8,
+  "gdn_path": "precompute",
+  "gdn_rows": 4,
+  "gdn_block": 8
+}

@@ -36,6 +36,14 @@ struct ModelConfig {
     float norm_eps = 1e-5;
     float rope_theta = 10000.0f;    // RoPE base frequency
 
+    // MoE configuration
+    size_t num_experts = 0;           // Number of experts (0 = dense model)
+    size_t num_experts_per_token = 0; // Number of active experts per token
+    bool norm_topk_prob = true;       // Whether to normalize top-k probabilities (default: true)
+
+    // Weight tying
+    bool tie_word_embeddings = false; // Whether lm_head shares weights with token embedding
+
     /**
      * @brief Get head dimension
      */

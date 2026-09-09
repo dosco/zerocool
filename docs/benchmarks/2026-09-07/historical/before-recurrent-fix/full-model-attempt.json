@@ -1,0 +1,62 @@
+{
+  "complete": false,
+  "passed": false,
+  "build_fingerprint": "33f1a986175d94cc8a7fc545d22f089fa70e7620d9a4e51acec91f325749057c",
+  "kind": "full_model_diagnostic_admission",
+  "minimum_engine_bytes": 2280734720,
+  "attempts": [
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1834467328 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1647001600 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1800863744 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1871396864 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1907851264 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1718484992 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1732247552 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1702117376 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1708621824 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1715159040 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1702117376 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1707032576 bytes\n"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.\nfreellm: memory admission requires at least 2280734720 bytes including 32 expert slots; available engine budget is 1735573504 bytes\n"
+    }
+  ],
+  "note": "All attempts refused admission before loading the model. No full-model result exists for the attention correction."
+}

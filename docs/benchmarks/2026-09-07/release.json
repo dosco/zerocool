@@ -1,0 +1,62 @@
+{
+  "passed": false,
+  "build_fingerprint": "8c56e73ec097e9520f95e63a7bfe97c9b381cd5f94a233da95e1f7686b044107",
+  "checks": [
+    {
+      "name": "checkpoint",
+      "passed": true,
+      "detail": {
+        "revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+        "verified_files": 24
+      }
+    },
+    {
+      "name": "full_model_logits",
+      "passed": true,
+      "detail": {
+        "relative_l2": 0.0,
+        "cosine": 1.0
+      }
+    },
+    {
+      "name": "performance",
+      "passed": false,
+      "error": "Performance run did not complete"
+    },
+    {
+      "name": "api",
+      "passed": false,
+      "error": "[Errno 2] No such file or directory: 'docs/benchmarks/2026-09-07/api.json'"
+    },
+    {
+      "name": "operator_parity",
+      "passed": true,
+      "detail": 290
+    },
+    {
+      "name": "cache_invariance",
+      "passed": true,
+      "detail": 1
+    },
+    {
+      "name": "moe_replay",
+      "passed": true,
+      "detail": 48
+    },
+    {
+      "name": "attention_replay",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "name": "soak",
+      "passed": false,
+      "error": "[Errno 2] No such file or directory: 'docs/benchmarks/2026-09-07/soak.json'"
+    },
+    {
+      "name": "coding",
+      "passed": false,
+      "error": "[Errno 2] No such file or directory: 'docs/benchmarks/2026-09-07/coding.json'"
+    }
+  ]
+}

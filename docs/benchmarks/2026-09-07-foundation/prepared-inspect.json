@@ -1,0 +1,63 @@
+{
+  "model": "Qwen3.8-Flash-Next",
+  "revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+  "tensors": 3215,
+  "tensor_bytes": 103769745912,
+  "resident_allocation_bytes": 2937683968,
+  "expert_bytes": 67947724800,
+  "ngram_bytes": 32000153600,
+  "expert_record_bytes": 2764800,
+  "source_format": "MLX affine Q4",
+  "identity_status": "pinned hash receipt and current file fingerprints validated",
+  "prepared": {
+    "format": "freellm-affine-records-v1",
+    "recipe": "q4-control-lossless",
+    "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+    "prepared_bytes": 100048541696,
+    "expert_record_bytes": 2764800,
+    "expert_stride": 2768896,
+    "ngram_record_bytes": 100,
+    "ngram_cache_dtype": "BF16",
+    "application_read_bytes": 0
+  },
+  "memory_plan": {
+    "limit_bytes": 22906503168,
+    "resident_bytes": 2937683968,
+    "session_bytes": 571473920,
+    "scratch_bytes": 536870912,
+    "ngram_bytes": 67108864,
+    "reserve_bytes": 1073741824,
+    "expert_bytes": 17718165504,
+    "expert_slots": 6399,
+    "planned_bytes": 22905044992
+  },
+  "machine": {
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "21a4618783fc2a38db234844f4616b4d2f57725e83e79723a177eec205abc4df",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 0,
+    "peak_buffer_bytes": 0,
+    "live_command_groups": 0,
+    "peak_command_groups": 0,
+    "dispatches": 0,
+    "submissions": 0,
+    "waits": 0
+  },
+  "process": {
+    "physical_footprint_bytes": 6604224,
+    "resident_bytes": 13942784,
+    "compressed_bytes": 0,
+    "system_swap_used_bytes": 25613697024,
+    "reclaimable_bytes": 2793930752
+  },
+  "current_admission": {
+    "error": "memory admission requires at least 5275484160 bytes including 32 expert slots; available engine budget is 1183318016 bytes",
+    "reclaimable_bytes": 2793930752
+  }
+}

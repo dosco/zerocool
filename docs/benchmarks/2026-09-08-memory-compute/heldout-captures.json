@@ -1,0 +1,79 @@
+{
+  "build": "6d60860fdeb4945ce8d6563add992dce83a89eb002d5da6a23e8d6bb2476ba34",
+  "complete": true,
+  "workload_sha256": "dccc43be5384203876edfbd1fabbcb99b79eda3fb4bfb5e8d73b70b38ee3e935",
+  "cases": [
+    {
+      "name": "prefill-0-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "bd1c9e2a6fa9bfe2c7e3cec651909549e74786c0387550ff506ba79e62537b79",
+      "path": ".cache/benchmarks/phase-memory/heldout/prefill-0-gdn-operators.json"
+    },
+    {
+      "name": "prefill-30-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "f0899661e625d90c944bcf361f4d0a7dd12cb7fc8aba1c3e8283685d16c07f60",
+      "path": ".cache/benchmarks/phase-memory/heldout/prefill-30-gdn-operators.json"
+    },
+    {
+      "name": "prefill-31-attention",
+      "cases": 6,
+      "bytes": 108867584,
+      "comparisons": 195,
+      "sha256": "2a65ebe55f60772127faf91d8da483b0ea140522e5c9b9c1faf16e33600b1ec2",
+      "path": ".cache/benchmarks/phase-memory/heldout/prefill-31-attention-operators.json"
+    },
+    {
+      "name": "append-30-gdn",
+      "cases": 6,
+      "bytes": 128364544,
+      "comparisons": 195,
+      "sha256": "2746a42c6a3828d2083bf95797aa7c7565f9838773f5ad9204768bba0008d4ef",
+      "path": ".cache/benchmarks/phase-memory/heldout/append-30-gdn-operators.json"
+    },
+    {
+      "name": "append-47-attention",
+      "cases": 6,
+      "bytes": 108867584,
+      "comparisons": 195,
+      "sha256": "f1d8444ac428159e035bdfd491a6301d8be9ff806cecf9626dffd36500e7c202",
+      "path": ".cache/benchmarks/phase-memory/heldout/append-47-attention-operators.json"
+    },
+    {
+      "name": "decode-0-gdn",
+      "cases": 3,
+      "bytes": 61321216,
+      "comparisons": 75,
+      "sha256": "92647fa46370253277b93aa4e90d52b66a9ccd9552b21ef11654f1ed75e98c41",
+      "path": ".cache/benchmarks/phase-memory/heldout/decode-0-gdn-operators.json"
+    },
+    {
+      "name": "decode-30-gdn",
+      "cases": 3,
+      "bytes": 61321216,
+      "comparisons": 75,
+      "sha256": "e5c29de7ba61b7a1716d5bca1577ca0ac72ce73fd24c625c7b1a83c62ca4826b",
+      "path": ".cache/benchmarks/phase-memory/heldout/decode-30-gdn-operators.json"
+    },
+    {
+      "name": "decode-31-attention",
+      "cases": 3,
+      "bytes": 51572736,
+      "comparisons": 75,
+      "sha256": "427047ff550bad20eaaccff1e090b2bbf3a379cefc287e89d60d7bc38d0cda11",
+      "path": ".cache/benchmarks/phase-memory/heldout/decode-31-attention-operators.json"
+    },
+    {
+      "name": "decode-23-routed_expert",
+      "cases": 2,
+      "bytes": 2777600,
+      "comparisons": 50,
+      "sha256": "c85ef751ebddc5fe6404f55a183f7c0d896a476d52ec942c47532e2b67287d62",
+      "path": ".cache/benchmarks/phase-memory/heldout/decode-23-routed_expert-operators.json"
+    }
+  ]
+}

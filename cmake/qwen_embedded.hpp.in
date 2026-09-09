@@ -1,0 +1,9 @@
+#pragma once
+#include <string_view>
+namespace freellm::qwen {
+inline constexpr const char* BuildFingerprint = "@FREELLM_BUILD_FINGERPRINT@";
+inline constexpr std::string_view MetalSource = R"FREELLM_MSL(@FREELLM_METAL_SOURCE@)FREELLM_MSL";
+inline constexpr std::string_view ModelLock = R"FREELLM_LOCK(@FREELLM_MODEL_LOCK@)FREELLM_LOCK";
+inline constexpr std::string_view MixedModelLock = R"FREELLM_MIXED(@FREELLM_MIXED_MODEL_LOCK@)FREELLM_MIXED";
+inline constexpr std::string_view MixedReuseLock = R"FREELLM_REUSE(@FREELLM_MIXED_REUSE_LOCK@)FREELLM_REUSE";
+}

@@ -1,0 +1,5686 @@
+{
+  "schema": 1,
+  "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+  "format": "freellm-affine-records-v1",
+  "recipe": "q4-control-lossless",
+  "expert_layout": [
+    {
+      "name": "gate_proj.weight",
+      "offset": 0,
+      "length": 819200,
+      "shape": [
+        640,
+        320
+      ],
+      "dtype": "U32",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "gate_proj.scales",
+      "offset": 819200,
+      "length": 51200,
+      "shape": [
+        640,
+        40
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "gate_proj.biases",
+      "offset": 870400,
+      "length": 51200,
+      "shape": [
+        640,
+        40
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "up_proj.weight",
+      "offset": 921600,
+      "length": 819200,
+      "shape": [
+        640,
+        320
+      ],
+      "dtype": "U32",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "up_proj.scales",
+      "offset": 1740800,
+      "length": 51200,
+      "shape": [
+        640,
+        40
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "up_proj.biases",
+      "offset": 1792000,
+      "length": 51200,
+      "shape": [
+        640,
+        40
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "down_proj.weight",
+      "offset": 1843200,
+      "length": 819200,
+      "shape": [
+        2560,
+        80
+      ],
+      "dtype": "U32",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "down_proj.scales",
+      "offset": 2662400,
+      "length": 51200,
+      "shape": [
+        2560,
+        10
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    },
+    {
+      "name": "down_proj.biases",
+      "offset": 2713600,
+      "length": 51200,
+      "shape": [
+        2560,
+        10
+      ],
+      "dtype": "BF16",
+      "bits": 4,
+      "group_size": 64
+    }
+  ],
+  "experts": [
+    {
+      "layer": 0,
+      "file": "experts-00.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 1,
+      "file": "experts-01.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 2,
+      "file": "experts-02.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 3,
+      "file": "experts-03.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 4,
+      "file": "experts-04.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 5,
+      "file": "experts-05.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 6,
+      "file": "experts-06.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 7,
+      "file": "experts-07.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 8,
+      "file": "experts-08.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 9,
+      "file": "experts-09.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 10,
+      "file": "experts-10.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 11,
+      "file": "experts-11.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 12,
+      "file": "experts-12.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 13,
+      "file": "experts-13.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 14,
+      "file": "experts-14.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 15,
+      "file": "experts-15.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 16,
+      "file": "experts-16.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 17,
+      "file": "experts-17.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 18,
+      "file": "experts-18.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 19,
+      "file": "experts-19.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 20,
+      "file": "experts-20.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 21,
+      "file": "experts-21.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 22,
+      "file": "experts-22.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 23,
+      "file": "experts-23.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 24,
+      "file": "experts-24.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 25,
+      "file": "experts-25.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 26,
+      "file": "experts-26.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 27,
+      "file": "experts-27.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 28,
+      "file": "experts-28.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 29,
+      "file": "experts-29.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 30,
+      "file": "experts-30.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 31,
+      "file": "experts-31.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 32,
+      "file": "experts-32.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 33,
+      "file": "experts-33.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 34,
+      "file": "experts-34.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 35,
+      "file": "experts-35.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 36,
+      "file": "experts-36.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 37,
+      "file": "experts-37.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 38,
+      "file": "experts-38.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 39,
+      "file": "experts-39.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 40,
+      "file": "experts-40.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 41,
+      "file": "experts-41.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 42,
+      "file": "experts-42.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 43,
+      "file": "experts-43.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 44,
+      "file": "experts-44.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 45,
+      "file": "experts-45.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 46,
+      "file": "experts-46.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    },
+    {
+      "layer": 47,
+      "file": "experts-47.bin",
+      "count": 512,
+      "offset": 0,
+      "length": 2764800,
+      "stride": 2768896,
+      "alignment": 16384
+    }
+  ],
+  "ngrams": [
+    {
+      "shard": 0,
+      "file": "ngram-000.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 1,
+      "file": "ngram-001.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 2,
+      "file": "ngram-002.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 3,
+      "file": "ngram-003.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 4,
+      "file": "ngram-004.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 5,
+      "file": "ngram-005.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 6,
+      "file": "ngram-006.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 7,
+      "file": "ngram-007.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 8,
+      "file": "ngram-008.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 9,
+      "file": "ngram-009.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 10,
+      "file": "ngram-010.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 11,
+      "file": "ngram-011.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 12,
+      "file": "ngram-012.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 13,
+      "file": "ngram-013.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 14,
+      "file": "ngram-014.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 15,
+      "file": "ngram-015.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 16,
+      "file": "ngram-016.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 17,
+      "file": "ngram-017.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 18,
+      "file": "ngram-018.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 19,
+      "file": "ngram-019.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 20,
+      "file": "ngram-020.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 21,
+      "file": "ngram-021.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 22,
+      "file": "ngram-022.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 23,
+      "file": "ngram-023.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 24,
+      "file": "ngram-024.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 25,
+      "file": "ngram-025.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 26,
+      "file": "ngram-026.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 27,
+      "file": "ngram-027.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 28,
+      "file": "ngram-028.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 29,
+      "file": "ngram-029.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 30,
+      "file": "ngram-030.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 31,
+      "file": "ngram-031.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 32,
+      "file": "ngram-032.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 33,
+      "file": "ngram-033.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 34,
+      "file": "ngram-034.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 35,
+      "file": "ngram-035.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 36,
+      "file": "ngram-036.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 37,
+      "file": "ngram-037.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 38,
+      "file": "ngram-038.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 39,
+      "file": "ngram-039.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 40,
+      "file": "ngram-040.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 41,
+      "file": "ngram-041.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 42,
+      "file": "ngram-042.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 43,
+      "file": "ngram-043.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 44,
+      "file": "ngram-044.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 45,
+      "file": "ngram-045.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 46,
+      "file": "ngram-046.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 47,
+      "file": "ngram-047.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 48,
+      "file": "ngram-048.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 49,
+      "file": "ngram-049.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 50,
+      "file": "ngram-050.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 51,
+      "file": "ngram-051.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 52,
+      "file": "ngram-052.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 53,
+      "file": "ngram-053.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 54,
+      "file": "ngram-054.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 55,
+      "file": "ngram-055.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 56,
+      "file": "ngram-056.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 57,
+      "file": "ngram-057.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 58,
+      "file": "ngram-058.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 59,
+      "file": "ngram-059.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 60,
+      "file": "ngram-060.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 61,
+      "file": "ngram-061.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 62,
+      "file": "ngram-062.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 63,
+      "file": "ngram-063.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 64,
+      "file": "ngram-064.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 65,
+      "file": "ngram-065.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 66,
+      "file": "ngram-066.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 67,
+      "file": "ngram-067.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 68,
+      "file": "ngram-068.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 69,
+      "file": "ngram-069.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 70,
+      "file": "ngram-070.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 71,
+      "file": "ngram-071.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 72,
+      "file": "ngram-072.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 73,
+      "file": "ngram-073.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 74,
+      "file": "ngram-074.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 75,
+      "file": "ngram-075.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 76,
+      "file": "ngram-076.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 77,
+      "file": "ngram-077.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 78,
+      "file": "ngram-078.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 79,
+      "file": "ngram-079.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 80,
+      "file": "ngram-080.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 81,
+      "file": "ngram-081.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 82,
+      "file": "ngram-082.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 83,
+      "file": "ngram-083.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 84,
+      "file": "ngram-084.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 85,
+      "file": "ngram-085.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 86,
+      "file": "ngram-086.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 87,
+      "file": "ngram-087.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 88,
+      "file": "ngram-088.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 89,
+      "file": "ngram-089.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 90,
+      "file": "ngram-090.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 91,
+      "file": "ngram-091.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 92,
+      "file": "ngram-092.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 93,
+      "file": "ngram-093.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 94,
+      "file": "ngram-094.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 95,
+      "file": "ngram-095.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 96,
+      "file": "ngram-096.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 97,
+      "file": "ngram-097.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 98,
+      "file": "ngram-098.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 99,
+      "file": "ngram-099.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 100,
+      "file": "ngram-100.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 101,
+      "file": "ngram-101.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 102,
+      "file": "ngram-102.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 103,
+      "file": "ngram-103.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 104,
+      "file": "ngram-104.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 105,
+      "file": "ngram-105.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 106,
+      "file": "ngram-106.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 107,
+      "file": "ngram-107.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 108,
+      "file": "ngram-108.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 109,
+      "file": "ngram-109.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 110,
+      "file": "ngram-110.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 111,
+      "file": "ngram-111.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 112,
+      "file": "ngram-112.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 113,
+      "file": "ngram-113.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 114,
+      "file": "ngram-114.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 115,
+      "file": "ngram-115.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 116,
+      "file": "ngram-116.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 117,
+      "file": "ngram-117.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 118,
+      "file": "ngram-118.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 119,
+      "file": "ngram-119.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 120,
+      "file": "ngram-120.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 121,
+      "file": "ngram-121.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 122,
+      "file": "ngram-122.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 123,
+      "file": "ngram-123.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 124,
+      "file": "ngram-124.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 125,
+      "file": "ngram-125.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 126,
+      "file": "ngram-126.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "shard": 127,
+      "file": "ngram-127.bin",
+      "count": 2500012,
+      "offset": 0,
+      "stride": 100,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 80,
+          "dtype": "U32",
+          "shape": [
+            20
+          ]
+        },
+        {
+          "offset": 80,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        },
+        {
+          "offset": 90,
+          "length": 10,
+          "dtype": "BF16",
+          "shape": [
+            5
+          ]
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "experts-00.bin",
+      "size": 1417674752,
+      "sha256": "0a965585c68dac13f9678edb634729fdb18a0845d5b975baedec689866d8b28a"
+    },
+    {
+      "path": "experts-01.bin",
+      "size": 1417674752,
+      "sha256": "f679361c25f5c90a28f75f4eae1453d6b48506dfe6944472ca001cc4078f90ba"
+    },
+    {
+      "path": "experts-02.bin",
+      "size": 1417674752,
+      "sha256": "2567784297f94eef018bb862a4accde0619181bfe0f6c87191d9acc20d35afb7"
+    },
+    {
+      "path": "experts-03.bin",
+      "size": 1417674752,
+      "sha256": "498db1449269c9033f9ee34a40c4db5adc78d3a5277338fae19b033a15100831"
+    },
+    {
+      "path": "experts-04.bin",
+      "size": 1417674752,
+      "sha256": "8dba5f73b84a6985e5673ed282467310b7928a79400e554bfee58971b4732061"
+    },
+    {
+      "path": "experts-05.bin",
+      "size": 1417674752,
+      "sha256": "b48cb1a3d567e3a4695bd70c0b5f6f4c1058321ed2d59986c9cecaf2442838b7"
+    },
+    {
+      "path": "experts-06.bin",
+      "size": 1417674752,
+      "sha256": "106c23bd6666e5c225b609b42dfea7debfd8f35e458f7a10a1661f6b0d3a547c"
+    },
+    {
+      "path": "experts-07.bin",
+      "size": 1417674752,
+      "sha256": "f9c2dc7fd218d88ffba5ca5de8959aa9a4c045adf5fc35cf48aa5ca736eb67e9"
+    },
+    {
+      "path": "experts-08.bin",
+      "size": 1417674752,
+      "sha256": "a7d72bfb4a3b76223feeeb4cc2b85c8c0fa9e71873a075b439acae971fa16997"
+    },
+    {
+      "path": "experts-09.bin",
+      "size": 1417674752,
+      "sha256": "72d8680036ddff83c06928114b9e792bd7ce001ba5bf3a10540cb60ca479902c"
+    },
+    {
+      "path": "experts-10.bin",
+      "size": 1417674752,
+      "sha256": "eefc90451f6697ba861e9dee5727c818a211985a7ca9fc1b04b05d470fe94438"
+    },
+    {
+      "path": "experts-11.bin",
+      "size": 1417674752,
+      "sha256": "0755c877173608af4011fb3c6b1d52a07b3d75a1504c5ee03a9dd0eb190fcaf7"
+    },
+    {
+      "path": "experts-12.bin",
+      "size": 1417674752,
+      "sha256": "984229c0d32bf6a6701f9a3af55bc144c0c9b8caf1814b5b29a3561dba99d894"
+    },
+    {
+      "path": "experts-13.bin",
+      "size": 1417674752,
+      "sha256": "76101e9f5db075f358628f1044b428e9cc5788dd2210bcc33f0b0c24a3915940"
+    },
+    {
+      "path": "experts-14.bin",
+      "size": 1417674752,
+      "sha256": "e476aef7ebf40a65ced6f43a788847a05d6f9fabd52210f5f3fe650b54d71218"
+    },
+    {
+      "path": "experts-15.bin",
+      "size": 1417674752,
+      "sha256": "461e28e0064eb4c57aa77f3db506982035373eed7ee996937be7dae131ce2abd"
+    },
+    {
+      "path": "experts-16.bin",
+      "size": 1417674752,
+      "sha256": "4200d42023f4f22aececab2ac9725f94848bf7b960ea8f26a260d3cc53f9c710"
+    },
+    {
+      "path": "experts-17.bin",
+      "size": 1417674752,
+      "sha256": "25089aa08d834a970b8ea44cdd1db1f6665074c9f4602c0781f57936f0383378"
+    },
+    {
+      "path": "experts-18.bin",
+      "size": 1417674752,
+      "sha256": "10f81bf384c2e1674760ab5c949ba5df7297a3900a0fdf25882f66dcaf861a68"
+    },
+    {
+      "path": "experts-19.bin",
+      "size": 1417674752,
+      "sha256": "d1ae422f0f09b4f0dd7c92b3207b198842539ec1002470224980318995a2f348"
+    },
+    {
+      "path": "experts-20.bin",
+      "size": 1417674752,
+      "sha256": "5565973eb0193b598de86d99e7c8c55a5e059a8fd9202a465fbb858626b85700"
+    },
+    {
+      "path": "experts-21.bin",
+      "size": 1417674752,
+      "sha256": "e1f562eee52dcbec557ebdf28391c73388dfeeb96b3a57a7beafe08a416556d2"
+    },
+    {
+      "path": "experts-22.bin",
+      "size": 1417674752,
+      "sha256": "87f5738f4cf20ff02aab9ff8e60db2dce934bc795038519aef85a9a716016fae"
+    },
+    {
+      "path": "experts-23.bin",
+      "size": 1417674752,
+      "sha256": "e4e6fe4780798f8300d688b723e962d30d8dacb1a50ce9e543fc645736801d03"
+    },
+    {
+      "path": "experts-24.bin",
+      "size": 1417674752,
+      "sha256": "8d45ac30106b04daa75573f6b97fbb579427c30efeb630de7fda131744e7c3a4"
+    },
+    {
+      "path": "experts-25.bin",
+      "size": 1417674752,
+      "sha256": "6d2b8e055b009db2745c99a3a53f4654c011c75c876f9a71e10e46a0026ad0fe"
+    },
+    {
+      "path": "experts-26.bin",
+      "size": 1417674752,
+      "sha256": "e7e19b35a40ff4e97b8ac62fd611ab64378a2edda90f013e851d0fc3a571542c"
+    },
+    {
+      "path": "experts-27.bin",
+      "size": 1417674752,
+      "sha256": "983cced779b4bc8dc0c1d84e91d3fa371c330eabdf902c0b460d04da77f589a7"
+    },
+    {
+      "path": "experts-28.bin",
+      "size": 1417674752,
+      "sha256": "a165fc3fc1098cbbe3e48dcabdcb55f49b0d39efbdd339d28754001ec7167473"
+    },
+    {
+      "path": "experts-29.bin",
+      "size": 1417674752,
+      "sha256": "8b613438204dd59be9b74fdc26b9da2f8020d1b22a0629f35809151b6e09c3a2"
+    },
+    {
+      "path": "experts-30.bin",
+      "size": 1417674752,
+      "sha256": "e8d2c083a195896811e8faac215bbaf4b6b73419aa51903de87be5c3f2ad2e32"
+    },
+    {
+      "path": "experts-31.bin",
+      "size": 1417674752,
+      "sha256": "f41555211fc86f203eb8daba8baa0bbef06e85ad24029f6504eeba7c9178606e"
+    },
+    {
+      "path": "experts-32.bin",
+      "size": 1417674752,
+      "sha256": "cdc5eff6ec581c8234edec425ae90ca04b087313c4a9a6b07f001c4f0c44e669"
+    },
+    {
+      "path": "experts-33.bin",
+      "size": 1417674752,
+      "sha256": "9900378829e3b371e74762c1f196503aae815e5f8b690ec6beaecf711aaf6959"
+    },
+    {
+      "path": "experts-34.bin",
+      "size": 1417674752,
+      "sha256": "2fa71b8ae524eb69bb75f13605f657c2c2b688fdbfd49d6b6bdc34b178c145a0"
+    },
+    {
+      "path": "experts-35.bin",
+      "size": 1417674752,
+      "sha256": "6bcac1551b6af4cee00dbe876aa9f8b2093fef302f29c87b8fdf749d99f5e402"
+    },
+    {
+      "path": "experts-36.bin",
+      "size": 1417674752,
+      "sha256": "d42ff1ba3a4c755ee4fca67b8109b84203cc5238ec707fa71a72142d523fe8cd"
+    },
+    {
+      "path": "experts-37.bin",
+      "size": 1417674752,
+      "sha256": "65a61a8f186b6fb40573d32cd5fd123c742d2a29f445535b74fe0ad8f30e28b1"
+    },
+    {
+      "path": "experts-38.bin",
+      "size": 1417674752,
+      "sha256": "c08d97f81bb584243f922da26bb9673bb06e34c678e173c8a955221f41b00284"
+    },
+    {
+      "path": "experts-39.bin",
+      "size": 1417674752,
+      "sha256": "e93728abc2f95020e898b2b1f8aa6d142f08faee4c8b033e4692b483672f68b6"
+    },
+    {
+      "path": "experts-40.bin",
+      "size": 1417674752,
+      "sha256": "353a3bf59a86f740ec1143ae578f08fea80f3a54237c54b566bb8a34f6f0f05e"
+    },
+    {
+      "path": "experts-41.bin",
+      "size": 1417674752,
+      "sha256": "4913adc62117dc177af8b1a808d1b3f5b43b734166fa3d86830f783e933a39d7"
+    },
+    {
+      "path": "experts-42.bin",
+      "size": 1417674752,
+      "sha256": "985a94ec4664dd56365109f5c15a799c59d2ad76936118274fc52af2e4741c58"
+    },
+    {
+      "path": "experts-43.bin",
+      "size": 1417674752,
+      "sha256": "617b31de0d8dd92dd8ab92da960f40536324bcd36c9ce43655e56943a42f7e6b"
+    },
+    {
+      "path": "experts-44.bin",
+      "size": 1417674752,
+      "sha256": "57511fcd8775bdbedd7fb1740c7e2230f64fc7cf4f00622ab9ea47ecd3960268"
+    },
+    {
+      "path": "experts-45.bin",
+      "size": 1417674752,
+      "sha256": "5b7e9054b03d2843687ed82ce9c62aeb95d38bbe0a3cb62e0ebbf911dc4e2bda"
+    },
+    {
+      "path": "experts-46.bin",
+      "size": 1417674752,
+      "sha256": "4bdb73f8bfe5432e3ef3950b73984c54925d66ece3fa2bca5e9b5b0538aaff25"
+    },
+    {
+      "path": "experts-47.bin",
+      "size": 1417674752,
+      "sha256": "a50ef10f6c2d910d15a6329098318482c92a67bc8b0f73806627e923a9167cb6"
+    },
+    {
+      "path": "ngram-000.bin",
+      "size": 250001200,
+      "sha256": "9563e2aa5facb3420fa79aa24474692c1ee453ab6dbe19d9a40b8b66176a8d7f"
+    },
+    {
+      "path": "ngram-001.bin",
+      "size": 250001200,
+      "sha256": "e116dc31a4404c043d187edcf8fb22075b7ca1b326be597c6651d4a4f266f25f"
+    },
+    {
+      "path": "ngram-002.bin",
+      "size": 250001200,
+      "sha256": "bbc7c0b095379333ab899ad1a70e3063cba6fd7264fbcd1316b6c1511b922576"
+    },
+    {
+      "path": "ngram-003.bin",
+      "size": 250001200,
+      "sha256": "051e0e3dce2bcdd275ac6e3d5f4342cb9e25a414819f379357ed47c82b77cb64"
+    },
+    {
+      "path": "ngram-004.bin",
+      "size": 250001200,
+      "sha256": "417dbaa7976b139d706c6e03c29f7ad8a5b549bddc37bdc7c488eea802945305"
+    },
+    {
+      "path": "ngram-005.bin",
+      "size": 250001200,
+      "sha256": "4884093922d98aee073d278f3ca6a304f96b1a8d6b9bb71edd599e6378d2fd56"
+    },
+    {
+      "path": "ngram-006.bin",
+      "size": 250001200,
+      "sha256": "424108775a0509ff331e2a89415503f889fe25d29eb4bc0280af01b32b76c40c"
+    },
+    {
+      "path": "ngram-007.bin",
+      "size": 250001200,
+      "sha256": "7e404ae87b061a81311a18dedbf3e72095f022bd5a71bcf4ed74a21d652f2d15"
+    },
+    {
+      "path": "ngram-008.bin",
+      "size": 250001200,
+      "sha256": "b05b76c5719bc8b0d02f0446b79341e0e5c5650d89051b21fe7f2e3e67c6f521"
+    },
+    {
+      "path": "ngram-009.bin",
+      "size": 250001200,
+      "sha256": "846d69c65aba1038c78b7eb463132c7898d7623e53f315d6073dc421bdc4183c"
+    },
+    {
+      "path": "ngram-010.bin",
+      "size": 250001200,
+      "sha256": "13353e20fbcd6bc677f8b99ea8bdf28188fcf1b452f99d47f77c646c7e46c4c4"
+    },
+    {
+      "path": "ngram-011.bin",
+      "size": 250001200,
+      "sha256": "07b8d49c117ed3a0dcc26985060a159ae894862fa5ebdf1e8489c5f97323309b"
+    },
+    {
+      "path": "ngram-012.bin",
+      "size": 250001200,
+      "sha256": "eec7861f3e62db7323608f4abe9ad81ad7bfcbb50e5d26f56573628610cbe68e"
+    },
+    {
+      "path": "ngram-013.bin",
+      "size": 250001200,
+      "sha256": "fdf00dc4799ef93f830028e3fb060914896ea522ff13339368e0032735ebe6f8"
+    },
+    {
+      "path": "ngram-014.bin",
+      "size": 250001200,
+      "sha256": "22a7eb97d496cd462e4231e35ac1b3c3a9183b6c61314827e8892ff0f591e6d6"
+    },
+    {
+      "path": "ngram-015.bin",
+      "size": 250001200,
+      "sha256": "e1f80bd3a397c9f93a7100f48f1f36429812e076b238844fc858136f24063283"
+    },
+    {
+      "path": "ngram-016.bin",
+      "size": 250001200,
+      "sha256": "acaaada2cd8f25ef9cdfa49cc7778500cab24fb11fd249d892210e5ea9943515"
+    },
+    {
+      "path": "ngram-017.bin",
+      "size": 250001200,
+      "sha256": "63446e0d92b9edf8926567bf742b685f958bba75507993e080a525c66b2effea"
+    },
+    {
+      "path": "ngram-018.bin",
+      "size": 250001200,
+      "sha256": "edda548cb8b5ddc5f4da913307fd0c789d7723753d20aa6d46b9bd22804759b8"
+    },
+    {
+      "path": "ngram-019.bin",
+      "size": 250001200,
+      "sha256": "6d1363fc65062952ee03d4691e8baf1ab672f29d80a7f7d3354d82438c83b4f7"
+    },
+    {
+      "path": "ngram-020.bin",
+      "size": 250001200,
+      "sha256": "bc4ccb6e337e95a3064c899808ed14911ec1344eed17793a4ee0d92bf558c8ea"
+    },
+    {
+      "path": "ngram-021.bin",
+      "size": 250001200,
+      "sha256": "4a43d8dadbd0b2ae0483984b0224993f26a6f6dae33aa87a7fdbf7b39644eda4"
+    },
+    {
+      "path": "ngram-022.bin",
+      "size": 250001200,
+      "sha256": "e18d7e7ada37255d382f1084426412160d79bbd1c3038b96b1c7df4262507b0a"
+    },
+    {
+      "path": "ngram-023.bin",
+      "size": 250001200,
+      "sha256": "313a5956a98ee0a0d31218c45c319727c4eb3c252c208cd19d0f979c7bb92748"
+    },
+    {
+      "path": "ngram-024.bin",
+      "size": 250001200,
+      "sha256": "743b4164cb4312ab7087a61c3f2bb7e4133d261348867b56c0c9daae61e12461"
+    },
+    {
+      "path": "ngram-025.bin",
+      "size": 250001200,
+      "sha256": "67368eba86081df062317c4865b7096b39bce8f444ef059e3e2b0e70c9f980dc"
+    },
+    {
+      "path": "ngram-026.bin",
+      "size": 250001200,
+      "sha256": "36494ba693f5df6749d75122e7535c4fa89c527e2d30c07bb7e85bbf270d6421"
+    },
+    {
+      "path": "ngram-027.bin",
+      "size": 250001200,
+      "sha256": "1e67364b4961de6b092aa2c774348d7e19dd9b9e2479f3dd9e5750eaba40ce77"
+    },
+    {
+      "path": "ngram-028.bin",
+      "size": 250001200,
+      "sha256": "a3e1bef674d2c1c3fe1793954540c329164947b2ed690e195375e68ccfcce060"
+    },
+    {
+      "path": "ngram-029.bin",
+      "size": 250001200,
+      "sha256": "50be8044238c3c4872e8f6e926b97a07a5f45fd6e64684425e204b30311fdcbf"
+    },
+    {
+      "path": "ngram-030.bin",
+      "size": 250001200,
+      "sha256": "79ed270ce73c0080c53652fb60cd38331178d2d150e703eb9454bffd91d9fa2a"
+    },
+    {
+      "path": "ngram-031.bin",
+      "size": 250001200,
+      "sha256": "3abcb37953696bb1821b0b0a28b17cb8c4cf964de2fdd461fa87df9f5a5a3636"
+    },
+    {
+      "path": "ngram-032.bin",
+      "size": 250001200,
+      "sha256": "f65ad0f0888ce0dae3d51dc9895c3f0672240925cc5918692e4d533d6564c0a5"
+    },
+    {
+      "path": "ngram-033.bin",
+      "size": 250001200,
+      "sha256": "5e873071e988b5c01d3f5dca3b4117422e246c56571a7e06e001b3262d026625"
+    },
+    {
+      "path": "ngram-034.bin",
+      "size": 250001200,
+      "sha256": "e750b5d1650f09565df57092e94eb03c2d27ca9a0a0493834939f8bb76b51cf5"
+    },
+    {
+      "path": "ngram-035.bin",
+      "size": 250001200,
+      "sha256": "8dc952cee15877e7c1b57f8bca9a8162e141ac7cc7bff067d830d82c96731e27"
+    },
+    {
+      "path": "ngram-036.bin",
+      "size": 250001200,
+      "sha256": "414d43fcc785d0cbc804d6bab4faa00e8a4c27d1aab3d417e0aa902d8856d5fa"
+    },
+    {
+      "path": "ngram-037.bin",
+      "size": 250001200,
+      "sha256": "b224c56066b35d5993b13ff536e1b586e0224924e40a374aa1be25fe2309a6b6"
+    },
+    {
+      "path": "ngram-038.bin",
+      "size": 250001200,
+      "sha256": "ec5eb10c41c1753a89d0af90e073bd0c559055eac30fb33098b99ec8ae9ad55f"
+    },
+    {
+      "path": "ngram-039.bin",
+      "size": 250001200,
+      "sha256": "1b39f667e549e975760b599aa3804ac0b6e811340dc62e50afeed2ad282a76e0"
+    },
+    {
+      "path": "ngram-040.bin",
+      "size": 250001200,
+      "sha256": "ce28fee276f0d71bfbdc8c4c3756d2410a50543e1abde9f40b89af3c31752c92"
+    },
+    {
+      "path": "ngram-041.bin",
+      "size": 250001200,
+      "sha256": "72adcd6d3c4af88dbab3f91cd3a229854e194633f76b070358a2faec1977bc88"
+    },
+    {
+      "path": "ngram-042.bin",
+      "size": 250001200,
+      "sha256": "51447b441374034105387f7b190a3f763bb406643ae55bf45ecfa2ef64483f3b"
+    },
+    {
+      "path": "ngram-043.bin",
+      "size": 250001200,
+      "sha256": "bcab9c7d63c738d8e1aaf3ccae458798a14be811b4f5d8d4dd7ba3df4a2d4b2e"
+    },
+    {
+      "path": "ngram-044.bin",
+      "size": 250001200,
+      "sha256": "cafa84a1090955b393139abb68b9bf6d1fa240bbc06828e86fd8734c280426c9"
+    },
+    {
+      "path": "ngram-045.bin",
+      "size": 250001200,
+      "sha256": "c619744bcddcf9ecb85e45620e5abc577d4fb759267e6ed387c767b28f8ee8ea"
+    },
+    {
+      "path": "ngram-046.bin",
+      "size": 250001200,
+      "sha256": "02810ff723a9b52efba70c252a76fed0bb9b38e9e74180e20242769cb1f4462f"
+    },
+    {
+      "path": "ngram-047.bin",
+      "size": 250001200,
+      "sha256": "ecba6fac3518eb402d9e79e3c2bfe1f9cb76c41a0d14097c3ac5b6b4cd5cfe30"
+    },
+    {
+      "path": "ngram-048.bin",
+      "size": 250001200,
+      "sha256": "b83dbdbce80ad2641619675cc25bbb5d24e0dfcec2202feaee25f0e640ef9192"
+    },
+    {
+      "path": "ngram-049.bin",
+      "size": 250001200,
+      "sha256": "39b70f34d39e63a4965e9564b20b6687ad9b0191d6d41bb80f2f510675b516de"
+    },
+    {
+      "path": "ngram-050.bin",
+      "size": 250001200,
+      "sha256": "ab955d652b19b4292f75452ed9600671ee9f404c05298af318210d8cc378c79f"
+    },
+    {
+      "path": "ngram-051.bin",
+      "size": 250001200,
+      "sha256": "06bef385b567b6c908f4fedd3135301c5d4ba7504fa26aafaedd61793a3f3762"
+    },
+    {
+      "path": "ngram-052.bin",
+      "size": 250001200,
+      "sha256": "aeb0207298ef47447de87c0837588ed63e97679d345202d8223fb8f031b92e26"
+    },
+    {
+      "path": "ngram-053.bin",
+      "size": 250001200,
+      "sha256": "afc9c2f4dab12701a4f457df2085a9fceebf175bde95d42100bf6965716eca8b"
+    },
+    {
+      "path": "ngram-054.bin",
+      "size": 250001200,
+      "sha256": "9d597f87a5acafbfe4ac0435be30b7db68c3de44e0f287dbff02eeceb47cc875"
+    },
+    {
+      "path": "ngram-055.bin",
+      "size": 250001200,
+      "sha256": "800c932f3fd1b2a231c9a48f8de600a5038329e650225267366cd0cfdf76937a"
+    },
+    {
+      "path": "ngram-056.bin",
+      "size": 250001200,
+      "sha256": "5186c0adae2eed60122ad3ef586ecc4cbff27ce97b16635974f8ac1ab885780d"
+    },
+    {
+      "path": "ngram-057.bin",
+      "size": 250001200,
+      "sha256": "349c83d574e7a9017cd31bf7be19e43db4b442803a851916edff9d490be5f2e4"
+    },
+    {
+      "path": "ngram-058.bin",
+      "size": 250001200,
+      "sha256": "3dd98f0fd101b9f46b720e414a5c4a91cd5bf96516d91736b5be0130ad9f4a1f"
+    },
+    {
+      "path": "ngram-059.bin",
+      "size": 250001200,
+      "sha256": "55a28ba9e740d75eafb78092ec24c6b015143b7785968e6c968a583db21dc201"
+    },
+    {
+      "path": "ngram-060.bin",
+      "size": 250001200,
+      "sha256": "45a36322ab25ec2f08796e88c9102ef203bbba5fc7269886e9ec5e73113e5e6f"
+    },
+    {
+      "path": "ngram-061.bin",
+      "size": 250001200,
+      "sha256": "97eaadba62fc6bf1dd46a487a01542bac00fb8c83b151beaaac7e063228714af"
+    },
+    {
+      "path": "ngram-062.bin",
+      "size": 250001200,
+      "sha256": "219964dd7f496d8dcf68f884b75b96dc09449f4cc6c48fad3d5d81cb040d4418"
+    },
+    {
+      "path": "ngram-063.bin",
+      "size": 250001200,
+      "sha256": "2c6775061bcce84beecf2dafc656cfbf0ac69984c575a43d7bb571c5e6277ce9"
+    },
+    {
+      "path": "ngram-064.bin",
+      "size": 250001200,
+      "sha256": "1e81f2347147e50275c3937a3d5dc6f5ff3b513273688c60b4e58e0207998733"
+    },
+    {
+      "path": "ngram-065.bin",
+      "size": 250001200,
+      "sha256": "b52f29c2f7c6755260c7a58609a039c34621b5114852bc0276436cd04df33815"
+    },
+    {
+      "path": "ngram-066.bin",
+      "size": 250001200,
+      "sha256": "0c7bc496a53113b33c262591d0ed9fff1222246609b3ef17588c8c50b91c25db"
+    },
+    {
+      "path": "ngram-067.bin",
+      "size": 250001200,
+      "sha256": "a1a1d59d066ec86dc90b9c2e9b97427650407051a2a4510f9c35e84a5da45b2f"
+    },
+    {
+      "path": "ngram-068.bin",
+      "size": 250001200,
+      "sha256": "d030039d9be7176522d5bd4a3f76111655ae5533265c96bccb37f89b279f9880"
+    },
+    {
+      "path": "ngram-069.bin",
+      "size": 250001200,
+      "sha256": "ff913973cd1d7cd2e64698664e85ab613997974529f86e5e275fc567f696c37c"
+    },
+    {
+      "path": "ngram-070.bin",
+      "size": 250001200,
+      "sha256": "a1eb63f1f08561e4b3a6b9aebd0dd07ba7610717bc636b5b6c810fbba863f59a"
+    },
+    {
+      "path": "ngram-071.bin",
+      "size": 250001200,
+      "sha256": "eea1e218a00b648945d379b32f2394a0c38ed19c7eafc8de31fba32d351ba4eb"
+    },
+    {
+      "path": "ngram-072.bin",
+      "size": 250001200,
+      "sha256": "e7051561c8bd8ab82abfc377852ee4b7b812aff6d4a8ec916eee1286a98c0bec"
+    },
+    {
+      "path": "ngram-073.bin",
+      "size": 250001200,
+      "sha256": "8362158bcf35032e921b33270a1e4c07704a8fb5a25e96b46e674588e826add8"
+    },
+    {
+      "path": "ngram-074.bin",
+      "size": 250001200,
+      "sha256": "a21a0cf4f80a630e00fd755463359c2f5b8cb0a3835a88dde3c6032ff874fb75"
+    },
+    {
+      "path": "ngram-075.bin",
+      "size": 250001200,
+      "sha256": "2cdd89671cce6b393e16c1a8f365896c33f104439100ead6e27cb06ad9ffaf08"
+    },
+    {
+      "path": "ngram-076.bin",
+      "size": 250001200,
+      "sha256": "d40b47224f01e2fb683a03d03188948992a7c05388b52a39e1434c3f5c870da4"
+    },
+    {
+      "path": "ngram-077.bin",
+      "size": 250001200,
+      "sha256": "bc24807a5c61906666a4f32caeeee7df9e65ca8a02ea01cf8e5c4cb299ca32c0"
+    },
+    {
+      "path": "ngram-078.bin",
+      "size": 250001200,
+      "sha256": "0a690e78c484511fdb2487ad6e2924d464618fdde7b19efdfda611c17395d20a"
+    },
+    {
+      "path": "ngram-079.bin",
+      "size": 250001200,
+      "sha256": "7982246eec2908d774a543ec2ac4ceceb7aa7b64030ebcfbed7c1d57f7fd5ab7"
+    },
+    {
+      "path": "ngram-080.bin",
+      "size": 250001200,
+      "sha256": "0196f0daeceec898922605f443def956e664b0ef993ef3c4202b3e3ebd84ddc5"
+    },
+    {
+      "path": "ngram-081.bin",
+      "size": 250001200,
+      "sha256": "d62de11cfaf7a451afbc3cc799d3a9367814972442d577be0e66c739fe726e9c"
+    },
+    {
+      "path": "ngram-082.bin",
+      "size": 250001200,
+      "sha256": "ee32544baf1567d946d67a8fb93e4ead8ceb14694918df3cc81e8971d25503c4"
+    },
+    {
+      "path": "ngram-083.bin",
+      "size": 250001200,
+      "sha256": "751069175cd1faf2fc1afe288fcb6ef490f85de3e0ac7c477066049b5b944e49"
+    },
+    {
+      "path": "ngram-084.bin",
+      "size": 250001200,
+      "sha256": "f88bff96dc068befaeeeca4219aff6d6e43301c521f32f293fa3c39c806745ef"
+    },
+    {
+      "path": "ngram-085.bin",
+      "size": 250001200,
+      "sha256": "11f4c936db5c2a70c894bbd29b100a114cb40661e36bcca7b7c616ea5a65970e"
+    },
+    {
+      "path": "ngram-086.bin",
+      "size": 250001200,
+      "sha256": "37a6eb04e90220f12a31ec3b96e1182e85d706a468106113637717488d1c3a20"
+    },
+    {
+      "path": "ngram-087.bin",
+      "size": 250001200,
+      "sha256": "a033d739a3d5c5d5b7bf258b4beb3b7996052f70f9cffb8aaab60cfc4f3f7c58"
+    },
+    {
+      "path": "ngram-088.bin",
+      "size": 250001200,
+      "sha256": "0164efc708842361ef495ec8a4ce791ca2b027d1821e351846e550424b0778eb"
+    },
+    {
+      "path": "ngram-089.bin",
+      "size": 250001200,
+      "sha256": "80ee7e70386260d1c9425f0c64b0e8d7ff55771a15b5af078ffc540188514b17"
+    },
+    {
+      "path": "ngram-090.bin",
+      "size": 250001200,
+      "sha256": "ced0abc3633699bc24f64db9dfbfd478b24e6a20193eb8532be90245a1e63284"
+    },
+    {
+      "path": "ngram-091.bin",
+      "size": 250001200,
+      "sha256": "98e7fa6066de8616c04dbf00d18129cf976327f65737e52f7486cd393e8bf746"
+    },
+    {
+      "path": "ngram-092.bin",
+      "size": 250001200,
+      "sha256": "6a40f8a27ad4270483a4025a853bd1a8931bf523a0971ae842a8effa385681a7"
+    },
+    {
+      "path": "ngram-093.bin",
+      "size": 250001200,
+      "sha256": "068ece4bf366d28a25f3ec58c19c92dc4c760807f1c29e8fa1b9da4023c4dbbc"
+    },
+    {
+      "path": "ngram-094.bin",
+      "size": 250001200,
+      "sha256": "5939ca3830ee32ba87f276b33048176a49ebdc876ff728c4c641f23bbfea7ae4"
+    },
+    {
+      "path": "ngram-095.bin",
+      "size": 250001200,
+      "sha256": "30b0e2769753f695973cb0c602dc42e8e0f145df6b34ba5194ec2a6db8bf6122"
+    },
+    {
+      "path": "ngram-096.bin",
+      "size": 250001200,
+      "sha256": "b8535ac46fc26eec0c36ed5a3031bff22dadbe0261b144fa345f34b7e8c7a73b"
+    },
+    {
+      "path": "ngram-097.bin",
+      "size": 250001200,
+      "sha256": "76f81794c2a8515dfe3c28cd86f365ffbaaa3380c62b6d8233652fe073c7018c"
+    },
+    {
+      "path": "ngram-098.bin",
+      "size": 250001200,
+      "sha256": "28c05244816a0da025a9b066c6a975d9cfb9b954a8b921de0f2a0ca786673e3f"
+    },
+    {
+      "path": "ngram-099.bin",
+      "size": 250001200,
+      "sha256": "bef6ae760f113442437ff070ff7ec2ca49856ac089a9e2bb055f20e0bad51981"
+    },
+    {
+      "path": "ngram-100.bin",
+      "size": 250001200,
+      "sha256": "e5931f0129478fe457742d324ac5aa0c8206172c94a0d75d6a1fd75a684ff6a9"
+    },
+    {
+      "path": "ngram-101.bin",
+      "size": 250001200,
+      "sha256": "ee1b043fe4ab9054ccfe0db48074e68c664decc0b161c6b6ee1b787955a602ed"
+    },
+    {
+      "path": "ngram-102.bin",
+      "size": 250001200,
+      "sha256": "bd8abf7f4af1e1a9cbd3c74e78af3914cccebd67073a824678698f65b4ada354"
+    },
+    {
+      "path": "ngram-103.bin",
+      "size": 250001200,
+      "sha256": "fcf0e02f3549fc857e63fa1d0446fe24eda72090ecf1044ed35b7fcff5f8065c"
+    },
+    {
+      "path": "ngram-104.bin",
+      "size": 250001200,
+      "sha256": "aba10bfe1dee78cd884375acf3bbfcdb3f548bd0ea7e298b1dadc65093f4b2c8"
+    },
+    {
+      "path": "ngram-105.bin",
+      "size": 250001200,
+      "sha256": "2f546ed88ec9b8be30e90310ae864e256b37d10a5af85a88ffd8004f30ff1a0c"
+    },
+    {
+      "path": "ngram-106.bin",
+      "size": 250001200,
+      "sha256": "2c214caa63672a65c2da2385982c90da31decbf3e88795f106f1ba7105ccc49a"
+    },
+    {
+      "path": "ngram-107.bin",
+      "size": 250001200,
+      "sha256": "bf4c7ac3c322a9003231c1a01c6af62e07ee65717e6dad0b0f5f40f4980e875a"
+    },
+    {
+      "path": "ngram-108.bin",
+      "size": 250001200,
+      "sha256": "0725762e09850d4008ef2110e0ddd761d3398a84919f028040576e3a660bfb3b"
+    },
+    {
+      "path": "ngram-109.bin",
+      "size": 250001200,
+      "sha256": "44079b07fafb0deabb5137f91ca8537f44d960f677deacb194a6b8343c96606b"
+    },
+    {
+      "path": "ngram-110.bin",
+      "size": 250001200,
+      "sha256": "299c68c867156edfa73a4d0f78973b91f9cc398b092dc24401636095a5f9bd1c"
+    },
+    {
+      "path": "ngram-111.bin",
+      "size": 250001200,
+      "sha256": "7a070358fa878213eb2371db69178bf54c2e23829b17a3377f729a7125660eb4"
+    },
+    {
+      "path": "ngram-112.bin",
+      "size": 250001200,
+      "sha256": "a502fd06704a13948e80ed42c4a43b5dfbc5198d5d13cc243c399b3d8d4634dc"
+    },
+    {
+      "path": "ngram-113.bin",
+      "size": 250001200,
+      "sha256": "9e3b272e5f02954ea782d06d4186434c662ceaab0c9ce36b27fab83cc6b6b6da"
+    },
+    {
+      "path": "ngram-114.bin",
+      "size": 250001200,
+      "sha256": "91cdc41acc9aa780da72791b19c53500af8273b849ed34a6de06434ab0bcc0cd"
+    },
+    {
+      "path": "ngram-115.bin",
+      "size": 250001200,
+      "sha256": "30b82805ed583f313d4ba02c8e2b3a4fa968106f586429737587d97d084bde04"
+    },
+    {
+      "path": "ngram-116.bin",
+      "size": 250001200,
+      "sha256": "dce66bbccaee386227d3c752297cf055de2aa0fcb2a895a686898e88b4f855ae"
+    },
+    {
+      "path": "ngram-117.bin",
+      "size": 250001200,
+      "sha256": "839169df41a2b793bfb6f9bcfad695744939013c77c043d26620635d4badaa86"
+    },
+    {
+      "path": "ngram-118.bin",
+      "size": 250001200,
+      "sha256": "57cfc740861ba4f9c019a41239679b94be7bcfeb6749fc1fbe9d44e6b238093c"
+    },
+    {
+      "path": "ngram-119.bin",
+      "size": 250001200,
+      "sha256": "3dae584f5c18707df02d9ef677a7495ce8608b0d3c0da76c4cbe66ffd9d1ef42"
+    },
+    {
+      "path": "ngram-120.bin",
+      "size": 250001200,
+      "sha256": "c89815282c04a7999d6a6da71e97edd4ff022105fbb9fb7b5178a594d606bb99"
+    },
+    {
+      "path": "ngram-121.bin",
+      "size": 250001200,
+      "sha256": "d1cf31a9712824ff47b5750819b0b194d45fb6bf38b4a4699efe0b6d675b8bea"
+    },
+    {
+      "path": "ngram-122.bin",
+      "size": 250001200,
+      "sha256": "d6ec8c2a9bcedd4758aa7c5227c5d11a170db24b1c7feb1c9084f28f15ebe285"
+    },
+    {
+      "path": "ngram-123.bin",
+      "size": 250001200,
+      "sha256": "e21a4aeef4d56f016095a62c98f1151f8f841e0cac7296f014b119dd501b3676"
+    },
+    {
+      "path": "ngram-124.bin",
+      "size": 250001200,
+      "sha256": "aa5bc8c4321c9dc227ca6df20d42f091c93fd542b29cd20384f26746ebc210de"
+    },
+    {
+      "path": "ngram-125.bin",
+      "size": 250001200,
+      "sha256": "4da1e34b4e4c5829cd4c5d2a04625182a19383becf222e137e74a82f5aa118c6"
+    },
+    {
+      "path": "ngram-126.bin",
+      "size": 250001200,
+      "sha256": "1d5d1595e7da82ba54695a03387ee1b33c6be8c24a9cd41536449702d5a6e7c7"
+    },
+    {
+      "path": "ngram-127.bin",
+      "size": 250001200,
+      "sha256": "8e3b55e6268c73b106fe018be8db92ffb343058cfbc24f9e93b16fe2769376e7"
+    }
+  ],
+  "prepared_bytes": 100048541696,
+  "ngram_cache_dtype": "BF16",
+  "source_files": {
+    "LICENSE": "a0dc422560841fd68e06d974907f8b4c709bca44a67daad2b528437bdf676c08",
+    "README.md": "db1e0d8575543e7a8d324fd22afd2d596a002e9163ed1f971b6b8df0abbe65fd",
+    "chat_template.jinja": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+    "config.json": "0da22a8ed4323fbe969bf982aeb054743b315206791f28ef74a309c707080ba5",
+    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
+    "merges.txt": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+    "model-00001.safetensors": "206c2e6ee138c902115f0686a43e0d56097518945bbcd6d3ab10bf916278f86c",
+    "model-00002.safetensors": "48f925c8652fd3210bd8593b41b9fbd66f02567e0e1e7abc28b75e2601f8af26",
+    "model-00003.safetensors": "cb0a951b9aed16ddad882a75c4c07b2615fa364db7c83cfcf7166dc481def85a",
+    "model-00004.safetensors": "f57df447a6acc2d16e69a66c708291d692f0f7476f74ab20aee3d2554c2896c8",
+    "model-00005.safetensors": "bc133543936364e026b413f1ab4b30f2847846d5a8cc1d201cadfd9396327320",
+    "model-00006.safetensors": "9231085f2723a8a3e26fc00836a789400527320ef8a6e219df6974ea4f8eee95",
+    "model-00007.safetensors": "03dffb750368b02fe517f2f1bfd7d5db69c419630801c3ffce88d8a6971046d5",
+    "model-00008.safetensors": "910401c0e420a50b901b170895e7a180c5908a45634be9c92903977ecaa14986",
+    "model-00009.safetensors": "0c77b22503b8e783cc345cd8afe63e007f9d0d0581cbda3f366250e38e096634",
+    "model-00010.safetensors": "115466ffb3e92a8e2a338d72395f7c32a176dadc791d2049ff9a8daadb347ed7",
+    "model-00011.safetensors": "9128a9cbf81cd25bc4cbebe8adeefa12fa36ee96fcccb6f5fe378343b45131f0",
+    "model.safetensors.index.json": "072cc2c60b8af6cce82a387f62e39ca88754c3a6fccae0816dd21bb89d27470d",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "qwen4_exp.py": "6fae4ec0decbf77ca4a4571de683bc5580ec75e84325ecb432dfcd2fc81df75e",
+    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+  }
+}

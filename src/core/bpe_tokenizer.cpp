@@ -83,8 +83,18 @@ void BPETokenizer::load_json(const std::string& path) {
     auto merges = data["model"]["merges"];
     int rank = 0;
     for (const auto& merge : merges) {
-        // format: "word1 word2"
-        merges_[merge.get<std::string>()] = rank++;
+        std::string merge_str;
+        if (merge.is_array()) {
+            if (merge.size() >= 2) {
+                merge_str = merge[0].get<std::string>() + " " + merge[1].get<std::string>();
+            }
+        } else {
+            merge_str = merge.get<std::string>();
+        }
+        
+        if (!merge_str.empty()) {
+            merges_[merge_str] = rank++;
+        }
     }
     
     // Parse pre_tokenizer pattern

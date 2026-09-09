@@ -74,11 +74,18 @@ infra::DeviceBuffer* GenerationEngine::get_buffer(const std::map<std::string, st
 }
 
 void GenerationEngine::load_weights(const std::string& model_path) {
-    // Quantization resolver (default: all Q4_0 except token_embedding/norm/lm_head)
+    // Quantization resolver (default: all Q4_0 except token_embedding/norm/lm_head/MoE weights)
     auto quant_resolver = [](const std::string& name) -> std::optional<freellm::quant::QuantType> {
          // Keep embeddings and norms in FP32 for accuracy
          if (name == "token_embedding" || name.find("norm") != std::string::npos || name == "lm_head") {
              return std::nullopt; // Keep FP32
+         }
+         // Keep MoE weights in FP32 for now (router and experts)
+         if (name.find("mlp.gate.weight") != std::string::npos) {
+             return std::nullopt;
+         }
+         if (name.find("mlp.experts.") != std::string::npos) {
+             return std::nullopt;
          }
          return freellm::quant::QuantType::Q4_0;
     };
@@ -138,7 +145,20 @@ void GenerationEngine::initialize_buffers() {
     ffn_down_ = backend_->allocate(alloc_tokens * config_.d_model * sizeof(float), infra::DType::FLOAT32);
     
     logits_ = backend_->allocate(alloc_tokens * config_.vocab_size * sizeof(float), infra::DType::FLOAT32);
-    
+
+    // MoE buffers (only allocated if num_experts > 0)
+    if (config_.num_experts > 0) {
+        moe_probs_ = backend_->allocate(alloc_tokens * config_.num_experts * sizeof(float), infra::DType::FLOAT32);
+        moe_indices_ = backend_->allocate(alloc_tokens * config_.num_experts_per_token * sizeof(int32_t), infra::DType::INT32);
+        moe_values_ = backend_->allocate(alloc_tokens * config_.num_experts_per_token * sizeof(float), infra::DType::FLOAT32);
+        moe_expert_out_ = backend_->allocate(alloc_tokens * config_.d_model * sizeof(float), infra::DType::FLOAT32);
+        // Additional buffer for expert accumulation
+        moe_accum_ = backend_->allocate(alloc_tokens * config_.d_model * sizeof(float), infra::DType::FLOAT32);
+        // Expert FFN intermediate buffers
+        moe_expert_gate_ = backend_->allocate(alloc_tokens * config_.d_ff * sizeof(float), infra::DType::FLOAT32);
+        moe_expert_up_ = backend_->allocate(alloc_tokens * config_.d_ff * sizeof(float), infra::DType::FLOAT32);
+    }
+
     block_table_buf_ = backend_->allocate(batch_size * kv_config_.max_num_blocks * sizeof(int32_t), infra::DType::INT32);
     cu_seqlens_buf_ = backend_->allocate((batch_size + 1) * sizeof(int32_t), infra::DType::INT32);
     positions_buf_ = backend_->allocate(alloc_tokens * sizeof(int32_t), infra::DType::INT32);
@@ -167,7 +187,155 @@ void GenerationEngine::initialize_buffers() {
     scalar_scale_attn_ = alloc_f32(scale);
 }
 
-void GenerationEngine::run_linear_batched(infra::DeviceBuffer* input, const std::string& weight_name, infra::DeviceBuffer* output, 
+// Run MoE forward pass using Metal kernels
+// Returns the output in moe_accum_ buffer
+void GenerationEngine::run_moe_forward(
+    infra::DeviceBuffer* input,      // [batch_size, d_model]
+    const std::string& layer_prefix, // e.g., "layers.0."
+    int batch_size)
+{
+    auto alloc_u32 = [&](uint32_t val) {
+        auto buf = backend_->allocate(sizeof(uint32_t), infra::DType::INT32);
+        backend_->copy_to_device(buf.get(), 0, &val, sizeof(uint32_t));
+        return buf;
+    };
+
+    // Step 1: Gate computation + Softmax using moe_gate_softmax kernel
+    // Input: hidden [batch_size, d_model], gate_weight [d_model, num_experts]
+    // Output: probs [batch_size, num_experts]
+    auto* gate_weight = get_buffer(gpu_weights_, layer_prefix + "mlp.gate.weight");
+
+    infra::KernelConfig gate_grid;
+    gate_grid.grid = infra::Dim3(batch_size, 1, 1);
+    gate_grid.block = infra::Dim3(32, 1, 1);  // One threadgroup per token
+
+    auto b_d_model = alloc_u32((uint32_t)config_.d_model);
+    auto b_num_experts = alloc_u32((uint32_t)config_.num_experts);
+
+    backend_->execute_kernel("moe_gate_softmax",
+        {input, gate_weight, moe_probs_.get(), b_d_model.get(), b_num_experts.get()},
+        {}, gate_grid);
+
+    // Step 2: TopK expert selection
+    // Input: probs [batch_size, num_experts]
+    // Output: indices [batch_size, k], values [batch_size, k]
+    infra::KernelConfig topk_grid;
+    topk_grid.grid = infra::Dim3(batch_size, 1, 1);
+    topk_grid.block = infra::Dim3(32, 1, 1);
+
+    auto b_k = alloc_u32((uint32_t)config_.num_experts_per_token);
+    auto b_norm_topk = alloc_u32(config_.norm_topk_prob ? 1u : 0u);
+
+    backend_->execute_kernel("moe_topk_experts",
+        {moe_probs_.get(), moe_indices_.get(), moe_values_.get(),
+         b_num_experts.get(), b_k.get(), b_norm_topk.get()},
+        {}, topk_grid);
+
+    // Step 3: Download indices and values to CPU for expert routing
+    backend_->synchronize();
+    std::vector<int32_t> indices(batch_size * config_.num_experts_per_token);
+    std::vector<float> values(batch_size * config_.num_experts_per_token);
+    backend_->copy_to_host(indices.data(), moe_indices_.get(), indices.size() * sizeof(int32_t));
+    backend_->copy_to_host(values.data(), moe_values_.get(), values.size() * sizeof(float));
+
+    // Step 4: Zero the accumulation buffer
+    std::vector<float> zeros(batch_size * config_.d_model, 0.0f);
+    backend_->copy_to_device(moe_accum_.get(), zeros.data(), zeros.size() * sizeof(float));
+
+    // Step 5: Group tokens by expert and run expert FFNs
+    // Build per-expert token lists
+    std::vector<std::vector<std::pair<int, float>>> expert_tokens(config_.num_experts);
+    for (int t = 0; t < batch_size; ++t) {
+        for (size_t k = 0; k < config_.num_experts_per_token; ++k) {
+            int expert_id = indices[t * config_.num_experts_per_token + k];
+            float prob = values[t * config_.num_experts_per_token + k];
+            if (expert_id >= 0 && expert_id < (int)config_.num_experts) {
+                expert_tokens[expert_id].push_back({t, prob});
+            }
+        }
+    }
+
+    // Download input to CPU for gathering
+    std::vector<float> input_cpu(batch_size * config_.d_model);
+    backend_->copy_to_host(input_cpu.data(), input, input_cpu.size() * sizeof(float));
+
+    // Download accumulator to CPU for scatter-add
+    std::vector<float> accum_cpu(batch_size * config_.d_model, 0.0f);
+
+    // Process each expert that has selected tokens
+    for (size_t e = 0; e < config_.num_experts; ++e) {
+        if (expert_tokens[e].empty()) continue;
+
+        int expert_batch = expert_tokens[e].size();
+
+        // Gather inputs for this expert
+        std::vector<float> expert_input(expert_batch * config_.d_model);
+        for (int i = 0; i < expert_batch; ++i) {
+            int token_idx = expert_tokens[e][i].first;
+            std::memcpy(expert_input.data() + i * config_.d_model,
+                       input_cpu.data() + token_idx * config_.d_model,
+                       config_.d_model * sizeof(float));
+        }
+
+        // Upload gathered input
+        backend_->copy_to_device(moe_expert_out_.get(), expert_input.data(),
+                                expert_input.size() * sizeof(float));
+
+        // Get expert weight names
+        std::string expert_prefix = layer_prefix + "mlp.experts." + std::to_string(e) + ".";
+        std::string gate_name = expert_prefix + "gate_proj.weight";
+        std::string up_name = expert_prefix + "up_proj.weight";
+        std::string down_name = expert_prefix + "down_proj.weight";
+
+        // Run expert FFN: gate -> silu -> mul with up -> down
+        // gate_proj: [d_model, d_ff]
+        // up_proj: [d_model, d_ff]
+        // down_proj: [d_ff, d_model]
+
+        // Gate projection
+        run_linear_batched(moe_expert_out_.get(), gate_name, moe_expert_gate_.get(),
+                          config_.d_model, config_.d_ff, expert_batch);
+
+        // Up projection
+        run_linear_batched(moe_expert_out_.get(), up_name, moe_expert_up_.get(),
+                          config_.d_model, config_.d_ff, expert_batch);
+
+        // SiLU(gate) * up
+        infra::KernelConfig ffn_grid;
+        ffn_grid.grid = infra::Dim3(expert_batch * config_.d_ff, 1, 1);
+        ffn_grid.block = infra::Dim3(256, 1, 1);
+
+        backend_->execute_kernel("silu", {moe_expert_gate_.get()}, {moe_expert_gate_.get()}, ffn_grid);
+        backend_->execute_kernel("mul", {moe_expert_gate_.get(), moe_expert_up_.get()},
+                                {moe_expert_gate_.get()}, ffn_grid);
+
+        // Down projection
+        run_linear_batched(moe_expert_gate_.get(), down_name, moe_expert_out_.get(),
+                          config_.d_ff, config_.d_model, expert_batch);
+
+        // Download expert output
+        std::vector<float> expert_output(expert_batch * config_.d_model);
+        backend_->synchronize();
+        backend_->copy_to_host(expert_output.data(), moe_expert_out_.get(),
+                              expert_output.size() * sizeof(float));
+
+        // Scatter-add weighted outputs to accumulator
+        for (int i = 0; i < expert_batch; ++i) {
+            int token_idx = expert_tokens[e][i].first;
+            float prob = expert_tokens[e][i].second;
+
+            for (size_t d = 0; d < config_.d_model; ++d) {
+                accum_cpu[token_idx * config_.d_model + d] +=
+                    prob * expert_output[i * config_.d_model + d];
+            }
+        }
+    }
+
+    // Upload final accumulated result
+    backend_->copy_to_device(moe_accum_.get(), accum_cpu.data(), accum_cpu.size() * sizeof(float));
+}
+
+void GenerationEngine::run_linear_batched(infra::DeviceBuffer* input, const std::string& weight_name, infra::DeviceBuffer* output,
                        int in_features, int out_features, int batch_size) {
     // Scalar Allocator Helper (todo: dedup)
     auto alloc_u32 = [&](uint32_t val) {
@@ -365,15 +533,22 @@ bool GenerationEngine::step() {
             auto b_dim_ffn = alloc_u32((uint32_t)config_.d_model);
             backend_->execute_kernel("rms_norm", {x_.get(), w_norm_ffn, x_norm_.get(), b_dim_ffn.get(), scalar_epsilon_.get()}, {}, grid_norm);
 
-            run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_gate", ffn_gate_.get(), config_.d_model, config_.d_ff, total_prompt_len);
-            run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_up", ffn_up_.get(), config_.d_model, config_.d_ff, total_prompt_len);
-            
-            infra::KernelConfig grid_ffn; grid_ffn.grid = infra::Dim3(total_prompt_len * config_.d_ff, 1, 1); grid_ffn.block = infra::Dim3(256, 1, 1);
-            backend_->execute_kernel("silu", {ffn_gate_.get()}, {ffn_gate_.get()}, grid_ffn);
-            backend_->execute_kernel("mul", {ffn_gate_.get(), ffn_up_.get()}, {ffn_gate_.get()}, grid_ffn);
-            
-            run_linear_batched(ffn_gate_.get(), layer_prefix + "ffn.W_down", ffn_down_.get(), config_.d_ff, config_.d_model, total_prompt_len);
-            backend_->execute_kernel("add", {x_.get(), ffn_down_.get()}, {x_.get()}, grid_add);
+            if (config_.num_experts > 0) {
+                // MoE path
+                run_moe_forward(x_norm_.get(), layer_prefix, total_prompt_len);
+                backend_->execute_kernel("add", {x_.get(), moe_accum_.get()}, {x_.get()}, grid_add);
+            } else {
+                // Dense FFN path
+                run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_gate", ffn_gate_.get(), config_.d_model, config_.d_ff, total_prompt_len);
+                run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_up", ffn_up_.get(), config_.d_model, config_.d_ff, total_prompt_len);
+
+                infra::KernelConfig grid_ffn; grid_ffn.grid = infra::Dim3(total_prompt_len * config_.d_ff, 1, 1); grid_ffn.block = infra::Dim3(256, 1, 1);
+                backend_->execute_kernel("silu", {ffn_gate_.get()}, {ffn_gate_.get()}, grid_ffn);
+                backend_->execute_kernel("mul", {ffn_gate_.get(), ffn_up_.get()}, {ffn_gate_.get()}, grid_ffn);
+
+                run_linear_batched(ffn_gate_.get(), layer_prefix + "ffn.W_down", ffn_down_.get(), config_.d_ff, config_.d_model, total_prompt_len);
+                backend_->execute_kernel("add", {x_.get(), ffn_down_.get()}, {x_.get()}, grid_add);
+            }
         }
         
         // Sampling
@@ -520,15 +695,22 @@ bool GenerationEngine::step() {
             auto b_dim_ffn_dec = alloc_u32((uint32_t)config_.d_model);
             backend_->execute_kernel("rms_norm", {x_.get(), w_norm_ffn, x_norm_.get(), b_dim_ffn_dec.get(), scalar_epsilon_.get()}, {}, grid_norm);
             
-            run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_gate", ffn_gate_.get(), config_.d_model, config_.d_ff, batch_size);
-            run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_up", ffn_up_.get(), config_.d_model, config_.d_ff, batch_size);
-            
-            infra::KernelConfig grid_ffn; grid_ffn.grid = infra::Dim3(batch_size * config_.d_ff, 1, 1); grid_ffn.block = infra::Dim3(256, 1, 1);
-            backend_->execute_kernel("silu", {ffn_gate_.get()}, {ffn_gate_.get()}, grid_ffn);
-            backend_->execute_kernel("mul", {ffn_gate_.get(), ffn_up_.get()}, {ffn_gate_.get()}, grid_ffn);
-            
-            run_linear_batched(ffn_gate_.get(), layer_prefix + "ffn.W_down", ffn_down_.get(), config_.d_ff, config_.d_model, batch_size);
-            backend_->execute_kernel("add", {x_.get(), ffn_down_.get()}, {x_.get()}, grid_add);
+            if (config_.num_experts > 0) {
+                // MoE path
+                run_moe_forward(x_norm_.get(), layer_prefix, batch_size);
+                backend_->execute_kernel("add", {x_.get(), moe_accum_.get()}, {x_.get()}, grid_add);
+            } else {
+                // Dense FFN path
+                run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_gate", ffn_gate_.get(), config_.d_model, config_.d_ff, batch_size);
+                run_linear_batched(x_norm_.get(), layer_prefix + "ffn.W_up", ffn_up_.get(), config_.d_model, config_.d_ff, batch_size);
+
+                infra::KernelConfig grid_ffn; grid_ffn.grid = infra::Dim3(batch_size * config_.d_ff, 1, 1); grid_ffn.block = infra::Dim3(256, 1, 1);
+                backend_->execute_kernel("silu", {ffn_gate_.get()}, {ffn_gate_.get()}, grid_ffn);
+                backend_->execute_kernel("mul", {ffn_gate_.get(), ffn_up_.get()}, {ffn_gate_.get()}, grid_ffn);
+
+                run_linear_batched(ffn_gate_.get(), layer_prefix + "ffn.W_down", ffn_down_.get(), config_.d_ff, config_.d_model, batch_size);
+                backend_->execute_kernel("add", {x_.get(), ffn_down_.get()}, {x_.get()}, grid_add);
+            }
         }
 
         // Output

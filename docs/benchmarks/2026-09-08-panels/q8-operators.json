@@ -1,0 +1,605 @@
+{
+  "kind": "real_mixed_q8_operator_check",
+  "passed": true,
+  "source": {
+    "schema": 1,
+    "repo": "pipenetwork/Qwen3.8-Flash-Next-MLX-mixed-4_8bit",
+    "revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "scope": "Bounded Q8 operator reference; not a complete checkpoint",
+    "files": [
+      {
+        "path": "config.json",
+        "size": 135742,
+        "sha256": "e3304833db1235a0368fd59bc66d7a8724943262c3e465e629e9e6a892e10ea1"
+      },
+      {
+        "path": "model-00011.safetensors",
+        "size": 4876940562,
+        "sha256": "8e7b68292208146a0298e8e07548efd25889ba1c36d39a5ed27ab46b0d635436"
+      }
+    ]
+  },
+  "fixture_manifest_sha256": "52f5f19b4856ebe99dfe44bb156d990d8207f7e6ab36c07755a8dcad89294520",
+  "machine": {
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "86d30a8a70f848c55d18d9ceeb77750a918fee90ad8f55e8b2da2a600a6b2cc9",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "q8_arithmetic": "MLX 0.31.1 fixed per-token QMV, FP32 input bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 0,
+    "peak_buffer_bytes": 3784704,
+    "live_command_groups": 0,
+    "peak_command_groups": 1,
+    "dispatches": 35,
+    "submissions": 35,
+    "waits": 35
+  },
+  "cases": [
+    {
+      "name": "shared_gate-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 640,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 640,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_gate-1-fused",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 1280,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_gate-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 1920,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 1920,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_gate-3-fused",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 2560,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_gate-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 10880,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 4406,
+        "values": 10880,
+        "relative_l2": 0.0024200422052073115,
+        "max_abs": 0.00390625
+      }
+    },
+    {
+      "name": "shared_gate-17-fused",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 11520,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_up-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 640,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 640,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_up-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 1920,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 1920,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_up-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 10880,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 4381,
+        "values": 10880,
+        "relative_l2": 0.0023944518063452732,
+        "max_abs": 0.00390625
+      }
+    },
+    {
+      "name": "shared_down-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_down-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "shared_down-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 216,
+        "values": 544,
+        "relative_l2": 0.002241090006883671,
+        "max_abs": 0.0009765625
+      }
+    },
+    {
+      "name": "hyper_down-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "hyper_down-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "hyper_down-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 220,
+        "values": 544,
+        "relative_l2": 0.0022841741997258894,
+        "max_abs": 0.015625
+      }
+    },
+    {
+      "name": "hyper_up-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 7,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 7,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "hyper_up-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 21,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 21,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "hyper_up-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 119,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 53,
+        "values": 119,
+        "relative_l2": 0.0035547181755262117,
+        "max_abs": 0.015625
+      }
+    },
+    {
+      "name": "attention_q-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "attention_q-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "attention_q-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 205,
+        "values": 544,
+        "relative_l2": 0.0022787969757291074,
+        "max_abs": 0.00390625
+      }
+    },
+    {
+      "name": "attention_o-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 7,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 7,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "attention_o-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 21,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 21,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "attention_o-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 119,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 52,
+        "values": 119,
+        "relative_l2": 0.003142056870278488,
+        "max_abs": 0.0078125
+      }
+    },
+    {
+      "name": "gdn_qkv-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "gdn_qkv-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "gdn_qkv-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 206,
+        "values": 544,
+        "relative_l2": 0.0020903033776351093,
+        "max_abs": 0.00390625
+      }
+    },
+    {
+      "name": "embedding-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "embedding-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "embedding-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 237,
+        "values": 544,
+        "relative_l2": 0.0026680853276812625,
+        "max_abs": 0.001953125
+      }
+    },
+    {
+      "name": "embedding-copies1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 12800,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "embedding-copies4",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 51200,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "lm_head-1",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 32,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "lm_head-3",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 96,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      }
+    },
+    {
+      "name": "lm_head-17",
+      "fixed_qmv_reference": {
+        "bit_identical": true,
+        "differing_values": 0,
+        "values": 544,
+        "relative_l2": 0.0,
+        "max_abs": 0.0
+      },
+      "mlx_batch_comparison": {
+        "bit_identical": false,
+        "differing_values": 218,
+        "values": 544,
+        "relative_l2": 0.0025447497696298575,
+        "max_abs": 0.00390625
+      }
+    }
+  ],
+  "full_model_verified": false,
+  "quality_qualified": false
+}

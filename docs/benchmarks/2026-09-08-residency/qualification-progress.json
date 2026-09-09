@@ -1,0 +1,11 @@
+{
+  "completed_steps": [
+    "admission-18g",
+    "real-operator-capture",
+    "captured-operators",
+    "shape-selection",
+    "mixed-microchunks",
+    "q4-short-current"
+  ],
+  "complete": true
+}

@@ -1,0 +1,223 @@
+{
+  "kind": "format_aware_oracle_q4_regression",
+  "passed": true,
+  "checks": [
+    {
+      "name": "layer_0",
+      "passed": true
+    },
+    {
+      "name": "layer_1",
+      "passed": true
+    },
+    {
+      "name": "layer_2",
+      "passed": true
+    },
+    {
+      "name": "layer_3",
+      "passed": true
+    },
+    {
+      "name": "layer_4",
+      "passed": true
+    },
+    {
+      "name": "layer_5",
+      "passed": true
+    },
+    {
+      "name": "layer_6",
+      "passed": true
+    },
+    {
+      "name": "layer_7",
+      "passed": true
+    },
+    {
+      "name": "layer_8",
+      "passed": true
+    },
+    {
+      "name": "layer_9",
+      "passed": true
+    },
+    {
+      "name": "layer_10",
+      "passed": true
+    },
+    {
+      "name": "layer_11",
+      "passed": true
+    },
+    {
+      "name": "layer_12",
+      "passed": true
+    },
+    {
+      "name": "layer_13",
+      "passed": true
+    },
+    {
+      "name": "layer_14",
+      "passed": true
+    },
+    {
+      "name": "layer_15",
+      "passed": true
+    },
+    {
+      "name": "layer_16",
+      "passed": true
+    },
+    {
+      "name": "layer_17",
+      "passed": true
+    },
+    {
+      "name": "layer_18",
+      "passed": true
+    },
+    {
+      "name": "layer_19",
+      "passed": true
+    },
+    {
+      "name": "layer_20",
+      "passed": true
+    },
+    {
+      "name": "layer_21",
+      "passed": true
+    },
+    {
+      "name": "layer_22",
+      "passed": true
+    },
+    {
+      "name": "layer_23",
+      "passed": true
+    },
+    {
+      "name": "layer_24",
+      "passed": true
+    },
+    {
+      "name": "layer_25",
+      "passed": true
+    },
+    {
+      "name": "layer_26",
+      "passed": true
+    },
+    {
+      "name": "layer_27",
+      "passed": true
+    },
+    {
+      "name": "layer_28",
+      "passed": true
+    },
+    {
+      "name": "layer_29",
+      "passed": true
+    },
+    {
+      "name": "layer_30",
+      "passed": true
+    },
+    {
+      "name": "layer_31",
+      "passed": true
+    },
+    {
+      "name": "layer_32",
+      "passed": true
+    },
+    {
+      "name": "layer_33",
+      "passed": true
+    },
+    {
+      "name": "layer_34",
+      "passed": true
+    },
+    {
+      "name": "layer_35",
+      "passed": true
+    },
+    {
+      "name": "layer_36",
+      "passed": true
+    },
+    {
+      "name": "layer_37",
+      "passed": true
+    },
+    {
+      "name": "layer_38",
+      "passed": true
+    },
+    {
+      "name": "layer_39",
+      "passed": true
+    },
+    {
+      "name": "layer_40",
+      "passed": true
+    },
+    {
+      "name": "layer_41",
+      "passed": true
+    },
+    {
+      "name": "layer_42",
+      "passed": true
+    },
+    {
+      "name": "layer_43",
+      "passed": true
+    },
+    {
+      "name": "layer_44",
+      "passed": true
+    },
+    {
+      "name": "layer_45",
+      "passed": true
+    },
+    {
+      "name": "layer_46",
+      "passed": true
+    },
+    {
+      "name": "layer_47",
+      "passed": true
+    },
+    {
+      "name": "full_logits",
+      "passed": true
+    }
+  ],
+  "oracle_report": {
+    "kind": "checkpoint_original_mlx_layers",
+    "layers": 48,
+    "tokens": [
+      760,
+      6511,
+      314,
+      9338,
+      369
+    ],
+    "mlx": "0.31.1",
+    "source_repo": "pipenetwork/Qwen3.8-Flash-Next-MLX-4bit",
+    "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+    "file_lock_sha256": "3ea4eca6568e725e329be172973f777c7a33572db0e04066d71182f000094d77",
+    "generator_sha256": "64e3f9573c3b5c4fdedb58c350b40bb94a9a17124adb7f259753ff5acc248fac",
+    "reader_sha256": "1396c2acfe2880e5fa195a685a1699c458df606a0c96daf9566b857a35af6084",
+    "greedy_id": 11751,
+    "logits": "/private/tmp/freellm-q4-oracle-format-aware/logits.f32",
+    "elapsed_seconds": 10.707238832488656,
+    "reference_peak_metal_bytes": 97186812
+  }
+}

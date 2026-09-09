@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/tensor.hpp"
+#include "core/model_config.hpp"
 #include "infra/model_loader.hpp"
 #include "infra/safetensors.hh"
 #include "infra/parallel_tensor_loader.hpp"
@@ -17,6 +18,8 @@
 #include <optional>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 namespace freellm {
 
@@ -80,10 +83,14 @@ inline float fp16_to_f32(uint16_t fp16_value) {
 }
 
 /**
- * @brief Map HuggingFace TinyLLaMA tensor names to our internal names
+ * @brief Map HuggingFace tensor names to our internal names
  *
- * TinyLLaMA uses standard HuggingFace naming convention.
- * We need to map these to our simpler internal names.
+ * This function handles multiple model architectures:
+ * - Dense models (TinyLlama, Llama): Map to internal ffn.W_* names
+ * - MoE models (OLMoE, Mixtral): Pass through MoE-specific names
+ *
+ * The key insight: For MoE models, we keep the original naming structure
+ * (mlp.gate.weight, mlp.experts.N.*) so load_moe_weights can find them.
  */
 inline std::string map_hf_name_to_freellm(const std::string& hf_name) {
     // Embed tokens
@@ -119,11 +126,29 @@ inline std::string map_hf_name_to_freellm(const std::string& hf_name) {
                 return "layers." + layer_num + ".attn.W_v";
             } else if (remaining.find("o_proj.weight") != std::string::npos) {
                 return "layers." + layer_num + ".attn.W_o";
+            } else if (remaining.find("q_norm.weight") != std::string::npos) {
+                // QK-normalization weights (used by OLMoE)
+                return "layers." + layer_num + ".attn.q_norm_weight";
+            } else if (remaining.find("k_norm.weight") != std::string::npos) {
+                return "layers." + layer_num + ".attn.k_norm_weight";
             }
         }
 
-        // MLP weights (SwiGLU in TinyLLaMA)
+        // MLP weights - check for MoE patterns FIRST
         if (remaining.find("mlp") == 0) {
+            // MoE: Router/Gate weight - PASSTHROUGH with simplified prefix
+            if (remaining == "mlp.gate.weight") {
+                return "layers." + layer_num + ".mlp.gate.weight";
+            }
+            
+            // MoE: Expert weights - PASSTHROUGH with simplified prefix
+            // Format: mlp.experts.{idx}.{gate_proj|up_proj|down_proj}.weight
+            if (remaining.find("mlp.experts.") == 0) {
+                // Pass through the entire mlp.experts.* structure
+                return "layers." + layer_num + "." + remaining;
+            }
+            
+            // Dense MLP weights (SwiGLU in TinyLLaMA, Llama)
             if (remaining.find("gate_proj.weight") != std::string::npos) {
                 return "layers." + layer_num + ".ffn.W_gate";
             } else if (remaining.find("up_proj.weight") != std::string::npos) {
@@ -141,8 +166,186 @@ inline std::string map_hf_name_to_freellm(const std::string& hf_name) {
         }
     }
 
-    // Unknown mapping
+    // Unknown mapping - return empty to skip
     return "";
+}
+
+/**
+ * @brief Detect model architecture from weight names
+ *
+ * Parses model.safetensors.index.json to auto-detect:
+ * - MoE (Mixture of Experts) models
+ * - Number of experts
+ * - Number of layers
+ */
+struct ModelArchitectureInfo {
+    bool is_moe = false;
+    size_t num_experts = 0;
+    size_t num_layers = 0;
+    std::vector<std::string> weight_names;
+};
+
+inline ModelArchitectureInfo detect_architecture_from_index(const std::string& model_dir) {
+    namespace fs = std::filesystem;
+    ModelArchitectureInfo info;
+    
+    std::string index_path = model_dir + "/model.safetensors.index.json";
+    if (!fs::exists(index_path)) {
+        // Single-file model, can't detect
+        return info;
+    }
+    
+    std::ifstream f(index_path);
+    if (!f.is_open()) return info;
+    
+    try {
+        nlohmann::json j;
+        f >> j;
+        
+        if (!j.contains("weight_map")) return info;
+        
+        const auto& weight_map = j["weight_map"];
+        size_t max_expert_idx = 0;
+        size_t max_layer_idx = 0;
+        
+        for (auto it = weight_map.begin(); it != weight_map.end(); ++it) {
+            const std::string& name = it.key();
+            info.weight_names.push_back(name);
+            
+            // Detect MoE
+            if (name.find("mlp.experts.") != std::string::npos) {
+                info.is_moe = true;
+                
+                // Extract expert index
+                size_t pos = name.find("mlp.experts.");
+                if (pos != std::string::npos) {
+                    pos += strlen("mlp.experts.");
+                    size_t end = name.find('.', pos);
+                    if (end != std::string::npos) {
+                        size_t expert_idx = std::stoul(name.substr(pos, end - pos));
+                        max_expert_idx = std::max(max_expert_idx, expert_idx);
+                    }
+                }
+            }
+            
+            // Detect layer count
+            if (name.find("model.layers.") != std::string::npos) {
+                size_t pos = strlen("model.layers.");
+                size_t end = name.find('.', pos);
+                if (end != std::string::npos) {
+                    size_t layer_idx = std::stoul(name.substr(pos, end - pos));
+                    max_layer_idx = std::max(max_layer_idx, layer_idx);
+                }
+            }
+        }
+        
+        info.num_experts = max_expert_idx + 1;
+        info.num_layers = max_layer_idx + 1;
+        
+    } catch (...) {
+        // JSON parse error
+    }
+    
+    return info;
+}
+
+/**
+ * @brief Load ModelConfig from HuggingFace config.json
+ *
+ * Parses config.json to auto-populate model dimensions.
+ * Supports Llama, TinyLlama, OLMoE, Mixtral, and other HF-compatible models.
+ *
+ * @param model_dir Path to the model directory containing config.json
+ * @return Populated ModelConfig, or default config if parsing fails
+ */
+inline ModelConfig load_model_config_from_json(const std::string& model_dir) {
+    namespace fs = std::filesystem;
+    ModelConfig config;
+    
+    std::string config_path = model_dir + "/config.json";
+    if (!fs::exists(config_path)) {
+        throw std::runtime_error("config.json not found in: " + model_dir);
+    }
+    
+    std::ifstream f(config_path);
+    if (!f.is_open()) {
+        throw std::runtime_error("Failed to open config.json: " + config_path);
+    }
+    
+    try {
+        nlohmann::json j;
+        f >> j;
+        
+        // Required fields
+        if (j.contains("hidden_size")) {
+            config.d_model = j["hidden_size"].get<size_t>();
+        }
+        if (j.contains("intermediate_size")) {
+            config.d_ff = j["intermediate_size"].get<size_t>();
+        }
+        if (j.contains("num_hidden_layers")) {
+            config.n_layers = j["num_hidden_layers"].get<size_t>();
+        }
+        if (j.contains("num_attention_heads")) {
+            config.n_heads = j["num_attention_heads"].get<size_t>();
+        }
+        if (j.contains("num_key_value_heads")) {
+            config.n_kv_heads = j["num_key_value_heads"].get<size_t>();
+        } else {
+            // Fallback: MHA (n_kv_heads = n_heads)
+            config.n_kv_heads = config.n_heads;
+        }
+        if (j.contains("vocab_size")) {
+            config.vocab_size = j["vocab_size"].get<size_t>();
+        }
+        if (j.contains("max_position_embeddings")) {
+            config.max_seq_len = j["max_position_embeddings"].get<size_t>();
+        }
+        
+        // Optional fields with defaults
+        if (j.contains("rms_norm_eps")) {
+            config.norm_eps = j["rms_norm_eps"].get<float>();
+        }
+        if (j.contains("rope_theta")) {
+            config.rope_theta = j["rope_theta"].get<float>();
+        }
+        
+        // MoE-specific fields
+        if (j.contains("num_experts")) {
+            config.num_experts = j["num_experts"].get<size_t>();
+        }
+        if (j.contains("num_experts_per_tok")) {
+            config.num_experts_per_token = j["num_experts_per_tok"].get<size_t>();
+        } else if (j.contains("num_experts_per_token")) {
+            config.num_experts_per_token = j["num_experts_per_token"].get<size_t>();
+        }
+        
+        if (j.contains("norm_topk_prob")) {
+             config.norm_topk_prob = j["norm_topk_prob"].get<bool>();
+        }
+
+        // Weight tying (common in OLMoE, Gemma, etc.)
+        if (j.contains("tie_word_embeddings")) {
+            config.tie_word_embeddings = j["tie_word_embeddings"].get<bool>();
+        }
+
+        // Detect model type for logging
+        std::string model_type = "unknown";
+        if (j.contains("model_type")) {
+            model_type = j["model_type"].get<std::string>();
+        }
+        
+        ui::print_success("Loaded config: " + model_type + 
+                         " (d=" + std::to_string(config.d_model) + 
+                         ", L=" + std::to_string(config.n_layers) + 
+                         ", H=" + std::to_string(config.n_heads) + 
+                         ", V=" + std::to_string(config.vocab_size) + ")");
+        
+    } catch (const std::exception& e) {
+        throw std::runtime_error("Failed to parse config.json: " + std::string(e.what()));
+    }
+    
+    return config;
 }
 
 /**

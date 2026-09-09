@@ -1,0 +1,157 @@
+{
+  "kind": "same_input_attention",
+  "full_model_verified": false,
+  "mlx": "0.31.1",
+  "native": {
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "8c56e73ec097e9520f95e63a7bfe97c9b381cd5f94a233da95e1f7686b044107",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 0,
+    "peak_buffer_bytes": 19890176,
+    "dispatches": 108,
+    "submissions": 24,
+    "waits": 24
+  },
+  "fixture_sha256": {
+    "model.layers.3.self_attn.q": "8aef4c03889ac89defee07deb7fc732852725f19711b0e0364cbfb4d100f798d",
+    "model.layers.3.self_attn.k": "19a59cd2a91cf50cc67a32e929a512cc130c04f9118c4f1aca57ab1358d260b3",
+    "model.layers.3.self_attn.v": "b8b104ceb760e5bf122386c970651dc9c238ce152178407d056db03864a2713c",
+    "model.layers.3.self_attn.qg": "fd9e9a73de5091c3f08884fa305f9f9b1d14c854ba64df3fa854061b77c73610",
+    "model.layers.3.self_attn.gated": "7748e29627e193d473ffd59774e113d37555f8adaed8e6e69957406c8bcf9df8",
+    "model.layers.7.self_attn.q": "a695731691abc1fb10e1b855334d0912f1798b8b756e198809c618c36ab40d8b",
+    "model.layers.7.self_attn.k": "c5c0ff955d218d4acccb1e93fcba89d4eb90cb89020fb142476a519b76c39084",
+    "model.layers.7.self_attn.v": "e694d1f369589d5154588953d1d28bb99455123ebbbfa3ca0ed67155ca959bd1",
+    "model.layers.7.self_attn.qg": "db5ffed66d7f1af0256f8abd8bc3f10f63b09ca922e2c86a26faf6d83ad794f7",
+    "model.layers.7.self_attn.gated": "2bafca8432b2ee8614d08106e1b4b6b030e92fe7ebe5ed84db4f08b42a3f9b93",
+    "model.layers.11.self_attn.q": "97a8e4f5f62a27d67e5f579128adb3af0081ebb482c0e1cdc639254bd6769956",
+    "model.layers.11.self_attn.k": "94c7ee7c81f83c4471920f55520b48fbfd3fcbeba7eb2e691c977729dad71120",
+    "model.layers.11.self_attn.v": "0179524af41d1120054d7368716f7734a91d19057e5816d8c9de8d3d70fe9615",
+    "model.layers.11.self_attn.qg": "c2272c740fd3efb41ddca4ac4b0d57c5a57c1c7d1a4ee1a86ec9b08af3a74b97",
+    "model.layers.11.self_attn.gated": "c02c6f7aa1e391f4bc8873cab152e94ae58c7c3991e7d64d0d1e5beb7b16312e",
+    "model.layers.15.self_attn.q": "8d614e57121be3462e2eaeb853148a33929515b6c754f5dd3299c4bbb61bdfd0",
+    "model.layers.15.self_attn.k": "6d7a52c70c92c692d95ab54af428215c344cfc39a0d5d248042164a78a66919e",
+    "model.layers.15.self_attn.v": "648585d95603a4037e22bfe8206a55eb5c5f2b2707666f790a91cca796756264",
+    "model.layers.15.self_attn.qg": "91d479a1c55bf5b9039f93cd407d739c00d673a2195790b080822ec15a7fa76e",
+    "model.layers.15.self_attn.gated": "94f0d07368eb476c2bf6ca4a9db9aa23205298bdbb199c0cecc0cc17e1578502",
+    "model.layers.19.self_attn.q": "990d0367007ed440ba84a3d7f794f4e41521b5fb6c00f27331305eb9287d5fa8",
+    "model.layers.19.self_attn.k": "dbb987a157477c9b4d8ff954db994f3fb71f2b3b427dcc7c87d91c0e642400d4",
+    "model.layers.19.self_attn.v": "0cf10e8935c262ab517d076eca40877983e56a94f071047581037137fcce0a1c",
+    "model.layers.19.self_attn.qg": "5e8b08c2e9cde617a8b7378ef8975f608132e4c597feb0e48ca4eeda82dd9bee",
+    "model.layers.19.self_attn.gated": "9c662155d66c3f11cb82e71bcae2570d285f6323972cc1865868907496ac5ed5",
+    "model.layers.23.self_attn.q": "5be73825335d0c7a6fd10873cd8db48af3f13c9edfe1ed9cf7bf64649fb30c57",
+    "model.layers.23.self_attn.k": "5ee24b5874d265a9a92e55e66f544be650fe97bb693ebf78a2b1f8cc36539510",
+    "model.layers.23.self_attn.v": "46670f30f23e37637dd5518aa8d58905ebd0564d89e7d6115a9ffe2d4704632f",
+    "model.layers.23.self_attn.qg": "55e38babde8e7058d333ac9d8241b1862882829ff8d119e58c21e098fe8fbcbb",
+    "model.layers.23.self_attn.gated": "90c9e4acc3d0716d7d57804c66d126b0bc9fc67d376de56ca3f53748e24645d7",
+    "model.layers.27.self_attn.q": "2fa04bf5bba63065f96f120fd7a6ae1a9f131083ee8f360eeb44c2b9cf9339ff",
+    "model.layers.27.self_attn.k": "2efe0c3edde008511be172b97fda6776acf887618573d08053c69087b049867b",
+    "model.layers.27.self_attn.v": "96ca0f4d577c88273a649e5d2716f03b03ce233f49ac4e98da02bfed2a968a8f",
+    "model.layers.27.self_attn.qg": "87ee2ced64e9b806f86a3c78a1a66184aa422c6a244dbe83c7e5216edc440ea3",
+    "model.layers.27.self_attn.gated": "996c1afff86c2c2dcc18eb41074e459d40df15405d45ba6ffeb724f06cd485f5",
+    "model.layers.31.self_attn.q": "7597ab27fd54fe726bb7ae2b308d6f09cec248836f47f3044369882cdff0b92f",
+    "model.layers.31.self_attn.k": "53ef7031ef6798364bcee7b2e1ae443e28b7e957d166b25ece4f6205b5258bbb",
+    "model.layers.31.self_attn.v": "8b525718205640669e59571d335ed7723e38c16a684a7c4bc49c9e090359b074",
+    "model.layers.31.self_attn.qg": "ed4f9d358cd54b4f11768b7df4347630dc2e7ae0a21268860593720f56e1c168",
+    "model.layers.31.self_attn.gated": "47e7b23b1c9f447ab3ccbaeeb65acc2bb2e6b7d368aa5c4e2091f319f7a3bfc5",
+    "model.layers.35.self_attn.q": "af4c7c5f1bb4bf50344c8df7ebe15597a0dd7c67668c85051684a0d75c058a8d",
+    "model.layers.35.self_attn.k": "abc1291835a46712748616dad6aeb84498861e474c2275b2e14cbebce919f374",
+    "model.layers.35.self_attn.v": "2e5f6e913b1632773a9be0a0b76f4e9710bdc0c68e6d08ac9b7ef6c78b7ec096",
+    "model.layers.35.self_attn.qg": "0004087ef0b40ab437318c17ac4af5f4ebeb7a5fd0b00f4515094872f8b72369",
+    "model.layers.35.self_attn.gated": "2f98426bc44fcee0fea9177da4b11aaae5115d0e7e8165996bea51ca602aba61",
+    "model.layers.39.self_attn.q": "4a8b779bbd211e4bd75fde6a9ee82a10db5276202cad0555d98fb7a9943e9d50",
+    "model.layers.39.self_attn.k": "f0c550e7dddd56d63e24d5566b4c2d8e38a46b6e55bb2cd1098767c0553b22c5",
+    "model.layers.39.self_attn.v": "b789a6233c0ef8d471e28422233b4bf0a0fd103a0f0b5c2a90e4b8723f0c0d87",
+    "model.layers.39.self_attn.qg": "896b4778af28ca9b8e8fd6036e9123c009943f8962469e45971fc6731d79bb01",
+    "model.layers.39.self_attn.gated": "6dd322a4aa29f979be163fdbb48b63917ae1ed76eac9d4f0c6bf6ed8453c90a7",
+    "model.layers.43.self_attn.q": "8ae6dbe36f20aaae3512f2cb0f74b9158574caaa701d327bca97d661dbf42565",
+    "model.layers.43.self_attn.k": "e048ddb503f5f66e28c12177850ec3fabc69c95933745505955af990747a2156",
+    "model.layers.43.self_attn.v": "b860a32a6f72226e99bf1afe005c1eb4d033e2d27a60930d2c948b03798ac876",
+    "model.layers.43.self_attn.qg": "21104396a0a8a3105482f301a367ab76ef80f4fb5b68a0361fc50e72d90a1639",
+    "model.layers.43.self_attn.gated": "5f13ae3e763928dc41650bc5daa30365b108622d2b68197a873c04757532bd1e",
+    "model.layers.47.self_attn.q": "01d1b0b3a0bb054bdccf4e617852cf3ec1fc51facafc74600913530f27f7f4ae",
+    "model.layers.47.self_attn.k": "772e97868e690e23c93340f7a1215cd8691447250dd058a4d3779c2909f9b67c",
+    "model.layers.47.self_attn.v": "df271133481256006d803b3b6181db9712a64f26a1a08f4068ce6ebfd1fa0ca4",
+    "model.layers.47.self_attn.qg": "5488f63beee334c04cbf71dc21472b6d3c0754ff202c6fcb24a8dc6275c1dc7c",
+    "model.layers.47.self_attn.gated": "0a81012fbd1d520b36c2cafd58fc3347a58fbc21098c8cef74f23a710c83f617"
+  },
+  "checks": [
+    {
+      "layer": 3,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 7,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 11,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 15,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 19,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 23,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 27,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 31,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 35,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 39,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 43,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    },
+    {
+      "layer": 47,
+      "different_values": 0,
+      "max_abs": 0.0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

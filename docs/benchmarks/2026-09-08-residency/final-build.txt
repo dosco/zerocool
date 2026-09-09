@@ -1,0 +1,21 @@
+[0;34mBuilding freellm with C++23...[0m
+[0;34mConfiguring CMake (Release mode)...[0m
+-- Using the multi-header code from /repo/build/_deps/json-src/include/
+-- clang-tidy not found
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /repo/build/qwen
+[0;34mBuilding project...[0m
+[ 42%] Built target freellm_lib
+[ 60%] Built target qwen_attention_replay
+[ 64%] Built target qwen_moe_replay
+[ 64%] Built target test_qwen
+[ 71%] Built target freellm
+[ 85%] Building CXX object CMakeFiles/qwen_panel_check.dir/scripts/qwen/check_panel.cpp.o
+[ 96%] Built target qwen_q8_check
+[ 96%] Built target qwen_ple_replay
+[ 96%] Built target qwen_storage_check
+[100%] Linking CXX executable qwen_panel_check
+[100%] Built target qwen_panel_check
+[0;32mBuild successful![0m
+[0;32mRun with: build/qwen/bin/freellm[0m

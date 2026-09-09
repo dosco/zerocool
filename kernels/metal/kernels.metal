@@ -1377,11 +1377,11 @@ kernel void gqa_attention_prefill_int8(
             k_val = ((float)k_global[data_idx]) * k_scale;
             v_val = ((float)v_global[data_idx]) * v_scale;
         }
-        
+
         float partial_score = simd_sum(q_val * k_val);
         if (simd_lane_id == 0) shared_scores[simd_group_id] = partial_score;
         threadgroup_barrier(mem_flags::mem_threadgroup);
-        
+
         float weight = 0.0f;
         if (tid.x == 0) {
             float score = 0.0f;
@@ -1394,12 +1394,250 @@ kernel void gqa_attention_prefill_int8(
             shared_scores[0] = weight;
         }
         threadgroup_barrier(mem_flags::mem_threadgroup);
-        
+
         weight = shared_scores[0];
         weighted_sum += weight * v_val;
     }
-    
+
     if (tid.x < head_dim) {
         output[(global_token_idx * n_heads + h) * head_dim + tid.x] = weighted_sum;
+    }
+}
+
+// =============================================================================
+// MoE (Mixture-of-Experts) Kernels
+// =============================================================================
+
+// MoE Gate + Softmax
+// Computes gate logits and applies softmax over all experts per token
+// Input: hidden [seq_len, d_model], gate_weight [d_model, num_experts]
+// Output: probs [seq_len, num_experts]
+// Grid: (seq_len, 1, 1)
+// Block: (32, 1, 1) - one threadgroup per token
+kernel void moe_gate_softmax(
+    device const float* hidden [[buffer(0)]],      // [seq_len, d_model]
+    device const float* gate_weight [[buffer(1)]], // [d_model, num_experts]
+    device float* probs [[buffer(2)]],             // [seq_len, num_experts]
+    constant uint& d_model [[buffer(3)]],
+    constant uint& num_experts [[buffer(4)]],
+    uint3 tid [[thread_position_in_threadgroup]],
+    uint3 tgid [[threadgroup_position_in_grid]])
+{
+    uint seq_idx = tgid.x;
+    uint lane = tid.x;
+
+    // Shared memory for logits
+    threadgroup float shared_logits[64]; // Assume max 64 experts
+    threadgroup float shared_max;
+    threadgroup float shared_sum;
+
+    // Step 1: Compute gate logits (each thread handles one expert at a time)
+    for (uint e = lane; e < num_experts; e += 32) {
+        float dot = 0.0f;
+        for (uint d = 0; d < d_model; ++d) {
+            // hidden: [seq_len, d_model], gate_weight: [d_model, num_experts]
+            dot += hidden[seq_idx * d_model + d] * gate_weight[d * num_experts + e];
+        }
+        shared_logits[e] = dot;
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+
+    // Step 2: Find max for numerical stability
+    float local_max = -INFINITY;
+    for (uint e = lane; e < num_experts; e += 32) {
+        local_max = max(local_max, shared_logits[e]);
+    }
+    local_max = simd_max(local_max);
+
+    if (lane == 0) {
+        shared_max = local_max;
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+    float max_val = shared_max;
+
+    // Step 3: Compute exp and sum
+    float local_sum = 0.0f;
+    for (uint e = lane; e < num_experts; e += 32) {
+        float exp_val = exp(shared_logits[e] - max_val);
+        shared_logits[e] = exp_val;
+        local_sum += exp_val;
+    }
+    local_sum = simd_sum(local_sum);
+
+    if (lane == 0) {
+        shared_sum = local_sum;
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+    float sum_exp = shared_sum;
+
+    // Step 4: Normalize and write output
+    for (uint e = lane; e < num_experts; e += 32) {
+        probs[seq_idx * num_experts + e] = shared_logits[e] / sum_exp;
+    }
+}
+
+// MoE Top-K Expert Selection
+// Selects top-k experts for each token using insertion sort (efficient for small k)
+// Input: probs [seq_len, num_experts]
+// Output: indices [seq_len, k], values [seq_len, k]
+// Grid: (seq_len, 1, 1)
+// Block: (32, 1, 1)
+kernel void moe_topk_experts(
+    device const float* probs [[buffer(0)]],    // [seq_len, num_experts]
+    device int* indices [[buffer(1)]],          // [seq_len, k]
+    device float* values [[buffer(2)]],         // [seq_len, k]
+    constant uint& num_experts [[buffer(3)]],
+    constant uint& k [[buffer(4)]],
+    constant uint& norm_topk [[buffer(5)]],     // 1 to normalize top-k probs
+    uint3 tid [[thread_position_in_threadgroup]],
+    uint3 tgid [[threadgroup_position_in_grid]])
+{
+    uint seq_idx = tgid.x;
+    uint lane = tid.x;
+
+    // Only thread 0 does the work (serial top-k for simplicity)
+    // For small k (typically 2-8), this is fast enough
+    if (lane != 0) return;
+
+    // Read probabilities for this token
+    device const float* token_probs = probs + seq_idx * num_experts;
+    device int* out_indices = indices + seq_idx * k;
+    device float* out_values = values + seq_idx * k;
+
+    // Initialize with worst possible values
+    for (uint i = 0; i < k; ++i) {
+        out_values[i] = -INFINITY;
+        out_indices[i] = -1;
+    }
+
+    // Insertion sort: maintain sorted top-k list
+    for (uint e = 0; e < num_experts; ++e) {
+        float prob = token_probs[e];
+
+        // Check if this probability belongs in top-k
+        if (prob > out_values[k - 1]) {
+            // Find insertion position
+            uint pos = k - 1;
+            while (pos > 0 && prob > out_values[pos - 1]) {
+                out_values[pos] = out_values[pos - 1];
+                out_indices[pos] = out_indices[pos - 1];
+                pos--;
+            }
+            out_values[pos] = prob;
+            out_indices[pos] = (int)e;
+        }
+    }
+
+    // Normalize top-k probabilities if requested
+    if (norm_topk) {
+        float sum = 0.0f;
+        for (uint i = 0; i < k; ++i) {
+            sum += out_values[i];
+        }
+        if (sum > 0.0f) {
+            for (uint i = 0; i < k; ++i) {
+                out_values[i] /= sum;
+            }
+        }
+    }
+}
+
+// MoE Aggregate Expert Outputs
+// Computes weighted sum of expert outputs
+// Input: expert_outputs [num_experts, seq_len, d_model], probs [seq_len, k], indices [seq_len, k]
+// Output: output [seq_len, d_model]
+// Grid: (d_model, seq_len, 1)
+// Block: (1, 1, 1) - each thread handles one output element
+kernel void moe_aggregate(
+    device const float* expert_outputs [[buffer(0)]],  // [num_experts, seq_len, d_model]
+    device const float* probs [[buffer(1)]],           // [seq_len, k]
+    device const int* indices [[buffer(2)]],           // [seq_len, k]
+    device float* output [[buffer(3)]],                // [seq_len, d_model]
+    constant uint& seq_len [[buffer(4)]],
+    constant uint& d_model [[buffer(5)]],
+    constant uint& k [[buffer(6)]],
+    uint3 gid [[thread_position_in_grid]])
+{
+    uint d_idx = gid.x;
+    uint seq_idx = gid.y;
+
+    if (d_idx >= d_model || seq_idx >= seq_len) return;
+
+    float accum = 0.0f;
+
+    for (uint i = 0; i < k; ++i) {
+        int expert_id = indices[seq_idx * k + i];
+        float prob = probs[seq_idx * k + i];
+
+        // expert_outputs layout: [num_experts, seq_len, d_model]
+        float expert_val = expert_outputs[(expert_id * seq_len + seq_idx) * d_model + d_idx];
+        accum += prob * expert_val;
+    }
+
+    output[seq_idx * d_model + d_idx] = accum;
+}
+
+// SwiGLU FFN for MoE Expert
+// Fused gate * silu(up) -> down projection
+// This is called per-expert
+// Input: x [seq_len, d_model]
+// Weights: W_gate [d_model, d_ff], W_up [d_model, d_ff], W_down [d_ff, d_model]
+// Output: y [seq_len, d_model]
+// Grid: (d_model, seq_len, 1)
+// Block: (32, 1, 1)
+kernel void moe_swiglu_ffn(
+    device const float* x [[buffer(0)]],        // [seq_len, d_model]
+    device const float* W_gate [[buffer(1)]],   // [d_model, d_ff]
+    device const float* W_up [[buffer(2)]],     // [d_model, d_ff]
+    device const float* W_down [[buffer(3)]],   // [d_ff, d_model]
+    device float* output [[buffer(4)]],         // [seq_len, d_model]
+    device float* intermediate [[buffer(5)]],   // [seq_len, d_ff] scratch
+    constant uint& seq_len [[buffer(6)]],
+    constant uint& d_model [[buffer(7)]],
+    constant uint& d_ff [[buffer(8)]],
+    uint3 tid [[thread_position_in_threadgroup]],
+    uint3 tgid [[threadgroup_position_in_grid]])
+{
+    // This kernel computes one output element per threadgroup
+    uint out_dim = tgid.x;
+    uint seq_idx = tgid.y;
+    uint lane = tid.x;
+
+    if (out_dim >= d_model || seq_idx >= seq_len) return;
+
+    // Step 1: Compute gate and up projections (in intermediate buffer)
+    // We do this in a loop since d_ff is large
+
+    float accum = 0.0f;
+
+    // For the down projection, we need the intermediate values
+    // intermediate[seq_idx, d] = silu(gate[d]) * up[d]
+    // output[seq_idx, out_dim] = sum_d(intermediate[d] * W_down[d, out_dim])
+
+    for (uint d = lane; d < d_ff; d += 32) {
+        // Compute gate[d] = dot(x, W_gate[:, d])
+        float gate_val = 0.0f;
+        float up_val = 0.0f;
+        for (uint i = 0; i < d_model; ++i) {
+            float x_val = x[seq_idx * d_model + i];
+            gate_val += x_val * W_gate[i * d_ff + d];
+            up_val += x_val * W_up[i * d_ff + d];
+        }
+
+        // SiLU activation on gate
+        float silu_gate = gate_val / (1.0f + exp(-gate_val));
+
+        // Element-wise multiply
+        float hidden = silu_gate * up_val;
+
+        // Accumulate for down projection
+        accum += hidden * W_down[d * d_model + out_dim];
+    }
+
+    // Reduce across threads
+    accum = simd_sum(accum);
+
+    if (lane == 0) {
+        output[seq_idx * d_model + out_dim] = accum;
     }
 }

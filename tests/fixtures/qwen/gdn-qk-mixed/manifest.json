@@ -1,0 +1,25 @@
+{
+  "source_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "mlx": "0.31.1",
+  "layer": 6,
+  "tokens": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "width": 10240,
+  "generator": "scripts/qwen/reference_stages.py",
+  "generator_sha256": "ef427db09adc69a675bd4359056fd861737f3e50ff59e17fc6f13b65211af027",
+  "files": {
+    "input.f32": {
+      "bytes": 204800,
+      "sha256": "9b6482006ff0d7efa03f7e960571679a5bd7fb0f6cd8c98768335a4f96461415"
+    },
+    "expected.f32": {
+      "bytes": 204800,
+      "sha256": "d0fd393630fcb88785c1be48764936a2ad322f1e3823f44c6e1130811a205044"
+    }
+  }
+}

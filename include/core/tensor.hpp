@@ -143,6 +143,11 @@ public:
         return result;
     }
 
+    /**
+     * @brief Alias for copy() - creates a deep copy of this tensor
+     */
+    Tensor clone() const { return copy(); }
+
     // Accessors
     const std::vector<size_t>& shape() const { return shape_; }
     const std::vector<size_t>& strides() const { return strides_; }

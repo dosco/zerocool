@@ -1,0 +1,7 @@
+{
+  "build_fingerprint": "402c3a651b2f720b2ae48f9319408415c8746b566dfbcba5f6f5a40671d183b8",
+  "binary_sha256": "79306e6f7eee8b397295e0436bd1ecc87153f477c2f266bbd1f6d6c09f1543c5",
+  "source_archive_sha256": "75b5cc64fe820141af21a588adcccdaf199fcd3e03bdcaa5ba20d0785af6b707",
+  "metal_kernel_sha256": "36cded055767668d374d23a17f9d3c2c44796b6cb1f30d485598cba0907cc4d9",
+  "kernel_source_unchanged_from_measurement_build": "4a19a77ebcdb21506068e602310b740afa42df4b085365943ead5c28015643d4"
+}

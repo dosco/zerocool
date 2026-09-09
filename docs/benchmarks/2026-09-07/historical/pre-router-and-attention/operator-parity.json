@@ -1,0 +1,1905 @@
+{
+  "kind": "independent_numpy_real_weight_operators",
+  "tokens": [
+    760,
+    6511,
+    314,
+    9338,
+    369
+  ],
+  "layers": 48,
+  "tolerance": {
+    "relative_l2_max": 0.01,
+    "cosine_min": 0.99995
+  },
+  "checks": [
+    {
+      "tensor": "input_0",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_0",
+      "relative_l2": 0.00046140412450768054,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_0",
+      "relative_l2": 0.00020312904962338507,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_0",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_0",
+      "relative_l2": 7.55321016185917e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_0",
+      "passed": true
+    },
+    {
+      "tensor": "layer_0",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "ngram",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_1",
+      "relative_l2": 0.0064294347539544106,
+      "cosine": 0.9999798536300659,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_1",
+      "relative_l2": 0.00021262100199237466,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_1",
+      "relative_l2": 0.0060117668472230434,
+      "cosine": 0.9999820590019226,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_1",
+      "relative_l2": 0.00012252469605300575,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_1",
+      "passed": true
+    },
+    {
+      "tensor": "layer_1",
+      "relative_l2": 0.0011464293347671628,
+      "cosine": 0.9999992847442627,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_2",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_2",
+      "relative_l2": 0.0004489663406275213,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_2",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_2",
+      "relative_l2": 8.030104072531685e-05,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_2",
+      "passed": true
+    },
+    {
+      "tensor": "layer_2",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_3",
+      "relative_l2": 0.0005358931957744062,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_3",
+      "relative_l2": 0.00031385180773213506,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_3",
+      "relative_l2": 0.00042352807940915227,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_3",
+      "relative_l2": 0.0004518567002378404,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_3",
+      "passed": true
+    },
+    {
+      "tensor": "layer_3",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_4",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_4",
+      "relative_l2": 0.000326731416862458,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_4",
+      "relative_l2": 3.264918632339686e-05,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_4",
+      "relative_l2": 0.00037651555612683296,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_4",
+      "passed": true
+    },
+    {
+      "tensor": "layer_4",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_5",
+      "relative_l2": 7.5190337156527676e-06,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_5",
+      "relative_l2": 0.00040566566167399287,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_5",
+      "relative_l2": 0.0006892510573379695,
+      "cosine": 0.9999997615814209,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_5",
+      "relative_l2": 0.00032445372198708355,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_5",
+      "passed": true
+    },
+    {
+      "tensor": "layer_5",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_6",
+      "relative_l2": 0.00010642162669682875,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_6",
+      "relative_l2": 0.0008126225438900292,
+      "cosine": 0.9999997615814209,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_6",
+      "relative_l2": 0.0003270859597250819,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_6",
+      "relative_l2": 0.000671119021717459,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_6",
+      "passed": true
+    },
+    {
+      "tensor": "layer_6",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_7",
+      "relative_l2": 6.1394916883728e-06,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_7",
+      "relative_l2": 0.0007011860725469887,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_7",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_7",
+      "relative_l2": 0.000808133278042078,
+      "cosine": 0.9999997019767761,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_7",
+      "passed": true
+    },
+    {
+      "tensor": "layer_7",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_8",
+      "relative_l2": 1.753375181579031e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_8",
+      "relative_l2": 0.0006150195258669555,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_8",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_8",
+      "relative_l2": 0.000401637313188985,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_8",
+      "passed": true
+    },
+    {
+      "tensor": "layer_8",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_9",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_9",
+      "relative_l2": 0.0010526756523177028,
+      "cosine": 0.999999463558197,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_9",
+      "relative_l2": 6.37966368230991e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_9",
+      "relative_l2": 0.0002657013537827879,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_9",
+      "passed": true
+    },
+    {
+      "tensor": "layer_9",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_10",
+      "relative_l2": 0.0006252189050428569,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_10",
+      "relative_l2": 0.00020483287516981363,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_10",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_10",
+      "relative_l2": 0.00023389232228510082,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_10",
+      "passed": true
+    },
+    {
+      "tensor": "layer_10",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_11",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_11",
+      "relative_l2": 0.0008817166672088206,
+      "cosine": 0.9999997019767761,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_11",
+      "relative_l2": 0.00017084261344280094,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_11",
+      "relative_l2": 6.62735546939075e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_11",
+      "passed": true
+    },
+    {
+      "tensor": "layer_11",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_12",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_12",
+      "relative_l2": 0.0010302478913217783,
+      "cosine": 0.9999995827674866,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_12",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_12",
+      "relative_l2": 0.0004021743079647422,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_12",
+      "passed": true
+    },
+    {
+      "tensor": "layer_12",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_13",
+      "relative_l2": 0.00015704070392530411,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_13",
+      "relative_l2": 0.0002834787592291832,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_13",
+      "relative_l2": 0.0003476219717413187,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_13",
+      "relative_l2": 0.0002400523517280817,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_13",
+      "passed": true
+    },
+    {
+      "tensor": "layer_13",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_14",
+      "relative_l2": 0.0003281865210738033,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_14",
+      "relative_l2": 0.0004888169933110476,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_14",
+      "relative_l2": 0.0011118000838905573,
+      "cosine": 0.9999994039535522,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_14",
+      "relative_l2": 0.00021948791982140392,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_14",
+      "passed": true
+    },
+    {
+      "tensor": "layer_14",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_15",
+      "relative_l2": 5.847665534020052e-07,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_15",
+      "relative_l2": 0.0003884193138219416,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_15",
+      "relative_l2": 0.00018655484018381685,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_15",
+      "relative_l2": 0.0006294504855759442,
+      "cosine": 0.9999997615814209,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_15",
+      "passed": true
+    },
+    {
+      "tensor": "layer_15",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_16",
+      "relative_l2": 0.0013615210773423314,
+      "cosine": 0.9999989867210388,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_16",
+      "relative_l2": 0.00046460950397886336,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_16",
+      "relative_l2": 0.00024010935158003122,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_16",
+      "relative_l2": 0.00014460363308899105,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_16",
+      "passed": true
+    },
+    {
+      "tensor": "layer_16",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_17",
+      "relative_l2": 0.00037450913805514574,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_17",
+      "relative_l2": 0.0010714269010350108,
+      "cosine": 0.9999994039535522,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_17",
+      "relative_l2": 8.412369061261415e-05,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_17",
+      "relative_l2": 0.00019077987235505134,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_17",
+      "passed": true
+    },
+    {
+      "tensor": "layer_17",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_18",
+      "relative_l2": 1.4339610970637295e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_18",
+      "relative_l2": 0.0005913879140280187,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_18",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_18",
+      "relative_l2": 0.0002121083380188793,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_18",
+      "passed": true
+    },
+    {
+      "tensor": "layer_18",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_19",
+      "relative_l2": 0.00032675510738044977,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_19",
+      "relative_l2": 0.00010170882887905464,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_19",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_19",
+      "relative_l2": 0.00047295138938352466,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_19",
+      "passed": true
+    },
+    {
+      "tensor": "layer_19",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_20",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_20",
+      "relative_l2": 0.0010893443832173944,
+      "cosine": 0.9999994039535522,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_20",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_20",
+      "relative_l2": 0.0005564515013247728,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_20",
+      "passed": true
+    },
+    {
+      "tensor": "layer_20",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_21",
+      "relative_l2": 9.564604988554493e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_21",
+      "relative_l2": 0.0003145086520817131,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_21",
+      "relative_l2": 5.011089160689153e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_21",
+      "relative_l2": 0.0002776597684714943,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_21",
+      "passed": true
+    },
+    {
+      "tensor": "layer_21",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_22",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_22",
+      "relative_l2": 0.00043041101889684796,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_22",
+      "relative_l2": 0.0040436298586428165,
+      "cosine": 0.999991774559021,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_22",
+      "relative_l2": 0.00016892408893909305,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_22",
+      "passed": true
+    },
+    {
+      "tensor": "layer_22",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_23",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_23",
+      "relative_l2": 0.0021114947739988565,
+      "cosine": 0.9999979138374329,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_23",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_23",
+      "relative_l2": 0.0006107992958277464,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_23",
+      "passed": true
+    },
+    {
+      "tensor": "layer_23",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_24",
+      "relative_l2": 6.23937085038051e-05,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_24",
+      "relative_l2": 0.00015882706793490797,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_24",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_24",
+      "relative_l2": 0.00037414071266539395,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_24",
+      "passed": true
+    },
+    {
+      "tensor": "layer_24",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_25",
+      "relative_l2": 0.00015239771164488047,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_25",
+      "relative_l2": 0.0002586106420494616,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_25",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_25",
+      "relative_l2": 0.00013609093730337918,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_25",
+      "passed": true
+    },
+    {
+      "tensor": "layer_25",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_26",
+      "relative_l2": 0.000532259582541883,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_26",
+      "relative_l2": 0.001113709295168519,
+      "cosine": 0.9999994039535522,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_26",
+      "relative_l2": 8.067792805377394e-06,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_26",
+      "relative_l2": 0.00011142225412186235,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_26",
+      "passed": true
+    },
+    {
+      "tensor": "layer_26",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_27",
+      "relative_l2": 8.826001430861652e-05,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_27",
+      "relative_l2": 0.0006377733079716563,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_27",
+      "relative_l2": 0.00039022916462272406,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_27",
+      "relative_l2": 6.637210753979161e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_27",
+      "passed": true
+    },
+    {
+      "tensor": "layer_27",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_28",
+      "relative_l2": 0.00028231777832843363,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_28",
+      "relative_l2": 0.002087552100419998,
+      "cosine": 0.9999979734420776,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_28",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_28",
+      "relative_l2": 0.0005429270095191896,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_28",
+      "passed": true
+    },
+    {
+      "tensor": "layer_28",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_29",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_29",
+      "relative_l2": 0.0016872573178261518,
+      "cosine": 0.9999986290931702,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_29",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_29",
+      "relative_l2": 6.295685307122767e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_29",
+      "passed": true
+    },
+    {
+      "tensor": "layer_29",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_30",
+      "relative_l2": 0.0004224352305755019,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_30",
+      "relative_l2": 0.001379419700242579,
+      "cosine": 0.9999992847442627,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_30",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_30",
+      "relative_l2": 0.00024381281400565058,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_30",
+      "passed": true
+    },
+    {
+      "tensor": "layer_30",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_31",
+      "relative_l2": 0.00012963544577360153,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_31",
+      "relative_l2": 0.0013623577542603016,
+      "cosine": 0.9999992847442627,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_31",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_31",
+      "relative_l2": 0.0004694623639807105,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_31",
+      "passed": true
+    },
+    {
+      "tensor": "layer_31",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_32",
+      "relative_l2": 0.00012394486111588776,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_32",
+      "relative_l2": 0.0002899367827922106,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_32",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_32",
+      "relative_l2": 0.0005063586286269128,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_32",
+      "passed": true
+    },
+    {
+      "tensor": "layer_32",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_33",
+      "relative_l2": 0.00014006027777213603,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_33",
+      "relative_l2": 0.000431722030043602,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_33",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_33",
+      "relative_l2": 0.0005568378255702555,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_33",
+      "passed": true
+    },
+    {
+      "tensor": "layer_33",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_34",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_34",
+      "relative_l2": 0.0009731783648021519,
+      "cosine": 0.999999463558197,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_34",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_34",
+      "relative_l2": 0.00033291985164396465,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_34",
+      "passed": true
+    },
+    {
+      "tensor": "layer_34",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_35",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_35",
+      "relative_l2": 0.0006009164499118924,
+      "cosine": 0.9999997615814209,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_35",
+      "relative_l2": 0.00040577887557446957,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_35",
+      "relative_l2": 0.00052610132843256,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_35",
+      "passed": true
+    },
+    {
+      "tensor": "layer_35",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_36",
+      "relative_l2": 0.00014441653911489993,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_36",
+      "relative_l2": 0.00047490966971963644,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_36",
+      "relative_l2": 0.00048094269004650414,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_36",
+      "relative_l2": 0.00013769371435046196,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_36",
+      "passed": true
+    },
+    {
+      "tensor": "layer_36",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_37",
+      "relative_l2": 0.0,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_37",
+      "relative_l2": 0.0011218670988455415,
+      "cosine": 0.999999463558197,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_37",
+      "relative_l2": 0.00010154360643355176,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_37",
+      "relative_l2": 0.00033654493745416403,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_37",
+      "passed": true
+    },
+    {
+      "tensor": "layer_37",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_38",
+      "relative_l2": 5.066016092314385e-05,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_38",
+      "relative_l2": 0.0015429911436513066,
+      "cosine": 0.9999988079071045,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_38",
+      "relative_l2": 0.00048265125951729715,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_38",
+      "relative_l2": 0.00022964482195675373,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_38",
+      "passed": true
+    },
+    {
+      "tensor": "layer_38",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_39",
+      "relative_l2": 0.0010118024656549096,
+      "cosine": 0.999999463558197,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_39",
+      "relative_l2": 0.0006403165752999485,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_39",
+      "relative_l2": 0.00022313294175546616,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_39",
+      "relative_l2": 0.0004954691976308823,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_39",
+      "passed": true
+    },
+    {
+      "tensor": "layer_39",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_40",
+      "relative_l2": 4.930939212499652e-06,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_40",
+      "relative_l2": 0.00018337974324822426,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_40",
+      "relative_l2": 6.856850086478516e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_40",
+      "relative_l2": 0.00015435671957675368,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_40",
+      "passed": true
+    },
+    {
+      "tensor": "layer_40",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_41",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_41",
+      "relative_l2": 0.0004397391458041966,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_41",
+      "relative_l2": 3.457756611169316e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_41",
+      "relative_l2": 0.0002752782602328807,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_41",
+      "passed": true
+    },
+    {
+      "tensor": "layer_41",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_42",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_42",
+      "relative_l2": 0.0009067506762221456,
+      "cosine": 0.9999996423721313,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_42",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_42",
+      "relative_l2": 7.411965634673834e-05,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_42",
+      "passed": true
+    },
+    {
+      "tensor": "layer_42",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_43",
+      "relative_l2": 8.082747808657587e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_43",
+      "relative_l2": 0.001043445779941976,
+      "cosine": 0.9999995231628418,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_43",
+      "relative_l2": 0.00019739835988730192,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_43",
+      "relative_l2": 0.00010939541971310973,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_43",
+      "passed": true
+    },
+    {
+      "tensor": "layer_43",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_44",
+      "relative_l2": 0.0001353106345050037,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_44",
+      "relative_l2": 0.0008006239077076316,
+      "cosine": 0.9999996423721313,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_44",
+      "relative_l2": 0.00034962259815074503,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_44",
+      "relative_l2": 0.0001581597898621112,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_44",
+      "passed": true
+    },
+    {
+      "tensor": "layer_44",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_45",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_45",
+      "relative_l2": 0.0008447843138128519,
+      "cosine": 0.9999997019767761,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_45",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_45",
+      "relative_l2": 4.1789513488765806e-05,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_45",
+      "passed": true
+    },
+    {
+      "tensor": "layer_45",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_46",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_46",
+      "relative_l2": 0.0008938845712691545,
+      "cosine": 0.9999996423721313,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_46",
+      "relative_l2": 4.012096542282961e-05,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_46",
+      "relative_l2": 0.00038906180998310447,
+      "cosine": 0.9999998211860657,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_46",
+      "passed": true
+    },
+    {
+      "tensor": "layer_46",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x1_47",
+      "relative_l2": 0.0,
+      "cosine": 1.0000001192092896,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "attn_47",
+      "relative_l2": 0.0007322575547732413,
+      "cosine": 0.9999997615814209,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "x2_47",
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "moe_47",
+      "relative_l2": 0.00028084986843168736,
+      "cosine": 0.9999998807907104,
+      "finite": true,
+      "passed": true
+    },
+    {
+      "tensor": "route_47",
+      "passed": true
+    },
+    {
+      "tensor": "layer_47",
+      "relative_l2": 0.0,
+      "cosine": 1.0,
+      "finite": true,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "full_model_verified": false
+}
