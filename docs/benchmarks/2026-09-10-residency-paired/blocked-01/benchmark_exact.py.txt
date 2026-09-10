@@ -206,19 +206,16 @@ def summarize(measurements, configs):
     return reports
 
 
-def inspect_admission(binary,common,stem,budget,panel,log,guard=None,remaining=None):
+def inspect_admission(binary,common,stem,budget,panel,log,guard=None):
     # Metal's process-exit cleanup can lag exit status. Retry metadata only;
     # never lower the budget, rewrite a rejected report, or retry inference.
     for attempt,delay in enumerate((0,2,5)):
-        if delay:
-            if remaining is not None and remaining()<=delay:raise subprocess.TimeoutExpired('admission',delay)
-            time.sleep(delay)
+        if delay:time.sleep(delay)
         suffix=".admission.json" if not attempt else f".admission-retry-{attempt}.json"
         path=stem.with_suffix(suffix)
         command=[str(binary),"inspect",*common,"--json",str(path)]
-        timeout=min(120,remaining()) if remaining is not None else 120
-        if guard:guard.run(command,stdout=log,timeout=timeout)
-        else:subprocess.run(command,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=timeout)
+        if guard:guard.run(command,stdout=log,timeout=120)
+        else:subprocess.run(command,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=120)
         report=json.loads(path.read_text());admission=report["current_admission"]
         if guard and (report['machine']['device']!=guard.identity['device'] or
                       report['machine']['physical_bytes']!=guard.identity['physical_bytes'] or

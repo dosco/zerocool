@@ -4,41 +4,16 @@ import copy
 import io
 import json
 import math
-import subprocess
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from benchmark_exact import config_args,inspect_admission
+from benchmark_exact import config_args
 from screen_residency import ORDER,check_residency,configs,decide,pair_order,paired_log_interval,run,validate_screen
 
 
 class ResidencyScreenTest(unittest.TestCase):
-    def test_metadata_retry_respects_remaining_deadline(self):
-        with tempfile.TemporaryDirectory() as d:
-            stem=Path(d)/'admit'
-            def denied(command,**kwargs):
-                self.assertEqual(command[1],'inspect')
-                self.assertEqual(kwargs['timeout'],1)
-                Path(command[-1]).write_text(json.dumps(dict(current_admission=dict(error='busy'))))
-            with patch('benchmark_exact.subprocess.run',side_effect=denied) as calls,patch('benchmark_exact.time.sleep') as sleep:
-                with self.assertRaises(subprocess.TimeoutExpired):inspect_admission('engine',[],stem,12,512,None,remaining=lambda:1)
-                self.assertEqual(calls.call_count,1);sleep.assert_not_called()
-                self.assertTrue(stem.with_suffix('.admission.json').exists())
-
-    def test_metadata_retry_preserves_rejection_and_never_runs_inference(self):
-        with tempfile.TemporaryDirectory() as d:
-            stem=Path(d)/'admit'
-            def inspect(command,**kwargs):
-                self.assertEqual(command[1],'inspect');self.assertEqual(kwargs['timeout'],20)
-                Path(command[-1]).write_text(json.dumps(dict(current_admission=(dict(error='busy') if command[-1].endswith('.admission.json') else dict(limit_bytes=12,panel_tokens=512)))))
-            with patch('benchmark_exact.subprocess.run',side_effect=inspect) as calls,patch('benchmark_exact.time.sleep') as sleep:
-                result=inspect_admission('engine',[],stem,12,512,None,remaining=lambda:20)
-                self.assertEqual(calls.call_count,2);sleep.assert_called_once_with(2)
-                self.assertEqual(result,stem.with_suffix('.admission-retry-1.json'))
-                self.assertIn('error',json.loads(stem.with_suffix('.admission.json').read_text())['current_admission'])
-
     def test_five_pair_interval_against_symmetric_log_fixture(self):
         values=[.9*math.exp(v) for v in (-.04,-.02,0,.02,.04)]
         interval=paired_log_interval(values)

@@ -1,0 +1,40 @@
+{
+  "path": "/repo/docs/experiments/4535a31e83180de3003942b3c1579d7207d2ad3c49c605d4653d9d146c5b8109.json",
+  "id": "4535a31e83180de3003942b3c1579d7207d2ad3c49c605d4653d9d146c5b8109",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-residency-paired/observations.json",
+      "sha256": "a473a0186c20aa9a2410ba111e007cddbbe90843dbf85a133b29af5e8889da04",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-residency-paired/observations.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "improvement_not_demonstrated",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-residency-paired/raw/summary.json",
+      "sha256": "41bace8fc000e84d5e65afd1b50cfa1ebef174908cbc4f3a85445e4d17be24bc",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-residency-paired/raw/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "improvement_not_demonstrated",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-residency-paired/blocked-01/raw/summary.json",
+      "sha256": "c37e687b053bd371681c66cb8e634cf89f6289166a817cfff4e3bd3f3cb7fd6c",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-residency-paired/blocked-01/raw/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "resource_blocked",
+      "recorded_complete": false
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

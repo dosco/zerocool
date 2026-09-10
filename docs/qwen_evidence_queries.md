@@ -337,12 +337,45 @@ match the completed startup diagnostic. The normal screen adds no per-token
 observations; it retains the engine's existing request and phase measurements.
 
 The total deadline defaults to 480 seconds, with a 150-second subprocess limit
-per conversation. A failed admission or deadline remains incomplete. Reports
+per conversation. Admission uses at most three metadata checks, separated by
+2 and 5 seconds and bounded by the remaining deadline. It retains rejected
+checks and never retries inference or reduces the budget. Exhausted admission
+or a deadline remains incomplete. Reports
 are sealed on exit; no longer test is started automatically.
 
 The [first completed normal screen](benchmarks/2026-09-10-residency-screen/README.md)
 passed the two-pair gate with 4.94% and 6.06% lower conversation time. Its ledger
 entry records a promising screen, without confidence or production qualification.
+
+For five new confirmation pairs, use the same helper with `--pairs 5` and a
+900-second deadline:
+
+```sh
+PYTHONPATH=scripts/qwen .cache/qwen-reference-venv/bin/python scripts/qwen/screen_residency.py \
+  --pairs 5 --output .cache/benchmarks/residency-paired/NEW-RUN --time-limit 900
+```
+
+This mode first revalidates the completed short screen's four original reports,
+tokens, memory, residency and decision. Its ten fresh conversations alternate
+off/core, core/off, off/core, core/off, off/core. Earlier pairs are not pooled.
+The complete-conversation core/off ratio is the primary measurement. The gate
+requires a geometric mean of at most 0.99 and a two-sided 95% interval upper
+bound below 1.00. Each initial/follow-up request, first-token and decode metric
+must have an interval upper bound at most 1.03.
+
+Intervals use the five paired log-ratios and Student-t with four degrees of
+freedom. They assume independent, approximately normal pair effects; changing
+host conditions can violate those assumptions. Each interval has marginal
+coverage, not simultaneous coverage across all metrics. The pair is the unit
+of analysis, not the token. Five observations provide limited precision. A
+positive result supports longer validation, not product acceptance or automatic
+promotion. The helper does not stop early for apparent success. Missing pairs
+from interruption, deadline or resource admission keep the run incomplete.
+
+The [first completed five-pair confirmation](benchmarks/2026-09-10-residency-paired/README.md)
+did not establish improvement: primary ratio 1.0228, interval 0.7707–1.3573.
+Its earlier failed admission and all measured slow runs are preserved. The
+short-screen result has not been promoted or pooled with the confirmation.
 
 ## Durable experiment ledger
 

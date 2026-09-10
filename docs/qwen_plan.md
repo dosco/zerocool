@@ -207,6 +207,15 @@ and must be charged in every comparison.
    qualification; keep defaults unchanged. Core still generates about 2.5
    tokens/s, and the short-history follow-up still waits about 24s for its first
    token. This does not meet the product targets.
+   The [five-pair confirmation](benchmarks/2026-09-10-residency-paired/README.md)
+   failed its fixed gate: primary geometric-mean core/off conversation ratio
+   1.0228, with a model-based 95% interval of 0.7707–1.3573. Core won three pairs
+   but the last core conversation slowed substantially with few decompressions
+   and longer GPU durations. Preserve every run and stop longer residency
+   qualification; no default changes. Next add a small resident GPU timing
+   reference outside request timing plus available host-condition metadata, to
+   distinguish device-speed variation from request-specific waits. Retain the
+   existing per-phase read and memory counters, and keep missing data explicit.
 
 Mixed-reference validation and calibration preparation may proceed alongside
 the first two milestones. The first deliverable is a dependency-level report
