@@ -1,0 +1,589 @@
+{
+  "kind": "sparse_attention_replay_v1",
+  "build_fingerprint": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "passed": true,
+  "normal_request_latency_qualified": false,
+  "cases": [
+    {
+      "layer": 3,
+      "phase": "decode",
+      "tokens": 1,
+      "length": 4097,
+      "score_tiles": 513,
+      "wholly_masked_tiles": 181,
+      "arms": [
+        {
+          "arm": 0,
+          "hashes": [
+            "c3c6335308dba2ee1b6f5585afb31d5945893637d7d58b90c39605a4e0c48f8a",
+            "d821f3075fa6f46f94d346863b66321c5b6198fb29fe34c01d201877cc35473d",
+            "ede1d147708bdb6666f6895e07f24aa209497496486bb0ee0f733a015c8e2d69"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252795183250,
+                "completed_ns": 4706252803728208,
+                "gpu_start_seconds": 4706252.7953619165,
+                "gpu_end_seconds": 4706252.803557876,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252794850291,
+                    "encode_ns": 204834,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 3862792,
+                    "gpu_begin_ticks": 4706252795361958,
+                    "gpu_end_ticks": 4706252799224750
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252795089583,
+                    "encode_ns": 43500,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 385875,
+                    "gpu_begin_ticks": 4706252799251875,
+                    "gpu_end_ticks": 4706252799637750
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252795140000,
+                    "encode_ns": 32375,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 3891625,
+                    "gpu_begin_ticks": 4706252799666291,
+                    "gpu_end_ticks": 4706252803557916
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_scores/{}": {
+                "count": 1,
+                "cpu_encode_ns": 204834
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 43500
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 32375
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        },
+        {
+          "arm": 1,
+          "hashes": [
+            "c3c6335308dba2ee1b6f5585afb31d5945893637d7d58b90c39605a4e0c48f8a",
+            "d821f3075fa6f46f94d346863b66321c5b6198fb29fe34c01d201877cc35473d",
+            "ede1d147708bdb6666f6895e07f24aa209497496486bb0ee0f733a015c8e2d69"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252816156583,
+                "completed_ns": 4706252824284291,
+                "gpu_start_seconds": 4706252.816333917,
+                "gpu_end_seconds": 4706252.824136542,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "sparse_select",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252815921125,
+                    "encode_ns": 136500,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 479208,
+                    "gpu_begin_ticks": 4706252816333958,
+                    "gpu_end_ticks": 4706252816813166
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252816068416,
+                    "encode_ns": 22584,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 3523041,
+                    "gpu_begin_ticks": 4706252816835500,
+                    "gpu_end_ticks": 4706252820358541
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252816097291,
+                    "encode_ns": 14417,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 385125,
+                    "gpu_begin_ticks": 4706252820381833,
+                    "gpu_end_ticks": 4706252820766958
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252816118166,
+                    "encode_ns": 31792,
+                    "counter_index": 6,
+                    "gpu_pass_ns": 3346083,
+                    "gpu_begin_ticks": 4706252820790500,
+                    "gpu_end_ticks": 4706252824136583
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/sparse_select/{}": {
+                "count": 1,
+                "cpu_encode_ns": 136500
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_scores/{}": {
+                "count": 1,
+                "cpu_encode_ns": 22584
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 14417
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 31792
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        },
+        {
+          "arm": 2,
+          "hashes": [
+            "c3c6335308dba2ee1b6f5585afb31d5945893637d7d58b90c39605a4e0c48f8a",
+            "d821f3075fa6f46f94d346863b66321c5b6198fb29fe34c01d201877cc35473d",
+            "ede1d147708bdb6666f6895e07f24aa209497496486bb0ee0f733a015c8e2d69"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252830718083,
+                "completed_ns": 4706252836779500,
+                "gpu_start_seconds": 4706252.830898042,
+                "gpu_end_seconds": 4706252.836625,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "sparse_select",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252830476500,
+                    "encode_ns": 154291,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 363208,
+                    "gpu_begin_ticks": 4706252830898083,
+                    "gpu_end_ticks": 4706252831261291
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores_skip_masked",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252830640625,
+                    "encode_ns": 22500,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 1827125,
+                    "gpu_begin_ticks": 4706252831283208,
+                    "gpu_end_ticks": 4706252833110333
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252830670166,
+                    "encode_ns": 14375,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 291625,
+                    "gpu_begin_ticks": 4706252833132791,
+                    "gpu_end_ticks": 4706252833424416
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 3,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252830694541,
+                    "encode_ns": 17459,
+                    "counter_index": 6,
+                    "gpu_pass_ns": 3181417,
+                    "gpu_begin_ticks": 4706252833443583,
+                    "gpu_end_ticks": 4706252836625000
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/sparse_select/{}": {
+                "count": 1,
+                "cpu_encode_ns": 154291
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_scores_skip_masked/{}": {
+                "count": 1,
+                "cpu_encode_ns": 22500
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 14375
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":3,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 17459
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        }
+      ],
+      "exact": true
+    },
+    {
+      "layer": 47,
+      "phase": "decode",
+      "tokens": 1,
+      "length": 4097,
+      "score_tiles": 513,
+      "wholly_masked_tiles": 175,
+      "arms": [
+        {
+          "arm": 0,
+          "hashes": [
+            "2add83ece5b175767c8e96ee5d290a2f8a9f3bfee891ae9ee6388c772f45d62b",
+            "0a188a659e9ec38f39920c5841398d84e72036fe8b01808a42e14c37d2a5d040",
+            "2f379768f04c6ba76ce072c6082dd08170da0c83cdbd60c10d9b4c604b6abb45"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252858877708,
+                "completed_ns": 4706252865726333,
+                "gpu_start_seconds": 4706252.859060125,
+                "gpu_end_seconds": 4706252.8655845,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252858678875,
+                    "encode_ns": 137208,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 3105584,
+                    "gpu_begin_ticks": 4706252859060166,
+                    "gpu_end_ticks": 4706252862165750
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252858826166,
+                    "encode_ns": 17584,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 290958,
+                    "gpu_begin_ticks": 4706252862193875,
+                    "gpu_end_ticks": 4706252862484833
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252858850375,
+                    "encode_ns": 17541,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 3079834,
+                    "gpu_begin_ticks": 4706252862504666,
+                    "gpu_end_ticks": 4706252865584500
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_scores/{}": {
+                "count": 1,
+                "cpu_encode_ns": 137208
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 17584
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 17541
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        },
+        {
+          "arm": 1,
+          "hashes": [
+            "2add83ece5b175767c8e96ee5d290a2f8a9f3bfee891ae9ee6388c772f45d62b",
+            "0a188a659e9ec38f39920c5841398d84e72036fe8b01808a42e14c37d2a5d040",
+            "2f379768f04c6ba76ce072c6082dd08170da0c83cdbd60c10d9b4c604b6abb45"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252872903291,
+                "completed_ns": 4706252879062250,
+                "gpu_start_seconds": 4706252.873074626,
+                "gpu_end_seconds": 4706252.878933792,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "sparse_select",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252872691750,
+                    "encode_ns": 136291,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 361416,
+                    "gpu_begin_ticks": 4706252873074625,
+                    "gpu_end_ticks": 4706252873436041
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252872836958,
+                    "encode_ns": 19750,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 2363709,
+                    "gpu_begin_ticks": 4706252873459916,
+                    "gpu_end_ticks": 4706252875823625
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252872863333,
+                    "encode_ns": 12958,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 243500,
+                    "gpu_begin_ticks": 4706252875848916,
+                    "gpu_end_ticks": 4706252876092416
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252872882125,
+                    "encode_ns": 15333,
+                    "counter_index": 6,
+                    "gpu_pass_ns": 2820708,
+                    "gpu_begin_ticks": 4706252876113125,
+                    "gpu_end_ticks": 4706252878933833
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/sparse_select/{}": {
+                "count": 1,
+                "cpu_encode_ns": 136291
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_scores/{}": {
+                "count": 1,
+                "cpu_encode_ns": 19750
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 12958
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 15333
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        },
+        {
+          "arm": 2,
+          "hashes": [
+            "2add83ece5b175767c8e96ee5d290a2f8a9f3bfee891ae9ee6388c772f45d62b",
+            "0a188a659e9ec38f39920c5841398d84e72036fe8b01808a42e14c37d2a5d040",
+            "2f379768f04c6ba76ce072c6082dd08170da0c83cdbd60c10d9b4c604b6abb45"
+          ],
+          "profile": {
+            "command_groups": [
+              {
+                "submitted_ns": 4706252885197125,
+                "completed_ns": 4706252889074000,
+                "gpu_start_seconds": 4706252.8853595005,
+                "gpu_end_seconds": 4706252.888948125,
+                "operations": [
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "sparse_select",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252884992791,
+                    "encode_ns": 127000,
+                    "counter_index": 0,
+                    "gpu_pass_ns": 242291,
+                    "gpu_begin_ticks": 4706252885359500,
+                    "gpu_end_ticks": 4706252885601791
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_scores_skip_masked",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252885128625,
+                    "encode_ns": 20375,
+                    "counter_index": 2,
+                    "gpu_pass_ns": 1241166,
+                    "gpu_begin_ticks": 4706252885625625,
+                    "gpu_end_ticks": 4706252886866791
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_softmax",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252885155708,
+                    "encode_ns": 13667,
+                    "counter_index": 4,
+                    "gpu_pass_ns": 196916,
+                    "gpu_begin_ticks": 4706252886888750,
+                    "gpu_end_ticks": 4706252887085666
+                  },
+                  {
+                    "stage": "attention",
+                    "layer": 47,
+                    "tokens": 1,
+                    "offset": 4096,
+                    "kernel": "attention_values",
+                    "request_phase": "unspecified",
+                    "encoded_at_ns": 4706252885175458,
+                    "encode_ns": 15750,
+                    "counter_index": 6,
+                    "gpu_pass_ns": 1846916,
+                    "gpu_begin_ticks": 4706252887101250,
+                    "gpu_end_ticks": 4706252888948166
+                  }
+                ]
+              }
+            ],
+            "truncated": false,
+            "operation_summary": {
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/sparse_select/{}": {
+                "count": 1,
+                "cpu_encode_ns": 127000
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_scores_skip_masked/{}": {
+                "count": 1,
+                "cpu_encode_ns": 20375
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_softmax/{}": {
+                "count": 1,
+                "cpu_encode_ns": 13667
+              },
+              "unspecified/{\"stage\":\"attention\",\"layer\":47,\"tokens\":1}/attention_values/{}": {
+                "count": 1,
+                "cpu_encode_ns": 15750
+              }
+            },
+            "timing_kind": "instrumented per-dispatch compute passes; submission boundaries preserved",
+            "counter_sample_capacity_per_group": 4096,
+            "counter_storage_reserve_bytes": 98304,
+            "normal_request_latency_qualified": false
+          }
+        }
+      ],
+      "exact": true
+    }
+  ]
+}

@@ -123,13 +123,18 @@ Json Result::json() const {
     auto latencies=token_ms; std::sort(latencies.begin(),latencies.end());
     const double p95=latencies.empty()?0:latencies[std::min(latencies.size()-1,size_t(std::ceil(latencies.size()*0.95)-1))];
     auto percentile=[&](double p) {return latencies.empty()?0:latencies[std::min(latencies.size()-1,size_t(std::ceil(latencies.size()*p)-1))];};
-    return {{"prompt_tokens",prompt_tokens},{"reused_tokens",reused_tokens},{"prefill_tokens",prompt_tokens-reused_tokens},
+    Json result={{"prompt_tokens",prompt_tokens},{"reused_tokens",reused_tokens},{"prefill_tokens",prompt_tokens-reused_tokens},
         {"output_tokens",tokens.size()},{"pending_tokens_ingested",pending_tokens_ingested},{"phases",phases},{"time_to_first_token_ms",first_token_ms},{"prefill_ms",prefill_ms},
         {"decode_ms",decode_ms},{"tokens_per_second",tokens.size()>1 && decode_ms>0?(tokens.size()-1)*1000.0/decode_ms:0.0},
         {"request_ms",request_ms},{"decode_wall_ms",decode_wall_ms},
         {"wall_tokens_per_second",tokens.size()>1 && decode_wall_ms>0?(tokens.size()-1)*1000.0/decode_wall_ms:0.0},
         {"p50_token_ms",percentile(0.5)},{"p95_token_ms",p95},{"p99_token_ms",percentile(0.99)},
         {"token_latency_ms",token_ms},{"output_token_ids",tokens},{"finish_reason",finish_reason},{"text",text}};
+    if(diagnose_decode) result["decode_diagnostics"]={{"kind","decode_step_diagnostics_v1"},
+        {"max_steps",32},{"total_decode_steps",token_ms.size()},{"captured_steps",decode_samples.size()},
+        {"omitted_steps",token_ms.size()-decode_samples.size()},{"samples",decode_samples},
+        {"scope","completed decode forwards only; excludes prefill and sampling; request wall time includes observation overhead"}};
+    return result;
 }
 Session::Session(Model& model,Tokenizer& tokenizer) : model_(model),tokenizer_(tokenizer) {}
 void Session::clear() {state_.reset();retained_.clear();last_logits_.clear();pending_token_.reset();}
@@ -174,6 +179,7 @@ Result Session::generate(const std::vector<int>& prompt,const Options& o,
     if(!std::isfinite(o.temperature) || o.temperature<0 || !std::isfinite(o.top_p) || o.top_p<=0 || o.top_p>1 || o.top_k<0)
         throw std::invalid_argument("invalid sampling parameters");
     const auto start=Clock::now(); Result result; result.prompt_tokens=prompt.size();
+    result.diagnose_decode=model_.options().decode_diagnostics;
     const auto before=model_.stats();
     try {
         ingest(prompt,result,cancel);
@@ -190,11 +196,20 @@ Result Session::generate(const std::vector<int>& prompt,const Options& o,
             }
             if(id==248044 || id==248046) {result.finish_reason="stop";break;}
             if(i+1==o.max_tokens) {result.finish_reason="length";break;}
+            const bool observe=result.diagnose_decode && result.decode_samples.size()<32;
+            Json counters;if(observe) counters=model_.decode_counters();
+            const auto step_ns=observe?monotonic_ns():0;
             const auto step=Clock::now();
             const std::array<int,1> token={id};
             last_logits_=model_.forward(token,*state_,true,cancel);
             retained_.push_back(id);
             const auto elapsed=ms(step); result.token_ms.push_back(elapsed); result.decode_ms+=elapsed;
+            if(observe) {
+                const auto end=monotonic_ns();
+                result.decode_samples.push_back({{"step",i},{"input_token_id",id},{"offset",state_->tokens-1},
+                    {"begin_ns",step_ns},{"end_ns",end},{"forward_ms",elapsed},
+                    {"before",std::move(counters)},{"after",model_.decode_counters()}});
+            }
         }
         result.request_ms=ms(start);result.decode_wall_ms=result.request_ms-result.first_token_ms;
         result.phases["decode"]={{"before",result.phases["ingest"]["after"]},{"after",model_.stats()}};

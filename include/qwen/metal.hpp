@@ -21,6 +21,7 @@ struct KernelConfig {
     uint32_t q8_decode_rows=0; // 0 keeps the existing path; 2/4/8 use packed T1 loads.
     bool gate_pair=false;
     std::string gdn="original";
+    std::string attention_score_tiles="full";
     bool profile=false;
     bool counter_profile=false; // Diagnostic: one compute pass per dispatch.
     Json shape_table=nullptr;
@@ -88,6 +89,10 @@ public:
     Buf gated_linear(const Linear& gate, const Linear& up, const Buf& x, uint32_t tokens, const Buf& rows = {});
     Buf gdn_scan(const Buf& qkv,const Buf& a,const Buf& b,const Buf& alog,
                  const Buf& dt,const Buf& state,uint32_t tokens,uint32_t alog_dtype,uint32_t dt_dtype);
+    void sparse_select(const Buf& scores,const Buf& mask,const Buf& status,
+                       uint32_t tokens,uint32_t offset,uint32_t length);
+    void attention_scores(const Buf& q,const Buf& keys,const Buf& mask,const Buf& scores,
+                          uint32_t tokens,uint32_t offset,uint32_t length,bool sparse);
     Buf embedding(const Linear& layer, std::span<const int> ids, uint32_t copies = 1);
     uint64_t recommended() const;
     uint64_t physical() const;
@@ -95,6 +100,7 @@ public:
     uint64_t peak() const;
     std::string device_name() const;
     Json statistics() const;
+    Json timing_counters() const; // Scalar snapshot; never submits, waits, reaps or allocates GPU buffers.
 private:
     void capture_linear(const Linear& layer,const Linear* up,const Buf& input,uint32_t tokens,const Buf& rows={});
     struct LinearPolicy { uint32_t tile=1, rows=1; bool pair=false; };

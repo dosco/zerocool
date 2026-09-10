@@ -12,6 +12,7 @@ import struct
 import subprocess
 import time
 from build_identity import build_fingerprint
+from qualification_evidence import ResourceBlocked, confined
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -47,7 +48,7 @@ def workloads(seed, output, include_7k=False):
 
 
 def config_args(config):
-    allowed = {"kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows"}
+    allowed = {"cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "sparse_selection", "attention_score_tiles"}
     if set(config) - allowed - {"name"}:
         raise ValueError("Unknown experiment option")
     result = []
@@ -123,11 +124,12 @@ def validate(report, config, expected, budget, output):
         validate_phase_memory(row, config, budget)
         execution=state.get("execution", {})
         if execution.get("cached_token_replay", False):raise ValueError("Cached replay cannot qualify normal requests")
-        for key,default in [("residency","off"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed")]:
+        for key,default in [("cache_policy","clock"),("residency","off"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed"),("sparse_selection","cpu")]:
             if execution.get(key,default)!=config.get(key,default):raise ValueError("Execution candidate changed")
         if config.get("expert_slots") and plan["expert_slots"]!=config["expert_slots"]:
             raise ValueError("Fixed expert capacity changed")
         kernels = machine["kernels"]
+        if kernels.get('attention_score_tiles','full')!=config.get('attention_score_tiles','full'):raise ValueError('Attention score tiles changed')
         if kernels.get('q8_decode_rows',0)!=config.get('q8_decode_rows',0):raise ValueError('Q8 decode variant changed')
         for key, runtime in [("kernel_policy", "policy"), ("token_tile", "token_tile"), ("gdn_path", "gdn")]:
             if kernels[runtime] != config[key]:
@@ -150,6 +152,10 @@ def validate(report, config, expected, budget, output):
             raise ValueError("Insufficient generated tokens for comparison")
         if name == "append_128" and (row["reused_tokens"] != 4096 or row["prefill_tokens"] != 128 or row["pending_tokens_ingested"] != 0):
             raise ValueError("Append does not measure exactly 4096 retained plus 128 new tokens")
+        for key in ('time_to_first_token_ms','decode_wall_ms','request_ms','wall_tokens_per_second'):
+            value=row.get(key)
+            if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<=0:
+                raise ValueError('Normal request timing must be positive and finite')
         def reads(s):
             return s["checkpoint_application_read_bytes"] + s["prepared"]["application_read_bytes"]
         phases = {}
@@ -164,6 +170,7 @@ def validate(report, config, expected, budget, output):
                                 device_before=a["storage"], device_after=b["storage"])
         observation = dict(name=name, ttft_ms=row["time_to_first_token_ms"],
                            decode_ms_per_token=row["decode_wall_ms"]/(output-1), tokens_per_second=row["wall_tokens_per_second"],
+                           output_token_ids=row.get("output_token_ids"),
                            forward_tokens_per_second=row["tokens_per_second"],request_ms=row["request_ms"],
                            p95_ms=row["p95_token_ms"], expert_slots=plan["expert_slots"], phases=phases,
                            peak_metal_bytes=machine["peak_buffer_bytes"], footprint_bytes=state["process"]["physical_footprint_bytes"],
@@ -186,7 +193,7 @@ def summarize(measurements, configs):
     for config in configs[1:]:
         bounds=[]
         for case in sorted({r["name"] for r in measurements}):
-            for metric in ["ttft_ms", "decode_ms_per_token"]:
+            for metric in ["ttft_ms", "decode_ms_per_token", "request_ms"]:
                 baseline={r["pair"]:r[metric] for r in measurements if r["configuration"]==reference and r["name"]==case}
                 candidate={r["pair"]:r[metric] for r in measurements if r["configuration"]==config["name"] and r["name"]==case}
                 if baseline.keys()!=candidate.keys():
@@ -199,26 +206,81 @@ def summarize(measurements, configs):
     return reports
 
 
-def inspect_admission(binary,common,stem,budget,panel,log):
+def inspect_admission(binary,common,stem,budget,panel,log,guard=None):
     # Metal's process-exit cleanup can lag exit status. Retry metadata only;
     # never lower the budget, rewrite a rejected report, or retry inference.
     for attempt,delay in enumerate((0,2,5)):
         if delay:time.sleep(delay)
         suffix=".admission.json" if not attempt else f".admission-retry-{attempt}.json"
         path=stem.with_suffix(suffix)
-        subprocess.run([str(binary),"inspect",*common,"--json",str(path)],check=True,stdout=log,stderr=subprocess.STDOUT,timeout=120)
-        admission=json.loads(path.read_text())["current_admission"]
+        command=[str(binary),"inspect",*common,"--json",str(path)]
+        if guard:guard.run(command,stdout=log,timeout=120)
+        else:subprocess.run(command,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=120)
+        report=json.loads(path.read_text());admission=report["current_admission"]
+        if guard and (report['machine']['device']!=guard.identity['device'] or
+                      report['machine']['physical_bytes']!=guard.identity['physical_bytes'] or
+                      report['machine']['build_fingerprint']!=guard.identity['build'] or
+                      report['revision']!=guard.identity['artifact_revision'] or
+                      report['prepared']['manifest_sha256']!=guard.identity['prepared_manifest_sha256']):
+            raise ValueError('Admission machine or build differs')
         if admission.get("limit_bytes")==budget and admission.get("panel_tokens")==panel:return path
-    raise ValueError("Common budget/panel unavailable after bounded admission retries")
+    raise ResourceBlocked("Common budget/panel unavailable after bounded admission retries")
 
 
 def is_original_control(config):
     return all(config.get(key,default)==default for key,default in [
         ("kernel_policy","reference"),("token_tile",1),("gdn_path","original"),
-        ("residency","off"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed"),("affine_rows",1),("gate_pair","off"),("q8_decode_rows",0),("shape_policy",None)])
+        ("residency","off"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed"),("affine_rows",1),("gate_pair","off"),("q8_decode_rows",0),("shape_policy",None),("sparse_selection","cpu"),("attention_score_tiles","full")])
 
 
-def run(args):
+def import_pairs(source,destination,identity,configs,cases,pairs,expected,output,validation_only=False):
+    """Revalidate complete pairs; never reuse just one arm of an interrupted pair."""
+    source,destination=Path(source),Path(destination)
+    summary=source/'summary.json'
+    saved=json.loads((summary if summary.exists() else source/'progress.json').read_text())
+    for key,value in identity.items():
+        if saved.get(key)!=value:raise ValueError('Resume experiment identity differs: '+key)
+    rows=saved.get('measurements',[]);indexed={}
+    allowed={(p,c['name'],name) for p in range(pairs) for c in configs for name in cases}
+    for row in rows:
+        key=(row['pair'],row['configuration'],row['name'])
+        if key in indexed:raise ValueError('Duplicate resume measurement')
+        if key not in allowed:raise ValueError('Unexpected resume pair or workload')
+        indexed[key]=row
+    imported=[]
+    for pair in range(pairs):
+        order=configs if pair%2==0 else configs[::-1]
+        keys=[(pair,c['name'],name) for c in order for name in cases]
+        if not all(key in indexed for key in keys):continue
+        validated=[];files={}
+        for key in keys:
+            row=indexed[key];config=next(c for c in configs if c['name']==key[1])
+            for label in ('report','admission_report','workload_report'):
+                name=row[label];path=confined(source,name)
+                if path.name!=name or sha(path)!=row[label+'_sha256']:
+                    raise ValueError('Changed resume raw evidence')
+                files[name]=path
+            raw=json.loads(files[row['report']].read_text())
+            if json.loads(files[row['workload_report']].read_text())!=cases[key[2]]:
+                raise ValueError('Changed resume token workload')
+            admission=json.loads(files[row['admission_report']].read_text())
+            if admission['current_admission'].get('limit_bytes')!=identity['budget_bytes'] or admission['current_admission'].get('panel_tokens')!=config['panel']:
+                raise ValueError('Changed resume admission')
+            observation=validate(raw,config,expected,identity['budget_bytes'],output)
+            observation.update({k:row[k] for k in ('pair','configuration','report','report_sha256',
+                'admission_report','admission_report_sha256','workload_report','workload_report_sha256')})
+            if observation!=row:raise ValueError('Resume measurement differs from raw evidence')
+            validated.append(observation)
+        if not validation_only:
+            for name,path in files.items():
+                target=destination/name
+                if target.exists():raise ValueError('Resume would overwrite evidence')
+                target.write_bytes(path.read_bytes())
+        imported.extend(validated)
+    return imported
+
+
+def run(args,guard=None):
     if args.pairs<1 or not math.isfinite(args.memory_gb) or not 0<args.memory_gb<=22:
         raise ValueError("Requires positive repetitions and a memory budget of at most 22GiB")
     if args.mode=="paired" and args.pairs not in (5,10):
@@ -245,8 +307,19 @@ def run(args):
     identity=dict(kind="exact_kernel_normal_requests", mode=args.mode, comparison_purpose=getattr(args,"comparison_purpose","promotion"), build=expected["build"], artifact=args.artifact,
                   artifact_revision=lock["revision"], workload_sha256=sha(args.workload),
                   runner_sha256=sha(Path(__file__)), configurations=configs,budget_bytes=int(args.memory_gb*1024**3))
+    identity.update(cases=list(cases),pairs=args.pairs,output_tokens=output)
+    if guard:identity['evidence_identity']=guard.identity
+    def unchanged():
+        if build_fingerprint(ROOT)!=expected['build']:raise ValueError('Native sources changed during normal comparison')
+        if guard:guard.check_identity();guard.check_resources()
     try:
+        unchanged()
+        if getattr(args,'resume_from',None):
+            measurements=import_pairs(args.resume_from,args.output,identity,configs,cases,args.pairs,expected,output)
+            unchanged()
+        done={row['pair'] for row in measurements}
         for pair in range(args.pairs):
+            if pair in done:continue
             for config in (configs if pair%2==0 else configs[::-1]):
                 for name, conversation in cases.items():
                     stem=args.output/f"{config['name']}-{name}-{pair}"
@@ -255,20 +328,30 @@ def run(args):
                     common=["--model",str(args.model),"--artifact",args.artifact,"--prepared",str(args.prepared),
                             "--memory-gb",str(args.memory_gb),"--context","8192"]+config_args(config)
                     with stem.with_suffix(".log").open("w") as log:
-                        admission_path=inspect_admission(args.binary,common,stem,identity["budget_bytes"],config["panel"],log)
-                        subprocess.run([str(args.binary),"bench",*common,"--workload-file",str(workload),"--repetitions","1",
-                                        "--temperature","0","--seed","0","--json",str(report_path)],
-                                       check=True,stdout=log,stderr=subprocess.STDOUT,timeout=args.timeout)
+                        unchanged()
+                        admission_path=inspect_admission(args.binary,common,stem,identity["budget_bytes"],config["panel"],log,guard)
+                        command=[str(args.binary),"bench",*common,"--workload-file",str(workload),"--repetitions","1",
+                                 "--temperature","0","--seed","0","--json",str(report_path)]
+                        if guard:guard.run(command,stdout=log,timeout=args.timeout)
+                        else:subprocess.run(command,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=args.timeout)
+                        unchanged()
                     report=json.loads(report_path.read_text());observation=validate(report,config,expected,identity["budget_bytes"],output)
-                    observation.update(pair=pair,configuration=config["name"],report=report_path.name,report_sha256=sha(report_path),admission_report=admission_path.name)
+                    observation.update(pair=pair,configuration=config["name"],report=report_path.name,report_sha256=sha(report_path),
+                        admission_report=admission_path.name,admission_report_sha256=sha(admission_path),
+                        workload_report=workload.name,workload_report_sha256=sha(workload))
+                    if observation['output_token_ids'] is None:raise ValueError("Missing generated-token evidence")
+                    previous=next((m for m in measurements if m['name']==name),None)
+                    if previous and previous['output_token_ids']!=observation['output_token_ids']:
+                        raise ValueError("Exact candidate changed generated tokens")
                     measurements.append(observation)
                     print(f"{config['name']} {name} pair {pair}: {observation['ttft_ms']/1000:.2f}s TTFT, {observation['tokens_per_second']:.3f} tokens/s",flush=True)
                     (args.output/"progress.json").write_text(json.dumps(dict(identity,complete=False,measurements=measurements),indent=2)+"\n")
         summary=summarize(measurements,configs) if args.mode=="paired" else []
         (args.output/"summary.json").write_text(json.dumps(dict(identity,complete=True,measurements=measurements,comparisons=summary,
             generated_tokens_equal=True,full_acceptance_qualified=False),indent=2)+"\n")
-    except Exception as error:
-        (args.output/"summary.json").write_text(json.dumps(dict(identity,complete=False,error=str(error),measurements=measurements),indent=2)+"\n")
+    except BaseException as error:
+        (args.output/"summary.json").write_text(json.dumps(dict(identity,complete=False,error=str(error),
+            status='resource_blocked' if isinstance(error,ResourceBlocked) else 'failed',measurements=measurements),indent=2)+"\n")
         raise
 
 
@@ -288,4 +371,5 @@ if __name__=="__main__":
     ap.add_argument("--cases",nargs="+",choices=["prompt_2k","prompt_4k","append_128","prompt_7k"])
     ap.add_argument("--include-7k",action="store_true")
     ap.add_argument("--timeout",type=int,default=7200)
+    ap.add_argument("--resume-from",type=Path)
     run(ap.parse_args())

@@ -32,6 +32,7 @@ enum class Artifact { Q4, Mixed };
 Json artifact_lock(Artifact artifact);
 const char* artifact_revision(Artifact artifact);
 const char* artifact_model_id(Artifact artifact);
+const char* build_fingerprint();
 
 uint64_t checked_add(uint64_t a, uint64_t b);
 uint64_t checked_mul(uint64_t a, uint64_t b);
@@ -189,6 +190,9 @@ struct CacheStats {
 // Single inference coordinator; asynchronous I/O only changes future state.
 // A lease pins a slot for all queued GPU uses, including hits overlapped with
 // loading misses. CLOCK skips every leased slot and never pins prefill seeds.
+enum class ExpertCachePolicy { Clock, SegmentedLRU };
+ExpertCachePolicy parse_cache_policy(std::string_view name);
+std::string_view cache_policy_name(ExpertCachePolicy policy);
 class ExpertCache {
     struct Entry;
 public:
@@ -212,7 +216,7 @@ public:
     };
     ExpertCache(size_t slots, Allocator allocator, ReadPool& reads,
                 std::function<void(ExpertKey, const Buf&)> loader,
-                uint64_t stride = ExpertStride);
+                uint64_t stride = ExpertStride, ExpertCachePolicy policy = ExpertCachePolicy::Clock);
     ~ExpertCache();
     Lease acquire(ExpertKey key);
     bool ready(ExpertKey key) const;
@@ -221,7 +225,13 @@ public:
     size_t capacity() const { return slots_.size(); }
     size_t occupancy() const { return lookup_.size(); }
     const CacheStats& stats() const { return stats_; }
+    Json json() const;
 private:
+    void unlink(Entry* entry);
+    void link(Entry* entry, unsigned queue);
+    void touch(Entry* entry);
+    void demote();
+    Entry* slru_victim() const;
     std::vector<std::shared_ptr<Entry>> slots_;
     std::unordered_map<uint64_t, size_t> lookup_;
     size_t hand_ = 0;
@@ -230,6 +240,11 @@ private:
     std::function<void(ExpertKey, const Buf&)> loader_;
     uint64_t stride_;
     CacheStats stats_;
+    ExpertCachePolicy policy_;
+    // Intrusive links live in the existing entries; no separate queue allocations.
+    // Metadata for both policies is covered by the common driver/control reserve.
+    std::array<Entry*,2> oldest_{}, newest_{};
+    size_t protected_ = 0;
 };
 
 struct MemoryPlan {
@@ -237,6 +252,7 @@ struct MemoryPlan {
     uint64_t ngram = 64 * MiB, reserve = GiB, experts = 0;
     uint64_t panel_scratch = 0, kernel_scratch = 0;
     uint64_t pipeline_scratch = 0, snapshot = 0;
+    uint64_t runtime_control = 16384; // One aligned GPU status allocation, all configurations.
     uint32_t panel_tokens = 0;
     size_t slots = 0;
     void cap_experts(size_t count);

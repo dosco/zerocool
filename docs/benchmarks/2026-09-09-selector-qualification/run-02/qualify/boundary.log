@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/repo/scripts/qwen/qualify_exact_sessions.py", line 163, in <module>
+    run(ap.parse_args())
+    ~~~^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/qualify_exact_sessions.py", line 110, in run
+    execute([str(args.binary),str(args.model),str(args.prepared),str(config),str(dest)],log)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/qualify_exact_sessions.py", line 103, in execute
+    if guard:guard.run(command,stdout=log,timeout=args.timeout)
+             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/qualification_evidence.py", line 137, in run
+    raise ResourceBlocked('Native memory/storage admission failed; see '+str(stdout.name))
+qualification_evidence.ResourceBlocked: Native memory/storage admission failed; see /repo/.cache/benchmarks/selector-qualification/2026-09-09-run-02/qualify/boundary/candidate.log

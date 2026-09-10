@@ -1,0 +1,35 @@
+{
+  "kind": "paired_cached_decode_comparison",
+  "build_fingerprint": "84229cdf0f0b35dd3f7028373a17c7b8a73b45e299060da1c884aed77772e323",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "comparison_axis": "attention_score_tiles",
+  "control_value": "full",
+  "candidate_value": "skip-masked",
+  "prompt_tokens": 4096,
+  "pairs": 5,
+  "control_ms": [
+    196.045792,
+    197.676292,
+    196.902917,
+    195.391375,
+    194.671875
+  ],
+  "candidate_ms": [
+    195.473375,
+    192.726875,
+    196.214584,
+    197.561875,
+    197.553791
+  ],
+  "control_median_ms": 196.045792,
+  "candidate_median_ms": 196.214584,
+  "latency_ratio": {
+    "median": 0.9970801872656364,
+    "low": 0.9749620101129781,
+    "high": 1.0148039669315354,
+    "pairs": 5
+  },
+  "exact": true,
+  "application_read_bytes": 0,
+  "normal_request_latency_qualified": false
+}

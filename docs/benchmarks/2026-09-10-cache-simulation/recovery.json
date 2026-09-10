@@ -1,0 +1,307 @@
+{
+  "kind": "expert_cache_simulation_v1",
+  "status": "simulated",
+  "scope": "fixed_order_serial_demand_simulation",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-03/recovery/report.json.trace.jsonl",
+      "sha256": "a005fd038c9f78bcfe81b282ab78ea29f60905562849ec1cede5366548ff252b",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-03/recovery/report.json.trace.jsonl"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Simulation of expert reads only; no measured latency, tokens/s, device traffic or quality gain.",
+    "Fixed ascending expert-ID demand order within each recorded layer pass, with within-pass deduplication. No token-major reconstruction of prefill panels. Native hit-first admission can change the order.",
+    "Cold start at each position/phase/session discontinuity or omitted pass. Contiguous positions imply continuation only as a simulation assumption; unrecorded resets cannot be detected.",
+    "Immediate read completion and release; no pinned GPU users, loading joins, prefetch, OS cache or read overlap. CLOCK here matches the native rule only under those assumptions.",
+    "Belady is a future-aware minimum for the SAME fixed order, equal-size records and mandatory admission. It is not a bound for arbitrary native schedules, variable-size quantization or end-to-end latency.",
+    "Budgets cover expert slots only, including alignment. Resident weights, metadata, ngrams, state, scratch and driver reserve need separate admission; this curve cannot approve an engine memory budget.",
+    "Artifact/build IDs are recorded claims, not newly verified model weights. No prompt identity, terminal request marker or representative steady-generation coverage is inferred from these route records."
+  ],
+  "build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "source_result": {
+    "status": "unknown",
+    "complete": null
+  },
+  "coverage": {
+    "identity": {
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b"
+    },
+    "input_passes": 145,
+    "included_passes": 144,
+    "excluded_incomplete_passes": 1,
+    "missing_route_passes": 0,
+    "filtered_passes": 0,
+    "incomplete_windows": 1,
+    "logical_router_selections": 1920,
+    "demand_record_accesses": 1824,
+    "within_pass_grouped_selections": 96,
+    "compulsory_misses": 1728,
+    "segment_count": 2,
+    "cold_starts": 2,
+    "boundary_count": 1,
+    "boundaries": [
+      {
+        "reason": "incomplete_or_discontinuous_window",
+        "source_pointer": "line:98"
+      }
+    ],
+    "boundary_details_truncated": false,
+    "segments": [
+      {
+        "start_offset": 0,
+        "end_offset": 2,
+        "phase": null,
+        "session_id": null,
+        "first_source_pointer": "line:1",
+        "last_source_pointer": "line:96",
+        "windows": 2,
+        "single_token_windows": 2
+      },
+      {
+        "start_offset": 0,
+        "end_offset": 2,
+        "phase": null,
+        "session_id": null,
+        "first_source_pointer": "line:98",
+        "last_source_pointer": "line:145",
+        "windows": 1,
+        "single_token_windows": 0
+      }
+    ],
+    "segment_details_truncated": false,
+    "whole_request_covered": null,
+    "session_boundaries_fully_known": false,
+    "phase_filter": null,
+    "capture_limits": null,
+    "query_truncated": false
+  },
+  "layout": {
+    "format": "affine_q4_group64",
+    "expert_payload_bytes": 2764800,
+    "aligned_slot_bytes": 2768896,
+    "layers": 48,
+    "experts_per_layer": 512,
+    "top_k": 10
+  },
+  "policy_parameters": {
+    "segmented_lru_protected_fraction": 0.75,
+    "mandatory_admission": true
+  },
+  "curves": [
+    {
+      "budget_mib": 0,
+      "budget_bytes": 0,
+      "slots": 0,
+      "slot_allocation_bytes": 0,
+      "unused_budget_bytes": 0,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 0,
+          "misses": 1824,
+          "application_miss_bytes": 5042995200,
+          "byte_hit_fraction": 0.0
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 0,
+          "misses": 1824,
+          "application_miss_bytes": 5042995200,
+          "byte_hit_fraction": 0.0
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 0,
+          "misses": 1824,
+          "application_miss_bytes": 5042995200,
+          "byte_hit_fraction": 0.0
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    },
+    {
+      "budget_mib": 1024,
+      "budget_bytes": 1073741824,
+      "slots": 387,
+      "slot_allocation_bytes": 1071562752,
+      "unused_budget_bytes": 2179072,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 0,
+          "misses": 1824,
+          "application_miss_bytes": 5042995200,
+          "byte_hit_fraction": 0.0
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 0,
+          "misses": 1824,
+          "application_miss_bytes": 5042995200,
+          "byte_hit_fraction": 0.0
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 265420800
+    },
+    {
+      "budget_mib": 2048,
+      "budget_bytes": 2147483648,
+      "slots": 775,
+      "slot_allocation_bytes": 2145894400,
+      "unused_budget_bytes": 1589248,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    },
+    {
+      "budget_mib": 4096,
+      "budget_bytes": 4294967296,
+      "slots": 1551,
+      "slot_allocation_bytes": 4294557696,
+      "unused_budget_bytes": 409600,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    },
+    {
+      "budget_mib": 6144,
+      "budget_bytes": 6442450944,
+      "slots": 2326,
+      "slot_allocation_bytes": 6440452096,
+      "unused_budget_bytes": 1998848,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    },
+    {
+      "budget_mib": 8192,
+      "budget_bytes": 8589934592,
+      "slots": 3102,
+      "slot_allocation_bytes": 8589115392,
+      "unused_budget_bytes": 819200,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        },
+        {
+          "policy": "belady",
+          "demands": 1824,
+          "hits": 96,
+          "misses": 1728,
+          "application_miss_bytes": 4777574400,
+          "byte_hit_fraction": 0.05263157894736842
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "predicted_tokens_per_second": null,
+  "predicted_request_speedup": null,
+  "next_experiment": "First capture 32 successive tokens of normal generation with explicit session/reset/phase markers and complete routes after a prompt, under a fixed deadline. If promising, extend to 256 tokens and a retained-history append. Screen one cache policy at the same admitted byte budget before full qualification."
+}

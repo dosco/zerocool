@@ -1,0 +1,76 @@
+{
+  "kind": "sparse_attention_fixture_v1",
+  "build_fingerprint": "84229cdf0f0b35dd3f7028373a17c7b8a73b45e299060da1c884aed77772e323",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "bytes": 58890240,
+  "cases": [
+    {
+      "layer": 3,
+      "phase": "decode",
+      "tokens": 1,
+      "offset": 7168,
+      "length": 7169,
+      "tensors": {
+        "q": {
+          "file": "0-q.f32",
+          "bytes": 24576,
+          "sha256": "0b5546978e94c56e3751a1884288272e93d77ccf50a15b2a5a1f98a31c829b06"
+        },
+        "keys": {
+          "file": "0-keys.f32",
+          "bytes": 14682112,
+          "sha256": "a787573ecb203820d51ee3a828d65f07b918f567aeada7bcdcba4b1bb15e1f57"
+        },
+        "values": {
+          "file": "0-values.f32",
+          "bytes": 14682112,
+          "sha256": "42df70a9641441ef9d803515b66a6f3b927a16a5882a7a872173ed74f6da5b6a"
+        },
+        "qg": {
+          "file": "0-qg.f32",
+          "bytes": 49152,
+          "sha256": "3ba36eb3d7a5fd052a67012d2e1017211613e3ae5bdc963f914efd2b58caeac8"
+        },
+        "index_scores": {
+          "file": "0-index_scores.f32",
+          "bytes": 7168,
+          "sha256": "c265097f75d61152b4dbca0b3b81a9397dfe7fd3c79a01626bba43e8d67e6a4d"
+        }
+      }
+    },
+    {
+      "layer": 47,
+      "phase": "decode",
+      "tokens": 1,
+      "offset": 7168,
+      "length": 7169,
+      "tensors": {
+        "q": {
+          "file": "1-q.f32",
+          "bytes": 24576,
+          "sha256": "fc54d5674ae3a9a7dad3c959f7e03c8e02789d8253df82f08ebc7757cb7996b9"
+        },
+        "keys": {
+          "file": "1-keys.f32",
+          "bytes": 14682112,
+          "sha256": "8fc234d5bf51dda2d759173b2b6aebf37718bfa3cf06e43fb5437a65def15bcf"
+        },
+        "values": {
+          "file": "1-values.f32",
+          "bytes": 14682112,
+          "sha256": "1030bc2607836939e83a7c82a453f2e653e91c4a8c09591f577c0c79ded4d908"
+        },
+        "qg": {
+          "file": "1-qg.f32",
+          "bytes": 49152,
+          "sha256": "3155de5a56457ecd470bb06da55c8ae4a667a810b23ddca93ca801c8c2f99768"
+        },
+        "index_scores": {
+          "file": "1-index_scores.f32",
+          "bytes": 7168,
+          "sha256": "b2b99f96a2c7a846b49f340fbd95cdd16c6b3ed6477f5e20e2d0c9d92ce4dc1c"
+        }
+      }
+    }
+  ]
+}

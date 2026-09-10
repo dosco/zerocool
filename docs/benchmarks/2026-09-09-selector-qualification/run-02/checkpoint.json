@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-09T21:03:14.713899+00:00",
+  "source_directory": "/repo/.cache/benchmarks/selector-qualification/2026-09-09-run-02",
+  "copied_sha256": {
+    "summary.json": "708d7b9f3f46fa7069057267c8aff160304c2fee83a4f7e1a80d24b7d5399357",
+    "capture-evidence-files.json": "e8c469bd3a6fdb9da8c8dcd114327448588501e2b3d7a7e071fb3fd75b216d62",
+    "identity.json": "8fa699a2433e724bdbb2bca3551a0e312dd1bb92ae92cb97307ff6418810a742",
+    "qualify/boundary.log": "d0004bc3e54f3315535d13e25a782da9a6bc757dde8ea5a2a9fc5e4150ebb3af",
+    "recovery/report.json.trace.jsonl": "b20aba52e672763c2deb6898da382ab9f16172807f3c382036aa933c3b712fb6",
+    "recovery/report.json": "f84dd843a25bb1ce2fb79f45a5a3a2e7ddc2eb98c3830444df5065c5468bbbc9",
+    "recovery/report.json.1.trace.jsonl": "6a2fc694de82cfe504ccc56f7b0929c035a34481ac07c8d4bad26d9e9fc01849",
+    "recovery/evidence-files.json": "4eaa0469cf9bb068e5ac57c65317398389e39df80b6a15d9f4a21c4e2991c4c0",
+    "recovery/report.json.97.trace.jsonl": "91e2984b33bedd6005240d20660ad97c152b8c509f2cab48aac74bdd8c70dd0a",
+    "recovery/admission-000.admission.json": "1b77b8341b349395979897b46d3a04b122c4242f2839de4a10afe9a38c162489",
+    "recovery/tooling-tests.log": "2dc22fbe0428facc24fbb77b205974aa7460c4b29acb3c65c4b49593a56e2dc0",
+    "recovery/native-tests.log": "2f033bf62879c8b00e1f0460ee2d760f9e89a914373b04464b8ee2cfccfb99aa",
+    "recovery/recovery.log": "65f011883b92cb1b3abc498b9fdf505aea4d83eb204691090ed76ce8510d28e3",
+    "recovery/admission-000.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qualify/boundary/candidate.log": "172edf12373b31ea9639307887192ed335856eb2e9f088f9f23f810263f79c46",
+    "qualify/boundary/reference.json": "340f93a8f2dd7d8110a6a771ae273140056edb67decbbff664dc20d6a2ba8427"
+  }
+}

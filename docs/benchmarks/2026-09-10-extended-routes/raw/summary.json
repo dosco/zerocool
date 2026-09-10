@@ -1,0 +1,89 @@
+{
+  "kind": "normal_route_capture_v1",
+  "status": "captured",
+  "complete": true,
+  "phase": "finished",
+  "time_limit_seconds": 300.0,
+  "started_at": "2026-09-10T20:22:50.889035+00:00",
+  "target_decode_steps": 256,
+  "max_output_tokens": 257,
+  "append_128": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "configuration": {
+    "name": "reference",
+    "kernel_policy": "reference",
+    "token_tile": 1,
+    "gdn_path": "original",
+    "panel": 512,
+    "chunk": 128,
+    "ready_group": 4,
+    "io_workers": 8
+  },
+  "prompt_tokens": 72,
+  "result": {
+    "requests": [
+      {
+        "name": "coding_routes_256",
+        "request_id": 1,
+        "generated_tokens": 257,
+        "committed_decode_steps": 256,
+        "target_decode_steps": 256,
+        "target_steps_met": true,
+        "finish_reason": "length",
+        "prompt_tokens": 72,
+        "reused_tokens": 0,
+        "new_input_tokens": 72,
+        "pending_tokens_ingested": 0
+      },
+      {
+        "name": "append_128",
+        "request_id": 2,
+        "generated_tokens": 33,
+        "committed_decode_steps": 32,
+        "target_decode_steps": 32,
+        "target_steps_met": true,
+        "finish_reason": "length",
+        "prompt_tokens": 457,
+        "reused_tokens": 328,
+        "new_input_tokens": 128,
+        "pending_tokens_ingested": 1
+      }
+    ],
+    "target_steps_met": true,
+    "trace_complete": true,
+    "target_32_steps_met": false,
+    "committed_decode_steps": 256,
+    "generated_tokens": 257
+  },
+  "route_progress": {
+    "identity": {
+      "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "budget_bytes": 12884901888,
+      "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+      "device": "Apple M1 Pro",
+      "physical_bytes": 34359738368,
+      "expert_payload_bytes": 2764800,
+      "expert_stride_bytes": 2768896
+    },
+    "status": "complete",
+    "complete": true,
+    "events": 14506,
+    "partial_final_line": false,
+    "aborted_forwards": 0,
+    "active_request": null,
+    "active_forward": null,
+    "uncommitted_layer_passes": 0,
+    "last_event": {
+      "event": "trace_end",
+      "source_pointer": "line:14506",
+      "monotonic_ns": 4790056396206333
+    }
+  },
+  "elapsed_seconds": 166.9419232076034,
+  "finished_at": "2026-09-10T20:25:37.830492+00:00"
+}

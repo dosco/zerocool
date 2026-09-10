@@ -1,0 +1,35 @@
+{
+  "kind": "paired_cached_decode_comparison",
+  "build_fingerprint": "504ba7664f83ee75b9fbfa67897a1492e6f3e62b4e060b03b77dd934f08dac98",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "comparison_axis": "sparse_selection",
+  "control_value": "cpu",
+  "candidate_value": "gpu",
+  "prompt_tokens": 2048,
+  "pairs": 5,
+  "control_ms": [
+    184.859875,
+    183.04975,
+    187.381334,
+    183.920084,
+    185.338125
+  ],
+  "candidate_ms": [
+    182.267625,
+    182.962667,
+    178.86825,
+    177.303708,
+    177.624084
+  ],
+  "control_median_ms": 184.859875,
+  "candidate_median_ms": 178.86825,
+  "latency_ratio": {
+    "median": 0.9640258102535447,
+    "low": 0.9545681321705181,
+    "high": 0.9995242659440946,
+    "pairs": 5
+  },
+  "exact": true,
+  "application_read_bytes": 0,
+  "normal_request_latency_qualified": false
+}

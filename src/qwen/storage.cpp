@@ -17,6 +17,7 @@
 #include <mach/mach_time.h>
 
 namespace freellm::qwen {
+const char* build_fingerprint() {return BuildFingerprint;}
 uint64_t checked_add(uint64_t a, uint64_t b) {
     if (b > UINT64_MAX - a) throw std::overflow_error("byte offset overflow");
     return a + b;
@@ -510,7 +511,53 @@ struct ExpertCache::Entry {
     std::shared_ptr<ReadTiming> timing=std::make_shared<ReadTiming>();
     unsigned pins = 0;
     bool referenced = true;
+    unsigned queue = 0; // 0 unlisted, 1 probation, 2 protected.
+    Entry *previous = nullptr, *next = nullptr;
 };
+ExpertCachePolicy parse_cache_policy(std::string_view name) {
+    if(name=="clock") return ExpertCachePolicy::Clock;
+    if(name=="slru") return ExpertCachePolicy::SegmentedLRU;
+    throw std::invalid_argument("cache policy must be clock or slru");
+}
+std::string_view cache_policy_name(ExpertCachePolicy policy) {
+    if(policy==ExpertCachePolicy::Clock) return "clock";
+    if(policy==ExpertCachePolicy::SegmentedLRU) return "slru";
+    throw std::invalid_argument("unknown expert cache policy");
+}
+void ExpertCache::unlink(Entry* e) {
+    if(!e->queue) return;
+    const auto q=e->queue-1;
+    if(e->previous) e->previous->next=e->next; else oldest_[q]=e->next;
+    if(e->next) e->next->previous=e->previous; else newest_[q]=e->previous;
+    if(e->queue==2) --protected_;
+    e->queue=0;e->previous=e->next=nullptr;
+}
+void ExpertCache::link(Entry* e,unsigned queue) {
+    const auto q=queue-1;
+    e->queue=queue;e->previous=newest_[q];e->next=nullptr;
+    if(newest_[q]) newest_[q]->next=e; else oldest_[q]=e;
+    newest_[q]=e;if(queue==2) ++protected_;
+}
+void ExpertCache::demote() {
+    while(protected_>3*capacity()/4) {auto* e=oldest_[1];unlink(e);link(e,1);}
+}
+void ExpertCache::touch(Entry* e) {
+    if(policy_==ExpertCachePolicy::Clock) {e->referenced=true;return;}
+    unlink(e);link(e,2);demote();
+}
+ExpertCache::Entry* ExpertCache::slru_victim() const {
+    // Protected is a preference, never a pin: avoid deadlock if probation is busy.
+    for(auto* first:oldest_) for(auto* e=first;e;e=e->next)
+        if(!e->pins && e->future.wait_for(std::chrono::seconds(0))==std::future_status::ready) return e;
+    return nullptr;
+}
+Json ExpertCache::json() const {
+    auto result=stats_.json();result["policy"]=cache_policy_name(policy_);
+    result["protected_entries"]=protected_;
+    result["probation_entries"]=policy_==ExpertCachePolicy::SegmentedLRU?occupancy()-protected_:0;
+    result["entry_metadata_bytes"]=occupancy()*sizeof(Entry);
+    return result;
+}
 ExpertCache::Lease::Lease(std::shared_ptr<Entry> e,int acquisition) : entry_(std::move(e)), acquisition_(acquisition) { ++entry_->pins; }
 ExpertCache::Lease::~Lease() { if (entry_) --entry_->pins; }
 ExpertCache::Lease::Lease(Lease&& other) noexcept : entry_(std::move(other.entry_)), acquisition_(other.acquisition_) {}
@@ -535,33 +582,43 @@ const char* ExpertCache::Lease::acquisition() const {
     return acquisition_==0?"new_miss":acquisition_==1?"ready_hit":"loading_join";
 }
 ExpertCache::ExpertCache(size_t slots, Allocator allocator, ReadPool& reads,
-                        std::function<void(ExpertKey,const Buf&)> loader, uint64_t stride)
-    : slots_(slots), allocator_(std::move(allocator)), reads_(reads), loader_(std::move(loader)), stride_(stride) {
+                        std::function<void(ExpertKey,const Buf&)> loader, uint64_t stride, ExpertCachePolicy policy)
+    : slots_(slots), allocator_(std::move(allocator)), reads_(reads), loader_(std::move(loader)), stride_(stride), policy_(policy) {
     if (!slots || !stride) throw std::invalid_argument("empty expert cache");
+    (void)cache_policy_name(policy_);
 }
 ExpertCache::~ExpertCache() { reads_.drain(); }
 ExpertCache::Lease ExpertCache::acquire(ExpertKey key) {
     if (key.layer >= Layers || key.expert >= Experts) throw std::out_of_range("invalid expert id");
     if (auto it=lookup_.find(key.value()); it!=lookup_.end()) {
-        auto e=slots_[it->second]; e->referenced=true; ++stats_.hits; ++stats_.layer_hits[key.layer];
+        auto e=slots_[it->second]; touch(e.get()); ++stats_.hits; ++stats_.layer_hits[key.layer];
         const bool ready=e->future.wait_for(std::chrono::seconds(0))==std::future_status::ready;
         if(ready) ++stats_.ready_hits; else ++stats_.loading_joins;
         return Lease(e,ready?1:2);
     }
-    for (size_t trial=0;trial<slots_.size()*2+1;++trial) {
-        const size_t slot=hand_; hand_=(hand_+1)%slots_.size();
+    size_t selected=slots_.size();
+    if(policy_==ExpertCachePolicy::SegmentedLRU && occupancy()==capacity()) {
+        if(auto* victim=slru_victim()) selected=lookup_.at(victim->key.value());
+    } else for (size_t trial=0;trial<slots_.size()*2+1;++trial) {
+        const size_t slot=hand_;hand_=(hand_+1)%slots_.size();
         auto& old=slots_[slot];
         if (old) {
+            if(policy_==ExpertCachePolicy::SegmentedLRU) continue; // Fill free capacity first.
             if (old->pins) continue;
             if (old->future.wait_for(std::chrono::seconds(0)) != std::future_status::ready) continue;
             if (old->referenced) { old->referenced=false; continue; }
         }
+        selected=slot;break;
+    }
+    if(selected<slots_.size()) {
+        auto& old=slots_[selected];
         auto e=std::make_shared<Entry>(); e->key=key;
         e->buffer=old ? old->buffer : allocator_(stride_);
-        if (old) { lookup_.erase(old->key.value()); ++stats_.evictions; }
-        old=e; lookup_[key.value()]=slot;
         const auto loader=loader_; const auto buffer=e->buffer;
         e->future=reads_.submit([loader,key,buffer]{loader(key,buffer);},ReadPriority::Demand,e->timing);
+        if (old) {unlink(old.get());lookup_.erase(old->key.value());++stats_.evictions;}
+        old=e;lookup_[key.value()]=selected;
+        if(policy_==ExpertCachePolicy::SegmentedLRU) link(e.get(),1);
         ++stats_.misses; ++stats_.layer_misses[key.layer]; stats_.bytes+=ExpertBytes;
         return Lease(e,0);
     }
@@ -570,6 +627,7 @@ ExpertCache::Lease ExpertCache::acquire(ExpertKey key) {
 void ExpertCache::clear() {
     for (const auto& e:slots_) if (e && e->pins) throw std::logic_error("cannot clear leased expert slots");
     reads_.drain(); lookup_.clear(); for (auto& e:slots_) e.reset(); hand_=0;
+    oldest_={};newest_={};protected_=0;
 }
 bool ExpertCache::ready(ExpertKey key) const {
     const auto it=lookup_.find(key.value());
@@ -585,15 +643,18 @@ void ExpertCache::resize(size_t slots) {
     if(slots>=slots_.size()) {slots_.resize(slots);return;}
     size_t occupied=lookup_.size();
     while(occupied>slots) {
-        auto& e=slots_[hand_];hand_=(hand_+1)%slots_.size();
+        size_t victim=hand_;hand_=(hand_+1)%slots_.size();
+        if(policy_==ExpertCachePolicy::SegmentedLRU) victim=lookup_.at(slru_victim()->key.value());
+        auto& e=slots_[victim];
         if(!e) continue;
-        if(e->referenced) {e->referenced=false;continue;}
-        lookup_.erase(e->key.value());e.reset();--occupied;++stats_.evictions;
+        if(policy_==ExpertCachePolicy::Clock && e->referenced) {e->referenced=false;continue;}
+        unlink(e.get());lookup_.erase(e->key.value());e.reset();--occupied;++stats_.evictions;
     }
     std::vector<std::shared_ptr<Entry>> survivors;survivors.reserve(slots);
     lookup_.clear();
     for(auto& e:slots_) if(e) {lookup_[e->key.value()]=survivors.size();survivors.push_back(std::move(e));}
     survivors.resize(slots);slots_=std::move(survivors);hand_=0;
+    if(policy_==ExpertCachePolicy::SegmentedLRU) demote();
 }
 
 MemoryPlan MemoryPlan::make(uint64_t requested,uint64_t physical,uint64_t metal_limit,
@@ -617,7 +678,7 @@ MemoryPlan MemoryPlan::make(uint64_t requested,uint64_t physical,uint64_t metal_
     p.kernel_scratch=kernel_scratch;p.scratch+=kernel_scratch;
     p.pipeline_scratch=(double_pipeline?2*p.scratch:0)+decode_scratch;
     p.snapshot=snapshot?p.state:0;
-    const auto base=p.resident+p.state+p.scratch+p.ngram+p.reserve+p.pipeline_scratch+p.snapshot;
+    const auto base=p.resident+p.state+p.scratch+p.ngram+p.reserve+p.pipeline_scratch+p.snapshot+p.runtime_control;
     // Bound complete-panel activations, expert contributions, router partials,
     // and shared work in addition to two bounded attention/recurrent groups.
     // Each successful smaller admission keeps the same precision and arithmetic.
@@ -643,15 +704,15 @@ void MemoryPlan::cap_experts(size_t count) {
 MemoryPlan MemoryPlan::without_prompt_workspaces(size_t expert_cap) const {
     if(pipeline_scratch<2*scratch) throw std::logic_error("memory plan has no double workspace reservation");
     auto p=*this;p.pipeline_scratch-=2*scratch;
-    const auto fixed=p.resident+p.state+p.scratch+p.panel_scratch+p.ngram+p.reserve+p.pipeline_scratch+p.snapshot;
+    const auto fixed=p.resident+p.state+p.scratch+p.panel_scratch+p.ngram+p.reserve+p.pipeline_scratch+p.snapshot+p.runtime_control;
     p.slots=std::min<uint64_t>((p.limit-fixed)/ExpertStride,Layers*Experts);
     p.experts=p.slots*ExpertStride;p.cap_experts(expert_cap);return p;
 }
 Json MemoryPlan::json() const {
     return {{"limit_bytes",limit},{"resident_bytes",resident},{"session_bytes",state},{"scratch_bytes",scratch},{"kernel_scratch_bytes",kernel_scratch},
         {"panel_tokens",panel_tokens},{"panel_scratch_bytes",panel_scratch},
-        {"pipeline_scratch_bytes",pipeline_scratch},{"snapshot_bytes",snapshot},{"ngram_bytes",ngram},{"reserve_bytes",reserve},{"expert_bytes",experts},{"expert_slots",slots},
-        {"planned_bytes",resident+state+scratch+panel_scratch+ngram+reserve+experts+pipeline_scratch+snapshot}};
+        {"runtime_control_bytes",runtime_control},{"pipeline_scratch_bytes",pipeline_scratch},{"snapshot_bytes",snapshot},{"ngram_bytes",ngram},{"reserve_bytes",reserve},{"expert_bytes",experts},{"expert_slots",slots},
+        {"planned_bytes",resident+state+scratch+panel_scratch+ngram+reserve+experts+pipeline_scratch+snapshot+runtime_control}};
 }
 
 NgramStore::NgramStore(const Checkpoint& cp,ReadPool& reads,uint64_t cache_bytes,std::shared_ptr<PreparedArtifact> prepared)

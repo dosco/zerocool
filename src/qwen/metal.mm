@@ -113,6 +113,8 @@ struct Metal::Impl {
     std::set<std::string> captured_shapes;uint64_t captured_bytes=0;
 };
 void KernelConfig::validate() const {
+    if(attention_score_tiles!="full" && attention_score_tiles!="skip-masked")
+        throw std::invalid_argument("attention score tiles must be full or skip-masked");
     if(counter_profile && !profile) throw std::invalid_argument("counter sampling requires diagnostic profiling");
     if(q8_decode_rows!=0 && q8_decode_rows!=2 && q8_decode_rows!=4 && q8_decode_rows!=8)
         throw std::invalid_argument("Q8 decode rows must be 0, 2, 4, or 8");
@@ -150,7 +152,7 @@ void KernelConfig::validate() const {
     if(policy!="candidate" && (token_tile!=1 || gdn!="original" || affine_rows!=1 || gate_pair)) throw std::invalid_argument("forced kernels require candidate policy");
 }
 Json KernelConfig::json() const {
-    return {{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
+    return {{"attention_score_tiles",attention_score_tiles},{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
         {"gdn_block",gdn_block},{"shape_table",shape_table},{"operator_capture",operator_capture.string()},
         {"capture_filter",{{"phase",capture_phase},{"operator",capture_operator},{"layer",capture_layer}}},
         {"profile",profile},{"counter_profile",counter_profile},{"automatic_rules_promoted",false}};
@@ -225,7 +227,12 @@ Buf Metal::allocate(uint64_t bytes,AllocationClass kind) {
         auto& p=*impl_;p.residency->drain();
         if(kind==AllocationClass::Temporary && p.active_scratch>=0) {
             auto& arena=p.scratch[size_t(p.active_scratch)];
-            for(size_t i=arena.cursor;i<arena.buffers.size();++i) if(arena.buffers[i]->bytes>=charge) {
+            // A large buffer reused for a small request stays pinned until this
+            // command group completes. That wasted capacity can strand a later
+            // large request even when the requested sizes fit the workspace.
+            // Exact physical-size reuse bounds the active prefix by its actual
+            // requests; unused shapes remain evictable below.
+            for(size_t i=arena.cursor;i<arena.buffers.size();++i) if(arena.buffers[i]->bytes==charge) {
                 std::swap(arena.buffers[i],arena.buffers[arena.cursor]);
                 const auto& b=arena.buffers[arena.cursor++];++p.pool_reuses;++arena.reuses;
                 return std::make_shared<Buffer>(Buffer{bytes,b->data,b->owner,b->metal});
@@ -432,6 +439,11 @@ void Metal::reap() {
     if(!failure.empty()) throw std::runtime_error("Metal execution: "+failure);
 }
 std::shared_ptr<Metal::Completion> Metal::submit() {
+    // Ending/committing an encoder can create autoreleased Metal objects that
+    // retain its buffers, especially with validation enabled. Plain C++ callers
+    // have no outer pool. Drain these objects at submission; pending still owns
+    // every command buffer and allocation until GPU completion is reaped.
+    @autoreleasepool {
     auto& p=*impl_; if(!p.current) {reap();return {};}
     reap();
     // Bound all submission paths, including attention and diagnostics.
@@ -454,6 +466,7 @@ std::shared_ptr<Metal::Completion> Metal::submit() {
     p.peak_groups=std::max<uint64_t>(p.peak_groups,p.pending.size());
     p.current_buffers.clear(); p.current=nil; ++p.submissions;
     return completion;
+    }
 }
 void Metal::finish() {
     // Even if a previous command failed, drain every outstanding user.
@@ -565,6 +578,23 @@ void Metal::linear_into(const Linear& l,const Buf& x,uint32_t tokens,Binding out
     else dispatch("plain_mm",{l.weight,{x},out},
         {l.input,l.output,tokens,l.dtype,uint32_t(float_output)},32*l.output,tokens);
 }
+void Metal::sparse_select(const Buf& scores,const Buf& mask,const Buf& status,
+                          uint32_t tokens,uint32_t offset,uint32_t length) {
+    if(!tokens || tokens>256 || uint64_t(offset)+tokens!=length || length>8192 || length<4 ||
+       !scores || scores->bytes!=uint64_t(tokens)*(length/4)*4 || !mask || mask->bytes<uint64_t(tokens)*length ||
+       !status || status->bytes<4)
+        throw std::invalid_argument("invalid GPU sparse selection geometry");
+    dispatch("sparse_select",{{scores},{mask},{status}},{tokens,offset,length},256,tokens,1,256);
+}
+void Metal::attention_scores(const Buf& q,const Buf& keys,const Buf& mask,const Buf& scores,
+                             uint32_t tokens,uint32_t offset,uint32_t length,bool sparse) {
+    if(!tokens || tokens>256 || uint64_t(offset)+tokens!=length || length>8192 ||
+       !q || q->bytes<uint64_t(tokens)*6144*4 || !keys || keys->bytes<uint64_t(length)*512*4 ||
+       !mask || (sparse && mask->bytes<uint64_t(tokens)*length) || !scores || scores->bytes<uint64_t(tokens)*24*length*4)
+        throw std::invalid_argument("invalid attention score geometry");
+    dispatch(sparse && impl_->config.attention_score_tiles=="skip-masked"?"attention_scores_skip_masked":"attention_scores",
+        {{q},{keys},{mask},{scores}},{tokens,offset,length,uint32_t(sparse)},((length+7)/8)*32,(tokens+7)/8,24);
+}
 Buf Metal::gated_linear(const Linear& gate,const Linear& up,const Buf& x,uint32_t tokens,const Buf& rows) {
     if(!gate.quantized || !up.quantized || gate.input!=up.input || gate.output!=up.output || gate.group!=up.group || gate.bits!=up.bits)
         throw std::invalid_argument("fused gate/up requires matching affine matrices");
@@ -653,6 +683,11 @@ uint64_t Metal::physical() const {
 uint64_t Metal::allocated() const { return impl_->accounting->live.load(); }
 uint64_t Metal::peak() const { return impl_->accounting->high.load(); }
 std::string Metal::device_name() const { return impl_->device.name.UTF8String; }
+Json Metal::timing_counters() const {
+    return {{"cpu_encode_ns",impl_->encode_ns},{"cpu_gpu_wait_ns",impl_->host_wait_ns},
+        {"gpu_command_ns",impl_->gpu_command_ns},{"submissions",impl_->submissions},
+        {"live_command_groups",impl_->pending.size()},{"live_buffer_bytes",allocated()}};
+}
 Json Metal::statistics() const {
     Json pools=Json::array();
     for(const auto& a:impl_->scratch) {

@@ -1,0 +1,452 @@
+{
+  "kind": "extended_normal_route_observations_v1",
+  "complete": true,
+  "status": "complete",
+  "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "elapsed_seconds": 166.9419232076034,
+  "memory_plan": {
+    "limit_bytes": 12884901888,
+    "resident_bytes": 5362515968,
+    "session_bytes": 571326464,
+    "scratch_bytes": 536870912,
+    "kernel_scratch_bytes": 0,
+    "panel_tokens": 512,
+    "panel_scratch_bytes": 155189248,
+    "runtime_control_bytes": 16384,
+    "pipeline_scratch_bytes": 0,
+    "snapshot_bytes": 0,
+    "ngram_bytes": 67108864,
+    "reserve_bytes": 1073741824,
+    "expert_bytes": 5116919808,
+    "expert_slots": 1848,
+    "planned_bytes": 12883689472
+  },
+  "observed_instrumented": [
+    {
+      "name": "coding_routes_256",
+      "prompt_tokens": 72,
+      "reused_tokens": 0,
+      "prefill_tokens": 72,
+      "output_tokens": 257,
+      "pending_tokens_ingested": 0,
+      "time_to_first_token_ms": 15731.974375,
+      "request_ms": 119536.515917,
+      "decode_ms": 103692.50784600005,
+      "decode_wall_ms": 103804.54154199999,
+      "tokens_per_second": 2.468837964457383,
+      "wall_tokens_per_second": 2.4661734081877404,
+      "p50_token_ms": 384.132167,
+      "p95_token_ms": 474.653209,
+      "p99_token_ms": 546.409,
+      "request_id": 1,
+      "phases": [
+        {
+          "phase": "prefill",
+          "native": {
+            "hits": 0,
+            "misses": 7688,
+            "application_read_bytes": 21255782400,
+            "hit_fraction": 0.0,
+            "process_decompressions": 488898,
+            "system_swap_change_bytes": 0
+          },
+          "process_before": {
+            "physical_footprint_bytes": 5491945216,
+            "resident_bytes": 5521473536,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 338255,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 9436905472
+          },
+          "process_after": {
+            "physical_footprint_bytes": 11190311488,
+            "resident_bytes": 5162237952,
+            "compressed_bytes": 6022479872,
+            "compressed_peak_bytes": 9349414912,
+            "decompressions": 488898,
+            "page_faults": 911440,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8820359168
+          },
+          "storage_before": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70713156583424,
+                "write_bytes": 19319754874880
+              }
+            ]
+          },
+          "storage_after": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70734561091584,
+                "write_bytes": 19319762026496
+              }
+            ]
+          }
+        },
+        {
+          "phase": "decode",
+          "native": {
+            "hits": 71195,
+            "misses": 51685,
+            "application_read_bytes": 142898688000,
+            "hit_fraction": 0.5793863932291666,
+            "process_decompressions": 758451,
+            "system_swap_change_bytes": 0
+          },
+          "process_before": {
+            "physical_footprint_bytes": 11190311488,
+            "resident_bytes": 5162237952,
+            "compressed_bytes": 6022479872,
+            "compressed_peak_bytes": 9349414912,
+            "decompressions": 488898,
+            "page_faults": 911440,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8820359168
+          },
+          "process_after": {
+            "physical_footprint_bytes": 11190557248,
+            "resident_bytes": 5168775168,
+            "compressed_bytes": 6022086656,
+            "compressed_peak_bytes": 10457137152,
+            "decompressions": 1247349,
+            "page_faults": 1398496,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8236843008
+          },
+          "storage_before": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70734561091584,
+                "write_bytes": 19319762026496
+              }
+            ]
+          },
+          "storage_after": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70878255280128,
+                "write_bytes": 19319849000960
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "append_128",
+      "prompt_tokens": 457,
+      "reused_tokens": 328,
+      "prefill_tokens": 129,
+      "output_tokens": 33,
+      "pending_tokens_ingested": 1,
+      "time_to_first_token_ms": 24131.825084,
+      "request_ms": 37666.437167,
+      "decode_ms": 13520.170337999998,
+      "decode_wall_ms": 13534.612082999996,
+      "tokens_per_second": 2.3668340856668286,
+      "wall_tokens_per_second": 2.3643086188035825,
+      "p50_token_ms": 406.0805,
+      "p95_token_ms": 544.410917,
+      "p99_token_ms": 624.440166,
+      "request_id": 2,
+      "phases": [
+        {
+          "phase": "append",
+          "native": {
+            "hits": 123,
+            "misses": 8835,
+            "application_read_bytes": 24427008000,
+            "hit_fraction": 0.013730743469524447,
+            "process_decompressions": 42,
+            "system_swap_change_bytes": 0
+          },
+          "process_before": {
+            "physical_footprint_bytes": 11191048768,
+            "resident_bytes": 5169692672,
+            "compressed_bytes": 6021677056,
+            "compressed_peak_bytes": 10457137152,
+            "decompressions": 1247374,
+            "page_faults": 1398552,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8235286528
+          },
+          "process_after": {
+            "physical_footprint_bytes": 11211594304,
+            "resident_bytes": 5171511296,
+            "compressed_bytes": 6020988928,
+            "compressed_peak_bytes": 10457137152,
+            "decompressions": 1247416,
+            "page_faults": 1429099,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8042627072
+          },
+          "storage_before": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70878255357952,
+                "write_bytes": 19319849099264
+              }
+            ]
+          },
+          "storage_after": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70902988963840,
+                "write_bytes": 19319860924416
+              }
+            ]
+          }
+        },
+        {
+          "phase": "decode",
+          "native": {
+            "hits": 7591,
+            "misses": 7769,
+            "application_read_bytes": 21479731200,
+            "hit_fraction": 0.49420572916666666,
+            "process_decompressions": 0,
+            "system_swap_change_bytes": 0
+          },
+          "process_before": {
+            "physical_footprint_bytes": 11211594304,
+            "resident_bytes": 5171511296,
+            "compressed_bytes": 6020988928,
+            "compressed_peak_bytes": 10457137152,
+            "decompressions": 1247416,
+            "page_faults": 1429099,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 8042627072
+          },
+          "process_after": {
+            "physical_footprint_bytes": 11191081536,
+            "resident_bytes": 5170511872,
+            "compressed_bytes": 6020988928,
+            "compressed_peak_bytes": 10457137152,
+            "decompressions": 1247416,
+            "page_faults": 1451180,
+            "pageins": 58,
+            "system_swap_used_bytes": 1891368960,
+            "reclaimable_bytes": 7882407936
+          },
+          "storage_before": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70902988963840,
+                "write_bytes": 19319860924416
+              }
+            ]
+          },
+          "storage_after": {
+            "scope": "internal device counters, including other processes",
+            "devices": [
+              {
+                "registry_id": 4294969813,
+                "read_bytes": 0,
+                "write_bytes": 0
+              },
+              {
+                "registry_id": 4294969822,
+                "read_bytes": 70924610420736,
+                "write_bytes": 19319861440512
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "memory": {
+    "physical_footprint_peak_at_recorded_phase_boundaries": 11211594304,
+    "physical_footprint_after": 11191081536,
+    "compressed_bytes_after": 6020988928,
+    "system_swap_change_bytes": 0
+  },
+  "simulated": {
+    "clock_misses": 76043,
+    "native_clock_misses": 75977,
+    "slru_misses": 72279,
+    "read_reduction_fraction": 0.04949831016661621,
+    "request_phases": [
+      {
+        "request_id": 1,
+        "phase": "prefill",
+        "clock_misses": 7688,
+        "slru_misses": 7688,
+        "read_reduction_fraction": 0.0
+      },
+      {
+        "request_id": 1,
+        "phase": "decode",
+        "clock_misses": 51749,
+        "slru_misses": 48788,
+        "read_reduction_fraction": 0.05721849697578696
+      },
+      {
+        "request_id": 2,
+        "phase": "append",
+        "clock_misses": 8835,
+        "slru_misses": 7999,
+        "read_reduction_fraction": 0.09462365591397848
+      },
+      {
+        "request_id": 2,
+        "phase": "decode",
+        "clock_misses": 7771,
+        "slru_misses": 7804,
+        "read_reduction_fraction": -0.004246557714579824
+      }
+    ]
+  },
+  "prior_short_capture_prefix": {
+    "output_token_ids_equal": true,
+    "first_1584_layer_routes_equal": true
+  },
+  "trace_coverage": {
+    "identity": {
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb"
+    },
+    "input_passes": 13920,
+    "explicit_boundary_events": 0,
+    "included_passes": 13920,
+    "excluded_incomplete_passes": 0,
+    "missing_route_passes": 0,
+    "filtered_passes": 0,
+    "incomplete_windows": 0,
+    "logical_router_selections": 234720,
+    "demand_record_accesses": 154886,
+    "within_pass_grouped_selections": 79834,
+    "compulsory_misses": 16017,
+    "segment_count": 1,
+    "cold_starts": 1,
+    "boundary_count": 0,
+    "boundaries": [],
+    "boundary_details_truncated": false,
+    "segments": [
+      {
+        "start_offset": 0,
+        "end_offset": 489,
+        "phase": "prefill",
+        "session_id": "1:0",
+        "first_source_pointer": "line:4",
+        "last_source_pointer": "line:14503",
+        "windows": 290,
+        "single_token_windows": 288,
+        "phases": [
+          "prefill",
+          "decode",
+          "append"
+        ]
+      }
+    ],
+    "segment_details_truncated": false,
+    "whole_request_covered": true,
+    "session_boundaries_fully_known": true,
+    "phase_filter": null,
+    "capture_limits": null,
+    "query_truncated": false,
+    "route_trace_protocol": "qwen_route_trace_v1",
+    "committed_forwards": 290,
+    "aborted_forwards": 0,
+    "uncommitted_layer_passes": 0,
+    "completed_requests": 2,
+    "phase_filter_starts_cold": false
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-extended-routes/raw/native.json",
+      "sha256": "bde008b89ff2e04d34c36a4f3d497ee479ef8ec9940fcf0d9473e350867120d2"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-extended-routes/raw/summary.json",
+      "sha256": "bbf04b3af2a67457279fadc6304ad8a8d6fa702bf45f81be7541d2a36203f8e8"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-extended-routes/raw/routes.jsonl",
+      "sha256": "2b39d4745755e99af0fd28174b7956d54a600a3e2c1748d8140f73ec2ed3e34a"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-extended-routes/cache-actual-capacity.json",
+      "sha256": "a7aa67da1ef1742a5865ce06078417d3c8ec6df483818ff8f22dc374a18e1ad8"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-normal-routes/raw/native.json",
+      "sha256": "c55f08d2970b53fe94291305863e616b0d08077682fb2b92b0c0bb47028862fd"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-normal-routes/raw/routes.jsonl",
+      "sha256": "4f922caa51f02226e0ae25ae346b23595952fce3a253794c98716db7b5422973"
+    }
+  ],
+  "limitations": [
+    "One instrumented coding conversation; not paired latency, 2K/4K/7K, held-out quality or a sustained session.",
+    "The append adds 128 tokens to 329 tokens of total prior history (72 input and 257 output); 328 are reused and the pending final output is ingested with the new input.",
+    "Fixed ascending demand order and immediate release omit hit-first native admission, pinned GPU users, OS cache and read overlap.",
+    "Request/phase counts retain warm cache state and partition the full trace. Negative read reduction means more misses.",
+    "Physical footprint peak covers recorded phase boundaries only; system swap and device counters include other processes.",
+    "Equal prefix outputs and routes reproduce the prior capture; they do not establish independent logit or coding-quality agreement."
+  ]
+}

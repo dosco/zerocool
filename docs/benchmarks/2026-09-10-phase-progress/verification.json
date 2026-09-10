@@ -1,0 +1,97 @@
+{
+  "kind": "cached_phase_progress_verification",
+  "build": "1134107188e63a9bc47491ca79500e6b749a49f8a133b6f65ed6cef0e363e4cb",
+  "native_command": [
+    "/repo/build/qwen/bin/freellm",
+    "bench",
+    "--cached-token-replay",
+    "--model",
+    "/repo/docs/benchmarks/2026-09-10-phase-progress/load-failure/intentionally-missing-model",
+    "--memory-gb",
+    "12",
+    "--tokens-file",
+    "/repo/docs/benchmarks/2026-09-10-phase-progress/load-failure/tokens.json",
+    "--cached-progress",
+    "/repo/docs/benchmarks/2026-09-10-phase-progress/load-failure/progress.jsonl"
+  ],
+  "native_load_failure": {
+    "expected": true,
+    "observed_returncode": 1,
+    "phase": "model_load",
+    "events": 2
+  },
+  "raw_admission_files": {
+    "admission-attempt/admission.admission-retry-1.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/admission.admission-retry-1.json",
+      "sha256": "e2e8c1d9f2472024c9f6b49b5c19fc83e1c92b124114921d6d5d3a57ea5832bb"
+    },
+    "admission-attempt/admission.admission-retry-2.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/admission.admission-retry-2.json",
+      "sha256": "dadd47cca214c46fa5fc6f9bc1cfdf27a25c5b4162816962822bc1e78ed826cb"
+    },
+    "admission-attempt/admission.admission.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/admission.admission.json",
+      "sha256": "a852b4bd382565ee0ba4fab808d7234d5803c57d962c159439819e3b1d907650"
+    },
+    "admission-attempt/admission.log": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/admission.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "admission-attempt/identity.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/identity.json",
+      "sha256": "f903b719fba4cadfc2ca595bdddf66f593f2ae788da69d8cc185536056d646f0"
+    },
+    "admission-attempt/summary.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/summary.json",
+      "sha256": "7e9b547139f15b439a1149cf6ddc2585a747a528a3a1a3faeda4d1c716cd2fc8"
+    },
+    "admission-attempt/tokens.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/tokens.json",
+      "sha256": "6ebeec445153b83c39aed5c87fa3cb9217e5d6b720b304fc14241e068447c785"
+    }
+  },
+  "native_full_model_phase_check": "Blocked before inference; only 7.44GiB was admitted, below the fixed 12GiB target.",
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "native_tests": {
+    "passed": 52,
+    "assertions": 6962,
+    "skipped": 0,
+    "metal_api_validation": true,
+    "metal_shader_validation": true
+  },
+  "python_tests": {
+    "passed": 131
+  },
+  "code_sha256": {
+    "include/qwen/cached_progress.hpp": "904209e80d038b1d348500ed6fcfaf54ffc29a3d7a3843db903567db1da1894c",
+    "include/qwen/model.hpp": "66b26c46a3df907075aebd09f582e1f580099ad40f2a24075ca577d6911d8e51",
+    "include/qwen/storage.hpp": "a0a19dab6635792ef326a49f5931c13220a4fa6acb502ce6708ebe9c1daa22af",
+    "src/qwen/cached_replay.cpp": "d5e4043436ce8a341b0d12613f59c56aee5dc5b63f5ae0b726989e35865722a4",
+    "src/qwen/main.cpp": "0e4392875d1586866a8b0e93e35f4a3cdcda8c20a7b2a3e609259f39ee9b1ad0",
+    "src/qwen/storage.cpp": "a1a37abdf4a6bfb3151c767a6e8e6d94da2cf3a1fc114f5c157e94828b0d8b03",
+    "tests/test_qwen.cpp": "50257fb5b5ac9d0918deaab53ebbea0d2d8a00abcff5a0001c9dd5ea718f4ffd",
+    "scripts/qwen/cached_progress.py": "2d130101bb11d787d2b99084f8feddfa26151df0d8411e5c21e742465b1a2ff8",
+    "scripts/qwen/test_cached_progress.py": "81889d81ebf5245d660b449a1c4e1acb4013b928a82a8a72d6df0a3a838a154f",
+    "scripts/qwen/selector_qualification.py": "2a5778ada466fc8d2950a4068dce15cf520a3a1fa3224b11cc16d58c7c2041a8",
+    "scripts/qwen/triage_selector.py": "f13d2ef277c511398337a16b7c397554776503601d5eb1d1d177eacdae05500d",
+    "scripts/qwen/test_selector_triage.py": "cb8825f5673cd14134455d582689ffcd79a4f016e82a08732ec3eb6c6ee51b49"
+  },
+  "report_sha256": {
+    "README.md": "5800841f0aca94ef10eca260fe966619a6530310b84572c506cf81f91ebdedeb",
+    "python-tests.log": "fd5e45424b871f60500a1d557e3ed841d91b198354ef287d4b33f64d1f28e652",
+    "native-tests.log": "d71d645ab29677b7697e22f9061a8331012514861088bd63c3beb1ed69eb11db",
+    "build.log": "9a0ae760fff3433583e994ad6db2dccbb6f24e0ac4304165784ac989d92f09b9",
+    "load-failure/summary.json": "4a2cc5e0f2c4d504e421ceb34cd476447f6dc157de82ac089244245fe7fc03fe",
+    "load-failure/progress.jsonl": "4027262074f4e770221e5c25c50e1e072632606d93fc12ab2bb0d127ba7d2ce9",
+    "load-failure/native.log": "1b0e5296d410058877562d4396a921d4a06d06c4057b3a74cb1e751cae52b4ae",
+    "load-failure/tokens.json": "add8be158c31f1b146a6761fccaac4b858705e76e41cb9a93f075500bcd13a69",
+    "admission-attempt/summary.json": "7e9b547139f15b439a1149cf6ddc2585a747a528a3a1a3faeda4d1c716cd2fc8",
+    "admission-attempt/admission.admission-retry-2.json": "dadd47cca214c46fa5fc6f9bc1cfdf27a25c5b4162816962822bc1e78ed826cb",
+    "admission-attempt/identity.json": "f903b719fba4cadfc2ca595bdddf66f593f2ae788da69d8cc185536056d646f0",
+    "admission-attempt/admission.admission.json": "a852b4bd382565ee0ba4fab808d7234d5803c57d962c159439819e3b1d907650",
+    "admission-attempt/admission.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "admission-attempt/tokens.json": "6ebeec445153b83c39aed5c87fa3cb9217e5d6b720b304fc14241e068447c785",
+    "admission-attempt/admission.admission-retry-1.json": "e2e8c1d9f2472024c9f6b49b5c19fc83e1c92b124114921d6d5d3a57ea5832bb"
+  }
+}

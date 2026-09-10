@@ -3,6 +3,8 @@
 #include <optional>
 
 namespace freellm::qwen {
+class CachedProgress;
+class RouteTrace;
 struct Options {
     Artifact artifact = Artifact::Q4; // Explicit selection; precision never changes under pressure.
     std::filesystem::path model;
@@ -16,6 +18,7 @@ struct Options {
     int ready_group = 4;
     bool completion_pipeline = true;
     std::filesystem::path dependency_trace;
+    std::filesystem::path route_trace;
     int max_tokens = 256;
     float temperature = 0;
     float top_p = 0.95f;
@@ -27,9 +30,14 @@ struct Options {
     bool diagnostic_stream_trunk = false;
     KernelConfig kernels;
     bool audit_routes=false; // Bounded correctness capture, disabled during timing.
+    bool decode_diagnostics=false; // Bounded per-step observation; benchmark timings are instrumented.
     std::string residency="off", decode_path="reference", prefill_pipeline="serial", phase_memory="fixed";
     bool cached_token_replay=false;
     bool cached_compare=false;
+    std::string cached_compare_axis="q8_decode_rows";
+    std::string sparse_selection="cpu";
+    std::string cache_policy="clock"; // Experimental SLRU; no automatic policy changes.
+    std::filesystem::path sparse_capture;
     std::filesystem::path operator_fixtures;
 };
 
@@ -43,6 +51,7 @@ struct State {
     std::array<LayerState,Layers> layers;
     std::array<int,2> history{248044,248044};
     uint32_t tokens = 0;
+    uint64_t trace_session_id = 0; // Diagnostic identity; never part of model arithmetic.
     bool valid = false; // Only make_state() or a committed update makes this reusable.
 };
 State snapshot_state(Metal& gpu,const State& state);
@@ -75,6 +84,7 @@ public:
     std::vector<float> forward(std::span<const int> ids, State& state, bool logits = true,
                               const std::atomic<bool>* cancel = nullptr);
     Json stats() const;
+    Json decode_counters() const;
     const MemoryPlan& memory_plan() const { return plan_; }
     const Options& options() const { return options_; }
     uint32_t input_limit() const { return plan_.panel_tokens?plan_.panel_tokens:uint32_t(options_.chunk); }
@@ -84,13 +94,17 @@ public:
     Json take_profile();
     void phase(std::string name) { phase_=name;gpu_.request_phase(std::move(name)); }
     Json route_identity() const;
+    RouteTrace* route_trace() const { return route_trace_.get(); }
     // Developer diagnostic: full forward, with real routes and deep state restore.
     Json cached_token_replay(std::span<const int> tokens, int repetitions,
-                             const std::atomic<bool>* cancel=nullptr);
+                             const std::atomic<bool>* cancel=nullptr,CachedProgress* progress=nullptr);
 private:
     std::vector<float> forward_impl(std::span<const int> ids, State& state, bool logits,
                                    const std::atomic<bool>* cancel);
     void transition_memory(bool prompt);
+    void check_sparse_status() const;
+    void capture_sparse(const Buf& q,const Buf& keys,const Buf& values,const Buf& qg,
+                        const Buf& index_scores,uint32_t tokens,uint32_t offset,int layer);
     std::vector<float> forward_panel(std::span<const int> ids, State& state, bool logits,
                                     const std::atomic<bool>* cancel);
     std::vector<float> compute_logits(const Buf& h, uint32_t tokens);
@@ -125,7 +139,12 @@ private:
     std::array<std::vector<int>,Layers> route_history_;
     std::string phase_="unspecified";
     std::array<Buf,2> expert_scratch_;
+    Buf sparse_status_; // Persistent across scratch reuse; checked after completed GPU work.
+    uint64_t sparse_capture_bytes_=0,sparse_selection_cpu_ns_=0,sparse_selection_wait_ns_=0;
+    Json sparse_captures_=Json::array();
     Json phase_dependencies_=Json::object(),dependency_events_=Json::array();
     std::unordered_map<std::string,size_t> detailed_reads_,detailed_passes_;
+    std::unique_ptr<RouteTrace> route_trace_;
+    uint64_t trace_session_sequence_=0;
 };
 } // namespace freellm::qwen

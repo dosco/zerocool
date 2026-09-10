@@ -1,0 +1,147 @@
+{
+  "kind": "decode_startup_observations_v1",
+  "status": "captured",
+  "complete": true,
+  "build": "968132061556ac0077ff41b7c922b5b7c632bb12e21b8ea8e2c5f82f10bb3c73",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "expert_slots": 1848,
+  "elapsed_seconds": 125.83073145896196,
+  "measurements": [
+    {
+      "pair": 0,
+      "residency": "off",
+      "source": "raw/pair-0-off.json",
+      "sha256": "62b6bf4bdb8e3f5d72f29a7dee7eead3a4f71a7caf7d7d77e8270f573fbf8f21",
+      "request_ms": 31378.180625,
+      "ttft_ms": 16184.782125,
+      "decode_wall_ms": 15193.398500000001,
+      "decode_tokens_per_second": 2.1061778903515234,
+      "first_four_ms": 3721.239875,
+      "remaining_28_ms": 11454.971709,
+      "first_four_decompressions": 478188,
+      "remaining_28_decompressions": 212299,
+      "first_four_cpu_gpu_wait_ms": 2730.782551,
+      "first_four_gpu_command_ms": 1088.159069,
+      "first_four_expert_read_bytes": 2756505600,
+      "decode_expert_read_bytes": 18065203200,
+      "after_compressed_bytes": 6046105600,
+      "max_observed_physical_footprint_bytes": 11187624384,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "snapshot_cost_ms": 2.337705,
+      "registered_core_bytes": 0
+    },
+    {
+      "pair": 0,
+      "residency": "core",
+      "source": "raw/pair-0-core.json",
+      "sha256": "3e210318115de31d017766fcfd357cd572b0983c41a1739f199fcd2a01c0a126",
+      "request_ms": 26570.487417,
+      "ttft_ms": 14116.889875,
+      "decode_wall_ms": 12453.597542,
+      "decode_tokens_per_second": 2.56953863267858,
+      "first_four_ms": 1691.122,
+      "remaining_28_ms": 10745.539709,
+      "first_four_decompressions": 1,
+      "remaining_28_decompressions": 0,
+      "first_four_cpu_gpu_wait_ms": 883.221213,
+      "first_four_gpu_command_ms": 1000.362958,
+      "first_four_expert_read_bytes": 2756505600,
+      "decode_expert_read_bytes": 18062438400,
+      "after_compressed_bytes": 10960896,
+      "max_observed_physical_footprint_bytes": 11184708160,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "snapshot_cost_ms": 1.881379,
+      "registered_core_bytes": 5933858816
+    },
+    {
+      "pair": 1,
+      "residency": "core",
+      "source": "raw/pair-1-core.json",
+      "sha256": "7f90341994ad60ea1dc5363ca8b5263ff011ece868d887a1802a431170577d24",
+      "request_ms": 26919.959459,
+      "ttft_ms": 14494.353167,
+      "decode_wall_ms": 12425.606292000002,
+      "decode_tokens_per_second": 2.5753270502866816,
+      "first_four_ms": 1711.17725,
+      "remaining_28_ms": 10697.339749,
+      "first_four_decompressions": 54,
+      "remaining_28_decompressions": 47,
+      "first_four_cpu_gpu_wait_ms": 879.110033,
+      "first_four_gpu_command_ms": 999.112242,
+      "first_four_expert_read_bytes": 2756505600,
+      "decode_expert_read_bytes": 18062438400,
+      "after_compressed_bytes": 106446848,
+      "max_observed_physical_footprint_bytes": 11185625600,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "snapshot_cost_ms": 1.933703,
+      "registered_core_bytes": 5933858816
+    },
+    {
+      "pair": 1,
+      "residency": "off",
+      "source": "raw/pair-1-off.json",
+      "sha256": "7eec4da61e78298c86a175c17098f775570cdc24bf0bbc05a52f85a53954ae5f",
+      "request_ms": 29345.586833,
+      "ttft_ms": 14481.821625,
+      "decode_wall_ms": 14863.765208,
+      "decode_tokens_per_second": 2.1528865366345338,
+      "first_four_ms": 4154.951458,
+      "remaining_28_ms": 10692.270414,
+      "first_four_decompressions": 446245,
+      "remaining_28_decompressions": 64387,
+      "first_four_cpu_gpu_wait_ms": 3085.956704,
+      "first_four_gpu_command_ms": 1104.612172,
+      "first_four_expert_read_bytes": 2756505600,
+      "decode_expert_read_bytes": 18059673600,
+      "after_compressed_bytes": 5596512256,
+      "max_observed_physical_footprint_bytes": 11183856192,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "snapshot_cost_ms": 1.832879,
+      "registered_core_bytes": 0
+    }
+  ],
+  "paired_ratios": [
+    {
+      "pair": 0,
+      "request_ms_core_over_off": 0.8467822827124158,
+      "ttft_ms_core_over_off": 0.8722323084716842,
+      "decode_wall_ms_core_over_off": 0.8196716186967649,
+      "first_four_ms_core_over_off": 0.45445121970268043,
+      "remaining_28_ms_core_over_off": 0.9380677649825526
+    },
+    {
+      "pair": 1,
+      "request_ms_core_over_off": 0.9173426863874363,
+      "ttft_ms_core_over_off": 1.0008653291225715,
+      "decode_wall_ms_core_over_off": 0.8359662654865049,
+      "first_four_ms_core_over_off": 0.41184049135045275,
+      "remaining_28_ms_core_over_off": 1.0004741121205991
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Two alternating pairs of a 72-token prompt and 33 outputs; no confidence interval, append, 2K/4K/7K or sustained-session qualification.",
+    "Decode diagnostics are enabled in every run; timings cannot qualify normal request performance.",
+    "The first-four split was selected from the earlier cache screen, before this residency experiment.",
+    "CPU waits, GPU durations and parallel I/O overlap and are not an additive critical-path decomposition.",
+    "Snapshots observe memory at boundaries; sampled footprint maxima are not continuous physical-memory peaks. System counters include other processes.",
+    "Metal residency enrollment requests residency; it does not guarantee physical residency or change OS limits.",
+    "Snapshot cost excludes outer sample assembly and report serialization. No overhead-free control is measured in this experiment.",
+    "Identical output tokens do not establish full-logit/state equivalence or coding quality. Arithmetic and weights are unchanged.",
+    "No production default is changed; this is a diagnostic result supporting an uninstrumented timing screen."
+  ],
+  "source_summary": {
+    "path": "raw/summary.json",
+    "sha256": "5407ad61bcf0b6fef458bedcba3a81d82f5c17104a9f63bfd27b0b76a5788e1b"
+  }
+}

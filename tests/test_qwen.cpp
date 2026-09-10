@@ -3,6 +3,9 @@
 #include "qwen/session.hpp"
 #include "qwen/pipeline.hpp"
 #include "qwen/bench.hpp"
+#include "qwen/cached_progress.hpp"
+#include "qwen/route_trace.hpp"
+#include "../scripts/qwen/cached_recovery_checks.hpp"
 #include <bit>
 #include <cmath>
 #include <cstring>
@@ -10,6 +13,102 @@
 #include <latch>
 
 using namespace freellm::qwen;
+TEST_CASE("decode diagnostics observe counters without submitting or reaping GPU work") {
+    CHECK_FALSE(Options{}.decode_diagnostics);
+    Result result;CHECK_FALSE(result.json().contains("decode_diagnostics"));
+    result.diagnose_decode=true;
+    CHECK(result.json()["decode_diagnostics"]["captured_steps"]==0);
+    result.token_ms.resize(40,1);result.decode_samples=Json::array();
+    for(int i=0;i<32;++i) result.decode_samples.push_back({{"step",i}});
+    CHECK(result.json()["decode_diagnostics"]["omitted_steps"]==8);
+    Metal gpu;auto a=gpu.zeros(32),b=gpu.zeros(32);
+    gpu.dispatch("binary",{{a},{a},{b}},{32,0},32);
+    const auto before=gpu.timing_counters();
+    CHECK(before["submissions"]==0);
+    CHECK(gpu.timing_counters()==before); // Reading cannot flush the pending encoder.
+    gpu.finish();
+    const auto after=gpu.timing_counters();
+    CHECK(after["submissions"]==1);CHECK(after["live_command_groups"]==0);
+    CHECK(after["gpu_command_ns"].get<uint64_t>()>=before["gpu_command_ns"].get<uint64_t>());
+}
+TEST_CASE("route trace commits complete forwards and keeps aborted work incomplete") {
+    const auto dir=std::filesystem::temp_directory_path()/("freellm-routes-"+std::to_string(monotonic_ns()));
+    std::filesystem::create_directory(dir);
+    struct Cleanup {std::filesystem::path dir;~Cleanup(){std::filesystem::remove_all(dir);}} cleanup{dir};
+    auto read=[&](const char* name) {std::ifstream in(dir/name);std::vector<Json> rows;std::string line;
+        while(std::getline(in,line)) rows.push_back(Json::parse(line));return rows;};
+    const std::array<int,1> input={760};const std::array<int,10> routes={0,1,2,3,4,5,6,7,8,9};
+    {
+        RouteTrace trace(dir/"complete.jsonl",{{"build",build_fingerprint()}});
+        CHECK_THROWS(RouteTrace(dir/"complete.jsonl",Json::object()));
+        CHECK_THROWS(trace.begin(1,0,input,"prefill",480));
+        trace.request_begin("normal",input,2,false);
+        trace.begin(1,0,input,"prefill",480);
+        CHECK_THROWS(trace.commit(1));CHECK_THROWS(trace.finish());
+        CHECK_THROWS(trace.routes(1,0,1,routes));
+        for(int l=0;l<Layers;++l) trace.routes(l,0,1,routes);
+        CHECK(read("complete.jsonl").back()["event"]=="routes");
+        CHECK_THROWS(trace.commit(2));trace.commit(1);
+        trace.request_end(input,"stop",0);trace.finish();
+    }
+    auto rows=read("complete.jsonl");REQUIRE(rows.size()==54);
+    CHECK(rows.back()["details"]["status"]=="complete");
+    CHECK(rows[2]["details"]["input_token_ids"]==Json::array({760}));
+    CHECK(rows[51]["event"]=="forward_commit");
+    for(size_t i=0;i<rows.size();++i) {CHECK(rows[i]["sequence"]==i+1);if(i) CHECK(rows[i]["monotonic_ns"]>=rows[i-1]["monotonic_ns"]);}
+    {
+        RouteTrace trace(dir/"aborted.jsonl",Json::object());
+        trace.request_begin("cancel",input,2,false);trace.begin(1,0,input,"prefill",480);
+        trace.routes(0,0,1,routes);trace.abort();
+        CHECK_THROWS(trace.commit(1));CHECK_THROWS(trace.finish());
+    }
+    rows=read("aborted.jsonl");CHECK(rows[4]["event"]=="forward_abort");
+    CHECK(rows.back()["details"]["status"]=="incomplete");
+}
+TEST_CASE("cached progress flushes live phases and preserves interrupted evidence") {
+    const auto dir=std::filesystem::temp_directory_path()/("freellm-progress-"+std::to_string(monotonic_ns()));
+    std::filesystem::create_directory(dir);
+    struct Cleanup {std::filesystem::path dir;~Cleanup(){std::filesystem::remove_all(dir);}} cleanup{dir};
+    auto read=[&](const char* name) {std::ifstream in(dir/name);std::vector<Json> rows;std::string line;
+        while(std::getline(in,line)) rows.push_back(Json::parse(line));return rows;};
+    CachedProgress progress(dir/"progress.jsonl",{{"build",build_fingerprint()}});
+    progress.begin("model_load");
+    CHECK(read("progress.jsonl").size()==1); // Visible before the writer closes.
+    CHECK_THROWS(CachedProgress(dir/"progress.jsonl",Json::object()));
+    CHECK_THROWS(progress.begin("overlap"));
+    progress.end();progress.begin("reference_priming",{{"completed_tokens",0}});
+    progress.update({{"completed_tokens",512}});
+    progress.finish("interrupted","generation cancelled");
+    auto rows=read("progress.jsonl");REQUIRE(rows.size()==5);
+    CHECK(rows.back()["phase"]=="reference_priming");
+    CHECK(rows.back()["details"]["phase_incomplete"]==true);
+    CHECK(rows.back()["event"]=="interrupted");
+    for(size_t i=0;i<rows.size();++i) {
+        CHECK(rows[i]["sequence"]==i+1);
+        CHECK(rows[i]["identity"]["build"]==build_fingerprint());
+        CHECK(rows[i]["phase_elapsed_ns"].get<uint64_t>()<=rows[i]["elapsed_ns"].get<uint64_t>());
+        if(i) CHECK(rows[i]["elapsed_ns"].get<uint64_t>()>=rows[i-1]["elapsed_ns"].get<uint64_t>());
+    }
+    CHECK_THROWS(progress.update(Json::object()));CHECK_THROWS(progress.finish("complete"));
+    CachedProgress success(dir/"success.jsonl",Json::object());
+    CHECK_THROWS(success.update(Json::object()));success.begin("paired_replay");
+    CHECK_THROWS(success.finish("complete"));
+    success.end({{"exact",true},{"completed_pairs",5}});success.finish("complete");
+    CHECK(read("success.jsonl").back()["event"]=="complete");
+}
+TEST_CASE("cached cancellation proof rejects late incomplete and misidentified traces") {
+    auto trace=[](size_t count) {std::string result;for(size_t i=0;i<count;++i)
+        result+=Json{{"layer",i%48},{"tokens",1},{"offset",i<48?0:1},{"build","build"},{"artifact_revision","artifact"}}.dump()+"\n";
+        return result;};
+    for(auto n:{1u,47u,97u,143u}) CHECK(recovery_trace_evidence(trace(n),n<48?1:97,n,"build","artifact")["validated"]==true);
+    for(auto n:{0u,48u,96u,144u,145u}) CHECK_THROWS(recovery_trace_evidence(trace(n),n<97?1:97,n,"build","artifact"));
+    CHECK_THROWS(recovery_trace_evidence(trace(97),97,96,"build","artifact"));
+    CHECK_THROWS(recovery_trace_evidence(trace(97),97,98,"build","artifact"));
+    CHECK_THROWS(recovery_trace_evidence(trace(1),1,1,"stale","artifact"));
+    CHECK_THROWS(recovery_trace_evidence(trace(1),1,1,"build","wrong"));
+    auto incomplete=trace(1);incomplete.pop_back();CHECK_THROWS(recovery_trace_evidence(incomplete,1,1,"build","artifact"));
+    CHECK_THROWS(recovery_trace_evidence(trace(1)+trace(1),1,1,"build","artifact"));
+}
 TEST_CASE("artifact selection binds complete file pins and API identities") {
     for(auto artifact:{Artifact::Q4,Artifact::Mixed}) {
         auto lock=artifact_lock(artifact);
@@ -47,7 +146,7 @@ TEST_CASE("panel admission charges full activations and shrinks panels before re
     auto small=MemoryPlan::make(8*GiB,32*GiB,24*GiB,3*GiB,8192,128,256);
     CHECK(large.panel_tokens==1024);CHECK(large.panel_scratch>small.panel_scratch);
     CHECK(large.slots<base.slots);CHECK(large.json()["planned_bytes"].get<uint64_t>()<=large.limit);
-    auto fixed=base.resident+base.state+base.scratch+base.ngram+base.reserve+32*ExpertStride;
+    auto fixed=base.resident+base.state+base.scratch+base.ngram+base.reserve+base.runtime_control+32*ExpertStride;
     auto shrunk=MemoryPlan::make(fixed+small.panel_scratch,32*GiB,24*GiB,3*GiB,8192,128,1024);
     CHECK(shrunk.panel_tokens==256);CHECK(shrunk.slots==32);
     auto fallback=MemoryPlan::make(fixed,32*GiB,24*GiB,3*GiB,8192,128,1024);
@@ -83,13 +182,73 @@ TEST_CASE("CLOCK leases protect in-flight data and cache capacity cannot alter r
     for(uint32_t i=0;i<32;++i) {auto lease=cache.acquire({1,i%8});CHECK(lease.wait()->floats()[0]==float(512+i%8));}
     CHECK(cache.stats().evictions>0);
 }
+TEST_CASE("SLRU matches independent probation protected demand replay") {
+    CHECK(Options{}.cache_policy=="clock");
+    CHECK(parse_cache_policy("slru")==ExpertCachePolicy::SegmentedLRU);
+    CHECK_THROWS(parse_cache_policy("adaptive"));
+    for(size_t capacity=1;capacity<=8;++capacity) {
+        ReadPool reads(1);size_t allocations=0;
+        ExpertCache cache(capacity,[&](uint64_t n){++allocations;return Buffer::host(n);},reads,
+            [](ExpertKey key,const Buf& b){b->floats()[0]=float(key.expert);},128,ExpertCachePolicy::SegmentedLRU);
+        std::vector<uint32_t> probation,protected_queue;uint32_t random=1234;
+        for(int step=0;step<300;++step) {
+            random=random*1664525+1013904223;const uint32_t key=(random>>16)%12;
+            auto p=std::find(probation.begin(),probation.end(),key),q=std::find(protected_queue.begin(),protected_queue.end(),key);
+            const bool hit=p!=probation.end() || q!=protected_queue.end();
+            if(hit) {
+                if(p!=probation.end()) probation.erase(p);else protected_queue.erase(q);
+                protected_queue.push_back(key);
+                if(protected_queue.size()>capacity*3/4) {probation.push_back(protected_queue.front());protected_queue.erase(protected_queue.begin());}
+            } else {
+                if(probation.size()+protected_queue.size()==capacity) probation.erase(probation.begin());
+                probation.push_back(key);
+            }
+            const auto before=cache.stats();
+            {auto lease=cache.acquire({0,key});CHECK(lease.wait()->floats()[0]==float(key));}
+            CHECK(cache.stats().hits-before.hits==uint64_t(hit));
+            CHECK(cache.stats().misses-before.misses==uint64_t(!hit));
+            CHECK(cache.json()["protected_entries"]==protected_queue.size());
+            for(uint32_t e=0;e<12;++e) CHECK(cache.ready({0,e})==
+                (std::find(probation.begin(),probation.end(),e)!=probation.end() ||
+                 std::find(protected_queue.begin(),protected_queue.end(),e)!=protected_queue.end()));
+        }
+        CHECK(allocations==capacity);CHECK(cache.json()["policy"]=="slru");
+        cache.clear();CHECK(cache.json()["protected_entries"]==0);CHECK(cache.occupancy()==0);
+    }
+}
+TEST_CASE("SLRU protects loading and GPU leases while allowing protected eviction and resizing") {
+    ReadPool reads(2);std::latch entered(1),release(1);
+    ExpertCache cache(4,Buffer::host,reads,[&](ExpertKey key,const Buf& b){
+        if(key.expert==4) {entered.count_down();release.wait();} b->floats()[0]=float(key.expert);
+    },128,ExpertCachePolicy::SegmentedLRU);
+    auto use=[&](uint32_t e){auto l=cache.acquire({0,e});l.wait();};
+    for(uint32_t e=0;e<4;++e) use(e);
+    for(uint32_t e=0;e<3;++e) use(e); // Protected: 0,1,2. Probation: 3.
+    auto pending=cache.acquire({0,4});entered.wait();
+    use(5);CHECK(!cache.ready({0,0})); // Busy probation forces an eligible protected victim.
+    auto join=cache.acquire({0,4});CHECK(cache.stats().loading_joins==1);
+    // Release leases while the read remains active: loading data still cannot be overwritten.
+    pending={};join={};
+    auto a=cache.acquire({0,1}),b=cache.acquire({0,2}),c=cache.acquire({0,5});
+    a.wait();b.wait();c.wait();CHECK_THROWS(cache.acquire({0,6}));
+    CHECK_THROWS(cache.resize(2));CHECK_THROWS(cache.clear());
+    release.count_down();CHECK(cache.acquire({0,4}).wait()->floats()[0]==4);
+    a={};b={};c={};cache.resize(2);
+    CHECK(cache.occupancy()==2);CHECK(cache.json()["protected_entries"].get<size_t>()<=1);
+    std::vector<uint32_t> survivors;for(uint32_t e=0;e<6;++e) if(cache.ready({0,e})) survivors.push_back(e);
+    const auto misses=cache.stats().misses;cache.resize(8);
+    for(auto e:survivors) use(e);CHECK(cache.stats().misses==misses);
+    cache.clear();use(9);CHECK(cache.occupancy()==1);
+}
 TEST_CASE("I/O failures are propagated and all destinations finish before release") {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
     ReadPool pool(2,2);std::atomic<int> completed{0};
     auto failure=pool.submit([]{throw std::runtime_error("truncated");});
     auto success=pool.submit([&]{++completed;});
     CHECK_THROWS(failure.get());success.get();pool.drain();CHECK(completed==1);
-    ExpertCache cache(1,Buffer::host,pool,[](ExpertKey,const Buf&){throw std::runtime_error("read failed");},128);
+    ExpertCache cache(1,Buffer::host,pool,[](ExpertKey,const Buf&){throw std::runtime_error("read failed");},128,policy);
     auto lease=cache.acquire({0,1});CHECK_THROWS(lease.wait());lease={};cache.clear();
+    }
 }
 TEST_CASE("demand overtakes queued future reads and completion tickets do not lose wakeups") {
     ReadPool pool(1,4);std::latch running(1),release(1);
@@ -104,10 +263,11 @@ TEST_CASE("demand overtakes queued future reads and completion tickets do not lo
     pool.events()->wait(ticket,std::chrono::milliseconds(0));
 }
 TEST_CASE("loading joins count separately and resize preserves surviving entries") {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
     ReadPool pool(2);std::latch running(1),release(1);
     ExpertCache cache(3,Buffer::host,pool,[&](ExpertKey k,const Buf& b){
         if(k.expert==0) {running.count_down();release.wait();} b->floats()[0]=float(k.expert);
-    },128);
+    },128,policy);
     auto a=cache.acquire({0,0});running.wait();auto join=cache.acquire({0,0});
     CHECK(cache.stats().loading_joins==1);CHECK(cache.stats().ready_hits==0);
     release.count_down();CHECK(a.wait()==join.wait());a={};join={};
@@ -117,12 +277,14 @@ TEST_CASE("loading joins count separately and resize preserves surviving entries
     auto before=cache.stats().misses;cache.resize(4);
     for(uint32_t e=0;e<3;++e) if(cache.ready({0,e})) {auto hit=cache.acquire({0,e});CHECK(hit.wait()->floats()[0]==float(e));}
     CHECK(cache.stats().misses==before);
+    }
 }
 TEST_CASE("completion pipeline executes later ready experts and rolls leases under forced eviction") {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
     Metal gpu;ReadPool reads(2);std::latch release_first(1);
     ExpertCache cache(4,[&](auto n){return gpu.allocate(n);},reads,[&](ExpertKey k,const Buf& b){
         if(k.expert==0) release_first.wait();std::fill(b->floats().begin(),b->floats().end(),float(k.expert));
-    },128);
+    },128,policy);
     std::vector<ExpertKey> keys;for(uint32_t e=0;e<40;++e) keys.push_back({0,e});
     std::vector<int> order;std::vector<Buf> outputs(40);
     auto result=execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey k,const Buf& record){
@@ -140,10 +302,12 @@ TEST_CASE("completion pipeline executes later ready experts and rolls leases und
         CHECK(r["encoded_ns"].get<uint64_t>()>=r["read_completed_ns"].get<uint64_t>());
     }
     cache.clear(); // all leases and GPU readers have been released
+    }
 }
 TEST_CASE("completion pipeline drains on cancellation and encoding failures") {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
     Metal gpu;ReadPool reads(2);std::atomic<bool> cancel=false;
-    ExpertCache cache(4,[&](auto n){return gpu.allocate(n);},reads,[](ExpertKey,const Buf& b){b->floats()[0]=1;},128);
+    ExpertCache cache(4,[&](auto n){return gpu.allocate(n);},reads,[](ExpertKey,const Buf& b){b->floats()[0]=1;},128,policy);
     const std::array<ExpertKey,4> keys={{{0,0},{0,1},{0,2},{0,3}}};
     size_t encoded=0;
     CHECK_THROWS(execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey,const Buf& record){
@@ -157,6 +321,7 @@ TEST_CASE("completion pipeline drains on cancellation and encoding failures") {
         throw std::runtime_error("encoding failure");
     }));
     CHECK_NOTHROW(cache.clear());CHECK(gpu.statistics()["live_command_groups"]==0);
+    }
 }
 TEST_CASE("failed state updates require rebuilding and only successful work commits history") {
     State state;state.valid=true;state.tokens=3;state.history={7,8};
@@ -608,10 +773,10 @@ Buf expert_fixture(Metal& gpu,uint32_t seed) {
     for(int projection=0;projection<3;++projection) {
         auto l=expert_linear(record,projection);
         auto w=reinterpret_cast<uint32_t*>(record->data+l.weight.offset);
-        for(size_t i=0;i<uint64_t(l.input)*l.output/8;++i) w[i]=uint32_t(i*2654435761u+seed*1234567u);
+        for(size_t i=0;i<uint64_t(l.input)*l.output/8;++i) w[i]=uint32_t(i*2654435761u+(seed+projection*29u)*1234567u);
         auto s=reinterpret_cast<uint16_t*>(record->data+l.scales.offset);
         auto b=reinterpret_cast<uint16_t*>(record->data+l.biases.offset);
-        for(size_t i=0;i<uint64_t(l.input/l.group)*l.output;++i) {s[i]=0x3b80;b[i]=0xbd00;}
+        for(size_t i=0;i<uint64_t(l.input/l.group)*l.output;++i) {s[i]=uint16_t(0x3b00+projection*32);b[i]=uint16_t(0xbc00+projection*16);}
     }
     return record;
 }
@@ -678,6 +843,28 @@ TEST_CASE("residency follows buffer ownership through GPU use and executor teard
     CHECK(core.statistics()["residency"]["allocations"]==0);
     CHECK_THROWS(core.residency("core-cache"));
 }
+TEST_CASE("command submission releases physical buffers from plain C++ callers") {
+    Metal gpu;gpu.budget(256*MiB);gpu.residency("core-cache");
+    auto cycle=[&](bool asynchronous) {
+        auto input=gpu.allocate(64*MiB,AllocationClass::Expert);
+        auto output=gpu.allocate(64*MiB,AllocationClass::State);
+        std::memset(input->data,0x3c,input->bytes);
+        gpu.copy(input,0,output,0,input->bytes);
+        if(asynchronous) gpu.wait(gpu.submit());else gpu.finish();
+        CHECK(std::memcmp(input->data,output->data,input->bytes)==0);
+        input.reset();output.reset();gpu.finish();
+        CHECK(gpu.allocated()==0);
+        CHECK(gpu.statistics()["residency"]["allocations"]==0);
+    };
+    // Warm driver caches before measuring growth. Logical accounting alone
+    // misses Objective-C objects retaining buffers after their C++ owners die.
+    cycle(false);cycle(true);
+    const auto baseline=process_memory().at("physical_footprint_bytes").get<uint64_t>();
+    for(int i=0;i<12;++i) cycle(i%2);
+    const auto after=process_memory().at("physical_footprint_bytes").get<uint64_t>();
+    INFO("footprint before="<<baseline<<", after="<<after);
+    CHECK(after<=baseline+256*MiB);
+}
 TEST_CASE("two scratch workspaces wait before reuse and preserve persistent allocations") {
     Metal gpu;auto output=gpu.zeros(16);void* previous=nullptr;
     for(int i=0;i<6;++i) {
@@ -714,6 +901,21 @@ TEST_CASE("workspace release drains commands and charges surviving views") {
     gpu.begin_scratch(1,65536);auto next=gpu.zeros(16);gpu.end_scratch();next.reset();
     gpu.release_scratch();CHECK(gpu.allocated()==initial);
     CHECK(gpu.statistics()["scratch_pools"][0]["peak_bytes"]==16384);
+}
+TEST_CASE("workspace shape changes cannot consume large buffers for small requests") {
+    Metal gpu;
+    const std::array<std::vector<uint64_t>,4> layouts={{{6*MiB,MiB,MiB},{MiB,MiB,6*MiB},
+                                                      {MiB,MiB,2*MiB,4*MiB},{5*MiB,MiB,MiB,MiB}}};
+    for(size_t slot=0;slot<2;++slot) for(const auto& layout:layouts) {
+        CHECK_NOTHROW([&] {
+            gpu.begin_scratch(slot,8*MiB);
+            try {for(auto bytes:layout) {auto buffer=gpu.allocate(bytes);(void)buffer;}}
+            catch(...) {gpu.end_scratch();throw;}
+            gpu.end_scratch();gpu.finish();
+        }());
+        CHECK(gpu.statistics()["scratch_pools"][slot]["allocated_bytes"].get<uint64_t>()<=8*MiB);
+    }
+    gpu.release_scratch();
 }
 
 TEST_CASE("ready expert groups survive eviction reversed reads and cancellation") {
@@ -768,4 +970,192 @@ TEST_CASE("captured affine fixtures and exact-shape selection reject stale ident
     table.shape_table["build_fingerprint"]="stale";CHECK_THROWS(gpu.configure(table));
     std::ofstream corrupt(dir/"0-x.bin",std::ios::binary|std::ios::trunc);corrupt<<"broken";corrupt.close();
     CHECK_THROWS(fixture_kernel_bench(options,1));
+}
+
+TEST_CASE("GPU sparse selection matches CPU rank ties causality tails and invalid status") {
+    Metal gpu;auto status=gpu.zeros(1,AllocationClass::State);
+    for(uint32_t L:{2048u,2049u,2050u,2051u,2052u,2053u,4095u,4096u,4097u,4100u,7168u,8192u}) {
+        const uint32_t T=L%2?129:256,offset=L-T,B=L/4;
+        std::vector<float> data(uint64_t(T)*B);
+        for(uint32_t t=0;t<T;++t) for(uint32_t b=0;b<B;++b) {
+            data[t*B+b]=b%13==0?-INFINITY:float(int((b*17+t)%701)-350);
+            if(t%4==0) data[t*B+b]=b%2?-0.0f:0.0f;
+            if(t%4==1) data[t*B+b]=-INFINITY;
+        }
+        const auto expected=sparse_mask(data,T,offset,L);auto scores=gpu.upload(data),mask=gpu.allocate(expected.size()+16);
+        std::memset(mask->data,0xab,mask->bytes);
+        gpu.sparse_select(scores,mask,status,T,offset,L);gpu.finish();
+        CHECK(*reinterpret_cast<uint32_t*>(status->data)==0);
+        CHECK(std::memcmp(mask->data,expected.data(),expected.size())==0);
+        for(size_t i=expected.size();i<mask->bytes;++i) CHECK(mask->data[i]==std::byte{0xab});
+    }
+    for(float invalid:{NAN,INFINITY}) for(uint32_t where:{0u,511u,512u,1023u}) {
+        auto scores=gpu.zeros(1024),mask=gpu.allocate(4096);
+        scores->floats()[where]=invalid;*reinterpret_cast<uint32_t*>(status->data)=0;
+        gpu.sparse_select(scores,mask,status,1,4095,4096);gpu.finish();
+        CHECK(*reinterpret_cast<uint32_t*>(status->data)==1);
+        CHECK_THROWS(sparse_mask(scores->floats(),1,4095,4096));
+        // A later valid dispatch cannot clear a previous failure, even across scratch reuse.
+        scores->floats()[where]=0;
+        for(size_t slot=0;slot<4;++slot) {
+            gpu.begin_scratch(slot%2,MiB);auto temporary=gpu.allocate(4096);
+            gpu.sparse_select(scores,temporary,status,1,4095,4096);gpu.end_scratch();
+        }
+        gpu.finish();CHECK(*reinterpret_cast<uint32_t*>(status->data)==1);gpu.release_scratch();
+    }
+    // The last complete block is still in the future for the first query.
+    for(float invalid:{NAN,INFINITY}) {
+        auto scores=gpu.zeros(3*1024),mask=gpu.allocate(3*4096);
+        scores->floats()[1023]=invalid;*reinterpret_cast<uint32_t*>(status->data)=0;
+        gpu.sparse_select(scores,mask,status,3,4093,4096);gpu.finish();
+        CHECK(*reinterpret_cast<uint32_t*>(status->data)==1);
+        CHECK_THROWS(sparse_mask(scores->floats(),3,4093,4096));
+    }
+    // Rank raw subnormal score bits without assuming GPU arithmetic preserves them.
+    for(bool negative:{false,true}) {
+        std::vector<float> data(1024,0.0f);
+        for(uint32_t i=0;i<512;++i) data[(negative?0:512)+i]=std::bit_cast<float>((negative?0x80000000u:0u)+i+1);
+        const auto expected=sparse_mask(data,1,4095,4096);
+        auto scores=gpu.upload(data),mask=gpu.allocate(4096);*reinterpret_cast<uint32_t*>(status->data)=0;
+        gpu.sparse_select(scores,mask,status,1,4095,4096);gpu.finish();
+        CHECK(*reinterpret_cast<uint32_t*>(status->data)==0);
+        CHECK(std::memcmp(mask->data,expected.data(),expected.size())==0);
+    }
+    {
+        std::vector<float> data(4*2048);uint32_t bits=0x12345678u;
+        for(auto& value:data) {
+            bits=bits*1664525u+1013904223u;
+            const auto finite=(bits&0x7f800000u)==0x7f800000u?bits^0x00800000u:bits;
+            value=std::bit_cast<float>(finite);
+        }
+        const auto expected=sparse_mask(data,4,8188,8192);
+        auto scores=gpu.upload(data),mask=gpu.allocate(expected.size());
+        gpu.sparse_select(scores,mask,status,4,8188,8192);gpu.finish();
+        CHECK(*reinterpret_cast<uint32_t*>(status->data)==0);
+        CHECK(std::memcmp(mask->data,expected.data(),expected.size())==0);
+    }
+    CHECK_THROWS(gpu.sparse_select({}, {},status,0,0,0));
+}
+TEST_CASE("masked attention score tiles preserve full arithmetic and probability outputs") {
+    Metal gpu;
+    for(auto geometry:{std::array<uint32_t,2>{1,2053},{7,4096},{8,2052},{9,4097},{33,7168},{129,8192}}) {
+        auto [T,L]=geometry;const uint32_t offset=L-T;
+        auto q=gpu.zeros(uint64_t(T)*6144),k=gpu.zeros(uint64_t(L)*512),v=gpu.zeros(uint64_t(L)*512);
+        auto qg=gpu.zeros(uint64_t(T)*12288),mask=gpu.allocate(uint64_t(T)*L);
+        for(size_t i=0;i<q->floats().size();++i) q->floats()[i]=round_bf16(float(int(i%31)-15)/32);
+        for(size_t i=0;i<k->floats().size();++i) {k->floats()[i]=round_bf16(float(int(i%19)-9)/32);v->floats()[i]=round_bf16(float(int(i%23)-11)/32);}
+        for(uint32_t t=0;t<T;++t) for(uint32_t i=0;i<L;++i) mask->data[uint64_t(t)*L+i]=std::byte((i/8)%5==0 || i==offset+t);
+        auto a=gpu.zeros(uint64_t(T)*24*L),b=gpu.zeros(uint64_t(T)*24*L);
+        gpu.configure({});gpu.attention_scores(q,k,mask,a,T,offset,L,true);
+        KernelConfig candidate;candidate.attention_score_tiles="skip-masked";gpu.configure(candidate);
+        gpu.attention_scores(q,k,mask,b,T,offset,L,true);gpu.finish();
+        CHECK(std::memcmp(a->data,b->data,a->bytes)==0);
+        for(const auto& scores:{a,b}) gpu.dispatch("attention_softmax",{{scores}},{L},T*24*32);
+        auto oa=gpu.zeros(uint64_t(T)*6144),ob=gpu.zeros(uint64_t(T)*6144);
+        gpu.dispatch("attention_values",{{a},{v},{qg},{oa}},{T,L},32*32,(T+7)/8,24);
+        gpu.dispatch("attention_values",{{b},{v},{qg},{ob}},{T,L},32*32,(T+7)/8,24);gpu.finish();
+        CHECK(std::memcmp(a->data,b->data,a->bytes)==0);CHECK(std::memcmp(oa->data,ob->data,oa->bytes)==0);
+    }
+}
+
+TEST_CASE("heavy expert rows exercise production microbatch scatter with distinct projections") {
+    Metal gpu;constexpr uint32_t T=513;auto record=expert_fixture(gpu,19),input=gpu.zeros(T*Hidden);
+    for(size_t i=0;i<input->floats().size();++i) input->floats()[i]=round_bf16(float(int((i*7+i/Hidden)%31)-15)/128);
+    std::vector<Buf> reference;reference.reserve(T);
+    for(uint32_t t=0;t<T;++t) {
+        auto row=gpu.slice(input,uint64_t(t)*Hidden*4,Hidden*4);
+        auto gate=gpu.gated_linear(expert_linear(record,0),expert_linear(record,1),row,1);
+        reference.push_back(gpu.linear(expert_linear(record,2),gate,1));
+        if(t%32==31) gpu.finish();
+    }
+    gpu.finish();
+    auto out=gpu.zeros((uint64_t(T)*TopK+1)*Hidden),expected=gpu.zeros(uint64_t(T)*TopK*Hidden);
+    auto weights=gpu.zeros(uint64_t(T)*TopK),shared=gpu.zeros(uint64_t(T)*Hidden),gate=gpu.zeros(T);
+    for(auto& w:weights->floats()) w=0.125f;
+    for(bool candidate:{false,true}) for(uint32_t count:{127u,128u,129u,255u,256u,257u,513u}) {
+        KernelConfig config;if(candidate) {config.policy="candidate";config.token_tile=8;config.affine_rows=4;}gpu.configure(config);
+        std::memset(out->data,0,out->bytes);std::memset(expected->data,0,expected->bytes);
+        std::memset(out->data+expected->bytes,0xa5,Hidden*4);
+        std::vector<int> positions;
+        for(uint32_t i=0;i<count;++i) {
+            const auto t=(i*31)%T,p=t*TopK+(i%9+1);positions.push_back(int(p));
+            std::memcpy(expected->data+uint64_t(p)*Hidden*4,reference[t]->data,Hidden*4);
+        }
+        encode_expert_rows(gpu,record,input,out,positions,T,128,false,3,4096);
+        gpu.finish();CHECK(std::memcmp(out->data,expected->data,expected->bytes)==0);
+        CHECK(std::all_of(out->data+expected->bytes,out->data+out->bytes,[](auto b){return b==std::byte{0xa5};}));
+        auto sum=gpu.zeros(uint64_t(T)*Hidden),want=gpu.zeros(uint64_t(T)*Hidden);
+        gpu.dispatch("moe_sum",{{out},{weights},{shared},{gate},{sum}},{T},Hidden,T);
+        gpu.dispatch("moe_sum",{{expected},{weights},{shared},{gate},{want}},{T},Hidden,T);gpu.finish();
+        CHECK(std::memcmp(sum->data,want->data,sum->bytes)==0);
+    }
+    const std::array<int,1> bad={int(T*TopK)};
+    CHECK_THROWS(encode_expert_rows(gpu,record,input,out,bad,T,128,false,0,0));
+}
+
+TEST_CASE("expert integration stress drains two workspaces eviction cancellation and recovery") {
+    Metal gpu;ReadPool reads(8);constexpr uint32_t T=513;
+    std::array<Buf,5> records;for(uint32_t i=0;i<5;++i) records[i]=expert_fixture(gpu,i+31);
+    const auto directory=std::filesystem::temp_directory_path()/("freellm-expert-stress-"+std::to_string(monotonic_ns()));
+    REQUIRE(std::filesystem::create_directory(directory));
+    struct Cleanup {std::filesystem::path path;~Cleanup(){std::error_code error;std::filesystem::remove_all(path,error);}} cleanup{directory};
+    {
+        std::ofstream file(directory/"experts.bin",std::ios::binary);
+        for(const auto& record:records) file.write(reinterpret_cast<const char*>(record->data),ExpertBytes);
+        file.close();REQUIRE(bool(file));
+    }
+    File file(directory/"experts.bin");
+    std::atomic<bool> reverse=true;std::latch later_read(1);std::vector<uint32_t> completions;std::mutex lock;
+    ExpertCache cache(3,[&](uint64_t n){return gpu.allocate(n,AllocationClass::Expert);},reads,
+        [&](ExpertKey key,const Buf& dest) {
+            if(reverse && key.expert==0) later_read.wait();
+            file.read(uint64_t(key.expert)*ExpertBytes,{dest->data,size_t(ExpertBytes)});
+            {std::lock_guard guard(lock);completions.push_back(key.expert);}
+        },ExpertBytes);
+    auto input=gpu.zeros(T*Hidden),out=gpu.zeros(uint64_t(T)*TopK*Hidden),want=gpu.zeros(uint64_t(T)*TopK*Hidden);
+    for(size_t i=0;i<input->floats().size();++i) input->floats()[i]=round_bf16(float(int((i*3+i/Hidden)%19)-9)/64);
+    // Independent one-row oracle, shared across all steps.
+    std::array<std::vector<Buf>,5> expected;
+    for(uint32_t e=0;e<5;++e) for(uint32_t t=0;t<(e?3:T);++t) {
+        auto row=gpu.slice(input,uint64_t(t)*Hidden*4,Hidden*4);
+        auto activated=gpu.gated_linear(expert_linear(records[e],0),expert_linear(records[e],1),row,1);
+        expected[e].push_back(gpu.linear(expert_linear(records[e],2),activated,1));if(t%32==31) gpu.finish();
+    }
+    gpu.finish();const std::array<ExpertKey,5> keys={{{0,0},{0,1},{0,2},{0,3},{0,4}}};
+    size_t step=0;
+    auto run=[&](uint32_t n,bool cancel_after_group) {
+        // Same ownership pattern as panel microchunks: two temporary pools,
+        // then the router dependency drains them before expert admission.
+        for(size_t slot=0;slot<2;++slot) {
+            gpu.begin_scratch(slot,MiB);auto a=gpu.slice(input,0,Hidden*4);auto b=gpu.allocate(Hidden*4);
+            gpu.copy(a,0,b,0,Hidden*4);gpu.end_scratch();
+        }
+        gpu.finish();std::memset(out->data,0,out->bytes);std::memset(want->data,0,want->bytes);
+        std::array<std::vector<int>,5> positions;
+        for(uint32_t e=0;e<5;++e) for(uint32_t t=0;t<(e?std::min(3u,n):n);++t) {
+            const auto p=t*TopK+e+1;positions[e].push_back(int(p));
+            std::memcpy(want->data+uint64_t(p)*Hidden*4,expected[e][t]->data,Hidden*4);
+        }
+        std::atomic<bool> cancel=false;
+        if(cancel_after_group) {
+            CHECK_THROWS(execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey key,const Buf& record) {
+                encode_expert_rows(gpu,record,input,out,positions[key.expert],n,128,false,3,4096,&cancel);
+                gpu.submit();cancel=true;
+            },&cancel));
+            CHECK(gpu.statistics()["live_command_groups"]==0);cache.clear();return;
+        }
+        const auto report=execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey key,const Buf& record) {
+            encode_expert_rows(gpu,record,input,out,positions[key.expert],n,128,false,3,4096);
+            // Observing ready expert 1 here proves its read-completion event
+            // preceded expert 0; ordering only the loader bodies is insufficient.
+            if(reverse && key.expert==1) later_read.count_down();
+        });
+        CHECK(report["peak_gpu_groups"].get<size_t>()<=2);CHECK(report["peak_leases"].get<size_t>()<=3);
+        CHECK(std::memcmp(out->data,want->data,want->bytes)==0);CHECK(gpu.statistics()["live_command_groups"]==0);
+        reverse=false;++step;
+    };
+    for(int repeat=0;repeat<2;++repeat) for(uint32_t n:{1u,2u,7u,8u,9u,31u,32u,33u,127u,128u,129u,513u}) run(n,false);
+    REQUIRE(completions.size()>2);CHECK(std::find(completions.begin(),completions.end(),1)<std::find(completions.begin(),completions.end(),0));
+    CHECK(step==24);CHECK(cache.stats().evictions>0);run(33,true);run(33,false);cache.clear();gpu.release_scratch();
+    CHECK(file.read_bytes.load()>=5*ExpertBytes);
 }

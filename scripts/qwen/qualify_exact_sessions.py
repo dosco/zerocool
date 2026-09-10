@@ -6,11 +6,46 @@ import json
 from pathlib import Path
 import subprocess
 from build_identity import build_fingerprint
+from qualification_evidence import EvidenceGuard
 
 ROOT=Path(__file__).resolve().parents[2]
 
 
-def compare(reference,candidate,build):
+def check_configuration(state,config):
+    execution=state.get('execution',{})
+    for key,default in [('cache_policy','clock'),('sparse_selection','cpu'),('residency','off'),('decode_path','reference'),
+                        ('prefill_pipeline','serial'),('phase_memory','fixed')]:
+        if execution.get(key,default)!=config.get(key,default):
+            raise ValueError('Session execution differs from requested configuration')
+    if execution.get('cached_token_replay',False):raise ValueError('Cached replay cannot qualify sessions')
+    kernels=state['metal'].get('kernels',{})
+    for option,key,default in [('kernel_policy','policy','reference'),('token_tile','token_tile',1),
+                               ('gdn_path','gdn','original'),('gdn_rows','gdn_rows',4),('gdn_block','gdn_block',8),
+                               ('affine_rows','affine_rows',1),('q8_decode_rows','q8_decode_rows',0),
+                               ('attention_score_tiles','attention_score_tiles','full')]:
+        if kernels.get(key,default)!=config.get(option,default):
+            raise ValueError('Session kernels differ from requested configuration')
+    if kernels.get('gate_pair',False)!=(config.get('gate_pair','off')=='on'):
+        raise ValueError('Session gate pairing differs from requested configuration')
+    shape=json.loads(Path(config['shape_policy']).read_text()) if config.get('shape_policy') else None
+    if kernels.get('shape_table')!=shape:raise ValueError('Session shape selection changed')
+    for option,key,default in [('ready_group','ready_group',4),('chunk','chunk_tokens',128),('io_workers','io_workers',8)]:
+        if state.get(key)!=config.get(option,default):raise ValueError('Session schedule differs from requested configuration')
+
+
+def compare(reference,candidate,build,*,reference_config=None,candidate_config=None):
+    # Offline callers may use the saved case; live qualification supplies the
+    # independently constructed request to catch ignored or misapplied options.
+    configs=(reference.get('case') if reference_config is None else reference_config,
+             candidate.get('case') if candidate_config is None else candidate_config)
+    if any(not isinstance(c,dict) for c in configs):raise ValueError('Missing requested session configurations')
+    if configs[0].get('kernel_policy','reference')!='reference' or configs[1].get('kernel_policy')!='candidate':
+        raise ValueError('Requires original reference and explicit candidate configurations')
+    for report,config in zip((reference,candidate),configs):
+        if report.get('case')!=config:raise ValueError('Session case differs from requested configuration')
+        for row in report.get('runs',[]):
+            for name in ('continued_statistics','after_fresh'):
+                check_configuration(row[name],config)
     if not reference.get("passed") or not candidate.get("passed"):
         raise ValueError("State/failure harness failed")
     if not reference["runs"] or len(reference["runs"])!=len(candidate["runs"]):raise ValueError("Different or missing admitted panel coverage")
@@ -57,17 +92,22 @@ def run(args):
     candidate=dict(kernel_policy="candidate",token_tile=args.token_tile,
                    gdn_path=args.gdn_path,gdn_rows=args.gdn_rows,gdn_block=args.gdn_block,
                    residency=args.residency,decode_path=args.decode_path,prefill_pipeline=args.prefill_pipeline,
-                   ready_group=args.ready_group,phase_memory=args.phase_memory,affine_rows=args.affine_rows,gate_pair=args.gate_pair,q8_decode_rows=args.q8_decode_rows)
+                   ready_group=args.ready_group,sparse_selection=args.sparse_selection,attention_score_tiles=args.attention_score_tiles,phase_memory=args.phase_memory,affine_rows=args.affine_rows,gate_pair=args.gate_pair,q8_decode_rows=args.q8_decode_rows)
     if args.shape_policy:
         if args.token_tile!=1:raise ValueError("Shape policy requires --token-tile 1")
         candidate['shape_policy']=str(args.shape_policy.resolve(strict=True))
     reports=[];prime_outputs=[];build=build_fingerprint(ROOT)
+    guard=EvidenceGuard(json.loads(args.evidence.read_text()),args.evidence.parent) if getattr(args,'evidence',None) else None
+    def execute(command,log):
+        if build_fingerprint(ROOT)!=build:raise ValueError('Native sources changed during session qualification')
+        if guard:guard.run(command,stdout=log,timeout=args.timeout)
+        else:subprocess.run(command,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=args.timeout)
+        if build_fingerprint(ROOT)!=build:raise ValueError('Native sources changed during session qualification')
     for name,extra in [("reference",{}),("candidate",candidate)]:
         config=args.output/f"{name}-case.json";dest=args.output/f"{name}.json"
         config.write_text(json.dumps(dict(base,**extra),indent=2)+"\n")
         with (args.output/f"{name}.log").open("w") as log:
-            subprocess.run([str(args.binary),str(args.model),str(args.prepared),str(config),str(dest)],
-                           check=True,stdout=log,stderr=subprocess.STDOUT,timeout=args.timeout)
+            execute([str(args.binary),str(args.model),str(args.prepared),str(config),str(dest)],log)
         reports.append(json.loads(dest.read_text()))
         if args.case=="short":
             workload=args.output/f"{name}-prime.workload.json";report=args.output/f"{name}-prime.json"
@@ -76,13 +116,17 @@ def run(args):
                 dict(name="fresh",tokens=sized(n)+sized(a),max_tokens=2)])+"\n")
             options=[item for key,value in extra.items() for item in ["--"+key.replace("_","-"),str(value)]]
             with (args.output/f"{name}-prime.log").open("w") as log:
-                subprocess.run([str(args.runner),"bench","--model",str(args.model),"--artifact",args.artifact,
+                execute([str(args.runner),"bench","--model",str(args.model),"--artifact",args.artifact,
                     "--prepared",str(args.prepared),"--context","256","--chunk","128","--panel","0",
                     "--expert-slots","32","--memory-gb",str(args.memory_gb),"--repetitions","1",
-                    "--workload-file",str(workload),"--json",str(report),*options],
-                    check=True,stdout=log,stderr=subprocess.STDOUT,timeout=args.timeout)
+                    "--workload-file",str(workload),"--json",str(report),*options],log)
             prime_outputs.append(check_prime(json.loads(report.read_text()),build,n,a))
-    compare(*reports,build)
+    compare(*reports,build,reference_config=base,candidate_config=dict(base,**candidate))
+    for report in reports:
+        for row in report['runs']:
+            for key in ('continued_statistics','after_fresh'):
+                if row[key]['memory_plan']['limit_bytes']!=int(args.memory_gb*1024**3):
+                    raise ValueError('Requested qualification memory budget was reduced')
     if prime_outputs and prime_outputs[0]!=prime_outputs[1]:raise ValueError("Session candidate changed sampled output")
     summary=dict(passed=True,kind="exact_native_session_parity",build_fingerprint=build,case=args.case,
                  all_48_layers=True,all_logits_and_state_equal=True,all_routes_equal=True,
@@ -107,10 +151,13 @@ if __name__=="__main__":
     ap.add_argument("--decode-path",choices=["reference","direct","grouped"],default="reference")
     ap.add_argument("--prefill-pipeline",choices=["serial","double"],default="serial")
     ap.add_argument("--affine-rows",type=int,choices=[1,2,4],default=1)
+    ap.add_argument("--sparse-selection",choices=["cpu","gpu"],default="cpu")
+    ap.add_argument("--attention-score-tiles",choices=["full","skip-masked"],default="full")
     ap.add_argument("--q8-decode-rows",type=int,choices=[0,2,4,8],default=0)
     ap.add_argument("--gate-pair",choices=["off","on"],default="off")
     ap.add_argument("--phase-memory",choices=["fixed","reclaim"],default="fixed")
     ap.add_argument("--ready-group",type=int,choices=[1,2,4,8],default=4)
     ap.add_argument("--shape-policy",type=Path)
     ap.add_argument("--timeout",type=int,default=21600)
+    ap.add_argument("--evidence",type=Path)
     run(ap.parse_args())

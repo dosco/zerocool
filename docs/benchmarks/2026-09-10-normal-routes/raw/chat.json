@@ -1,0 +1,9 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity."
+    }
+  ],
+  "enable_thinking": false
+}

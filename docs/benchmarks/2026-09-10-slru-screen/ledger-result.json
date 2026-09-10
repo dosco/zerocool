@@ -1,0 +1,50 @@
+{
+  "path": "/repo/docs/experiments/7ab95cf77a94fe2bc35a5b929a88f542588b7e2b890755772693e95feb5ea733.json",
+  "id": "7ab95cf77a94fe2bc35a5b929a88f542588b7e2b890755772693e95feb5ea733",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-slru-screen/observations.json",
+      "sha256": "b09f88fea344cc23b388f078776264988726c5d24242734f841587d82842a3a6",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-slru-screen/observations.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "inconclusive",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/summary.json",
+      "sha256": "2620af439dbb7d1bfa39b4764abfda3a790c822ee35ff6d32efacb40b4b87f14",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "improvement_not_demonstrated",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/clock-correctness.json",
+      "sha256": "9e56da58df68b199ed6e8580d7300ff11f046ebf7fa2a9560927573844498ce7",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/clock-correctness.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "passed",
+      "recorded_complete": null
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/slru-correctness.json",
+      "sha256": "114d4e747ad9c77c013a98d57427e2a1d38d97f3d8054e92becf4e7a543a5787",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/slru-correctness.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "passed",
+      "recorded_complete": null
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/repo/scripts/qwen/benchmark_sparse_attention.py", line 162, in <module>
+    run(ap.parse_args())
+    ~~~^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/benchmark_sparse_attention.py", line 76, in run
+    return selector_run(args)
+  File "/repo/scripts/qwen/selector_qualification.py", line 440, in run
+    for n in contexts:experiment.cached(n)
+                      ~~~~~~~~~~~~~~~~~^^^
+  File "/repo/scripts/qwen/selector_qualification.py", line 294, in cached
+    return self.phase('cached-'+str(n),action,lambda d:check_cached(json.loads((d/'report.json').read_text()),self.evidence,tokens))
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/selector_qualification.py", line 197, in phase
+    action(directory)
+    ~~~~~~^^^^^^^^^^^
+  File "/repo/scripts/qwen/selector_qualification.py", line 290, in action
+    self.admit(d,self.configs[1],True);save(d/'tokens.json',tokens)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/selector_qualification.py", line 218, in admit
+    return normal.inspect_admission(self.binary,self.shared+normal.config_args(config)+extra,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                    stem,12*GiB,512,log,self.guard)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/scripts/qwen/benchmark_exact.py", line 227, in inspect_admission
+    raise ResourceBlocked("Common budget/panel unavailable after bounded admission retries")
+qualification_evidence.ResourceBlocked: Common budget/panel unavailable after bounded admission retries

@@ -1,0 +1,38 @@
+{
+  "sparse_selection-2048-summary.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-2048-summary.json",
+    "sha256": "68cbaf8e8d9c7fd42598bd0d34f59bfdbf5f27fc9305c90ee9277e4305f42915"
+  },
+  "sparse_selection-2048.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-2048.json",
+    "sha256": "9aebdc43b0cae2351f0d32ca71f623ab67564a361e3e2e109514ef2b91a2c082"
+  },
+  "sparse_selection-4096-summary.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-4096-summary.json",
+    "sha256": "8e3abf350c9a4f236b8cbcf32877b15c1426b67d0b59c7dfde5f23781053cbbf"
+  },
+  "sparse_selection-4096.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-4096.json",
+    "sha256": "f0c56f3185335214affda3ee8603896cc28db2a4efba19e4c382802c2110bcd8"
+  },
+  "sparse_selection-7168.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-7168.json",
+    "sha256": "5a062576f1f803b16755ebb887bed95649813cadeb8d5efec0d2b48cacb7957c"
+  },
+  "sparse_selection-7168-summary.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-1/sparse_selection-7168-summary.json",
+    "sha256": "489b6a9898585957e6857267245b4bdce3d5b5ae1c029f0492cef22af5f602c6"
+  },
+  "attention_score_tiles-4096.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-tiles-4k-final/measurement.json",
+    "sha256": "7c6db61cb9b871a3a828562ccfc724e391e0f1792f8eaf7cc22b004642f8ac3c"
+  },
+  "attention_score_tiles-4096-summary.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-tiles-4k-final/summary.json",
+    "sha256": "56c9fcda1182663623a4479be7653d95bf37566852b1d07a10a7aef431ac722f"
+  },
+  "attention_score_tiles-4096-invocation.json": {
+    "path": ".cache/benchmarks/sparse-attention/cached-tiles-4k-final/invocation.json",
+    "sha256": "2f5ad23b91bdcb027d018f897605777092b3f35ea13ab1ccd250c67134db83cb"
+  }
+}

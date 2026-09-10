@@ -657,6 +657,47 @@ kernel void index_scores(device const float* q [[buffer(0)]],device const float*
     }
     if(!lane) scores[t*p[0]+block]=(block*4+3<=p[2]+t)?sum*0.08838834764831845f:-INFINITY;
 }
+// The CPU oracle ranks before causal filtering. Padded entries sort last even
+// when real entries are -infinity; invalid inputs flag failure independently of rank.
+// Integer keys preserve subnormal ordering on GPUs that flush floating operands.
+// Canonicalize signed zero, then map IEEE sign/magnitude to increasing unsigned keys.
+inline bool sparse_before(uint a,uint ai,uint b,uint bi) { return a==b?ai<bi:a>b; }
+kernel void sparse_select(device const uint* input [[buffer(0)]],device uchar* mask [[buffer(1)]],
+    device atomic_uint* status [[buffer(2)]],constant uint* p [[buffer(3)]],
+    uint3 group [[threadgroup_position_in_grid]],uint lane [[thread_index_in_threadgroup]]) {
+    threadgroup uint values[2048];threadgroup uint indices[2048];
+    uint t=group.y,L=p[2],blocks=L/4,count=1;
+    while(count<blocks) count<<=1;
+    for(uint i=lane;i<count;i+=256) {
+        uint bits=i<blocks?input[t*blocks+i]:0xff800000u;
+        if((bits&0x7fffffffu)>0x7f800000u || bits==0x7f800000u) {
+            atomic_fetch_or_explicit(status,1u,memory_order_relaxed);bits=0xff800000u;
+        }
+        if(!(bits&0x7fffffffu)) bits=0;
+        values[i]=(bits&0x80000000u)?~bits:(bits^0x80000000u);indices[i]=i<blocks?i:0xffffffffu;
+    }
+    for(uint i=lane;i<L;i+=256) mask[t*L+i]=0;
+    threadgroup_barrier(mem_flags::mem_threadgroup|mem_flags::mem_device);
+    for(uint width=2;width<=count;width<<=1) for(uint step=width/2;step;step>>=1) {
+        for(uint i=lane;i<count;i+=256) {
+            uint j=i^step;
+            if(j>i) {
+                bool before=sparse_before(values[i],indices[i],values[j],indices[j]);
+                if(before!=((i&width)==0)) {
+                    uint v=values[i];values[i]=values[j];values[j]=v;
+                    uint index=indices[i];indices[i]=indices[j];indices[j]=index;
+                }
+            }
+        }
+        threadgroup_barrier(mem_flags::mem_threadgroup);
+    }
+    for(uint rank=lane;rank<min(512u,blocks);rank+=256) {
+        uint b=indices[rank];
+        if(values[rank]>0x007fffffu && b<blocks && b*4+3<=p[1]+t)
+            for(uint d=0;d<4;++d) mask[t*L+b*4+d]=1;
+    }
+    if(!lane) for(uint i=((p[1]+t+1)/4)*4;i<=p[1]+t;++i) mask[t*L+i]=1;
+}
 // Explicit BF16 score/probability boundaries follow the original checkpoint's
 // MLX attention fallback (256-wide heads, GQA=12, prefill >2 tokens). Keep the
 // same arithmetic during decoding so splitting a prefix cannot change it.
@@ -666,6 +707,35 @@ kernel void attention_scores(device const float* q [[buffer(0)]],device const fl
     constant uint* p [[buffer(4)]],uint3 group [[threadgroup_position_in_grid]],uint lane [[thread_index_in_simdgroup]]) {
     uint col=group.x*8,row=group.y*8,h=group.z,T=p[0],L=p[2];
     uint qid=lane/4,fr=(qid&4)+((lane/2)%4),fc=(qid&2)*2+(lane%2)*2;
+    simdgroup_float8x8 a,b,c;c.thread_elements()[0]=0;c.thread_elements()[1]=0;
+    for(uint d=0;d<256;d+=8) {
+        for(uint j=0;j<2;++j) {
+            a.thread_elements()[j]=row+fr<T?q[((row+fr)*24+h)*256+d+fc+j]*0.0625f:0;
+            b.thread_elements()[j]=col+fc+j<L?k[((col+fc+j)*2+h/12)*256+d+fr]:0;
+        }
+        simdgroup_multiply_accumulate(c,a,b,c);
+    }
+    for(uint j=0;j<2;++j) if(row+fr<T && col+fc+j<L) {
+        uint t=row+fr,key=col+fc+j;
+        bool visible=key<=p[1]+t && (!p[3] || mask[t*L+key]);
+        scores[(t*24+h)*L+key]=visible?bf(c.thread_elements()[j]):-INFINITY;
+    }
+}
+kernel void attention_scores_skip_masked(device const float* q [[buffer(0)]],device const float* k [[buffer(1)]],
+    device const uchar* mask [[buffer(2)]],device float* scores [[buffer(3)]],
+    constant uint* p [[buffer(4)]],uint3 group [[threadgroup_position_in_grid]],uint lane [[thread_index_in_simdgroup]]) {
+    uint col=group.x*8,row=group.y*8,h=group.z,T=p[0],L=p[2];
+    uint qid=lane/4,fr=(qid&4)+((lane/2)%4),fc=(qid&2)*2+(lane%2)*2;
+    bool visible=false;
+    for(uint j=0;j<2;++j) if(row+fr<T && col+fc+j<L) {
+        uint t=row+fr,key=col+fc+j;
+        visible|=key<=p[1]+t && (!p[3] || mask[t*L+key]);
+    }
+    if(!simd_any(visible)) {
+        for(uint j=0;j<2;++j) if(row+fr<T && col+fc+j<L)
+            scores[((row+fr)*24+h)*L+col+fc+j]=-INFINITY;
+        return;
+    }
     simdgroup_float8x8 a,b,c;c.thread_elements()[0]=0;c.thread_elements()[1]=0;
     for(uint d=0;d<256;d+=8) {
         for(uint j=0;j<2;++j) {

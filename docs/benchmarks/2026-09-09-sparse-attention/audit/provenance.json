@@ -1,0 +1,60 @@
+{
+  "kind": "sparse_attention_implementation_audit",
+  "native_build_before_recovery_fix": "84229cdf0f0b35dd3f7028373a17c7b8a73b45e299060da1c884aed77772e323",
+  "native_build_after_recovery_fix": "857ee812709cba3817cfef46d431060744a529bd2d3fa802fa3ece6dd430cb5c",
+  "native_tests": 49,
+  "native_assertions": 6873,
+  "tooling_tests": 68,
+  "captured_cases_replayed_before_recovery_fix": 8,
+  "real_model_recovery_check_passed": false,
+  "real_model_recovery_check_status": "not admitted: only 7851524096 engine bytes available; fixed budget requires 12884901888",
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "recorded_report_revalidation": {
+    "historical_cached_report_valid": true,
+    "historical_session_report_valid": true,
+    "cached_latency_ratio": {
+      "median": 0.9970801872656364,
+      "low": 0.9749620101129781,
+      "high": 1.0148039669315354,
+      "pairs": 5
+    }
+  },
+  "files": {
+    "src/qwen/cached_replay.cpp": "03745a997d2d58ca77db91a6461bc3b052ac5fa21910a5814b8f7ed27a554288",
+    "cmake/qwen.cmake": "d231b071ef92815d118286bfc7d9effb4ff891b9ec8e9c7e1e586af80bdb3213",
+    "scripts/qwen/check_cached_recovery.cpp": "4a12adc2a01b8f64779de37db4589f3c31dffd566dfb83bb48b45bf8fdd46bf1",
+    "scripts/qwen/qualify_exact_sessions.py": "1479728fcd6ec55977e161f3edb214b8c1c4c3db841d9b4f6f04d1599241d2c4",
+    "scripts/qwen/summarize_cached_comparison.py": "bd350609317589f1abac46700a5c71fbd9bb7d932158bc3b17fcbe37a9ac4014",
+    "scripts/qwen/test_decode_profile.py": "b9af6682ab887bce50882d8887e8ba9c2737bcb38482439594d8589d47475dc9",
+    "scripts/qwen/test_exact_benchmark.py": "5e18b922c99a349a5ea8aeba16eb8116519c655dd692821a2f0f62170283365c",
+    "scripts/qwen/test_download.py": "9db03260f91014775145dbf1ddbb871eafc2fbd599a7fed2c1f3ecb489f21678",
+    "build/qwen/test_qwen": "931cc0dd5e4291aad277b7d4eb600b529db8995478822038d0981f9c3293ff02",
+    "build/qwen/qwen_cached_recovery": "a11aadbf36eed778d5864408a0a84fbeefb98376720d066ad1636e1b88c42e82",
+    "build/qwen/bin/freellm": "cbda287dec6d4a4a4b0d98a50957dbc43b400fd08cae717048d88c61fab914e8"
+  },
+  "logs": {
+    "native.log": "db33a0347a361ab3bc4d776e647d7d501f054158eaafb65a1d202e92d424b04a",
+    "native-after.log": "84be89f587479d04ff30445a0f5e60b23092519d3ea60f2073f2a5dfd9f52e5e",
+    "python-after.log": "5de96dd5a5314dd5ddcec4262c5a573eaa9c8990fe197a65e3c252d5dd309606",
+    "prompt_4k.log": "1b5900a9468249ef2920e8fd0411d257f5f25d1ffe6a03cf7c375ebb09298d7a",
+    "prompt_7k.log": "dcf856a11fb717e280e72e409fc8e6837cb35bf35a6744309a5e1edb58b42a6b",
+    "append_128.log": "8fd3316cbe89dbaf8e22825226753c64527e61b7792cf87dcccc3a163f4419e7",
+    "recovery-before.log": "b1fef48fc449853bf317d1d5f067767cdee4d107f2ea4784f7fd41be04d96ab2",
+    "recovery-after.log": "1533a130a40f4037c7db47feb5d88855afcc29a5a84749d9e32ebd20083150cb"
+  },
+  "replay_reports": {
+    "prompt_4k": {
+      "path": ".cache/benchmarks/sparse-attention/audit-20260909/prompt_4k-replay.json",
+      "sha256": "fbb6161e3b17db4cb1b5475f2a7102c4e9d52cc0db43805102552d65cb85d7fa"
+    },
+    "prompt_7k": {
+      "path": ".cache/benchmarks/sparse-attention/audit-20260909/prompt_7k-replay.json",
+      "sha256": "81a08c9caf65f2926277ad3af3f49e0d87155903f46ca3e971ff298091e42573"
+    },
+    "append_128": {
+      "path": ".cache/benchmarks/sparse-attention/audit-20260909/append_128-replay.json",
+      "sha256": "f917d599d82ea28e0654d6e580c98bc3404f78bd101d2397611cdf78eac66981"
+    }
+  }
+}

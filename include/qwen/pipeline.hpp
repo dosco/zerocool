@@ -2,6 +2,10 @@
 #include "qwen/metal.hpp"
 
 namespace freellm::qwen {
+// Internal production row encoder; queue submission and leases remain caller-owned.
+void encode_expert_rows(Metal& gpu,const Buf& record,const Buf& input,const Buf& output,
+                        std::span<const int> positions,uint32_t tokens,uint32_t chunk,
+                        bool direct,int layer,uint32_t offset,const std::atomic<bool>* cancel=nullptr);
 struct ReadyExpert { ExpertKey key; Buf record; };
 using EncodeReadyGroup = std::function<void(std::span<const ReadyExpert>,size_t)>;
 // Run all requested experts; only execution order may change. The caller

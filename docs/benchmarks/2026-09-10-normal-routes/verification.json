@@ -1,0 +1,42 @@
+{
+  "kind": "normal_route_capture_verification_v1",
+  "recorded_at": "2026-09-10T19:12:22.242419+00:00",
+  "native_build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "native_tests": 53,
+  "native_assertions": 7084,
+  "python_tests": 155,
+  "metal_api_validation": true,
+  "metal_shader_validation": true,
+  "skipped_native_tests": 0,
+  "native_capture_build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "original_capture_seal_sha256": "458e1fb8685cdb40b57297d5a523128dca9c233ef7496fc3452edcd140166788",
+  "implementation_sha256": {
+    "include/qwen/route_trace.hpp": "58748fd1a864a22998ebd84c68c15f00bfb367773bc95577e5e1765742c55f7f",
+    "include/qwen/model.hpp": "b3345dd3cdeb985c542ad229341f84e7fe8cb5dd83a781798e08d5461cce1b2d",
+    "src/qwen/model.cpp": "ad7f6dcb1b73ecebea7c1169a309b7d680cd74ea2ea59426b88952acd34019ad",
+    "src/qwen/main.cpp": "8eda3e16b8e577be16826cc09ac6aa7f1d493941c80070e3abde1dcbc7331545",
+    "tests/test_qwen.cpp": "ef1c080b1bcd819983d461533cb77472fbdc3236824adb51cf7643f2deff26fb",
+    "scripts/qwen/route_trace.py": "1dac23cbe268fdb23d753827564965dfc0dc79c84ed6f7871224a9dfa58355e0",
+    "scripts/qwen/capture_routes.py": "c8102b429b47b898c6ab94d3fef041fb815c0df09056a6f5237fe552b4cf3d68",
+    "scripts/qwen/cache_simulation.py": "436a8f4b9cf8c7b11dc1160f232bf93310acb65b473d58db3bc3aa0d399b0cb2",
+    "scripts/qwen/test_route_trace.py": "cf12afcd9aa41d29cf091c303599df999d1b7057598bd2fca53935ee47e5d7ca",
+    "scripts/qwen/test_cache_simulation.py": "40f406ddbda0d790cf178d122265b19a854b7c181c10e3869146873cd350fe4d"
+  },
+  "evidence_sha256": {
+    "docs/benchmarks/2026-09-10-normal-routes/build.log": "7a7b3189b4ca78656f3425f8f84dd76df474c87231ca8a72bb7011b4e3211cdf",
+    "docs/benchmarks/2026-09-10-normal-routes/native-tests.log": "ecf207e43894dc1f351aada01c613f1b3899dda3c738a32842d25972ef32986d",
+    "docs/benchmarks/2026-09-10-normal-routes/python-tests.log": "1e6fe0127f9b33dd3bbb36fa01d45c5adfa2d4c2bb35ee9866ce5d833503d236",
+    "docs/benchmarks/2026-09-10-normal-routes/cache-actual-capacity.json": "b295529e98e96bc5a65f22f8b4c0c838499a42313e4eaa92d3d82a0e7b853c00",
+    "docs/benchmarks/2026-09-10-normal-routes/observations.json": "bb2879ff9e5c34b2084c6ee6591dbfad2fce61221c92f830ffece8f8d777e51d",
+    "docs/benchmarks/2026-09-10-normal-routes/ledger-result.json": "868839ea4c06536615673528f78eca719ec7fc84ae8d100f03516610b140df68",
+    "docs/benchmarks/2026-09-10-normal-routes/README.md": "a6b91614c87325393d40a035929f1b472f1c675074700312afee40150ea292f7",
+    "/repo/docs/experiments/ed9c6c3e9757bbe73c7b347201803043e896aafa8076030501e716736c6bf362.json": "ed9c6c3e9757bbe73c7b347201803043e896aafa8076030501e716736c6bf362"
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "notes": [
+    "Original capture identity and sealed reports remain unchanged.",
+    "A final reader audit separates explicit reset markers from missing route passes; this changes no observed route or native build.",
+    "One instrumented normal capture is not paired performance or 2K/4K/7K/session acceptance."
+  ]
+}

@@ -62,6 +62,14 @@ class CachedComparisonTest(unittest.TestCase):
             report=self.fixture();change(report)
             with self.assertRaises(ValueError):summarize(report)
 
+    def test_reject_nonpositive_and_nonfinite_timings(self):
+        from summarize_cached_comparison import summarize
+        # Invalid timings on both arms can otherwise produce a valid ratio.
+        for value in (-100,0,float('nan'),float('inf'),-float('inf'),True,None):
+            report=self.fixture()
+            for row in report['runs']:row['forward_ns']=value
+            with self.assertRaises(ValueError):summarize(report)
+
 
 class Q8OperatorComparisonTest(unittest.TestCase):
     def fixture(self):
@@ -86,5 +94,24 @@ class Q8OperatorComparisonTest(unittest.TestCase):
         for change in changes:
             report=self.fixture();change(report)
             with self.assertRaises(ValueError):summarize(report,2,5)
+
+
+class SparseCachedComparisonTest(CachedComparisonTest):
+    def test_declared_host_and_gpu_axes(self):
+        from summarize_cached_comparison import summarize
+        for axis,field,value in [('sparse_selection','execution','gpu'),('attention_score_tiles','kernels','skip-masked')]:
+            report=self.fixture();report['comparison_axis']=axis
+            for row in report['runs']:
+                for key in ('before','after'):
+                    state=row[key];state['metal']['kernels']['q8_decode_rows']=2
+                    container=state['execution'] if field=='execution' else state['metal']['kernels']
+                    container[axis]=value if row['variant']=='candidate' else ('cpu' if axis=='sparse_selection' else 'full')
+            self.assertEqual(summarize(report)['comparison_axis'],axis)
+            bad=copy.deepcopy(report)
+            for key in ('before','after'):bad['runs'][1][key]['metal']['kernels']['q8_decode_rows']=4
+            with self.assertRaises(ValueError):summarize(bad)
+            bad=copy.deepcopy(report)
+            bad['runs'][1]['after']['execution']['sparse_selection']='wrong'
+            with self.assertRaises(ValueError):summarize(bad)
 
 if __name__=='__main__':unittest.main()

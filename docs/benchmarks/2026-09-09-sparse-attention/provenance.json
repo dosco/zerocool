@@ -1,0 +1,37 @@
+{
+  "build_fingerprint": "84229cdf0f0b35dd3f7028373a17c7b8a73b45e299060da1c884aed77772e323",
+  "files": {
+    "tests/test_qwen.cpp": "27cc5b4bb8db81279834323b72ac10d6ce9852fe43845488673c122a765a66e7",
+    "scripts/qwen/benchmark_sparse_attention.py": "1165cc1bf9dc0f3a3ab3d28e1ae999f5f27f1cef0028244fd1723650506a6d7f",
+    "scripts/qwen/replay_sparse.cpp": "65312f42b491498a8f205ec19e5db39ef243f2c52b7ce57a188f1deb68255a20",
+    "scripts/qwen/benchmark_exact.py": "081994167c6396ec43560f6cbd0c0a1a31cbc9824e82dd97db602b4a00835164",
+    "scripts/qwen/summarize_cached_comparison.py": "0022d0fcdc3bc6f37560beb35381e2b5b8c90c6eaa72161876b7e05bbb21fbf2",
+    "scripts/qwen/qualify_exact_sessions.py": "87a97131a881207a9c771eba9948fa3bf5010b405a8a65870c014157f9f7b4a5",
+    "scripts/qwen/check_panel.cpp": "cf5d575173816f5e015bf9acbf6e05c030a9e0b30e875c8d62f5d5256875645a",
+    "docs/benchmarks/2026-09-09-sparse-attention/configs.json": "474d961d749b982c6dc9003ac1670fdbd8858c71a6879db5c660d9f0dd5eaa6a",
+    "docs/benchmarks/2026-09-08-validation/workload-2k.json": "ee84a428e69d8104315ad57b170b93026c037e2f4d041dec889e57df9e77c766",
+    "mixed-models.lock.json": "a8257f7f5feb9aa5ae9614c684d9ebb332988e3d3a9755368bbeb049aebdb187",
+    "mixed-payload-reuse.lock.json": "0348bfdb1b0d34ff40909724c753355f1f51f8e1b99df9bfd453a7e57d289a07",
+    "build/qwen/bin/freellm": "eb7ddaee80f442b460bf6d3e68c84e49dcb36fe326f72e1e8e52bfccf26d5ac3",
+    "build/qwen/test_qwen": "f034fcac6223c16c97b4fcebbb1c038486687233329a360b8d4aa08a2ac203c5",
+    "build/qwen/qwen_sparse_replay": "9adbf5c63971619d660b09c4ecae594441dbffcfd22a04ffca150fd2995e26b0",
+    "build/qwen/qwen_panel_check": "3e95567733e9f5b2f87afc0e556fd109f936a6640316e0854e43f45ba2b9e110"
+  },
+  "validation_logs": {
+    "native-validation.log": "2ade5ae71453f863370e75e6161e7fccd5345b0dc302d0876f8daf623e975428",
+    "subnormal-before-fix.log": "36386f1ad83047da55fe4dcadc222bade77b6a0000d0833d2305c565e605b3b3",
+    "python-validation.log": "800ad5bdc77462c71f142c48082d292efa3c8cfcf6fde42b3081989225720683",
+    "workspace-before-fix.log": "452aafaad197ad5c7901d15e7bdcc55c2f7c5672d1501e40c5eb94273c3985fa"
+  },
+  "native_tests": 49,
+  "native_assertions": 6873,
+  "tooling_tests": 65,
+  "full_product_acceptance": false,
+  "production_promoted": false,
+  "evidence": {
+    "capture-summary.json": "6af4da209e85ada766da5fb4a6f82d9e1c229f2b5b876163d6c28817a074ee21",
+    "fixture-rejection.json": "6745313d039ad4f255a811a4828c56fa911ede4341253a5bf41d20701058fe60",
+    "boundary-state-summary.json": "0b003a3842d3525b66fd40dc0ce7bfecf10ae4a796689817180a14e10c3cbd9b",
+    "attention_score_tiles-4096-summary.json": "56c9fcda1182663623a4479be7653d95bf37566852b1d07a10a7aef431ac722f"
+  }
+}

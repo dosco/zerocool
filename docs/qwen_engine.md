@@ -6,6 +6,12 @@ numerical, coding-quality, or M1 performance acceptance gates have passed.
 Current evidence is under `docs/benchmarks/2026-09-08-validation/`; the earlier
 Q4 baseline and audit are under `docs/benchmarks/2026-09-08-audit-q8/`.
 
+The [sparse-attention experiment](qwen_sparse_attention_stage.md) adds exact GPU
+block selection and wholly masked score-tile skipping, with production expert
+microbatch and resource-lifetime regression coverage. Its [current evidence](benchmarks/2026-09-09-sparse-attention/README.md)
+separates cached-token comparisons from normal requests and promotion gates.
+Both attention candidates remain opt-in for benchmarking.
+
 The [exact-arithmetic performance stage](qwen_next_stage.md) now implements
 benchmark-selectable GDN gate preparation/shared staging and Q4/Q8 token tiles,
 fresh-process comparisons, sample-free session priming, bounded phase traces,
@@ -164,11 +170,25 @@ minus 1.5GiB. It includes resident weights, recurrent and attention state,
 expert slots, scratch, a separate 64MiB ngram cache, and a 1GiB CPU/driver
 reserve. Buffers visible to both the CPU and GPU are counted once.
 
-The expert cache uses global CLOCK replacement. Loading, ready, and leased
+The expert cache defaults to global CLOCK replacement. Loading, ready, and leased
 records have explicit ownership. A slot cannot be overwritten while an I/O
 job or encoded GPU operation still uses it. Prefill references receive the
 same CLOCK treatment as generation references. Tests exercise eviction,
 resizing, and pinned leases. Shrinkage evicts eligible entries and keeps survivors.
+`bench` and `inspect` accept experimental `--cache-policy slru`. New entries enter
+probation; a hit moves an entry to protected MRU. Protected capacity targets
+floor(75% of slots); excess entries move back to probation. Eviction prefers the
+oldest eligible probation entry, then the oldest eligible protected entry if
+probation is busy. Neither queue can evict a loading or leased buffer. Shrinkage
+preserves surviving queue order and restores the protected target; growth retains
+all entries. Clear empties both queues. The coordinator owns all queue changes.
+Links are embedded in the existing entry metadata, with the same allocation layout
+for CLOCK and SLRU. No extra record or queue buffers are allocated. Metadata stays
+within the common CPU/driver reserve; reported `entry_metadata_bytes` covers entry
+objects only, excluding allocator, lookup and future overhead. This estimate is
+not added to shared weight allocations or used to enlarge the admitted cache.
+The policy and probation/protected counts appear in native statistics. SLRU remains
+an explicit experiment; `run` and `serve` retain CLOCK.
 Decoded ngram cache rows now hold BF16 values (the existing decoder already
 rounds to BF16), with an explicit allowance for index overhead. Duplicate rows,
 including queued ones in a lookup, share the same read and decoded result.
@@ -396,6 +416,17 @@ bytes and include other processes; they are not attributed solely to
 FreeLLM. Per-layer cache hits and misses accompany inference measurements.
 
 ## Qualification limitations
+
+The [offline evidence query tool](qwen_evidence_queries.md) indexes existing
+JSON/JSONL reports and experiment decisions in disposable SQLite. It exposes
+paired comparisons, recorded memory boundaries and bounded dependency traces
+with original source hashes. It runs no inference and makes no promotion claim.
+
+Candidate iteration now starts with [bounded cached triage](qwen_selector_qualification_stage.md#fast-iteration-is-the-entry-point).
+It checks five exact 4K CPU/GPU pairs within a 600-second total deadline and
+never starts full qualification automatically. A cached speedup alone cannot
+qualify normal requests. See the [current evidence](benchmarks/2026-09-09-selector-qualification/README.md)
+for interrupted and resource-blocked attempts.
 
 The published Slotstream v0.2.11 binary was attempted on this exact laptop.
 Its bundled metallib requires Metal language 4.0, which macOS 15.6 rejects.

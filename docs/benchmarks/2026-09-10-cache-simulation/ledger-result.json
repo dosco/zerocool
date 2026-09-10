@@ -1,0 +1,40 @@
+{
+  "path": "/repo/docs/experiments/1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48.json",
+  "id": "1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/foundation-prefill.json",
+      "sha256": "020cf8a575d3022f584db935c7898348d70748a6a00e7b956330fd124abe9675",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-cache-simulation/foundation-prefill.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "simulated",
+      "recorded_complete": null
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/recovery.json",
+      "sha256": "5293c98ad42210420ff3d532e7b2ff2a09091dd9974faa93e947380574e7ea15",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-cache-simulation/recovery.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "simulated",
+      "recorded_complete": null
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/profile-coverage.json",
+      "sha256": "41f0eec20f4b5384748c33968506a6f86e7b163e59658ba0c40ac48bdf09a371",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-cache-simulation/profile-coverage.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "insufficient_evidence",
+      "recorded_complete": null
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

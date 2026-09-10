@@ -7,6 +7,7 @@
 #include <numeric>
 #include <stdexcept>
 #include <CommonCrypto/CommonDigest.h>
+#include "qwen/route_trace.hpp"
 
 namespace freellm::qwen {
 namespace {
@@ -23,6 +24,8 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
     store_(checkpoint_,prepared_) {
     options_.kernels.artifact_revision=checkpoint_.revision();
     gpu_.configure(options_.kernels);
+    (void)parse_cache_policy(options_.cache_policy);
+    if(options_.sparse_selection!="cpu" && options_.sparse_selection!="gpu") throw std::invalid_argument("sparse selection must be cpu or gpu");
     if(options_.decode_path!="reference" && options_.decode_path!="direct" && options_.decode_path!="grouped")
         throw std::invalid_argument("invalid decode path");
     if(options_.prefill_pipeline!="serial" && options_.prefill_pipeline!="double")
@@ -51,14 +54,29 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
     if(options_.phase_memory=="reclaim") plan_=generation_plan_;
     if(options_.cached_token_replay && plan_.limit!=12*GiB)
         throw std::runtime_error("the fixed 12GiB cached replay budget is not currently admitted");
+    if(!options_.route_trace.empty()) {
+        if(plan_.limit!=options_.memory)
+            throw std::runtime_error("memory admission requires at least the requested route capture budget");
+        if(options_.probe_layers!=Layers || options_.diagnostic_stream_trunk || options_.cached_token_replay)
+            throw std::invalid_argument("route capture requires normal full-model inference");
+        route_trace_=std::make_unique<RouteTrace>(options_.route_trace,Json{{"build",build_fingerprint()},
+            {"artifact_revision",checkpoint_.revision()},{"budget_bytes",plan_.limit},
+            {"prepared_manifest_sha256",prepared_?prepared_->inspect().at("manifest_sha256"):Json(nullptr)},
+            {"device",gpu_.statistics().at("device")},{"physical_bytes",gpu_.physical()},
+            {"expert_payload_bytes",ExpertBytes},{"expert_stride_bytes",ExpertStride}});
+    }
     // Reserve includes CPU bookkeeping, tokenizer, and driver allocations.
     gpu_.budget(plan_.limit-plan_.ngram-plan_.reserve);
     gpu_.residency(options_.residency);
+    sparse_status_=gpu_.zeros(1,AllocationClass::State);
     resident_=std::make_unique<Resident>(checkpoint_,gpu_,options_.probe_layers,options_.diagnostic_stream_trunk);
     cache_=std::make_unique<ExpertCache>(plan_.slots,[this](uint64_t n){return gpu_.allocate(n,AllocationClass::Expert);},reads_,
-        [this](ExpertKey k,const Buf& b){store_.read(k,b);});
+        [this](ExpertKey k,const Buf& b){store_.read(k,b);},ExpertStride,parse_cache_policy(options_.cache_policy));
     if(options_.decode_path=="grouped") for(auto& scratch:expert_scratch_) scratch=gpu_.allocate(uint64_t(options_.ready_group)*Intermediate*4);
     ngrams_=std::make_unique<NgramStore>(checkpoint_,reads_,plan_.ngram,prepared_);
+}
+void Model::check_sparse_status() const {
+    if(*reinterpret_cast<const uint32_t*>(sparse_status_->data)) throw std::runtime_error("invalid sparse score");
 }
 Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain(); }
 void Model::transition_memory(bool prompt) {
@@ -92,11 +110,14 @@ std::vector<float> Model::forward(std::span<const int> ids,State& state,bool log
     const bool owned=!ingest_active_;bool completed=false;
     try {
         if(owned) prepare_ingest(ids.size());
+        if(route_trace_) route_trace_->begin(state.trace_session_id,state.tokens,ids,phase_,cache_->capacity());
         auto result=forward_impl(ids,state,logits,cancel);completed=true;
         if(owned) finish_ingest();
+        if(route_trace_) route_trace_->commit(state.tokens);
         return result;
     } catch(...) {
         const auto error=std::current_exception();
+        if(route_trace_) {state.valid=false;try {route_trace_->abort();} catch(...) {}}
         if(owned) {if(completed) state.valid=false;try {finish_ingest();} catch(...) {}}
         std::rethrow_exception(error);
     }
@@ -122,6 +143,7 @@ std::vector<std::byte> sparse_mask(std::span<const float> scores,uint32_t tokens
 State Model::make_state() {
     for(auto& routes:route_history_) routes.clear();
     State s;s.artifact=options_.artifact;
+    if(route_trace_) s.trace_session_id=++trace_session_sequence_;
     for(int l=0;l<options_.probe_layers;++l) {
         auto& st=s.layers[l];
         if((l+1)%4) {
@@ -153,12 +175,45 @@ void StateUpdate::commit() {
 }
 void Model::trace(const std::string& name,const Buf& buffer) {
     if(options_.trace_dir.empty() || !buffer) return;
+    check_sparse_status();
     // Caller has already completed this command group.
     const auto dir=options_.trace_dir/("step_"+std::to_string(trace_offset_));
     std::filesystem::create_directories(dir);
     std::ofstream f(dir/(name+".bin"),std::ios::binary);
     f.write(reinterpret_cast<const char*>(buffer->data),std::streamsize(buffer->bytes));
     if(!f) throw std::runtime_error("cannot write diagnostic tensor: "+name);
+}
+void Model::capture_sparse(const Buf& q,const Buf& keys,const Buf& values,const Buf& qg,
+                           const Buf& index_scores,uint32_t tokens,uint32_t offset,int layer) {
+    // Capture only the first generated token or retained append at the requested
+    // context. Prompt microchunks cannot fill this bounded diagnostic collection.
+    if((layer!=3 && layer!=47) || !((phase_=="decode" && tokens==1) || (phase_=="append" && tokens==128))) return;
+    for(const auto& c:sparse_captures_) if(c["layer"]==layer && c["phase"]==phase_) return;
+    const uint32_t length=offset+tokens;
+    const uint64_t bytes=q->bytes+uint64_t(length)*512*8+qg->bytes+index_scores->bytes;
+    if(sparse_captures_.size()>=16 || bytes>256*MiB-sparse_capture_bytes_) throw std::runtime_error("sparse capture limit exceeded");
+    gpu_.finish();check_sparse_status();
+    if(sparse_captures_.empty() && std::filesystem::exists(options_.sparse_capture/"manifest.json"))
+        throw std::runtime_error("sparse capture destination already exists");
+    std::filesystem::create_directories(options_.sparse_capture);
+    Json tensors=Json::object();
+    auto save=[&](const char* name,const Buf& b,uint64_t size) {
+        const auto filename=std::to_string(sparse_captures_.size())+"-"+name+".f32";
+        unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(b->data,CC_LONG(size),digest);
+        std::string hex;constexpr char digits[]="0123456789abcdef";
+        for(auto v:digest) {hex+=digits[v>>4];hex+=digits[v&15];}
+        std::ofstream f(options_.sparse_capture/filename,std::ios::binary);f.write(reinterpret_cast<const char*>(b->data),std::streamsize(size));
+        if(!f) throw std::runtime_error("cannot write sparse capture");
+        tensors[name]={{"file",filename},{"bytes",size},{"sha256",hex}};
+    };
+    save("q",q,q->bytes);save("keys",keys,uint64_t(length)*512*4);save("values",values,uint64_t(length)*512*4);
+    save("qg",qg,qg->bytes);save("index_scores",index_scores,index_scores->bytes);
+    sparse_capture_bytes_+=bytes;
+    sparse_captures_.push_back({{"layer",layer},{"phase",phase_},{"tokens",tokens},{"offset",offset},{"length",length},{"tensors",tensors}});
+    Json manifest={{"kind","sparse_attention_fixture_v1"},{"build_fingerprint",gpu_.statistics()["build_fingerprint"]},
+        {"artifact_revision",checkpoint_.revision()},{"bytes",sparse_capture_bytes_},{"cases",sparse_captures_}};
+    std::ofstream f(options_.sparse_capture/"manifest.json");f<<manifest.dump(2)<<'\n';
+    if(!f) throw std::runtime_error("cannot write sparse manifest");
 }
 Buf Model::norm(const Buf& x,const std::string& weight,uint32_t width,uint32_t group,uint32_t tokens,bool grouped) {
     if(x->bytes<uint64_t(tokens)*width*4 || !group || width%group) throw std::invalid_argument("normalization shape");
@@ -248,14 +303,19 @@ Buf Model::attention(const Buf& x,LayerState& state,int layer,uint32_t tokens,ui
             {blocks,resident_->dtype(b+".indexer.k_layernorm.weight")},32*blocks);
         auto scores=gpu_.allocate(uint64_t(tokens)*blocks*4);
         gpu_.dispatch("index_scores",{{iq},{pooled},{scores}},{blocks,tokens,offset},32*blocks,tokens);
-        gpu_.finish();
-        const auto selected=sparse_mask(scores->floats(),tokens,offset,length);
-        std::memcpy(mask->data,selected.data(),selected.size());
+        if(options_.sparse_selection=="gpu") gpu_.sparse_select(scores,mask,sparse_status_,tokens,offset,length);
+        else {
+            auto start=monotonic_ns();gpu_.finish();check_sparse_status();
+            sparse_selection_wait_ns_+=monotonic_ns()-start;start=monotonic_ns();
+            const auto selected=sparse_mask(scores->floats(),tokens,offset,length);
+            std::memcpy(mask->data,selected.data(),selected.size());
+            sparse_selection_cpu_ns_+=monotonic_ns()-start;
+        }
+        if(!options_.sparse_capture.empty()) capture_sparse(q,state.keys,state.values,qg,scores,tokens,offset,layer);
     }
     auto out=gpu_.allocate(uint64_t(tokens)*6144*4);
     auto scores=gpu_.allocate(uint64_t(tokens)*24*length*4);
-    gpu_.dispatch("attention_scores",{{q},{state.keys},{mask},{scores}},
-        {tokens,offset,length,uint32_t(sparse)},((length+7)/8)*32,(tokens+7)/8,24);
+    gpu_.attention_scores(q,state.keys,mask,scores,tokens,offset,length,sparse);
     gpu_.dispatch("attention_softmax",{{scores}},{length},tokens*24*32);
     gpu_.dispatch("attention_values",{{scores},{state.values},{qg},{out}},
         {tokens,length},32*32,(tokens+7)/8,24);
@@ -271,11 +331,12 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     auto router=gpu_.linear(resident_->linear(b+".gate"),x,tokens,true);
     auto ids=gpu_.allocate(uint64_t(tokens)*TopK*4),weights=gpu_.allocate(uint64_t(tokens)*TopK*4);
     gpu_.dispatch("route",{{router},{ids},{weights}},{tokens},tokens*32);
-    gpu_.finish(); cancelled(cancel);
+    gpu_.finish(); check_sparse_status(); cancelled(cancel);
     trace("route_"+std::to_string(layer),ids);
     trace("router_"+std::to_string(layer),router);
     std::array<std::vector<int>,Experts> positions;
     auto raw=std::span<const int>(reinterpret_cast<const int*>(ids->data),tokens*TopK);
+    if(route_trace_) route_trace_->routes(layer,trace_offset_,tokens,raw);
     if(options_.audit_routes) {
         auto& history=route_history_[layer];
         if(trace_offset_+tokens>8192) throw std::runtime_error("route audit exceeds context");
@@ -310,23 +371,8 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
             gpu_.grouped_experts(records,destinations,x,expert_out,expert_scratch_.at(slot));
         };
         auto timing=execute_experts(keys,*cache_,reads_,gpu_,options_.ready_group,[&](ExpertKey key,const Buf& record){
-            const auto& all=positions[key.expert];
-            for(size_t at=0;at<all.size();at+=options_.chunk) {
-                cancelled(cancel);
-                const auto pos=std::span<const int>(all).subspan(at,std::min<size_t>(options_.chunk,all.size()-at));
-                const auto n=uint32_t(pos.size());
-                gpu_.label("routed_expert",layer,n,trace_offset_);
-                std::vector<int> rows;rows.reserve(n);for(auto p:pos) rows.push_back(p/TopK);
-                auto rowsbuf=tokens==1?Buf{}:ints(gpu_,rows);
-                auto activated=gpu_.gated_linear(expert_linear(record,0),expert_linear(record,1),x,n,rowsbuf);
-                if(tokens==1 && options_.decode_path!="reference")
-                    gpu_.linear_into(expert_linear(record,2),activated,1,{expert_out,uint64_t(pos[0])*Hidden*4});
-                else {
-                    auto posbuf=ints(gpu_,pos);
-                    auto down=gpu_.linear(expert_linear(record,2),activated,n);
-                    gpu_.dispatch("scatter_experts",{{down},{posbuf},{expert_out}},{n},Hidden,n);
-                }
-            }
+            encode_expert_rows(gpu_,record,x,expert_out,positions[key.expert],tokens,options_.chunk,
+                options_.decode_path!="reference",layer,trace_offset_,cancel);
         },cancel,!options_.dependency_trace.empty() || (options_.kernels.profile && detailed_passes_[phase_]<48 && detailed_reads_[phase_]<8192),grouped);
         expert_wait_ns_[layer]+=timing["coordinator_wait_ns"].get<uint64_t>();
         expert_gpu_ns_[layer]+=timing["gpu_execution_sum_ns"].get<uint64_t>();++expert_passes_[layer];
@@ -361,23 +407,8 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
             cancelled(cancel);
             const auto& record=leases[i-start].wait();
             cancelled(cancel);
-            const auto& all=positions[selected[i]];
-            for(size_t at=0;at<all.size();at+=options_.chunk) {
-                cancelled(cancel);
-                const auto pos=std::span<const int>(all).subspan(at,std::min<size_t>(options_.chunk,all.size()-at));
-                const uint32_t n=uint32_t(pos.size());
-                gpu_.label("routed_expert",layer,n,trace_offset_);
-                std::vector<int> rows; rows.reserve(n); for(auto p:pos) rows.push_back(p/TopK);
-                auto rowsbuf=tokens==1?Buf{}:ints(gpu_,rows);
-                auto activated=gpu_.gated_linear(expert_linear(record,0),expert_linear(record,1),x,n,rowsbuf);
-                if(tokens==1 && options_.decode_path!="reference")
-                    gpu_.linear_into(expert_linear(record,2),activated,1,{expert_out,uint64_t(pos[0])*Hidden*4});
-                else {
-                    auto posbuf=ints(gpu_,pos);
-                    auto down=gpu_.linear(expert_linear(record,2),activated,n);
-                    gpu_.dispatch("scatter_experts",{{down},{posbuf},{expert_out}},{n},Hidden,n);
-                }
-            }
+            encode_expert_rows(gpu_,record,x,expert_out,positions[selected[i]],tokens,options_.chunk,
+                options_.decode_path!="reference",layer,trace_offset_,cancel);
         };
         std::vector<bool> done(end-start,false);
         // Available experts execute while the persistent reader fills misses.
@@ -430,6 +461,8 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
         gpu_.finish(); cache_->resize(std::max<size_t>(32,cache_->capacity()/2));
         plan_.slots=cache_->capacity();plan_.experts=plan_.slots*ExpertStride;
     }
+    // Each preceding forward has drained its users, including on failure.
+    *reinterpret_cast<uint32_t*>(sparse_status_->data)=0;
     if(ids.size()>uint64_t(options_.chunk)) return forward_panel(ids,state,logits,cancel);
     StateUpdate update(state,ids);
     trace_offset_=state.tokens;
@@ -493,9 +526,23 @@ std::vector<float> Model::compute_logits(const Buf& h,uint32_t T) {
     for(float v:values) if(!std::isfinite(v)) throw std::runtime_error("non-finite model logits");
     return {values.begin(),values.end()};
 }
+Json Model::decode_counters() const {
+    const auto start=monotonic_ns();
+    const auto& cache=cache_->stats();
+    auto dependencies=phase_dependencies_.value(phase_,Json::object());
+    for(const auto* key:{"ready_hits","loading_joins","new_misses","read_queue_sum_ns","read_service_sum_ns",
+                         "ready_to_encode_sum_ns","ready_to_gpu_sum_ns","coordinator_wait_ns","completion_waits"})
+        if(!dependencies.contains(key)) dependencies[key]=0; // No expert work yet in this phase.
+    Json result={{"process",process_memory()},{"metal",gpu_.timing_counters()},
+        {"expert_cache",{{"hits",cache.hits},{"misses",cache.misses},{"application_read_bytes",cache.bytes}}},
+        {"expert_dependencies",std::move(dependencies)}};
+    result["sample_ns"]=monotonic_ns()-start;
+    return result;
+}
 Json Model::stats() const {
-    return {{"artifact_revision",checkpoint_.revision()},{"model_id",checkpoint_.model_id()},
-        {"execution",{{"residency",options_.residency},{"decode_path",options_.decode_path},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
+    return {{"sparse_selection_cpu_ns",sparse_selection_cpu_ns_},{"sparse_selection_wait_ns",sparse_selection_wait_ns_},
+        {"artifact_revision",checkpoint_.revision()},{"model_id",checkpoint_.model_id()},
+        {"execution",{{"cache_policy",options_.cache_policy},{"sparse_selection",options_.sparse_selection},{"residency",options_.residency},{"decode_path",options_.decode_path},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
         {"phase_memory",{{"policy",options_.phase_memory},{"phase",prompt_memory_?"prompt":"generation"},
             {"prompt_plan",prompt_plan_.json()},{"generation_plan",generation_plan_.json()},{"pressure_resizes",pressure_resizes_},
             {"transition_count",transition_count_},{"transitions",memory_transitions_}}},
@@ -505,12 +552,12 @@ Json Model::stats() const {
         {"chunk_tokens",options_.chunk},{"io_workers",options_.io_workers},{"short_append_tokens",options_.short_append},
         {"phase_dependencies",phase_dependencies_},
         {"gpu_timing_scope","expert pipeline command groups can include shared work"},{"layer_expert_wait_ns",expert_wait_ns_},{"layer_expert_gpu_ns",expert_gpu_ns_},{"layer_expert_passes",expert_passes_},
-        {"expert_cache_occupancy",cache_->occupancy()},{"expert_cache",cache_->stats().json()},{"ngram_hits",ngrams_->hits},{"ngram_misses",ngrams_->misses},
+        {"expert_cache_occupancy",cache_->occupancy()},{"expert_cache",cache_->json()},{"ngram_hits",ngrams_->hits},{"ngram_misses",ngrams_->misses},
         {"prepared",prepared_?prepared_->inspect():Json(nullptr)},
         {"checkpoint_application_read_bytes",checkpoint_.bytes_read()},
         {"passes",{{"decode",decode_passes_},{"short_append",append_passes_},{"prefill",prefill_passes_},{"panel",panel_passes_}}}};
 }
-void Model::reset_expert_cache() { gpu_.finish(); cache_->clear(); }
+void Model::reset_expert_cache() { gpu_.finish(); cache_->clear();if(route_trace_) route_trace_->cache_reset(); }
 Json Model::take_profile() {
     auto result=gpu_.take_profile();result["expert_dependencies"]=std::move(dependency_events_);
     result["dependency_capture_limits"]={{"passes_per_phase",48},{"read_records_per_phase",8192}};

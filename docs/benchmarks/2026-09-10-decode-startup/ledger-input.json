@@ -1,0 +1,24 @@
+{
+  "hypothesis": "Requesting residency for core weights and session state reduces the initial decode stalls associated with process decompression.",
+  "expected_effect": "Lower startup and whole-request elapsed time at equal memory, with fewer observed decompressions when compression occurs. This is an authored diagnostic interpretation, not normal timing qualification.",
+  "controlled_change": "Only residency off versus core, in two alternating fresh-process pairs: off/core then core/off. CLOCK, reference arithmetic, mixed artifact, 12GiB, 1,848 slots, 72-token prompt, 33 greedy outputs and per-step diagnostics held fixed.",
+  "correctness": "56 native tests and 45,682 assertions with Metal API/shader validation, zero skips; 168 Python tests. All four real requests matched every output token from the prior uninstrumented CLOCK control. Allocation and all 128 committed decode samples revalidated. No new independent full-logit/state comparison or coding-quality evaluation.",
+  "outcome": "First four forwards: off 3.721/4.155 seconds, core 1.691/1.711 seconds; decompressions 478188/446245 versus 1/54. Instrumented request ratios core/off 0.846782/0.917343; decode ratios 0.819672/0.835966. Core generation about 2.57 tokens/s. Same first-four expert reads and fixed memory plan. Completed in 125.83 seconds.",
+  "decision": "promising",
+  "smallest_experiment": "Run a bounded uninstrumented off/core paired screen at the same budget, with an initial request and retained-history append. Check output parity, memory and complete conversation latency before longer qualification. Keep CLOCK and residency-off defaults pending evidence.",
+  "limitations": [
+    "Two alternating pairs of a 72-token prompt and 33 outputs; no confidence interval, append, 2K/4K/7K or sustained-session qualification.",
+    "Decode diagnostics are enabled in every run; timings cannot qualify normal request performance.",
+    "The first-four split was selected from the earlier cache screen, before this residency experiment.",
+    "CPU waits, GPU durations and parallel I/O overlap and are not an additive critical-path decomposition.",
+    "Snapshots observe memory at boundaries; sampled footprint maxima are not continuous physical-memory peaks. System counters include other processes.",
+    "Metal residency enrollment requests residency; it does not guarantee physical residency or change OS limits.",
+    "Snapshot cost excludes outer sample assembly and report serialization. No overhead-free control is measured in this experiment.",
+    "Identical output tokens do not establish full-logit/state equivalence or coding quality. Arithmetic and weights are unchanged.",
+    "No production default is changed; this is a diagnostic result supporting an uninstrumented timing screen."
+  ],
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-10-decode-startup/observations.json",
+    "/repo/docs/benchmarks/2026-09-10-decode-startup/raw/summary.json"
+  ]
+}

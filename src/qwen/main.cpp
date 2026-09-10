@@ -1,5 +1,7 @@
 #include "qwen/session.hpp"
 #include "qwen/bench.hpp"
+#include "qwen/cached_progress.hpp"
+#include "qwen/route_trace.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <algorithm>
 #include <chrono>
@@ -124,10 +126,14 @@ int main(int argc,char** argv) {
                 "Layer diagnostics: --probe-layers N --trace-dir DIR [--stream-trunk]\n"
                 "Cache/schedule: --expert-slots N --short-append 32 --ready-group 4 [--legacy-schedule]\n"
                 "Prepared storage: --prepared DIR; profiling: --dependency-trace FILE\n"
+                "  --route-trace FILE records committed routes for normal bench workloads\n"
                 "Artifact: --artifact q4-control|mixed-4_8bit with its explicit --model DIR\n"
                 "Dependency replay: bench --replay-routes FILE [--replay-hits 0..10]\n"
                 "Execution experiments: --residency off|core|core-cache --decode-path reference|direct|grouped\n"
+                "  --decode-diagnostics (first 32 decode steps per normal request; instrumented)\n"
+                "  --cache-policy clock|slru (experimental; bench/inspect only)\n"
                 "  --phase-memory fixed|reclaim --prefill-pipeline serial|double --cached-token-replay (last token is continuation)\n"
+                "  --cached-progress FILE writes flushed phase progress for cached replay outside forward timing\n"
                 "Kernel experiments (bench only): --kernel-policy reference|auto|candidate --token-tile 1|2|4|8\n"
                 "  --q8-decode-rows 0|2|4|8; diagnostic per-pass timing: --dispatch-profile FILE\n"
                 "  --kernel-bench measures bounded real-weight operators, not request latency\n"
@@ -140,7 +146,7 @@ int main(int argc,char** argv) {
         if(command!="inspect" && command!="run" && command!="bench" && command!="serve") throw std::invalid_argument("unknown command: "+command);
         Options o; o.model=".cache/models/qwen38-flash-next";
         std::string prompt,json_path,io_path,tokens_path,logits_path,tokenize,render_path,workloads_path;
-        std::string replay_routes,phase_profile;int replay_hits=-1,soak_seconds=0;
+        std::string replay_routes,phase_profile,cached_progress;int replay_hits=-1,soak_seconds=0;
         bool probe=false,storage=false,kernel_probe=false;
         bool raw=command=="bench",thinking=false; int repetitions=3,port=8080;
         for(int i=2;i<argc;++i) {
@@ -148,6 +154,7 @@ int main(int argc,char** argv) {
             if(arg=="--raw") {raw=true;continue;} if(arg=="--chat") {raw=false;continue;}
             if(arg=="--thinking") {thinking=true;continue;}
             if(arg=="--legacy-schedule") {o.completion_pipeline=false;continue;}
+            if(arg=="--decode-diagnostics") {o.decode_diagnostics=true;continue;}
             if(arg=="--storage") {storage=true;continue;}
             if(arg=="--cached-token-replay") {o.cached_token_replay=true;continue;}
             if(arg=="--cached-compare") {o.cached_compare=true;continue;}
@@ -181,9 +188,15 @@ int main(int argc,char** argv) {
             else if(arg=="--residency") o.residency=value;
             else if(arg=="--decode-path") o.decode_path=value;
             else if(arg=="--prefill-pipeline") o.prefill_pipeline=value;
+            else if(arg=="--cache-policy") o.cache_policy=value;
             else if(arg=="--phase-memory") o.phase_memory=value;
             else if(arg=="--phase-profile") {phase_profile=value;o.kernels.profile=true;}
             else if(arg=="--dispatch-profile") {phase_profile=value;o.kernels.profile=true;o.kernels.counter_profile=true;}
+            else if(arg=="--sparse-selection") o.sparse_selection=value;
+            else if(arg=="--attention-score-tiles") o.kernels.attention_score_tiles=value;
+            else if(arg=="--cached-compare-axis") o.cached_compare_axis=value;
+            else if(arg=="--cached-progress") cached_progress=value;
+            else if(arg=="--sparse-capture") {o.sparse_capture=value;o.kernels.profile=true;}
             else if(arg=="--q8-decode-rows") o.kernels.q8_decode_rows=std::stoul(value);
             else if(arg=="--soak-seconds") soak_seconds=std::stoi(value);
             else if(arg=="--panel") o.panel=std::stoi(value);
@@ -192,6 +205,7 @@ int main(int argc,char** argv) {
             else if(arg=="--replay-hits") replay_hits=std::stoi(value);
             else if(arg=="--ready-group") o.ready_group=std::stoi(value);
             else if(arg=="--dependency-trace") o.dependency_trace=value;
+            else if(arg=="--route-trace") o.route_trace=value;
             else if(arg=="--io-workers") o.io_workers=std::stoi(value);
             else if(arg=="--max-tokens") o.max_tokens=std::stoi(value);
             else if(arg=="--temperature") o.temperature=std::stof(value);
@@ -216,14 +230,28 @@ int main(int argc,char** argv) {
         }
         if(repetitions<1 || repetitions>20 || port<1 || port>65535) throw std::invalid_argument("invalid repetitions or port");
         o.kernels.validate();
-        if(o.cached_compare && (!o.cached_token_replay || !o.kernels.q8_decode_rows || o.kernels.profile || repetitions<5))
-            throw std::invalid_argument("cached comparison requires unprofiled cached replay, a Q8 candidate, and at least five pairs");
-        if((o.residency!="off" || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay) && command!="bench" && command!="inspect")
+        if(o.sparse_selection!="cpu" && o.sparse_selection!="gpu") throw std::invalid_argument("sparse selection must be cpu or gpu");
+        if(o.cached_compare_axis!="q8_decode_rows" && o.cached_compare_axis!="sparse_selection" && o.cached_compare_axis!="attention_score_tiles")
+            throw std::invalid_argument("invalid cached comparison axis");
+        if(o.decode_diagnostics && (command!="bench" || o.cached_token_replay || o.diagnostic_stream_trunk || o.probe_layers!=Layers || workloads_path.empty()))
+            throw std::invalid_argument("decode diagnostics require normal bench --workload-file");
+        if(o.cached_compare && (!o.cached_token_replay || o.kernels.profile || repetitions<5 ||
+           (o.cached_compare_axis=="q8_decode_rows" && !o.kernels.q8_decode_rows) ||
+           (o.cached_compare_axis=="sparse_selection" && o.sparse_selection!="gpu") ||
+           (o.cached_compare_axis=="attention_score_tiles" && o.kernels.attention_score_tiles!="skip-masked")))
+            throw std::invalid_argument("cached comparison requires an unprofiled candidate and at least five pairs");
+        if((o.cache_policy!="clock" || o.residency!="off" || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay ||
+            o.sparse_selection!="cpu" || o.kernels.attention_score_tiles!="full" || !o.sparse_capture.empty()) && command!="bench" && command!="inspect")
             throw std::invalid_argument("execution experiments require bench or inspect");
         if(o.cached_token_replay && ((command!="bench" && command!="inspect") || (command=="bench" && tokens_path.empty()) || kernel_probe || storage || !io_path.empty() || !o.operator_fixtures.empty() || !logits_path.empty() || probe || !replay_routes.empty() || !workloads_path.empty() || !o.trace_dir.empty() || !o.kernels.operator_capture.empty()))
             throw std::invalid_argument("cached replay requires bench --tokens-file and no other diagnostic");
         if(soak_seconds<0 || soak_seconds>86400 || (soak_seconds && (command!="bench" || workloads_path.empty())))
             throw std::invalid_argument("soak requires a benchmark workload and 1..86400 seconds");
+        if(!o.route_trace.empty() && (command!="bench" || workloads_path.empty() || repetitions!=1 || soak_seconds ||
+            o.cached_token_replay || probe || storage || kernel_probe || !replay_routes.empty() || !logits_path.empty() || !io_path.empty() || !o.operator_fixtures.empty()))
+            throw std::invalid_argument("route trace requires one normal bench workload repetition");
+        if(!o.route_trace.empty() && !json_path.empty() && std::filesystem::absolute(o.route_trace)==std::filesystem::absolute(json_path))
+            throw std::invalid_argument("route trace and benchmark report must use different files");
         if((o.kernels.policy=="candidate" || o.kernels.profile) && command!="bench" && command!="inspect")
             throw std::invalid_argument("experimental kernels and profiling require bench or inspect");
         std::signal(SIGINT,interrupt); std::signal(SIGTERM,interrupt);
@@ -234,20 +262,42 @@ int main(int argc,char** argv) {
         if(o.residency!="off" && o.residency!="core" && o.residency!="core-cache") throw std::invalid_argument("invalid residency mode");
         if(o.decode_path!="reference" && o.decode_path!="direct" && o.decode_path!="grouped") throw std::invalid_argument("invalid decode path");
         if(o.prefill_pipeline!="serial" && o.prefill_pipeline!="double") throw std::invalid_argument("invalid prefill pipeline");
+        (void)parse_cache_policy(o.cache_policy);
         if(o.phase_memory!="fixed" && o.phase_memory!="reclaim") throw std::invalid_argument("invalid phase memory policy");
         if(o.phase_memory=="reclaim" && o.prefill_pipeline!="double") throw std::invalid_argument("phase reclamation requires double prefill");
+        if(!cached_progress.empty() && (command!="bench" || !o.cached_token_replay))
+            throw std::invalid_argument("cached progress requires bench --cached-token-replay");
+        if(!cached_progress.empty() && ((!json_path.empty() && std::filesystem::weakly_canonical(cached_progress)==std::filesystem::weakly_canonical(json_path)) ||
+            (!phase_profile.empty() && std::filesystem::weakly_canonical(cached_progress)==std::filesystem::weakly_canonical(phase_profile))))
+            throw std::invalid_argument("cached progress must have a separate output path");
         if(o.cached_token_replay && !o.expert_slots) o.expert_slots=480;
         if(o.cached_token_replay && command=="bench") {
             if(!o.expert_slots) o.expert_slots=480;
             auto input=read_json(tokens_path).get<std::vector<int>>();
             if(input.size()<2 || input.size()>size_t(o.context)) throw std::invalid_argument("cached replay requires prompt plus continuation within context");
-            Model model(o);
-            auto report=model.cached_token_replay(input,repetitions,&cancelled);
-            if(!phase_profile.empty()) {
-                std::ofstream stream(phase_profile);stream<<model.take_profile().dump()<<'\n';
-                if(!stream) throw std::runtime_error("cannot write cached-token profile");
+            std::unique_ptr<CachedProgress> progress;
+            if(!cached_progress.empty()) progress=std::make_unique<CachedProgress>(cached_progress,Json{
+                {"build",build_fingerprint()},{"artifact_revision",artifact_revision(o.artifact)},
+                {"prompt_tokens",input.size()-1},{"budget_bytes",o.memory},{"comparison_axis",o.cached_compare_axis},
+                {"paired_comparison",o.cached_compare}});
+            try {
+                if(progress) progress->begin("model_load");
+                Model model(o);
+                if(progress) progress->end();
+                auto report=model.cached_token_replay(input,repetitions,&cancelled,progress.get());
+                if(progress) progress->begin("report_write");
+                if(!phase_profile.empty()) {
+                    std::ofstream stream(phase_profile);stream<<model.take_profile().dump()<<'\n';
+                    if(!stream) throw std::runtime_error("cannot write cached-token profile");
+                }
+                emit(report);
+                if(progress) {progress->end();progress->finish("complete");}
+            } catch(const std::exception& error) {
+                if(progress) try {progress->finish(cancelled.load()?"interrupted":"failed",error.what());}
+                    catch(const std::exception& logging) {std::cerr<<"cached progress: "<<logging.what()<<'\n';}
+                throw;
             }
-            emit(report);return 0;
+            return 0;
         }
         if(!io_path.empty()) {if(command!="bench")throw std::invalid_argument("--io-file requires bench");emit(storage_bench(io_path,repetitions));return 0;}
         if(!o.operator_fixtures.empty()) {if(command!="bench") throw std::invalid_argument("operator fixtures require bench");emit(fixture_kernel_bench(o,repetitions));return 0;}
@@ -269,9 +319,9 @@ int main(int argc,char** argv) {
             auto report=cp.inspect();
             if(!o.prepared.empty()) report["prepared"]=PreparedArtifact(o.prepared,cp).inspect();
             o.kernels.artifact_revision=cp.revision();gpu.configure(o.kernels);
-            auto planned=MemoryPlan::make(o.memory,gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay);planned.cap_experts(o.expert_slots);report["memory_plan"]=planned.json();
+            auto planned=MemoryPlan::make(o.memory,gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay);planned.cap_experts(o.expert_slots);report["memory_plan"]=planned.json();report["cache_policy"]=o.cache_policy;
             if(o.phase_memory=="reclaim") {report["phase_memory"]={{"policy",o.phase_memory},{"prompt_plan",planned.json()},{"generation_plan",planned.without_prompt_workspaces(o.expert_slots).json()}};report["memory_plan"]=report["phase_memory"]["generation_plan"];}
-            report["machine"]=gpu.statistics();report["process"]=process_memory();
+            report["sparse_selection"]=o.sparse_selection;report["machine"]=gpu.statistics();report["process"]=process_memory();
             const auto available=available_memory();
             try {
                 if(available<=GiB+GiB/2) throw std::runtime_error("insufficient currently available memory");
@@ -330,15 +380,18 @@ int main(int argc,char** argv) {
                         auto ids=task.at("tokens").get<std::vector<int>>();
                         if(task.value("append",false)) {history.insert(history.end(),ids.begin(),ids.end());ids=history;}
                         else {session.clear();history=ids;}
+                        if(auto* trace=model.route_trace()) trace->request_begin(task.at("name"),ids,settings.max_tokens,task.value("prime",false));
                         const auto before=model.stats();auto result=task.value("prime",false)?session.prime(ids,&cancelled):session.generate(ids,settings,{},&cancelled);
+                        if(auto* trace=model.route_trace()) trace->request_end(result.tokens,result.finish_reason,result.reused_tokens);
                         auto row=result.json();row["name"]=task.at("name");row["repetition"]=rep;row["before"]=before;row["after"]=model.stats();
                         row["runtime_cache_state"]=runs.empty()?"empty_at_process_start":"retained";
-                        row["initialization_ns"]=initialization_ns;row["profiling_enabled"]=o.kernels.profile || !o.dependency_trace.empty() || !o.trace_dir.empty();
+                        row["initialization_ns"]=initialization_ns;row["profiling_enabled"]=o.decode_diagnostics || o.kernels.profile || !o.dependency_trace.empty() || !o.route_trace.empty() || !o.trace_dir.empty();
                         runs.push_back(row);history.insert(history.end(),result.tokens.begin(),result.tokens.end());
                         if(!json_path.empty()) emit({{"model_revision",model.checkpoint().revision()},{"sampling",sampling},{"workloads",cases},{"runs",runs},{"complete",false}});
                         std::println(stderr,"{}: {:.2f} tokens/s, first token {:.1f}s, {} tokens reused",task.at("name").get<std::string>(),row["tokens_per_second"].get<double>(),result.first_token_ms/1000,result.reused_tokens);
                     }
                 }
+                if(auto* trace=model.route_trace()) trace->finish();
                 flush_profile();emit({{"model_revision",model.checkpoint().revision()},{"sampling",sampling},{"workloads",cases},{"runs",runs},{"complete",true},
                     {"soak_seconds_requested",soak_seconds},{"benchmark_elapsed_ns",monotonic_ns()-soak_start}});return 0;
             }
@@ -349,7 +402,7 @@ int main(int argc,char** argv) {
                 session.clear(); const auto before=model.stats();
                 auto result=session.generate(ids,o,{},&cancelled);auto row=result.json();row["repetition"]=rep;
                 row["runtime_cache_state"]=rep==0?"empty_at_process_start":"retained";
-                row["initialization_ns"]=initialization_ns;row["profiling_enabled"]=o.kernels.profile || !o.dependency_trace.empty() || !o.trace_dir.empty();
+                row["initialization_ns"]=initialization_ns;row["profiling_enabled"]=o.decode_diagnostics || o.kernels.profile || !o.dependency_trace.empty() || !o.trace_dir.empty();
                 row["before"]=before;row["after"]=model.stats();runs.push_back(row);
                 std::println(stderr,"Run {}: {:.2f} tokens/s, first token {:.1f}s",rep+1,row["tokens_per_second"].get<double>(),result.first_token_ms/1000);
             }

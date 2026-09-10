@@ -1,0 +1,1119 @@
+{
+  "kind": "expert_cache_simulation_v1",
+  "status": "simulated",
+  "scope": "fixed_order_serial_demand_simulation",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-10-extended-routes/raw/routes.jsonl",
+      "sha256": "2b39d4745755e99af0fd28174b7956d54a600a3e2c1748d8140f73ec2ed3e34a",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-10-extended-routes/raw/routes.jsonl"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Simulation of expert reads only; no measured latency, tokens/s, device traffic or quality gain.",
+    "Fixed ascending expert-ID demand order within each recorded layer pass, with within-pass deduplication. No token-major reconstruction of prefill panels. Native hit-first admission can change the order.",
+    "Only committed forwards are included. Explicit session/cache resets and omitted work start cold segments. Unfiltered captures retain simulated prefill warmth into decode; phase filters do not.",
+    "Immediate read completion and release; no pinned GPU users, loading joins, prefetch, OS cache or read overlap. CLOCK here matches the native rule only under those assumptions.",
+    "Belady is a future-aware minimum for the SAME fixed order, equal-size records and mandatory admission. It is not a bound for arbitrary native schedules, variable-size quantization or end-to-end latency.",
+    "Budgets cover expert slots only, including alignment. Resident weights, metadata, ngrams, state, scratch and driver reserve need separate admission; this curve cannot approve an engine memory budget.",
+    "Request token inputs and terminal markers are checked against committed forwards. Artifact identities are recorded claims, and a complete short capture does not establish representative locality.",
+    "Request/phase counters partition the unfiltered simulation without resetting its cache. Belady minimizes total misses for each segment, not misses in every individual phase."
+  ],
+  "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "source_result": {
+    "status": "complete",
+    "complete": true
+  },
+  "coverage": {
+    "identity": {
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb"
+    },
+    "input_passes": 13920,
+    "explicit_boundary_events": 0,
+    "included_passes": 13920,
+    "excluded_incomplete_passes": 0,
+    "missing_route_passes": 0,
+    "filtered_passes": 0,
+    "incomplete_windows": 0,
+    "logical_router_selections": 234720,
+    "demand_record_accesses": 154886,
+    "within_pass_grouped_selections": 79834,
+    "compulsory_misses": 16017,
+    "segment_count": 1,
+    "cold_starts": 1,
+    "boundary_count": 0,
+    "boundaries": [],
+    "boundary_details_truncated": false,
+    "segments": [
+      {
+        "start_offset": 0,
+        "end_offset": 489,
+        "phase": "prefill",
+        "session_id": "1:0",
+        "first_source_pointer": "line:4",
+        "last_source_pointer": "line:14503",
+        "windows": 290,
+        "single_token_windows": 288,
+        "phases": [
+          "prefill",
+          "decode",
+          "append"
+        ]
+      }
+    ],
+    "segment_details_truncated": false,
+    "whole_request_covered": true,
+    "session_boundaries_fully_known": true,
+    "phase_filter": null,
+    "capture_limits": null,
+    "query_truncated": false,
+    "route_trace_protocol": "qwen_route_trace_v1",
+    "committed_forwards": 290,
+    "aborted_forwards": 0,
+    "uncommitted_layer_passes": 0,
+    "completed_requests": 2,
+    "phase_filter_starts_cold": false
+  },
+  "layout": {
+    "format": "affine_q4_group64",
+    "expert_payload_bytes": 2764800,
+    "aligned_slot_bytes": 2768896,
+    "layers": 48,
+    "experts_per_layer": 512,
+    "top_k": 10
+  },
+  "policy_parameters": {
+    "segmented_lru_protected_fraction": 0.75,
+    "mandatory_admission": true
+  },
+  "curves": [
+    {
+      "budget_mib": 4880,
+      "budget_bytes": 5117050880,
+      "slots": 1848,
+      "slot_allocation_bytes": 5116919808,
+      "unused_budget_bytes": 131072,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 78843,
+          "misses": 76043,
+          "application_miss_bytes": 210243686400,
+          "byte_hit_fraction": 0.5090389060341154,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 71131,
+              "misses": 51749,
+              "demands": 122880,
+              "application_miss_bytes": 143075635200,
+              "byte_hit_fraction": 0.5788655598958333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 123,
+              "misses": 8835,
+              "demands": 8958,
+              "application_miss_bytes": 24427008000,
+              "byte_hit_fraction": 0.013730743469524447
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 7589,
+              "misses": 7771,
+              "demands": 15360,
+              "application_miss_bytes": 21485260800,
+              "byte_hit_fraction": 0.49407552083333334
+            }
+          ],
+          "layers": [
+            {
+              "layer": 0,
+              "hits": 766,
+              "misses": 2646,
+              "application_miss_bytes": 7315660800
+            },
+            {
+              "layer": 1,
+              "hits": 1029,
+              "misses": 2275,
+              "application_miss_bytes": 6289920000
+            },
+            {
+              "layer": 2,
+              "hits": 1210,
+              "misses": 2074,
+              "application_miss_bytes": 5734195200
+            },
+            {
+              "layer": 3,
+              "hits": 1496,
+              "misses": 1627,
+              "application_miss_bytes": 4498329600
+            },
+            {
+              "layer": 4,
+              "hits": 1453,
+              "misses": 1740,
+              "application_miss_bytes": 4810752000
+            },
+            {
+              "layer": 5,
+              "hits": 1336,
+              "misses": 1894,
+              "application_miss_bytes": 5236531200
+            },
+            {
+              "layer": 6,
+              "hits": 1290,
+              "misses": 1992,
+              "application_miss_bytes": 5507481600
+            },
+            {
+              "layer": 7,
+              "hits": 1252,
+              "misses": 2043,
+              "application_miss_bytes": 5648486400
+            },
+            {
+              "layer": 8,
+              "hits": 1807,
+              "misses": 1376,
+              "application_miss_bytes": 3804364800
+            },
+            {
+              "layer": 9,
+              "hits": 1903,
+              "misses": 1259,
+              "application_miss_bytes": 3480883200
+            },
+            {
+              "layer": 10,
+              "hits": 1568,
+              "misses": 1661,
+              "application_miss_bytes": 4592332800
+            },
+            {
+              "layer": 11,
+              "hits": 1809,
+              "misses": 1407,
+              "application_miss_bytes": 3890073600
+            },
+            {
+              "layer": 12,
+              "hits": 1396,
+              "misses": 1875,
+              "application_miss_bytes": 5184000000
+            },
+            {
+              "layer": 13,
+              "hits": 1562,
+              "misses": 1687,
+              "application_miss_bytes": 4664217600
+            },
+            {
+              "layer": 14,
+              "hits": 1694,
+              "misses": 1527,
+              "application_miss_bytes": 4221849600
+            },
+            {
+              "layer": 15,
+              "hits": 2238,
+              "misses": 847,
+              "application_miss_bytes": 2341785600
+            },
+            {
+              "layer": 16,
+              "hits": 2176,
+              "misses": 964,
+              "application_miss_bytes": 2665267200
+            },
+            {
+              "layer": 17,
+              "hits": 1736,
+              "misses": 1509,
+              "application_miss_bytes": 4172083200
+            },
+            {
+              "layer": 18,
+              "hits": 1454,
+              "misses": 1809,
+              "application_miss_bytes": 5001523200
+            },
+            {
+              "layer": 19,
+              "hits": 1791,
+              "misses": 1408,
+              "application_miss_bytes": 3892838400
+            },
+            {
+              "layer": 20,
+              "hits": 1813,
+              "misses": 1412,
+              "application_miss_bytes": 3903897600
+            },
+            {
+              "layer": 21,
+              "hits": 1654,
+              "misses": 1594,
+              "application_miss_bytes": 4407091200
+            },
+            {
+              "layer": 22,
+              "hits": 1223,
+              "misses": 2105,
+              "application_miss_bytes": 5819904000
+            },
+            {
+              "layer": 23,
+              "hits": 1689,
+              "misses": 1481,
+              "application_miss_bytes": 4094668800
+            },
+            {
+              "layer": 24,
+              "hits": 1648,
+              "misses": 1539,
+              "application_miss_bytes": 4255027200
+            },
+            {
+              "layer": 25,
+              "hits": 1769,
+              "misses": 1407,
+              "application_miss_bytes": 3890073600
+            },
+            {
+              "layer": 26,
+              "hits": 1451,
+              "misses": 1767,
+              "application_miss_bytes": 4885401600
+            },
+            {
+              "layer": 27,
+              "hits": 1718,
+              "misses": 1499,
+              "application_miss_bytes": 4144435200
+            },
+            {
+              "layer": 28,
+              "hits": 1501,
+              "misses": 1769,
+              "application_miss_bytes": 4890931200
+            },
+            {
+              "layer": 29,
+              "hits": 1613,
+              "misses": 1653,
+              "application_miss_bytes": 4570214400
+            },
+            {
+              "layer": 30,
+              "hits": 1764,
+              "misses": 1467,
+              "application_miss_bytes": 4055961600
+            },
+            {
+              "layer": 31,
+              "hits": 2185,
+              "misses": 935,
+              "application_miss_bytes": 2585088000
+            },
+            {
+              "layer": 32,
+              "hits": 2097,
+              "misses": 1071,
+              "application_miss_bytes": 2961100800
+            },
+            {
+              "layer": 33,
+              "hits": 1725,
+              "misses": 1539,
+              "application_miss_bytes": 4255027200
+            },
+            {
+              "layer": 34,
+              "hits": 1509,
+              "misses": 1754,
+              "application_miss_bytes": 4849459200
+            },
+            {
+              "layer": 35,
+              "hits": 1844,
+              "misses": 1381,
+              "application_miss_bytes": 3818188800
+            },
+            {
+              "layer": 36,
+              "hits": 1900,
+              "misses": 1351,
+              "application_miss_bytes": 3735244800
+            },
+            {
+              "layer": 37,
+              "hits": 1799,
+              "misses": 1446,
+              "application_miss_bytes": 3997900800
+            },
+            {
+              "layer": 38,
+              "hits": 1368,
+              "misses": 1941,
+              "application_miss_bytes": 5366476800
+            },
+            {
+              "layer": 39,
+              "hits": 1901,
+              "misses": 1282,
+              "application_miss_bytes": 3544473600
+            },
+            {
+              "layer": 40,
+              "hits": 1954,
+              "misses": 1216,
+              "application_miss_bytes": 3361996800
+            },
+            {
+              "layer": 41,
+              "hits": 1747,
+              "misses": 1468,
+              "application_miss_bytes": 4058726400
+            },
+            {
+              "layer": 42,
+              "hits": 1680,
+              "misses": 1585,
+              "application_miss_bytes": 4382208000
+            },
+            {
+              "layer": 43,
+              "hits": 1826,
+              "misses": 1388,
+              "application_miss_bytes": 3837542400
+            },
+            {
+              "layer": 44,
+              "hits": 1703,
+              "misses": 1543,
+              "application_miss_bytes": 4266086400
+            },
+            {
+              "layer": 45,
+              "hits": 1724,
+              "misses": 1466,
+              "application_miss_bytes": 4053196800
+            },
+            {
+              "layer": 46,
+              "hits": 1647,
+              "misses": 1566,
+              "application_miss_bytes": 4329676800
+            },
+            {
+              "layer": 47,
+              "hits": 1425,
+              "misses": 1798,
+              "application_miss_bytes": 4971110400
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 82607,
+          "misses": 72279,
+          "application_miss_bytes": 199836979200,
+          "byte_hit_fraction": 0.53334065054298,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 74092,
+              "misses": 48788,
+              "demands": 122880,
+              "application_miss_bytes": 134889062400,
+              "byte_hit_fraction": 0.6029622395833333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 959,
+              "misses": 7999,
+              "demands": 8958,
+              "application_miss_bytes": 22115635200,
+              "byte_hit_fraction": 0.10705514623799955
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 7556,
+              "misses": 7804,
+              "demands": 15360,
+              "application_miss_bytes": 21576499200,
+              "byte_hit_fraction": 0.49192708333333335
+            }
+          ],
+          "layers": [
+            {
+              "layer": 0,
+              "hits": 601,
+              "misses": 2811,
+              "application_miss_bytes": 7771852800
+            },
+            {
+              "layer": 1,
+              "hits": 1066,
+              "misses": 2238,
+              "application_miss_bytes": 6187622400
+            },
+            {
+              "layer": 2,
+              "hits": 1192,
+              "misses": 2092,
+              "application_miss_bytes": 5783961600
+            },
+            {
+              "layer": 3,
+              "hits": 1585,
+              "misses": 1538,
+              "application_miss_bytes": 4252262400
+            },
+            {
+              "layer": 4,
+              "hits": 1447,
+              "misses": 1746,
+              "application_miss_bytes": 4827340800
+            },
+            {
+              "layer": 5,
+              "hits": 1465,
+              "misses": 1765,
+              "application_miss_bytes": 4879872000
+            },
+            {
+              "layer": 6,
+              "hits": 1322,
+              "misses": 1960,
+              "application_miss_bytes": 5419008000
+            },
+            {
+              "layer": 7,
+              "hits": 1284,
+              "misses": 2011,
+              "application_miss_bytes": 5560012800
+            },
+            {
+              "layer": 8,
+              "hits": 1938,
+              "misses": 1245,
+              "application_miss_bytes": 3442176000
+            },
+            {
+              "layer": 9,
+              "hits": 2056,
+              "misses": 1106,
+              "application_miss_bytes": 3057868800
+            },
+            {
+              "layer": 10,
+              "hits": 1715,
+              "misses": 1514,
+              "application_miss_bytes": 4185907200
+            },
+            {
+              "layer": 11,
+              "hits": 1939,
+              "misses": 1277,
+              "application_miss_bytes": 3530649600
+            },
+            {
+              "layer": 12,
+              "hits": 1475,
+              "misses": 1796,
+              "application_miss_bytes": 4965580800
+            },
+            {
+              "layer": 13,
+              "hits": 1672,
+              "misses": 1577,
+              "application_miss_bytes": 4360089600
+            },
+            {
+              "layer": 14,
+              "hits": 1822,
+              "misses": 1399,
+              "application_miss_bytes": 3867955200
+            },
+            {
+              "layer": 15,
+              "hits": 2284,
+              "misses": 801,
+              "application_miss_bytes": 2214604800
+            },
+            {
+              "layer": 16,
+              "hits": 2290,
+              "misses": 850,
+              "application_miss_bytes": 2350080000
+            },
+            {
+              "layer": 17,
+              "hits": 1848,
+              "misses": 1397,
+              "application_miss_bytes": 3862425600
+            },
+            {
+              "layer": 18,
+              "hits": 1533,
+              "misses": 1730,
+              "application_miss_bytes": 4783104000
+            },
+            {
+              "layer": 19,
+              "hits": 1929,
+              "misses": 1270,
+              "application_miss_bytes": 3511296000
+            },
+            {
+              "layer": 20,
+              "hits": 1898,
+              "misses": 1327,
+              "application_miss_bytes": 3668889600
+            },
+            {
+              "layer": 21,
+              "hits": 1719,
+              "misses": 1529,
+              "application_miss_bytes": 4227379200
+            },
+            {
+              "layer": 22,
+              "hits": 1276,
+              "misses": 2052,
+              "application_miss_bytes": 5673369600
+            },
+            {
+              "layer": 23,
+              "hits": 1800,
+              "misses": 1370,
+              "application_miss_bytes": 3787776000
+            },
+            {
+              "layer": 24,
+              "hits": 1702,
+              "misses": 1485,
+              "application_miss_bytes": 4105728000
+            },
+            {
+              "layer": 25,
+              "hits": 1869,
+              "misses": 1307,
+              "application_miss_bytes": 3613593600
+            },
+            {
+              "layer": 26,
+              "hits": 1490,
+              "misses": 1728,
+              "application_miss_bytes": 4777574400
+            },
+            {
+              "layer": 27,
+              "hits": 1751,
+              "misses": 1466,
+              "application_miss_bytes": 4053196800
+            },
+            {
+              "layer": 28,
+              "hits": 1543,
+              "misses": 1727,
+              "application_miss_bytes": 4774809600
+            },
+            {
+              "layer": 29,
+              "hits": 1602,
+              "misses": 1664,
+              "application_miss_bytes": 4600627200
+            },
+            {
+              "layer": 30,
+              "hits": 1821,
+              "misses": 1410,
+              "application_miss_bytes": 3898368000
+            },
+            {
+              "layer": 31,
+              "hits": 2240,
+              "misses": 880,
+              "application_miss_bytes": 2433024000
+            },
+            {
+              "layer": 32,
+              "hits": 2162,
+              "misses": 1006,
+              "application_miss_bytes": 2781388800
+            },
+            {
+              "layer": 33,
+              "hits": 1753,
+              "misses": 1511,
+              "application_miss_bytes": 4177612800
+            },
+            {
+              "layer": 34,
+              "hits": 1609,
+              "misses": 1654,
+              "application_miss_bytes": 4572979200
+            },
+            {
+              "layer": 35,
+              "hits": 1903,
+              "misses": 1322,
+              "application_miss_bytes": 3655065600
+            },
+            {
+              "layer": 36,
+              "hits": 1966,
+              "misses": 1285,
+              "application_miss_bytes": 3552768000
+            },
+            {
+              "layer": 37,
+              "hits": 1884,
+              "misses": 1361,
+              "application_miss_bytes": 3762892800
+            },
+            {
+              "layer": 38,
+              "hits": 1462,
+              "misses": 1847,
+              "application_miss_bytes": 5106585600
+            },
+            {
+              "layer": 39,
+              "hits": 2023,
+              "misses": 1160,
+              "application_miss_bytes": 3207168000
+            },
+            {
+              "layer": 40,
+              "hits": 2066,
+              "misses": 1104,
+              "application_miss_bytes": 3052339200
+            },
+            {
+              "layer": 41,
+              "hits": 1869,
+              "misses": 1346,
+              "application_miss_bytes": 3721420800
+            },
+            {
+              "layer": 42,
+              "hits": 1803,
+              "misses": 1462,
+              "application_miss_bytes": 4042137600
+            },
+            {
+              "layer": 43,
+              "hits": 1933,
+              "misses": 1281,
+              "application_miss_bytes": 3541708800
+            },
+            {
+              "layer": 44,
+              "hits": 1829,
+              "misses": 1417,
+              "application_miss_bytes": 3917721600
+            },
+            {
+              "layer": 45,
+              "hits": 1889,
+              "misses": 1301,
+              "application_miss_bytes": 3597004800
+            },
+            {
+              "layer": 46,
+              "hits": 1772,
+              "misses": 1441,
+              "application_miss_bytes": 3984076800
+            },
+            {
+              "layer": 47,
+              "hits": 1510,
+              "misses": 1713,
+              "application_miss_bytes": 4736102400
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 108304,
+          "misses": 46582,
+          "application_miss_bytes": 128789913600,
+          "byte_hit_fraction": 0.6992497707991684,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 94834,
+              "misses": 28046,
+              "demands": 122880,
+              "application_miss_bytes": 77541580800,
+              "byte_hit_fraction": 0.7717610677083333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 1628,
+              "misses": 7330,
+              "demands": 8958,
+              "application_miss_bytes": 20265984000,
+              "byte_hit_fraction": 0.1817369948649252
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 11842,
+              "misses": 3518,
+              "demands": 15360,
+              "application_miss_bytes": 9726566400,
+              "byte_hit_fraction": 0.7709635416666667
+            }
+          ],
+          "layers": [
+            {
+              "layer": 0,
+              "hits": 1879,
+              "misses": 1533,
+              "application_miss_bytes": 4238438400
+            },
+            {
+              "layer": 1,
+              "hits": 1910,
+              "misses": 1394,
+              "application_miss_bytes": 3854131200
+            },
+            {
+              "layer": 2,
+              "hits": 2010,
+              "misses": 1274,
+              "application_miss_bytes": 3522355200
+            },
+            {
+              "layer": 3,
+              "hits": 2226,
+              "misses": 897,
+              "application_miss_bytes": 2480025600
+            },
+            {
+              "layer": 4,
+              "hits": 2186,
+              "misses": 1007,
+              "application_miss_bytes": 2784153600
+            },
+            {
+              "layer": 5,
+              "hits": 2167,
+              "misses": 1063,
+              "application_miss_bytes": 2938982400
+            },
+            {
+              "layer": 6,
+              "hits": 2059,
+              "misses": 1223,
+              "application_miss_bytes": 3381350400
+            },
+            {
+              "layer": 7,
+              "hits": 2048,
+              "misses": 1247,
+              "application_miss_bytes": 3447705600
+            },
+            {
+              "layer": 8,
+              "hits": 2311,
+              "misses": 872,
+              "application_miss_bytes": 2410905600
+            },
+            {
+              "layer": 9,
+              "hits": 2427,
+              "misses": 735,
+              "application_miss_bytes": 2032128000
+            },
+            {
+              "layer": 10,
+              "hits": 2217,
+              "misses": 1012,
+              "application_miss_bytes": 2797977600
+            },
+            {
+              "layer": 11,
+              "hits": 2383,
+              "misses": 833,
+              "application_miss_bytes": 2303078400
+            },
+            {
+              "layer": 12,
+              "hits": 2132,
+              "misses": 1139,
+              "application_miss_bytes": 3149107200
+            },
+            {
+              "layer": 13,
+              "hits": 2183,
+              "misses": 1066,
+              "application_miss_bytes": 2947276800
+            },
+            {
+              "layer": 14,
+              "hits": 2309,
+              "misses": 912,
+              "application_miss_bytes": 2521497600
+            },
+            {
+              "layer": 15,
+              "hits": 2590,
+              "misses": 495,
+              "application_miss_bytes": 1368576000
+            },
+            {
+              "layer": 16,
+              "hits": 2585,
+              "misses": 555,
+              "application_miss_bytes": 1534464000
+            },
+            {
+              "layer": 17,
+              "hits": 2351,
+              "misses": 894,
+              "application_miss_bytes": 2471731200
+            },
+            {
+              "layer": 18,
+              "hits": 2153,
+              "misses": 1110,
+              "application_miss_bytes": 3068928000
+            },
+            {
+              "layer": 19,
+              "hits": 2352,
+              "misses": 847,
+              "application_miss_bytes": 2341785600
+            },
+            {
+              "layer": 20,
+              "hits": 2323,
+              "misses": 902,
+              "application_miss_bytes": 2493849600
+            },
+            {
+              "layer": 21,
+              "hits": 2194,
+              "misses": 1054,
+              "application_miss_bytes": 2914099200
+            },
+            {
+              "layer": 22,
+              "hits": 2023,
+              "misses": 1305,
+              "application_miss_bytes": 3608064000
+            },
+            {
+              "layer": 23,
+              "hits": 2294,
+              "misses": 876,
+              "application_miss_bytes": 2421964800
+            },
+            {
+              "layer": 24,
+              "hits": 2231,
+              "misses": 956,
+              "application_miss_bytes": 2643148800
+            },
+            {
+              "layer": 25,
+              "hits": 2360,
+              "misses": 816,
+              "application_miss_bytes": 2256076800
+            },
+            {
+              "layer": 26,
+              "hits": 2172,
+              "misses": 1046,
+              "application_miss_bytes": 2891980800
+            },
+            {
+              "layer": 27,
+              "hits": 2303,
+              "misses": 914,
+              "application_miss_bytes": 2527027200
+            },
+            {
+              "layer": 28,
+              "hits": 2211,
+              "misses": 1059,
+              "application_miss_bytes": 2927923200
+            },
+            {
+              "layer": 29,
+              "hits": 2182,
+              "misses": 1084,
+              "application_miss_bytes": 2997043200
+            },
+            {
+              "layer": 30,
+              "hits": 2349,
+              "misses": 882,
+              "application_miss_bytes": 2438553600
+            },
+            {
+              "layer": 31,
+              "hits": 2594,
+              "misses": 526,
+              "application_miss_bytes": 1454284800
+            },
+            {
+              "layer": 32,
+              "hits": 2527,
+              "misses": 641,
+              "application_miss_bytes": 1772236800
+            },
+            {
+              "layer": 33,
+              "hits": 2286,
+              "misses": 978,
+              "application_miss_bytes": 2703974400
+            },
+            {
+              "layer": 34,
+              "hits": 2168,
+              "misses": 1095,
+              "application_miss_bytes": 3027456000
+            },
+            {
+              "layer": 35,
+              "hits": 2342,
+              "misses": 883,
+              "application_miss_bytes": 2441318400
+            },
+            {
+              "layer": 36,
+              "hits": 2384,
+              "misses": 867,
+              "application_miss_bytes": 2397081600
+            },
+            {
+              "layer": 37,
+              "hits": 2314,
+              "misses": 931,
+              "application_miss_bytes": 2574028800
+            },
+            {
+              "layer": 38,
+              "hits": 2085,
+              "misses": 1224,
+              "application_miss_bytes": 3384115200
+            },
+            {
+              "layer": 39,
+              "hits": 2424,
+              "misses": 759,
+              "application_miss_bytes": 2098483200
+            },
+            {
+              "layer": 40,
+              "hits": 2427,
+              "misses": 743,
+              "application_miss_bytes": 2054246400
+            },
+            {
+              "layer": 41,
+              "hits": 2276,
+              "misses": 939,
+              "application_miss_bytes": 2596147200
+            },
+            {
+              "layer": 42,
+              "hits": 2217,
+              "misses": 1048,
+              "application_miss_bytes": 2897510400
+            },
+            {
+              "layer": 43,
+              "hits": 2305,
+              "misses": 909,
+              "application_miss_bytes": 2513203200
+            },
+            {
+              "layer": 44,
+              "hits": 2268,
+              "misses": 978,
+              "application_miss_bytes": 2703974400
+            },
+            {
+              "layer": 45,
+              "hits": 2258,
+              "misses": 932,
+              "application_miss_bytes": 2576793600
+            },
+            {
+              "layer": 46,
+              "hits": 2202,
+              "misses": 1011,
+              "application_miss_bytes": 2795212800
+            },
+            {
+              "layer": 47,
+              "hits": 2107,
+              "misses": 1116,
+              "application_miss_bytes": 3085516800
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 81453772800
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "predicted_tokens_per_second": null,
+  "predicted_request_speedup": null,
+  "next_experiment": "First capture 32 successive tokens of normal generation with explicit session/reset/phase markers and complete routes after a prompt, under a fixed deadline. If promising, extend to 256 tokens and a retained-history append. Screen one cache policy at the same admitted byte budget before full qualification."
+}

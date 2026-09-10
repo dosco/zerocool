@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-10T05:46:48.913705+00:00",
+  "native_build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "native_build_changed": false,
+  "frozen_qualification_dependencies_unchanged": true,
+  "prior_identity_sha256": "abf34351717b1fbf1f90014986f64c060b990d2cc4fb1e69f1c6ff41de423dec",
+  "python_tests": 105,
+  "new_query_tests": 15,
+  "python_test_log_sha256": "58b640d60b0fe796564bcd8453e497ce4c90c3ecbf3405ebff6de3518e5d5ef1",
+  "code_sha256": {
+    "scripts/qwen/evidence_index.py": "3277487e75831b92dfd8dda3e63aca8eaafd155aceaf93f2ef394eb807395757",
+    "scripts/qwen/evidence_queries.py": "93710d2775c7dbb447a640117dde2c89cc0e29f4f47236ac6017d9fe24fb00aa",
+    "scripts/qwen/query_evidence.py": "7748786b7b7693c7fe13d51488ab5719ac22c462d33e44a15e391c83fef88cd0",
+    "scripts/qwen/test_evidence_queries.py": "878eabb677c424f2d922ec5376f9b8fc071c27f695eb4bd2146c47b26eafdcf5"
+  },
+  "live_import": {
+    "documents": 409,
+    "issues": [],
+    "limitations": [
+      "Import is a snapshot; queries verify selected raw files again.",
+      "Files over 64MiB and malformed files are reported as issues; JSONL indexing is bounded."
+    ],
+    "paths": 465,
+    "sources": [
+      "/repo/docs/benchmarks",
+      "/repo/.cache/benchmarks/decode-compute",
+      "/repo/docs/experiments"
+    ]
+  },
+  "example_sha256": {
+    "normal.json": "a6180d12e7803351983d6a2360352a1b7636bd197400673407aa64066be1bc35",
+    "cached.json": "3cb81856668a622f7d1874cd96946742892091bcb10ab1077060efb2bbbe582d",
+    "memory.json": "e3d377fb319eddf485a3850062db92c8284f12dd75407b5daa36a5eb6f419b9d",
+    "timeline.json": "e3e2e2219a88604f160a6420f93edd51b881b0f614dd62c9c8f1d47b1729728a",
+    "history.json": "820f53db0b312161dd67438527b8d58bcae68d8b053eb9783a3a26161e1c8aac",
+    "next.json": "f76c801e72589a94bc705b09c196ffee5667487eb3a6818c8e1b73c40dcc90d3"
+  },
+  "production_promoted": false,
+  "limitations": [
+    "Historical evidence queried; no new inference timing measured.",
+    "Independent model-quality and runtime qualification are unchanged."
+  ]
+}

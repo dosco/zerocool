@@ -1,0 +1,39 @@
+{
+  "kind": "extended_normal_route_verification_v1",
+  "recorded_at": "2026-09-10T20:30:09.420960+00:00",
+  "native_build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "python_tests": 159,
+  "python_tests_passed": true,
+  "native_tests_rerun": false,
+  "previous_native_validation": {
+    "path": "/repo/docs/benchmarks/2026-09-10-normal-routes/verification.json",
+    "sha256": "e06a1015f3428d820c322a8cf4954972a01cbe653c90e978fd7444085844aa25",
+    "native_tests": 53,
+    "native_assertions": 7084,
+    "same_native_build": true
+  },
+  "original_capture_seal_sha256": "c327e939bba956954c96b4d29cfbe0747d4d71a5670ca3d159da8ba67ac14ac7",
+  "original_and_copy_seals_verified": true,
+  "frozen_identity_rechecked_after_capture": true,
+  "capture_revalidated": true,
+  "all_committed_forwards_have_1848_slots": true,
+  "implementation_sha256": {
+    "scripts/qwen/capture_routes.py": "c134958ec67fbb539cf4e24d830ae6a8a002d57ff822cea5c8c33a36335d7184",
+    "scripts/qwen/route_trace.py": "035900b82b0f10d2d41c7b4e6a6ad6467cbd2542fe41de85d998230495988452",
+    "scripts/qwen/cache_simulation.py": "86caf9bb170aff246ada6b619eec3b9b9caa4d12862933229d8599708813880a",
+    "scripts/qwen/test_route_trace.py": "7009b86664893b143de497c2522c399b9cfd926550ec1c6736cb8bf812c5fca0"
+  },
+  "evidence_sha256": {
+    "docs/benchmarks/2026-09-10-extended-routes/README.md": "bf9616e2d6cc18167f0f055256b175bd4bfe7813b7d84c4e62d64775e762a237",
+    "docs/benchmarks/2026-09-10-extended-routes/python-tests.log": "e221668990f19f6bfc4e682ae4e31d302f0331afac66ca0834b88439d8a01fb1",
+    "docs/benchmarks/2026-09-10-extended-routes/observations.json": "ddf7c1f60383b5630da9957c6ec8ec37b93334f7988f6897f9a09eae564a4025",
+    "docs/benchmarks/2026-09-10-extended-routes/cache-actual-capacity.json": "a7aa67da1ef1742a5865ce06078417d3c8ec6df483818ff8f22dc374a18e1ad8",
+    "docs/benchmarks/2026-09-10-extended-routes/ledger-input.json": "a13d1c69efadc1892b5dd19e5c404ad998ec97b1d28fd8d7df22f42828e52b68",
+    "docs/benchmarks/2026-09-10-extended-routes/ledger-result.json": "bab1c71813c13b773868217a5f6355be8620bf60f81d15b38daebd4d9fc1ebb9",
+    "/repo/docs/experiments/ab745f534d04d2136222a2cb91a1a89f8e199e7224f3f9f97b021e3df637da63.json": "ab745f534d04d2136222a2cb91a1a89f8e199e7224f3f9f97b021e3df637da63",
+    "docs/qwen_evidence_queries.md": "b645cb964b0a9afca5af561b804f928d84d542e238c2bda1e6bf2f4923f9dabd",
+    "docs/qwen_plan.md": "c97c5fd934726069a25d7f7df6922b6a10e0dc0cf964a32f4468adab016e4574"
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

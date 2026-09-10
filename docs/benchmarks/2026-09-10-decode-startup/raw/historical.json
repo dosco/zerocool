@@ -1,0 +1,95 @@
+{
+  "kind": "decode_startup_historical_analysis_v1",
+  "complete": true,
+  "measurements": [
+    {
+      "pair": 0,
+      "policy": "clock",
+      "source": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/pair-0-clock.json",
+      "sha256": "4144e4b828755dddc61208f27bfbcfea33e6c1f2ca90b2414ae974098a57a28e",
+      "decode_wall_ms": 22194.317499999997,
+      "first_4_ms": 11215.337416,
+      "remaining_28_ms": 10964.59042,
+      "decode_process_delta": {
+        "decompressions": 1760841,
+        "page_faults": 375585,
+        "pageins": 0,
+        "system_swap_used_bytes": 0
+      },
+      "decode_metal_delta": {
+        "cpu_encode_ns": 174739284,
+        "cpu_gpu_wait_ns": 15043839284,
+        "gpu_command_ns": 8195904671,
+        "submissions": 9586
+      }
+    },
+    {
+      "pair": 0,
+      "policy": "slru",
+      "source": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/pair-0-slru.json",
+      "sha256": "10cfb0b26fd5055d4e8f5e116c35eab141191c2f9fdec29a6e678e2c68580b60",
+      "decode_wall_ms": 12386.951582999998,
+      "first_4_ms": 2203.7345,
+      "remaining_28_ms": 10168.896085,
+      "decode_process_delta": {
+        "decompressions": 89554,
+        "page_faults": 22403,
+        "pageins": 0,
+        "system_swap_used_bytes": 0
+      },
+      "decode_metal_delta": {
+        "cpu_encode_ns": 149819302,
+        "cpu_gpu_wait_ns": 7044904260,
+        "gpu_command_ns": 7243342276,
+        "submissions": 9654
+      }
+    },
+    {
+      "pair": 1,
+      "policy": "slru",
+      "source": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/pair-1-slru.json",
+      "sha256": "e7dfa126dc769e0842ae942ca81d6ecac506c40d10a240f4a405a52bf1116979",
+      "decode_wall_ms": 17209.512042000002,
+      "first_4_ms": 6763.5169989999995,
+      "remaining_28_ms": 10431.666749,
+      "decode_process_delta": {
+        "decompressions": 975730,
+        "page_faults": 292446,
+        "pageins": 0,
+        "system_swap_used_bytes": 0
+      },
+      "decode_metal_delta": {
+        "cpu_encode_ns": 154384770,
+        "cpu_gpu_wait_ns": 10829259711,
+        "gpu_command_ns": 7577902851,
+        "submissions": 9307
+      }
+    },
+    {
+      "pair": 1,
+      "policy": "clock",
+      "source": "/repo/docs/benchmarks/2026-09-10-slru-screen/raw/pair-1-clock.json",
+      "sha256": "5261bb716f5a4f727665b3e05567670e97a92b16d75383387826ef1b80a64ba0",
+      "decode_wall_ms": 12912.582416000001,
+      "first_4_ms": 2215.7204580000002,
+      "remaining_28_ms": 10682.440415,
+      "decode_process_delta": {
+        "decompressions": 98262,
+        "page_faults": 22353,
+        "pageins": 0,
+        "system_swap_used_bytes": 0
+      },
+      "decode_metal_delta": {
+        "cpu_encode_ns": 160815642,
+        "cpu_gpu_wait_ns": 7098787591,
+        "gpu_command_ns": 7265994238,
+        "submissions": 10102
+      }
+    }
+  ],
+  "limitations": [
+    "The first-four split was selected after inspecting this evidence.",
+    "Per-request process counters cannot locate decompression at individual tokens.",
+    "Overlapping GPU, CPU-wait and read-duration sums cannot be added into request time."
+  ]
+}

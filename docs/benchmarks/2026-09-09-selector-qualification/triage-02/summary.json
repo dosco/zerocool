@@ -1,0 +1,33 @@
+{
+  "kind": "selector_cached_triage",
+  "status": "resource_blocked",
+  "complete": false,
+  "time_limit_seconds": 600,
+  "started_at": "2026-09-10T03:54:18.184073+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/repo/.cache/benchmarks/selector-qualification/2026-09-09-triage-02/cached-run"
+  ],
+  "build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "error": "Native memory/storage admission failed; see /repo/.cache/benchmarks/selector-qualification/2026-09-09-triage-02/launch.log",
+  "elapsed_seconds": 7.859704291447997,
+  "finished_at": "2026-09-10T03:54:26.043669+00:00"
+}

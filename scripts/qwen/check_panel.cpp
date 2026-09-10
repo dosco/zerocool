@@ -49,12 +49,15 @@ int main(int argc,char** argv) {
         const auto artifact=config.value("artifact",std::string("q4-control"));
         if(artifact=="mixed-4_8bit") options.artifact=Artifact::Mixed;
         else if(artifact!="q4-control") throw std::invalid_argument("unknown panel fixture artifact");
+        options.cache_policy=config.value("cache_policy",std::string("clock"));
         options.audit_routes=true;options.chunk=config.at("chunk");options.memory=uint64_t(config.value("memory_gib",4.0)*GiB);
         options.probe_layers=config.value("layers",Layers);options.expert_slots=config.value("expert_slots",size_t(32));
         options.diagnostic_stream_trunk=config.value("diagnostic_stream_trunk",true);
         options.residency=config.value("residency",std::string("off"));
         options.decode_path=config.value("decode_path",std::string("reference"));
         options.prefill_pipeline=config.value("prefill_pipeline",std::string("serial"));
+        options.sparse_selection=config.value("sparse_selection",std::string("cpu"));
+        options.kernels.attention_score_tiles=config.value("attention_score_tiles",std::string("full"));
         options.kernels.affine_rows=config.value("affine_rows",1u);
         options.kernels.q8_decode_rows=config.value("q8_decode_rows",0u);
         options.kernels.gate_pair=config.value("gate_pair",std::string("off"))=="on";

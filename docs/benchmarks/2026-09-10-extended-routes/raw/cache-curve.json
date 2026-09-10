@@ -1,0 +1,989 @@
+{
+  "kind": "expert_cache_simulation_v1",
+  "status": "simulated",
+  "scope": "fixed_order_serial_demand_simulation",
+  "sources": [
+    {
+      "path": "/repo/.cache/benchmarks/routes/2026-09-10-extended-01/routes.jsonl",
+      "sha256": "2b39d4745755e99af0fd28174b7956d54a600a3e2c1748d8140f73ec2ed3e34a",
+      "aliases": [
+        "/repo/.cache/benchmarks/routes/2026-09-10-extended-01/routes.jsonl"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Simulation of expert reads only; no measured latency, tokens/s, device traffic or quality gain.",
+    "Fixed ascending expert-ID demand order within each recorded layer pass, with within-pass deduplication. No token-major reconstruction of prefill panels. Native hit-first admission can change the order.",
+    "Only committed forwards are included. Explicit session/cache resets and omitted work start cold segments. Unfiltered captures retain simulated prefill warmth into decode; phase filters do not.",
+    "Immediate read completion and release; no pinned GPU users, loading joins, prefetch, OS cache or read overlap. CLOCK here matches the native rule only under those assumptions.",
+    "Belady is a future-aware minimum for the SAME fixed order, equal-size records and mandatory admission. It is not a bound for arbitrary native schedules, variable-size quantization or end-to-end latency.",
+    "Budgets cover expert slots only, including alignment. Resident weights, metadata, ngrams, state, scratch and driver reserve need separate admission; this curve cannot approve an engine memory budget.",
+    "Request token inputs and terminal markers are checked against committed forwards. Artifact identities are recorded claims, and a complete short capture does not establish representative locality.",
+    "Request/phase counters partition the unfiltered simulation without resetting its cache. Belady minimizes total misses for each segment, not misses in every individual phase."
+  ],
+  "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "source_result": {
+    "status": "complete",
+    "complete": true
+  },
+  "coverage": {
+    "identity": {
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "build": "fc0207993bb8736f67f7b9c233f5b66cded6ca2c654e76c73db21763d50b12cb"
+    },
+    "input_passes": 13920,
+    "explicit_boundary_events": 0,
+    "included_passes": 13920,
+    "excluded_incomplete_passes": 0,
+    "missing_route_passes": 0,
+    "filtered_passes": 0,
+    "incomplete_windows": 0,
+    "logical_router_selections": 234720,
+    "demand_record_accesses": 154886,
+    "within_pass_grouped_selections": 79834,
+    "compulsory_misses": 16017,
+    "segment_count": 1,
+    "cold_starts": 1,
+    "boundary_count": 0,
+    "boundaries": [],
+    "boundary_details_truncated": false,
+    "segments": [
+      {
+        "start_offset": 0,
+        "end_offset": 489,
+        "phase": "prefill",
+        "session_id": "1:0",
+        "first_source_pointer": "line:4",
+        "last_source_pointer": "line:14503",
+        "windows": 290,
+        "single_token_windows": 288,
+        "phases": [
+          "prefill",
+          "decode",
+          "append"
+        ]
+      }
+    ],
+    "segment_details_truncated": false,
+    "whole_request_covered": true,
+    "session_boundaries_fully_known": true,
+    "phase_filter": null,
+    "capture_limits": null,
+    "query_truncated": false,
+    "route_trace_protocol": "qwen_route_trace_v1",
+    "committed_forwards": 290,
+    "aborted_forwards": 0,
+    "uncommitted_layer_passes": 0,
+    "completed_requests": 2,
+    "phase_filter_starts_cold": false
+  },
+  "layout": {
+    "format": "affine_q4_group64",
+    "expert_payload_bytes": 2764800,
+    "aligned_slot_bytes": 2768896,
+    "layers": 48,
+    "experts_per_layer": 512,
+    "top_k": 10
+  },
+  "policy_parameters": {
+    "segmented_lru_protected_fraction": 0.75,
+    "mandatory_admission": true
+  },
+  "curves": [
+    {
+      "budget_mib": 0,
+      "budget_bytes": 0,
+      "slots": 0,
+      "slot_allocation_bytes": 0,
+      "unused_budget_bytes": 0,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 0,
+          "misses": 154886,
+          "application_miss_bytes": 428228812800,
+          "byte_hit_fraction": 0.0,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 122880,
+              "demands": 122880,
+              "application_miss_bytes": 339738624000,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 0,
+              "misses": 8958,
+              "demands": 8958,
+              "application_miss_bytes": 24767078400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 15360,
+              "demands": 15360,
+              "application_miss_bytes": 42467328000,
+              "byte_hit_fraction": 0.0
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 0,
+          "misses": 154886,
+          "application_miss_bytes": 428228812800,
+          "byte_hit_fraction": 0.0,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 122880,
+              "demands": 122880,
+              "application_miss_bytes": 339738624000,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 0,
+              "misses": 8958,
+              "demands": 8958,
+              "application_miss_bytes": 24767078400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 15360,
+              "demands": 15360,
+              "application_miss_bytes": 42467328000,
+              "byte_hit_fraction": 0.0
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 0,
+          "misses": 154886,
+          "application_miss_bytes": 428228812800,
+          "byte_hit_fraction": 0.0,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 122880,
+              "demands": 122880,
+              "application_miss_bytes": 339738624000,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 0,
+              "misses": 8958,
+              "demands": 8958,
+              "application_miss_bytes": 24767078400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 15360,
+              "demands": 15360,
+              "application_miss_bytes": 42467328000,
+              "byte_hit_fraction": 0.0
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 0
+    },
+    {
+      "budget_mib": 1024,
+      "budget_bytes": 1073741824,
+      "slots": 387,
+      "slot_allocation_bytes": 1071562752,
+      "unused_budget_bytes": 2179072,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 0,
+          "misses": 154886,
+          "application_miss_bytes": 428228812800,
+          "byte_hit_fraction": 0.0,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 122880,
+              "demands": 122880,
+              "application_miss_bytes": 339738624000,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 0,
+              "misses": 8958,
+              "demands": 8958,
+              "application_miss_bytes": 24767078400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 15360,
+              "demands": 15360,
+              "application_miss_bytes": 42467328000,
+              "byte_hit_fraction": 0.0
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 0,
+          "misses": 154886,
+          "application_miss_bytes": 428228812800,
+          "byte_hit_fraction": 0.0,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 122880,
+              "demands": 122880,
+              "application_miss_bytes": 339738624000,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 0,
+              "misses": 8958,
+              "demands": 8958,
+              "application_miss_bytes": 24767078400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 15360,
+              "demands": 15360,
+              "application_miss_bytes": 42467328000,
+              "byte_hit_fraction": 0.0
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 69117,
+          "misses": 85769,
+          "application_miss_bytes": 237134131200,
+          "byte_hit_fraction": 0.446244334542825,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 61774,
+              "misses": 61106,
+              "demands": 122880,
+              "application_miss_bytes": 168945868800,
+              "byte_hit_fraction": 0.5027180989583333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 352,
+              "misses": 8606,
+              "demands": 8958,
+              "application_miss_bytes": 23793868800,
+              "byte_hit_fraction": 0.03929448537620005
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 6991,
+              "misses": 8369,
+              "demands": 15360,
+              "application_miss_bytes": 23138611200,
+              "byte_hit_fraction": 0.45514322916666666
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 191094681600
+    },
+    {
+      "budget_mib": 2048,
+      "budget_bytes": 2147483648,
+      "slots": 775,
+      "slot_allocation_bytes": 2145894400,
+      "unused_budget_bytes": 1589248,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 53168,
+          "misses": 101718,
+          "application_miss_bytes": 281229926400,
+          "byte_hit_fraction": 0.3432718257298917,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 48386,
+              "misses": 74494,
+              "demands": 122880,
+              "application_miss_bytes": 205961011200,
+              "byte_hit_fraction": 0.39376627604166664
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 17,
+              "misses": 8941,
+              "demands": 8958,
+              "application_miss_bytes": 24720076800,
+              "byte_hit_fraction": 0.0018977450323732976
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 4765,
+              "misses": 10595,
+              "demands": 15360,
+              "application_miss_bytes": 29293056000,
+              "byte_hit_fraction": 0.3102213541666667
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 21295,
+          "misses": 133591,
+          "application_miss_bytes": 369352396800,
+          "byte_hit_fraction": 0.1374882171403484,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 16974,
+              "misses": 105906,
+              "demands": 122880,
+              "application_miss_bytes": 292808908800,
+              "byte_hit_fraction": 0.138134765625
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 443,
+              "misses": 8515,
+              "demands": 8958,
+              "application_miss_bytes": 23542272000,
+              "byte_hit_fraction": 0.04945300290243358
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 3878,
+              "misses": 11482,
+              "demands": 15360,
+              "application_miss_bytes": 31745433600,
+              "byte_hit_fraction": 0.25247395833333336
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 86895,
+          "misses": 67991,
+          "application_miss_bytes": 187981516800,
+          "byte_hit_fraction": 0.5610255284531849,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 77007,
+              "misses": 45873,
+              "demands": 122880,
+              "application_miss_bytes": 126829670400,
+              "byte_hit_fraction": 0.6266845703125
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 740,
+              "misses": 8218,
+              "demands": 8958,
+              "application_miss_bytes": 22721126400,
+              "byte_hit_fraction": 0.08260772493860237
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 9148,
+              "misses": 6212,
+              "demands": 15360,
+              "application_miss_bytes": 17174937600,
+              "byte_hit_fraction": 0.5955729166666667
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 93248409600
+    },
+    {
+      "budget_mib": 4096,
+      "budget_bytes": 4294967296,
+      "slots": 1551,
+      "slot_allocation_bytes": 4294557696,
+      "unused_budget_bytes": 409600,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 74493,
+          "misses": 80393,
+          "application_miss_bytes": 222270566400,
+          "byte_hit_fraction": 0.4809537337138282,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 67271,
+              "misses": 55609,
+              "demands": 122880,
+              "application_miss_bytes": 153747763200,
+              "byte_hit_fraction": 0.5474527994791667
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 82,
+              "misses": 8876,
+              "demands": 8958,
+              "application_miss_bytes": 24540364800,
+              "byte_hit_fraction": 0.009153828979682964
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 7140,
+              "misses": 8220,
+              "demands": 15360,
+              "application_miss_bytes": 22726656000,
+              "byte_hit_fraction": 0.46484375
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 76705,
+          "misses": 78181,
+          "application_miss_bytes": 216154828800,
+          "byte_hit_fraction": 0.49523520524773057,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 69553,
+              "misses": 53327,
+              "demands": 122880,
+              "application_miss_bytes": 147438489600,
+              "byte_hit_fraction": 0.5660237630208333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 795,
+              "misses": 8163,
+              "demands": 8958,
+              "application_miss_bytes": 22569062400,
+              "byte_hit_fraction": 0.08874748827863363
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 6357,
+              "misses": 9003,
+              "demands": 15360,
+              "application_miss_bytes": 24891494400,
+              "byte_hit_fraction": 0.4138671875
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 103940,
+          "misses": 50946,
+          "application_miss_bytes": 140855500800,
+          "byte_hit_fraction": 0.6710742094185401,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 91336,
+              "misses": 31544,
+              "demands": 122880,
+              "application_miss_bytes": 87212851200,
+              "byte_hit_fraction": 0.7432942708333333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 1356,
+              "misses": 7602,
+              "demands": 8958,
+              "application_miss_bytes": 21018009600,
+              "byte_hit_fraction": 0.15137307434695244
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 11248,
+              "misses": 4112,
+              "demands": 15360,
+              "application_miss_bytes": 11368857600,
+              "byte_hit_fraction": 0.7322916666666667
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 81415065600
+    },
+    {
+      "budget_mib": 6144,
+      "budget_bytes": 6442450944,
+      "slots": 2326,
+      "slot_allocation_bytes": 6440452096,
+      "unused_budget_bytes": 1998848,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 85513,
+          "misses": 69373,
+          "application_miss_bytes": 191802470400,
+          "byte_hit_fraction": 0.5521028369252224,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 76969,
+              "misses": 45911,
+              "demands": 122880,
+              "application_miss_bytes": 126934732800,
+              "byte_hit_fraction": 0.6263753255208333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 205,
+              "misses": 8753,
+              "demands": 8958,
+              "application_miss_bytes": 24200294400,
+              "byte_hit_fraction": 0.022884572449207413
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 8339,
+              "misses": 7021,
+              "demands": 15360,
+              "application_miss_bytes": 19411660800,
+              "byte_hit_fraction": 0.5429036458333333
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 90954,
+          "misses": 63932,
+          "application_miss_bytes": 176759193600,
+          "byte_hit_fraction": 0.5872318995906667,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 81124,
+              "misses": 41756,
+              "demands": 122880,
+              "application_miss_bytes": 115446988800,
+              "byte_hit_fraction": 0.6601888020833333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 1164,
+              "misses": 7794,
+              "demands": 8958,
+              "application_miss_bytes": 21548851200,
+              "byte_hit_fraction": 0.12993971868720697
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 8666,
+              "misses": 6694,
+              "demands": 15360,
+              "application_miss_bytes": 18507571200,
+              "byte_hit_fraction": 0.5641927083333333
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 113782,
+          "misses": 41104,
+          "application_miss_bytes": 113644339200,
+          "byte_hit_fraction": 0.7346177188383715,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 99327,
+              "misses": 23553,
+              "demands": 122880,
+              "application_miss_bytes": 65119334400,
+              "byte_hit_fraction": 0.8083251953125
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 2053,
+              "misses": 6905,
+              "demands": 8958,
+              "application_miss_bytes": 19090944000,
+              "byte_hit_fraction": 0.22918062067425765
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 12402,
+              "misses": 2958,
+              "demands": 15360,
+              "application_miss_bytes": 8178278400,
+              "byte_hit_fraction": 0.807421875
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 78158131200
+    },
+    {
+      "budget_mib": 8192,
+      "budget_bytes": 8589934592,
+      "slots": 3102,
+      "slot_allocation_bytes": 8589115392,
+      "unused_budget_bytes": 819200,
+      "policies": [
+        {
+          "policy": "clock",
+          "demands": 154886,
+          "hits": 93625,
+          "misses": 61261,
+          "application_miss_bytes": 169374412800,
+          "byte_hit_fraction": 0.6044768410314683,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 83557,
+              "misses": 39323,
+              "demands": 122880,
+              "application_miss_bytes": 108720230400,
+              "byte_hit_fraction": 0.6799886067708333
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 396,
+              "misses": 8562,
+              "demands": 8958,
+              "application_miss_bytes": 23672217600,
+              "byte_hit_fraction": 0.04420629604822505
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 9672,
+              "misses": 5688,
+              "demands": 15360,
+              "application_miss_bytes": 15726182400,
+              "byte_hit_fraction": 0.6296875
+            }
+          ]
+        },
+        {
+          "policy": "segmented_lru",
+          "demands": 154886,
+          "hits": 99728,
+          "misses": 55158,
+          "application_miss_bytes": 152500838400,
+          "byte_hit_fraction": 0.6438800149787586,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 88345,
+              "misses": 34535,
+              "demands": 122880,
+              "application_miss_bytes": 95482368000,
+              "byte_hit_fraction": 0.7189534505208334
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 1490,
+              "misses": 7468,
+              "demands": 8958,
+              "application_miss_bytes": 20647526400,
+              "byte_hit_fraction": 0.16633177048448314
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 9893,
+              "misses": 5467,
+              "demands": 15360,
+              "application_miss_bytes": 15115161600,
+              "byte_hit_fraction": 0.6440755208333333
+            }
+          ]
+        },
+        {
+          "policy": "belady",
+          "demands": 154886,
+          "hits": 120507,
+          "misses": 34379,
+          "application_miss_bytes": 95051059200,
+          "byte_hit_fraction": 0.7780367496093902,
+          "request_phases": [
+            {
+              "request_id": 1,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "demands": 7688,
+              "application_miss_bytes": 21255782400,
+              "byte_hit_fraction": 0.0
+            },
+            {
+              "request_id": 1,
+              "phase": "decode",
+              "hits": 104709,
+              "misses": 18171,
+              "demands": 122880,
+              "application_miss_bytes": 50239180800,
+              "byte_hit_fraction": 0.8521240234375
+            },
+            {
+              "request_id": 2,
+              "phase": "append",
+              "hits": 2618,
+              "misses": 6340,
+              "demands": 8958,
+              "application_miss_bytes": 17528832000,
+              "byte_hit_fraction": 0.2922527349854878
+            },
+            {
+              "request_id": 2,
+              "phase": "decode",
+              "hits": 13180,
+              "misses": 2180,
+              "demands": 15360,
+              "application_miss_bytes": 6027264000,
+              "byte_hit_fraction": 0.8580729166666666
+            }
+          ]
+        }
+      ],
+      "clock_minus_oracle_read_bytes": 74323353600
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "predicted_tokens_per_second": null,
+  "predicted_request_speedup": null,
+  "next_experiment": "First capture 32 successive tokens of normal generation with explicit session/reset/phase markers and complete routes after a prompt, under a fixed deadline. If promising, extend to 256 tokens and a retained-history append. Screen one cache policy at the same admitted byte budget before full qualification."
+}

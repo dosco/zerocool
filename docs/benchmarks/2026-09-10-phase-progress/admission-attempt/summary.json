@@ -1,0 +1,18 @@
+{
+  "kind": "cached_phase_progress_check",
+  "complete": false,
+  "status": "resource_blocked",
+  "time_limit_seconds": 120,
+  "started_at": "2026-09-10T17:10:44.808181+00:00",
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build": "0ee8056629ccc4841e11cc20546e2772a24614b9c53ecf2040860009a4ffe50b",
+  "error": "Common budget/panel unavailable after bounded admission retries",
+  "phase_progress": {
+    "available": false,
+    "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-phase-progress-01/progress.jsonl",
+    "limitation": "No phase progress was recorded."
+  },
+  "elapsed_seconds": 7.5533296670764685,
+  "finished_at": "2026-09-10T17:10:52.373701+00:00"
+}

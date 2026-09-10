@@ -56,7 +56,7 @@ class ExactBenchmarkTest(unittest.TestCase):
         with self.assertRaises(ValueError):config_args({"name":"test","unknown":1})
 
     def test_partial_workload_coverage_cannot_qualify(self):
-        rows=[dict(configuration=name,name="prompt_2k",pair=p,ttft_ms=latency,decode_ms_per_token=latency)
+        rows=[dict(configuration=name,name="prompt_2k",pair=p,ttft_ms=latency,decode_ms_per_token=latency,request_ms=latency)
               for p in range(5) for name,latency in [("reference",100),("precompute",80)]]
         result=summarize(rows,configurations()[:2])[0]
         self.assertFalse(result["required_workloads_complete"])
@@ -68,17 +68,54 @@ class ExactBenchmarkTest(unittest.TestCase):
             rows.append(dict(configuration=name,name="prompt_2k",ttft_ms=ttft,decode_ms_per_token=decode))
         self.assertEqual(choose(dict(measurements=rows))[0],"balanced")
 
-    def test_session_qualification_rejects_incomplete_or_changed_state(self):
+    def session_fixture(self):
         stage=dict(layers=[{}]*48,routes=[{}]*48,logits_sha256="identical")
-        stats=dict(metal=dict(build_fingerprint="native"),diagnostic_stream_trunk=False,memory_plan=dict(panel_tokens=512))
-        reference=dict(passed=True,runs=[dict(panel=512,stages=[stage],continued_statistics=stats)])
-        self.assertTrue(compare(reference,copy.deepcopy(reference),"native"))
+        stats=dict(metal=dict(build_fingerprint="native",kernels=dict(policy='reference',token_tile=1,gdn='original')),
+                   execution=dict(sparse_selection='cpu',residency='off',decode_path='reference',
+                                  prefill_pipeline='serial',phase_memory='fixed'),
+                   ready_group=4,chunk_tokens=128,io_workers=8,
+                   diagnostic_stream_trunk=False,memory_plan=dict(panel_tokens=512))
+        reference=dict(passed=True,case=dict(chunk=128),runs=[dict(panel=512,stages=[stage],continued_statistics=stats,
+                                                                 after_fresh=copy.deepcopy(stats))])
+        candidate=copy.deepcopy(reference)
+        candidate['case'].update(kernel_policy='candidate',token_tile=8,gdn_path='precompute',
+                                 sparse_selection='gpu',attention_score_tiles='skip-masked',q8_decode_rows=2,ready_group=2)
+        for name in ('continued_statistics','after_fresh'):
+            state=candidate['runs'][0][name]
+            state['metal']['kernels'].update(policy='candidate',token_tile=8,gdn='precompute',
+                                             attention_score_tiles='skip-masked',q8_decode_rows=2)
+            state['execution']['sparse_selection']='gpu';state['ready_group']=2
+        return reference,candidate
+
+    def test_session_qualification_rejects_incomplete_or_changed_state(self):
+        reference,candidate=self.session_fixture()
+        self.assertTrue(compare(reference,candidate,"native"))
         for change in [lambda r:r.update(passed=False),
                        lambda r:r["runs"][0]["stages"][0].update(logits_sha256="changed"),
                        lambda r:r["runs"][0]["continued_statistics"].update(diagnostic_stream_trunk=True),
                        lambda r:r["runs"][0]["continued_statistics"]["memory_plan"].update(panel_tokens=256)]:
-            candidate=copy.deepcopy(reference);change(candidate)
-            with self.assertRaises(ValueError):compare(reference,candidate,"native")
+            bad=copy.deepcopy(candidate);change(bad)
+            with self.assertRaises(ValueError):compare(reference,bad,"native")
+
+    def test_session_qualification_binds_both_execution_configurations(self):
+        reference,candidate=self.session_fixture()
+        expected=dict(reference_config=copy.deepcopy(reference['case']),candidate_config=copy.deepcopy(candidate['case']))
+        self.assertTrue(compare(reference,candidate,'native',**expected))
+        with self.assertRaises(ValueError):compare(reference,copy.deepcopy(reference),'native')
+        with self.assertRaises(ValueError):compare(reference,copy.deepcopy(reference),'native',**expected)
+        for state_name in ('continued_statistics','after_fresh'):
+            for change in [lambda s:s['execution'].update(sparse_selection='cpu'),
+                           lambda s:s['execution'].update(decode_path='grouped'),
+                           lambda s:s['metal']['kernels'].update(attention_score_tiles='full'),
+                           lambda s:s['metal']['kernels'].update(q8_decode_rows=0),
+                           lambda s:s['metal']['kernels'].update(token_tile=1),
+                           lambda s:s.update(ready_group=4)]:
+                bad=copy.deepcopy(candidate);change(bad['runs'][0][state_name])
+                with self.assertRaises(ValueError):compare(reference,bad,'native',**expected)
+        bad=copy.deepcopy(candidate);bad['case']['sparse_selection']='cpu'
+        with self.assertRaises(ValueError):compare(reference,bad,'native',**expected)
+        bad=copy.deepcopy(reference);bad['runs'][0]['after_fresh']['metal']['kernels']['token_tile']=8
+        with self.assertRaises(ValueError):compare(bad,candidate,'native',**expected)
 
     def test_prime_qualification_checks_actual_reuse_and_sampling(self):
         stats=dict(metal=dict(build_fingerprint="native"),diagnostic_stream_trunk=False)

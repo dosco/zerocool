@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "kind": "exact_native_session_parity",
+  "build_fingerprint": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "case": "append",
+  "all_48_layers": true,
+  "all_logits_and_state_equal": true,
+  "all_routes_equal": true,
+  "session_prime_checked": false,
+  "independent_long_context_oracle": false,
+  "performance_qualified": false,
+  "report_hashes": {
+    "reference": "9016e7122094b5d96a0edc1f83f76f68d2664762ffe3ea2901ed3f9448f3a3e2",
+    "candidate": "3027fab7d74bcab679ae871acb30b1e53e77a71e20f9f6869f7b4c79c0473b03"
+  }
+}

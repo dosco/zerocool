@@ -1,0 +1,4625 @@
+{
+  "kind": "decode_startup_diagnostic_v1",
+  "status": "captured",
+  "complete": true,
+  "phase": "finished",
+  "measurements": [
+    {
+      "pair": 0,
+      "residency": "off",
+      "request": {
+        "name": "coding_routes_32",
+        "request_ms": 31378.180625,
+        "time_to_first_token_ms": 16184.782125,
+        "decode_wall_ms": 15193.398500000001,
+        "tokens_per_second": 2.1061778903515234,
+        "output_token_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629,
+          26126,
+          13,
+          198,
+          1031,
+          262,
+          17167,
+          25,
+          198,
+          285,
+          26126,
+          25,
+          357,
+          1103,
+          314,
+          26126,
+          11
+        ],
+        "reused_tokens": 0,
+        "phases": [
+          {
+            "phase": "ingest",
+            "expert_hits": 0,
+            "expert_misses": 7688,
+            "expert_read_bytes": 21255782400
+          },
+          {
+            "phase": "decode",
+            "expert_hits": 8826,
+            "expert_misses": 6534,
+            "expert_read_bytes": 18065203200
+          }
+        ],
+        "memory_before": {
+          "physical_footprint_bytes": 5484588672,
+          "resident_bytes": 5513838592,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 338165,
+          "pageins": 58,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 17301340160
+        },
+        "memory_after": {
+          "physical_footprint_bytes": 11186313664,
+          "resident_bytes": 5137661952,
+          "compressed_bytes": 6046105600,
+          "compressed_peak_bytes": 9186131968,
+          "decompressions": 1198340,
+          "page_faults": 1354150,
+          "pageins": 58,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 8299003904
+        }
+      },
+      "diagnostics": {
+        "samples": [
+          {
+            "step": 0,
+            "offset": 72,
+            "forward_ms": 2417.695708,
+            "process": {
+              "decompressions": 373405,
+              "page_faults": 69209,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 8215075,
+              "cpu_gpu_wait_ns": 2039194086,
+              "gpu_command_ns": 416612521,
+              "submissions": 358
+            },
+            "expert_cache": {
+              "hits": 75,
+              "misses": 405,
+              "application_read_bytes": 1119744000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 275357095,
+              "read_service_sum_ns": 1382304002,
+              "read_queue_sum_ns": 274448169
+            },
+            "observation_ns": 104667,
+            "compressed_bytes_before": 8784609280,
+            "compressed_bytes_after": 8150417408
+          },
+          {
+            "step": 1,
+            "offset": 73,
+            "forward_ms": 500.129333,
+            "process": {
+              "decompressions": 38196,
+              "page_faults": 37092,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6020899,
+              "cpu_gpu_wait_ns": 288106042,
+              "gpu_command_ns": 222404146,
+              "submissions": 291
+            },
+            "expert_cache": {
+              "hits": 265,
+              "misses": 215,
+              "application_read_bytes": 594432000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 145142925,
+              "read_service_sum_ns": 619151046,
+              "read_queue_sum_ns": 12348410
+            },
+            "observation_ns": 60792,
+            "compressed_bytes_before": 8150417408,
+            "compressed_bytes_after": 7562969088
+          },
+          {
+            "step": 2,
+            "offset": 74,
+            "forward_ms": 397.510084,
+            "process": {
+              "decompressions": 31096,
+              "page_faults": 29758,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5622586,
+              "cpu_gpu_wait_ns": 202698171,
+              "gpu_command_ns": 222643091,
+              "submissions": 286
+            },
+            "expert_cache": {
+              "hits": 308,
+              "misses": 172,
+              "application_read_bytes": 475545600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 126381213,
+              "read_service_sum_ns": 482736538,
+              "read_queue_sum_ns": 13778456
+            },
+            "observation_ns": 86167,
+            "compressed_bytes_before": 7562969088,
+            "compressed_bytes_after": 7104135168
+          },
+          {
+            "step": 3,
+            "offset": 75,
+            "forward_ms": 405.90475,
+            "process": {
+              "decompressions": 35491,
+              "page_faults": 35336,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6069316,
+              "cpu_gpu_wait_ns": 200784252,
+              "gpu_command_ns": 226499311,
+              "submissions": 295
+            },
+            "expert_cache": {
+              "hits": 275,
+              "misses": 205,
+              "application_read_bytes": 566784000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 139012710,
+              "read_service_sum_ns": 577887636,
+              "read_queue_sum_ns": 13168628
+            },
+            "observation_ns": 112708,
+            "compressed_bytes_before": 7104135168,
+            "compressed_bytes_after": 6552715264
+          },
+          {
+            "step": 4,
+            "offset": 76,
+            "forward_ms": 454.517209,
+            "process": {
+              "decompressions": 24335,
+              "page_faults": 26377,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6496180,
+              "cpu_gpu_wait_ns": 201294418,
+              "gpu_command_ns": 223849309,
+              "submissions": 420
+            },
+            "expert_cache": {
+              "hits": 122,
+              "misses": 358,
+              "application_read_bytes": 989798400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 176871452,
+              "read_service_sum_ns": 1099985161,
+              "read_queue_sum_ns": 76767080
+            },
+            "observation_ns": 63250,
+            "compressed_bytes_before": 6552715264,
+            "compressed_bytes_after": 6203850752
+          },
+          {
+            "step": 5,
+            "offset": 77,
+            "forward_ms": 586.760959,
+            "process": {
+              "decompressions": 12508,
+              "page_faults": 19008,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6270821,
+              "cpu_gpu_wait_ns": 293531793,
+              "gpu_command_ns": 323062279,
+              "submissions": 289
+            },
+            "expert_cache": {
+              "hits": 297,
+              "misses": 183,
+              "application_read_bytes": 505958400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 185692665,
+              "read_service_sum_ns": 554299246,
+              "read_queue_sum_ns": 17422163
+            },
+            "observation_ns": 111749,
+            "compressed_bytes_before": 6203850752,
+            "compressed_bytes_after": 6736150528
+          },
+          {
+            "step": 6,
+            "offset": 78,
+            "forward_ms": 504.369167,
+            "process": {
+              "decompressions": 36336,
+              "page_faults": 36857,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5682982,
+              "cpu_gpu_wait_ns": 250259962,
+              "gpu_command_ns": 284184671,
+              "submissions": 325
+            },
+            "expert_cache": {
+              "hits": 237,
+              "misses": 243,
+              "application_read_bytes": 671846400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 179794496,
+              "read_service_sum_ns": 689114035,
+              "read_queue_sum_ns": 18548331
+            },
+            "observation_ns": 73042,
+            "compressed_bytes_before": 6736150528,
+            "compressed_bytes_after": 6402162688
+          },
+          {
+            "step": 7,
+            "offset": 79,
+            "forward_ms": 623.5745,
+            "process": {
+              "decompressions": 16869,
+              "page_faults": 16889,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 8067314,
+              "cpu_gpu_wait_ns": 285271750,
+              "gpu_command_ns": 328518089,
+              "submissions": 245
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 250593121,
+              "read_service_sum_ns": 400139702,
+              "read_queue_sum_ns": 27350342
+            },
+            "observation_ns": 94208,
+            "compressed_bytes_before": 6402162688,
+            "compressed_bytes_after": 7388463104
+          },
+          {
+            "step": 8,
+            "offset": 80,
+            "forward_ms": 526.226166,
+            "process": {
+              "decompressions": 36901,
+              "page_faults": 33875,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6098387,
+              "cpu_gpu_wait_ns": 285525120,
+              "gpu_command_ns": 295935362,
+              "submissions": 287
+            },
+            "expert_cache": {
+              "hits": 281,
+              "misses": 199,
+              "application_read_bytes": 550195200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 174458420,
+              "read_service_sum_ns": 624732371,
+              "read_queue_sum_ns": 23948541
+            },
+            "observation_ns": 84125,
+            "compressed_bytes_before": 7388463104,
+            "compressed_bytes_after": 7398686720
+          },
+          {
+            "step": 9,
+            "offset": 81,
+            "forward_ms": 448.259542,
+            "process": {
+              "decompressions": 45803,
+              "page_faults": 38948,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5887235,
+              "cpu_gpu_wait_ns": 205193462,
+              "gpu_command_ns": 231329777,
+              "submissions": 282
+            },
+            "expert_cache": {
+              "hits": 253,
+              "misses": 227,
+              "application_read_bytes": 627609600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 170933693,
+              "read_service_sum_ns": 698715172,
+              "read_queue_sum_ns": 18363918
+            },
+            "observation_ns": 54083,
+            "compressed_bytes_before": 7398686720,
+            "compressed_bytes_after": 6912950272
+          },
+          {
+            "step": 10,
+            "offset": 82,
+            "forward_ms": 386.17575,
+            "process": {
+              "decompressions": 16918,
+              "page_faults": 14398,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5328535,
+              "cpu_gpu_wait_ns": 198536418,
+              "gpu_command_ns": 222745406,
+              "submissions": 270
+            },
+            "expert_cache": {
+              "hits": 318,
+              "misses": 162,
+              "application_read_bytes": 447897600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 111542627,
+              "read_service_sum_ns": 372522965,
+              "read_queue_sum_ns": 14263997
+            },
+            "observation_ns": 125333,
+            "compressed_bytes_before": 6912950272,
+            "compressed_bytes_after": 6688374784
+          },
+          {
+            "step": 11,
+            "offset": 83,
+            "forward_ms": 419.040625,
+            "process": {
+              "decompressions": 20557,
+              "page_faults": 23107,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5758827,
+              "cpu_gpu_wait_ns": 213042585,
+              "gpu_command_ns": 239905438,
+              "submissions": 315
+            },
+            "expert_cache": {
+              "hits": 264,
+              "misses": 216,
+              "application_read_bytes": 597196800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 128911302,
+              "read_service_sum_ns": 549083540,
+              "read_queue_sum_ns": 15330961
+            },
+            "observation_ns": 82709,
+            "compressed_bytes_before": 6688374784,
+            "compressed_bytes_after": 6321111040
+          },
+          {
+            "step": 12,
+            "offset": 84,
+            "forward_ms": 334.895208,
+            "process": {
+              "decompressions": 1353,
+              "page_faults": 5315,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4683495,
+              "cpu_gpu_wait_ns": 197792127,
+              "gpu_command_ns": 221636489,
+              "submissions": 259
+            },
+            "expert_cache": {
+              "hits": 361,
+              "misses": 119,
+              "application_read_bytes": 329011200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 73931625,
+              "read_service_sum_ns": 204781249,
+              "read_queue_sum_ns": 3364085
+            },
+            "observation_ns": 86333,
+            "compressed_bytes_before": 6321111040,
+            "compressed_bytes_after": 6246334464
+          },
+          {
+            "step": 13,
+            "offset": 85,
+            "forward_ms": 335.243458,
+            "process": {
+              "decompressions": 170,
+              "page_faults": 2381,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4765641,
+              "cpu_gpu_wait_ns": 197106210,
+              "gpu_command_ns": 221388507,
+              "submissions": 251
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 81720745,
+              "read_service_sum_ns": 173187995,
+              "read_queue_sum_ns": 2889458
+            },
+            "observation_ns": 55166,
+            "compressed_bytes_before": 6246334464,
+            "compressed_bytes_after": 6218629120
+          },
+          {
+            "step": 14,
+            "offset": 86,
+            "forward_ms": 424.153875,
+            "process": {
+              "decompressions": 512,
+              "page_faults": 1874,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5934639,
+              "cpu_gpu_wait_ns": 198482211,
+              "gpu_command_ns": 222825560,
+              "submissions": 385
+            },
+            "expert_cache": {
+              "hits": 165,
+              "misses": 315,
+              "application_read_bytes": 870912000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 150901883,
+              "read_service_sum_ns": 837337415,
+              "read_queue_sum_ns": 45741712
+            },
+            "observation_ns": 86875,
+            "compressed_bytes_before": 6218629120,
+            "compressed_bytes_after": 6199246848
+          },
+          {
+            "step": 15,
+            "offset": 87,
+            "forward_ms": 403.366625,
+            "process": {
+              "decompressions": 20,
+              "page_faults": 1050,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5785859,
+              "cpu_gpu_wait_ns": 198196872,
+              "gpu_command_ns": 222661565,
+              "submissions": 355
+            },
+            "expert_cache": {
+              "hits": 213,
+              "misses": 267,
+              "application_read_bytes": 738201600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 135636417,
+              "read_service_sum_ns": 668488327,
+              "read_queue_sum_ns": 25355580
+            },
+            "observation_ns": 50667,
+            "compressed_bytes_before": 6199246848,
+            "compressed_bytes_after": 6193381376
+          },
+          {
+            "step": 16,
+            "offset": 88,
+            "forward_ms": 380.856792,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 1031,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5131319,
+              "cpu_gpu_wait_ns": 198573459,
+              "gpu_command_ns": 222000012,
+              "submissions": 300
+            },
+            "expert_cache": {
+              "hits": 285,
+              "misses": 195,
+              "application_read_bytes": 539136000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 106424914,
+              "read_service_sum_ns": 410427751,
+              "read_queue_sum_ns": 8902753
+            },
+            "observation_ns": 131791,
+            "compressed_bytes_before": 6193381376,
+            "compressed_bytes_after": 6187810816
+          },
+          {
+            "step": 17,
+            "offset": 89,
+            "forward_ms": 363.304959,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 5423,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4983862,
+              "cpu_gpu_wait_ns": 198151335,
+              "gpu_command_ns": 222020133,
+              "submissions": 294
+            },
+            "expert_cache": {
+              "hits": 288,
+              "misses": 192,
+              "application_read_bytes": 530841600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 104165912,
+              "read_service_sum_ns": 428895582,
+              "read_queue_sum_ns": 12997336
+            },
+            "observation_ns": 84209,
+            "compressed_bytes_before": 6187810816,
+            "compressed_bytes_after": 6110265344
+          },
+          {
+            "step": 18,
+            "offset": 90,
+            "forward_ms": 390.402708,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 860,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5384801,
+              "cpu_gpu_wait_ns": 198045004,
+              "gpu_command_ns": 222331498,
+              "submissions": 332
+            },
+            "expert_cache": {
+              "hits": 242,
+              "misses": 238,
+              "application_read_bytes": 658022400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 124658992,
+              "read_service_sum_ns": 565234918,
+              "read_queue_sum_ns": 30629460
+            },
+            "observation_ns": 125666,
+            "compressed_bytes_before": 6110265344,
+            "compressed_bytes_after": 6107496448
+          },
+          {
+            "step": 19,
+            "offset": 91,
+            "forward_ms": 400.454542,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 3395,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6792269,
+              "cpu_gpu_wait_ns": 198483665,
+              "gpu_command_ns": 222693104,
+              "submissions": 299
+            },
+            "expert_cache": {
+              "hits": 276,
+              "misses": 204,
+              "application_read_bytes": 564019200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 124758417,
+              "read_service_sum_ns": 452365869,
+              "read_queue_sum_ns": 10083451
+            },
+            "observation_ns": 54874,
+            "compressed_bytes_before": 6107496448,
+            "compressed_bytes_after": 6063194112
+          },
+          {
+            "step": 20,
+            "offset": 92,
+            "forward_ms": 362.6995,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5102796,
+              "cpu_gpu_wait_ns": 198600625,
+              "gpu_command_ns": 222379654,
+              "submissions": 258
+            },
+            "expert_cache": {
+              "hits": 344,
+              "misses": 136,
+              "application_read_bytes": 376012800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 84407992,
+              "read_service_sum_ns": 242371087,
+              "read_queue_sum_ns": 2552494
+            },
+            "observation_ns": 47167,
+            "compressed_bytes_before": 6063194112,
+            "compressed_bytes_after": 6063194112
+          },
+          {
+            "step": 21,
+            "offset": 93,
+            "forward_ms": 342.347417,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4582059,
+              "cpu_gpu_wait_ns": 197456668,
+              "gpu_command_ns": 222065442,
+              "submissions": 273
+            },
+            "expert_cache": {
+              "hits": 330,
+              "misses": 150,
+              "application_read_bytes": 414720000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 84923671,
+              "read_service_sum_ns": 293293121,
+              "read_queue_sum_ns": 7586958
+            },
+            "observation_ns": 47749,
+            "compressed_bytes_before": 6063194112,
+            "compressed_bytes_after": 6063177728
+          },
+          {
+            "step": 22,
+            "offset": 94,
+            "forward_ms": 393.915666,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4603917,
+              "cpu_gpu_wait_ns": 199047956,
+              "gpu_command_ns": 223962525,
+              "submissions": 325
+            },
+            "expert_cache": {
+              "hits": 243,
+              "misses": 237,
+              "application_read_bytes": 655257600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 122873414,
+              "read_service_sum_ns": 551095955,
+              "read_queue_sum_ns": 19885164
+            },
+            "observation_ns": 63041,
+            "compressed_bytes_before": 6063177728,
+            "compressed_bytes_after": 6063177728
+          },
+          {
+            "step": 23,
+            "offset": 95,
+            "forward_ms": 437.953833,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5584277,
+              "cpu_gpu_wait_ns": 198658164,
+              "gpu_command_ns": 223745549,
+              "submissions": 404
+            },
+            "expert_cache": {
+              "hits": 151,
+              "misses": 329,
+              "application_read_bytes": 909619200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 157328135,
+              "read_service_sum_ns": 888147426,
+              "read_queue_sum_ns": 41654239
+            },
+            "observation_ns": 49958,
+            "compressed_bytes_before": 6063177728,
+            "compressed_bytes_after": 6063177728
+          },
+          {
+            "step": 24,
+            "offset": 96,
+            "forward_ms": 381.231875,
+            "process": {
+              "decompressions": 4,
+              "page_faults": 865,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4747462,
+              "cpu_gpu_wait_ns": 197705335,
+              "gpu_command_ns": 222067127,
+              "submissions": 318
+            },
+            "expert_cache": {
+              "hits": 270,
+              "misses": 210,
+              "application_read_bytes": 580608000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 113146508,
+              "read_service_sum_ns": 464655628,
+              "read_queue_sum_ns": 7475000
+            },
+            "observation_ns": 48417,
+            "compressed_bytes_before": 6063177728,
+            "compressed_bytes_after": 6060343296
+          },
+          {
+            "step": 25,
+            "offset": 97,
+            "forward_ms": 383.324125,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4449520,
+              "cpu_gpu_wait_ns": 197821840,
+              "gpu_command_ns": 222515432,
+              "submissions": 290
+            },
+            "expert_cache": {
+              "hits": 293,
+              "misses": 187,
+              "application_read_bytes": 517017600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 129857369,
+              "read_service_sum_ns": 376681374,
+              "read_queue_sum_ns": 6198800
+            },
+            "observation_ns": 49417,
+            "compressed_bytes_before": 6060343296,
+            "compressed_bytes_after": 6060310528
+          },
+          {
+            "step": 26,
+            "offset": 98,
+            "forward_ms": 389.257583,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 1197,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5092860,
+              "cpu_gpu_wait_ns": 198849995,
+              "gpu_command_ns": 224368637,
+              "submissions": 336
+            },
+            "expert_cache": {
+              "hits": 250,
+              "misses": 230,
+              "application_read_bytes": 635904000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 117763006,
+              "read_service_sum_ns": 547513787,
+              "read_queue_sum_ns": 23261075
+            },
+            "observation_ns": 52792,
+            "compressed_bytes_before": 6060310528,
+            "compressed_bytes_after": 6052003840
+          },
+          {
+            "step": 27,
+            "offset": 99,
+            "forward_ms": 346.48925,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 1030,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4422315,
+              "cpu_gpu_wait_ns": 196915461,
+              "gpu_command_ns": 221298361,
+              "submissions": 270
+            },
+            "expert_cache": {
+              "hits": 334,
+              "misses": 146,
+              "application_read_bytes": 403660800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 87070131,
+              "read_service_sum_ns": 268111667,
+              "read_queue_sum_ns": 3322459
+            },
+            "observation_ns": 51584,
+            "compressed_bytes_before": 6052003840,
+            "compressed_bytes_after": 6046433280
+          },
+          {
+            "step": 28,
+            "offset": 100,
+            "forward_ms": 383.126458,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4679954,
+              "cpu_gpu_wait_ns": 199279582,
+              "gpu_command_ns": 222667814,
+              "submissions": 297
+            },
+            "expert_cache": {
+              "hits": 295,
+              "misses": 185,
+              "application_read_bytes": 511488000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 101920003,
+              "read_service_sum_ns": 411948711,
+              "read_queue_sum_ns": 12757915
+            },
+            "observation_ns": 51542,
+            "compressed_bytes_before": 6046433280,
+            "compressed_bytes_after": 6046400512
+          },
+          {
+            "step": 29,
+            "offset": 101,
+            "forward_ms": 335.941958,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4447027,
+              "cpu_gpu_wait_ns": 197308415,
+              "gpu_command_ns": 221566686,
+              "submissions": 257
+            },
+            "expert_cache": {
+              "hits": 360,
+              "misses": 120,
+              "application_read_bytes": 331776000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 76416497,
+              "read_service_sum_ns": 218972586,
+              "read_queue_sum_ns": 3251041
+            },
+            "observation_ns": 49207,
+            "compressed_bytes_before": 6046400512,
+            "compressed_bytes_after": 6046384128
+          },
+          {
+            "step": 30,
+            "offset": 102,
+            "forward_ms": 354.15625,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4575944,
+              "cpu_gpu_wait_ns": 197948252,
+              "gpu_command_ns": 222402714,
+              "submissions": 259
+            },
+            "expert_cache": {
+              "hits": 358,
+              "misses": 122,
+              "application_read_bytes": 337305600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 74977913,
+              "read_service_sum_ns": 232182458,
+              "read_queue_sum_ns": 5726370
+            },
+            "observation_ns": 50292,
+            "compressed_bytes_before": 6046384128,
+            "compressed_bytes_after": 6046367744
+          },
+          {
+            "step": 31,
+            "offset": 103,
+            "forward_ms": 362.925709,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4499412,
+              "cpu_gpu_wait_ns": 204372791,
+              "gpu_command_ns": 229609625,
+              "submissions": 258
+            },
+            "expert_cache": {
+              "hits": 345,
+              "misses": 135,
+              "application_read_bytes": 373248000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 82091545,
+              "read_service_sum_ns": 241142996,
+              "read_queue_sum_ns": 5483499
+            },
+            "observation_ns": 48125,
+            "compressed_bytes_before": 6046367744,
+            "compressed_bytes_after": 6046351360
+          }
+        ],
+        "windows": [
+          {
+            "name": "first_4",
+            "steps": 4,
+            "forward_ms": 3721.239875,
+            "process": {
+              "decompressions": 478188,
+              "page_faults": 171395,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 25927876,
+              "cpu_gpu_wait_ns": 2730782551,
+              "gpu_command_ns": 1088159069,
+              "submissions": 1230
+            },
+            "expert_cache": {
+              "hits": 923,
+              "misses": 997,
+              "application_read_bytes": 2756505600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 685893943,
+              "read_service_sum_ns": 3062079222,
+              "read_queue_sum_ns": 313743663
+            }
+          },
+          {
+            "name": "remaining_captured",
+            "steps": 28,
+            "forward_ms": 11454.971709,
+            "process": {
+              "decompressions": 212299,
+              "page_faults": 240101,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 149839709,
+              "cpu_gpu_wait_ns": 5901451475,
+              "gpu_command_ns": 6605736765,
+              "submissions": 8453
+            },
+            "expert_cache": {
+              "hits": 7903,
+              "misses": 5537,
+              "application_read_bytes": 15308697600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 3513772865,
+              "read_service_sum_ns": 13465428094,
+              "read_queue_sum_ns": 491114182
+            }
+          }
+        ],
+        "captured_steps": 32,
+        "omitted_steps": 0,
+        "observation_ns": 2337705,
+        "counter_scope": "CPU waits, GPU durations and concurrent reads overlap; their sums are not a critical-path decomposition."
+      },
+      "residency_before": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "source": "pair-0-off.json",
+      "sha256": "62b6bf4bdb8e3f5d72f29a7dee7eead3a4f71a7caf7d7d77e8270f573fbf8f21"
+    },
+    {
+      "pair": 0,
+      "residency": "core",
+      "request": {
+        "name": "coding_routes_32",
+        "request_ms": 26570.487417,
+        "time_to_first_token_ms": 14116.889875,
+        "decode_wall_ms": 12453.597542,
+        "tokens_per_second": 2.56953863267858,
+        "output_token_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629,
+          26126,
+          13,
+          198,
+          1031,
+          262,
+          17167,
+          25,
+          198,
+          285,
+          26126,
+          25,
+          357,
+          1103,
+          314,
+          26126,
+          11
+        ],
+        "reused_tokens": 0,
+        "phases": [
+          {
+            "phase": "ingest",
+            "expert_hits": 0,
+            "expert_misses": 7688,
+            "expert_read_bytes": 21255782400
+          },
+          {
+            "phase": "decode",
+            "expert_hits": 8827,
+            "expert_misses": 6533,
+            "expert_read_bytes": 18062438400
+          }
+        ],
+        "memory_before": {
+          "physical_footprint_bytes": 5488521024,
+          "resident_bytes": 5530648576,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 338359,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 15395454976
+        },
+        "memory_after": {
+          "physical_footprint_bytes": 11183233600,
+          "resident_bytes": 11199266816,
+          "compressed_bytes": 10960896,
+          "compressed_peak_bytes": 1426440192,
+          "decompressions": 87019,
+          "page_faults": 817430,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 8133312512
+        }
+      },
+      "diagnostics": {
+        "samples": [
+          {
+            "step": 0,
+            "offset": 72,
+            "forward_ms": 473.735792,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 694,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5627479,
+              "cpu_gpu_wait_ns": 207972790,
+              "gpu_command_ns": 235966963,
+              "submissions": 472
+            },
+            "expert_cache": {
+              "hits": 75,
+              "misses": 405,
+              "application_read_bytes": 1119744000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 201478419,
+              "read_service_sum_ns": 1161942468,
+              "read_queue_sum_ns": 197283492
+            },
+            "observation_ns": 73293,
+            "compressed_bytes_before": 10977280,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 1,
+            "offset": 73,
+            "forward_ms": 423.169833,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5717324,
+              "cpu_gpu_wait_ns": 228916002,
+              "gpu_command_ns": 257671580,
+              "submissions": 320
+            },
+            "expert_cache": {
+              "hits": 265,
+              "misses": 215,
+              "application_read_bytes": 594432000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 114817289,
+              "read_service_sum_ns": 479145504,
+              "read_queue_sum_ns": 13057668
+            },
+            "observation_ns": 56125,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 2,
+            "offset": 74,
+            "forward_ms": 423.3285,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5690288,
+              "cpu_gpu_wait_ns": 246607165,
+              "gpu_command_ns": 280875734,
+              "submissions": 283
+            },
+            "expert_cache": {
+              "hits": 308,
+              "misses": 172,
+              "application_read_bytes": 475545600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 101627287,
+              "read_service_sum_ns": 378948042,
+              "read_queue_sum_ns": 7797909
+            },
+            "observation_ns": 51001,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 3,
+            "offset": 75,
+            "forward_ms": 370.887875,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4814500,
+              "cpu_gpu_wait_ns": 199725256,
+              "gpu_command_ns": 225848681,
+              "submissions": 307
+            },
+            "expert_cache": {
+              "hits": 275,
+              "misses": 205,
+              "application_read_bytes": 566784000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 108000958,
+              "read_service_sum_ns": 442322748,
+              "read_queue_sum_ns": 7177874
+            },
+            "observation_ns": 45000,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 4,
+            "offset": 76,
+            "forward_ms": 516.87325,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6099661,
+              "cpu_gpu_wait_ns": 268445584,
+              "gpu_command_ns": 309835067,
+              "submissions": 415
+            },
+            "expert_cache": {
+              "hits": 122,
+              "misses": 358,
+              "application_read_bytes": 989798400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 173263741,
+              "read_service_sum_ns": 1002042587,
+              "read_queue_sum_ns": 65352333
+            },
+            "observation_ns": 50792,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 5,
+            "offset": 77,
+            "forward_ms": 406.731625,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5224864,
+              "cpu_gpu_wait_ns": 201589254,
+              "gpu_command_ns": 226825736,
+              "submissions": 297
+            },
+            "expert_cache": {
+              "hits": 297,
+              "misses": 183,
+              "application_read_bytes": 505958400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 105950798,
+              "read_service_sum_ns": 424589080,
+              "read_queue_sum_ns": 14867088
+            },
+            "observation_ns": 47917,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 6,
+            "offset": 78,
+            "forward_ms": 395.472916,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4995540,
+              "cpu_gpu_wait_ns": 197278418,
+              "gpu_command_ns": 222872685,
+              "submissions": 336
+            },
+            "expert_cache": {
+              "hits": 237,
+              "misses": 243,
+              "application_read_bytes": 671846400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 126013122,
+              "read_service_sum_ns": 573817955,
+              "read_queue_sum_ns": 11296709
+            },
+            "observation_ns": 52501,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 7,
+            "offset": 79,
+            "forward_ms": 341.24275,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4215991,
+              "cpu_gpu_wait_ns": 198701421,
+              "gpu_command_ns": 223396913,
+              "submissions": 249
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 71152291,
+              "read_service_sum_ns": 195919129,
+              "read_queue_sum_ns": 2193583
+            },
+            "observation_ns": 50292,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 8,
+            "offset": 80,
+            "forward_ms": 377.410042,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4787305,
+              "cpu_gpu_wait_ns": 197254835,
+              "gpu_command_ns": 222167680,
+              "submissions": 314
+            },
+            "expert_cache": {
+              "hits": 281,
+              "misses": 199,
+              "application_read_bytes": 550195200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 108734411,
+              "read_service_sum_ns": 469771044,
+              "read_queue_sum_ns": 12492668
+            },
+            "observation_ns": 49458,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 9,
+            "offset": 81,
+            "forward_ms": 391.899,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5267255,
+              "cpu_gpu_wait_ns": 197581332,
+              "gpu_command_ns": 222657370,
+              "submissions": 327
+            },
+            "expert_cache": {
+              "hits": 253,
+              "misses": 227,
+              "application_read_bytes": 627609600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 117601079,
+              "read_service_sum_ns": 533562382,
+              "read_queue_sum_ns": 10076829
+            },
+            "observation_ns": 47875,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 10,
+            "offset": 82,
+            "forward_ms": 367.150042,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4575406,
+              "cpu_gpu_wait_ns": 203811420,
+              "gpu_command_ns": 227503063,
+              "submissions": 283
+            },
+            "expert_cache": {
+              "hits": 318,
+              "misses": 162,
+              "application_read_bytes": 447897600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 92785528,
+              "read_service_sum_ns": 337663290,
+              "read_queue_sum_ns": 9091207
+            },
+            "observation_ns": 48708,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 11,
+            "offset": 83,
+            "forward_ms": 385.339666,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4622025,
+              "cpu_gpu_wait_ns": 198162330,
+              "gpu_command_ns": 222922122,
+              "submissions": 325
+            },
+            "expert_cache": {
+              "hits": 264,
+              "misses": 216,
+              "application_read_bytes": 597196800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 127560458,
+              "read_service_sum_ns": 471032456,
+              "read_queue_sum_ns": 15221664
+            },
+            "observation_ns": 46458,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 12,
+            "offset": 84,
+            "forward_ms": 351.882917,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4258625,
+              "cpu_gpu_wait_ns": 196855458,
+              "gpu_command_ns": 222135451,
+              "submissions": 256
+            },
+            "expert_cache": {
+              "hits": 361,
+              "misses": 119,
+              "application_read_bytes": 329011200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 76334458,
+              "read_service_sum_ns": 213588659,
+              "read_queue_sum_ns": 3024625
+            },
+            "observation_ns": 47250,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 13,
+            "offset": 85,
+            "forward_ms": 342.059959,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4685270,
+              "cpu_gpu_wait_ns": 196769208,
+              "gpu_command_ns": 221426462,
+              "submissions": 242
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 87717416,
+              "read_service_sum_ns": 178167426,
+              "read_queue_sum_ns": 1850368
+            },
+            "observation_ns": 47750,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 14,
+            "offset": 86,
+            "forward_ms": 443.3625,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6283165,
+              "cpu_gpu_wait_ns": 201549501,
+              "gpu_command_ns": 228356306,
+              "submissions": 377
+            },
+            "expert_cache": {
+              "hits": 165,
+              "misses": 315,
+              "application_read_bytes": 870912000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 168975958,
+              "read_service_sum_ns": 929680120,
+              "read_queue_sum_ns": 47065586
+            },
+            "observation_ns": 50459,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 15,
+            "offset": 87,
+            "forward_ms": 447.23425,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6024716,
+              "cpu_gpu_wait_ns": 226380332,
+              "gpu_command_ns": 259327081,
+              "submissions": 353
+            },
+            "expert_cache": {
+              "hits": 213,
+              "misses": 267,
+              "application_read_bytes": 738201600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 135129853,
+              "read_service_sum_ns": 697571126,
+              "read_queue_sum_ns": 24190705
+            },
+            "observation_ns": 48416,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 16,
+            "offset": 88,
+            "forward_ms": 375.463167,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5312006,
+              "cpu_gpu_wait_ns": 196860747,
+              "gpu_command_ns": 222872622,
+              "submissions": 309
+            },
+            "expert_cache": {
+              "hits": 285,
+              "misses": 195,
+              "application_read_bytes": 539136000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 107867458,
+              "read_service_sum_ns": 420405123,
+              "read_queue_sum_ns": 6620585
+            },
+            "observation_ns": 52374,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 17,
+            "offset": 89,
+            "forward_ms": 369.844542,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5684093,
+              "cpu_gpu_wait_ns": 197539833,
+              "gpu_command_ns": 222103219,
+              "submissions": 299
+            },
+            "expert_cache": {
+              "hits": 288,
+              "misses": 192,
+              "application_read_bytes": 530841600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 103437910,
+              "read_service_sum_ns": 438546045,
+              "read_queue_sum_ns": 11005883
+            },
+            "observation_ns": 59543,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 18,
+            "offset": 90,
+            "forward_ms": 399.194167,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5171303,
+              "cpu_gpu_wait_ns": 196771037,
+              "gpu_command_ns": 222463688,
+              "submissions": 336
+            },
+            "expert_cache": {
+              "hits": 242,
+              "misses": 238,
+              "application_read_bytes": 658022400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 125908291,
+              "read_service_sum_ns": 588373624,
+              "read_queue_sum_ns": 30376079
+            },
+            "observation_ns": 87042,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 19,
+            "offset": 91,
+            "forward_ms": 384.538458,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5473531,
+              "cpu_gpu_wait_ns": 198806208,
+              "gpu_command_ns": 224638722,
+              "submissions": 311
+            },
+            "expert_cache": {
+              "hits": 277,
+              "misses": 203,
+              "application_read_bytes": 561254400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 107341281,
+              "read_service_sum_ns": 445405626,
+              "read_queue_sum_ns": 10045872
+            },
+            "observation_ns": 49166,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 20,
+            "offset": 92,
+            "forward_ms": 353.968583,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4495406,
+              "cpu_gpu_wait_ns": 198762498,
+              "gpu_command_ns": 222857651,
+              "submissions": 261
+            },
+            "expert_cache": {
+              "hits": 344,
+              "misses": 136,
+              "application_read_bytes": 376012800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 80310170,
+              "read_service_sum_ns": 230317674,
+              "read_queue_sum_ns": 2292331
+            },
+            "observation_ns": 97125,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 21,
+            "offset": 93,
+            "forward_ms": 356.454334,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5379734,
+              "cpu_gpu_wait_ns": 197170582,
+              "gpu_command_ns": 221891958,
+              "submissions": 270
+            },
+            "expert_cache": {
+              "hits": 330,
+              "misses": 150,
+              "application_read_bytes": 414720000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 84535360,
+              "read_service_sum_ns": 294391952,
+              "read_queue_sum_ns": 9355212
+            },
+            "observation_ns": 54292,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 22,
+            "offset": 94,
+            "forward_ms": 385.664958,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5068527,
+              "cpu_gpu_wait_ns": 197655170,
+              "gpu_command_ns": 223788457,
+              "submissions": 336
+            },
+            "expert_cache": {
+              "hits": 243,
+              "misses": 237,
+              "application_read_bytes": 655257600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 119290620,
+              "read_service_sum_ns": 564382161,
+              "read_queue_sum_ns": 14435090
+            },
+            "observation_ns": 49375,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 23,
+            "offset": 95,
+            "forward_ms": 432.394375,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6339179,
+              "cpu_gpu_wait_ns": 202980713,
+              "gpu_command_ns": 228441744,
+              "submissions": 402
+            },
+            "expert_cache": {
+              "hits": 151,
+              "misses": 329,
+              "application_read_bytes": 909619200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 160577791,
+              "read_service_sum_ns": 896408211,
+              "read_queue_sum_ns": 42761613
+            },
+            "observation_ns": 57125,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 24,
+            "offset": 96,
+            "forward_ms": 383.48625,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5456401,
+              "cpu_gpu_wait_ns": 197951962,
+              "gpu_command_ns": 223165294,
+              "submissions": 306
+            },
+            "expert_cache": {
+              "hits": 270,
+              "misses": 210,
+              "application_read_bytes": 580608000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 114462262,
+              "read_service_sum_ns": 476808624,
+              "read_queue_sum_ns": 6528134
+            },
+            "observation_ns": 83418,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 25,
+            "offset": 97,
+            "forward_ms": 370.200583,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5169263,
+              "cpu_gpu_wait_ns": 198209082,
+              "gpu_command_ns": 222474676,
+              "submissions": 296
+            },
+            "expert_cache": {
+              "hits": 293,
+              "misses": 187,
+              "application_read_bytes": 517017600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 100804840,
+              "read_service_sum_ns": 394836157,
+              "read_queue_sum_ns": 4451216
+            },
+            "observation_ns": 83833,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 26,
+            "offset": 98,
+            "forward_ms": 397.396334,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5484216,
+              "cpu_gpu_wait_ns": 200011917,
+              "gpu_command_ns": 224796370,
+              "submissions": 330
+            },
+            "expert_cache": {
+              "hits": 250,
+              "misses": 230,
+              "application_read_bytes": 635904000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 118161627,
+              "read_service_sum_ns": 560251168,
+              "read_queue_sum_ns": 25039461
+            },
+            "observation_ns": 47209,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 27,
+            "offset": 99,
+            "forward_ms": 351.274167,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 751,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4975151,
+              "cpu_gpu_wait_ns": 196600208,
+              "gpu_command_ns": 221701319,
+              "submissions": 260
+            },
+            "expert_cache": {
+              "hits": 334,
+              "misses": 146,
+              "application_read_bytes": 403660800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 82704194,
+              "read_service_sum_ns": 273241667,
+              "read_queue_sum_ns": 3338713
+            },
+            "observation_ns": 105291,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 28,
+            "offset": 100,
+            "forward_ms": 387.718083,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4854951,
+              "cpu_gpu_wait_ns": 198692541,
+              "gpu_command_ns": 223441814,
+              "submissions": 300
+            },
+            "expert_cache": {
+              "hits": 295,
+              "misses": 185,
+              "application_read_bytes": 511488000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 107603331,
+              "read_service_sum_ns": 420553242,
+              "read_queue_sum_ns": 13126214
+            },
+            "observation_ns": 48667,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 29,
+            "offset": 101,
+            "forward_ms": 334.260625,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4232106,
+              "cpu_gpu_wait_ns": 197360250,
+              "gpu_command_ns": 221746377,
+              "submissions": 250
+            },
+            "expert_cache": {
+              "hits": 360,
+              "misses": 120,
+              "application_read_bytes": 331776000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 78314913,
+              "read_service_sum_ns": 225736659,
+              "read_queue_sum_ns": 3436628
+            },
+            "observation_ns": 47791,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 30,
+            "offset": 102,
+            "forward_ms": 346.711208,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4060964,
+              "cpu_gpu_wait_ns": 198793038,
+              "gpu_command_ns": 222884892,
+              "submissions": 252
+            },
+            "expert_cache": {
+              "hits": 358,
+              "misses": 122,
+              "application_read_bytes": 337305600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 81165661,
+              "read_service_sum_ns": 232928454,
+              "read_queue_sum_ns": 5833036
+            },
+            "observation_ns": 46458,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          },
+          {
+            "step": 31,
+            "offset": 103,
+            "forward_ms": 350.310958,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 3955865,
+              "cpu_gpu_wait_ns": 197268876,
+              "gpu_command_ns": 222205821,
+              "submissions": 254
+            },
+            "expert_cache": {
+              "hits": 345,
+              "misses": 135,
+              "application_read_bytes": 373248000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 83637170,
+              "read_service_sum_ns": 239987833,
+              "read_queue_sum_ns": 5866504
+            },
+            "observation_ns": 99375,
+            "compressed_bytes_before": 10960896,
+            "compressed_bytes_after": 10960896
+          }
+        ],
+        "windows": [
+          {
+            "name": "first_4",
+            "steps": 4,
+            "forward_ms": 1691.122,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 2764,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 21849591,
+              "cpu_gpu_wait_ns": 883221213,
+              "gpu_command_ns": 1000362958,
+              "submissions": 1382
+            },
+            "expert_cache": {
+              "hits": 923,
+              "misses": 997,
+              "application_read_bytes": 2756505600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 525923953,
+              "read_service_sum_ns": 2462358762,
+              "read_queue_sum_ns": 225316943
+            }
+          },
+          {
+            "name": "remaining_captured",
+            "steps": 28,
+            "forward_ms": 10745.539709,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 19384,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 142152519,
+              "cpu_gpu_wait_ns": 5655813755,
+              "gpu_command_ns": 6380900560,
+              "submissions": 8546
+            },
+            "expert_cache": {
+              "hits": 7904,
+              "misses": 5536,
+              "application_read_bytes": 15305932800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 3047341992,
+              "read_service_sum_ns": 12729979474,
+              "read_queue_sum_ns": 411235936
+            }
+          }
+        ],
+        "captured_steps": 32,
+        "omitted_steps": 0,
+        "observation_ns": 1881379,
+        "counter_scope": "CPU waits, GPU durations and concurrent reads overlap; their sums are not a critical-path decomposition."
+      },
+      "residency_before": {
+        "mode": "core",
+        "registered_bytes": 5362532352,
+        "allocations": 2067,
+        "bytes_by_class": {
+          "resident": 5362515968,
+          "state": 16384
+        },
+        "set_overhead_bytes": 0,
+        "commits": 2067,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 4585,
+        "removals": 1221,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "source": "pair-0-core.json",
+      "sha256": "3e210318115de31d017766fcfd357cd572b0983c41a1739f199fcd2a01c0a126"
+    },
+    {
+      "pair": 1,
+      "residency": "core",
+      "request": {
+        "name": "coding_routes_32",
+        "request_ms": 26919.959459,
+        "time_to_first_token_ms": 14494.353167,
+        "decode_wall_ms": 12425.606292000002,
+        "tokens_per_second": 2.5753270502866816,
+        "output_token_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629,
+          26126,
+          13,
+          198,
+          1031,
+          262,
+          17167,
+          25,
+          198,
+          285,
+          26126,
+          25,
+          357,
+          1103,
+          314,
+          26126,
+          11
+        ],
+        "reused_tokens": 0,
+        "phases": [
+          {
+            "phase": "ingest",
+            "expert_hits": 0,
+            "expert_misses": 7688,
+            "expert_read_bytes": 21255782400
+          },
+          {
+            "phase": "decode",
+            "expert_hits": 8827,
+            "expert_misses": 6533,
+            "expert_read_bytes": 18062438400
+          }
+        ],
+        "memory_before": {
+          "physical_footprint_bytes": 5483884224,
+          "resident_bytes": 5510938624,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 338200,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 15791063040
+        },
+        "memory_after": {
+          "physical_footprint_bytes": 11184331264,
+          "resident_bytes": 11075272704,
+          "compressed_bytes": 106446848,
+          "compressed_peak_bytes": 3687940096,
+          "decompressions": 255947,
+          "page_faults": 986654,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 8398077952
+        }
+      },
+      "diagnostics": {
+        "samples": [
+          {
+            "step": 0,
+            "offset": 72,
+            "forward_ms": 562.405583,
+            "process": {
+              "decompressions": 20,
+              "page_faults": 790,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5866748,
+              "cpu_gpu_wait_ns": 284118788,
+              "gpu_command_ns": 329626728,
+              "submissions": 457
+            },
+            "expert_cache": {
+              "hits": 75,
+              "misses": 405,
+              "application_read_bytes": 1119744000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 207462947,
+              "read_service_sum_ns": 1213086467,
+              "read_queue_sum_ns": 213063078
+            },
+            "observation_ns": 104750,
+            "compressed_bytes_before": 108347392,
+            "compressed_bytes_after": 108019712
+          },
+          {
+            "step": 1,
+            "offset": 73,
+            "forward_ms": 388.249167,
+            "process": {
+              "decompressions": 13,
+              "page_faults": 780,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4828089,
+              "cpu_gpu_wait_ns": 199394749,
+              "gpu_command_ns": 223449978,
+              "submissions": 321
+            },
+            "expert_cache": {
+              "hits": 265,
+              "misses": 215,
+              "application_read_bytes": 594432000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 110690960,
+              "read_service_sum_ns": 490610825,
+              "read_queue_sum_ns": 12693706
+            },
+            "observation_ns": 51125,
+            "compressed_bytes_before": 108019712,
+            "compressed_bytes_after": 107806720
+          },
+          {
+            "step": 2,
+            "offset": 74,
+            "forward_ms": 376.183125,
+            "process": {
+              "decompressions": 12,
+              "page_faults": 777,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4487824,
+              "cpu_gpu_wait_ns": 197384496,
+              "gpu_command_ns": 222571398,
+              "submissions": 294
+            },
+            "expert_cache": {
+              "hits": 308,
+              "misses": 172,
+              "application_read_bytes": 475545600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 100753539,
+              "read_service_sum_ns": 394116038,
+              "read_queue_sum_ns": 6669966
+            },
+            "observation_ns": 96375,
+            "compressed_bytes_before": 107806720,
+            "compressed_bytes_after": 107610112
+          },
+          {
+            "step": 3,
+            "offset": 75,
+            "forward_ms": 384.339375,
+            "process": {
+              "decompressions": 9,
+              "page_faults": 708,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4947135,
+              "cpu_gpu_wait_ns": 198212000,
+              "gpu_command_ns": 223464138,
+              "submissions": 303
+            },
+            "expert_cache": {
+              "hits": 275,
+              "misses": 205,
+              "application_read_bytes": 566784000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 109846420,
+              "read_service_sum_ns": 456170494,
+              "read_queue_sum_ns": 6252000
+            },
+            "observation_ns": 51541,
+            "compressed_bytes_before": 107610112,
+            "compressed_bytes_after": 107462656
+          },
+          {
+            "step": 4,
+            "offset": 76,
+            "forward_ms": 442.522625,
+            "process": {
+              "decompressions": 6,
+              "page_faults": 705,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5685414,
+              "cpu_gpu_wait_ns": 201391371,
+              "gpu_command_ns": 227673950,
+              "submissions": 420
+            },
+            "expert_cache": {
+              "hits": 122,
+              "misses": 358,
+              "application_read_bytes": 989798400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 170538972,
+              "read_service_sum_ns": 999609789,
+              "read_queue_sum_ns": 63427594
+            },
+            "observation_ns": 48625,
+            "compressed_bytes_before": 107462656,
+            "compressed_bytes_after": 107364352
+          },
+          {
+            "step": 5,
+            "offset": 77,
+            "forward_ms": 400.546291,
+            "process": {
+              "decompressions": 7,
+              "page_faults": 701,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4855771,
+              "cpu_gpu_wait_ns": 199163872,
+              "gpu_command_ns": 223977358,
+              "submissions": 304
+            },
+            "expert_cache": {
+              "hits": 297,
+              "misses": 183,
+              "application_read_bytes": 505958400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 107741212,
+              "read_service_sum_ns": 429497500,
+              "read_queue_sum_ns": 13509125
+            },
+            "observation_ns": 48916,
+            "compressed_bytes_before": 107364352,
+            "compressed_bytes_after": 107249664
+          },
+          {
+            "step": 6,
+            "offset": 78,
+            "forward_ms": 433.834125,
+            "process": {
+              "decompressions": 7,
+              "page_faults": 759,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5631757,
+              "cpu_gpu_wait_ns": 223659166,
+              "gpu_command_ns": 255226462,
+              "submissions": 344
+            },
+            "expert_cache": {
+              "hits": 237,
+              "misses": 243,
+              "application_read_bytes": 671846400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 126624388,
+              "read_service_sum_ns": 587152544,
+              "read_queue_sum_ns": 12306665
+            },
+            "observation_ns": 50750,
+            "compressed_bytes_before": 107249664,
+            "compressed_bytes_after": 107134976
+          },
+          {
+            "step": 7,
+            "offset": 79,
+            "forward_ms": 343.630542,
+            "process": {
+              "decompressions": 3,
+              "page_faults": 693,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4362919,
+              "cpu_gpu_wait_ns": 197414628,
+              "gpu_command_ns": 222834096,
+              "submissions": 247
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 73499909,
+              "read_service_sum_ns": 200021334,
+              "read_queue_sum_ns": 2150954
+            },
+            "observation_ns": 49832,
+            "compressed_bytes_before": 107134976,
+            "compressed_bytes_after": 107085824
+          },
+          {
+            "step": 8,
+            "offset": 80,
+            "forward_ms": 381.963791,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 695,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4655253,
+              "cpu_gpu_wait_ns": 197997082,
+              "gpu_command_ns": 222788098,
+              "submissions": 307
+            },
+            "expert_cache": {
+              "hits": 281,
+              "misses": 199,
+              "application_read_bytes": 550195200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 113849619,
+              "read_service_sum_ns": 479241127,
+              "read_queue_sum_ns": 15899503
+            },
+            "observation_ns": 51749,
+            "compressed_bytes_before": 107085824,
+            "compressed_bytes_after": 107053056
+          },
+          {
+            "step": 9,
+            "offset": 81,
+            "forward_ms": 396.238208,
+            "process": {
+              "decompressions": 4,
+              "page_faults": 697,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4731748,
+              "cpu_gpu_wait_ns": 198324372,
+              "gpu_command_ns": 222766754,
+              "submissions": 316
+            },
+            "expert_cache": {
+              "hits": 253,
+              "misses": 227,
+              "application_read_bytes": 627609600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 125670792,
+              "read_service_sum_ns": 531332126,
+              "read_queue_sum_ns": 10949919
+            },
+            "observation_ns": 50124,
+            "compressed_bytes_before": 107053056,
+            "compressed_bytes_after": 106987520
+          },
+          {
+            "step": 10,
+            "offset": 82,
+            "forward_ms": 367.142125,
+            "process": {
+              "decompressions": 3,
+              "page_faults": 698,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4726982,
+              "cpu_gpu_wait_ns": 197402962,
+              "gpu_command_ns": 222477690,
+              "submissions": 284
+            },
+            "expert_cache": {
+              "hits": 318,
+              "misses": 162,
+              "application_read_bytes": 447897600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 91572607,
+              "read_service_sum_ns": 336824082,
+              "read_queue_sum_ns": 10609583
+            },
+            "observation_ns": 48292,
+            "compressed_bytes_before": 106987520,
+            "compressed_bytes_after": 106938368
+          },
+          {
+            "step": 11,
+            "offset": 83,
+            "forward_ms": 404.426208,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 696,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4885531,
+              "cpu_gpu_wait_ns": 209312497,
+              "gpu_command_ns": 234932867,
+              "submissions": 318
+            },
+            "expert_cache": {
+              "hits": 264,
+              "misses": 216,
+              "application_read_bytes": 597196800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 114718253,
+              "read_service_sum_ns": 490060884,
+              "read_queue_sum_ns": 13049743
+            },
+            "observation_ns": 51125,
+            "compressed_bytes_before": 106938368,
+            "compressed_bytes_after": 106905600
+          },
+          {
+            "step": 12,
+            "offset": 84,
+            "forward_ms": 334.209375,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 694,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4273739,
+              "cpu_gpu_wait_ns": 197629918,
+              "gpu_command_ns": 221615250,
+              "submissions": 255
+            },
+            "expert_cache": {
+              "hits": 360,
+              "misses": 120,
+              "application_read_bytes": 331776000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 75930578,
+              "read_service_sum_ns": 221100086,
+              "read_queue_sum_ns": 2724164
+            },
+            "observation_ns": 49416,
+            "compressed_bytes_before": 106905600,
+            "compressed_bytes_after": 106889216
+          },
+          {
+            "step": 13,
+            "offset": 85,
+            "forward_ms": 347.245125,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4270153,
+              "cpu_gpu_wait_ns": 197774039,
+              "gpu_command_ns": 222030425,
+              "submissions": 247
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 77040613,
+              "read_service_sum_ns": 178494500,
+              "read_queue_sum_ns": 1997294
+            },
+            "observation_ns": 51874,
+            "compressed_bytes_before": 106889216,
+            "compressed_bytes_after": 106872832
+          },
+          {
+            "step": 14,
+            "offset": 86,
+            "forward_ms": 420.967167,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 693,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5475918,
+              "cpu_gpu_wait_ns": 199476499,
+              "gpu_command_ns": 224735758,
+              "submissions": 393
+            },
+            "expert_cache": {
+              "hits": 165,
+              "misses": 315,
+              "application_read_bytes": 870912000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 152677233,
+              "read_service_sum_ns": 836347334,
+              "read_queue_sum_ns": 39949262
+            },
+            "observation_ns": 46375,
+            "compressed_bytes_before": 106872832,
+            "compressed_bytes_after": 106856448
+          },
+          {
+            "step": 15,
+            "offset": 87,
+            "forward_ms": 430.859125,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5030049,
+              "cpu_gpu_wait_ns": 204430834,
+              "gpu_command_ns": 230407939,
+              "submissions": 358
+            },
+            "expert_cache": {
+              "hits": 213,
+              "misses": 267,
+              "application_read_bytes": 738201600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 135255328,
+              "read_service_sum_ns": 689881452,
+              "read_queue_sum_ns": 22778837
+            },
+            "observation_ns": 49875,
+            "compressed_bytes_before": 106856448,
+            "compressed_bytes_after": 106840064
+          },
+          {
+            "step": 16,
+            "offset": 88,
+            "forward_ms": 391.210959,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4792736,
+              "cpu_gpu_wait_ns": 197231460,
+              "gpu_command_ns": 222155338,
+              "submissions": 308
+            },
+            "expert_cache": {
+              "hits": 285,
+              "misses": 195,
+              "application_read_bytes": 539136000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 108933079,
+              "read_service_sum_ns": 437143462,
+              "read_queue_sum_ns": 7903831
+            },
+            "observation_ns": 47417,
+            "compressed_bytes_before": 106840064,
+            "compressed_bytes_after": 106823680
+          },
+          {
+            "step": 17,
+            "offset": 89,
+            "forward_ms": 369.891083,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4630698,
+              "cpu_gpu_wait_ns": 197131334,
+              "gpu_command_ns": 222216021,
+              "submissions": 302
+            },
+            "expert_cache": {
+              "hits": 288,
+              "misses": 192,
+              "application_read_bytes": 530841600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 103843333,
+              "read_service_sum_ns": 437455253,
+              "read_queue_sum_ns": 8808620
+            },
+            "observation_ns": 68167,
+            "compressed_bytes_before": 106823680,
+            "compressed_bytes_after": 106790912
+          },
+          {
+            "step": 18,
+            "offset": 90,
+            "forward_ms": 395.349083,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5152413,
+              "cpu_gpu_wait_ns": 197150910,
+              "gpu_command_ns": 222860486,
+              "submissions": 332
+            },
+            "expert_cache": {
+              "hits": 243,
+              "misses": 237,
+              "application_read_bytes": 655257600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 123486675,
+              "read_service_sum_ns": 571140994,
+              "read_queue_sum_ns": 32040797
+            },
+            "observation_ns": 52000,
+            "compressed_bytes_before": 106790912,
+            "compressed_bytes_after": 106790912
+          },
+          {
+            "step": 19,
+            "offset": 91,
+            "forward_ms": 382.972167,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5105213,
+              "cpu_gpu_wait_ns": 198807253,
+              "gpu_command_ns": 222192165,
+              "submissions": 317
+            },
+            "expert_cache": {
+              "hits": 277,
+              "misses": 203,
+              "application_read_bytes": 561254400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 111791448,
+              "read_service_sum_ns": 453052830,
+              "read_queue_sum_ns": 9977335
+            },
+            "observation_ns": 87542,
+            "compressed_bytes_before": 106790912,
+            "compressed_bytes_after": 106790912
+          },
+          {
+            "step": 20,
+            "offset": 92,
+            "forward_ms": 342.311292,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4872551,
+              "cpu_gpu_wait_ns": 198495171,
+              "gpu_command_ns": 221597114,
+              "submissions": 261
+            },
+            "expert_cache": {
+              "hits": 344,
+              "misses": 136,
+              "application_read_bytes": 376012800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 81502219,
+              "read_service_sum_ns": 236435711,
+              "read_queue_sum_ns": 2370204
+            },
+            "observation_ns": 82000,
+            "compressed_bytes_before": 106790912,
+            "compressed_bytes_after": 106790912
+          },
+          {
+            "step": 21,
+            "offset": 93,
+            "forward_ms": 371.28575,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5525682,
+              "cpu_gpu_wait_ns": 203137916,
+              "gpu_command_ns": 229116962,
+              "submissions": 275
+            },
+            "expert_cache": {
+              "hits": 330,
+              "misses": 150,
+              "application_read_bytes": 414720000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 90564875,
+              "read_service_sum_ns": 309672916,
+              "read_queue_sum_ns": 8841753
+            },
+            "observation_ns": 81875,
+            "compressed_bytes_before": 106790912,
+            "compressed_bytes_after": 106774528
+          },
+          {
+            "step": 22,
+            "offset": 94,
+            "forward_ms": 381.678417,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5244806,
+              "cpu_gpu_wait_ns": 196832623,
+              "gpu_command_ns": 222492041,
+              "submissions": 338
+            },
+            "expert_cache": {
+              "hits": 243,
+              "misses": 237,
+              "application_read_bytes": 655257600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 118584916,
+              "read_service_sum_ns": 563270416,
+              "read_queue_sum_ns": 17555993
+            },
+            "observation_ns": 49500,
+            "compressed_bytes_before": 106774528,
+            "compressed_bytes_after": 106774528
+          },
+          {
+            "step": 23,
+            "offset": 95,
+            "forward_ms": 436.885541,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6280064,
+              "cpu_gpu_wait_ns": 200349203,
+              "gpu_command_ns": 225268683,
+              "submissions": 394
+            },
+            "expert_cache": {
+              "hits": 151,
+              "misses": 329,
+              "application_read_bytes": 909619200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 156069258,
+              "read_service_sum_ns": 899812052,
+              "read_queue_sum_ns": 46941960
+            },
+            "observation_ns": 54458,
+            "compressed_bytes_before": 106774528,
+            "compressed_bytes_after": 106774528
+          },
+          {
+            "step": 24,
+            "offset": 96,
+            "forward_ms": 386.297458,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5237650,
+              "cpu_gpu_wait_ns": 196388288,
+              "gpu_command_ns": 221907759,
+              "submissions": 316
+            },
+            "expert_cache": {
+              "hits": 270,
+              "misses": 210,
+              "application_read_bytes": 580608000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 112117745,
+              "read_service_sum_ns": 473694674,
+              "read_queue_sum_ns": 7359948
+            },
+            "observation_ns": 49333,
+            "compressed_bytes_before": 106774528,
+            "compressed_bytes_after": 106758144
+          },
+          {
+            "step": 25,
+            "offset": 97,
+            "forward_ms": 388.711958,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5102270,
+              "cpu_gpu_wait_ns": 198546585,
+              "gpu_command_ns": 223308592,
+              "submissions": 296
+            },
+            "expert_cache": {
+              "hits": 293,
+              "misses": 187,
+              "application_read_bytes": 517017600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 106476156,
+              "read_service_sum_ns": 386377578,
+              "read_queue_sum_ns": 5721801
+            },
+            "observation_ns": 52583,
+            "compressed_bytes_before": 106758144,
+            "compressed_bytes_after": 106741760
+          },
+          {
+            "step": 26,
+            "offset": 98,
+            "forward_ms": 386.822834,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5423170,
+              "cpu_gpu_wait_ns": 197246294,
+              "gpu_command_ns": 222439997,
+              "submissions": 330
+            },
+            "expert_cache": {
+              "hits": 250,
+              "misses": 230,
+              "application_read_bytes": 635904000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 118045877,
+              "read_service_sum_ns": 563259090,
+              "read_queue_sum_ns": 25194911
+            },
+            "observation_ns": 52875,
+            "compressed_bytes_before": 106741760,
+            "compressed_bytes_after": 106741760
+          },
+          {
+            "step": 27,
+            "offset": 99,
+            "forward_ms": 354.209042,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5112231,
+              "cpu_gpu_wait_ns": 198047917,
+              "gpu_command_ns": 222356872,
+              "submissions": 265
+            },
+            "expert_cache": {
+              "hits": 334,
+              "misses": 146,
+              "application_read_bytes": 403660800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 84521874,
+              "read_service_sum_ns": 263210166,
+              "read_queue_sum_ns": 3325414
+            },
+            "observation_ns": 85583,
+            "compressed_bytes_before": 106741760,
+            "compressed_bytes_after": 106725376
+          },
+          {
+            "step": 28,
+            "offset": 100,
+            "forward_ms": 377.305833,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5249790,
+              "cpu_gpu_wait_ns": 197899579,
+              "gpu_command_ns": 222757466,
+              "submissions": 301
+            },
+            "expert_cache": {
+              "hits": 295,
+              "misses": 185,
+              "application_read_bytes": 511488000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 103176373,
+              "read_service_sum_ns": 429026286,
+              "read_queue_sum_ns": 14514383
+            },
+            "observation_ns": 75042,
+            "compressed_bytes_before": 106725376,
+            "compressed_bytes_after": 106725376
+          },
+          {
+            "step": 29,
+            "offset": 101,
+            "forward_ms": 347.48625,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4526341,
+              "cpu_gpu_wait_ns": 196460168,
+              "gpu_command_ns": 221520445,
+              "submissions": 254
+            },
+            "expert_cache": {
+              "hits": 360,
+              "misses": 120,
+              "application_read_bytes": 331776000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 81408296,
+              "read_service_sum_ns": 227208662,
+              "read_queue_sum_ns": 3068373
+            },
+            "observation_ns": 78041,
+            "compressed_bytes_before": 106725376,
+            "compressed_bytes_after": 106725376
+          },
+          {
+            "step": 30,
+            "offset": 102,
+            "forward_ms": 339.359792,
+            "process": {
+              "decompressions": 2,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4679697,
+              "cpu_gpu_wait_ns": 197054501,
+              "gpu_command_ns": 221642988,
+              "submissions": 258
+            },
+            "expert_cache": {
+              "hits": 358,
+              "misses": 122,
+              "application_read_bytes": 337305600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 75479131,
+              "read_service_sum_ns": 230893663,
+              "read_queue_sum_ns": 6237285
+            },
+            "observation_ns": 54917,
+            "compressed_bytes_before": 106725376,
+            "compressed_bytes_after": 106692608
+          },
+          {
+            "step": 31,
+            "offset": 103,
+            "forward_ms": 341.977583,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4835871,
+              "cpu_gpu_wait_ns": 196276661,
+              "gpu_command_ns": 221326787,
+              "submissions": 260
+            },
+            "expert_cache": {
+              "hits": 345,
+              "misses": 135,
+              "application_read_bytes": 373248000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 78983871,
+              "read_service_sum_ns": 246351123,
+              "read_queue_sum_ns": 5827875
+            },
+            "observation_ns": 61626,
+            "compressed_bytes_before": 106692608,
+            "compressed_bytes_after": 106692608
+          }
+        ],
+        "windows": [
+          {
+            "name": "first_4",
+            "steps": 4,
+            "forward_ms": 1711.17725,
+            "process": {
+              "decompressions": 54,
+              "page_faults": 3055,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 20129796,
+              "cpu_gpu_wait_ns": 879110033,
+              "gpu_command_ns": 999112242,
+              "submissions": 1375
+            },
+            "expert_cache": {
+              "hits": 923,
+              "misses": 997,
+              "application_read_bytes": 2756505600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 528753866,
+              "read_service_sum_ns": 2553983824,
+              "read_queue_sum_ns": 238678750
+            }
+          },
+          {
+            "name": "remaining_captured",
+            "steps": 28,
+            "forward_ms": 10697.339749,
+            "process": {
+              "decompressions": 47,
+              "page_faults": 19471,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 140356417,
+              "cpu_gpu_wait_ns": 5591033103,
+              "gpu_command_ns": 6296626363,
+              "submissions": 8600
+            },
+            "expert_cache": {
+              "hits": 7904,
+              "misses": 5536,
+              "application_read_bytes": 15305932800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 3020104630,
+              "read_service_sum_ns": 12707567634,
+              "read_queue_sum_ns": 415043126
+            }
+          }
+        ],
+        "captured_steps": 32,
+        "omitted_steps": 0,
+        "observation_ns": 1933703,
+        "counter_scope": "CPU waits, GPU durations and concurrent reads overlap; their sums are not a critical-path decomposition."
+      },
+      "residency_before": {
+        "mode": "core",
+        "registered_bytes": 5362532352,
+        "allocations": 2067,
+        "bytes_by_class": {
+          "resident": 5362515968,
+          "state": 16384
+        },
+        "set_overhead_bytes": 0,
+        "commits": 2067,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 4585,
+        "removals": 1221,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "source": "pair-1-core.json",
+      "sha256": "7f90341994ad60ea1dc5363ca8b5263ff011ece868d887a1802a431170577d24"
+    },
+    {
+      "pair": 1,
+      "residency": "off",
+      "request": {
+        "name": "coding_routes_32",
+        "request_ms": 29345.586833,
+        "time_to_first_token_ms": 14481.821625,
+        "decode_wall_ms": 14863.765208,
+        "tokens_per_second": 2.1528865366345338,
+        "output_token_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629,
+          26126,
+          13,
+          198,
+          1031,
+          262,
+          17167,
+          25,
+          198,
+          285,
+          26126,
+          25,
+          357,
+          1103,
+          314,
+          26126,
+          11
+        ],
+        "reused_tokens": 0,
+        "phases": [
+          {
+            "phase": "ingest",
+            "expert_hits": 0,
+            "expert_misses": 7688,
+            "expert_read_bytes": 21255782400
+          },
+          {
+            "phase": "decode",
+            "expert_hits": 8828,
+            "expert_misses": 6532,
+            "expert_read_bytes": 18059673600
+          }
+        ],
+        "memory_before": {
+          "physical_footprint_bytes": 5482983168,
+          "resident_bytes": 5510807552,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 338320,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 14494957568
+        },
+        "memory_after": {
+          "physical_footprint_bytes": 11182676544,
+          "resident_bytes": 5584519168,
+          "compressed_bytes": 5596512256,
+          "compressed_peak_bytes": 8888778752,
+          "decompressions": 619497,
+          "page_faults": 949347,
+          "pageins": 2,
+          "system_swap_used_bytes": 1891368960,
+          "reclaimable_bytes": 7945650176
+        }
+      },
+      "diagnostics": {
+        "samples": [
+          {
+            "step": 0,
+            "offset": 72,
+            "forward_ms": 2818.266041,
+            "process": {
+              "decompressions": 336833,
+              "page_faults": 35932,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 7589642,
+              "cpu_gpu_wait_ns": 2398981076,
+              "gpu_command_ns": 431294223,
+              "submissions": 378
+            },
+            "expert_cache": {
+              "hits": 75,
+              "misses": 405,
+              "application_read_bytes": 1119744000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 323905874,
+              "read_service_sum_ns": 1486112487,
+              "read_queue_sum_ns": 261370600
+            },
+            "observation_ns": 55792,
+            "compressed_bytes_before": 4393582592,
+            "compressed_bytes_after": 8602386432
+          },
+          {
+            "step": 1,
+            "offset": 73,
+            "forward_ms": 513.869125,
+            "process": {
+              "decompressions": 39783,
+              "page_faults": 37096,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6070557,
+              "cpu_gpu_wait_ns": 287037876,
+              "gpu_command_ns": 222969454,
+              "submissions": 294
+            },
+            "expert_cache": {
+              "hits": 265,
+              "misses": 215,
+              "application_read_bytes": 594432000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 160784426,
+              "read_service_sum_ns": 640857412,
+              "read_queue_sum_ns": 13998125
+            },
+            "observation_ns": 56041,
+            "compressed_bytes_before": 8602386432,
+            "compressed_bytes_after": 8005959680
+          },
+          {
+            "step": 2,
+            "offset": 74,
+            "forward_ms": 398.073292,
+            "process": {
+              "decompressions": 32279,
+              "page_faults": 29820,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5152213,
+              "cpu_gpu_wait_ns": 197751249,
+              "gpu_command_ns": 222447136,
+              "submissions": 290
+            },
+            "expert_cache": {
+              "hits": 308,
+              "misses": 172,
+              "application_read_bytes": 475545600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 138353961,
+              "read_service_sum_ns": 483536834,
+              "read_queue_sum_ns": 9114792
+            },
+            "observation_ns": 51126,
+            "compressed_bytes_before": 8005959680,
+            "compressed_bytes_after": 7529709568
+          },
+          {
+            "step": 3,
+            "offset": 75,
+            "forward_ms": 424.743,
+            "process": {
+              "decompressions": 37350,
+              "page_faults": 35338,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4953642,
+              "cpu_gpu_wait_ns": 202186503,
+              "gpu_command_ns": 227901359,
+              "submissions": 284
+            },
+            "expert_cache": {
+              "hits": 275,
+              "misses": 205,
+              "application_read_bytes": 566784000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 158590622,
+              "read_service_sum_ns": 599740916,
+              "read_queue_sum_ns": 8696085
+            },
+            "observation_ns": 50084,
+            "compressed_bytes_before": 7529709568,
+            "compressed_bytes_after": 6962069504
+          },
+          {
+            "step": 4,
+            "offset": 76,
+            "forward_ms": 476.394875,
+            "process": {
+              "decompressions": 59656,
+              "page_faults": 61192,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6648420,
+              "cpu_gpu_wait_ns": 197757334,
+              "gpu_command_ns": 223585572,
+              "submissions": 383
+            },
+            "expert_cache": {
+              "hits": 122,
+              "misses": 358,
+              "application_read_bytes": 989798400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 196661217,
+              "read_service_sum_ns": 1254779555,
+              "read_queue_sum_ns": 92889994
+            },
+            "observation_ns": 49917,
+            "compressed_bytes_before": 6962069504,
+            "compressed_bytes_after": 5970821120
+          },
+          {
+            "step": 5,
+            "offset": 77,
+            "forward_ms": 378.762,
+            "process": {
+              "decompressions": 4720,
+              "page_faults": 18759,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4809575,
+              "cpu_gpu_wait_ns": 198906166,
+              "gpu_command_ns": 222024671,
+              "submissions": 311
+            },
+            "expert_cache": {
+              "hits": 297,
+              "misses": 183,
+              "application_read_bytes": 505958400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 106350754,
+              "read_service_sum_ns": 412449125,
+              "read_queue_sum_ns": 12651047
+            },
+            "observation_ns": 84459,
+            "compressed_bytes_before": 5970821120,
+            "compressed_bytes_after": 5674778624
+          },
+          {
+            "step": 6,
+            "offset": 78,
+            "forward_ms": 393.493125,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5163077,
+              "cpu_gpu_wait_ns": 198608286,
+              "gpu_command_ns": 222997116,
+              "submissions": 346
+            },
+            "expert_cache": {
+              "hits": 237,
+              "misses": 243,
+              "application_read_bytes": 671846400
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 126763131,
+              "read_service_sum_ns": 570731503,
+              "read_queue_sum_ns": 13599576
+            },
+            "observation_ns": 49876,
+            "compressed_bytes_before": 5674778624,
+            "compressed_bytes_after": 5674778624
+          },
+          {
+            "step": 7,
+            "offset": 79,
+            "forward_ms": 336.871208,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4297918,
+              "cpu_gpu_wait_ns": 197357921,
+              "gpu_command_ns": 221849297,
+              "submissions": 251
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 71143502,
+              "read_service_sum_ns": 194585663,
+              "read_queue_sum_ns": 2281671
+            },
+            "observation_ns": 49166,
+            "compressed_bytes_before": 5674778624,
+            "compressed_bytes_after": 5674778624
+          },
+          {
+            "step": 8,
+            "offset": 80,
+            "forward_ms": 409.706792,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5191703,
+              "cpu_gpu_wait_ns": 211328791,
+              "gpu_command_ns": 237524344,
+              "submissions": 319
+            },
+            "expert_cache": {
+              "hits": 281,
+              "misses": 199,
+              "application_read_bytes": 550195200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 108594987,
+              "read_service_sum_ns": 467479876,
+              "read_queue_sum_ns": 14353589
+            },
+            "observation_ns": 50625,
+            "compressed_bytes_before": 5674778624,
+            "compressed_bytes_after": 5674778624
+          },
+          {
+            "step": 9,
+            "offset": 81,
+            "forward_ms": 381.849709,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 2381,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5049955,
+              "cpu_gpu_wait_ns": 200066208,
+              "gpu_command_ns": 225073079,
+              "submissions": 337
+            },
+            "expert_cache": {
+              "hits": 253,
+              "misses": 227,
+              "application_read_bytes": 627609600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 113924167,
+              "read_service_sum_ns": 512971125,
+              "read_queue_sum_ns": 10649875
+            },
+            "observation_ns": 50375,
+            "compressed_bytes_before": 5674778624,
+            "compressed_bytes_after": 5647073280
+          },
+          {
+            "step": 10,
+            "offset": 82,
+            "forward_ms": 359.078,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 1197,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4584977,
+              "cpu_gpu_wait_ns": 198842664,
+              "gpu_command_ns": 221777877,
+              "submissions": 290
+            },
+            "expert_cache": {
+              "hits": 318,
+              "misses": 162,
+              "application_read_bytes": 447897600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 91365659,
+              "read_service_sum_ns": 335519956,
+              "read_queue_sum_ns": 10598669
+            },
+            "observation_ns": 50167,
+            "compressed_bytes_before": 5647073280,
+            "compressed_bytes_after": 5638766592
+          },
+          {
+            "step": 11,
+            "offset": 83,
+            "forward_ms": 382.792042,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 1028,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4834893,
+              "cpu_gpu_wait_ns": 197410214,
+              "gpu_command_ns": 222314418,
+              "submissions": 323
+            },
+            "expert_cache": {
+              "hits": 264,
+              "misses": 216,
+              "application_read_bytes": 597196800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 115076048,
+              "read_service_sum_ns": 493553252,
+              "read_queue_sum_ns": 11215658
+            },
+            "observation_ns": 59834,
+            "compressed_bytes_before": 5638766592,
+            "compressed_bytes_after": 5633228800
+          },
+          {
+            "step": 12,
+            "offset": 84,
+            "forward_ms": 343.460708,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 1536,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4317346,
+              "cpu_gpu_wait_ns": 198472168,
+              "gpu_command_ns": 221958785,
+              "submissions": 255
+            },
+            "expert_cache": {
+              "hits": 361,
+              "misses": 119,
+              "application_read_bytes": 329011200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 74921675,
+              "read_service_sum_ns": 212703121,
+              "read_queue_sum_ns": 2852670
+            },
+            "observation_ns": 50042,
+            "compressed_bytes_before": 5633228800,
+            "compressed_bytes_after": 5619367936
+          },
+          {
+            "step": 13,
+            "offset": 85,
+            "forward_ms": 342.010583,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 860,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4111470,
+              "cpu_gpu_wait_ns": 197948457,
+              "gpu_command_ns": 221334783,
+              "submissions": 247
+            },
+            "expert_cache": {
+              "hits": 364,
+              "misses": 116,
+              "application_read_bytes": 320716800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 70987704,
+              "read_service_sum_ns": 176075664,
+              "read_queue_sum_ns": 2022996
+            },
+            "observation_ns": 52959,
+            "compressed_bytes_before": 5619367936,
+            "compressed_bytes_after": 5616599040
+          },
+          {
+            "step": 14,
+            "offset": 86,
+            "forward_ms": 423.995667,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 1028,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5080729,
+              "cpu_gpu_wait_ns": 198973711,
+              "gpu_command_ns": 222838882,
+              "submissions": 400
+            },
+            "expert_cache": {
+              "hits": 165,
+              "misses": 315,
+              "application_read_bytes": 870912000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 153903504,
+              "read_service_sum_ns": 828255386,
+              "read_queue_sum_ns": 42922959
+            },
+            "observation_ns": 51958,
+            "compressed_bytes_before": 5616599040,
+            "compressed_bytes_after": 5611061248
+          },
+          {
+            "step": 15,
+            "offset": 87,
+            "forward_ms": 449.52475,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5882310,
+              "cpu_gpu_wait_ns": 224990831,
+              "gpu_command_ns": 256903686,
+              "submissions": 363
+            },
+            "expert_cache": {
+              "hits": 213,
+              "misses": 267,
+              "application_read_bytes": 738201600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 134272012,
+              "read_service_sum_ns": 676839582,
+              "read_queue_sum_ns": 23109456
+            },
+            "observation_ns": 51876,
+            "compressed_bytes_before": 5611061248,
+            "compressed_bytes_after": 5611044864
+          },
+          {
+            "step": 16,
+            "offset": 88,
+            "forward_ms": 381.7035,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4921896,
+              "cpu_gpu_wait_ns": 199021957,
+              "gpu_command_ns": 222916799,
+              "submissions": 308
+            },
+            "expert_cache": {
+              "hits": 285,
+              "misses": 195,
+              "application_read_bytes": 539136000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 105834864,
+              "read_service_sum_ns": 407090248,
+              "read_queue_sum_ns": 7182377
+            },
+            "observation_ns": 45583,
+            "compressed_bytes_before": 5611044864,
+            "compressed_bytes_after": 5611044864
+          },
+          {
+            "step": 17,
+            "offset": 89,
+            "forward_ms": 374.675041,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4616114,
+              "cpu_gpu_wait_ns": 199250667,
+              "gpu_command_ns": 223615208,
+              "submissions": 303
+            },
+            "expert_cache": {
+              "hits": 288,
+              "misses": 192,
+              "application_read_bytes": 530841600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 103346465,
+              "read_service_sum_ns": 433021999,
+              "read_queue_sum_ns": 11870377
+            },
+            "observation_ns": 94375,
+            "compressed_bytes_before": 5611044864,
+            "compressed_bytes_after": 5611044864
+          },
+          {
+            "step": 18,
+            "offset": 90,
+            "forward_ms": 397.389666,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5144767,
+              "cpu_gpu_wait_ns": 200007044,
+              "gpu_command_ns": 224554114,
+              "submissions": 334
+            },
+            "expert_cache": {
+              "hits": 244,
+              "misses": 236,
+              "application_read_bytes": 652492800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 130564528,
+              "read_service_sum_ns": 585975840,
+              "read_queue_sum_ns": 31776124
+            },
+            "observation_ns": 44833,
+            "compressed_bytes_before": 5611044864,
+            "compressed_bytes_after": 5611044864
+          },
+          {
+            "step": 19,
+            "offset": 91,
+            "forward_ms": 377.076708,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 1029,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4903261,
+              "cpu_gpu_wait_ns": 198471417,
+              "gpu_command_ns": 223288589,
+              "submissions": 315
+            },
+            "expert_cache": {
+              "hits": 276,
+              "misses": 204,
+              "application_read_bytes": 564019200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 108008795,
+              "read_service_sum_ns": 443092256,
+              "read_queue_sum_ns": 9636458
+            },
+            "observation_ns": 47542,
+            "compressed_bytes_before": 5611044864,
+            "compressed_bytes_after": 5605474304
+          },
+          {
+            "step": 20,
+            "offset": 92,
+            "forward_ms": 360.04175,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4333727,
+              "cpu_gpu_wait_ns": 199302119,
+              "gpu_command_ns": 222324162,
+              "submissions": 264
+            },
+            "expert_cache": {
+              "hits": 344,
+              "misses": 136,
+              "application_read_bytes": 376012800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 84783033,
+              "read_service_sum_ns": 233282202,
+              "read_queue_sum_ns": 2860584
+            },
+            "observation_ns": 52334,
+            "compressed_bytes_before": 5605474304,
+            "compressed_bytes_after": 5605474304
+          },
+          {
+            "step": 21,
+            "offset": 93,
+            "forward_ms": 354.217541,
+            "process": {
+              "decompressions": 3,
+              "page_faults": 925,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5074817,
+              "cpu_gpu_wait_ns": 199318749,
+              "gpu_command_ns": 222049740,
+              "submissions": 277
+            },
+            "expert_cache": {
+              "hits": 330,
+              "misses": 150,
+              "application_read_bytes": 414720000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 90024289,
+              "read_service_sum_ns": 293816872,
+              "read_queue_sum_ns": 12701499
+            },
+            "observation_ns": 47041,
+            "compressed_bytes_before": 5605474304,
+            "compressed_bytes_after": 5602656256
+          },
+          {
+            "step": 22,
+            "offset": 94,
+            "forward_ms": 391.789833,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5397992,
+              "cpu_gpu_wait_ns": 199162419,
+              "gpu_command_ns": 223652201,
+              "submissions": 335
+            },
+            "expert_cache": {
+              "hits": 243,
+              "misses": 237,
+              "application_read_bytes": 655257600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 126273623,
+              "read_service_sum_ns": 556789665,
+              "read_queue_sum_ns": 17875631
+            },
+            "observation_ns": 73958,
+            "compressed_bytes_before": 5602656256,
+            "compressed_bytes_after": 5602656256
+          },
+          {
+            "step": 23,
+            "offset": 95,
+            "forward_ms": 422.27675,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 6076259,
+              "cpu_gpu_wait_ns": 198324830,
+              "gpu_command_ns": 223783084,
+              "submissions": 399
+            },
+            "expert_cache": {
+              "hits": 151,
+              "misses": 329,
+              "application_read_bytes": 909619200
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 161587713,
+              "read_service_sum_ns": 896234413,
+              "read_queue_sum_ns": 45104658
+            },
+            "observation_ns": 78500,
+            "compressed_bytes_before": 5602656256,
+            "compressed_bytes_after": 5602656256
+          },
+          {
+            "step": 24,
+            "offset": 96,
+            "forward_ms": 394.930334,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5036494,
+              "cpu_gpu_wait_ns": 197814335,
+              "gpu_command_ns": 222607255,
+              "submissions": 315
+            },
+            "expert_cache": {
+              "hits": 270,
+              "misses": 210,
+              "application_read_bytes": 580608000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 114238706,
+              "read_service_sum_ns": 459185036,
+              "read_queue_sum_ns": 6090837
+            },
+            "observation_ns": 52374,
+            "compressed_bytes_before": 5602656256,
+            "compressed_bytes_after": 5602639872
+          },
+          {
+            "step": 25,
+            "offset": 97,
+            "forward_ms": 369.078667,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5291388,
+              "cpu_gpu_wait_ns": 197832796,
+              "gpu_command_ns": 222389007,
+              "submissions": 303
+            },
+            "expert_cache": {
+              "hits": 293,
+              "misses": 187,
+              "application_read_bytes": 517017600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 101846207,
+              "read_service_sum_ns": 388571370,
+              "read_queue_sum_ns": 4979548
+            },
+            "observation_ns": 46458,
+            "compressed_bytes_before": 5602639872,
+            "compressed_bytes_after": 5602639872
+          },
+          {
+            "step": 26,
+            "offset": 98,
+            "forward_ms": 407.354916,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 859,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5586612,
+              "cpu_gpu_wait_ns": 214711039,
+              "gpu_command_ns": 242726450,
+              "submissions": 335
+            },
+            "expert_cache": {
+              "hits": 250,
+              "misses": 230,
+              "application_read_bytes": 635904000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 117805423,
+              "read_service_sum_ns": 540584802,
+              "read_queue_sum_ns": 22610110
+            },
+            "observation_ns": 71626,
+            "compressed_bytes_before": 5602639872,
+            "compressed_bytes_after": 5599870976
+          },
+          {
+            "step": 27,
+            "offset": 99,
+            "forward_ms": 354.1845,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 860,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4762549,
+              "cpu_gpu_wait_ns": 199090251,
+              "gpu_command_ns": 223674558,
+              "submissions": 265
+            },
+            "expert_cache": {
+              "hits": 334,
+              "misses": 146,
+              "application_read_bytes": 403660800
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 80941377,
+              "read_service_sum_ns": 263896172,
+              "read_queue_sum_ns": 3480370
+            },
+            "observation_ns": 56458,
+            "compressed_bytes_before": 5599870976,
+            "compressed_bytes_after": 5597085696
+          },
+          {
+            "step": 28,
+            "offset": 100,
+            "forward_ms": 400.983458,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 692,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4857564,
+              "cpu_gpu_wait_ns": 198275838,
+              "gpu_command_ns": 223789178,
+              "submissions": 297
+            },
+            "expert_cache": {
+              "hits": 295,
+              "misses": 185,
+              "application_read_bytes": 511488000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 102060213,
+              "read_service_sum_ns": 410048369,
+              "read_queue_sum_ns": 14225246
+            },
+            "observation_ns": 48791,
+            "compressed_bytes_before": 5597085696,
+            "compressed_bytes_after": 5597085696
+          },
+          {
+            "step": 29,
+            "offset": 101,
+            "forward_ms": 342.457416,
+            "process": {
+              "decompressions": 0,
+              "page_faults": 690,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4762970,
+              "cpu_gpu_wait_ns": 197695377,
+              "gpu_command_ns": 221929531,
+              "submissions": 254
+            },
+            "expert_cache": {
+              "hits": 360,
+              "misses": 120,
+              "application_read_bytes": 331776000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 78260701,
+              "read_service_sum_ns": 234365292,
+              "read_queue_sum_ns": 3039876
+            },
+            "observation_ns": 80667,
+            "compressed_bytes_before": 5597085696,
+            "compressed_bytes_after": 5597085696
+          },
+          {
+            "step": 30,
+            "offset": 102,
+            "forward_ms": 331.584791,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 691,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 4703792,
+              "cpu_gpu_wait_ns": 197612125,
+              "gpu_command_ns": 221467339,
+              "submissions": 255
+            },
+            "expert_cache": {
+              "hits": 358,
+              "misses": 122,
+              "application_read_bytes": 337305600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 76110207,
+              "read_service_sum_ns": 236931925,
+              "read_queue_sum_ns": 6302536
+            },
+            "observation_ns": 79208,
+            "compressed_bytes_before": 5597085696,
+            "compressed_bytes_after": 5597069312
+          },
+          {
+            "step": 31,
+            "offset": 103,
+            "forward_ms": 354.586084,
+            "process": {
+              "decompressions": 1,
+              "page_faults": 756,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 5159507,
+              "cpu_gpu_wait_ns": 197338791,
+              "gpu_command_ns": 221587575,
+              "submissions": 263
+            },
+            "expert_cache": {
+              "hits": 345,
+              "misses": 135,
+              "application_read_bytes": 373248000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 87166666,
+              "read_service_sum_ns": 253340164,
+              "read_queue_sum_ns": 5063582
+            },
+            "observation_ns": 48834,
+            "compressed_bytes_before": 5597069312,
+            "compressed_bytes_after": 5597052928
+          }
+        ],
+        "windows": [
+          {
+            "name": "first_4",
+            "steps": 4,
+            "forward_ms": 4154.951458,
+            "process": {
+              "decompressions": 446245,
+              "page_faults": 138186,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 23766054,
+              "cpu_gpu_wait_ns": 3085956704,
+              "gpu_command_ns": 1104612172,
+              "submissions": 1246
+            },
+            "expert_cache": {
+              "hits": 923,
+              "misses": 997,
+              "application_read_bytes": 2756505600
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 781634883,
+              "read_service_sum_ns": 3210247649,
+              "read_queue_sum_ns": 293179602
+            }
+          },
+          {
+            "name": "remaining_captured",
+            "steps": 28,
+            "forward_ms": 10692.270414,
+            "process": {
+              "decompressions": 64387,
+              "page_faults": 102770,
+              "pageins": 0,
+              "system_swap_used_bytes": 0
+            },
+            "metal": {
+              "cpu_encode_ns": 140602082,
+              "cpu_gpu_wait_ns": 5613892505,
+              "gpu_command_ns": 6306537300,
+              "submissions": 8647
+            },
+            "expert_cache": {
+              "hits": 7905,
+              "misses": 5535,
+              "application_read_bytes": 15303168000
+            },
+            "expert_dependencies": {
+              "coordinator_wait_ns": 3032817170,
+              "read_service_sum_ns": 12772170433,
+              "read_queue_sum_ns": 443947973
+            }
+          }
+        ],
+        "captured_steps": 32,
+        "omitted_steps": 0,
+        "observation_ns": 1832879,
+        "counter_scope": "CPU waits, GPU durations and concurrent reads overlap; their sums are not a critical-path decomposition."
+      },
+      "residency_before": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      },
+      "source": "pair-1-off.json",
+      "sha256": "7eec4da61e78298c86a175c17098f775570cdc24bf0bbc05a52f85a53954ae5f"
+    }
+  ],
+  "time_limit_seconds": 360,
+  "started_at": "2026-09-10T21:19:35.720689+00:00",
+  "design": {
+    "order": [
+      [
+        0,
+        "off"
+      ],
+      [
+        0,
+        "core"
+      ],
+      [
+        1,
+        "core"
+      ],
+      [
+        1,
+        "off"
+      ]
+    ],
+    "cache_policy": "clock",
+    "only_configuration_change": "residency",
+    "steps_per_request": 32,
+    "hypothesis": "Requesting core residency reduces early decode stalls and decompression when they occur."
+  },
+  "instrumentation": {
+    "decode_diagnostics": true,
+    "metal_validation": false,
+    "profile": false
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build": "968132061556ac0077ff41b7c922b5b7c632bb12e21b8ea8e2c5f82f10bb3c73",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "configurations": [
+    {
+      "name": "off",
+      "kernel_policy": "reference",
+      "token_tile": 1,
+      "gdn_path": "original",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8,
+      "residency": "off",
+      "cache_policy": "clock"
+    },
+    {
+      "name": "core",
+      "kernel_policy": "reference",
+      "token_tile": 1,
+      "gdn_path": "original",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8,
+      "residency": "core",
+      "cache_policy": "clock"
+    }
+  ],
+  "memory_plan": {
+    "limit_bytes": 12884901888,
+    "resident_bytes": 5362515968,
+    "session_bytes": 571326464,
+    "scratch_bytes": 536870912,
+    "kernel_scratch_bytes": 0,
+    "panel_tokens": 512,
+    "panel_scratch_bytes": 155189248,
+    "runtime_control_bytes": 16384,
+    "pipeline_scratch_bytes": 0,
+    "snapshot_bytes": 0,
+    "ngram_bytes": 67108864,
+    "reserve_bytes": 1073741824,
+    "expert_bytes": 5116919808,
+    "expert_slots": 1848,
+    "planned_bytes": 12883689472
+  },
+  "elapsed_seconds": 125.83073145896196,
+  "finished_at": "2026-09-10T21:21:41.551780+00:00"
+}

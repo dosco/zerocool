@@ -1,0 +1,3 @@
+2026-09-09 14:48:50.622 qwen_panel_check[54607:192258700] Metal API Validation Enabled
+2026-09-09 14:48:50.622 qwen_panel_check[54607:192258700] Metal GPU Validation Enabled
+9 panel state/failure checks: true

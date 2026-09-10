@@ -133,6 +133,17 @@ and must be charged in every comparison.
    verified original source; Q4-to-Q3 is exploratory only. Gate/up-only Q3 saves
    about 15% of current expert payload, not 25%, after scale/bias overhead.
    Select using quality, latency, and total memory together. Defer Q2.
+   Tie each expert's gate/up format, group size, and bitrate so its fused kernel
+   remains valid; down precision may differ. Calibration captures exact templated
+   model-visible token streams, including generated reasoning, coding, tool calls,
+   tool results, continuations and recovery. Keep calibration, candidate selection,
+   and final evaluation conversations disjoint. Evaluate actual quantized
+   candidates rather than importing EXL3's noise-sensitivity estimates, whose
+   optimizer is explicitly untested on sparse models. Measure padded record bytes,
+   resulting cache capacity, exposed read waits, decoding computation and complete
+   requests together. Tool parser/recovery checks must pass independently.
+   EXL3 trellis support is deferred until affine-Q3 results identify a concrete
+   need; any later investigation starts with a bounded M1 operator experiment.
 6. **Trace-justified cache/prefetch.** Compare CLOCK with one probation/protected
    policy at equal bytes; protected entries remain evictable and prefill gives
    no permanent importance. First run expert prediction in shadow mode. Initial
@@ -140,12 +151,87 @@ and must be charged in every comparison.
    predicted experts and one active speculative read. Yield to demand, do not
    displace actively needed records, and always fall back to the true router.
    Prediction affects read timing only. [PowerInfer-2](https://arxiv.org/html/2406.06282v3#S4)
+   The offline `query_evidence.py cache` query now provides equal-byte CLOCK,
+   probation/protected SLRU and future-aware MIN curves from saved routes, under
+   explicit fixed-order, immediate-release assumptions. It reports application
+   read bytes, not a native speedup. Existing five-token prefill and cancellation
+   fixtures do not establish normal generation locality; do not change the live
+   policy from those curves. First obtain a deadline-limited 32-token normal
+   continuation with complete routes and explicit phase/session/reset boundaries.
+   Extend promising evidence to 256 generated tokens and retained-history append,
+   then screen a single policy at equal admitted memory before full qualification.
+   `capture_routes.py` now implements the first capture with a 180-second default
+   deadline, the mixed artifact and unchanged reference kernels at 12GiB. Native
+   committed-route markers distinguish prefill, decode, session changes and aborts;
+   no partial forward is admitted to the cache simulation. Instrumented timings
+   remain ineligible for performance qualification.
+   The [first complete normal capture](benchmarks/2026-09-10-normal-routes/README.md)
+   recorded all 32 decode steps in 34 seconds at the fixed budget. At its actual
+   1,848 slots, SLRU simulated 10.71% fewer decode expert reads than CLOCK, but no
+   latency gain is established. This supports the longer locality capture and
+   append before implementing a policy; native CLOCK remains the default.
+   The [extended capture](benchmarks/2026-09-10-extended-routes/README.md) completed
+   256 decode steps, a 128-token append and 32 further steps in 167 seconds at the
+   same budget, verifying 328 tokens of actual state reuse. SLRU simulated 5.72%
+   fewer first-request decode reads and 9.46% fewer append reads, but 0.42% more
+   reads during generation after the append: 4.95% fewer across the conversation.
+   Instrumented native generation was 2.47 tokens/s and append TTFT 24.13 seconds;
+   neither proves acceptance. Next implement this one policy behind an experimental
+   option, verify lifetimes and exact state, then run a short equal-budget paired
+   request screen including append. Keep CLOCK until measured latency supports a
+   change; the modest simulated read benefit does not establish a speedup.
+   SLRU is now implemented behind `bench`/`inspect --cache-policy slru`; CLOCK
+   remains the production default. The [native screen](benchmarks/2026-09-10-slru-screen/README.md)
+   passed exact all-layer logits/routes/state and failure/cancellation checks under
+   forced eviction. In two alternating short-history pairs, SLRU issued 9.72% fewer
+   expert reads, but whole-conversation time was 15.97% lower in one pair and 5.08%
+   higher in the other. The predeclared repeatability gate failed; no five-pair or
+   long qualification followed. Preserve this inconclusive result in the ledger.
+   Use existing memory/dependency evidence to investigate variable initial decode
+   latency before tuning policies or rerunning expensive validation. Do not assign
+   the observed timing variance to compression without testing that explanation.
+   The [bounded startup diagnostic](benchmarks/2026-09-10-decode-startup/README.md)
+   now links per-token counters to two alternating off/core residency pairs at
+   the same 12GiB allocation. Core reduced the first four decode forwards from
+   3.72/4.15s to 1.69/1.71s, with decompressions falling from 478,188/446,245 to
+   1/54 and identical output tokens. This supports the startup-memory hypothesis;
+   all runs are instrumented and do not qualify normal latency. Next screen
+   off/core without diagnostics, including retained-history append, before
+   longer qualification or more cache tuning. Keep existing defaults; observed
+   core generation remains about 2.57 tokens/s, below the 5 tokens/s target.
 
 Mixed-reference validation and calibration preparation may proceed alongside
 the first two milestones. The first deliverable is a dependency-level report
 and numerically identical Q4 inference using contiguous records and completions.
 
+## Current exact-attention experiment
+
+The [sparse-attention stage](qwen_sparse_attention_stage.md) specifies CPU-equivalent
+GPU selection, wholly masked score-tile skipping, heavily selected expert and
+execution-lifetime regression coverage, and isolated paired measurements. This
+stage changes no artifact bytes or production defaults. Its numerical and timing
+qualification does not substitute for quantization quality or product acceptance.
+
+The next deliverable is [screen-first selector evaluation](qwen_selector_qualification_stage.md):
+CPU/full versus GPU/full only at the fixed 12GiB budget. Verify quick operator
+and saved-input correctness, then use `triage_selector.py` for five cached 4K
+pairs with a 600-second total deadline. Stop weak or inconclusive candidates;
+timeouts and resource blocks remain unfinished. A promising result proceeds to
+a small normal append screen (`triage_requests.py`, one pair with a 900-second
+total deadline), then full 7K/session/recovery
+validation and the established paired normal-performance gate. The existing
+all-phase qualifier retains its old order and is reserved for survivors. Reuse
+only original, revalidated evidence. No default or precision change is implied.
+
 ## Interfaces and qualification
+
+Use the [offline evidence queries and experiment ledger](qwen_evidence_queries.md)
+to choose experiments and retain negative or blocked outcomes. Start with existing
+reports and verified paired comparisons. The bounded cache simulation answers
+read-volume what-ifs while keeping incomplete trace coverage explicit. Critical-path
+ranking, shared runtime event IDs and new lifecycle probes follow only when a
+concrete decision cannot be answered from current evidence. The index remains rebuildable;
+raw reports and ledger JSON retain their original provenance.
 
 Keep `inspect`, `run`, `bench`, `serve`. Inspect reports artifact/recipe identity,
 precision distribution, actual prepared bytes, and allocations. Bench adds

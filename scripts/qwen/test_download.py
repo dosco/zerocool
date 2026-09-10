@@ -11,7 +11,8 @@ from verify_checkpoint import verify
 
 class ArtifactDownload(unittest.TestCase):
     def test_rejects_other_recipe_or_changed_files_before_download(self):
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory() as temporary, patch('shutil.disk_usage') as usage:
+            usage.return_value.free = 6*1024**3
             model = Path(temporary)
             original = b'original packed weights'
             (model/'weights').write_bytes(original)

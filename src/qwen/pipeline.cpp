@@ -1,8 +1,32 @@
 #include "qwen/pipeline.hpp"
 #include <algorithm>
 #include <stdexcept>
+#include <cstring>
 
 namespace freellm::qwen {
+void encode_expert_rows(Metal& gpu,const Buf& record,const Buf& input,const Buf& output,
+                        std::span<const int> positions,uint32_t tokens,uint32_t chunk,
+                        bool direct,int layer,uint32_t offset,const std::atomic<bool>* cancel) {
+    if(!chunk || chunk>256 || !tokens || tokens>1024 || !input || !output ||
+       input->bytes<uint64_t(tokens)*Hidden*4 || output->bytes<uint64_t(tokens)*TopK*Hidden*4)
+        throw std::invalid_argument("invalid expert row encoding geometry");
+    for(auto p:positions) if(p<0 || uint64_t(p)>=uint64_t(tokens)*TopK) throw std::invalid_argument("expert destination outside input");
+    auto ints=[&](std::span<const int> values) {auto b=gpu.allocate(values.size_bytes());std::memcpy(b->data,values.data(),values.size_bytes());return b;};
+    for(size_t at=0;at<positions.size();at+=chunk) {
+        if(cancel && cancel->load()) throw std::runtime_error("generation cancelled");
+        const auto pos=positions.subspan(at,std::min<size_t>(chunk,positions.size()-at));
+        const auto n=uint32_t(pos.size());gpu.label("routed_expert",layer,n,offset);
+        std::vector<int> rows;rows.reserve(n);for(auto p:pos) rows.push_back(p/TopK);
+        auto rowsbuf=tokens==1?Buf{}:ints(rows);
+        auto activated=gpu.gated_linear(expert_linear(record,0),expert_linear(record,1),input,n,rowsbuf);
+        if(tokens==1 && direct) gpu.linear_into(expert_linear(record,2),activated,1,{output,uint64_t(pos[0])*Hidden*4});
+        else {
+            auto posbuf=ints(pos);auto down=gpu.linear(expert_linear(record,2),activated,n);
+            gpu.dispatch("scatter_experts",{{down},{posbuf},{output}},{n},Hidden,n);
+        }
+    }
+}
+
 Json execute_experts_batched(std::span<const ExpertKey> selected,ExpertCache& cache,
                             ReadPool& reads,Metal& gpu,
                             const std::function<void(ExpertKey,const Buf&)>& encode,

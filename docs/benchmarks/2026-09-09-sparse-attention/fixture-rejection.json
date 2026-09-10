@@ -1,0 +1,64 @@
+{
+  "kind": "sparse_fixture_rejection_checks",
+  "build_fingerprint": "84229cdf0f0b35dd3f7028373a17c7b8a73b45e299060da1c884aed77772e323",
+  "manifest_sha256": "53b5c251bae04a3e087a5af1dc81200d74ec9d125fa1740b648989bcbabcfde2",
+  "passed": true,
+  "checks": [
+    {
+      "name": "stale-build",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "incompatible sparse fixture identity or bounds",
+      "stderr": "2026-09-09 03:22:27.754 qwen_sparse_replay[60232:191591966] Metal API Validation Enabled\n2026-09-09 03:22:27.754 qwen_sparse_replay[60232:191591966] Metal GPU Validation Enabled\nsparse replay: incompatible sparse fixture identity or bounds\n"
+    },
+    {
+      "name": "wrong-artifact",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "incompatible sparse fixture identity or bounds",
+      "stderr": "2026-09-09 03:22:27.833 qwen_sparse_replay[60233:191591971] Metal API Validation Enabled\n2026-09-09 03:22:27.834 qwen_sparse_replay[60233:191591971] Metal GPU Validation Enabled\nsparse replay: incompatible sparse fixture identity or bounds\n"
+    },
+    {
+      "name": "empty",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "incompatible sparse fixture identity or bounds",
+      "stderr": "2026-09-09 03:22:27.909 qwen_sparse_replay[60234:191591975] Metal API Validation Enabled\n2026-09-09 03:22:27.910 qwen_sparse_replay[60234:191591975] Metal GPU Validation Enabled\nsparse replay: incompatible sparse fixture identity or bounds\n"
+    },
+    {
+      "name": "oversized",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "incompatible sparse fixture identity or bounds",
+      "stderr": "2026-09-09 03:22:27.981 qwen_sparse_replay[60235:191591979] Metal API Validation Enabled\n2026-09-09 03:22:27.981 qwen_sparse_replay[60235:191591979] Metal GPU Validation Enabled\nsparse replay: incompatible sparse fixture identity or bounds\n"
+    },
+    {
+      "name": "bad-hash",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "sparse fixture hash mismatch",
+      "stderr": "2026-09-09 03:22:28.050 qwen_sparse_replay[60236:191591984] Metal API Validation Enabled\n2026-09-09 03:22:28.050 qwen_sparse_replay[60236:191591984] Metal GPU Validation Enabled\nsparse replay: sparse fixture hash mismatch\n"
+    },
+    {
+      "name": "truncated",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "sparse fixture size mismatch",
+      "stderr": "2026-09-09 03:22:28.176 qwen_sparse_replay[60237:191591989] Metal API Validation Enabled\n2026-09-09 03:22:28.177 qwen_sparse_replay[60237:191591989] Metal GPU Validation Enabled\nsparse replay: sparse fixture size mismatch\n"
+    },
+    {
+      "name": "bad-geometry",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "invalid sparse fixture geometry",
+      "stderr": "2026-09-09 03:22:28.272 qwen_sparse_replay[60238:191591993] Metal API Validation Enabled\n2026-09-09 03:22:28.272 qwen_sparse_replay[60238:191591993] Metal GPU Validation Enabled\nsparse replay: invalid sparse fixture geometry\n"
+    },
+    {
+      "name": "path-traversal",
+      "passed": true,
+      "returncode": 1,
+      "expected_error": "invalid sparse fixture tensor",
+      "stderr": "2026-09-09 03:22:28.363 qwen_sparse_replay[60239:191591999] Metal API Validation Enabled\n2026-09-09 03:22:28.363 qwen_sparse_replay[60239:191591999] Metal GPU Validation Enabled\nsparse replay: invalid sparse fixture tensor\n"
+    }
+  ]
+}

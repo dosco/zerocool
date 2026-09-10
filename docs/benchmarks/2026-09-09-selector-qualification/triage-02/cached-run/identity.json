@@ -1,0 +1,1537 @@
+{
+  "protocol": "selector-qualification-v1",
+  "root": "/repo",
+  "build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+  "files": {
+    "/repo/scripts/qwen/api_check.py": "fe6fa8d208497028d6a4f938494b1dc2452276ef772cfe0e246f2b585cae9c32",
+    "/repo/scripts/qwen/benchmark_cache_sizes.py": "fd6d307204c257b679e4b3fb13c1f98ab15d2bdcab3be84a3c91ad056b8ff319",
+    "/repo/scripts/qwen/benchmark_cached_tokens.py": "2604e81dce2e122412c98d744f2faaed23550f4cb445d366924d3a9e68cf4446",
+    "/repo/scripts/qwen/benchmark_dependencies.py": "f9f7bf8019eb1c119812a160f5f82e456de260e994a3791a0f81bcdefc34de86",
+    "/repo/scripts/qwen/benchmark_exact.py": "ce67aaa1beef9c2e1a722bef7664324bef2e7fa090e73ed3f994a9db61a3349f",
+    "/repo/scripts/qwen/benchmark_execution.py": "002a5b3d7884b4cd2b017bfb43ff10dfc2d07618b002e87b88ccee931500e29c",
+    "/repo/scripts/qwen/benchmark_panels.py": "967902ac992137e8bd8f24e8d6f5c5a2f0faaae59bcc65ed4167aa4b5e95df50",
+    "/repo/scripts/qwen/benchmark_q8_decode.py": "9af802e82d86871ab9f4738687492011688cc310d56d80707a0ca92a85f64fab",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py": "ad429f42159fc02a780810f10a63f2b5b5b50244fbd967c6ffa9ac2553a01191",
+    "/repo/scripts/qwen/build_identity.py": "6e2346aebfa2add4b6f9eadaaeb02b4dda3c32b95c860695a5ef70940802e37b",
+    "/repo/scripts/qwen/capture_phase_inputs.py": "81e3fc04cc09afe6dba3cb50a3fe5142f104b0c84ce9db12ca439c1eee3ae36e",
+    "/repo/scripts/qwen/check_attention_replay.py": "7549f2d73354b83934efd7954245d15a6d61975c79ae002270491a6cd7dd0829",
+    "/repo/scripts/qwen/check_full_replay.py": "48e1138ef8364bfadb43d1fce6fcf43c1efc7a77c3e245077017c8de5d0ee799",
+    "/repo/scripts/qwen/check_mixed_reference.py": "f586c3a657278a00689af396ca40bbdc590f999df04c27b87371c51793ed89bb",
+    "/repo/scripts/qwen/check_moe_replay.py": "fad30f7d927961c37a344976f34c4647c0891b408231bcc4c0ee7bfa0e337589",
+    "/repo/scripts/qwen/check_soak.py": "e02674b4771950bcd774d29d1b2edb36b30571b3e21a9d69ae0c8f0330590b75",
+    "/repo/scripts/qwen/compare_logits.py": "db282479fd77897bc2189eccd2cb73644b9779d045ed1f74af5529bcae5a7078",
+    "/repo/scripts/qwen/download.py": "72dc016d07f47e3ec8b30d5619aa187a8c09eff3b1c2ae8715758d3c01064334",
+    "/repo/scripts/qwen/inspect_mixed.py": "cf661ca2cb4dd0cecfa1c776ff7cb4e9df2f13903b2794028dca87ba5ef76b77",
+    "/repo/scripts/qwen/prepare_benchmarks.py": "721f5e59976ef5fc07efd2e9ab87e32ec45d794635b03b56e8ddd71f043bccf0",
+    "/repo/scripts/qwen/prepare_storage.py": "a5a1689fe7f2646e9af83aa960f421753961f612970717aed2e044a9a3c24c57",
+    "/repo/scripts/qwen/qualification_evidence.py": "b1004f745ddc796ba34daf20db7db93319e6b35faf91363af2e37592e73a5eb0",
+    "/repo/scripts/qwen/qualify_exact_sessions.py": "d7a63330137bb0462f7506ff58715dcb230c90b4c761ded3bf99485f63d661dd",
+    "/repo/scripts/qwen/reference_mlx.py": "64e3f9573c3b5c4fdedb58c350b40bb94a9a17124adb7f259753ff5acc248fac",
+    "/repo/scripts/qwen/reference_numpy.py": "1396c2acfe2880e5fa195a685a1699c458df606a0c96daf9566b857a35af6084",
+    "/repo/scripts/qwen/reference_q8.py": "f9566b90cb7b157b2302228adee17605084cdab28cbaf4867cc9e71214b5318b",
+    "/repo/scripts/qwen/reference_stages.py": "ef427db09adc69a675bd4359056fd861737f3e50ff59e17fc6f13b65211af027",
+    "/repo/scripts/qwen/release_check.py": "2de8ac4d3ada076bb7981e1ab3d8cba175bf6500e5b472ccc733899155728c34",
+    "/repo/scripts/qwen/select_shape_rules.py": "d47a6a8bcb894967ab3b2c3a45cd0a30afb20431c67ea540da9e1ebb1a20076d",
+    "/repo/scripts/qwen/selector_qualification.py": "e73dca309ebf782758fe1da163dffda452e30529a38fa403c1c817d00a38a79b",
+    "/repo/scripts/qwen/summarize_cached_comparison.py": "bd350609317589f1abac46700a5c71fbd9bb7d932158bc3b17fcbe37a9ac4014",
+    "/repo/scripts/qwen/summarize_decode_profile.py": "8f7400d28c8b2b32f50f049bc8d3896b6c766f2014eb8dd6451e8dda1787a837",
+    "/repo/scripts/qwen/test_compare_logits.py": "9d2bfa864acfae22e29754168f409f3573a012fe3ff8f4bad4496d929cf6d059",
+    "/repo/scripts/qwen/test_decode_profile.py": "b9af6682ab887bce50882d8887e8ba9c2737bcb38482439594d8589d47475dc9",
+    "/repo/scripts/qwen/test_dependency_summary.py": "646151bfc75999f3b17e7e87dbea355c644e2de61e1323678707ac92a6174232",
+    "/repo/scripts/qwen/test_download.py": "9db03260f91014775145dbf1ddbb871eafc2fbd599a7fed2c1f3ecb489f21678",
+    "/repo/scripts/qwen/test_exact_benchmark.py": "5e18b922c99a349a5ea8aeba16eb8116519c655dd692821a2f0f62170283365c",
+    "/repo/scripts/qwen/test_execution_stage.py": "6931120e5ea36869ecd542d68f493a4b4ff49d82faf187c975eed2d1c3e0c571",
+    "/repo/scripts/qwen/test_full_replay.py": "3b7be51a34bb5fbe968f13ac5183f2503739aa9f2a8ba3bd029a5d496e843d96",
+    "/repo/scripts/qwen/test_mixed_inspection.py": "0829159e0b78885e91c2210c6eb465784fd255c8cdc29dfd2eb21b0b979b4820",
+    "/repo/scripts/qwen/test_mixed_payloads.py": "2e89b54f10a36da4bd9e2dbe608110e513f3201777727770109441df2a9104fe",
+    "/repo/scripts/qwen/test_panel_benchmark.py": "eadd4ccee1dfa9fbdb40caa1bc96af75e376d7a7d8b9e3f37ff8aa5881253027",
+    "/repo/scripts/qwen/test_phase_memory.py": "0d09e716c14ed61bb1d954bca8a2e4d01e8b5443aa01af2ead6f5042ad67d09f",
+    "/repo/scripts/qwen/test_prepared_rejection.py": "4362d1f7219d0325de431da59be185c38efc3eb6537340b066f3a7f87e67226c",
+    "/repo/scripts/qwen/test_q8_rejection.py": "b0f4748ec054ea13a22ff944163e8acebb89639c673878f3f56d054360662ccd",
+    "/repo/scripts/qwen/test_release_check.py": "57ff06ad062ea4635263cc5f5d067e68ddf16f37cecaedb241dea74214153358",
+    "/repo/scripts/qwen/test_selector_qualification.py": "6d79c0320277fbc637d9c0c5807b5b344b661258103c2cd908de6ca382e48b05",
+    "/repo/scripts/qwen/test_selector_triage.py": "32730a7756884e85b0a4b7f64592b3c6cf0d32780a031943313ffc1365829990",
+    "/repo/scripts/qwen/test_sparse_stage.py": "fee5965572321ee06280c32f6eaadf6451197f1ffe0d6c9116b58a30d6222581",
+    "/repo/scripts/qwen/triage_selector.py": "c7f472edfa62b0d0572bdcc110feddbf3ecce5be65f912f389570fd3adb78fc1",
+    "/repo/scripts/qwen/tune_exact.py": "f219a9352b446e588c9f22c17becb33f01cdadafa34bcd870f22f6b783158d43",
+    "/repo/scripts/qwen/verify_checkpoint.py": "46892cf53bfdbada8357fb13596c1c42c4e59cb779ec3b77aa12273d9e7a7f0b",
+    "/repo/scripts/qwen/verify_mixed_payloads.py": "ace77f4221bf0b5f6bf6008be1ef7a1e3b3cc803913bd39996461da187a84f3b",
+    "/repo/scripts/qwen/check_cached_recovery.cpp": "37747111c33c9e053dde969a99eb590de09ec9a5455477ea83df603b7f294e99",
+    "/repo/scripts/qwen/check_panel.cpp": "cf5d575173816f5e015bf9acbf6e05c030a9e0b30e875c8d62f5d5256875645a",
+    "/repo/scripts/qwen/check_q8.cpp": "719f4d123128b1375d1d164a9ee72554e6c73519f94d846bce2e699feb0727d9",
+    "/repo/scripts/qwen/check_storage.cpp": "ca268395fdc33afd52a518d8a76770b1315b2a2061a44c36b71564f624de5fe3",
+    "/repo/scripts/qwen/replay_attention.cpp": "45468f978e6d81da6ab55dd4b296a25693d4906c68029b7efd8ec3f892029a2d",
+    "/repo/scripts/qwen/replay_moe.cpp": "c356c05ff572b469e54a576b7e72bc78d51731f3b3af3ffc77166236d4f5ffaa",
+    "/repo/scripts/qwen/replay_ple.cpp": "c01e5aed1e5cace21f73b7d61300c3566c5c8987149cc4601d2b80acdba84b18",
+    "/repo/scripts/qwen/replay_sparse.cpp": "65312f42b491498a8f205ec19e5db39ef243f2c52b7ce57a188f1deb68255a20",
+    "/repo/scripts/qwen/cached_recovery_checks.hpp": "8745343cff63c4d3d44b8bcd946a43578e11aeb96adcce9a123ae8f49e5c6030",
+    "/repo/tests/test_qwen.cpp": "791accd9d1c6bb01628dc47e4a3046c53968cdd0d1cdd4ba2a6a53d60ff0514f",
+    "/repo/mixed-models.lock.json": "a8257f7f5feb9aa5ae9614c684d9ebb332988e3d3a9755368bbeb049aebdb187",
+    "/repo/models.lock.json": "3ea4eca6568e725e329be172973f777c7a33572db0e04066d71182f000094d77",
+    "/repo/mixed-payload-reuse.lock.json": "0348bfdb1b0d34ff40909724c753355f1f51f8e1b99df9bfd453a7e57d289a07",
+    "/repo/.cache/qwen-mixed-reference/freellm-verification.json": "ef0ea00fd2b85e37f81aa5f0c3633d29a22dca52d807a2092ea418feb94002f0",
+    "/repo/.cache/prepared/q4-records-v1/manifest.json": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "/repo/.cache/prepared/q4-records-v1/verification.json": "0ce575c1d7407bfd90da082bf2af45642e03b03fcfb1f6df99bc2a89f0fd4c08",
+    "/repo/docs/benchmarks/2026-09-08-validation/workload-2k.json": "ee84a428e69d8104315ad57b170b93026c037e2f4d041dec889e57df9e77c766",
+    "/repo/build/qwen/bin/freellm": "a740564da42cb6bee487a74178c8cee74a50c506e0845df49718ac82d2210f7a",
+    "/repo/build/qwen/test_qwen": "62dc5f7eba0ae65048d9327e6e0c7771aafccb82d4e705e42c88cbe986565ea2",
+    "/repo/build/qwen/qwen_cached_recovery": "96309cf96323513d6943a127d5701fc1a7724ceda78b5386cd1016939e8ca05f",
+    "/repo/build/qwen/qwen_sparse_replay": "fd8ada44e95967f71376458c75e99f5d791d70bfbba4178dc6f96693863b7788",
+    "/repo/build/qwen/qwen_panel_check": "9ffe3e7a58774efd1074cba956f608c05c45ae54589066a931c0219b44081544",
+    "/repo/docs/benchmarks/2026-09-09-sparse-attention/configs.json": "474d961d749b982c6dc9003ac1670fdbd8858c71a6879db5c660d9f0dd5eaa6a"
+  },
+  "assets": {
+    "/repo/.cache/qwen-mixed-reference/LICENSE": {
+      "size": 3235,
+      "device": 16777229,
+      "inode": 510126367,
+      "mtime_ns": 1788885072043276143,
+      "ctime_ns": 1788885072044277728
+    },
+    "/repo/.cache/qwen-mixed-reference/README.md": {
+      "size": 6195,
+      "device": 16777229,
+      "inode": 510126371,
+      "mtime_ns": 1788885072159244264,
+      "ctime_ns": 1788885072160302142
+    },
+    "/repo/.cache/qwen-mixed-reference/chat_template.jinja": {
+      "size": 8952,
+      "device": 16777229,
+      "inode": 510126375,
+      "mtime_ns": 1788885072306747203,
+      "ctime_ns": 1788885072307738705
+    },
+    "/repo/.cache/qwen-mixed-reference/config.json": {
+      "size": 135742,
+      "device": 16777229,
+      "inode": 510126376,
+      "mtime_ns": 1788885072380265526,
+      "ctime_ns": 1788885072382514198
+    },
+    "/repo/.cache/qwen-mixed-reference/generation_config.json": {
+      "size": 202,
+      "device": 16777229,
+      "inode": 510126383,
+      "mtime_ns": 1788885072533759061,
+      "ctime_ns": 1788885072534740688
+    },
+    "/repo/.cache/qwen-mixed-reference/merges.txt": {
+      "size": 3353259,
+      "device": 16777229,
+      "inode": 510126387,
+      "mtime_ns": 1788885072737365702,
+      "ctime_ns": 1788885072738570997
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00001.safetensors": {
+      "size": 10131671103,
+      "device": 16777229,
+      "inode": 510126388,
+      "mtime_ns": 1788885358203059642,
+      "ctime_ns": 1788885358204312563
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00002.safetensors": {
+      "size": 10000066971,
+      "device": 16777229,
+      "inode": 510126392,
+      "mtime_ns": 1788885355353013030,
+      "ctime_ns": 1788885355366374624
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00003.safetensors": {
+      "size": 10000066984,
+      "device": 16777229,
+      "inode": 510127141,
+      "mtime_ns": 1788885657389947291,
+      "ctime_ns": 1788885657397225487
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00004.safetensors": {
+      "size": 10314427650,
+      "device": 16777229,
+      "inode": 510127153,
+      "mtime_ns": 1788885611064085452,
+      "ctime_ns": 1788885611069629682
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00005.safetensors": {
+      "size": 10008047700,
+      "device": 16777229,
+      "inode": 510127626,
+      "mtime_ns": 1788885901365037657,
+      "ctime_ns": 1788885901367636000
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00006.safetensors": {
+      "size": 10412855614,
+      "device": 16777229,
+      "inode": 510127680,
+      "mtime_ns": 1788885970940107356,
+      "ctime_ns": 1788885970949023766
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00007.safetensors": {
+      "size": 10003320652,
+      "device": 16777229,
+      "inode": 510128589,
+      "mtime_ns": 1788886166160521992,
+      "ctime_ns": 1788886166170321655
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00008.safetensors": {
+      "size": 10022166479,
+      "device": 16777229,
+      "inode": 510128751,
+      "mtime_ns": 1788886251899662149,
+      "ctime_ns": 1788886251911481278
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00009.safetensors": {
+      "size": 10413658096,
+      "device": 16777229,
+      "inode": 510129375,
+      "mtime_ns": 1788886444745425115,
+      "ctime_ns": 1788886444749961966
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00010.safetensors": {
+      "size": 10011809426,
+      "device": 16777229,
+      "inode": 510135913,
+      "mtime_ns": 1788886486597561937,
+      "ctime_ns": 1788886486599072484
+    },
+    "/repo/.cache/qwen-mixed-reference/model-00011.safetensors": {
+      "size": 4876940562,
+      "device": 16777229,
+      "inode": 509702573,
+      "mtime_ns": 1788850084191111171,
+      "ctime_ns": 1788850142389821352
+    },
+    "/repo/.cache/qwen-mixed-reference/model.safetensors.index.json": {
+      "size": 317973,
+      "device": 16777229,
+      "inode": 510136441,
+      "mtime_ns": 1788886448544760756,
+      "ctime_ns": 1788886448545424050
+    },
+    "/repo/.cache/qwen-mixed-reference/preprocessor_config.json": {
+      "size": 390,
+      "device": 16777229,
+      "inode": 510136445,
+      "mtime_ns": 1788886448816838275,
+      "ctime_ns": 1788886448817217984
+    },
+    "/repo/.cache/qwen-mixed-reference/qwen4_exp.py": {
+      "size": 35046,
+      "device": 16777229,
+      "inode": 510136449,
+      "mtime_ns": 1788886449053649781,
+      "ctime_ns": 1788886449054259575
+    },
+    "/repo/.cache/qwen-mixed-reference/tokenizer.json": {
+      "size": 12809320,
+      "device": 16777229,
+      "inode": 509964627,
+      "mtime_ns": 1788859858230644535,
+      "ctime_ns": 1788859858230644535
+    },
+    "/repo/.cache/qwen-mixed-reference/tokenizer_config.json": {
+      "size": 17928,
+      "device": 16777229,
+      "inode": 510136455,
+      "mtime_ns": 1788886449436551982,
+      "ctime_ns": 1788886449436938858
+    },
+    "/repo/.cache/qwen-mixed-reference/video_preprocessor_config.json": {
+      "size": 385,
+      "device": 16777229,
+      "inode": 510136459,
+      "mtime_ns": 1788886449684606740,
+      "ctime_ns": 1788886449685210576
+    },
+    "/repo/.cache/qwen-mixed-reference/vocab.json": {
+      "size": 6722759,
+      "device": 16777229,
+      "inode": 510136463,
+      "mtime_ns": 1788886450284550245,
+      "ctime_ns": 1788886450305452160
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-00.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624628,
+      "mtime_ns": 1788837923822719374,
+      "ctime_ns": 1788837923823991060
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-01.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624633,
+      "mtime_ns": 1788837926925260664,
+      "ctime_ns": 1788837926926524600
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-02.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624635,
+      "mtime_ns": 1788837929961841863,
+      "ctime_ns": 1788837929963090424
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-03.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624638,
+      "mtime_ns": 1788837932937764135,
+      "ctime_ns": 1788837932938999820
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-04.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624642,
+      "mtime_ns": 1788837936236067000,
+      "ctime_ns": 1788837936237475480
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-05.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624644,
+      "mtime_ns": 1788837939260972520,
+      "ctime_ns": 1788837939263796147
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-06.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624647,
+      "mtime_ns": 1788837942442920774,
+      "ctime_ns": 1788837942444163376
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-07.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624650,
+      "mtime_ns": 1788837945907375845,
+      "ctime_ns": 1788837945908622864
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-08.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624652,
+      "mtime_ns": 1788837949091526424,
+      "ctime_ns": 1788837949092651733
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-09.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624710,
+      "mtime_ns": 1788837952180452090,
+      "ctime_ns": 1788837952181708817
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-10.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624714,
+      "mtime_ns": 1788837955342369246,
+      "ctime_ns": 1788837955343622598
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-11.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624721,
+      "mtime_ns": 1788837958432772225,
+      "ctime_ns": 1788837958434026245
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-12.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624725,
+      "mtime_ns": 1788837965719725215,
+      "ctime_ns": 1788837965721003068
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-13.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624729,
+      "mtime_ns": 1788837968746626432,
+      "ctime_ns": 1788837968751960264
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-14.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624732,
+      "mtime_ns": 1788837971909484561,
+      "ctime_ns": 1788837971910735913
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-15.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624734,
+      "mtime_ns": 1788837974969300823,
+      "ctime_ns": 1788837974970568509
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-16.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624736,
+      "mtime_ns": 1788837979097965462,
+      "ctime_ns": 1788837979099003728
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-17.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624754,
+      "mtime_ns": 1788837982313656273,
+      "ctime_ns": 1788837982314915250
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-18.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624758,
+      "mtime_ns": 1788837985416068270,
+      "ctime_ns": 1788837985419037357
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-19.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624761,
+      "mtime_ns": 1788837988559749897,
+      "ctime_ns": 1788837988561036209
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-20.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624763,
+      "mtime_ns": 1788837991622134449,
+      "ctime_ns": 1788837991623380635
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-21.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624766,
+      "mtime_ns": 1788837994691413648,
+      "ctime_ns": 1788837994692680834
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-22.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624768,
+      "mtime_ns": 1788838003088070680,
+      "ctime_ns": 1788838003089334574
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-23.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624780,
+      "mtime_ns": 1788838006163658600,
+      "ctime_ns": 1788838006165029205
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-24.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624784,
+      "mtime_ns": 1788838009274673145,
+      "ctime_ns": 1788838009275856330
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-25.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624787,
+      "mtime_ns": 1788838012495828499,
+      "ctime_ns": 1788838012498733293
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-26.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624789,
+      "mtime_ns": 1788838015660352028,
+      "ctime_ns": 1788838015665294395
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-27.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624792,
+      "mtime_ns": 1788838018860207347,
+      "ctime_ns": 1788838018861464283
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-28.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624795,
+      "mtime_ns": 1788838021924636055,
+      "ctime_ns": 1788838021925893366
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-29.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624802,
+      "mtime_ns": 1788838025031236158,
+      "ctime_ns": 1788838025032547344
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-30.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624804,
+      "mtime_ns": 1788838028175074163,
+      "ctime_ns": 1788838028181820057
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-31.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624806,
+      "mtime_ns": 1788838031396031929,
+      "ctime_ns": 1788838031397292449
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-32.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624809,
+      "mtime_ns": 1788838040593158529,
+      "ctime_ns": 1788838040594399714
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-33.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624826,
+      "mtime_ns": 1788838043675153713,
+      "ctime_ns": 1788838043676455150
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-34.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624832,
+      "mtime_ns": 1788838046881175210,
+      "ctime_ns": 1788838046882538481
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-35.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624834,
+      "mtime_ns": 1788838049930144515,
+      "ctime_ns": 1788838049931400285
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-36.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624837,
+      "mtime_ns": 1788838053075591545,
+      "ctime_ns": 1788838053076843564
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-37.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624840,
+      "mtime_ns": 1788838056173083591,
+      "ctime_ns": 1788838056174328652
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-38.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624872,
+      "mtime_ns": 1788838059709422345,
+      "ctime_ns": 1788838059710711739
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-39.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624954,
+      "mtime_ns": 1788838063285230493,
+      "ctime_ns": 1788838063288278373
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-40.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624965,
+      "mtime_ns": 1788838066537642741,
+      "ctime_ns": 1788838066537882494
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-41.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624967,
+      "mtime_ns": 1788838069653666237,
+      "ctime_ns": 1788838069657236000
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-42.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624971,
+      "mtime_ns": 1788838072959044919,
+      "ctime_ns": 1788838072960335230
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-43.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509624995,
+      "mtime_ns": 1788838081745913873,
+      "ctime_ns": 1788838081748692166
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-44.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509625006,
+      "mtime_ns": 1788838084875777998,
+      "ctime_ns": 1788838084877047017
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-45.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509625009,
+      "mtime_ns": 1788838087993279976,
+      "ctime_ns": 1788838087995959558
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-46.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509625066,
+      "mtime_ns": 1788838091044916446,
+      "ctime_ns": 1788838091046274217
+    },
+    "/repo/.cache/prepared/q4-records-v1/experts-47.bin": {
+      "size": 1417674752,
+      "device": 16777229,
+      "inode": 509625069,
+      "mtime_ns": 1788838094187466890,
+      "ctime_ns": 1788838094190388518
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-000.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625072,
+      "mtime_ns": 1788838094942269592,
+      "ctime_ns": 1788838094942589805
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-001.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625074,
+      "mtime_ns": 1788838095449140463,
+      "ctime_ns": 1788838095449427843
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-002.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625076,
+      "mtime_ns": 1788838095947917419,
+      "ctime_ns": 1788838095948247508
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-003.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625078,
+      "mtime_ns": 1788838096504793638,
+      "ctime_ns": 1788838096505076893
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-004.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625081,
+      "mtime_ns": 1788838096993484274,
+      "ctime_ns": 1788838096993882988
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-005.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625083,
+      "mtime_ns": 1788838098463563615,
+      "ctime_ns": 1788838098464114957
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-006.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625097,
+      "mtime_ns": 1788838099040694185,
+      "ctime_ns": 1788838099041009940
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-007.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625100,
+      "mtime_ns": 1788838099598691463,
+      "ctime_ns": 1788838099598996718
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-008.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625102,
+      "mtime_ns": 1788838100207841481,
+      "ctime_ns": 1788838100208213778
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-009.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625104,
+      "mtime_ns": 1788838100709469398,
+      "ctime_ns": 1788838100709798069
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-010.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625106,
+      "mtime_ns": 1788838101243338265,
+      "ctime_ns": 1788838101243644811
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-011.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625108,
+      "mtime_ns": 1788838101754529494,
+      "ctime_ns": 1788838101754814207
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-012.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625110,
+      "mtime_ns": 1788838102265364467,
+      "ctime_ns": 1788838102265714181
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-013.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625112,
+      "mtime_ns": 1788838102777542837,
+      "ctime_ns": 1788838102777904134
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-014.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625114,
+      "mtime_ns": 1788838103309178837,
+      "ctime_ns": 1788838103309583593
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-015.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625116,
+      "mtime_ns": 1788838103832873173,
+      "ctime_ns": 1788838103833196470
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-016.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625118,
+      "mtime_ns": 1788838104390514279,
+      "ctime_ns": 1788838104390841951
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-017.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625120,
+      "mtime_ns": 1788838104899958398,
+      "ctime_ns": 1788838104900498115
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-018.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625122,
+      "mtime_ns": 1788838105433085671,
+      "ctime_ns": 1788838105433369467
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-019.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625125,
+      "mtime_ns": 1788838105954870520,
+      "ctime_ns": 1788838105955152899
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-020.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625127,
+      "mtime_ns": 1788838106574534240,
+      "ctime_ns": 1788838106575021206
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-021.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625129,
+      "mtime_ns": 1788838107110776227,
+      "ctime_ns": 1788838107111082399
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-022.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625131,
+      "mtime_ns": 1788838107788886091,
+      "ctime_ns": 1788838107789242429
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-023.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625133,
+      "mtime_ns": 1788838108971399079,
+      "ctime_ns": 1788838108971922296
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-024.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625136,
+      "mtime_ns": 1788838110190817465,
+      "ctime_ns": 1788838110191239763
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-025.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625138,
+      "mtime_ns": 1788838111506901829,
+      "ctime_ns": 1788838111507205208
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-026.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625140,
+      "mtime_ns": 1788838112731323708,
+      "ctime_ns": 1788838112731649130
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-027.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625143,
+      "mtime_ns": 1788838115077044640,
+      "ctime_ns": 1788838115077518439
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-028.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625145,
+      "mtime_ns": 1788838116452273199,
+      "ctime_ns": 1788838116452589454
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-029.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625149,
+      "mtime_ns": 1788838117064799019,
+      "ctime_ns": 1788838117065130732
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-030.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625151,
+      "mtime_ns": 1788838117595674674,
+      "ctime_ns": 1788838117596034179
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-031.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625153,
+      "mtime_ns": 1788838118080183287,
+      "ctime_ns": 1788838118080460583
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-032.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625155,
+      "mtime_ns": 1788838118563355588,
+      "ctime_ns": 1788838118563653634
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-033.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625158,
+      "mtime_ns": 1788838119056835421,
+      "ctime_ns": 1788838119057122300
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-034.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625160,
+      "mtime_ns": 1788838119556415431,
+      "ctime_ns": 1788838119556899772
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-035.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625162,
+      "mtime_ns": 1788838120094820076,
+      "ctime_ns": 1788838120095249208
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-036.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625164,
+      "mtime_ns": 1788838120682571892,
+      "ctime_ns": 1788838120682860438
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-037.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625166,
+      "mtime_ns": 1788838121180603836,
+      "ctime_ns": 1788838121180886882
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-038.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625168,
+      "mtime_ns": 1788838121666390011,
+      "ctime_ns": 1788838121666668723
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-039.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625170,
+      "mtime_ns": 1788838122179368017,
+      "ctime_ns": 1788838122179654605
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-040.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625172,
+      "mtime_ns": 1788838122686448433,
+      "ctime_ns": 1788838122686877981
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-041.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625174,
+      "mtime_ns": 1788838123216788163,
+      "ctime_ns": 1788838123217082876
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-042.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625176,
+      "mtime_ns": 1788838123734101278,
+      "ctime_ns": 1788838123734429741
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-043.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625178,
+      "mtime_ns": 1788838124225518288,
+      "ctime_ns": 1788838124225885627
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-044.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625180,
+      "mtime_ns": 1788838124715407150,
+      "ctime_ns": 1788838124715714280
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-045.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625182,
+      "mtime_ns": 1788838125209747538,
+      "ctime_ns": 1788838125210164294
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-046.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625184,
+      "mtime_ns": 1788838125705781244,
+      "ctime_ns": 1788838125706199208
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-047.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625187,
+      "mtime_ns": 1788838126305822164,
+      "ctime_ns": 1788838126306106543
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-048.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625189,
+      "mtime_ns": 1788838126811441808,
+      "ctime_ns": 1788838126811713937
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-049.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625191,
+      "mtime_ns": 1788838127342658343,
+      "ctime_ns": 1788838127342947389
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-050.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625193,
+      "mtime_ns": 1788838127877283805,
+      "ctime_ns": 1788838127877601810
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-051.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625196,
+      "mtime_ns": 1788838128396568700,
+      "ctime_ns": 1788838128397094583
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-052.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625199,
+      "mtime_ns": 1788838128901908756,
+      "ctime_ns": 1788838128902192302
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-053.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625201,
+      "mtime_ns": 1788838129390980814,
+      "ctime_ns": 1788838129391278985
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-054.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625204,
+      "mtime_ns": 1788838129914742277,
+      "ctime_ns": 1788838129915025489
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-055.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625209,
+      "mtime_ns": 1788838130456219719,
+      "ctime_ns": 1788838130456511181
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-056.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625212,
+      "mtime_ns": 1788838130950502439,
+      "ctime_ns": 1788838130950799236
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-057.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625214,
+      "mtime_ns": 1788838131446172181,
+      "ctime_ns": 1788838131446522728
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-058.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625216,
+      "mtime_ns": 1788838131933507421,
+      "ctime_ns": 1788838131933821675
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-059.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625218,
+      "mtime_ns": 1788838132431104400,
+      "ctime_ns": 1788838132431399946
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-060.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625220,
+      "mtime_ns": 1788838132931721301,
+      "ctime_ns": 1788838132932022472
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-061.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625222,
+      "mtime_ns": 1788838133429400365,
+      "ctime_ns": 1788838133429859414
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-062.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625224,
+      "mtime_ns": 1788838133925539114,
+      "ctime_ns": 1788838133925818619
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-063.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625226,
+      "mtime_ns": 1788838134464912649,
+      "ctime_ns": 1788838134465300197
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-064.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625228,
+      "mtime_ns": 1788838134963369309,
+      "ctime_ns": 1788838134963719564
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-065.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625230,
+      "mtime_ns": 1788838135466530998,
+      "ctime_ns": 1788838135466833961
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-066.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625232,
+      "mtime_ns": 1788838136035898491,
+      "ctime_ns": 1788838136036177037
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-067.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625234,
+      "mtime_ns": 1788838136528771066,
+      "ctime_ns": 1788838136529050445
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-068.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625236,
+      "mtime_ns": 1788838137026214960,
+      "ctime_ns": 1788838137026502006
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-069.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625239,
+      "mtime_ns": 1788838137511729380,
+      "ctime_ns": 1788838137512135636
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-070.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625241,
+      "mtime_ns": 1788838138010543419,
+      "ctime_ns": 1788838138010836174
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-071.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625243,
+      "mtime_ns": 1788838138513010099,
+      "ctime_ns": 1788838138513366646
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-072.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625245,
+      "mtime_ns": 1788838139012420939,
+      "ctime_ns": 1788838139012716652
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-073.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625247,
+      "mtime_ns": 1788838139501307077,
+      "ctime_ns": 1788838139501590749
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-074.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625249,
+      "mtime_ns": 1788838140062720033,
+      "ctime_ns": 1788838140063062496
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-075.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625251,
+      "mtime_ns": 1788838140558463442,
+      "ctime_ns": 1788838140558820156
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-076.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625253,
+      "mtime_ns": 1788838141049285985,
+      "ctime_ns": 1788838141049573489
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-077.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625255,
+      "mtime_ns": 1788838141555925394,
+      "ctime_ns": 1788838141556238274
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-078.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625257,
+      "mtime_ns": 1788838142063167480,
+      "ctime_ns": 1788838142063454693
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-079.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625260,
+      "mtime_ns": 1788838142562660363,
+      "ctime_ns": 1788838142563046953
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-080.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625263,
+      "mtime_ns": 1788838143087020627,
+      "ctime_ns": 1788838143087370216
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-081.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625265,
+      "mtime_ns": 1788838143573139931,
+      "ctime_ns": 1788838143573419686
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-082.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625268,
+      "mtime_ns": 1788838144566251567,
+      "ctime_ns": 1788838144566584031
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-083.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625270,
+      "mtime_ns": 1788838145739424497,
+      "ctime_ns": 1788838145739771960
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-084.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625272,
+      "mtime_ns": 1788838147480716567,
+      "ctime_ns": 1788838147481023738
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-085.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625274,
+      "mtime_ns": 1788838148808282481,
+      "ctime_ns": 1788838148808711571
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-086.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625277,
+      "mtime_ns": 1788838150012599761,
+      "ctime_ns": 1788838150016978953
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-087.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625280,
+      "mtime_ns": 1788838151304187125,
+      "ctime_ns": 1788838151304645590
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-088.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625283,
+      "mtime_ns": 1788838152563775833,
+      "ctime_ns": 1788838152564209715
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-089.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625285,
+      "mtime_ns": 1788838153840519595,
+      "ctime_ns": 1788838153840845184
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-090.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625287,
+      "mtime_ns": 1788838154442516921,
+      "ctime_ns": 1788838154442802883
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-091.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625289,
+      "mtime_ns": 1788838154945893572,
+      "ctime_ns": 1788838154946258619
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-092.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625291,
+      "mtime_ns": 1788838155422600066,
+      "ctime_ns": 1788838155422876445
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-093.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625293,
+      "mtime_ns": 1788838155900294783,
+      "ctime_ns": 1788838155900599288
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-094.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625295,
+      "mtime_ns": 1788838156417217058,
+      "ctime_ns": 1788838156417493645
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-095.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625297,
+      "mtime_ns": 1788838156926759678,
+      "ctime_ns": 1788838156927104975
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-096.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625300,
+      "mtime_ns": 1788838157937508167,
+      "ctime_ns": 1788838157937878131
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-097.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625318,
+      "mtime_ns": 1788838158490068820,
+      "ctime_ns": 1788838158490840457
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-098.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625320,
+      "mtime_ns": 1788838158999768943,
+      "ctime_ns": 1788838159000045031
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-099.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625322,
+      "mtime_ns": 1788838159493313861,
+      "ctime_ns": 1788838159493632532
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-100.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625324,
+      "mtime_ns": 1788838159964235725,
+      "ctime_ns": 1788838159964519062
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-101.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625326,
+      "mtime_ns": 1788838160470689964,
+      "ctime_ns": 1788838160470967552
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-102.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625328,
+      "mtime_ns": 1788838160945718808,
+      "ctime_ns": 1788838160946123897
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-103.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625330,
+      "mtime_ns": 1788838161438195084,
+      "ctime_ns": 1788838161438592882
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-104.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625334,
+      "mtime_ns": 1788838162019937975,
+      "ctime_ns": 1788838162020277938
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-105.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625336,
+      "mtime_ns": 1788838162512137122,
+      "ctime_ns": 1788838162512576712
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-106.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625339,
+      "mtime_ns": 1788838163014291713,
+      "ctime_ns": 1788838163014603426
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-107.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625341,
+      "mtime_ns": 1788838163503099933,
+      "ctime_ns": 1788838163503466730
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-108.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625343,
+      "mtime_ns": 1788838163996755853,
+      "ctime_ns": 1788838163997047024
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-109.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625345,
+      "mtime_ns": 1788838164488560785,
+      "ctime_ns": 1788838164488860957
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-110.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625347,
+      "mtime_ns": 1788838164992351318,
+      "ctime_ns": 1788838164992642822
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-111.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625349,
+      "mtime_ns": 1788838165511237498,
+      "ctime_ns": 1788838165511688172
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-112.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625351,
+      "mtime_ns": 1788838166018738504,
+      "ctime_ns": 1788838166019020842
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-113.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625353,
+      "mtime_ns": 1788838166676551391,
+      "ctime_ns": 1788838166676835103
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-114.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625355,
+      "mtime_ns": 1788838167197782815,
+      "ctime_ns": 1788838167198246822
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-115.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625357,
+      "mtime_ns": 1788838167697512369,
+      "ctime_ns": 1788838167697801665
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-116.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625359,
+      "mtime_ns": 1788838168202716090,
+      "ctime_ns": 1788838168202998927
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-117.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625361,
+      "mtime_ns": 1788838168734373215,
+      "ctime_ns": 1788838168734749846
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-118.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625363,
+      "mtime_ns": 1788838169254039824,
+      "ctime_ns": 1788838169254338495
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-119.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625366,
+      "mtime_ns": 1788838169755073022,
+      "ctime_ns": 1788838169755411277
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-120.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625368,
+      "mtime_ns": 1788838170247525548,
+      "ctime_ns": 1788838170247806511
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-121.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625370,
+      "mtime_ns": 1788838170742088357,
+      "ctime_ns": 1788838170742366069
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-122.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625372,
+      "mtime_ns": 1788838171293853747,
+      "ctime_ns": 1788838171294154794
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-123.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625374,
+      "mtime_ns": 1788838171821331059,
+      "ctime_ns": 1788838171821630647
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-124.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625376,
+      "mtime_ns": 1788838172336448139,
+      "ctime_ns": 1788838172336754186
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-125.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625378,
+      "mtime_ns": 1788838172880362619,
+      "ctime_ns": 1788838172880821459
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-126.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625380,
+      "mtime_ns": 1788838173439699708,
+      "ctime_ns": 1788838173440002546
+    },
+    "/repo/.cache/prepared/q4-records-v1/ngram-127.bin": {
+      "size": 250001200,
+      "device": 16777229,
+      "inode": 509625382,
+      "mtime_ns": 1788838173955769845,
+      "ctime_ns": 1788838173956066267
+    }
+  },
+  "configurations": [
+    {
+      "kernel_policy": "candidate",
+      "token_tile": 8,
+      "gdn_path": "precompute",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 2,
+      "io_workers": 8,
+      "residency": "core-cache",
+      "decode_path": "grouped",
+      "name": "cpu-selection",
+      "prefill_pipeline": "double",
+      "phase_memory": "reclaim",
+      "affine_rows": 4,
+      "gate_pair": "off",
+      "q8_decode_rows": 2,
+      "sparse_selection": "cpu",
+      "attention_score_tiles": "full"
+    },
+    {
+      "kernel_policy": "candidate",
+      "token_tile": 8,
+      "gdn_path": "precompute",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 2,
+      "io_workers": 8,
+      "residency": "core-cache",
+      "decode_path": "grouped",
+      "name": "gpu-selection",
+      "prefill_pipeline": "double",
+      "phase_memory": "reclaim",
+      "affine_rows": 4,
+      "gate_pair": "off",
+      "q8_decode_rows": 2,
+      "sparse_selection": "gpu",
+      "attention_score_tiles": "full"
+    }
+  ],
+  "sampling": {
+    "temperature": 0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "seed": 0
+  },
+  "budget_bytes": 12884901888,
+  "context": 8192,
+  "device": "Apple M1 Pro",
+  "physical_bytes": 34359738368
+}

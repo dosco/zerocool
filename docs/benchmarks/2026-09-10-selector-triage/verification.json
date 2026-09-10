@@ -1,0 +1,53 @@
+{
+  "kind": "selector_triage_tooling_verification",
+  "native_changed_this_step": false,
+  "python_tests": {
+    "passed": 124,
+    "log": "python-tests.log",
+    "sha256": "27a6409dbc2d7e69bca96ebaf0a82e3422a5936253e893216117e2f06557ef57"
+  },
+  "code_sha256": {
+    "scripts/qwen/triage_requests.py": "925da5563259c48ad441478ea718c0e337199fa09ec292a552d56ee48ce9d67a",
+    "scripts/qwen/test_triage_requests.py": "ad0194517064536f15d4434e44daeedf7be0699e5bd9f9aa3bba15f64cc18726"
+  },
+  "raw_files": {
+    "raw/summary.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/summary.json",
+      "sha256": "174bc69824c56947227c5547ba92d7834a8350f8390103e9edb5aaef8ce5b88f"
+    },
+    "raw/identity.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/identity.json",
+      "sha256": "1d6c3dee4273ffa6abe60bab760380478421308533771a4c63725997d32163af"
+    },
+    "raw/prerequisites.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/prerequisites.json",
+      "sha256": "6dd206671a48ca860b3c3d632a540b706b67de08972cce49c0a0f11cbf5b8b8f"
+    },
+    "raw/launch.log": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/launch.log",
+      "sha256": "03489904d6a0fb2bba523d29bec3124d39254650cb4b1579ba95f95f4bc520e6"
+    },
+    "raw/cached-run/summary.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/cached-run/summary.json",
+      "sha256": "8c7b2397b27c7ff2d6eb7ca4f92fefda562e6adf83d25f0d03eff82cd99efc04"
+    },
+    "raw/cached-run/cached-4096/admission-000.admission.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/cached-run/cached-4096/admission-000.admission.json",
+      "sha256": "b10e7a0bf4494532ed8fec04c6ad023e517e4eb829c3f5e74200f4d3d2c757d8"
+    },
+    "raw/cached-run/cached-4096/tokens.json": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/cached-run/cached-4096/tokens.json",
+      "sha256": "6ebeec445153b83c39aed5c87fa3cb9217e5d6b720b304fc14241e068447c785"
+    },
+    "raw/cached-run/cached-4096/cached.log": {
+      "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-10-triage-01/cached-run/cached-4096/cached.log",
+      "sha256": "af28b7c62d147c9080733ce6b2807e73f4dad6629ed6afa9b78c043bc6bd6c03"
+    }
+  },
+  "short_request_screen_executed": false,
+  "reason": "Cached prerequisite exhausted its time budget without timings.",
+  "production_promoted": false,
+  "frozen_original_dependencies_verified_unchanged": true,
+  "raw_copies_verified_against_originals": true,
+  "real_unfinished_attempt_rejected_before_gpu_setup": true
+}

@@ -1,0 +1,22 @@
+{
+  "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-09-run-03",
+  "identity_sha256": "abf34351717b1fbf1f90014986f64c060b990d2cc4fb1e69f1c6ff41de423dec",
+  "phases": {
+    "recovery": {
+      "status": "passed",
+      "result": {
+        "cancelled_and_reused": true
+      },
+      "files_sha256": "667900ea049b4e1b32946ec4e87377e46ff7ba6c51393b8b3997e06848978000"
+    },
+    "capture": {
+      "status": "passed",
+      "result": {
+        "exact_cases": 8,
+        "capture_bytes": 181934336
+      },
+      "files_sha256": "a230e60f2e53d68c05ccb71c5c5936116ac7a7ea805f72ba235c0e00cc238d05"
+    }
+  },
+  "note": "Existing unchanged-build checks reused with original provenance; no report relabeled."
+}

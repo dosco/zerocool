@@ -1,0 +1,31 @@
+{
+  "available": true,
+  "source": "/repo/docs/benchmarks/2026-09-10-phase-progress/load-failure/progress.jsonl",
+  "sha256": "4027262074f4e770221e5c25c50e1e072632606d93fc12ab2bb0d127ba7d2ce9",
+  "identity": {
+    "build": "1134107188e63a9bc47491ca79500e6b749a49f8a133b6f65ed6cef0e363e4cb",
+    "artifact_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+    "prompt_tokens": 1,
+    "budget_bytes": 12884901888,
+    "comparison_axis": "q8_decode_rows",
+    "paired_comparison": false
+  },
+  "events": 2,
+  "status": "failed",
+  "complete": false,
+  "last_phase": "model_load",
+  "unfinished_phase": "model_load",
+  "last_elapsed_ns": 766958,
+  "unfinished_phase_elapsed_ns": 766542,
+  "completed_phase_ns": {},
+  "latest_details": {
+    "phase_incomplete": true,
+    "error": "open /repo/docs/benchmarks/2026-09-10-phase-progress/load-failure/intentionally-missing-model/freellm-verification.json: No such file or directory"
+  },
+  "partial_final_line_ignored": false,
+  "limitations": [
+    "Progress is diagnostic; partial pairs never establish performance or correctness.",
+    "Times end at the last flushed event; silence after it is not measured.",
+    "Interruption/failure timestamps can include resource cleanup."
+  ]
+}

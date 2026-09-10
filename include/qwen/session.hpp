@@ -35,6 +35,8 @@ struct Result {
     std::vector<double> token_ms;
     size_t pending_tokens_ingested=0;
     Json phases=Json::object();
+    bool diagnose_decode=false;
+    Json decode_samples=Json::array();
     Json json() const;
 };
 

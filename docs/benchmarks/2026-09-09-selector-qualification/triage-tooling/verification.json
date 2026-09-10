@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-09-10T03:55:15.693250+00:00",
+  "native_build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
+  "native_changed": false,
+  "tests": {
+    "command": "PYTHONPATH=scripts/qwen .cache/qwen-reference-venv/bin/python -m unittest discover -s scripts/qwen -p 'test_*.py'",
+    "passed": 90,
+    "failed": 0
+  },
+  "native_verification": "Unchanged native build: prior 51 tests / 6931 assertions under Metal API and shader validation; not rerun for Python/docs changes.",
+  "files_sha256": {
+    "scripts/qwen/triage_selector.py": "c7f472edfa62b0d0572bdcc110feddbf3ecce5be65f912f389570fd3adb78fc1",
+    "scripts/qwen/test_selector_triage.py": "32730a7756884e85b0a4b7f64592b3c6cf0d32780a031943313ffc1365829990"
+  },
+  "test_log_sha256": "7c330c71a869a5a01e3a8de1e6ece496bc7d444b06e3a4bf72a6538e644de493",
+  "live_attempt": {
+    "source": "/repo/.cache/benchmarks/selector-qualification/2026-09-09-triage-02",
+    "summary_sha256": "c382b0a41e343b989f10143a93d71d804393fdfa28b7ba63acbbdf54654033c4",
+    "status": "resource_blocked",
+    "timing_measurements": 0
+  },
+  "full_validation": false,
+  "production_promoted": false
+}

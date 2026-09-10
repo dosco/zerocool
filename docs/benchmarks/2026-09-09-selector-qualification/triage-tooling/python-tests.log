@@ -1,0 +1,154 @@
+..................verified weights
+.............................................................Cached 4K selector triage: at most 10s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "promising",
+  "complete": true,
+  "time_limit_seconds": 10,
+  "started_at": "2026-09-10T03:53:48.885956+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": true,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpyfuae2iw/run/cached-run"
+  ],
+  "build": "test",
+  "cached_result": {
+    "exact": true,
+    "pairs": 5,
+    "application_read_bytes": 0,
+    "prompt_tokens": 4096,
+    "comparison_axis": "sparse_selection",
+    "latency_ratio": {
+      "low": 0.97,
+      "median": 0.98,
+      "high": 0.99,
+      "pairs": 5
+    }
+  },
+  "elapsed_seconds": 0.0013790000230073929,
+  "finished_at": "2026-09-10T03:53:48.887329+00:00"
+}
+..Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "resource_blocked",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-10T03:53:48.889197+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpym9642qn/run/cached-run"
+  ],
+  "build": "test",
+  "error": "memory",
+  "elapsed_seconds": 0.0006364164873957634,
+  "finished_at": "2026-09-10T03:53:48.889831+00:00"
+}
+Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "time_budget_exhausted",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-10T03:53:48.891353+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmp92p56ofe/run/cached-run"
+  ],
+  "build": "test",
+  "error": "Stopped at the triage deadline; no performance decision.",
+  "elapsed_seconds": 0.0007154159247875214,
+  "finished_at": "2026-09-10T03:53:48.892069+00:00"
+}
+Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "interrupted",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-10T03:53:48.893447+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpuv1hq_t7/run/cached-run"
+  ],
+  "build": "test",
+  "error": "Stopped by the user; no performance decision.",
+  "elapsed_seconds": 0.0007486669346690178,
+  "finished_at": "2026-09-10T03:53:48.894195+00:00"
+}
+.........
+----------------------------------------------------------------------
+Ran 90 tests in 1.637s
+
+OK
