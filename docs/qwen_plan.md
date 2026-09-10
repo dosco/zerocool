@@ -199,6 +199,14 @@ and must be charged in every comparison.
    off/core without diagnostics, including retained-history append, before
    longer qualification or more cache tuning. Keep existing defaults; observed
    core generation remains about 2.57 tokens/s, below the 5 tokens/s target.
+   The [normal residency screen](benchmarks/2026-09-10-residency-screen/README.md)
+   then passed its predeclared gate: conversation time fell 4.94% and 6.06% in
+   two alternating pairs, with identical outputs, 104-token follow-up reuse,
+   memory plans and expert-read counts. Diagnostics were disabled. Next use five
+   paired normal repetitions with uncertainty estimates before longer
+   qualification; keep defaults unchanged. Core still generates about 2.5
+   tokens/s, and the short-history follow-up still waits about 24s for its first
+   token. This does not meet the product targets.
 
 Mixed-reference validation and calibration preparation may proceed alongside
 the first two milestones. The first deliverable is a dependency-level report

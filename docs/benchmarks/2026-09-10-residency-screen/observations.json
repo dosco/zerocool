@@ -1,0 +1,494 @@
+{
+  "kind": "residency_screen_observations_v1",
+  "complete": true,
+  "status": "promising",
+  "conversation_ratios": [
+    0.9506016308468519,
+    0.9394211895749908
+  ],
+  "median_conversation_ratio": 0.9450114102109213,
+  "ratios": [
+    {
+      "request": 0,
+      "metric": "request_ms",
+      "ratios": [
+        0.9230061662681219,
+        0.8751794176154384
+      ],
+      "median": 0.8990927919417802
+    },
+    {
+      "request": 0,
+      "metric": "time_to_first_token_ms",
+      "ratios": [
+        0.8852760930211158,
+        0.9733399424555875
+      ],
+      "median": 0.9293080177383517
+    },
+    {
+      "request": 0,
+      "metric": "decode_wall_ms",
+      "ratios": [
+        0.96922318963654,
+        0.786277762112557
+      ],
+      "median": 0.8777504758745485
+    },
+    {
+      "request": 1,
+      "metric": "request_ms",
+      "ratios": [
+        0.971676598595475,
+        0.99218553788478
+      ],
+      "median": 0.9819310682401274
+    },
+    {
+      "request": 1,
+      "metric": "time_to_first_token_ms",
+      "ratios": [
+        0.9878295322855982,
+        1.0030410706248671
+      ],
+      "median": 0.9954353014552326
+    },
+    {
+      "request": 1,
+      "metric": "decode_wall_ms",
+      "ratios": [
+        0.9426805332527385,
+        0.9723403285312872
+      ],
+      "median": 0.9575104308920128
+    }
+  ],
+  "confidence_95": null,
+  "advance_to_five_pairs": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build": "968132061556ac0077ff41b7c922b5b7c632bb12e21b8ea8e2c5f82f10bb3c73",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "expert_slots": 1848,
+  "elapsed_seconds": 273.51657333318144,
+  "measurements": [
+    {
+      "pair": 0,
+      "residency": "off",
+      "name": "coding_routes_32",
+      "source": "raw/pair-0-off.json",
+      "sha256": "b17ea356d890131613b64fb964152598c35a355676b4700d7f69528108f12e7b",
+      "request_ms": 29009.974666,
+      "ttft_ms": 15971.424041,
+      "decode_wall_ms": 13038.550624999998,
+      "decode_tokens_per_second": 2.4542605171654195,
+      "first_four_forward_ms": 2209.392582,
+      "remaining_28_forward_ms": 10814.764043,
+      "reused_tokens": 0,
+      "prefill_tokens": 72,
+      "max_observed_footprint_bytes": 11188886016,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 6026657792,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 498839,
+          "expert_misses": 7688,
+          "expert_read_bytes": 21255782400,
+          "gpu_command_ns": 12903254519,
+          "cpu_gpu_wait_ns": 10731207003
+        },
+        {
+          "phase": "decode",
+          "decompressions": 89563,
+          "expert_misses": 6533,
+          "expert_read_bytes": 18062438400,
+          "gpu_command_ns": 7347795862,
+          "cpu_gpu_wait_ns": 7151026547
+        }
+      ],
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 0,
+      "residency": "off",
+      "name": "append_128",
+      "source": "raw/pair-0-off.json",
+      "sha256": "b17ea356d890131613b64fb964152598c35a355676b4700d7f69528108f12e7b",
+      "request_ms": 37985.525666,
+      "ttft_ms": 24395.464083,
+      "decode_wall_ms": 13590.061583000002,
+      "decode_tokens_per_second": 2.3546618832124535,
+      "first_four_forward_ms": 2018.9461259999998,
+      "remaining_28_forward_ms": 11556.712457,
+      "reused_tokens": 104,
+      "prefill_tokens": 129,
+      "max_observed_footprint_bytes": 11197569536,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 6029508608,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 47981,
+          "expert_misses": 8527,
+          "expert_read_bytes": 23575449600,
+          "gpu_command_ns": 23339354198,
+          "cpu_gpu_wait_ns": 18416298960
+        },
+        {
+          "phase": "decode",
+          "decompressions": 114951,
+          "expert_misses": 7516,
+          "expert_read_bytes": 20780236800,
+          "gpu_command_ns": 7476706052,
+          "cpu_gpu_wait_ns": 7102016395
+        }
+      ],
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 0,
+      "residency": "core",
+      "name": "coding_routes_32",
+      "source": "raw/pair-0-core.json",
+      "sha256": "eaa2a629789f95c06b67b217a819633a848e65bd157d79dca212eff83befb4e6",
+      "request_ms": 26776.3855,
+      "ttft_ms": 14139.119875,
+      "decode_wall_ms": 12637.265625,
+      "decode_tokens_per_second": 2.532193351756029,
+      "first_four_forward_ms": 1629.904792,
+      "remaining_28_forward_ms": 10992.617918,
+      "reused_tokens": 0,
+      "prefill_tokens": 72,
+      "max_observed_footprint_bytes": 11182398016,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 344064,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 91386,
+          "expert_misses": 7688,
+          "expert_read_bytes": 21255782400,
+          "gpu_command_ns": 12960657153,
+          "cpu_gpu_wait_ns": 9991805375
+        },
+        {
+          "phase": "decode",
+          "decompressions": 0,
+          "expert_misses": 6533,
+          "expert_read_bytes": 18062438400,
+          "gpu_command_ns": 7347905974,
+          "cpu_gpu_wait_ns": 6528077281
+        }
+      ],
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 4585,
+        "removals": 1221,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 0,
+      "residency": "core",
+      "name": "append_128",
+      "source": "raw/pair-0-core.json",
+      "sha256": "eaa2a629789f95c06b67b217a819633a848e65bd157d79dca212eff83befb4e6",
+      "request_ms": 36909.646375,
+      "ttft_ms": 24098.559875,
+      "decode_wall_ms": 12811.086499999998,
+      "decode_tokens_per_second": 2.4978365418108766,
+      "first_four_forward_ms": 1695.895041,
+      "remaining_28_forward_ms": 11100.646293,
+      "reused_tokens": 104,
+      "prefill_tokens": 129,
+      "max_observed_footprint_bytes": 11189901952,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 344064,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 0,
+          "expert_misses": 8527,
+          "expert_read_bytes": 23575449600,
+          "gpu_command_ns": 23492179111,
+          "cpu_gpu_wait_ns": 18120295584
+        },
+        {
+          "phase": "decode",
+          "decompressions": 0,
+          "expert_misses": 7516,
+          "expert_read_bytes": 20780236800,
+          "gpu_command_ns": 7272428531,
+          "cpu_gpu_wait_ns": 6453127459
+        }
+      ],
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 7067,
+        "removals": 2479,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 1,
+      "residency": "core",
+      "name": "coding_routes_32",
+      "source": "raw/pair-1-core.json",
+      "sha256": "f74ba7b0e3356bf01897722ed3f10adcf6a43b85b8775e6816781d385747fc2d",
+      "request_ms": 26693.315417,
+      "ttft_ms": 14108.92175,
+      "decode_wall_ms": 12584.393667000002,
+      "decode_tokens_per_second": 2.5428320860554017,
+      "first_four_forward_ms": 1690.8322500000002,
+      "remaining_28_forward_ms": 10878.910124,
+      "reused_tokens": 0,
+      "prefill_tokens": 72,
+      "max_observed_footprint_bytes": 11179907520,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 589824,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 91229,
+          "expert_misses": 7688,
+          "expert_read_bytes": 21255782400,
+          "gpu_command_ns": 13000338454,
+          "cpu_gpu_wait_ns": 10018465586
+        },
+        {
+          "phase": "decode",
+          "decompressions": 1,
+          "expert_misses": 6533,
+          "expert_read_bytes": 18062438400,
+          "gpu_command_ns": 7428645162,
+          "cpu_gpu_wait_ns": 6603610226
+        }
+      ],
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 4585,
+        "removals": 1221,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 1,
+      "residency": "core",
+      "name": "append_128",
+      "source": "raw/pair-1-core.json",
+      "sha256": "f74ba7b0e3356bf01897722ed3f10adcf6a43b85b8775e6816781d385747fc2d",
+      "request_ms": 36844.718958,
+      "ttft_ms": 24077.3055,
+      "decode_wall_ms": 12767.413457999999,
+      "decode_tokens_per_second": 2.506380803384178,
+      "first_four_forward_ms": 1585.616959,
+      "remaining_28_forward_ms": 11167.308793,
+      "reused_tokens": 104,
+      "prefill_tokens": 129,
+      "max_observed_footprint_bytes": 11189934528,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 103792640,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 1,
+          "expert_misses": 8527,
+          "expert_read_bytes": 23575449600,
+          "gpu_command_ns": 23475825968,
+          "cpu_gpu_wait_ns": 18122471336
+        },
+        {
+          "phase": "decode",
+          "decompressions": 0,
+          "expert_misses": 7516,
+          "expert_read_bytes": 20780236800,
+          "gpu_command_ns": 7224588220,
+          "cpu_gpu_wait_ns": 6447447959
+        }
+      ],
+      "residency_after": {
+        "mode": "core",
+        "registered_bytes": 5933858816,
+        "allocations": 2176,
+        "bytes_by_class": {
+          "state": 571342848,
+          "resident": 5362515968
+        },
+        "set_overhead_bytes": 0,
+        "commits": 7067,
+        "removals": 2479,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 1,
+      "residency": "off",
+      "name": "coding_routes_32",
+      "source": "raw/pair-1-off.json",
+      "sha256": "310372ec27918adfe3e47ada021053cb49ce2b3819db4abc82cd340d95bea034",
+      "request_ms": 30500.392125,
+      "ttft_ms": 14495.369125,
+      "decode_wall_ms": 16005.023,
+      "decode_tokens_per_second": 1.999372322051646,
+      "first_four_forward_ms": 5237.559165,
+      "remaining_28_forward_ms": 10753.20179,
+      "reused_tokens": 0,
+      "prefill_tokens": 72,
+      "max_observed_footprint_bytes": 11189721536,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 6038585344,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 108318,
+          "expert_misses": 7688,
+          "expert_read_bytes": 21255782400,
+          "gpu_command_ns": 12875795689,
+          "cpu_gpu_wait_ns": 10401547292
+        },
+        {
+          "phase": "decode",
+          "decompressions": 742444,
+          "expert_misses": 6533,
+          "expert_read_bytes": 18062438400,
+          "gpu_command_ns": 7492197716,
+          "cpu_gpu_wait_ns": 9592132671
+        }
+      ],
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    },
+    {
+      "pair": 1,
+      "residency": "off",
+      "name": "append_128",
+      "source": "raw/pair-1-off.json",
+      "sha256": "310372ec27918adfe3e47ada021053cb49ce2b3819db4abc82cd340d95bea034",
+      "request_ms": 37134.908292,
+      "ttft_ms": 24004.306708,
+      "decode_wall_ms": 13130.601584,
+      "decode_tokens_per_second": 2.4370551337870827,
+      "first_four_forward_ms": 1722.929501,
+      "remaining_28_forward_ms": 11393.185247,
+      "reused_tokens": 104,
+      "prefill_tokens": 129,
+      "max_observed_footprint_bytes": 11210332672,
+      "observed_system_swap_bytes": [
+        1891368960
+      ],
+      "after_compressed_bytes": 6020710400,
+      "phases": [
+        {
+          "phase": "ingest",
+          "decompressions": 63,
+          "expert_misses": 8527,
+          "expert_read_bytes": 23575449600,
+          "gpu_command_ns": 23278716676,
+          "cpu_gpu_wait_ns": 18102304117
+        },
+        {
+          "phase": "decode",
+          "decompressions": 2,
+          "expert_misses": 7516,
+          "expert_read_bytes": 20780236800,
+          "gpu_command_ns": 7432777189,
+          "cpu_gpu_wait_ns": 6755718773
+        }
+      ],
+      "residency_after": {
+        "mode": "off",
+        "registered_bytes": 0,
+        "allocations": 0,
+        "bytes_by_class": {},
+        "set_overhead_bytes": 0,
+        "commits": 0,
+        "removals": 0,
+        "pending_retirements": 0,
+        "physical_residency_guaranteed": false
+      }
+    }
+  ],
+  "limitations": [
+    "Only two alternating pairs; no confidence interval or production promotion.",
+    "72-token initial prompt and 128-token append to short live history; not the 2K/4K/7K acceptance workloads or sustained coding session.",
+    "Output parity is not a new full-logit/state comparison or independent coding-quality evaluation. Weights and native arithmetic are unchanged.",
+    "Memory snapshots are boundary observations, not continuous peaks. System counters include other processes.",
+    "Core residency is requested through Metal, not guaranteed. Host memory pressure and SSD caching remain uncontrolled influences.",
+    "Phase-level decompressions cannot identify the exact page or token causing a wait. Overlapping read, GPU and CPU timings are not additive.",
+    "Diagnostic and normal results use different observations and must not be pooled as equivalent repetitions."
+  ],
+  "source_summary": {
+    "path": "raw/summary.json",
+    "sha256": "33590961812f7143276f252661b8b2701e1f4a2c1d480e6b698ed86e3ccc9437"
+  }
+}

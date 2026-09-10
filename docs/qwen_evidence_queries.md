@@ -312,6 +312,38 @@ captured all 128 expected decode intervals and reproduced the startup difference
 in both pair orders. Its raw reports, derived windows and ledger entry remain
 diagnostic evidence; the next timing screen must disable this option.
 
+## Normal residency screen
+
+```sh
+PYTHONPATH=scripts/qwen .cache/qwen-reference-venv/bin/python scripts/qwen/screen_residency.py \
+  --output .cache/benchmarks/residency-screen/NEW-RUN --time-limit 480
+```
+
+This screen holds CLOCK, reference arithmetic, the mixed artifact and the 12GiB
+allocation fixed. It runs off/core then core/off in four fresh processes, with
+diagnostics and Metal validation disabled. Each process generates 33 outputs
+from the existing 72-token coding prompt, appends 128 tokens to its live history,
+then generates another 33 outputs. The follow-up must reuse exactly 104 computed
+tokens and ingest the pending output along with the new input. It checks every
+output against the prior CLOCK control and requires identical memory plans.
+
+The predeclared gate requires both complete-conversation ratios to favor core,
+at least 1% median improvement, and no per-request metric median regression over
+3%. A passing short screen supports five paired repetitions; it does not itself
+qualify latency or change defaults. The helper records core buffer enrollment
+and retirement at request/phase boundaries, rejecting expert enrollment, extra
+GPU profiling, unfinished requests and changed artifacts. Its native build must
+match the completed startup diagnostic. The normal screen adds no per-token
+observations; it retains the engine's existing request and phase measurements.
+
+The total deadline defaults to 480 seconds, with a 150-second subprocess limit
+per conversation. A failed admission or deadline remains incomplete. Reports
+are sealed on exit; no longer test is started automatically.
+
+The [first completed normal screen](benchmarks/2026-09-10-residency-screen/README.md)
+passed the two-pair gate with 4.94% and 6.06% lower conversation time. Its ledger
+entry records a promising screen, without confidence or production qualification.
+
 ## Durable experiment ledger
 
 Ledger JSON belongs in `docs/experiments/`; it is independent of SQLite. The

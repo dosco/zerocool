@@ -1,0 +1,40 @@
+{
+  "kind": "residency_screen_verification_v1",
+  "recorded_at": "2026-09-10T22:10:09.401140+00:00",
+  "native_build": "968132061556ac0077ff41b7c922b5b7c632bb12e21b8ea8e2c5f82f10bb3c73",
+  "native_sources_unchanged_since_commit": "dd8229b",
+  "native_tests_rerun": false,
+  "prior_native_verification": {
+    "path": "docs/benchmarks/2026-09-10-decode-startup/verification.json",
+    "sha256": "f37b2dda9d501024ff34d228f29d14f0c568cae61422123cfebb7235ba72429a",
+    "tests": 56,
+    "assertions": 45682,
+    "skipped": 0,
+    "metal_validation": true
+  },
+  "python_tests": 173,
+  "original_capture_seal_sha256": "07e6b5b6339245c0a041ce0772def4adfd4d4b7895e32f9cebd8814ff1cc28ad",
+  "original_and_copy_seals_verified": true,
+  "frozen_source_and_artifact_identity_rechecked": true,
+  "all_four_conversations_eight_requests_revalidated": true,
+  "residency_enrollment_revalidated": true,
+  "decision_recomputed": true,
+  "implementation_sha256": {
+    "scripts/qwen/screen_residency.py": "9fb25325ac824e09ca7404c755538123e82118b3c73a1f888107bc839181e826",
+    "scripts/qwen/test_residency_screen.py": "230fc3aaf2e7b60523ccf3c5dba22e8dec03d9da42a06c33fb7a75970b4d1002"
+  },
+  "evidence_sha256": {
+    "docs/benchmarks/2026-09-10-residency-screen/README.md": "187f65bfda0563adf6f149ba009844143694d5e48e31f4f369010c18f928e924",
+    "docs/benchmarks/2026-09-10-residency-screen/observations.json": "362d479d043f17a61fa63e2a8ef8b9d92df0a9621261097c33ae9ec4fc799e47",
+    "docs/benchmarks/2026-09-10-residency-screen/python-tests.log": "652c35b760fedee4ceeafae6b28cacf534f5bebf27935a94ea9d4bbf25c52ba5",
+    "docs/benchmarks/2026-09-10-residency-screen/ledger-input.json": "2123b104182e713b2e473f7e747e889ff08df42baa84eb8ffa16c8f376ce47a9",
+    "docs/benchmarks/2026-09-10-residency-screen/ledger-result.json": "d82c7aed2dd60910692d2677306eaedd3912ab5a22251c3c27d0a6ab6fd3f62f",
+    "docs/experiments/d964b48b7b708c42e7b862f00a102f14e6b97c45e5c5382394e250292a563d27.json": "d964b48b7b708c42e7b862f00a102f14e6b97c45e5c5382394e250292a563d27"
+  },
+  "guidance_sha256": {
+    "docs/qwen_plan.md": "f29b0b91b2799f05345bb59011fc6bbd19781c236a994a4b0ed5c113e9a1eaac",
+    "docs/qwen_evidence_queries.md": "1f143af5af90868b6c53fc21d01e2a26d2c9ff38f6fa221adff995b7657e76be"
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}
