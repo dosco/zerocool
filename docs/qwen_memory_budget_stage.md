@@ -5,6 +5,14 @@ budget experiment on the same 32GiB M1 Pro. This is a memory/performance tradeof
 the candidate spends six additional GiB on the existing expert cache. It does
 not introduce a new quantization, cache policy, kernel, model, or backend.
 
+```sh
+python3 scripts/qwen/screen_memory_budget.py --output .cache/benchmarks/memory-budget-NEW
+```
+
+The Q8 confirmation's primary conversation interval favored packed Q8, while
+its initial first-token guard remained inconclusive. This stage keeps that
+result unchanged and uses packed Q8 explicitly in both experimental arms.
+
 First simulate the existing complete 256-step route trace at the corresponding
 expert capacities, retaining cache state across ingestion, generation and the
 follow-up. Report predicted read counts only. This simulation cannot admit
@@ -42,3 +50,10 @@ A survivor still needs five fresh pairs and the original 2K/4K output-length,
 inconclusive timing result stops this one budget experiment. The next computation
 candidate is the serial expert-ranking step, whose completion precedes each
 layer's actual expert reads; measure it on current inputs before implementation.
+
+The offline comparison accepts `q8_memory_budget_screen_v1` with
+`--control control --candidate candidate --change memory_gb --change expert_slots`.
+It reopens the prior confirmation and every new request by hash, enforces each
+arm's explicit budget, and preserves the same fixed allocations across arms.
+Legacy comparisons still default to exactly 12GiB and reject an 18GiB report
+unless the caller explicitly selects that budget.

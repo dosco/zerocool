@@ -59,7 +59,7 @@ def validate_correctness(reports,evidence):
                 independent_model_reference=False)
 
 
-def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,gpu_reference='off',capacity_axis=False):
+def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,gpu_reference='off',capacity_axis=False,memory_budget_bytes=12*1024**3):
     if raw.get('gpu_reference_mode','off')!=gpu_reference or (gpu_reference=='off' and raw.get('gpu_references')):
         raise ValueError('Changed GPU reference instrumentation')
     if (raw.get('complete') is not True or raw.get('workloads')!=workload or len(workload) not in (1,2) or len(raw.get('runs',[]))!=len(workload) or
@@ -93,7 +93,7 @@ def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,
         if set(row.get('phases',{}))!={'ingest','decode'}: raise ValueError('Missing phase measurements')
         if expected.setdefault(task['name'],outputs)!=outputs: raise ValueError('Policies produced different tokens')
         for state in [row['before'],row['after'],*[s[k] for s in row['phases'].values() for k in ('before','after')]]:
-            check_machine(state,evidence);check_configuration(state,config)
+            check_machine(state,evidence,budget_bytes=memory_budget_bytes);check_configuration(state,config)
             if (state['memory_plan']!=plan or state['diagnostic_stream_trunk'] or
                 state['phase_memory']['pressure_resizes']!=0 or not state['completion_pipeline'] or
                 state['expert_cache']['policy']!=config['cache_policy']):

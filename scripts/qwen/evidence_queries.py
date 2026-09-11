@@ -25,6 +25,18 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
+        if data.get('kind') == 'q8_memory_budget_screen_v1':
+            from screen_memory_budget import revalidate
+            if case is not None or (control,candidate)!=('control','candidate') or set(changes)!={'memory_gb','expert_slots'}:
+                raise ValueError('Budget comparison requires control/candidate and exactly memory_gb and expert_slots')
+            def resolve(digest):
+                raw,original=index.json(digest);sources.append(original);return raw
+            decision=revalidate(data,resolve)
+            return result(sources,limits+['Candidate uses six additional GiB of engine budget for expert cache.',
+                'Two short pairs have no confidence bounds and do not qualify sustained or long-context performance.',
+                'Both arms explicitly use experimental packed Q8; this does not change its prior inconclusive first-token guard.'],
+                comparable=True,status='measured',scope='memory_budget_conversation',comparison=decision,
+                controlled_change={'memory_gb':[12,18],'expert_slots':[1848,4175]},normal_request_latency_qualified=False)
         if data.get('kind') in ('q8_steady_short_screen_v1','q8_steady_confirmation_v1'):
             confirmation=data['kind']=='q8_steady_confirmation_v1'
             if confirmation:

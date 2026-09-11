@@ -65,14 +65,16 @@ def screen_gate(screen):
                 ratios=ratios,confidence_claim=False,production_promoted=False)
 
 
-def check_machine(state,evidence):
+def check_machine(state,evidence,*,budget_bytes=12*GiB):
+    if type(budget_bytes) is not int or not 0<budget_bytes<=22*GiB:
+        raise ValueError('Invalid explicit memory budget')
     machine=state['metal']
     if any(machine[k]!=evidence[v] for k,v in [('build_fingerprint','build'),('device','device'),('physical_bytes','physical_bytes')]):
         raise ValueError('Execution machine or build differs')
     if state['artifact_revision']!=evidence['artifact_revision'] or state['prepared']['manifest_sha256']!=evidence['prepared_manifest_sha256']:
         raise ValueError('Execution artifact differs')
     plan=state['memory_plan']
-    if plan['limit_bytes']!=12*GiB or plan['planned_bytes']>12*GiB or state['process']['physical_footprint_bytes']>12*GiB or machine['peak_buffer_bytes']>12*GiB:
+    if plan['limit_bytes']!=budget_bytes or plan['planned_bytes']>budget_bytes or state['process']['physical_footprint_bytes']>budget_bytes or machine['peak_buffer_bytes']>budget_bytes:
         raise ValueError('Execution exceeded or reduced the fixed memory budget')
 
 
