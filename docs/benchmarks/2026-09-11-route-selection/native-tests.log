@@ -1,0 +1,8 @@
+2026-09-11 07:15:16.574 test_qwen[46038:198198299] Metal API Validation Enabled
+2026-09-11 07:15:16.574 test_qwen[46038:198198299] Metal GPU Validation Enabled
+[doctest] doctest version is "2.4.12"
+[doctest] run with "--help" for options
+===============================================================================
+[doctest] test cases:    58 |    58 passed | 0 failed | 0 skipped
+[doctest] assertions: 48454 | 48454 passed | 0 failed |
+[doctest] Status: SUCCESS!

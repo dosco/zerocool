@@ -114,6 +114,10 @@ struct Metal::Impl {
     std::set<std::string> captured_shapes;uint64_t captured_bytes=0;
 };
 void KernelConfig::validate() const {
+    if(route_selection!="serial" && route_selection!="simd")
+        throw std::invalid_argument("route selection must be serial or simd");
+    if(route_selection!="serial" && policy!="candidate")
+        throw std::invalid_argument("parallel route selection requires candidate policy");
     if(attention_score_tiles!="full" && attention_score_tiles!="skip-masked")
         throw std::invalid_argument("attention score tiles must be full or skip-masked");
     if(counter_profile && !profile) throw std::invalid_argument("counter sampling requires diagnostic profiling");
@@ -153,7 +157,7 @@ void KernelConfig::validate() const {
     if(policy!="candidate" && (token_tile!=1 || gdn!="original" || affine_rows!=1 || gate_pair)) throw std::invalid_argument("forced kernels require candidate policy");
 }
 Json KernelConfig::json() const {
-    return {{"attention_score_tiles",attention_score_tiles},{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
+    return {{"route_selection",route_selection},{"attention_score_tiles",attention_score_tiles},{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
         {"gdn_block",gdn_block},{"shape_table",shape_table},{"operator_capture",operator_capture.string()},
         {"capture_filter",{{"phase",capture_phase},{"operator",capture_operator},{"layer",capture_layer}}},
         {"profile",profile},{"counter_profile",counter_profile},{"automatic_rules_promoted",false}};
@@ -173,6 +177,12 @@ void Metal::configure(KernelConfig config) {
     impl_->config=std::move(config);
 }
 void Metal::request_phase(std::string phase) {impl_->request_phase=std::move(phase);}
+void Metal::route(const Buf& logits,const Buf& ids,const Buf& weights,uint32_t tokens) {
+    if(!tokens || tokens>8192 || !logits || !ids || !weights ||
+       logits->bytes!=uint64_t(tokens)*Experts*4 || ids->bytes!=uint64_t(tokens)*TopK*4 || weights->bytes!=ids->bytes)
+        throw std::invalid_argument("invalid route selection buffers");
+    dispatch(impl_->config.route_selection=="simd"?"route_simd":"route",{{logits},{ids},{weights}},{tokens},tokens*32);
+}
 void Metal::label(std::string stage,int layer,uint32_t tokens,uint32_t offset,std::span<const uint32_t> experts) {
     if(impl_->config.profile) {impl_->context={{"stage",stage},{"layer",layer},{"tokens",tokens},{"offset",offset}};
         if(!experts.empty()) impl_->context["experts"]=experts;}

@@ -48,7 +48,7 @@ def workloads(seed, output, include_7k=False):
 
 
 def config_args(config):
-    allowed = {"cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "sparse_selection", "attention_score_tiles"}
+    allowed = {"cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "route_selection", "sparse_selection", "attention_score_tiles"}
     if set(config) - allowed - {"name"}:
         raise ValueError("Unknown experiment option")
     result = []
@@ -131,6 +131,7 @@ def validate(report, config, expected, budget, output):
         if config.get("expert_slots") and plan["expert_slots"]!=config["expert_slots"]:
             raise ValueError("Fixed expert capacity changed")
         kernels = machine["kernels"]
+        if kernels.get('route_selection','serial')!=config.get('route_selection','serial'):raise ValueError('Route selection changed')
         if kernels.get('attention_score_tiles','full')!=config.get('attention_score_tiles','full'):raise ValueError('Attention score tiles changed')
         if kernels.get('q8_decode_rows',0)!=config.get('q8_decode_rows',0):raise ValueError('Q8 decode variant changed')
         for key, runtime in [("kernel_policy", "policy"), ("token_tile", "token_tile"), ("gdn_path", "gdn")]:

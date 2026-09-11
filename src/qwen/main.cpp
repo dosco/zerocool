@@ -138,6 +138,7 @@ int main(int argc,char** argv) {
                 "  --cached-progress FILE writes flushed phase progress for cached replay outside forward timing\n"
                 "Kernel experiments (bench only): --kernel-policy reference|auto|candidate --token-tile 1|2|4|8\n"
                 "  --q8-decode-rows 0|2|4|8; diagnostic per-pass timing: --dispatch-profile FILE\n"
+                "  --route-selection serial|simd (simd requires experimental candidate policy)\n"
                 "  --kernel-bench measures bounded real-weight operators, not request latency\n"
                 "  --soak-seconds 1200 repeats a workload conversation for a memory soak\n"
                 "  --gdn-path original|precompute|staged --gdn-rows 4|8 --gdn-block 4|8|16 --phase-profile FILE\n"
@@ -202,6 +203,7 @@ int main(int argc,char** argv) {
             else if(arg=="--cached-progress") cached_progress=value;
             else if(arg=="--sparse-capture") {o.sparse_capture=value;o.kernels.profile=true;}
             else if(arg=="--q8-decode-rows") o.kernels.q8_decode_rows=std::stoul(value);
+            else if(arg=="--route-selection") o.kernels.route_selection=value;
             else if(arg=="--soak-seconds") soak_seconds=std::stoi(value);
             else if(arg=="--panel") o.panel=std::stoi(value);
             else if(arg=="--short-append") o.short_append=std::stoi(value);

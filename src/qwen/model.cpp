@@ -347,7 +347,7 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     const auto b="model.layers."+std::to_string(layer)+".mlp";
     auto router=gpu_.linear(resident_->linear(b+".gate"),x,tokens,true);
     auto ids=gpu_.allocate(uint64_t(tokens)*TopK*4),weights=gpu_.allocate(uint64_t(tokens)*TopK*4);
-    gpu_.dispatch("route",{{router},{ids},{weights}},{tokens},tokens*32);
+    gpu_.route(router,ids,weights,tokens);
     gpu_.finish(); check_sparse_status(); cancelled(cancel);
     trace("route_"+std::to_string(layer),ids);
     trace("router_"+std::to_string(layer),router);

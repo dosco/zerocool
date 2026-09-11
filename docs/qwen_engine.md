@@ -3,8 +3,23 @@
 This is the specialized engine authorized in the September 2026 plan. It is
 experimental. The presence of all four commands does **not** mean that the
 numerical, coding-quality, or M1 performance acceptance gates have passed.
-Current evidence is under `docs/benchmarks/2026-09-08-validation/`; the earlier
-Q4 baseline and audit are under `docs/benchmarks/2026-09-08-audit-q8/`.
+The September 11 [Q8 confirmation](benchmarks/2026-09-11-q8-confirmation/README.md)
+measured 11.1% lower short-conversation time across five fresh pairs, but its
+initial first-token confidence guard remained inconclusive. The subsequent
+[12/18GiB cache experiment](benchmarks/2026-09-11-memory-budget/README.md)
+reduced expert reads yet slowed both conversation pairs and exposed substantial
+process compression. Keep the 12GiB experimental baseline; defaults remain
+unchanged. Neither result qualifies the original 2K/4K or sustained-use targets.
+
+The [parallel router stage](qwen_route_selection_stage.md) adds an explicit
+benchmark-only selector preserving top-ten identity, tie order and softmax
+arithmetic. Its [short screen](benchmarks/2026-09-11-route-selection/README.md)
+passed two alternating pairs with 1.85% less conversation time and initial
+generation increasing from 3.53 to 3.71 tokens/s. Fresh all-layer state and
+failure checks passed; five-pair confirmation and long-workload qualification
+remain open. Original independent-model evidence is under
+`docs/benchmarks/2026-09-08-validation/`; the earlier Q4 baseline and audit are
+under `docs/benchmarks/2026-09-08-audit-q8/`.
 
 The [sparse-attention experiment](qwen_sparse_attention_stage.md) adds exact GPU
 block selection and wholly masked score-tile skipping, with production expert
@@ -30,11 +45,10 @@ After correcting both, all 48 layers and all 248,320 logits match the independen
 five-token reference exactly for Q4 and mixed precision. Source/prepared layouts,
 cache sizes, batching and short session continuation preserve all retained state.
 The mixed runtime is explicitly selectable; Q4 stays the default. Long-context
-correctness, coding quality, calibration/Q3, cache-policy experiments and
-prediction remain pending.
+correctness, coding quality, calibration/Q3 and prediction remain pending.
 Layer-major panels are implemented behind explicit `--panel 256|512|1024`;
 the default remains `--panel 0` while panel qualification continues.
-The [latest report](benchmarks/2026-09-08-validation/README.md) records 30 native
+The [September 8 report](benchmarks/2026-09-08-validation/README.md) records 30 native
 tests/896 assertions, 53 full-model fixture/state checks per artifact and
 20 normal session/panel/failure checks per artifact. The small session fixture
 has a five-token prompt, three-token append including EOS, and two continuations;

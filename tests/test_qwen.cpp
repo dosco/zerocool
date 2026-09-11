@@ -531,6 +531,50 @@ TEST_CASE("native Metal routing selects exactly ten experts and normalizes finit
     for(int i=0;i<10;++i) {CHECK(reinterpret_cast<int*>(ids->data)[i]==order[i]);sum+=weights->floats()[i];}
     CHECK(sum==doctest::Approx(1).epsilon(1e-6));
 }
+TEST_CASE("parallel routes preserve ties, exceptional scores and irregular token batches") {
+    Metal gpu;constexpr uint32_t T=137;
+    std::vector<float> values(T*512);std::mt19937 rng(123);
+    for(uint32_t t=0;t<T;++t) for(uint32_t e=0;e<512;++e) {
+        float v=std::ldexp(float(int(rng()%2001)-1000),-int(rng()%12));
+        switch(t%10) {
+            case 0:v=float(e);break; // insertion-shift worst case
+            case 1:v=-float(e);break;
+            case 2:v=float(e%13);break; // ties across lanes and the tenth boundary
+            case 3:v=(e%2)?0.0f:-0.0f;break;
+            case 4:v=e<9?float(e):-INFINITY;break;
+            case 5:v=(e%41==0)?NAN:v;break;
+            case 6:v=(e%33==0)?INFINITY:v;break;
+            case 7:v=-INFINITY;break;
+            case 8:v=NAN;break;
+        }
+        values[t*512+e]=v;
+    }
+    auto input=gpu.upload(values),ids=gpu.allocate(T*40),weights=gpu.allocate(T*40);
+    gpu.route(input,ids,weights,T);gpu.finish();
+    for(uint32_t t=0;t<T;++t) {
+        std::vector<int> cpu;
+        for(int e=0;e<512;++e) if(values[t*512+e]>-INFINITY) cpu.push_back(e);
+        std::stable_sort(cpu.begin(),cpu.end(),[&](int a,int b){return values[t*512+a]>values[t*512+b];});
+        cpu.resize(10,-1);
+        for(uint32_t j=0;j<10;++j) CHECK(reinterpret_cast<int*>(ids->data)[t*10+j]==cpu[j]);
+    }
+    KernelConfig c;c.route_selection="simd";CHECK_THROWS(gpu.configure(c));
+    c.policy="candidate";gpu.configure(c);
+    for(auto [offset,count]:std::array<std::pair<uint32_t,uint32_t>,5>{{{0,1},{1,7},{8,31},{39,97},{136,1}}}) {
+        auto x=gpu.upload(std::span(values).subspan(offset*512,count*512));
+        auto a=gpu.allocate(count*40),b=gpu.allocate(count*40);gpu.route(x,a,b,count);gpu.finish();
+        CHECK(std::memcmp(a->data,ids->data+offset*40,count*40)==0);
+        for(uint32_t i=0;i<count*10;++i) {
+            float expected=weights->floats()[offset*10+i],actual=b->floats()[i];
+            if(std::isnan(expected)) CHECK(std::isnan(actual));
+            else CHECK(std::bit_cast<uint32_t>(actual)==std::bit_cast<uint32_t>(expected));
+        }
+    }
+    CHECK_THROWS(gpu.route(input,ids,weights,0));
+    CHECK_THROWS(gpu.route(input,ids,weights,T-1));
+    CHECK_THROWS(gpu.route({},ids,weights,T));
+    c.route_selection="unknown";CHECK_THROWS(gpu.configure(c));
+}
 TEST_CASE("FP32 router matches MLX accumulation and is invariant under irregular chunks") {
     Metal gpu;constexpr uint32_t T=11,K=2560,N=512;
     auto w=gpu.allocate(uint64_t(N)*K*2);std::vector<float> x(T*K);

@@ -19,6 +19,7 @@ struct KernelConfig {
     uint32_t token_tile=1, gdn_rows=4, gdn_block=8;
     uint32_t affine_rows=1;
     uint32_t q8_decode_rows=0; // 0 keeps the existing path; 2/4/8 use packed T1 loads.
+    std::string route_selection="serial";
     bool gate_pair=false;
     std::string gdn="original";
     std::string attention_score_tiles="full";
@@ -91,6 +92,7 @@ public:
     Buf gated_linear(const Linear& gate, const Linear& up, const Buf& x, uint32_t tokens, const Buf& rows = {});
     Buf gdn_scan(const Buf& qkv,const Buf& a,const Buf& b,const Buf& alog,
                  const Buf& dt,const Buf& state,uint32_t tokens,uint32_t alog_dtype,uint32_t dt_dtype);
+    void route(const Buf& logits,const Buf& ids,const Buf& weights,uint32_t tokens);
     void sparse_select(const Buf& scores,const Buf& mask,const Buf& status,
                        uint32_t tokens,uint32_t offset,uint32_t length);
     void attention_scores(const Buf& q,const Buf& keys,const Buf& mask,const Buf& scores,

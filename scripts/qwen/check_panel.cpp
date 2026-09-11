@@ -60,6 +60,7 @@ int main(int argc,char** argv) {
         options.kernels.attention_score_tiles=config.value("attention_score_tiles",std::string("full"));
         options.kernels.affine_rows=config.value("affine_rows",1u);
         options.kernels.q8_decode_rows=config.value("q8_decode_rows",0u);
+        options.kernels.route_selection=config.value("route_selection",std::string("serial"));
         options.kernels.gate_pair=config.value("gate_pair",std::string("off"))=="on";
         options.phase_memory=config.value("phase_memory",std::string("fixed"));
         options.ready_group=config.value("ready_group",size_t(4));

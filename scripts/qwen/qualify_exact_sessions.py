@@ -21,7 +21,7 @@ def check_configuration(state,config):
     kernels=state['metal'].get('kernels',{})
     for option,key,default in [('kernel_policy','policy','reference'),('token_tile','token_tile',1),
                                ('gdn_path','gdn','original'),('gdn_rows','gdn_rows',4),('gdn_block','gdn_block',8),
-                               ('affine_rows','affine_rows',1),('q8_decode_rows','q8_decode_rows',0),
+                               ('affine_rows','affine_rows',1),('q8_decode_rows','q8_decode_rows',0),('route_selection','route_selection','serial'),
                                ('attention_score_tiles','attention_score_tiles','full')]:
         if kernels.get(key,default)!=config.get(option,default):
             raise ValueError('Session kernels differ from requested configuration')

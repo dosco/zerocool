@@ -115,6 +115,17 @@ comparisons do not establish long-context performance or promote a default.
 
 ## Isolated packed-Q8 comparisons
 
+`q8_memory_budget_screen_v1` requires both `--change memory_gb` and
+`--change expert_slots`. It validates the explicit 12/18GiB budgets and fixed
+non-expert allocations, while preserving the earlier Q8 confirmation result.
+The extra six GiB is a memory/performance tradeoff, not an equal-memory gain.
+
+`route_selection_screen_v1` requires only `--change route_selection`, with
+`--control control --candidate candidate`. It reopens captured-operator and
+normal-request evidence and requires all-layer state/failure checks for a timing
+survivor. Non-routing dispatches, allocations and actual reuse must match.
+The short screen cannot promote a default or qualify the original target.
+
 `compare` accepts completed `q8_steady_short_screen_v1` request summaries with
 `--control control --candidate candidate --change kernel_policy --change q8_decode_rows`.
 It reopens both correctness reports, both operator reports, and all four normal

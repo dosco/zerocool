@@ -112,3 +112,5 @@ Thumbs.db
 !docs/benchmarks/2026-09-11-q8-steady/**/*.log
 !docs/benchmarks/2026-09-11-q8-confirmation/**/*.log
 !docs/benchmarks/2026-09-11-memory-budget/**/*.log
+!docs/benchmarks/2026-09-11-route-selection/**/*.log
+!docs/benchmarks/2026-09-11-route-selection/raw/fixtures/*.bin

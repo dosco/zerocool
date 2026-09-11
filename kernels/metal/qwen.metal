@@ -581,6 +581,36 @@ kernel void route(device const float* logits [[buffer(0)]],device int* ids [[buf
         uint j=lane*4+i;if(j<10) {ids[t*10+j]=selected[j];weights[t*10+j]=values[i]*inverse;}
     }
 }
+// One SIMD group per token. Only selection is parallel: scores are reloaded
+// from their original indices, then use the reference softmax below unchanged.
+kernel void route_simd(device const float* logits [[buffer(0)]],device int* ids [[buffer(1)]],
+    device float* weights [[buffer(2)]],constant uint* p [[buffer(3)]],
+    uint gid [[thread_position_in_grid]],uint lane [[thread_index_in_simdgroup]]) {
+    uint t=gid/32; if(t>=p[0]) return;
+    threadgroup float scores[10]; threadgroup int selected[10];
+    float candidates[16];
+    for(uint i=0;i<16;++i) candidates[i]=logits[t*512+lane+i*32];
+    for(uint j=0;j<10;++j) {
+        float best=-INFINITY;uint index=512;
+        for(uint i=0;i<16;++i) if(candidates[i]>best) {best=candidates[i];index=lane+i*32;}
+        float maximum=simd_max(best);
+        uint winner=simd_min(best==maximum?index:512u);
+        if(!lane) {
+            selected[j]=winner<512?int(winner):-1;
+            // Preserve signed zero and the original tie order. NaN and -inf
+            // never beat the serial insertion kernel's -inf sentinel.
+            scores[j]=winner<512?logits[t*512+winner]:-INFINITY;
+        }
+        for(uint i=0;i<16;++i) if(lane+i*32==winner) candidates[i]=-INFINITY;
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+    float values[4],sum=0;
+    for(uint i=0;i<4;++i) {uint j=lane*4+i;values[i]=j<10?fast::exp(scores[j]-scores[0]):0;sum+=values[i];}
+    float inverse=1.0f/simd_sum(sum);
+    for(uint i=0;i<4;++i) {
+        uint j=lane*4+i;if(j<10) {ids[t*10+j]=selected[j];weights[t*10+j]=values[i]*inverse;}
+    }
+}
 kernel void gather_rows(device const float* x [[buffer(0)]],device const int* rows [[buffer(1)]],
     device float* out [[buffer(2)]],constant uint* p [[buffer(3)]],uint2 gid [[thread_position_in_grid]]) {
     if(gid.x<p[0] && gid.y<p[1]) out[gid.y*p[0]+gid.x]=x[uint(rows[gid.y])*p[0]+gid.x];
