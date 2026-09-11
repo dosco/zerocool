@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
 #include <IOKit/IOKitLib.h>
+#include <IOKit/ps/IOPowerSources.h>
 #include <CommonCrypto/CommonDigest.h>
 #include <fstream>
 #include <set>
@@ -546,6 +547,64 @@ Buf Metal::linear(const Linear& l,const Buf& x,uint32_t tokens,bool float_output
     auto out=allocate(checked_mul(checked_mul(tokens,l.output),4));
     linear_into(l,x,tokens,{out},float_output);return out;
 }
+Json Metal::reference_probe(const Linear& l,const std::atomic<bool>* cancel) {
+    if(!l.quantized || l.bits!=8 || l.group!=64 || !l.input || l.input>2560 || !l.output || l.output>6144)
+        throw std::invalid_argument("GPU reference requires bounded affine Q8 group64");
+    validate_affine(l);
+    if(impl_->active_scratch>=0) throw std::logic_error("GPU reference cannot use a live scratch pool");
+    auto check=[&] {if(cancel && cancel->load()) throw std::runtime_error("GPU reference cancelled");};
+    check();finish();
+    const auto baseline=allocated();
+    const auto before=process_memory();
+    Buf x,out;Json samples=Json::array();std::string checksum;
+    uint64_t workspace=0;
+    try {
+        x=allocate(uint64_t(l.input)*4);out=allocate(uint64_t(l.output)*4);
+        workspace=allocated()-baseline;
+        if(workspace>48*1024) throw std::logic_error("GPU reference scratch exceeds 48KiB");
+        for(uint32_t i=0;i<l.input;++i) x->floats()[i]=float(int(i%17)-8)/16;
+        for(int sample=0;sample<4;++sample) {
+            check();const auto memory_before=process_memory();const auto start=monotonic_ns();
+            const int dispatches=sample?8:1;
+            for(int i=0;i<dispatches;++i)
+                dispatch("q8_mm",{l.weight,l.scales,l.biases,{x},{out}},
+                    {l.input,l.output,1,l.group,0},32*l.output);
+            auto completion=submit();wait(completion);reap();
+            const auto end=monotonic_ns();
+            for(uint32_t i=0;i<l.output;++i) if(!std::isfinite(out->floats()[i]))
+                throw std::runtime_error("nonfinite GPU reference output");
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(out->data,CC_LONG(l.output*4),digest);
+            std::string hash;constexpr char digits[]="0123456789abcdef";
+            for(auto c:digest) {hash+=digits[c>>4];hash+=digits[c&15];}
+            if(!checksum.empty() && hash!=checksum) throw std::runtime_error("GPU reference output changed");
+            checksum=hash;
+            const double gs=completion->gpu_start,ge=completion->gpu_end;
+            const bool valid=std::isfinite(gs) && std::isfinite(ge) && gs>0 && ge>gs;
+            const double submit_seconds=double(completion->submitted_ns)/1e9;
+            const bool ordered=valid && gs>=submit_seconds && ge<=double(completion->completed_ns)/1e9;
+            samples.push_back({{"sample",sample},{"dispatches",dispatches},{"wall_ns",end-start},
+                {"submitted_ns",completion->submitted_ns},{"completed_ns",completion->completed_ns},
+                {"gpu_start_seconds",std::isfinite(gs)?Json(gs):Json(nullptr)},
+                {"gpu_end_seconds",std::isfinite(ge)?Json(ge):Json(nullptr)},
+                {"gpu_ns",valid?Json((ge-gs)*1e9):Json(nullptr)},
+                {"submission_delay_ns",ordered?Json((gs-submit_seconds)*1e9):Json(nullptr)},
+                {"output_sha256",hash},{"memory_before",memory_before},{"memory_after",process_memory()}});
+        }
+        finish();x.reset();out.reset();reap();check();
+    } catch(...) {
+        const auto error=std::current_exception();try {finish();} catch(...) {}
+        x.reset();out.reset();std::rethrow_exception(error);
+    }
+    if(allocated()!=baseline) throw std::logic_error("GPU reference retained allocations");
+    Json median=nullptr;std::vector<double> warm;
+    for(size_t i=1;i<samples.size();++i) if(samples[i]["gpu_ns"].is_number()) warm.push_back(samples[i]["gpu_ns"].get<double>()/8);
+    if(warm.size()==3) {std::sort(warm.begin(),warm.end());median=warm[1];}
+    return {{"kernel","q8_mm"},{"input",l.input},{"output",l.output},{"group",l.group},
+        {"samples",samples},{"warm_gpu_ns_per_dispatch",median},{"temporary_bytes",workspace},
+        {"scratch_accounting","existing transient scratch; disjoint from forward temporaries"},
+        {"live_bytes_before",baseline},{"live_bytes_after",allocated()},
+        {"live_command_groups",impl_->pending.size()},{"memory_before",before},{"memory_after",process_memory()}};
+}
 void Metal::linear_into(const Linear& l,const Buf& x,uint32_t tokens,Binding out,bool float_output) {
     if(!tokens || !l.input || !l.output || !x || x->bytes<checked_mul(checked_mul(tokens,l.input),4))
         throw std::invalid_argument("linear input shape");
@@ -728,6 +787,23 @@ Json process_memory() {
     if(!sysctlbyname("vm.swapusage",&swap,&size,nullptr,0)) j["system_swap_used_bytes"]=swap.xsu_used;
     j["reclaimable_bytes"]=available_memory();
     return j;
+}
+Json host_conditions() {
+    @autoreleasepool {
+        Json result={{"monotonic_ns",monotonic_ns()},{"thermal_state",nullptr},{"low_power_mode",nullptr},
+            {"power_source",nullptr},{"source","NSProcessInfo and IOPowerSources"},
+            {"limitation","OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"}};
+        const auto process=[NSProcessInfo processInfo];
+        result["thermal_state"]=int(process.thermalState);
+        if(@available(macOS 12.0,*)) result["low_power_mode"]=bool(process.lowPowerModeEnabled);
+        CFTypeRef info=IOPSCopyPowerSourcesInfo();
+        if(info) {
+            CFStringRef type=IOPSGetProvidingPowerSourceType(info);
+            if(type) result["power_source"]=std::string([(__bridge NSString*)type UTF8String]);
+            CFRelease(info);
+        }
+        return result;
+    }
 }
 Json disk_counters() {
     @autoreleasepool {

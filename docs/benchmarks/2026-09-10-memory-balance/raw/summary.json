@@ -1,0 +1,41 @@
+{
+  "kind": "bounded_memory_stage_v1",
+  "complete": true,
+  "status": "completed",
+  "phase": "finished",
+  "stages": {
+    "diagnostic": {
+      "source": "diagnostic/summary.json",
+      "sha256": "92b2b05ab73dc35f05f0baf3f7dee05c67839dabba68ad3cbc3ba3ac7cb93e1a",
+      "status": "observed",
+      "complete": true
+    },
+    "screen": {
+      "source": "screen/summary.json",
+      "sha256": "d3fe72133820403bf82239228b2fa7f1c2aef8da88d0942f45250265cb87820d",
+      "status": "improvement_not_demonstrated",
+      "complete": true
+    }
+  },
+  "started_at": "2026-09-11T06:06:17.588096+00:00",
+  "production_promoted": false,
+  "normal_request_latency_qualified": false,
+  "limits_seconds": {
+    "correctness": 360,
+    "diagnostic": 450,
+    "screen": 600,
+    "confirm": 900
+  },
+  "build": "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "correctness": {
+    "passed": true,
+    "exact_logits_routes_state": true,
+    "continued_equals_fresh": true,
+    "cancellation_failure_checked": true,
+    "independent_model_reference": false
+  },
+  "candidate_for_later_qualification": false,
+  "elapsed_seconds": 515.548064082861,
+  "finished_at": "2026-09-11T06:14:53.135988+00:00"
+}

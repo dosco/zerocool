@@ -25,6 +25,37 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
+        if data.get('kind') in ('q8_steady_short_screen_v1','q8_steady_confirmation_v1'):
+            confirmation=data['kind']=='q8_steady_confirmation_v1'
+            if confirmation:
+                from confirm_q8_steady import revalidate
+            else:
+                from screen_q8_steady import revalidate
+            if case is not None or (control,candidate)!=('control','candidate') or set(changes)!={'kernel_policy','q8_decode_rows'}:
+                raise ValueError('Q8 conversation requires control/candidate and the kernel_policy and q8_decode_rows changes')
+            def resolve(digest):
+                raw, original = index.json(digest); sources.append(original); return raw
+            decision=revalidate(data,resolve)
+            return result(sources,limits+['Five fresh pairs use a paired log-ratio Student-t interval; temporal effects can violate its assumptions.' if confirmation else
+                'Two short conversation pairs are screening evidence without confidence bounds.',
+                'Operator timing compares against the previous two-row kernel; request timing compares against the original reference.',
+                'Short exact state checks do not qualify 7K context or sustained coding.'],
+                comparable=True,status='measured',scope='q8_steady_conversation',comparison=decision,
+                controlled_change={'kernel_policy':['reference','candidate'],'q8_decode_rows':[0,2]},
+                normal_request_latency_qualified=False)
+        if data.get('kind') in ('cache_capacity_screen_v1','cache_capacity_confirmation_v1'):
+            from capacity_experiment import revalidate
+            if case is not None or (control,candidate)!=('control','candidate') or set(changes)!={'expert_slots'}:
+                raise ValueError('Capacity conversation requires control/candidate and exactly --change expert_slots')
+            def resolve(digest):
+                raw, original = index.json(digest); sources.append(original); return raw
+            decision=revalidate(data,resolve)
+            return result(sources,limits+['The fixed ceiling is equal; actual expert allocations intentionally differ.',
+                'Boundary probes can warm hardware; diagnostic screens cannot qualify ordinary latency.',
+                'Short histories do not establish long-context or sustained coding performance.'],
+                comparable=True,status='measured',scope='capacity_conversation',comparison=decision,
+                controlled_change={'expert_slots':[1848,1460]},gpu_reference_mode=data['gpu_reference_mode'],
+                normal_request_latency_qualified=False)
         if data.get('kind') == 'cached_full_token_replay':
             if case is not None: raise ValueError('--case selects normal workloads, not cached context')
             summary = cached_comparison(data)

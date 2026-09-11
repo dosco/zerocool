@@ -114,13 +114,14 @@ class EvidenceGuard:
         if tree_bytes(self.output) >= 2*GiB:
             raise ResourceBlocked('Experiment evidence reached its 2GiB limit')
 
-    def run(self, command, *, stdout, timeout, env=None):
+    def run(self, command, *, stdout, timeout, env=None, progress=None):
         self.check_identity(); self.check_resources()
         process = subprocess.Popen([str(x) for x in command], cwd=self.identity['root'], stdout=stdout,
                                    stderr=subprocess.STDOUT, env=env, start_new_session=True)
         try:
             deadline = time.monotonic() + timeout
             while process.poll() is None:
+                if progress is not None: progress()
                 if time.monotonic() >= deadline:
                     raise subprocess.TimeoutExpired(command, timeout)
                 try:
@@ -151,7 +152,7 @@ def seal(directory):
     directory = Path(directory)
     tree_bytes(directory)
     files = {str(p.relative_to(directory)): sha(p) for p in directory.rglob('*')
-             if p.is_file() and p.name != 'evidence-files.json'}
+             if p.is_file() and p != directory/'evidence-files.json'}
     save(directory/'evidence-files.json', files)
     return sha(directory/'evidence-files.json')
 

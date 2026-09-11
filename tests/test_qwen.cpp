@@ -11,8 +11,45 @@
 #include <cstring>
 #include <fstream>
 #include <latch>
+#include <CommonCrypto/CommonDigest.h>
 
 using namespace freellm::qwen;
+TEST_CASE("GPU reference uses fixed Q8 arithmetic and releases scratch on success and failure") {
+    Metal gpu;constexpr uint32_t K=320,N=8,G=64;
+    auto w=gpu.allocate(K*N),s=gpu.allocate(K*N/G*2),b=gpu.allocate(K*N/G*2);
+    std::vector<float> expected(N);float sum=0;
+    for(uint32_t k=0;k<K;++k) sum+=float(int(k%17)-8)/16;
+    for(uint32_t n=0;n<N;++n) {
+        for(uint32_t k=0;k<K;++k) reinterpret_cast<uint8_t*>(w->data)[n*K+k]=uint8_t(n+1);
+        expected[n]=round_bf16(sum*float(n+1));
+    }
+    for(uint32_t i=0;i<K*N/G;++i) {
+        reinterpret_cast<uint16_t*>(s->data)[i]=0x3f80;
+        reinterpret_cast<uint16_t*>(b->data)[i]=0;
+    }
+    unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(expected.data(),CC_LONG(N*4),digest);
+    std::string hash;constexpr char digits[]="0123456789abcdef";
+    for(auto c:digest) {hash+=digits[c>>4];hash+=digits[c&15];}
+    Linear layer{{w},{s},{b},K,N,G,0,true,8};
+    KernelConfig candidate;candidate.policy="candidate";candidate.q8_decode_rows=8;gpu.configure(candidate);
+    const auto baseline=gpu.allocated();const auto report=gpu.reference_probe(layer);
+    REQUIRE(report["samples"].size()==4);
+    for(const auto& sample:report["samples"]) {
+        CHECK(sample["output_sha256"]==hash);
+        CHECK(sample["completed_ns"].get<uint64_t>()>=sample["submitted_ns"].get<uint64_t>());
+    }
+    CHECK(report["temporary_bytes"]==32768);CHECK(gpu.allocated()==baseline);
+    CHECK(gpu.statistics()["live_command_groups"]==0);
+    CHECK(gpu.statistics()["kernel_dispatches"]["q8_mm"]==25);
+    CHECK(gpu.statistics()["kernels"]["q8_decode_rows"]==8);
+    std::atomic<bool> cancelled=true;CHECK_THROWS(gpu.reference_probe(layer,&cancelled));
+    CHECK(gpu.allocated()==baseline);
+    auto invalid=layer;invalid.bits=4;CHECK_THROWS(gpu.reference_probe(invalid));
+    reinterpret_cast<uint16_t*>(s->data)[0]=0x7f80;
+    CHECK_THROWS(gpu.reference_probe(layer));CHECK(gpu.allocated()==baseline);
+    CHECK(gpu.statistics()["live_command_groups"]==0);
+    const auto host=host_conditions();CHECK(host.contains("power_source"));CHECK(host.contains("limitation"));
+}
 TEST_CASE("decode diagnostics observe counters without submitting or reaping GPU work") {
     CHECK_FALSE(Options{}.decode_diagnostics);
     Result result;CHECK_FALSE(result.json().contains("decode_diagnostics"));

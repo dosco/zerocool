@@ -59,18 +59,29 @@ def validate_correctness(reports,evidence):
                 independent_model_reference=False)
 
 
-def validate_request(raw,evidence,config,workload,expected,*,instrumented=False):
+def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,gpu_reference='off',capacity_axis=False):
+    if raw.get('gpu_reference_mode','off')!=gpu_reference or (gpu_reference=='off' and raw.get('gpu_references')):
+        raise ValueError('Changed GPU reference instrumentation')
     if (raw.get('complete') is not True or raw.get('workloads')!=workload or len(workload) not in (1,2) or len(raw.get('runs',[]))!=len(workload) or
         raw.get('model_revision')!=evidence['artifact_revision'] or not fixed_sampling(raw.get('sampling'))):
         raise ValueError('Missing complete identical normal workload')
     history=[];observations=[]
     plan=raw['runs'][0]['before']['memory_plan']
-    if expected.setdefault('memory_plan',plan)!=plan: raise ValueError('Unequal admitted memory allocation')
+    if capacity_axis:
+        fixed={k:v for k,v in plan.items() if k not in ('expert_slots','expert_bytes','planned_bytes')}
+        if expected.setdefault('fixed_memory_plan',fixed)!=fixed: raise ValueError('Changed fixed allocation')
+        if (plan['expert_slots']!=config['expert_slots'] or plan['expert_bytes']!=config['expert_slots']*2768896 or
+            plan['planned_bytes']!=sum(plan[k] for k in ('resident_bytes','session_bytes','scratch_bytes',
+                'panel_scratch_bytes','ngram_bytes','reserve_bytes','expert_bytes','pipeline_scratch_bytes','snapshot_bytes','runtime_control_bytes'))):
+            raise ValueError('Invalid explicit expert capacity accounting')
+        if expected.setdefault('memory_plan_'+config['name'],plan)!=plan: raise ValueError('Capacity arm changed allocation')
+    elif expected.setdefault('memory_plan',plan)!=plan: raise ValueError('Unequal admitted memory allocation')
     for i,(row,task) in enumerate(zip(raw['runs'],workload)):
         prompt=history+task['tokens'] if i else task['tokens']
         reused=len(history)-1 if i else 0
         outputs=row.get('output_token_ids')
         if (row.get('name')!=task['name'] or row.get('repetition')!=0 or row.get('profiling_enabled') is not instrumented or
+            row.get('gpu_reference_mode','off')!=gpu_reference or
             row.get('runtime_cache_state')!=('retained' if i else 'empty_at_process_start') or
             row.get('prompt_tokens')!=len(prompt) or row.get('reused_tokens')!=reused or
             row.get('pending_tokens_ingested')!=int(i>0) or row.get('prefill_tokens')!=len(prompt)-reused or

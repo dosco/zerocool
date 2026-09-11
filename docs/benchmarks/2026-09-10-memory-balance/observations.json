@@ -1,0 +1,598 @@
+{
+  "measurements": [
+    {
+      "phase": "diagnostic",
+      "pair": 0,
+      "configuration": "control",
+      "source": "raw/diagnostic/pair-0-control.json",
+      "sha256": "ead443d0497eeb540fcaa948e4d7e1349488dea2b989d9c38a2d4c49d443a596",
+      "conversation_ms": 66104.755875,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 28923.294625,
+          "ttft_ms": 15826.450792,
+          "tokens_per_second": 2.4433367617448325,
+          "reused_tokens": 0,
+          "footprint_bytes": 11192162816,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 12944605065,
+              "cpu_gpu_wait_ns": 11086977791,
+              "decompressions": 476746
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 18062438400,
+              "expert_misses": 6533,
+              "gpu_command_ns": 7332069550,
+              "cpu_gpu_wait_ns": 7173017002,
+              "decompressions": 94877
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 37181.46125,
+          "ttft_ms": 24002.484958,
+          "tokens_per_second": 2.4281096870494316,
+          "reused_tokens": 104,
+          "footprint_bytes": 11192113664,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23575449600,
+              "expert_misses": 8527,
+              "gpu_command_ns": 23203883056,
+              "cpu_gpu_wait_ns": 18122510007,
+              "decompressions": 90
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 20780236800,
+              "expert_misses": 7516,
+              "gpu_command_ns": 7398668467,
+              "cpu_gpu_wait_ns": 6736616085,
+              "decompressions": 2
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        532020.814716816,
+        500812.4280720949
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817534200910750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817600331157750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "diagnostic",
+      "pair": 1,
+      "configuration": "control",
+      "source": "raw/diagnostic/pair-1-control.json",
+      "sha256": "4058bc9022dc749f9608df89e403fb06fd23cdf6a52ea5bed43bf6821f351080",
+      "conversation_ms": 63828.873834,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26613.055542,
+          "ttft_ms": 14186.471917,
+          "tokens_per_second": 2.5751245045035462,
+          "reused_tokens": 0,
+          "footprint_bytes": 11177089536,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 13006096950,
+              "cpu_gpu_wait_ns": 10259027082,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 18062438400,
+              "expert_misses": 6533,
+              "gpu_command_ns": 7213832209,
+              "cpu_gpu_wait_ns": 6579940887,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 37215.818292,
+          "ttft_ms": 24191.961917,
+          "tokens_per_second": 2.457029552431623,
+          "reused_tokens": 104,
+          "footprint_bytes": 11177286144,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23575449600,
+              "expert_misses": 8527,
+              "gpu_command_ns": 23298427341,
+              "cpu_gpu_wait_ns": 18150471157,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 20780236800,
+              "expert_misses": 7516,
+              "gpu_command_ns": 7281052351,
+              "cpu_gpu_wait_ns": 6630548290,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        633953.1391859055,
+        499999.96554106474
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817605302368875,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817669168224000,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "diagnostic",
+      "pair": 2,
+      "configuration": "control",
+      "source": "raw/diagnostic/pair-2-control.json",
+      "sha256": "6a2f22e466efa3ab42449c3d58e6ae9a414b0fa2bbaf8afa63ca8a3f5f60bbe3",
+      "conversation_ms": 63462.9435,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26565.365583,
+          "ttft_ms": 14170.186,
+          "tokens_per_second": 2.5816487599653684,
+          "reused_tokens": 0,
+          "footprint_bytes": 11183331712,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 12952500382,
+              "cpu_gpu_wait_ns": 10182871252,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 18062438400,
+              "expert_misses": 6533,
+              "gpu_command_ns": 7238841746,
+              "cpu_gpu_wait_ns": 6628361163,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 36897.577917,
+          "ttft_ms": 23985.642917,
+          "tokens_per_second": 2.4783272220623784,
+          "reused_tokens": 104,
+          "footprint_bytes": 11182610880,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23575449600,
+              "expert_misses": 8527,
+              "gpu_command_ns": 23111108837,
+              "cpu_gpu_wait_ns": 18034086881,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 20780236800,
+              "expert_misses": 7516,
+              "gpu_command_ns": 7266510722,
+              "cpu_gpu_wait_ns": 6601843752,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        523593.7424004078,
+        501916.6273996234
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817674174891250,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817737662360291,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "screen",
+      "pair": 0,
+      "configuration": "control",
+      "source": "raw/screen/pair-0-control.json",
+      "sha256": "09d1ac252439560f33dcd7d1980b593d365d05e374b4ebe4665540ba36c8898b",
+      "conversation_ms": 63378.288459,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26391.958084,
+          "ttft_ms": 14039.886167,
+          "tokens_per_second": 2.590658491549001,
+          "reused_tokens": 0,
+          "footprint_bytes": 11180988864,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 12977981812,
+              "cpu_gpu_wait_ns": 10193838582,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 18062438400,
+              "expert_misses": 6533,
+              "gpu_command_ns": 7166141543,
+              "cpu_gpu_wait_ns": 6537500799,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 36986.330375,
+          "ttft_ms": 24043.205375,
+          "tokens_per_second": 2.472355014727897,
+          "reused_tokens": 104,
+          "footprint_bytes": 11180874176,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23575449600,
+              "expert_misses": 8527,
+              "gpu_command_ns": 23188754495,
+              "cpu_gpu_wait_ns": 18085359417,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 20780236800,
+              "expert_misses": 7516,
+              "gpu_command_ns": 7244519200,
+              "cpu_gpu_wait_ns": 6639334785,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        545781.3385874033,
+        500864.5821362734
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817742556035500,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817805960015541,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "screen",
+      "pair": 0,
+      "configuration": "candidate",
+      "source": "raw/screen/pair-0-candidate.json",
+      "sha256": "007a5a3f7de903fb701359ef2d49ca44b225d74b87607a8d53e820fce6694b88",
+      "conversation_ms": 63982.604999,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26651.582791,
+          "ttft_ms": 14056.454416,
+          "tokens_per_second": 2.5406648544779125,
+          "reused_tokens": 0,
+          "footprint_bytes": 10110718464,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 13011322250,
+              "cpu_gpu_wait_ns": 10210555086,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 19757260800,
+              "expert_misses": 7146,
+              "gpu_command_ns": 7231768085,
+              "cpu_gpu_wait_ns": 6597051579,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 37331.022208,
+          "ttft_ms": 24001.027292,
+          "tokens_per_second": 2.40060106561559,
+          "reused_tokens": 104,
+          "footprint_bytes": 10110833152,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23738572800,
+              "expert_misses": 8586,
+              "gpu_command_ns": 23188362090,
+              "cpu_gpu_wait_ns": 18075650671,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 22687948800,
+              "expert_misses": 8206,
+              "gpu_command_ns": 7397965353,
+              "cpu_gpu_wait_ns": 6716610865,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        625203.0143514276,
+        499723.9448130131
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817810891759833,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817874903891666,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "screen",
+      "pair": 1,
+      "configuration": "candidate",
+      "source": "raw/screen/pair-1-candidate.json",
+      "sha256": "bc0df73170e5c0d06d14e6682244ab1cadf09de2e228ea1ddbd0499ec7d6fa7f",
+      "conversation_ms": 63949.506417,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26832.6095,
+          "ttft_ms": 14116.214709,
+          "tokens_per_second": 2.516436499962075,
+          "reused_tokens": 0,
+          "footprint_bytes": 10111144512,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 13086037178,
+              "cpu_gpu_wait_ns": 10266480914,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 19757260800,
+              "expert_misses": 7146,
+              "gpu_command_ns": 7279453603,
+              "cpu_gpu_wait_ns": 6617910100,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 37116.896917,
+          "ttft_ms": 23994.833708,
+          "tokens_per_second": 2.438640897420173,
+          "reused_tokens": 104,
+          "footprint_bytes": 10111275584,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23738572800,
+              "expert_misses": 8586,
+              "gpu_command_ns": 23180921984,
+              "cpu_gpu_wait_ns": 18070161674,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 22687948800,
+              "expert_misses": 8206,
+              "gpu_command_ns": 7245018894,
+              "cpu_gpu_wait_ns": 6652113699,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        619526.0211825371,
+        500390.65536111593
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817879746574750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4817943725646291,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    },
+    {
+      "phase": "screen",
+      "pair": 1,
+      "configuration": "control",
+      "source": "raw/screen/pair-1-control.json",
+      "sha256": "9f928db7b781e6a6c0226dc6bad936ffe52086091ac52d55ee40e1939798a254",
+      "conversation_ms": 63569.376084,
+      "requests": [
+        {
+          "name": "coding_routes_32",
+          "request_ms": 26595.408584,
+          "ttft_ms": 14181.571292,
+          "tokens_per_second": 2.5777686018667367,
+          "reused_tokens": 0,
+          "footprint_bytes": 11184675392,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 21255782400,
+              "expert_misses": 7688,
+              "gpu_command_ns": 13065410337,
+              "cpu_gpu_wait_ns": 10239372998,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 18062438400,
+              "expert_misses": 6533,
+              "gpu_command_ns": 7186337465,
+              "cpu_gpu_wait_ns": 6590230779,
+              "decompressions": 0
+            }
+          ]
+        },
+        {
+          "name": "append_128",
+          "request_ms": 36973.9675,
+          "ttft_ms": 23965.211542,
+          "tokens_per_second": 2.45988164458731,
+          "reused_tokens": 104,
+          "footprint_bytes": 11185674816,
+          "phases": [
+            {
+              "phase": "ingest",
+              "expert_read_bytes": 23575449600,
+              "expert_misses": 8527,
+              "gpu_command_ns": 23115977896,
+              "cpu_gpu_wait_ns": 18040972948,
+              "decompressions": 0
+            },
+            {
+              "phase": "decode",
+              "expert_read_bytes": 20780236800,
+              "expert_misses": 7516,
+              "gpu_command_ns": 7314678578,
+              "cpu_gpu_wait_ns": 6668778615,
+              "decompressions": 0
+            }
+          ]
+        }
+      ],
+      "probe_warm_gpu_ns": [
+        645796.8847826123,
+        500640.59905707836
+      ],
+      "host_conditions": [
+        {
+          "monotonic_ns": 4817948589690541,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        {
+          "monotonic_ns": 4818012188274458,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Probe-enabled timing is diagnostic, not normal performance qualification.",
+    "GPU command durations and CPU/I/O waits overlap; do not add them into a critical path.",
+    "Boundary probes and OS nominal thermal state do not establish conditions throughout a conversation.",
+    "Process footprint samples are not continuous physical peaks."
+  ]
+}

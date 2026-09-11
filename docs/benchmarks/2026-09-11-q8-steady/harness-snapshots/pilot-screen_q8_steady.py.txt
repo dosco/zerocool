@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+"""One preselected packed-Q8 candidate: fresh inputs, exact state, two request pairs."""
+import argparse
+import datetime
+import fcntl
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import time
+
+from benchmark_exact import config_args, inspect_admission
+from benchmark_q8_decode import summarize as operator_summary
+from capacity_experiment import configs as capacity_configs, decide, order
+from capture_routes import load
+from qualification_evidence import EvidenceGuard, ResourceBlocked, identity, save, seal, sha, verify_seal
+from qualify_exact_sessions import compare as compare_state
+from screen_cache import CHECKS, correctness_case, validate_request
+from selector_qualification import check_machine
+
+ROOT = Path(__file__).resolve().parents[2]
+SOURCE = ROOT/'docs/benchmarks/2026-09-10-slru-screen/raw'
+KIND = 'q8_steady_short_screen_v1'
+CAPTURES = ((0, 'gdn'), (31, 'attention'))
+LIMITS = dict(operators=240, correctness=360, requests=600)
+
+
+def configs():
+    base = capacity_configs()[0]
+    return [dict(base, name=name, kernel_policy=policy, q8_decode_rows=rows)
+            for name, policy, rows in (('control', 'reference', 0), ('candidate', 'candidate', 2))]
+
+
+def state_case(config):
+    return dict(correctness_case('clock'), kernel_policy=config['kernel_policy'], q8_decode_rows=config['q8_decode_rows'])
+
+
+def correctness(reports, evidence):
+    if len(reports) != 2: raise ValueError('Missing correctness arm')
+    for raw, config in zip(reports, configs()):
+        if (raw.get('case') != state_case(config) or raw.get('full_model') is not True or raw.get('layers') != 48 or
+            len(raw.get('runs', [])) != 1 or len(raw.get('checks', [])) != len(CHECKS) or
+            {c['name'] for c in raw['checks']} != CHECKS or any(c.get('passed') is not True for c in raw['checks'])):
+            raise ValueError('Incomplete all-layer correctness and recovery coverage')
+        run = raw['runs'][0]
+        if len(run['stages']) != 3 or run.get('gpu_references') != []: raise ValueError('Changed correctness protocol')
+        for key in ('continued_statistics', 'after_fresh'):
+            state = run[key]; check_machine(state, evidence)
+            if state['memory_plan']['expert_slots'] != 32 or state['expert_cache']['evictions'] <= 0:
+                raise ValueError('Correctness requires forced eviction')
+    compare_state(*reports, evidence['build'], reference_config=state_case(configs()[0]), candidate_config=state_case(configs()[1]))
+    return dict(exact_logits_routes_state=True, continued_equals_fresh=True, cancellation_failure_checked=True,
+                layers=48, expert_slots=32, independent_model_reference=False)
+
+
+def operators(raw, evidence, layer, stage):
+    manifest = raw.get('source', {})
+    for obj in (raw, manifest):
+        if obj.get('build_fingerprint') != evidence['build'] or obj.get('artifact_revision') != evidence['artifact_revision']:
+            raise ValueError('Stale operator build or artifact')
+    cases = manifest.get('cases', [])
+    if manifest.get('kind') != 'captured_affine_operators' or len(cases) != 3:
+        raise ValueError('Requires the three captured projections per selected layer')
+    expected = []
+    for case in cases:
+        m = case['matrix']
+        if (case['phase'] != 'decode' or case['context']['layer'] != layer or case['context']['stage'] != stage or
+            m['rows'] != 1 or m['bits'] != 8 or m['fused'] or m['gathered']):
+            raise ValueError('Changed captured input coverage')
+        for rep in range(5):
+            for rows in ((0, 2) if rep % 2 == 0 else (2, 0)):
+                expected.append((m, case['tensors']['x']['sha256'], rep, rows))
+    actual = [(r['matrix'], r['case'], r['repetition'], r['q8_decode_rows']) for r in raw.get('measurements', [])]
+    if actual != expected: raise ValueError('Changed operator pair order or coverage')
+    for row in raw['measurements']:
+        if (row.get('tile') != 1 or row.get('output_rows') != 2 or row.get('gate_pair') is not False or
+            type(row['wall_ns']) not in (int, float) or not math.isfinite(row['wall_ns'])):
+            raise ValueError('Changed operator baseline or timing')
+    return operator_summary(raw, 2, 5)
+
+
+def observations(raw, evidence, config, workload, expected):
+    if raw.get('gpu_reference_mode') != 'off' or raw.get('gpu_references') != []:
+        raise ValueError('Normal timing must exclude boundary probes')
+    for row in raw.get('runs', []):
+        for state in [row['before'], row['after'], *[v[k] for v in row['phases'].values() for k in ('before', 'after')]]:
+            kernels = state['metal']['kernels']
+            if (kernels.get('profile') or kernels.get('counter_profile') or kernels.get('operator_capture') or
+                state['memory_plan']['expert_slots'] != 1848 or state.get('short_append_tokens') != 32):
+                raise ValueError('Changed capacity, schedule or instrumentation')
+        dispatches = row['after']['metal']['kernel_dispatches']
+        packed = sum(v for k, v in dispatches.items() if k.startswith('q8_mv_packed_'))
+        if bool(packed) != bool(config['q8_decode_rows']): raise ValueError('Requested packed kernel did not execute')
+    return validate_request(raw, evidence, config, workload, expected)
+
+
+def revalidate(summary, resolve):
+    if (summary.get('kind') != KIND or summary.get('complete') is not True or summary.get('configurations') != configs() or
+        summary.get('gpu_reference_mode') != 'off' or summary.get('metal_validation') is not False):
+        raise ValueError('Incomplete or changed Q8 experiment protocol')
+    proof = correctness([resolve(r['sha256']) for r in summary['correctness_sources']], summary['identity'])
+    if proof != summary['correctness']: raise ValueError('Changed correctness summary')
+    captures = summary['operator_sources']
+    if [(r['layer'], r['stage']) for r in captures] != list(CAPTURES): raise ValueError('Missing selected operator capture')
+    for row in captures:
+        cases = operators(resolve(row['sha256']), summary['identity'], row['layer'], row['stage'])
+        if cases != row['cases'] or not all(c['bounds']['high'] < 1 for c in cases):
+            raise ValueError('Operator screen did not pass the predeclared gate')
+    rows = summary['measurements']; used = set(); expected = {}
+    if [(r['pair'], r['configuration']) for r in rows] != order(2): raise ValueError('Requires two alternating request pairs')
+    for row in rows:
+        digest = row['sha256']
+        if digest in used: raise ValueError('Repeated original report')
+        used.add(digest)
+        config = next(c for c in configs() if c['name'] == row['configuration'])
+        if observations(resolve(digest), summary['identity'], config, summary['workload'], expected) != row['requests']:
+            raise ValueError('Summary differs from original requests')
+    decision = decide(rows, 2)
+    if any(summary.get(k) != v for k, v in decision.items()): raise ValueError('Changed predeclared decision')
+    return decision
+
+
+def run(args):
+    out = args.output.resolve(); out.mkdir(parents=True, exist_ok=False); started = time.monotonic()
+    report = dict(kind=KIND, complete=False, status='running', phase='preparation', measurements=[], operator_sources=[], correctness_sources=[],
+        configurations=configs(), gpu_reference_mode='off', metal_validation=False, limits_seconds=LIMITS,
+        normal_request_latency_qualified=False, production_promoted=False,
+        started_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+    deadline = started
+    def remaining():
+        value = deadline - time.monotonic()
+        if value <= 0: raise subprocess.TimeoutExpired('q8-steady-screen', 0)
+        return value
+    def progress(name):
+        report['phase'] = name; save(out/'summary.json', report); print(name, flush=True)
+    def source(path): return dict(source=str(path.relative_to(out)), sha256=sha(path))
+    try:
+        verify_seal(SOURCE, sha(SOURCE/'evidence-files.json'))
+        workload = load(SOURCE/'workload.json'); save(out/'workload.json', workload)
+        save(out/'capture-workload.json', [dict(workload[0], max_tokens=2)])
+        for config in configs(): save(out/f"{config['name']}.case.json", state_case(config))
+        model, prepared = ROOT/'.cache/qwen-mixed-reference', ROOT/'.cache/prepared/q4-records-v1'
+        frozen = identity(ROOT, configs(), model, prepared, out/'workload.json')
+        for path in [SOURCE/'pair-0-clock.json', SOURCE/'evidence-files.json', SOURCE/'workload.json',
+                     out/'capture-workload.json', *out.glob('*.case.json')]:
+            frozen['files'][str(path.resolve())] = sha(path)
+        save(out/'identity.json', frozen); guard = EvidenceGuard(frozen, out)
+        report.update(identity={k:frozen[k] for k in ('build','artifact_revision','prepared_manifest_sha256','budget_bytes','device','physical_bytes')}, workload=workload)
+        env = dict(os.environ)
+        for key in ('MTL_DEBUG_LAYER', 'MTL_SHADER_VALIDATION'): env.pop(key, None)
+        def execute(command, stem, timeout, validation=False):
+            last = 0
+            def pulse():
+                nonlocal last
+                if time.monotonic()-last >= 15:
+                    print(f'{stem.name}: elapsed {time.monotonic()-started:.0f}s; phase remaining {max(0,deadline-time.monotonic()):.0f}s', flush=True)
+                    last = time.monotonic()
+            with stem.with_suffix('.log').open('w') as log:
+                guard.run(command, stdout=log, timeout=min(timeout, remaining()), progress=pulse,
+                          env=dict(env, MTL_DEBUG_LAYER='1', MTL_SHADER_VALIDATION='1') if validation else env)
+        def common(config):
+            return ['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
+        def admission(config, stem):
+            with stem.with_suffix('.admission.log').open('w') as log:
+                path = inspect_admission(ROOT/'build/qwen/bin/freellm',common(config),stem,frozen['budget_bytes'],512,log,guard,remaining)
+            if load(path)['current_admission']['expert_slots'] != 1848: raise ResourceBlocked('Explicit capacity not admitted')
+        with (ROOT/'.cache/qwen-qualification.lock').open('a') as lock:
+            try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError: raise ResourceBlocked('Another workload owns the GPU lease')
+            guard.check_resources(initial=True)
+            deadline = time.monotonic()+LIMITS['operators']
+            for layer, stage in CAPTURES:
+                stem = out/f'capture-{layer}-{stage}'; progress(stem.name); admission(configs()[0],stem)
+                execute([ROOT/'build/qwen/bin/freellm','bench',*common(configs()[0]),'--workload-file',out/'capture-workload.json',
+                    '--repetitions','1','--temperature','0','--seed','0','--operator-capture',stem,
+                    '--capture-phase','decode','--capture-layer',str(layer),'--capture-operator',stage,'--json',stem.with_suffix('.json')],stem,100)
+                manifest = stem/'manifest.json'; captured = load(manifest)
+                for entry in captured['cases']:
+                    for tensor in entry['tensors'].values():
+                        path = stem/tensor['file']; frozen['files'][str(path.resolve())] = sha(path)
+                frozen['files'][str(manifest.resolve())] = sha(manifest); save(out/'identity.json', frozen)
+                replay = out/f'operators-{layer}-{stage}'; progress(replay.name)
+                execute([ROOT/'build/qwen/bin/freellm','bench','--artifact','mixed-4_8bit','--operator-fixtures',manifest,
+                    '--kernel-policy','candidate','--q8-decode-rows','2','--repetitions','5','--json',replay.with_suffix('.json')],replay,30)
+                cases = operators(load(replay.with_suffix('.json')), frozen, layer, stage)
+                report['operator_sources'].append(dict(**source(replay.with_suffix('.json')),layer=layer,stage=stage,cases=cases))
+                save(out/'summary.json',report)
+            if not all(c['bounds']['high'] < 1 for r in report['operator_sources'] for c in r['cases']):
+                report.update(status='operator_improvement_not_demonstrated',complete=True); return 0
+            deadline = time.monotonic()+LIMITS['correctness']; correct = []
+            for config in configs():
+                stem = out/f"correctness-{config['name']}"; progress(stem.name)
+                execute([ROOT/'build/qwen/qwen_panel_check',model,prepared,out/f"{config['name']}.case.json",stem.with_suffix('.json')],stem,180,True)
+                correct.append(load(stem.with_suffix('.json'))); report['correctness_sources'].append(source(stem.with_suffix('.json')))
+            report['correctness'] = correctness(correct, frozen)
+            deadline = time.monotonic()+LIMITS['requests']
+            expected = {r['name']:r['output_token_ids'] for r in load(SOURCE/'pair-0-clock.json')['runs']}
+            for pair, name in order(2):
+                config = next(c for c in configs() if c['name']==name); stem = out/f'pair-{pair}-{name}'; progress(stem.name)
+                admission(config,stem)
+                execute([ROOT/'build/qwen/bin/freellm','bench',*common(config),'--workload-file',out/'workload.json',
+                    '--repetitions','1','--temperature','0','--seed','0','--gpu-reference','off',
+                    '--bench-progress',stem.with_suffix('.progress.jsonl'),'--json',stem.with_suffix('.json')],stem,150)
+                requests = observations(load(stem.with_suffix('.json')),frozen,config,workload,expected)
+                report['measurements'].append(dict(pair=pair,configuration=name,requests=requests,**source(stem.with_suffix('.json'))))
+                save(out/'summary.json',report)
+            report.update(decide(report['measurements'],2),complete=True)
+            files = {r['sha256']:out/r['source'] for key in ('measurements','operator_sources','correctness_sources') for r in report[key]}
+            revalidate(report,lambda h:load(files[h])); report['phase']='finished'
+    except ResourceBlocked as error: report.update(status='resource_blocked',error=str(error),complete=False)
+    except subprocess.TimeoutExpired: report.update(status='time_budget_exhausted',error='Partial evidence remains unfinished.',complete=False)
+    except KeyboardInterrupt: report.update(status='interrupted',complete=False)
+    except Exception as error: report.update(status='failed',error=str(error),complete=False)
+    finally:
+        report.update(elapsed_seconds=time.monotonic()-started,finished_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+        save(out/'summary.json',report); seal(out)
+        print(json.dumps({k:report[k] for k in ('status','complete','phase','elapsed_seconds')}),flush=True)
+    return 0 if report['complete'] else 2
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',required=True,type=Path)
+    raise SystemExit(run(parser.parse_args()))

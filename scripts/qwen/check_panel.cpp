@@ -74,6 +74,8 @@ int main(int argc,char** argv) {
         if(all.size()>size_t(options.context)) throw std::invalid_argument("case exceeds context");
         for(auto panel:panels) {
             options.panel=panel;Model model(options);auto state=model.make_state();Json stages=Json::array();
+            Json probes=Json::array();
+            if(config.value("gpu_reference",false)) probes.push_back(model.gpu_reference());
             if(config.value("require_exact_panel",false) && model.memory_plan().panel_tokens!=uint32_t(panel))
                 throw std::runtime_error("requested panel differs from admitted panel");
             state.artifact=options.artifact==Artifact::Q4?Artifact::Mixed:Artifact::Q4;
@@ -86,6 +88,10 @@ int main(int argc,char** argv) {
             logits=feed(model,state,append);stages.push_back(snapshot(state,logits,options.probe_layers,model.route_identity()));
             for(auto id:continuation) logits=feed(model,state,std::span<const int>(&id,1));
             stages.push_back(snapshot(state,logits,options.probe_layers,model.route_identity()));
+            if(config.value("gpu_reference",false)) {
+                probes.push_back(model.gpu_reference());
+                check("probe_preserves_state",snapshot(state,logits,options.probe_layers,model.route_identity())==stages.back());
+            }
             if(reference.is_null()) reference=stages;
             check("panel_"+std::to_string(panel)+"_continued_state",stages==reference);
             if(panel) check("panel_"+std::to_string(panel)+"_executed",model.stats()["passes"]["panel"].get<uint64_t>()>0);
@@ -93,7 +99,7 @@ int main(int argc,char** argv) {
             state=State{};model.reset_expert_cache();state=model.make_state();
             logits=feed(model,state,all);
             check("panel_"+std::to_string(panel)+"_fresh_replay",snapshot(state,logits,options.probe_layers,model.route_identity())==stages.back());
-            runs.push_back({{"panel",panel},{"stages",stages},{"continued_statistics",after_continued},{"after_fresh",model.stats()}});
+            runs.push_back({{"panel",panel},{"stages",stages},{"continued_statistics",after_continued},{"after_fresh",model.stats()},{"gpu_references",probes}});
         }
         // Deliberately fail after layer-zero recurrent work and expert execution.
         // This exercises the production partial-panel failure path without altering weights.

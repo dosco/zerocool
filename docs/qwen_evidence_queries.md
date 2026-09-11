@@ -90,6 +90,48 @@ They remain cached comparisons. Their timings cannot be substituted for normal
 request latency. Missing measurements remain missing; failed or partial reports
 are searchable but cannot establish a winner.
 
+## Bounded capacity comparisons
+
+`compare` also accepts `cache_capacity_screen_v1` and
+`cache_capacity_confirmation_v1` summaries from the memory-balance stage:
+
+```sh
+python3 scripts/qwen/query_evidence.py compare PATH/screen/summary.json \
+  --control control --candidate candidate --change expert_slots
+```
+
+The query reconstructs whole-conversation pairs from the original reports,
+requires the explicit 1,848/1,460-slot difference at the same 12GiB ceiling,
+and checks that all other allocation categories stay equal. Each arm must retain
+its allocation through both requests. It reuses the runner's decision function,
+including its five-pair log-ratio Student-t interval, rather than applying the
+legacy normal-report bootstrap method to a different protocol.
+
+Probe-enabled screens require both complete boundary probes and retain their
+diagnostic status. Confirmation requires the probe to be off. Unknown timing
+stays missing; incomplete pairs, duplicate raw reports, changed source metrics,
+and undeclared instrumentation or allocation changes are rejected. These
+comparisons do not establish long-context performance or promote a default.
+
+## Isolated packed-Q8 comparisons
+
+`compare` accepts completed `q8_steady_short_screen_v1` request summaries with
+`--control control --candidate candidate --change kernel_policy --change q8_decode_rows`.
+It reopens both correctness reports, both operator reports, and all four normal
+conversation reports by hash. The same artifact, allocation, schedule, sampling,
+kernel options, actual prefix reuse, and instrumentation checks apply. Operator
+captures must cover the declared layers and pair count. An operator-only stop
+does not establish request performance. See the
+[bounded stage](qwen_q8_steady_stage.md) for the two different operator/request
+controls and the predeclared gates. Two conversation pairs do not provide
+confidence bounds or qualify a production default.
+
+`q8_steady_confirmation_v1` uses the same axes and resolves the prerequisite
+screen plus ten fresh conversation reports. It rejects reused screen timings,
+early completion, changed identity and duplicated pairs, and reconstructs the
+five-pair Student-t interval. Its decision remains separate from long-context
+and sustained coding qualification.
+
 ## Memory and timeline limits
 
 Memory plans describe capacity; they are not physical allocation measurements.

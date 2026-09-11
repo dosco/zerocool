@@ -79,6 +79,23 @@ void Model::check_sparse_status() const {
     if(*reinterpret_cast<const uint32_t*>(sparse_status_->data)) throw std::runtime_error("invalid sparse score");
 }
 Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain(); }
+Json Model::gpu_reference(const std::atomic<bool>* cancel) {
+    if(options_.artifact!=Artifact::Mixed || options_.diagnostic_stream_trunk ||
+       options_.prefill_pipeline!="serial" || options_.phase_memory!="fixed")
+        throw std::invalid_argument("GPU reference requires resident mixed weights and serial fixed memory");
+    gpu_.finish();reads_.drain();
+    const auto before=stats();
+    const auto layer=resident_->linear("model.layers.0.linear_attn.in_proj_z");
+    if(layer.input!=2560 || layer.output!=6144) throw std::runtime_error("GPU reference matrix changed");
+    const auto host_before=host_conditions();
+    auto result=gpu_.reference_probe(layer,cancel);
+    const auto after=stats();
+    for(const auto* key:{"expert_cache","ngram_hits","ngram_misses","checkpoint_application_read_bytes","memory_plan"})
+        if(before.at(key)!=after.at(key)) throw std::logic_error("GPU reference changed model cache or plan");
+    result["mode"]="resident-q8-v1";result["host_before"]=host_before;result["host_after"]=host_conditions();
+    result["memory_plan"]=plan_.json();result["cache_unchanged"]=true;
+    return result;
+}
 void Model::transition_memory(bool prompt) {
     if(options_.phase_memory!="reclaim" || prompt_memory_==prompt) return;
     const auto started=monotonic_ns();

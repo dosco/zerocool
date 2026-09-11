@@ -96,6 +96,8 @@ def validate_phase_memory(row, config, budget):
 
 
 def validate(report, config, expected, budget, output):
+    if report.get('gpu_reference_mode', 'off') != 'off' or report.get('gpu_references'):
+        raise ValueError('GPU boundary probes cannot qualify normal timing')
     if report.get("complete") is not True or report.get("model_revision") != expected["revision"]:
         raise ValueError("Incomplete or changed artifact")
     if not fixed_sampling(report.get("sampling")):
@@ -106,7 +108,7 @@ def validate(report, config, expected, budget, output):
     observation = None
     for row in rows:
         state = row["after"]; plan = state["memory_plan"]; machine = state["metal"]
-        if row.get("repetition") != 0 or row.get("profiling_enabled") or state["diagnostic_stream_trunk"]:
+        if row.get("repetition") != 0 or row.get("profiling_enabled") or row.get('gpu_reference_mode','off')!='off' or state["diagnostic_stream_trunk"]:
             raise ValueError("Warm repetitions or diagnostic timing cannot qualify")
         if not state.get("completion_pipeline") or any(state.get(k)!=config[c] for k,c in
                 [("chunk_tokens","chunk"),("ready_group","ready_group"),("io_workers","io_workers")]):

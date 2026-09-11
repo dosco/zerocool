@@ -240,6 +240,41 @@ validation and the established paired normal-performance gate. The existing
 all-phase qualifier retains its old order and is reserved for survivors. Reuse
 only original, revalidated evidence. No default or precision change is implied.
 
+## Current bounded memory experiment
+
+The [memory-balance stage](qwen_memory_balance_stage.md) implements a fixed Q8
+GPU boundary reference and one 1848/1460-slot comparison at the same 12GiB
+ceiling. Probe-enabled diagnostics/screens remain separate from probe-off
+confirmation. Only a short-screen survivor receives five fresh paired runs;
+production defaults and long-context qualification remain unchanged.
+The [completed bounded stage](benchmarks/2026-09-10-memory-balance/README.md)
+passed exact probe-on/off state checks. The smaller cache reduced footprint
+about 1GiB but its two conversation ratios were 1.00954 and 1.00598, failing
+the short gate. No confirmation ran. Endpoint probes did not reproduce the
+earlier late GPU slowdown; its cause remains unresolved.
+
+## Current isolated Q8 experiment
+
+The [bounded packed-Q8 stage](qwen_q8_steady_stage.md) tests the existing
+two-row packed kernel against the original schedule with 1848 slots and the
+same 12GiB ceiling. It uses fresh captured inputs, short all-layer state parity,
+and two alternating probe-off conversations. Historical bundled-kernel results
+select the candidate but do not qualify this configuration. A noisy five-pair
+operator pilot is retained separately from one 20-pair follow-up; neither is
+pooled into subsequent request confirmation. No default or precision changes.
+The [completed isolated screen](benchmarks/2026-09-11-q8-steady/README.md)
+preserved all-layer state and reduced conversation time by a median 10.0% in
+two alternating pairs. Median generation rose from 2.55 to 3.50 tok/s initially
+and 2.48 to 3.20 after the append. First-token latency remains largely unchanged.
+Next confirm this same configuration with five fresh pairs before long-context
+qualification; do not pool the short screen or change production defaults.
+The [five-pair result](benchmarks/2026-09-11-q8-confirmation/README.md) now records
+an 11.06% complete-conversation reduction, but the full gate is inconclusive:
+initial first-token uncertainty has an upper ratio of 1.03437 versus the 1.03
+guard. Preserve that decision and the defaults. Next evaluate the explicit
+[12GiB/18GiB memory tradeoff](qwen_memory_budget_stage.md) with packed Q8 kept
+experimental in both arms; it does not retroactively qualify this result.
+
 ## Interfaces and qualification
 
 Use the [offline evidence queries and experiment ledger](qwen_evidence_queries.md)

@@ -109,6 +109,7 @@ Json checkpoint_storage_bench(const Options& o,int repeats) {
 }
 }
 int main(int argc,char** argv) {
+    std::unique_ptr<CachedProgress> bench_progress;
     try {
         if(argc<2 || std::string(argv[1])=="--help") {
             std::println("FreeLLM — Qwen3.8-Flash-Next on Apple Silicon\n"
@@ -133,6 +134,7 @@ int main(int argc,char** argv) {
                 "  --decode-diagnostics (first 32 decode steps per normal request; instrumented)\n"
                 "  --cache-policy clock|slru (experimental; bench/inspect only)\n"
                 "  --phase-memory fixed|reclaim --prefill-pipeline serial|double --cached-token-replay (last token is continuation)\n"
+                "  --gpu-reference off|resident-q8-v1 --bench-progress FILE (normal workload diagnostics)\n"
                 "  --cached-progress FILE writes flushed phase progress for cached replay outside forward timing\n"
                 "Kernel experiments (bench only): --kernel-policy reference|auto|candidate --token-tile 1|2|4|8\n"
                 "  --q8-decode-rows 0|2|4|8; diagnostic per-pass timing: --dispatch-profile FILE\n"
@@ -146,7 +148,7 @@ int main(int argc,char** argv) {
         if(command!="inspect" && command!="run" && command!="bench" && command!="serve") throw std::invalid_argument("unknown command: "+command);
         Options o; o.model=".cache/models/qwen38-flash-next";
         std::string prompt,json_path,io_path,tokens_path,logits_path,tokenize,render_path,workloads_path;
-        std::string replay_routes,phase_profile,cached_progress;int replay_hits=-1,soak_seconds=0;
+        std::string replay_routes,phase_profile,cached_progress,bench_progress_path;int replay_hits=-1,soak_seconds=0;
         bool probe=false,storage=false,kernel_probe=false;
         bool raw=command=="bench",thinking=false; int repetitions=3,port=8080;
         for(int i=2;i<argc;++i) {
@@ -185,6 +187,8 @@ int main(int argc,char** argv) {
             else if(arg=="--capture-operator") o.kernels.capture_operator=value;
             else if(arg=="--capture-layer") o.kernels.capture_layer=std::stoi(value);
             else if(arg=="--operator-fixtures") o.operator_fixtures=value;
+            else if(arg=="--gpu-reference") o.gpu_reference=value;
+            else if(arg=="--bench-progress") bench_progress_path=value;
             else if(arg=="--residency") o.residency=value;
             else if(arg=="--decode-path") o.decode_path=value;
             else if(arg=="--prefill-pipeline") o.prefill_pipeline=value;
@@ -233,6 +237,18 @@ int main(int argc,char** argv) {
         if(o.sparse_selection!="cpu" && o.sparse_selection!="gpu") throw std::invalid_argument("sparse selection must be cpu or gpu");
         if(o.cached_compare_axis!="q8_decode_rows" && o.cached_compare_axis!="sparse_selection" && o.cached_compare_axis!="attention_score_tiles")
             throw std::invalid_argument("invalid cached comparison axis");
+        if(o.gpu_reference!="off" && o.gpu_reference!="resident-q8-v1") throw std::invalid_argument("invalid GPU reference mode");
+        if((o.gpu_reference!="off" || !bench_progress_path.empty()) && (command!="bench" || workloads_path.empty() ||
+           o.cached_token_replay || o.diagnostic_stream_trunk || probe || kernel_probe || storage ||
+           !io_path.empty() || !o.operator_fixtures.empty() || !logits_path.empty() || !replay_routes.empty()))
+            throw std::invalid_argument("boundary diagnostics require normal bench --workload-file");
+        if(o.gpu_reference!="off" && (o.artifact!=Artifact::Mixed || o.prefill_pipeline!="serial" ||
+           o.phase_memory!="fixed" || o.kernels.profile || o.decode_diagnostics || !o.dependency_trace.empty() ||
+           !o.trace_dir.empty() || !o.route_trace.empty()))
+            throw std::invalid_argument("GPU reference requires mixed artifact, serial fixed memory and no other profiling");
+        if(!bench_progress_path.empty() && !json_path.empty() &&
+           std::filesystem::weakly_canonical(bench_progress_path)==std::filesystem::weakly_canonical(json_path))
+            throw std::invalid_argument("benchmark progress requires a separate output path");
         if(o.decode_diagnostics && (command!="bench" || o.cached_token_replay || o.diagnostic_stream_trunk || o.probe_layers!=Layers || workloads_path.empty()))
             throw std::invalid_argument("decode diagnostics require normal bench --workload-file");
         if(o.cached_compare && (!o.cached_token_replay || o.kernels.profile || repetitions<5 ||
@@ -332,10 +348,17 @@ int main(int argc,char** argv) {
         }
         std::signal(SIGINT,interrupt); std::signal(SIGTERM,interrupt);
         std::println(stderr,"Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.");
+        if(!bench_progress_path.empty()) {
+            bench_progress=std::make_unique<CachedProgress>(bench_progress_path,Json{
+                {"build",build_fingerprint()},{"artifact_revision",artifact_revision(o.artifact)},
+                {"gpu_reference",o.gpu_reference}},"benchmark_progress_v1");
+            bench_progress->begin("model_load");
+        }
         const auto initialization_start=monotonic_ns();
         Model model(o);Tokenizer tokenizer(o.model);Session session(model,tokenizer);
         if(command=="bench") model.prepare_pipelines();
         const auto initialization_ns=monotonic_ns()-initialization_start;
+        if(bench_progress) bench_progress->end();
         auto flush_profile=[&] {
             if(phase_profile.empty()) return;
             std::ofstream stream(phase_profile);stream<<model.take_profile().dump()<<'\n';
@@ -370,30 +393,49 @@ int main(int argc,char** argv) {
             if(!workloads_path.empty()) {
                 const auto cases=read_json(workloads_path);
                 if(!cases.is_array() || cases.empty()) throw std::invalid_argument("workload file must be a nonempty array");
-                Json runs=Json::array();
+                Json runs=Json::array(),references=Json::array();
                 const Json sampling={{"temperature",o.temperature},{"top_k",o.top_k},{"top_p",o.top_p},{"seed",o.seed}};
+                auto write_report=[&](bool complete) {
+                    emit({{"model_revision",model.checkpoint().revision()},{"sampling",sampling},{"workloads",cases},
+                        {"runs",runs},{"complete",complete},{"gpu_reference_mode",o.gpu_reference},{"gpu_references",references}});
+                };
+                auto reference=[&](int rep,const char* boundary) {
+                    if(o.gpu_reference=="off") return;
+                    if(bench_progress) bench_progress->begin(std::string(boundary)+"_probe",{{"repetition",rep}});
+                    auto sample=model.gpu_reference(&cancelled);sample["repetition"]=rep;sample["boundary"]=boundary;
+                    references.push_back(std::move(sample));write_report(false);
+                    if(bench_progress) bench_progress->end();
+                };
+                write_report(false);
                 const auto soak_start=monotonic_ns();
                 for(int rep=0;rep<repetitions || monotonic_ns()-soak_start<uint64_t(soak_seconds)*1000000000ull;++rep) {
-                    session.clear();std::vector<int> history;
+                    session.clear();std::vector<int> history;reference(rep,"before");
                     for(const auto& task:cases) {
                         Options settings=o;settings.max_tokens=task.value("max_tokens",o.max_tokens);
                         auto ids=task.at("tokens").get<std::vector<int>>();
                         if(task.value("append",false)) {history.insert(history.end(),ids.begin(),ids.end());ids=history;}
                         else {session.clear();history=ids;}
+                        if(bench_progress) bench_progress->begin(task.value("append",false)?"append_request":"initial_request",{{"repetition",rep},{"name",task.at("name")}});
                         if(auto* trace=model.route_trace()) trace->request_begin(task.at("name"),ids,settings.max_tokens,task.value("prime",false));
                         const auto before=model.stats();auto result=task.value("prime",false)?session.prime(ids,&cancelled):session.generate(ids,settings,{},&cancelled);
                         if(auto* trace=model.route_trace()) trace->request_end(result.tokens,result.finish_reason,result.reused_tokens);
                         auto row=result.json();row["name"]=task.at("name");row["repetition"]=rep;row["before"]=before;row["after"]=model.stats();
                         row["runtime_cache_state"]=runs.empty()?"empty_at_process_start":"retained";
                         row["initialization_ns"]=initialization_ns;row["profiling_enabled"]=o.decode_diagnostics || o.kernels.profile || !o.dependency_trace.empty() || !o.route_trace.empty() || !o.trace_dir.empty();
+                        row["gpu_reference_mode"]=o.gpu_reference;
                         runs.push_back(row);history.insert(history.end(),result.tokens.begin(),result.tokens.end());
-                        if(!json_path.empty()) emit({{"model_revision",model.checkpoint().revision()},{"sampling",sampling},{"workloads",cases},{"runs",runs},{"complete",false}});
+                        if(bench_progress) bench_progress->end();
+                        if(cancelled.load()) {write_report(false);throw std::runtime_error("benchmark cancelled");}
+                        if(!json_path.empty()) write_report(false);
                         std::println(stderr,"{}: {:.2f} tokens/s, first token {:.1f}s, {} tokens reused",task.at("name").get<std::string>(),row["tokens_per_second"].get<double>(),result.first_token_ms/1000,result.reused_tokens);
                     }
+                    reference(rep,"after");
                 }
                 if(auto* trace=model.route_trace()) trace->finish();
                 flush_profile();emit({{"model_revision",model.checkpoint().revision()},{"sampling",sampling},{"workloads",cases},{"runs",runs},{"complete",true},
-                    {"soak_seconds_requested",soak_seconds},{"benchmark_elapsed_ns",monotonic_ns()-soak_start}});return 0;
+                    {"gpu_reference_mode",o.gpu_reference},{"gpu_references",references},
+                    {"soak_seconds_requested",soak_seconds},{"benchmark_elapsed_ns",monotonic_ns()-soak_start}});
+                if(bench_progress) bench_progress->finish("complete");return 0;
             }
             if(prompt.empty() && tokens_path.empty()) throw std::invalid_argument("bench requires --prompt, --prompt-file, or --tokens-file");
             auto ids=tokens_path.empty()?tokenizer.encode(raw?prompt:tokenizer.render(Json::array({{{"role","user"},{"content",prompt}}}),Json::array(),thinking)):read_json(tokens_path).get<std::vector<int>>();
@@ -422,5 +464,8 @@ int main(int argc,char** argv) {
             prompt.clear();
         }
         return 0;
-    } catch(const std::exception& e) {std::println(stderr,"freellm: {}",e.what());return 1;}
+    } catch(const std::exception& e) {
+        if(bench_progress) try {bench_progress->finish(cancelled.load()?"interrupted":"failed",e.what());} catch(...) {}
+        std::println(stderr,"freellm: {}",e.what());return 1;
+    }
 }

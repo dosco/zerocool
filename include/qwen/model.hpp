@@ -31,6 +31,7 @@ struct Options {
     KernelConfig kernels;
     bool audit_routes=false; // Bounded correctness capture, disabled during timing.
     bool decode_diagnostics=false; // Bounded per-step observation; benchmark timings are instrumented.
+    std::string gpu_reference="off"; // Benchmark-only boundary instrumentation.
     std::string residency="off", decode_path="reference", prefill_pipeline="serial", phase_memory="fixed";
     bool cached_token_replay=false;
     bool cached_compare=false;
@@ -85,6 +86,7 @@ public:
                               const std::atomic<bool>* cancel = nullptr);
     Json stats() const;
     Json decode_counters() const;
+    Json gpu_reference(const std::atomic<bool>* cancel=nullptr);
     const MemoryPlan& memory_plan() const { return plan_; }
     const Options& options() const { return options_; }
     uint32_t input_limit() const { return plan_.panel_tokens?plan_.panel_tokens:uint32_t(options_.chunk); }

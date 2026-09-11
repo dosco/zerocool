@@ -81,6 +81,8 @@ public:
     void reap();
     void completion_events(std::shared_ptr<CompletionEvents> events);
     void finish();
+    // Bounded diagnostic, using fixed reference arithmetic and temporary scratch.
+    Json reference_probe(const Linear& layer, const std::atomic<bool>* cancel=nullptr);
     Buf linear(const Linear& layer, const Buf& x, uint32_t tokens, bool float_output = false);
     void linear_into(const Linear& layer, const Buf& x, uint32_t tokens,
                      Binding output, bool float_output = false);
@@ -124,6 +126,7 @@ private:
 };
 Linear expert_linear(const Buf& record, int projection);
 Json process_memory();
+Json host_conditions();
 uint64_t available_memory();
 Json disk_counters();
 } // namespace freellm::qwen

@@ -1,0 +1,16 @@
+{
+  "native_build": "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "original_sources_revalidated": true,
+  "raw_seal": "0d30b9db108fa8eec51b0a521a560e78a57f411098b42ab3274ddf6139763d1b",
+  "comparison_sha256": "3006116a421408e854e5730638508321bd551c091850b52dd49a4b1503acc096",
+  "source_aliases": {
+    "/repo/scripts/qwen/qualification_evidence.py": "qualification_evidence.py.txt",
+    "/repo/scripts/qwen/test_capacity_experiment.py": "test_capacity_experiment.py.txt"
+  },
+  "native_tests": 57,
+  "native_assertions": 45704,
+  "python_tests": 185,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

@@ -9,7 +9,7 @@ namespace freellm::qwen {
 // measured forward interval. Each flushed line survives ordinary cancellation.
 class CachedProgress {
 public:
-    CachedProgress(const std::filesystem::path& path,Json identity) : identity_(std::move(identity)) {
+    CachedProgress(const std::filesystem::path& path,Json identity,std::string kind="cached_replay_progress_v1") : identity_(std::move(identity)),kind_(std::move(kind)) {
         const int fd=::open(path.c_str(),O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC,0600);
         if(fd<0) throw std::runtime_error("cannot create cached progress file (must be new): "+path.string());
         stream_=::fdopen(fd,"w");
@@ -41,7 +41,7 @@ private:
     void emit(const char* event,Json details) {
         if(++sequence_>10000) throw std::runtime_error("cached progress event limit exceeded");
         const auto now=monotonic_ns();
-        const auto line=Json{{"kind","cached_replay_progress_v1"},{"sequence",sequence_},
+        const auto line=Json{{"kind",kind_},{"sequence",sequence_},
             {"monotonic_ns",now},{"elapsed_ns",now-started_},{"phase_elapsed_ns",now-phase_started_},
             {"phase",phase_},{"event",event},{"identity",identity_},{"details",std::move(details)}}.dump()+"\n";
         if(line.size()>4096) throw std::runtime_error("cached progress record limit exceeded");
@@ -50,7 +50,7 @@ private:
     }
     std::FILE* stream_=nullptr;
     Json identity_;
-    std::string phase_;
+    std::string phase_,kind_;
     uint64_t started_=0,phase_started_=0,sequence_=0;
     bool active_=false,terminal_=false;
 };

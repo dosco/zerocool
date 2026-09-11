@@ -1,0 +1,126 @@
+{
+  "local_directory": "/repo/.cache/benchmarks/q8-steady-20260911",
+  "omitted": [
+    {
+      "path": "capture-0-gdn/2-x.bin",
+      "bytes": 24576,
+      "sha256": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "path": "capture-0-gdn/0-x.bin",
+      "bytes": 10240,
+      "sha256": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "path": "capture-0-gdn/1-x.bin",
+      "bytes": 10240,
+      "sha256": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "path": "capture-0-gdn/1-s.bin",
+      "bytes": 491520,
+      "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+    },
+    {
+      "path": "capture-0-gdn/1-w.bin",
+      "bytes": 15728640,
+      "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+    },
+    {
+      "path": "capture-0-gdn/1-b.bin",
+      "bytes": 491520,
+      "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+    },
+    {
+      "path": "capture-0-gdn/0-s.bin",
+      "bytes": 819200,
+      "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+    },
+    {
+      "path": "capture-0-gdn/2-s.bin",
+      "bytes": 491520,
+      "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+    },
+    {
+      "path": "capture-0-gdn/0-b.bin",
+      "bytes": 819200,
+      "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+    },
+    {
+      "path": "capture-0-gdn/2-w.bin",
+      "bytes": 15728640,
+      "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+    },
+    {
+      "path": "capture-0-gdn/2-b.bin",
+      "bytes": 491520,
+      "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+    },
+    {
+      "path": "capture-0-gdn/0-w.bin",
+      "bytes": 26214400,
+      "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+    },
+    {
+      "path": "capture-31-attention/2-x.bin",
+      "bytes": 24576,
+      "sha256": "c566f232a42b57074cfa6e138d068aaff5d7cd436e6b9e024294a32e0b8381c9"
+    },
+    {
+      "path": "capture-31-attention/0-x.bin",
+      "bytes": 10240,
+      "sha256": "5d3aa7ca43f484cd39152bc3f42368b1f00ccbe2af3171e787c0c67910b0bc76"
+    },
+    {
+      "path": "capture-31-attention/1-x.bin",
+      "bytes": 10240,
+      "sha256": "5d3aa7ca43f484cd39152bc3f42368b1f00ccbe2af3171e787c0c67910b0bc76"
+    },
+    {
+      "path": "capture-31-attention/1-s.bin",
+      "bytes": 40960,
+      "sha256": "4f19315f8bc4c935de1ecd358fc35ca8147cdd5343232efe1a70a7c42a1c7c26"
+    },
+    {
+      "path": "capture-31-attention/1-w.bin",
+      "bytes": 1310720,
+      "sha256": "55970f121c05edba25fc60abae6e28747a8c332d0d98a786485fcba03d925c3d"
+    },
+    {
+      "path": "capture-31-attention/1-b.bin",
+      "bytes": 40960,
+      "sha256": "caf9852475e678c791f1c9006bb8e0637e0800a9c01578857ec799729920f726"
+    },
+    {
+      "path": "capture-31-attention/0-s.bin",
+      "bytes": 983040,
+      "sha256": "940a7d21358bdb9ca7021e12db7788c5b42774d01b6b371624a8f079a437c290"
+    },
+    {
+      "path": "capture-31-attention/2-s.bin",
+      "bytes": 491520,
+      "sha256": "d9a4a7965af852b19167ea1facb0a2a798d9564008df84469d71fbd974300f4f"
+    },
+    {
+      "path": "capture-31-attention/0-b.bin",
+      "bytes": 983040,
+      "sha256": "ac4a8db368be9ccb36c6f62ab0ed0ab572a1a723363e3a747ba61af3e363ee6f"
+    },
+    {
+      "path": "capture-31-attention/2-w.bin",
+      "bytes": 15728640,
+      "sha256": "ec963d016bf856c969517177b9ee0fe89b59c68c5f2c9169609e081d291a2d76"
+    },
+    {
+      "path": "capture-31-attention/2-b.bin",
+      "bytes": 491520,
+      "sha256": "1f53fac70a94e75a0b125dc23f881bf87d994c8502a3202e71fe737c2acc627a"
+    },
+    {
+      "path": "capture-31-attention/0-w.bin",
+      "bytes": 31457280,
+      "sha256": "b6beab19fefc4dab921a5ca22970e3b522de1c729d11309be1f6db1f939e7414"
+    }
+  ],
+  "limitation": "Metadata-only archive. Packed weights and activation fixtures remain local; native replay verified each payload hash."
+}

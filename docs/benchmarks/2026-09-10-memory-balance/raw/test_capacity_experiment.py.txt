@@ -1,0 +1,146 @@
+import argparse
+import contextlib
+import copy
+import hashlib
+import io
+import json
+from pathlib import Path
+import statistics
+import tempfile
+import unittest
+from unittest.mock import patch
+
+from benchmark_exact import validate as validate_normal
+from capacity_experiment import PROBE, KINDS, configs, order, observations, decide, revalidate, validate_probe
+from evidence_index import Index
+from evidence_queries import compare
+from screen_cache import validate_request
+from screen_capacity import run
+
+ROOT=Path(__file__).resolve().parents[2]
+
+
+def probe(plan, boundary):
+    samples=[]
+    for i in range(4):
+        start=2.0+i;end=start+.004
+        samples.append(dict(sample=i,dispatches=8 if i else 1,wall_ns=5_000_000,
+            submitted_ns=int((start-.001)*1e9),completed_ns=int((end+.001)*1e9),
+            gpu_start_seconds=start,gpu_end_seconds=end,gpu_ns=(end-start)*1e9,
+            submission_delay_ns=(start-int((start-.001)*1e9)/1e9)*1e9,
+            output_sha256='a'*64,memory_before={'decompressions':None},memory_after={'decompressions':None}))
+    return dict(mode=PROBE,kernel='q8_mm',input=2560,output=6144,group=64,temporary_bytes=49152,
+        live_bytes_before=100000,live_bytes_after=100000,live_command_groups=0,cache_unchanged=True,
+        samples=samples,warm_gpu_ns_per_dispatch=statistics.median(s['gpu_ns']/8 for s in samples[1:]),
+        host_before=dict(source='OS',limitation='may be unknown',thermal_state=None),
+        host_after=dict(source='OS',limitation='may be unknown',thermal_state=None),
+        repetition=0,boundary=boundary,memory_plan=copy.deepcopy(plan))
+
+
+class CapacityExperimentTest(unittest.TestCase):
+    def setUp(self):
+        self.base=json.loads((ROOT/'docs/benchmarks/2026-09-10-residency-paired/raw/pair-0-off.json').read_text())
+        state=self.base['runs'][0]['before']; metal=state['metal']
+        self.identity=dict(build=metal['build_fingerprint'],artifact_revision=state['artifact_revision'],
+            prepared_manifest_sha256=state['prepared']['manifest_sha256'],device=metal['device'],
+            physical_bytes=metal['physical_bytes'],budget_bytes=12*1024**3)
+
+    def raw(self,name='control',mode=PROBE,pair=0):
+        raw=copy.deepcopy(self.base);config=next(c for c in configs() if c['name']==name)
+        raw.update(gpu_reference_mode=mode,fixture_pair=pair)
+        for row in raw['runs']:
+            row['gpu_reference_mode']=mode
+            if name=='candidate':
+                for key in ('request_ms','time_to_first_token_ms','decode_wall_ms'): row[key]*=.95
+            for state in [row['before'],row['after'],*[v[k] for v in row['phases'].values() for k in ('before','after')]]:
+                plan=state['memory_plan']; delta=(plan['expert_slots']-config['expert_slots'])*2768896
+                plan['expert_slots']=config['expert_slots'];plan['expert_bytes']-=delta;plan['planned_bytes']-=delta
+        raw['gpu_references']=[probe(raw['runs'][0]['before']['memory_plan'],b) for b in ('before','after')] if mode==PROBE else []
+        return raw
+
+    def summary(self,mode='screen'):
+        pairs=2 if mode=='screen' else 5;gpu=PROBE if mode=='screen' else 'off'; rows=[]; originals={};expected={}
+        for i,name in order(pairs):
+            raw=self.raw(name,gpu,i); h=hashlib.sha256(json.dumps(raw).encode()).hexdigest();originals[h]=raw
+            requests=observations(raw,self.identity,next(c for c in configs() if c['name']==name),raw['workloads'],expected,gpu)
+            rows.append(dict(pair=i,configuration=name,sha256=h,requests=requests))
+        summary=dict(kind=KINDS[mode],mode=mode,identity=self.identity,configurations=configs(),
+            gpu_reference_mode=gpu,metal_validation=False,complete=True,workload=self.base['workloads'],measurements=rows)
+        summary.update(decide(rows,pairs))
+        return summary,originals
+
+    def test_exact_capacity_delta_and_legacy_strictness(self):
+        expected={};a,b=[self.raw(n) for n in ('control','candidate')]
+        for raw,config in zip((a,b),configs()): observations(raw,self.identity,config,raw['workloads'],expected,PROBE)
+        p,q=[r['runs'][0]['before']['memory_plan'] for r in (a,b)]
+        self.assertEqual(p['planned_bytes']-q['planned_bytes'],1074331648)
+        strict={}
+        validate_request(a,self.identity,configs()[0],a['workloads'],strict,gpu_reference=PROBE)
+        with self.assertRaisesRegex(ValueError,'Unequal'): validate_request(b,self.identity,configs()[1],b['workloads'],strict,gpu_reference=PROBE)
+        for key in ('scratch_bytes','resident_bytes','reserve_bytes'):
+            changed=copy.deepcopy(b);changed['runs'][0]['before']['memory_plan'][key]+=1
+            with self.assertRaises(ValueError): observations(changed,self.identity,configs()[1],b['workloads'],expected,PROBE)
+
+    def test_rejects_probe_mismatch_missing_boundary_and_changed_state(self):
+        raw=self.raw();config=configs()[0]
+        changes=(lambda r:r['gpu_references'].pop(),lambda r:r.update(gpu_reference_mode='off'),
+            lambda r:r['runs'][1].update(reused_tokens=105),lambda r:r['runs'][1]['before'].update(short_append_tokens=129),
+            lambda r:r['gpu_references'][0].update(temporary_bytes=65536),
+            lambda r:r['gpu_references'][0].update(live_bytes_after=200000))
+        for change in changes:
+            r=copy.deepcopy(raw);change(r)
+            with self.assertRaises(ValueError): observations(r,self.identity,config,raw['workloads'],{},PROBE)
+        with self.assertRaisesRegex(ValueError,'boundary probes'):
+            validate_normal(raw,config,{},12*1024**3,33)
+        with self.assertRaisesRegex(ValueError,'instrumentation'):
+            validate_request(raw,self.identity,config,raw['workloads'],{})
+
+    def test_missing_gpu_timing_stays_missing_and_corruption_fails(self):
+        p=self.raw()['gpu_references'][0];validate_probe(p)
+        for s in p['samples']:
+            s.update(gpu_start_seconds=None,gpu_end_seconds=None,gpu_ns=None,submission_delay_ns=None)
+        p['warm_gpu_ns_per_dispatch']=None;self.assertIsNone(validate_probe(p))
+        p['samples'][0]['gpu_ns']=0
+        with self.assertRaises(ValueError):validate_probe(p)
+        p=self.raw()['gpu_references'][0];p['samples'][0]['completed_ns']=1
+        with self.assertRaises(ValueError):validate_probe(p)
+        p=self.raw()['gpu_references'][0];p['samples'][0]['gpu_end_seconds']=1
+        with self.assertRaises(ValueError):validate_probe(p)
+        p=self.raw()['gpu_references'][0];p['samples'][2]['output_sha256']='b'*64
+        with self.assertRaises(ValueError):validate_probe(p)
+
+    def test_gates_reconstruct_raw_metrics_and_require_original_pairs(self):
+        for mode in ('screen','confirm'):
+            s,originals=self.summary(mode);result=revalidate(s,originals.__getitem__)
+            self.assertEqual(result['status'],'promising');self.assertFalse(result['production_promoted'])
+            for change in (lambda r:r['measurements'].pop(),lambda r:r.update(metal_validation=True),
+                lambda r:r['measurements'][0]['requests'][0].update(request_ms=1),
+                lambda r:r['measurements'][1].update(sha256=r['measurements'][0]['sha256']),
+                lambda r:r.update(status='rejected')):
+                altered=copy.deepcopy(s);change(altered)
+                with self.assertRaises(ValueError):revalidate(altered,originals.__getitem__)
+
+    def test_offline_query_preserves_axis_and_sources(self):
+        s,originals=self.summary()
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);index=Index(root/'index.sqlite');mapping={}
+            try:
+                for i,(h,raw) in enumerate(originals.items()):
+                    path=root/f'raw-{i}.json';path.write_text(json.dumps(raw));mapping[h]=hashlib.sha256(path.read_bytes()).hexdigest()
+                for r in s['measurements']:r['sha256']=mapping[r['sha256']]
+                path=root/'summary.json';path.write_text(json.dumps(s));index.import_paths([root])
+                answer=compare(index,str(path),'control','candidate',['expert_slots'])
+                self.assertTrue(answer['comparable']);self.assertEqual(len(answer['sources']),5)
+                self.assertEqual(answer['gpu_reference_mode'],PROBE)
+                self.assertFalse(compare(index,str(path),'control','candidate',['residency'])['comparable'])
+                s['complete']=False;path.write_text(json.dumps(s));index.import_paths([path])
+                self.assertFalse(compare(index,str(path),'control','candidate',['expert_slots'])['comparable'])
+            finally:index.close()
+
+    def test_missing_prerequisite_retains_unfinished_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            out=Path(d)/'attempt'
+            with patch('screen_capacity.verify_seal',side_effect=ValueError('changed source')),contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(run(argparse.Namespace(output=out)),2)
+            self.assertFalse(json.loads((out/'summary.json').read_text())['complete'])
+            self.assertTrue((out/'evidence-files.json').exists())

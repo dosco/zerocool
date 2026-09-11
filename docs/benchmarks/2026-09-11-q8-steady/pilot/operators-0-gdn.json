@@ -1,0 +1,745 @@
+{
+  "kind": "captured_q8_decode_screen",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "build_fingerprint": "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+  "source": {
+    "kind": "captured_affine_operators",
+    "build_fingerprint": "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "bytes": 61321216,
+    "byte_limit": 268435456,
+    "case_limit": 32,
+    "normal_request_latency_qualified": false,
+    "filter": {
+      "phase": "decode",
+      "operator": "gdn",
+      "layer": 0
+    },
+    "cases": [
+      {
+        "matrix": {
+          "K": 2560,
+          "N": 10240,
+          "rows": 1,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 1,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "0-w.bin",
+            "bytes": 26214400,
+            "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+          },
+          "s": {
+            "file": "0-s.bin",
+            "bytes": 819200,
+            "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+          },
+          "b": {
+            "file": "0-b.bin",
+            "bytes": 819200,
+            "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+          },
+          "x": {
+            "file": "0-x.bin",
+            "bytes": 10240,
+            "sha256": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+          }
+        }
+      },
+      {
+        "matrix": {
+          "K": 2560,
+          "N": 6144,
+          "rows": 1,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 1,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "1-w.bin",
+            "bytes": 15728640,
+            "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+          },
+          "s": {
+            "file": "1-s.bin",
+            "bytes": 491520,
+            "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+          },
+          "b": {
+            "file": "1-b.bin",
+            "bytes": 491520,
+            "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+          },
+          "x": {
+            "file": "1-x.bin",
+            "bytes": 10240,
+            "sha256": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+          }
+        }
+      },
+      {
+        "matrix": {
+          "K": 6144,
+          "N": 2560,
+          "rows": 1,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 1,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "2-w.bin",
+            "bytes": 15728640,
+            "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+          },
+          "s": {
+            "file": "2-s.bin",
+            "bytes": 491520,
+            "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+          },
+          "b": {
+            "file": "2-b.bin",
+            "bytes": 491520,
+            "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+          },
+          "x": {
+            "file": "2-x.bin",
+            "bytes": 24576,
+            "sha256": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+          }
+        }
+      }
+    ]
+  },
+  "exact": true,
+  "normal_request_latency_qualified": false,
+  "measurements": [
+    {
+      "wall_ns": 1403250,
+      "gpu_ns": 1169417,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 0,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 578750,
+      "gpu_ns": 255624,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 0,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 469500,
+      "gpu_ns": 250875,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 1,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 1381792,
+      "gpu_ns": 1180958,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 1,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 1182833,
+      "gpu_ns": 937750,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 2,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 388792,
+      "gpu_ns": 202874,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 2,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 401000,
+      "gpu_ns": 202625,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 3,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 1162333,
+      "gpu_ns": 943625,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 3,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 1263083,
+      "gpu_ns": 1033917,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 4,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 453500,
+      "gpu_ns": 250292,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 4,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 617375,
+      "gpu_ns": 415874,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 0,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 279500,
+      "gpu_ns": 92583,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 0,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 276666,
+      "gpu_ns": 92791,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 1,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 608708,
+      "gpu_ns": 419374,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 1,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 587500,
+      "gpu_ns": 415499,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 2,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 269458,
+      "gpu_ns": 92833,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 2,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 266250,
+      "gpu_ns": 92333,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 3,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 597333,
+      "gpu_ns": 420249,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 3,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 596958,
+      "gpu_ns": 420666,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 4,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 334667,
+      "gpu_ns": 93583,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 4,
+      "exact": true,
+      "case": "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+    },
+    {
+      "wall_ns": 734375,
+      "gpu_ns": 531749,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 0,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 302334,
+      "gpu_ns": 101749,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 0,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 289875,
+      "gpu_ns": 100250,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 1,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 740541,
+      "gpu_ns": 529999,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 1,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 741834,
+      "gpu_ns": 530124,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 2,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 300375,
+      "gpu_ns": 100291,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 2,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 310458,
+      "gpu_ns": 100458,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 3,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 742625,
+      "gpu_ns": 538166,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 3,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 718917,
+      "gpu_ns": 523458,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 0,
+      "repetition": 4,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    },
+    {
+      "wall_ns": 301250,
+      "gpu_ns": 99625,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 1,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "tile": 1,
+      "output_rows": 2,
+      "gate_pair": false,
+      "q8_decode_rows": 2,
+      "repetition": 4,
+      "exact": true,
+      "case": "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+    }
+  ]
+}

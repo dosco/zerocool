@@ -1,0 +1,16 @@
+{
+  "correctness": "57 native tests with Metal validation; exact real-model probe-on/off logits, routes and persistent state; 185 Python tests.",
+  "limitations": [
+    "Short histories and two diagnostic pairs do not qualify ordinary or sustained performance.",
+    "GPU probes affect hardware/cache state; endpoint samples are not a continuous device trace."
+  ],
+  "hypothesis": "Additional free memory could reduce compression enough to offset a smaller expert cache.",
+  "expected_effect": "Lower complete-conversation latency at an unchanged 12GiB engine ceiling.",
+  "controlled_change": "CLOCK expert capacity 1848 to 1460 slots; fixed residency off, reference kernels and matching boundary probes.",
+  "outcome": "Footprint fell about 1GiB, but candidate/control conversation ratios were 1.009535 and 1.005980. Expert application reads rose about 4.50%.",
+  "decision": "inconclusive",
+  "smallest_experiment": "No further capacity search in this stage; preserve the current default and revisit only with new evidence of pressure-related delay.",
+  "evidence": [
+    "docs/benchmarks/2026-09-10-memory-balance/raw/screen/summary.json"
+  ]
+}
