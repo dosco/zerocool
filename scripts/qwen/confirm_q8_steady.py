@@ -32,11 +32,12 @@ def screen_files(directory):
     return summary, files
 
 
-def revalidate(summary, resolve):
-    if (summary.get('kind') != KIND or summary.get('complete') is not True or summary.get('configurations') != configs() or
+def revalidate(summary, resolve, *, kind=KIND, configs=configs,
+               observations=observations, revalidate_screen=revalidate_screen):
+    if (summary.get('kind') != kind or summary.get('complete') is not True or summary.get('configurations') != configs() or
         summary.get('gpu_reference_mode') != 'off' or summary.get('metal_validation') is not False or
         summary.get('prior_pairs_pooled') is not False or summary.get('early_success_stopping') is not False):
-        raise ValueError('Incomplete or changed Q8 confirmation protocol')
+        raise ValueError('Incomplete or changed confirmation protocol')
     prior = resolve(summary['screen_source']['sha256'])
     if not revalidate_screen(prior,resolve)['advance_to_confirmation']:
         raise ValueError('Requires a passing short screen')
@@ -59,18 +60,19 @@ def revalidate(summary, resolve):
     return decision
 
 
-def run(args):
+def run(args, *, kind=KIND, screen=SCREEN, configs=configs, screen_files=screen_files,
+        revalidate_screen=revalidate_screen, observations=observations, revalidate=revalidate):
     out = args.output.resolve(); out.mkdir(parents=True,exist_ok=False); started = time.monotonic()
-    report = dict(kind=KIND,complete=False,status='running',phase='preparation',configurations=configs(),measurements=[],
+    report = dict(kind=kind,complete=False,status='running',phase='preparation',configurations=configs(),measurements=[],
         gpu_reference_mode='off',metal_validation=False,prior_pairs_pooled=False,early_success_stopping=False,
         time_limit_seconds=TIME_LIMIT,normal_request_latency_qualified=False,production_promoted=False,
         started_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
     def remaining():
         value = TIME_LIMIT-(time.monotonic()-started)
-        if value <= 0: raise subprocess.TimeoutExpired('q8-confirmation',TIME_LIMIT)
+        if value <= 0: raise subprocess.TimeoutExpired(kind,TIME_LIMIT)
         return value
     try:
-        import_sealed(SCREEN,out/'screen',sha(SCREEN/'evidence-files.json'))
+        import_sealed(screen,out/'screen',sha(screen/'evidence-files.json'))
         prior, files = screen_files(out/'screen')
         if not revalidate_screen(prior,lambda h:load(files[h]))['advance_to_confirmation']:
             raise ValueError('Requires a passing short screen')

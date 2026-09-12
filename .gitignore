@@ -114,3 +114,5 @@ Thumbs.db
 !docs/benchmarks/2026-09-11-memory-budget/**/*.log
 !docs/benchmarks/2026-09-11-route-selection/**/*.log
 !docs/benchmarks/2026-09-11-route-selection/raw/fixtures/*.bin
+!docs/benchmarks/2026-09-12-route-confirmation/**/*.log
+!docs/benchmarks/2026-09-12-route-confirmation/raw/screen/fixtures/*.bin

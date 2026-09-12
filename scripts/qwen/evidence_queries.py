@@ -25,16 +25,20 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
-        if data.get('kind') == 'route_selection_screen_v1':
-            from screen_route_selection import revalidate
+        if data.get('kind') in ('route_selection_screen_v1','route_selection_confirmation_v1'):
+            confirmation=data['kind']=='route_selection_confirmation_v1'
+            if confirmation:
+                from confirm_route_selection import revalidate
+            else:
+                from screen_route_selection import revalidate
             if case is not None or (control,candidate)!=('control','candidate') or set(changes)!={'route_selection'}:
                 raise ValueError('Router comparison requires control/candidate and only route_selection')
             def resolve(digest):
                 raw,original=index.json(digest);sources.append(original);return raw
             decision=revalidate(data,resolve)
-            return result(sources,limits+['Two short pairs screen experiments; they cannot promote production or qualify the original target.',
+            return result(sources,limits+['Short workload comparisons cannot promote production or qualify the original target.',
                 'Both timing arms use experimental packed Q8; its earlier first-token guard remains inconclusive.'],
-                comparable=True,status='measured',scope='router_selection_conversation',comparison=decision,
+                comparable=True,status='measured',scope='router_selection_confirmation' if confirmation else 'router_selection_conversation',comparison=decision,
                 controlled_change={'route_selection':['serial','simd']},normal_request_latency_qualified=False)
         if data.get('kind') == 'q8_memory_budget_screen_v1':
             from screen_memory_budget import revalidate

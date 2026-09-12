@@ -1,0 +1,356 @@
+{
+  "metal_validation" : false,
+  "paired_repetitions" : 10,
+  "normal_request_latency_qualified" : false,
+  "dispatches_per_sample" : 32,
+  "production_promoted" : false,
+  "input_kind" : "synthetic finite BF16, eight fixed seeds",
+  "threads_per_threadgroup" : 32,
+  "cases" : [
+    {
+      "T" : 1,
+      "K" : 10240,
+      "exact_checks" : 16,
+      "N" : 4,
+      "pairs" : [
+        {
+          "reference_gpu_us" : 157.81249385327101,
+          "candidate_gpu_us" : 111.54686217196286,
+          "pair" : 0,
+          "ratio" : 0.70683162941253275
+        },
+        {
+          "reference_gpu_us" : 157.84765128046274,
+          "candidate_gpu_us" : 111.56249092891812,
+          "pair" : 1,
+          "ratio" : 0.70677320836845758
+        },
+        {
+          "reference_gpu_us" : 157.90495672263205,
+          "candidate_gpu_us" : 111.59112909808755,
+          "pair" : 2,
+          "ratio" : 0.70669807594515821
+        },
+        {
+          "reference_gpu_us" : 157.84634160809219,
+          "candidate_gpu_us" : 111.58722918480635,
+          "pair" : 3,
+          "ratio" : 0.70693579621794467
+        },
+        {
+          "reference_gpu_us" : 157.82029367983341,
+          "candidate_gpu_us" : 111.78513523191214,
+          "pair" : 4,
+          "ratio" : 0.70830647076787345
+        },
+        {
+          "reference_gpu_us" : 158.06249575689435,
+          "candidate_gpu_us" : 111.58984852954745,
+          "pair" : 5,
+          "ratio" : 0.70598561660810766
+        },
+        {
+          "reference_gpu_us" : 157.88932796567678,
+          "candidate_gpu_us" : 111.58201959915459,
+          "pair" : 6,
+          "ratio" : 0.70671033335078326
+        },
+        {
+          "reference_gpu_us" : 157.86589938215911,
+          "candidate_gpu_us" : 111.61327711306512,
+          "pair" : 7,
+          "ratio" : 0.70701321532950934
+        },
+        {
+          "reference_gpu_us" : 157.88411838002503,
+          "candidate_gpu_us" : 111.56770051456988,
+          "pair" : 8,
+          "ratio" : 0.70664295851485115
+        },
+        {
+          "reference_gpu_us" : 157.85938012413681,
+          "candidate_gpu_us" : 111.61589645780623,
+          "pair" : 9,
+          "ratio" : 0.70705900637665109
+        }
+      ]
+    },
+    {
+      "T" : 72,
+      "K" : 10240,
+      "exact_checks" : 16,
+      "N" : 4,
+      "pairs" : [
+        {
+          "reference_gpu_us" : 155.87630332447588,
+          "candidate_gpu_us" : 108.58333553187549,
+          "pair" : 0,
+          "ratio" : 0.69659937537680627
+        },
+        {
+          "reference_gpu_us" : 155.85156506858766,
+          "candidate_gpu_us" : 108.58854511752725,
+          "pair" : 1,
+          "ratio" : 0.69674337289933053
+        },
+        {
+          "reference_gpu_us" : 155.87502275593579,
+          "candidate_gpu_us" : 108.57032611966133,
+          "pair" : 2,
+          "ratio" : 0.69652163765619679
+        },
+        {
+          "reference_gpu_us" : 155.87109373882413,
+          "candidate_gpu_us" : 108.56639710254967,
+          "pair" : 3,
+          "ratio" : 0.69651398792685915
+        },
+        {
+          "reference_gpu_us" : 155.85939399898052,
+          "candidate_gpu_us" : 108.57812594622374,
+          "pair" : 4,
+          "ratio" : 0.69664152516167199
+        },
+        {
+          "reference_gpu_us" : 156.29688277840614,
+          "candidate_gpu_us" : 108.83982758969069,
+          "pair" : 5,
+          "ratio" : 0.69636595212203367
+        },
+        {
+          "reference_gpu_us" : 155.86981317028403,
+          "candidate_gpu_us" : 108.593754703179,
+          "pair" : 6,
+          "ratio" : 0.69669522593539601
+        },
+        {
+          "reference_gpu_us" : 155.85939399898052,
+          "candidate_gpu_us" : 108.94139995798469,
+          "pair" : 7,
+          "ratio" : 0.69897230550439116
+        },
+        {
+          "reference_gpu_us" : 155.86716472171247,
+          "candidate_gpu_us" : 108.56770677492023,
+          "pair" : 8,
+          "ratio" : 0.69653994777385353
+        },
+        {
+          "reference_gpu_us" : 155.87109373882413,
+          "candidate_gpu_us" : 108.56639710254967,
+          "pair" : 9,
+          "ratio" : 0.69651398792685915
+        }
+      ]
+    },
+    {
+      "T" : 128,
+      "K" : 10240,
+      "exact_checks" : 16,
+      "N" : 4,
+      "pairs" : [
+        {
+          "reference_gpu_us" : 158.62498548813164,
+          "candidate_gpu_us" : 128.92967788502574,
+          "pair" : 0,
+          "ratio" : 0.81279552201864369
+        },
+        {
+          "reference_gpu_us" : 158.61328574828804,
+          "candidate_gpu_us" : 128.9856736548245,
+          "pair" : 1,
+          "ratio" : 0.81320850927657351
+        },
+        {
+          "reference_gpu_us" : 158.6340949870646,
+          "candidate_gpu_us" : 128.76300024800003,
+          "pair" : 2,
+          "ratio" : 0.81169814256197359
+        },
+        {
+          "reference_gpu_us" : 158.60155690461397,
+          "candidate_gpu_us" : 129.08203643746674,
+          "pair" : 3,
+          "ratio" : 0.81387622515647284
+        },
+        {
+          "reference_gpu_us" : 158.59762788750231,
+          "candidate_gpu_us" : 128.86847252957523,
+          "pair" : 4,
+          "ratio" : 0.81254981077639576
+        },
+        {
+          "reference_gpu_us" : 158.63412409089506,
+          "candidate_gpu_us" : 128.92708764411509,
+          "pair" : 5,
+          "ratio" : 0.81273237005577526
+        },
+        {
+          "reference_gpu_us" : 158.61718566156924,
+          "candidate_gpu_us" : 129.01955051347613,
+          "pair" : 6,
+          "ratio" : 0.81340209117539397
+        },
+        {
+          "reference_gpu_us" : 158.64972374401987,
+          "candidate_gpu_us" : 128.98826389573514,
+          "pair" : 7,
+          "ratio" : 0.81303806178608129
+        },
+        {
+          "reference_gpu_us" : 158.63412409089506,
+          "candidate_gpu_us" : 129.08855569548905,
+          "pair" : 8,
+          "ratio" : 0.81375023460603702
+        },
+        {
+          "reference_gpu_us" : 158.60938583500683,
+          "candidate_gpu_us" : 128.96876432932913,
+          "pair" : 9,
+          "ratio" : 0.81312189471238916
+        }
+      ]
+    },
+    {
+      "T" : 3,
+      "K" : 10239,
+      "exact_checks" : 16,
+      "N" : 5,
+      "pairs" : [
+        {
+          "reference_gpu_us" : 156.05468070134521,
+          "candidate_gpu_us" : 108.88150427490473,
+          "pair" : 0,
+          "ratio" : 0.69771379996784777
+        },
+        {
+          "reference_gpu_us" : 156.04167128913105,
+          "candidate_gpu_us" : 108.9466386474669,
+          "pair" : 1,
+          "ratio" : 0.69818938586987234
+        },
+        {
+          "reference_gpu_us" : 155.98436584696174,
+          "candidate_gpu_us" : 108.94142906181514,
+          "pair" : 2,
+          "ratio" : 0.69841248813806744
+        },
+        {
+          "reference_gpu_us" : 155.96873709000647,
+          "candidate_gpu_us" : 108.91014244407415,
+          "pair" : 3,
+          "ratio" : 0.69828187671497444
+        },
+        {
+          "reference_gpu_us" : 155.92967974953353,
+          "candidate_gpu_us" : 108.87498501688242,
+          "pair" : 4,
+          "ratio" : 0.6982313129339196
+        },
+        {
+          "reference_gpu_us" : 156.24999650754035,
+          "candidate_gpu_us" : 108.88930410146713,
+          "pair" : 5,
+          "ratio" : 0.69689156182612988
+        },
+        {
+          "reference_gpu_us" : 155.93881835229695,
+          "candidate_gpu_us" : 109.03255315497518,
+          "pair" : 6,
+          "ratio" : 0.69920084240120928
+        },
+        {
+          "reference_gpu_us" : 156.00261394865811,
+          "candidate_gpu_us" : 109.03907241299748,
+          "pair" : 7,
+          "ratio" : 0.6989567011286314
+        },
+        {
+          "reference_gpu_us" : 155.97004676237702,
+          "candidate_gpu_us" : 108.92187128774822,
+          "pair" : 8,
+          "ratio" : 0.69835121261258903
+        },
+        {
+          "reference_gpu_us" : 155.97915626130998,
+          "candidate_gpu_us" : 108.96482854150236,
+          "pair" : 9,
+          "ratio" : 0.6985858312950155
+        }
+      ]
+    },
+    {
+      "T" : 1,
+      "K" : 31,
+      "exact_checks" : 16,
+      "N" : 1,
+      "pairs" : [
+        {
+          "reference_gpu_us" : 2.2773456294089556,
+          "candidate_gpu_us" : 2.4505134206265211,
+          "pair" : 0,
+          "ratio" : 1.0760393104065227
+        },
+        {
+          "reference_gpu_us" : 2.28648423217237,
+          "candidate_gpu_us" : 2.4544133339077234,
+          "pair" : 1,
+          "ratio" : 1.073444242200527
+        },
+        {
+          "reference_gpu_us" : 2.2916647139936686,
+          "candidate_gpu_us" : 2.4427135940641165,
+          "pair" : 2,
+          "ratio" : 1.0659122947384463
+        },
+        {
+          "reference_gpu_us" : 2.2760359570384026,
+          "candidate_gpu_us" : 2.4531327653676271,
+          "pair" : 3,
+          "ratio" : 1.0778093192164084
+        },
+        {
+          "reference_gpu_us" : 2.2903550416231155,
+          "candidate_gpu_us" : 2.4453038349747658,
+          "pair" : 4,
+          "ratio" : 1.0676527396563993
+        },
+        {
+          "reference_gpu_us" : 2.2851454559713602,
+          "candidate_gpu_us" : 2.4518230929970741,
+          "pair" : 5,
+          "ratio" : 1.0729396181718609
+        },
+        {
+          "reference_gpu_us" : 2.2864551283419132,
+          "candidate_gpu_us" : 2.4492328520864248,
+          "pair" : 6,
+          "ratio" : 1.0711921794251673
+        },
+        {
+          "reference_gpu_us" : 2.2851454559713602,
+          "candidate_gpu_us" : 2.4531036615371704,
+          "pair" : 7,
+          "ratio" : 1.0735000063680478
+        },
+        {
+          "reference_gpu_us" : 2.2838648874312639,
+          "candidate_gpu_us" : 2.4492328520864248,
+          "pair" : 8,
+          "ratio" : 1.0724070699476254
+        },
+        {
+          "reference_gpu_us" : 2.2773456294089556,
+          "candidate_gpu_us" : 2.4414039216935635,
+          "pair" : 9,
+          "ratio" : 1.0720392592876586
+        }
+      ]
+    }
+  ],
+  "complete" : true,
+  "kind" : "plain_projection_load4_probe_v1",
+  "device" : "Apple M1 Pro",
+  "max_shared_buffer_bytes" : 5328896,
+  "correctness" : "byte exact against unchanged native shader; BF16 and FP32 outputs"
+}

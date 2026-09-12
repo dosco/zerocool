@@ -1,0 +1,16 @@
+{
+  "native_build": "3a0ea9334c448434ca7a534a623888e94c20350c29d29f7354bb4be2cc334a53",
+  "native_build_changed": false,
+  "files": {
+    "scripts/qwen/probe_plain_projection.mm": "b1d92faaf44d51b19d6051fc2b808f27747934d4b9d9f919dd54db539ff0ad87",
+    "kernels/metal/qwen.metal": "782b1775a7744b17286feb348ea2dd38e0f233b8191f4228d0618e702a228798"
+  },
+  "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "binary_sha256": "a2371eb3d7d198d59cf7a6afc89d229846d3bd4b75deecbbecd90ea275e8a67e",
+  "compile_command": "clang++ -std=c++23 -O2 -fobjc-arc -framework Foundation -framework Metal scripts/qwen/probe_plain_projection.mm -o /tmp/freellm-plain-probe",
+  "limitations": [
+    "Synthetic inputs and weights only; no actual model activation capture.",
+    "Per-command GPU time divided by 32 dispatches includes command overhead.",
+    "No measured request speedup or runtime qualification."
+  ]
+}

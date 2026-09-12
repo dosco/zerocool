@@ -40,3 +40,13 @@ selection must be declared by offline comparisons, and other kernel dispatch
 counts, memory plans and computation reuse must match. Incomplete runs remain
 incomplete. A survivor still needs five fresh timing pairs, 2K/4K acceptance,
 7K reporting and a sustained coding session before promotion.
+
+Run `scripts/qwen/confirm_route_selection.py --output DIRECTORY` for the next
+five fresh pairs, with a 900-second total deadline and 150 seconds per process.
+It reopens the sealed short screen and reuses its correctness evidence only on
+the same native build, artifact, allocation and workload. All prior timings are
+excluded from the new samples; no early success stop is allowed. Require the
+conversation geometric-mean ratio at most 0.99, the paired log-ratio Student-t
+95% upper bound below one, and each secondary upper bound at most 1.03.
+Inconclusive results do not pass. Offline comparison uses the same
+`--change route_selection` axis for `route_selection_confirmation_v1`.
