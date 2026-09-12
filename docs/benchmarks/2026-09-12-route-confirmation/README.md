@@ -1,5 +1,9 @@
 # Confirmation blocked before inference; narrow projection probe is promising
 
+Follow-up: after host memory became available, a separate
+[five-pair retry](../2026-09-12-route-five-pairs/README.md) completed and passed.
+The unfinished attempt below remains unchanged and contributes no timings.
+
 The five-pair router confirmation stopped at memory admission after three
 bounded metadata-only attempts. **No timing samples were collected.** Its
 status is `resource_blocked`, `complete: false`. Preserve this attempt and use

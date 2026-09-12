@@ -50,3 +50,12 @@ conversation geometric-mean ratio at most 0.99, the paired log-ratio Student-t
 95% upper bound below one, and each secondary upper bound at most 1.03.
 Inconclusive results do not pass. Offline comparison uses the same
 `--change route_selection` axis for `route_selection_confirmation_v1`.
+
+The [five-pair confirmation](benchmarks/2026-09-12-route-five-pairs/README.md)
+passed on the unchanged build after host memory became available. Complete
+conversation time fell 2.00% geometrically; the paired 95% ratio interval was
+0.96644–0.99380. All secondary upper bounds stayed below 1.03. This advances
+the selector to later qualification only; the prior packed-Q8 guard and the
+2K/4K, 7K, and sustained-session targets remain open. The next small candidate
+is the narrow BF16 projection, requiring actual model inputs before a normal
+request screen.
