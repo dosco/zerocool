@@ -1,0 +1,13 @@
+{
+  "kind": "decode_gpu_boundary_v1",
+  "complete": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "status": "captured",
+  "warm_ns_per_dispatch": [
+    666130.2177235484,
+    494687.4687448144
+  ],
+  "decode_ms_per_token": 283.7306796875001,
+  "elapsed_seconds": 21.736075459048152
+}

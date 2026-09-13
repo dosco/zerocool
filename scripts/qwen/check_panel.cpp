@@ -54,6 +54,7 @@ int main(int argc,char** argv) {
         options.probe_layers=config.value("layers",Layers);options.expert_slots=config.value("expert_slots",size_t(32));
         options.diagnostic_stream_trunk=config.value("diagnostic_stream_trunk",true);
         options.residency=config.value("residency",std::string("off"));
+        options.expert_tail=config.value("expert_tail",std::string("wait"));
         options.decode_path=config.value("decode_path",std::string("reference"));
         options.prefill_pipeline=config.value("prefill_pipeline",std::string("serial"));
         options.sparse_selection=config.value("sparse_selection",std::string("cpu"));
@@ -138,6 +139,40 @@ int main(int argc,char** argv) {
             stop=true;watcher.join();
             check("cancelled_panel_invalidates_partial_state",stopped && !state.valid && state.tokens==0 && state.layers[0].position>0);
             check("cancelled_panel_drains_gpu",model.stats()["metal"]["live_command_groups"]==0);model.reset_expert_cache();
+        }
+        if(options.expert_tail=="overlap") {
+            // Fault only after single-token expert work has been submitted and
+            // its tail moved into model ownership. Multi-token panel failures
+            // above do not exercise this lifetime.
+            options.dependency_trace=dir;
+            {
+                Model model(options);auto state=model.make_state();bool failed=false;
+                try {model.forward(std::span<const int>(prefix).first(1),state,false);}
+                catch(const std::runtime_error& e) {failed=std::string(e.what()).find("dependency trace")!=std::string::npos;}
+                const auto stats=model.stats();
+                check("failed_decode_tail_invalidates_state",failed && !state.valid && state.tokens==0 && stats["expert_tail_deferrals"].get<uint64_t>()>0);
+                check("failed_decode_tail_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0);
+                model.reset_expert_cache();
+            }
+            options.dependency_trace=dir/"cancel-tail.jsonl";
+            {
+                Model model(options);auto state=model.make_state();std::atomic<bool> cancel=false,stop=false;
+                std::thread watcher([&] {
+                    while(!stop.load()) {
+                        std::error_code error;auto size=std::filesystem::file_size(options.dependency_trace,error);
+                        if(!error && size>0) {cancel=true;return;}
+                        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                    }
+                });
+                struct Join {std::atomic<bool>& stop;std::thread& worker;~Join(){stop=true;if(worker.joinable())worker.join();}} join{stop,watcher};
+                bool stopped=false;
+                try {model.forward(std::span<const int>(prefix).first(1),state,false,&cancel);}
+                catch(const std::runtime_error& e) {stopped=std::string(e.what()).find("cancelled")!=std::string::npos;}
+                stop=true;watcher.join();const auto stats=model.stats();
+                check("cancelled_decode_tail_invalidates_state",stopped && !state.valid && state.tokens==0 && stats["expert_tail_deferrals"].get<uint64_t>()>0);
+                check("cancelled_decode_tail_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0);
+                model.reset_expert_cache();
+            }
         }
         Json report={{"kind","real_panel_state_and_failure_check"},{"passed",passed},{"case",config},{"checks",checks},{"runs",runs},
             {"layers",options.probe_layers},{"full_model",options.probe_layers==Layers},{"performance_qualified",false}};

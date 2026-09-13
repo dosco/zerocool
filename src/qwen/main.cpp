@@ -134,6 +134,7 @@ int main(int argc,char** argv) {
                 "  --decode-diagnostics (first 32 decode steps per normal request; instrumented)\n"
                 "  --cache-policy clock|slru (experimental; bench/inspect only)\n"
                 "  --phase-memory fixed|reclaim --prefill-pipeline serial|double --cached-token-replay (last token is continuation)\n"
+                "  --expert-tail wait|overlap (single-token scheduling experiment)\n"
                 "  --gpu-reference off|resident-q8-v1 --bench-progress FILE (normal workload diagnostics)\n"
                 "  --cached-progress FILE writes flushed phase progress for cached replay outside forward timing\n"
                 "Kernel experiments (bench only): --kernel-policy reference|auto|candidate --token-tile 1|2|4|8\n"
@@ -191,6 +192,7 @@ int main(int argc,char** argv) {
             else if(arg=="--gpu-reference") o.gpu_reference=value;
             else if(arg=="--bench-progress") bench_progress_path=value;
             else if(arg=="--residency") o.residency=value;
+            else if(arg=="--expert-tail") o.expert_tail=value;
             else if(arg=="--decode-path") o.decode_path=value;
             else if(arg=="--prefill-pipeline") o.prefill_pipeline=value;
             else if(arg=="--cache-policy") o.cache_policy=value;
@@ -258,7 +260,7 @@ int main(int argc,char** argv) {
            (o.cached_compare_axis=="sparse_selection" && o.sparse_selection!="gpu") ||
            (o.cached_compare_axis=="attention_score_tiles" && o.kernels.attention_score_tiles!="skip-masked")))
             throw std::invalid_argument("cached comparison requires an unprofiled candidate and at least five pairs");
-        if((o.cache_policy!="clock" || o.residency!="off" || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay ||
+        if((o.expert_tail!="wait" || o.cache_policy!="clock" || o.residency!="off" || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay ||
             o.sparse_selection!="cpu" || o.kernels.attention_score_tiles!="full" || !o.sparse_capture.empty()) && command!="bench" && command!="inspect")
             throw std::invalid_argument("execution experiments require bench or inspect");
         if(o.cached_token_replay && ((command!="bench" && command!="inspect") || (command=="bench" && tokens_path.empty()) || kernel_probe || storage || !io_path.empty() || !o.operator_fixtures.empty() || !logits_path.empty() || probe || !replay_routes.empty() || !workloads_path.empty() || !o.trace_dir.empty() || !o.kernels.operator_capture.empty()))
@@ -278,6 +280,9 @@ int main(int argc,char** argv) {
             else {std::ofstream f(json_path);if(!f)throw std::runtime_error("cannot open report file");f<<j.dump(2,' ',false,Json::error_handler_t::replace)<<'\n';if(!f)throw std::runtime_error("cannot write report file");}
         };
         if(o.residency!="off" && o.residency!="core" && o.residency!="core-cache") throw std::invalid_argument("invalid residency mode");
+        if(o.expert_tail!="wait" && o.expert_tail!="overlap") throw std::invalid_argument("expert tail must be wait or overlap");
+        if(o.expert_tail=="overlap" && (!o.completion_pipeline || o.cached_token_replay))
+            throw std::invalid_argument("expert tail overlap requires normal completion-pipeline execution");
         if(o.decode_path!="reference" && o.decode_path!="direct" && o.decode_path!="grouped") throw std::invalid_argument("invalid decode path");
         if(o.prefill_pipeline!="serial" && o.prefill_pipeline!="double") throw std::invalid_argument("invalid prefill pipeline");
         (void)parse_cache_policy(o.cache_policy);

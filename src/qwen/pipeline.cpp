@@ -65,12 +65,7 @@ Json execute_experts_batched(std::span<const ExpertKey> selected,ExpertCache& ca
             {"coordinator_wait_ns",nullptr},{"gpu_execution_sum_ns",nullptr},
             {"records",Json::array()},{"schedule","batched_control"}};
 }
-Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
-                     ReadPool& reads, Metal& gpu, size_t group_size,
-                     const std::function<void(ExpertKey,const Buf&)>& encode,
-                     const std::atomic<bool>* cancel, bool detailed,const EncodeReadyGroup& encode_group) {
-    if(group_size!=1 && group_size!=2 && group_size!=4 && group_size!=8)
-        throw std::invalid_argument("expert group size must be 1, 2, 4, or 8");
+struct ExpertTail::Impl {
     struct Work {
         ExpertCache::Lease lease;
         uint64_t admitted=0, encoded=0;
@@ -79,37 +74,84 @@ Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
         std::shared_ptr<Metal::Completion> completion;
         std::vector<Work> work;
     };
-    const auto start=monotonic_ns();
-    const auto events=reads.events();gpu.completion_events(events);
+    Metal& gpu; ReadPool& reads; const bool detailed;
+    const uint64_t start=monotonic_ns();
     std::vector<Work> waiting;std::deque<Group> groups;Group encoding;
-    const auto window=std::min<size_t>(32,cache.capacity());
     size_t next=0,leased=0,peak_leases=0,peak_groups=0,group_sequence=0;
     uint64_t waits=0,wait_ns=0,queue_ns=0,read_ns=0,last_read=start,ready_delay=0;
     uint64_t ready_hits=0,joins=0,misses=0,gpu_ns=0,ready_gpu_ns=0;
     Json records=Json::array();
+    Impl(Metal& g,ReadPool& r,bool d):gpu(g),reads(r),detailed(d) {}
+    ~Impl() {
+        // A failed read/encode, abandoned tail, or failed reap cannot release a
+        // cache slot while its GPU user is outstanding.
+        if(!waiting.empty() || !groups.empty() || !encoding.work.empty()) {
+            try {gpu.finish();} catch(...) {} reads.drain();
+        }
+    }
+    bool reap() {
+        bool progress=false;
+        while(!groups.empty() && groups.front().completion->done.load(std::memory_order_acquire)) {
+            auto& group=groups.front();const auto& c=*group.completion;
+            gpu_ns+=uint64_t(std::max(0.0,c.gpu_end-c.gpu_start)*1e9);
+            for(const auto& w:group.work) {
+                const auto ready=std::max(w.admitted,w.lease.timing().completed_ns);
+                const auto gpu_start=uint64_t(c.gpu_start*1e9);
+                if(gpu_start>=ready) ready_gpu_ns+=gpu_start-ready;
+                if(!detailed) continue;
+                const auto& r=w.lease.timing();
+                records.push_back({{"expert",w.lease.key().expert},{"acquisition",w.lease.acquisition()},
+                    {"admitted_ns",w.admitted},{"read_queued_ns",r.queued_ns},
+                    {"read_started_ns",r.started_ns},{"read_completed_ns",r.completed_ns},
+                    {"encoded_ns",w.encoded},{"submitted_ns",c.submitted_ns},
+                    {"gpu_start_ns",uint64_t(c.gpu_start*1e9)},
+                    {"gpu_end_ns",uint64_t(c.gpu_end*1e9)},{"released_ns",monotonic_ns()}});
+            }
+            leased-=group.work.size();groups.pop_front();progress=true;
+        }
+        return progress;
+    }
+    Json report() {
+        return {{"duration_ns",monotonic_ns()-start},{"ready_hits",ready_hits},{"loading_joins",joins},
+            {"new_misses",misses},{"read_queue_sum_ns",queue_ns},{"read_service_sum_ns",read_ns},
+            {"last_required_read_ns",last_read-start},{"ready_to_encode_sum_ns",ready_delay},
+            {"ready_to_gpu_sum_ns",ready_gpu_ns},{"gpu_execution_sum_ns",gpu_ns},{"coordinator_wait_ns",wait_ns},{"completion_waits",waits},
+            {"peak_leases",peak_leases},{"peak_gpu_groups",peak_groups},{"records",std::move(records)}};
+    }
+};
+ExpertTail::ExpertTail() = default;
+ExpertTail::~ExpertTail() = default;
+bool ExpertTail::pending() const {return bool(impl_);}
+Json ExpertTail::finish() {
+    if(!impl_) throw std::logic_error("no pending expert tail");
+    auto state=std::move(impl_);
+    const auto before=monotonic_ns();state->gpu.finish();
+    state->wait_ns+=monotonic_ns()-before;
+    state->reap();
+    if(!state->groups.empty()) throw std::logic_error("expert tail still has GPU users after drain");
+    return state->report();
+}
+Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
+                     ReadPool& reads, Metal& gpu, size_t group_size,
+                     const std::function<void(ExpertKey,const Buf&)>& encode,
+                     const std::atomic<bool>* cancel, bool detailed,const EncodeReadyGroup& encode_group,ExpertTail* tail) {
+    if(group_size!=1 && group_size!=2 && group_size!=4 && group_size!=8)
+        throw std::invalid_argument("expert group size must be 1, 2, 4, or 8");
+    if(tail && tail->pending()) throw std::logic_error("previous expert tail must drain before admission");
+    auto state=std::make_unique<ExpertTail::Impl>(gpu,reads,detailed);
+    auto& waiting=state->waiting;auto& groups=state->groups;auto& encoding=state->encoding;
+    auto& next=state->next;auto& leased=state->leased;auto& peak_leases=state->peak_leases;
+    auto& peak_groups=state->peak_groups;auto& group_sequence=state->group_sequence;
+    auto& ready_hits=state->ready_hits;auto& joins=state->joins;auto& misses=state->misses;
+    auto& queue_ns=state->queue_ns;auto& read_ns=state->read_ns;auto& last_read=state->last_read;
+    auto& ready_delay=state->ready_delay;auto& waits=state->waits;auto& wait_ns=state->wait_ns;
+    const auto events=reads.events();gpu.completion_events(events);
+    const auto window=std::min<size_t>(32,cache.capacity());
     try {
         while(next<selected.size() || !waiting.empty() || !groups.empty()) {
             const auto ticket=events->ticket();
             if(cancel && cancel->load()) throw std::runtime_error("generation cancelled");
-            gpu.reap();bool progress=false;
-            while(!groups.empty() && groups.front().completion->done.load(std::memory_order_acquire)) {
-                auto& group=groups.front();const auto& c=*group.completion;
-                gpu_ns+=uint64_t(std::max(0.0,c.gpu_end-c.gpu_start)*1e9);
-                for(const auto& w:group.work) {
-                    const auto ready=std::max(w.admitted,w.lease.timing().completed_ns);
-                    const auto gpu_start=uint64_t(c.gpu_start*1e9);
-                    if(gpu_start>=ready) ready_gpu_ns+=gpu_start-ready;
-                    if(!detailed) continue;
-                    const auto& r=w.lease.timing();
-                    records.push_back({{"expert",w.lease.key().expert},{"acquisition",w.lease.acquisition()},
-                        {"admitted_ns",w.admitted},{"read_queued_ns",r.queued_ns},
-                        {"read_started_ns",r.started_ns},{"read_completed_ns",r.completed_ns},
-                        {"encoded_ns",w.encoded},{"submitted_ns",c.submitted_ns},
-                        {"gpu_start_ns",uint64_t(c.gpu_start*1e9)},
-                        {"gpu_end_ns",uint64_t(c.gpu_end*1e9)},{"released_ns",monotonic_ns()}});
-                }
-                leased-=group.work.size();groups.pop_front();progress=true;
-            }
+            gpu.reap();bool progress=state->reap();
             while(next<selected.size() && leased<window) {
                 if(cancel && cancel->load()) throw std::runtime_error("generation cancelled");
                 waiting.push_back({cache.acquire(selected[next++]),monotonic_ns(),0});++leased;
@@ -145,6 +187,13 @@ Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
                     groups.push_back(std::move(group));encoding={};peak_groups=std::max(peak_groups,groups.size());progress=true;
                 }
             }
+            if(tail && next==selected.size() && waiting.empty() && !groups.empty()) {
+                // All selected contributions are queued in their original
+                // destinations. The caller may encode dependent work on this
+                // same queue while this bounded tail still owns the leases.
+                if(cancel && cancel->load()) throw std::runtime_error("generation cancelled");
+                tail->impl_=std::move(state);return nullptr;
+            }
             if(!progress && (!waiting.empty() || !groups.empty())) {
                 const auto before=monotonic_ns();events->wait(ticket);wait_ns+=monotonic_ns()-before;++waits;
             }
@@ -153,10 +202,6 @@ Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
         const auto failure=std::current_exception();
         try {gpu.finish();} catch(...) {} reads.drain();std::rethrow_exception(failure);
     }
-    return {{"duration_ns",monotonic_ns()-start},{"ready_hits",ready_hits},{"loading_joins",joins},
-        {"new_misses",misses},{"read_queue_sum_ns",queue_ns},{"read_service_sum_ns",read_ns},
-        {"last_required_read_ns",last_read-start},{"ready_to_encode_sum_ns",ready_delay},
-        {"ready_to_gpu_sum_ns",ready_gpu_ns},{"gpu_execution_sum_ns",gpu_ns},{"coordinator_wait_ns",wait_ns},{"completion_waits",waits},
-        {"peak_leases",peak_leases},{"peak_gpu_groups",peak_groups},{"records",std::move(records)}};
+    return state->report();
 }
 }

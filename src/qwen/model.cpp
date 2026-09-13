@@ -22,6 +22,11 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
     reads_(options_.io_workers),
     prepared_(options_.prepared.empty()?nullptr:std::make_shared<PreparedArtifact>(options_.prepared,checkpoint_)),
     store_(checkpoint_,prepared_) {
+    if(options_.expert_tail!="wait" && options_.expert_tail!="overlap")
+        throw std::invalid_argument("expert tail must be wait or overlap");
+    if(options_.expert_tail=="overlap" && (!options_.completion_pipeline || options_.cached_token_replay))
+        throw std::invalid_argument("expert tail overlap requires normal completion-pipeline execution");
+    expert_tail_=std::make_unique<ExpertTail>();
     options_.kernels.artifact_revision=checkpoint_.revision();
     gpu_.configure(options_.kernels);
     (void)parse_cache_policy(options_.cache_policy);
@@ -78,7 +83,7 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
 void Model::check_sparse_status() const {
     if(*reinterpret_cast<const uint32_t*>(sparse_status_->data)) throw std::runtime_error("invalid sparse score");
 }
-Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain(); }
+Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain();expert_tail_.reset(); }
 Json Model::gpu_reference(const std::atomic<bool>* cancel) {
     if(options_.artifact!=Artifact::Mixed || options_.diagnostic_stream_trunk ||
        options_.prefill_pipeline!="serial" || options_.phase_memory!="fixed")
@@ -348,7 +353,7 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     auto router=gpu_.linear(resident_->linear(b+".gate"),x,tokens,true);
     auto ids=gpu_.allocate(uint64_t(tokens)*TopK*4),weights=gpu_.allocate(uint64_t(tokens)*TopK*4);
     gpu_.route(router,ids,weights,tokens);
-    gpu_.finish(); check_sparse_status(); cancelled(cancel);
+    gpu_.finish();finish_expert_tail(); check_sparse_status(); cancelled(cancel);
     trace("route_"+std::to_string(layer),ids);
     trace("router_"+std::to_string(layer),router);
     std::array<std::vector<int>,Experts> positions;
@@ -390,27 +395,13 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
         auto timing=execute_experts(keys,*cache_,reads_,gpu_,options_.ready_group,[&](ExpertKey key,const Buf& record){
             encode_expert_rows(gpu_,record,x,expert_out,positions[key.expert],tokens,options_.chunk,
                 options_.decode_path!="reference",layer,trace_offset_,cancel);
-        },cancel,!options_.dependency_trace.empty() || (options_.kernels.profile && detailed_passes_[phase_]<48 && detailed_reads_[phase_]<8192),grouped);
-        expert_wait_ns_[layer]+=timing["coordinator_wait_ns"].get<uint64_t>();
-        expert_gpu_ns_[layer]+=timing["gpu_execution_sum_ns"].get<uint64_t>();++expert_passes_[layer];
-        auto& aggregate=phase_dependencies_[phase_];if(aggregate.is_null()) aggregate=Json::object();
-        for(const auto* metric:{"ready_hits","loading_joins","new_misses","read_queue_sum_ns","read_service_sum_ns",
-            "ready_to_encode_sum_ns","ready_to_gpu_sum_ns","coordinator_wait_ns","completion_waits"})
-            aggregate[metric]=aggregate.value(metric,uint64_t(0))+timing.at(metric).get<uint64_t>();
-        if(options_.kernels.profile && detailed_passes_[phase_]<48) {
-            auto event=timing;event["layer"]=layer;event["offset"]=trace_offset_;event["tokens"]=tokens;event["request_phase"]=phase_;
-            auto& records=event["records"];const auto remaining=8192-detailed_reads_[phase_];
-            if(records.size()>remaining) records.erase(records.begin()+remaining,records.end());
-            detailed_reads_[phase_]+=records.size();++detailed_passes_[phase_];
-            dependency_events_.push_back(std::move(event));
-        }
-        if(!options_.dependency_trace.empty()) {
-            timing["layer"]=layer;timing["offset"]=trace_offset_;timing["tokens"]=tokens;
-            timing["routes"]=std::vector<int>(raw.begin(),raw.end());
-            timing["build"]=gpu_.statistics()["build_fingerprint"];timing["artifact_revision"]=checkpoint_.revision();
-            std::ofstream f(options_.dependency_trace,std::ios::app);f<<timing.dump()<<'\n';
-            if(!f) throw std::runtime_error("cannot write dependency trace");
-        }
+        },cancel,!options_.dependency_trace.empty() || (options_.kernels.profile && detailed_passes_[phase_]<48 && detailed_reads_[phase_]<8192),grouped,
+            tokens==1 && options_.expert_tail=="overlap"?expert_tail_.get():nullptr);
+        if(timing.is_null()) {
+            ++tail_deferrals_;tail_layer_=layer;tail_offset_=trace_offset_;tail_phase_=phase_;
+            if(!options_.dependency_trace.empty()) tail_routes_.assign(raw.begin(),raw.end());
+        } else record_expert_timing(std::move(timing),layer,tokens,trace_offset_,phase_,raw);
+
     } else {
     const size_t batch_limit=std::min<size_t>(32,cache_->capacity());
     for(size_t start=0;start<selected.size();start+=batch_limit) {
@@ -446,6 +437,35 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     gpu_.label("expert_reduce",layer,tokens,trace_offset_);
     gpu_.dispatch("moe_sum",{{expert_out},{weights},{shared},{gate},{out}},{tokens},Hidden,tokens);
     return out;
+}
+void Model::finish_expert_tail() {
+    if(!expert_tail_->pending()) return;
+    auto timing=expert_tail_->finish();
+    record_expert_timing(std::move(timing),tail_layer_,1,tail_offset_,tail_phase_,tail_routes_);
+    tail_routes_.clear();
+}
+void Model::record_expert_timing(Json timing,int layer,uint32_t tokens,uint32_t offset,
+                               const std::string& phase,std::span<const int> routes) {
+    expert_wait_ns_[layer]+=timing["coordinator_wait_ns"].get<uint64_t>();
+    expert_gpu_ns_[layer]+=timing["gpu_execution_sum_ns"].get<uint64_t>();++expert_passes_[layer];
+    auto& aggregate=phase_dependencies_[phase];if(aggregate.is_null()) aggregate=Json::object();
+    for(const auto* metric:{"ready_hits","loading_joins","new_misses","read_queue_sum_ns","read_service_sum_ns",
+        "ready_to_encode_sum_ns","ready_to_gpu_sum_ns","coordinator_wait_ns","completion_waits"})
+        aggregate[metric]=aggregate.value(metric,uint64_t(0))+timing.at(metric).get<uint64_t>();
+    if(options_.kernels.profile && detailed_passes_[phase]<48) {
+        auto event=timing;event["layer"]=layer;event["offset"]=offset;event["tokens"]=tokens;event["request_phase"]=phase;
+        auto& records=event["records"];const auto remaining=8192-detailed_reads_[phase];
+        if(records.size()>remaining) records.erase(records.begin()+remaining,records.end());
+        detailed_reads_[phase]+=records.size();++detailed_passes_[phase];
+        dependency_events_.push_back(std::move(event));
+    }
+    if(!options_.dependency_trace.empty()) {
+        timing["layer"]=layer;timing["offset"]=offset;timing["tokens"]=tokens;
+        timing["routes"]=std::vector<int>(routes.begin(),routes.end());
+        timing["build"]=gpu_.statistics()["build_fingerprint"];timing["artifact_revision"]=checkpoint_.revision();
+        std::ofstream f(options_.dependency_trace,std::ios::app);f<<timing.dump()<<'\n';
+        if(!f) throw std::runtime_error("cannot write dependency trace");
+    }
 }
 Buf Model::ple(const Buf& x,const Buf& embedding,LayerState& state,uint32_t tokens) {
     const std::string b="model.layers.1.ple";
@@ -523,13 +543,13 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
                 trace("x2_"+std::to_string(l),mx);trace("moe_"+std::to_string(l),m);
             }
         }
-        if(!logits) {gpu_.finish();update.commit();return {};}
+        if(!logits) {gpu_.finish();finish_expert_tail();update.commit();return {};}
         auto result=compute_logits(h,T);update.commit();return result;
     } catch(...) {
         const auto error=std::current_exception();
         if(ng_future.valid()) ng_future.wait();
         try { gpu_.finish(); } catch(...) {}
-        reads_.drain(); std::rethrow_exception(error);
+        reads_.drain();try {finish_expert_tail();} catch(...) {} std::rethrow_exception(error);
     }
 }
 std::vector<float> Model::compute_logits(const Buf& h,uint32_t T) {
@@ -538,7 +558,7 @@ std::vector<float> Model::compute_logits(const Buf& h,uint32_t T) {
     auto last=gpu_.allocate(Hidden*4);
     const std::array<int,1> row={int(T-1)};auto rowbuf=ints(gpu_,row);
     gpu_.dispatch("gather_rows",{{mixed},{rowbuf},{last}},{Hidden,1},Hidden);
-    auto out=gpu_.linear(resident_->linear("lm_head"),last,1);gpu_.finish();
+    auto out=gpu_.linear(resident_->linear("lm_head"),last,1);gpu_.finish();finish_expert_tail();
     auto values=out->floats();
     for(float v:values) if(!std::isfinite(v)) throw std::runtime_error("non-finite model logits");
     return {values.begin(),values.end()};
@@ -559,12 +579,13 @@ Json Model::decode_counters() const {
 Json Model::stats() const {
     return {{"sparse_selection_cpu_ns",sparse_selection_cpu_ns_},{"sparse_selection_wait_ns",sparse_selection_wait_ns_},
         {"artifact_revision",checkpoint_.revision()},{"model_id",checkpoint_.model_id()},
-        {"execution",{{"cache_policy",options_.cache_policy},{"sparse_selection",options_.sparse_selection},{"residency",options_.residency},{"decode_path",options_.decode_path},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
+        {"execution",{{"cache_policy",options_.cache_policy},{"sparse_selection",options_.sparse_selection},{"residency",options_.residency},{"decode_path",options_.decode_path},{"expert_tail",options_.expert_tail},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
         {"phase_memory",{{"policy",options_.phase_memory},{"phase",prompt_memory_?"prompt":"generation"},
             {"prompt_plan",prompt_plan_.json()},{"generation_plan",generation_plan_.json()},{"pressure_resizes",pressure_resizes_},
             {"transition_count",transition_count_},{"transitions",memory_transitions_}}},
         {"memory_plan",plan_.json()},{"metal",gpu_.statistics()},{"process",process_memory()},{"storage",disk_counters()},
         {"diagnostic_stream_trunk",options_.diagnostic_stream_trunk},
+        {"expert_tail_deferrals",tail_deferrals_},{"expert_tail_pending",expert_tail_->pending()},
         {"completion_pipeline",options_.completion_pipeline},{"ready_group",options_.ready_group},
         {"chunk_tokens",options_.chunk},{"io_workers",options_.io_workers},{"short_append_tokens",options_.short_append},
         {"phase_dependencies",phase_dependencies_},

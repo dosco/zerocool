@@ -317,18 +317,28 @@ TEST_CASE("loading joins count separately and resize preserves surviving entries
     }
 }
 TEST_CASE("completion pipeline executes later ready experts and rolls leases under forced eviction") {
-    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) for(bool deferred:{false,true}) {
     Metal gpu;ReadPool reads(2);std::latch release_first(1);
     ExpertCache cache(4,[&](auto n){return gpu.allocate(n);},reads,[&](ExpertKey k,const Buf& b){
         if(k.expert==0) release_first.wait();std::fill(b->floats().begin(),b->floats().end(),float(k.expert));
     },128,policy);
+    ExpertTail tail;
     std::vector<ExpertKey> keys;for(uint32_t e=0;e<40;++e) keys.push_back({0,e});
     std::vector<int> order;std::vector<Buf> outputs(40);
     auto result=execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey k,const Buf& record){
         if(order.empty()) release_first.count_down();order.push_back(int(k.expert));
         outputs[k.expert]=gpu.allocate(128);
         gpu.dispatch("binary",{{record},{record},{outputs[k.expert]}},{32,0},32);
-    },nullptr,true);
+    },nullptr,true,{},deferred?&tail:nullptr);
+    if(deferred) {
+        REQUIRE(result.is_null());REQUIRE(tail.pending());
+        CHECK_THROWS(cache.clear());CHECK_THROWS(cache.resize(1));
+        // Dependent work can be encoded before the CPU observes completion.
+        auto dependent=gpu.allocate(128);
+        gpu.dispatch("binary",{{outputs[39]},{outputs[39]},{dependent}},{32,0},32);
+        result=tail.finish();CHECK_FALSE(tail.pending());
+        CHECK(dependent->floats()[0]==156);
+    }
     REQUIRE(order.size()==40);CHECK(order.front()!=0);
     for(uint32_t e=0;e<40;++e) CHECK(outputs[e]->floats()[0]==float(2*e));
     CHECK(result["peak_leases"].get<size_t>()<=4);CHECK(result["peak_gpu_groups"].get<size_t>()<=2);
@@ -342,23 +352,43 @@ TEST_CASE("completion pipeline executes later ready experts and rolls leases und
     }
 }
 TEST_CASE("completion pipeline drains on cancellation and encoding failures") {
-    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) {
+    for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) for(bool deferred:{false,true}) {
     Metal gpu;ReadPool reads(2);std::atomic<bool> cancel=false;
     ExpertCache cache(4,[&](auto n){return gpu.allocate(n);},reads,[](ExpertKey,const Buf& b){b->floats()[0]=1;},128,policy);
+    ExpertTail tail;
     const std::array<ExpertKey,4> keys={{{0,0},{0,1},{0,2},{0,3}}};
     size_t encoded=0;
     CHECK_THROWS(execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey,const Buf& record){
         ++encoded;
         auto out=gpu.allocate(128);gpu.dispatch("binary",{{record},{record},{out}},{1,0},1);cancel=true;
-    },&cancel));
+    },&cancel,false,{},deferred?&tail:nullptr));
+    CHECK_FALSE(tail.pending());
     CHECK(encoded==1);
     CHECK_NOTHROW(cache.clear());cancel=false;
     CHECK_THROWS(execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey,const Buf& record){
         auto out=gpu.allocate(128);gpu.dispatch("binary",{{record},{record},{out}},{1,0},1);
         throw std::runtime_error("encoding failure");
-    }));
+    },nullptr,false,{},deferred?&tail:nullptr));
+    CHECK_FALSE(tail.pending());
     CHECK_NOTHROW(cache.clear());CHECK(gpu.statistics()["live_command_groups"]==0);
     }
+}
+TEST_CASE("abandoned expert tail drains users before releasing slots") {
+    Metal gpu;ReadPool reads(2);
+    ExpertCache cache(2,[&](auto n){return gpu.allocate(n);},reads,[](ExpertKey,const Buf& b){b->floats()[0]=7;},128);
+    const std::array<ExpertKey,2> keys={{{0,0},{0,1}}};
+    auto out=gpu.allocate(128);
+    {
+        ExpertTail tail;
+        const auto result=execute_experts(keys,cache,reads,gpu,2,[&](ExpertKey,const Buf& record) {
+            gpu.dispatch("binary",{{record},{record},{out}},{1,0},1);
+        },nullptr,true,{},&tail);
+        REQUIRE(result.is_null());CHECK(tail.pending());CHECK_THROWS(cache.clear());
+        // A second admission cannot consume the prior tail's lease allowance.
+        CHECK_THROWS(execute_experts(keys,cache,reads,gpu,2,[](ExpertKey,const Buf&){},nullptr,false,{},&tail));
+    }
+    CHECK(out->floats()[0]==14);CHECK_NOTHROW(cache.clear());
+    CHECK(gpu.statistics()["live_command_groups"]==0);
 }
 TEST_CASE("failed state updates require rebuilding and only successful work commits history") {
     State state;state.valid=true;state.tokens=3;state.history={7,8};

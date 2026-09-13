@@ -48,7 +48,7 @@ def workloads(seed, output, include_7k=False):
 
 
 def config_args(config):
-    allowed = {"cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "route_selection", "sparse_selection", "attention_score_tiles"}
+    allowed = {"expert_tail", "cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "route_selection", "sparse_selection", "attention_score_tiles"}
     if set(config) - allowed - {"name"}:
         raise ValueError("Unknown experiment option")
     result = []

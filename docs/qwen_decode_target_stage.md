@@ -75,7 +75,7 @@ heuristic, not permission to claim predicted savings as measurements.
 - Large gaps between expert completion and the next submission motivate
   testing removal of the end-of-layer CPU barrier while retaining leases
   until the final GPU user finishes. Command ordering and bounded ownership
-  must remain intact. This candidate is not implemented or justified yet.
+  must remain intact. The first screen below failed to demonstrate a repeatable gain.
 - Predominantly read-dependent idle time motivates an exact read scheduling
   experiment. Preserve previous negative cache results; additional memory
   and fewer read bytes have not by themselves improved complete requests.
@@ -98,3 +98,21 @@ complete the existing 7K report and sustained coding/session checks. A
 conversation cannot qualify that target. Existing mixed-Q8 first-token
 uncertainty remains open. No precision change or production promotion is
 part of this measurement stage.
+
+## Current experiment
+
+The [completed capture](benchmarks/2026-09-13-decode-target/README.md) shows a
+71.09ms/token submission gap after final expert GPU completion, with substantial
+trace overhead and separate GPU-speed variation. The next measured candidate
+is `--expert-tail overlap`: encode the reduction and next attention work before
+waiting for the last submitted expert groups, retain their leases, and drain
+before the next expert admission. It is implemented behind an explicit option;
+`wait` remains the default. See the [bounded screen and acceptance rules](benchmarks/2026-09-13-expert-tail/README.md).
+
+The initial tail-overlap screen failed: one initial-generation win, one loss,
+and no append-generation win. Preserve it as negative evidence; do not run
+five-pair or long-context qualification on this result. Next measure temporary
+buffer allocation/retirement cost before implementing bounded reuse. Both arms
+still allocate 3238 temporary/state buffers per token. The failed screen also
+recorded a 7.56GiB compression peak in one append despite no net swap growth;
+keep these observations explicit in later comparisons.

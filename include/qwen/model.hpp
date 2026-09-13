@@ -5,6 +5,7 @@
 namespace freellm::qwen {
 class CachedProgress;
 class RouteTrace;
+class ExpertTail;
 struct Options {
     Artifact artifact = Artifact::Q4; // Explicit selection; precision never changes under pressure.
     std::filesystem::path model;
@@ -17,6 +18,7 @@ struct Options {
     int io_workers = 8;
     int ready_group = 4;
     bool completion_pipeline = true;
+    std::string expert_tail="wait"; // Explicit single-token encode-ahead experiment.
     std::filesystem::path dependency_trace;
     std::filesystem::path route_trace;
     int max_tokens = 256;
@@ -105,6 +107,9 @@ private:
                                    const std::atomic<bool>* cancel);
     void transition_memory(bool prompt);
     void check_sparse_status() const;
+    void finish_expert_tail();
+    void record_expert_timing(Json timing,int layer,uint32_t tokens,uint32_t offset,
+                              const std::string& phase,std::span<const int> routes);
     void capture_sparse(const Buf& q,const Buf& keys,const Buf& values,const Buf& qg,
                         const Buf& index_scores,uint32_t tokens,uint32_t offset,int layer);
     std::vector<float> forward_panel(std::span<const int> ids, State& state, bool logits,
@@ -146,6 +151,11 @@ private:
     Json sparse_captures_=Json::array();
     Json phase_dependencies_=Json::object(),dependency_events_=Json::array();
     std::unordered_map<std::string,size_t> detailed_reads_,detailed_passes_;
+    std::unique_ptr<ExpertTail> expert_tail_;
+    int tail_layer_=0;uint32_t tail_offset_=0;
+    uint64_t tail_deferrals_=0;
+    std::string tail_phase_;
+    std::vector<int> tail_routes_;
     std::unique_ptr<RouteTrace> route_trace_;
     uint64_t trace_session_sequence_=0;
 };

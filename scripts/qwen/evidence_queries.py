@@ -25,6 +25,18 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
+        if data.get('kind') == 'expert_tail_screen_v1':
+            from screen_expert_tail import revalidate
+            if case is not None or (control,candidate)!=('control','candidate') or set(changes)!={'expert_tail'}:
+                raise ValueError('Expert tail comparison requires control/candidate and only expert_tail')
+            def resolve(digest):
+                raw,original=index.json(digest);sources.append(original);return raw
+            decision=revalidate(data,resolve)
+            return result(sources,limits+['Two short pairs have no confidence bounds; GPU-speed variation is not normalized away.',
+                'A failed screen does not run the later full-model state qualification.',
+                'This experiment does not qualify 2K/4K context or the 5 tokens/s target.'],
+                comparable=True,status='measured',scope='expert_tail_conversation',comparison=decision,
+                controlled_change={'expert_tail':['wait','overlap']},normal_request_latency_qualified=False)
         if data.get('kind') in ('route_selection_screen_v1','route_selection_confirmation_v1'):
             confirmation=data['kind']=='route_selection_confirmation_v1'
             if confirmation:
