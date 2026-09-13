@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from benchmark_exact import config_args
 from qualify_exact_sessions import check_configuration
-from screen_decode_scratch import configs,decide,observations,correctness,state_cases,SCRATCH_CHECKS
+from screen_decode_scratch import configs,decide,observations,correctness,state_cases,SCRATCH_CHECKS,check_state_workspace
 from screen_cache import CHECKS
 
 
@@ -63,8 +63,8 @@ class DecodeScratchTest(unittest.TestCase):
         reports=[]
         for c in state_cases():
             overlap=c['decode_scratch']=='reuse'
-            s=dict(diagnostic_stream_trunk=False,memory_plan=dict(expert_slots=32),expert_cache=dict(evictions=1),expert_tail_pending=False,
-                   decode_scratch_passes=48 if overlap else 0,metal=dict(live_command_groups=0,active_scratch_slot=-1,scratch_pools=[dict(allocated_bytes=0),dict(allocated_bytes=0)]))
+            s=dict(diagnostic_stream_trunk=False,memory_plan=dict(expert_slots=32,panel_tokens=0),chunk_tokens=2,expert_cache=dict(evictions=1),expert_tail_pending=False,
+                   decode_scratch_passes=48 if overlap else 0,metal=dict(live_command_groups=0,active_scratch_slot=-1,scratch_pools=[dict(allocated_bytes=8*1024**2 if overlap else 0),dict(allocated_bytes=0)]))
             checks=CHECKS|SCRATCH_CHECKS if overlap else CHECKS
             reports.append(dict(case=c,passed=True,layers=48,full_model=True,
                 checks=[dict(name=k,passed=True) for k in checks],
@@ -77,6 +77,23 @@ class DecodeScratchTest(unittest.TestCase):
             with self.assertRaises(ValueError):correctness(altered,{})
             altered=copy.deepcopy(reports);altered[1]['runs'][0]['stages'][0]['logits_sha256']='b'
             with self.assertRaises(ValueError):correctness(altered,{})
+
+    def test_fresh_replay_workspace_follows_actual_last_chunk(self):
+        case=state_cases()[1] # nine tokens, two-token microchunks: last forward is one token
+        state=dict(memory_plan=dict(panel_tokens=0),chunk_tokens=2,
+            metal=dict(active_scratch_slot=-1,scratch_pools=[dict(allocated_bytes=8*1024**2),dict(allocated_bytes=0)]))
+        check_state_workspace(state,case,'after_fresh')
+        empty=copy.deepcopy(state);empty['metal']['scratch_pools'][0]['allocated_bytes']=0
+        with self.assertRaisesRegex(ValueError,'last replay chunk'):check_state_workspace(empty,case,'after_fresh')
+        even=copy.deepcopy(case);even['continuation'].append(1) # ten tokens: last chunk has two
+        check_state_workspace(empty,even,'after_fresh')
+        with self.assertRaisesRegex(ValueError,'last replay chunk'):check_state_workspace(state,even,'after_fresh')
+        panel=copy.deepcopy(empty);panel['memory_plan']['panel_tokens']=256
+        check_state_workspace(panel,case,'after_fresh')
+        for changed in (dict(active_scratch_slot=0),dict(scratch_pools=[dict(allocated_bytes=129*1024**2),dict(allocated_bytes=0)]),
+                        dict(scratch_pools=[dict(allocated_bytes=8*1024**2),dict(allocated_bytes=16384)])):
+            bad=copy.deepcopy(state);bad['metal'].update(changed)
+            with self.assertRaises(ValueError):check_state_workspace(bad,case,'after_fresh')
 
 
 if __name__=='__main__':unittest.main()

@@ -25,9 +25,12 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
-        if data.get('kind') in ('expert_tail_screen_v1','decode_scratch_screen_v1'):
-            scratch=data['kind']=='decode_scratch_screen_v1'
-            if scratch:
+        if data.get('kind') in ('expert_tail_screen_v1','decode_scratch_screen_v1','decode_scratch_confirmation_v1'):
+            confirmation=data['kind']=='decode_scratch_confirmation_v1'
+            scratch=data['kind']!='expert_tail_screen_v1'
+            if confirmation:
+                from confirm_decode_scratch import revalidate
+            elif scratch:
                 from screen_decode_scratch import revalidate
             else:
                 from screen_expert_tail import revalidate
@@ -37,10 +40,11 @@ def compare(index, selector, control, candidate, changes, case=None):
             def resolve(digest):
                 raw,original=index.json(digest);sources.append(original);return raw
             decision=revalidate(data,resolve)
-            return result(sources,limits+['Two short pairs have no confidence bounds; GPU-speed variation is not normalized away.',
+            return result(sources,limits+['Five fresh pairs use paired log-ratio Student-t bounds; temporal effects can violate their assumptions.' if confirmation else
+                'Two short pairs have no confidence bounds; GPU-speed variation is not normalized away.',
                 'A failed screen does not run the later full-model state qualification.',
                 'This experiment does not qualify 2K/4K context or the 5 tokens/s target.'],
-                comparable=True,status='measured',scope=axis+'_conversation',comparison=decision,
+                comparable=True,status='measured',scope=axis+('_confirmation' if confirmation else '_conversation'),comparison=decision,
                 controlled_change={axis:['none','reuse'] if scratch else ['wait','overlap']},normal_request_latency_qualified=False)
         if data.get('kind') in ('route_selection_screen_v1','route_selection_confirmation_v1'):
             confirmation=data['kind']=='route_selection_confirmation_v1'

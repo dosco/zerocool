@@ -1,0 +1,80 @@
+{
+  "path": "/repo/docs/experiments/5e0e83e13fdc5b49b000e51214e7bd9f90bfe4f9f4e660251cb7ddec5ea4a30b.json",
+  "id": "5e0e83e13fdc5b49b000e51214e7bd9f90bfe4f9f4e660251cb7ddec5ea4a30b",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/readiness/summary.json",
+      "sha256": "5abb4d269de2a242d7fc7456e79316f4fbc0259f89d762211e7076935ddedc55",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/readiness/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "resource_blocked",
+      "recorded_complete": false
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/summary.json",
+      "sha256": "421ac5ce225a3e709a25a8442d1e2273d80aec7633077024f302b7fe812971fc",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "passed",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-settling-screen/summary.json",
+      "sha256": "dbcb2adff5760e3b26d06325c65d24b2755fcc3ddb8bd48f84b19366f860eece",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-settling-screen/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "memory_disturbed",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-settling-comparison.json",
+      "sha256": "33ad212fc6eaba8130271484123f2ad5197be9b0ea36dc4f6de29c466fda887b",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-settling-comparison.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "measured",
+      "recorded_complete": null
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/summary.json",
+      "sha256": "677bc73e0febb68140c2d5b911ab847dc1afdf90bcdc351f2a1972c1ce31c07b",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "memory_disturbed",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-comparison.json",
+      "sha256": "b68d56c036b195d9de3ae837dec7124b3eb3f0c9306418a88da44f3b919481a3",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-comparison.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "measured",
+      "recorded_complete": null
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-boundaries.json",
+      "sha256": "319c01658d2cc294d21d238091ce9697ac9399cf96a09b94720f59ffc23f21b0",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-boundaries.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "complete",
+      "recorded_complete": true
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

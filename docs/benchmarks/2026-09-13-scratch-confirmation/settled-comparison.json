@@ -1,0 +1,155 @@
+{
+  "comparable": true,
+  "status": "measured",
+  "scope": "decode_scratch_conversation",
+  "comparison": {
+    "status": "memory_disturbed",
+    "conversation_ratios": [
+      0.9521720917705733,
+      0.918661125105076
+    ],
+    "median_conversation_ratio": 0.9354166084378246,
+    "ratios": [
+      {
+        "request": 0,
+        "metric": "request_ms",
+        "ratios": [
+          0.9386497763673675,
+          0.8944522421732312
+        ],
+        "median": 0.9165510092702993
+      },
+      {
+        "request": 0,
+        "metric": "time_to_first_token_ms",
+        "ratios": [
+          1.0026457479472266,
+          0.9907293116274442
+        ],
+        "median": 0.9966875297873354
+      },
+      {
+        "request": 0,
+        "metric": "decode_wall_ms",
+        "ratios": [
+          0.8375152646218353,
+          0.7539682379200154
+        ],
+        "median": 0.7957417512709254
+      },
+      {
+        "request": 1,
+        "metric": "request_ms",
+        "ratios": [
+          0.9615384356173241,
+          0.9357023136506507
+        ],
+        "median": 0.9486203746339874
+      },
+      {
+        "request": 1,
+        "metric": "time_to_first_token_ms",
+        "ratios": [
+          1.003708838224484,
+          0.9975607756420563
+        ],
+        "median": 1.0006348069332702
+      },
+      {
+        "request": 1,
+        "metric": "decode_wall_ms",
+        "ratios": [
+          0.8560426583559644,
+          0.7876383163645618
+        ],
+        "median": 0.8218404873602632
+      }
+    ],
+    "confidence_95": null,
+    "normal_request_latency_qualified": false,
+    "production_promoted": false,
+    "advance_to_confirmation": false,
+    "candidate_for_later_qualification": false,
+    "clean_decode_memory": false,
+    "decode_savings_ms_per_token": [
+      [
+        45.23632812500006,
+        74.34203906249996
+      ],
+      [
+        42.637416656250025,
+        66.05747528124994
+      ]
+    ],
+    "median_initial_saving_ms": 59.78918359375001,
+    "target_ms_per_token": 200
+  },
+  "controlled_change": {
+    "decode_scratch": [
+      "none",
+      "reuse"
+    ]
+  },
+  "normal_request_latency_qualified": false,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/summary.json",
+      "sha256": "677bc73e0febb68140c2d5b911ab847dc1afdf90bcdc351f2a1972c1ce31c07b",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/summary.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-buffer-costs/raw/normal.json",
+      "sha256": "c30fafc1aad45813eda3dd959322e390dda5d837ab178e1ee8b20115844b0fd6",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-buffer-costs/raw/normal.json",
+        "/repo/docs/benchmarks/2026-09-13-decode-scratch/raw/prior-output-control.json",
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/memory-settling-screen/prior-output-control.json",
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/prior-output-control.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-0-control.json",
+      "sha256": "87d08b6dac03d7031e3e5941bc54bc48f394744eafba3431dfbabab89acdda5e",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-0-control.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-0-candidate.json",
+      "sha256": "9fc625107dbc0d06a63bdf6984837e61f9e1e7217dd1a701695d7ff4eb24aabf",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-0-candidate.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-1-candidate.json",
+      "sha256": "bb61bcf4f4c8a627dabd731411bb76c6c962e9ca21ed1829fae79efcb7e73586",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-1-candidate.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-1-control.json",
+      "sha256": "aefea01821fd89bd3e893337fa9e96d41e69772d60c5bd6a7e319073b149bf60",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-scratch-confirmation/settled-screen/pair-1-control.json"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Comparisons use one recorded experiment; unrelated runs are never assigned synthetic pairs.",
+    "Numerical correctness and generated-token agreement do not establish coding quality.",
+    "Two short pairs have no confidence bounds; GPU-speed variation is not normalized away.",
+    "A failed screen does not run the later full-model state qualification.",
+    "This experiment does not qualify 2K/4K context or the 5 tokens/s target."
+  ],
+  "production_promoted": false
+}

@@ -70,6 +70,25 @@ def observations(raw,evidence,config,workload,expected):
     return rows
 
 
+def check_state_workspace(state,case,stage):
+    if stage not in ('continued_statistics','after_fresh'):raise ValueError('Unknown state checkpoint')
+    if state['metal'].get('active_scratch_slot')!=-1:raise ValueError('Scratch scope still active')
+    pools=state['metal']['scratch_pools']
+    sizes=[p.get('allocated_bytes') for p in pools]
+    if (len(sizes)!=2 or any(type(n) is not int or n<0 for n in sizes) or
+        sizes[1]!=0 or sizes[0]>128*1024**2):raise ValueError('Unbounded state workspace')
+    # feed() uses panel_tokens or chunk_tokens; its last chunk can have one
+    # token even when the entire fresh history has many tokens. That forward
+    # legitimately retains decode scratch after earlier multi-token releases.
+    limit=state['memory_plan']['panel_tokens'] or state['chunk_tokens']
+    if type(limit) is not int or limit<=0:raise ValueError('Invalid state input limit')
+    total=sum(len(case[k]) for k in ('prefix','append','continuation'))
+    if not total:raise ValueError('Missing state replay history')
+    last=1 if stage=='continued_statistics' else (total-1)%limit+1
+    retained=case['decode_scratch']=='reuse' and last==1
+    if bool(sizes[0])!=retained:raise ValueError('Workspace does not match the last replay chunk')
+
+
 def correctness(reports,evidence):
     if len(reports)!=2:raise ValueError('Missing correctness arm')
     for raw,case in zip(reports,state_cases()):
@@ -88,9 +107,8 @@ def correctness(reports,evidence):
                 state.get('diagnostic_stream_trunk') is not False):
                 raise ValueError('Missing forced eviction or drain')
             if (state['decode_scratch_passes']>0)!=(case['decode_scratch']=='reuse'):raise ValueError('Missing scratch execution')
-            if state['metal'].get('active_scratch_slot')!=-1:raise ValueError('Scratch scope still active')
-            pool_bytes=sum(p['allocated_bytes'] for p in state['metal']['scratch_pools'])
-            if pool_bytes>128*1024**2 or (key=='after_fresh' and pool_bytes):raise ValueError('Workspace not bounded/released before fresh replay')
+            if state['memory_plan']['panel_tokens']!=case['panels'][0]:raise ValueError('Changed state replay panel')
+            check_state_workspace(state,case,key)
     if reports[0]['runs'][0]['stages']!=reports[1]['runs'][0]['stages']:
         raise ValueError('Scratch reuse changed logits, routes or persistent state')
     return dict(exact_logits_routes_state=True,all_48_layers=True,continued_equals_fresh=True,

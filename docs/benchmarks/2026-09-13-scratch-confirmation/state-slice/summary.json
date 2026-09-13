@@ -1,0 +1,47 @@
+{
+  "kind": "decode_scratch_state_slice_v1",
+  "complete": true,
+  "status": "passed",
+  "phase": "finished",
+  "sources": [
+    {
+      "source": "control.json",
+      "sha256": "996233a0a6443c724fd9d843de2f05b3a32a14dd96fcb979a57868b7d566e926"
+    },
+    {
+      "source": "candidate.json",
+      "sha256": "02e60f6243f2377ea6437c572f56921eb57d4f342ac09b82fa7bb8b49752863c"
+    }
+  ],
+  "full_model": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "started_at": "2026-09-13T17:32:54.793275+00:00",
+  "time_limit_seconds": 180,
+  "limitations": [
+    "Four layers and nine tokens at 4GiB; cannot replace 48-layer state or performance qualification.",
+    "Truncated forward computes no model logits; equality concerns captured state and route identities.",
+    "Real mixed weights with native control arithmetic; not an independent implementation oracle."
+  ],
+  "identity": {
+    "build": "62d1bd6ffa588fd89b13f65fab8fb74edb13a7bb5306a4201d920db55489fcf5",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 4294967296,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "result": {
+    "exact_four_layer_state_and_routes": true,
+    "continued_equals_fresh": true,
+    "forced_eviction": true,
+    "cancellation_failure_checked": true,
+    "one_token_replay_remainder_checked": true,
+    "logits_compared": false,
+    "full_model": false,
+    "independent_model_reference": false,
+    "normal_request_latency_qualified": false,
+    "production_promoted": false
+  },
+  "elapsed_seconds": 6.996387249790132
+}

@@ -33,7 +33,7 @@ def screen_files(directory):
 
 
 def revalidate(summary, resolve, *, kind=KIND, configs=configs,
-               observations=observations, revalidate_screen=revalidate_screen):
+               observations=observations, revalidate_screen=revalidate_screen, decision=decide):
     if (summary.get('kind') != kind or summary.get('complete') is not True or summary.get('configurations') != configs() or
         summary.get('gpu_reference_mode') != 'off' or summary.get('metal_validation') is not False or
         summary.get('prior_pairs_pooled') is not False or summary.get('early_success_stopping') is not False):
@@ -55,13 +55,13 @@ def revalidate(summary, resolve, *, kind=KIND, configs=configs,
         config = next(c for c in configs() if c['name'] == row['configuration'])
         if observations(resolve(digest),summary['identity'],config,summary['workload'],expected) != row['requests']:
             raise ValueError('Confirmation differs from original requests')
-    decision = decide(rows,5)
-    if any(summary.get(k) != v for k,v in decision.items()): raise ValueError('Changed confirmation decision')
-    return decision
+    result = decision(rows,5)
+    if any(summary.get(k) != v for k,v in result.items()): raise ValueError('Changed confirmation decision')
+    return result
 
 
 def run(args, *, kind=KIND, screen=SCREEN, configs=configs, screen_files=screen_files,
-        revalidate_screen=revalidate_screen, observations=observations, revalidate=revalidate):
+        revalidate_screen=revalidate_screen, observations=observations, revalidate=revalidate, decision=decide):
     out = args.output.resolve(); out.mkdir(parents=True,exist_ok=False); started = time.monotonic()
     report = dict(kind=kind,complete=False,status='running',phase='preparation',configurations=configs(),measurements=[],
         gpu_reference_mode='off',metal_validation=False,prior_pairs_pooled=False,early_success_stopping=False,
@@ -115,7 +115,7 @@ def run(args, *, kind=KIND, screen=SCREEN, configs=configs, screen_files=screen_
                 digest=sha(stem.with_suffix('.json')); files[digest]=stem.with_suffix('.json')
                 report['measurements'].append(dict(pair=pair,configuration=name,requests=requests,source=stem.with_suffix('.json').name,sha256=digest))
                 save(out/'summary.json',report)
-            report.update(decide(report['measurements'],5),complete=True,phase='finished')
+            report.update(decision(report['measurements'],5),complete=True,phase='finished')
             revalidate(report,lambda h:load(files[h]))
     except ResourceBlocked as error:report.update(status='resource_blocked',error=str(error),complete=False)
     except subprocess.TimeoutExpired:report.update(status='time_budget_exhausted',error='Partial confirmation remains unfinished.',complete=False)

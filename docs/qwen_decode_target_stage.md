@@ -138,3 +138,26 @@ inconclusive and the option disabled by default. Preserve all measurements;
 do not run the later expensive qualification until a fresh clean-memory screen
 passes. Candidate medians leave roughly 37–45ms/token to the short-workload
 200ms goal; 2K/4K and sustained-use acceptance still require their own evidence.
+
+The [confirmation preparation](benchmarks/2026-09-13-scratch-confirmation/README.md)
+adds the five-pair runner and corrects the fresh-replay workspace check for a
+one-token remainder. A four-layer real-weight diagnostic passed all 20 control
+and candidate state/recovery checks at 4GiB. It computes no model logits and
+cannot replace the full-model gate. The initial 12GiB admission attempt was
+blocked at 7.66GiB reclaimable. After memory was freed, a fresh screen completed:
+reuse won every decode comparison (3.78–4.35 tokens/s), but compression in the
+first control keeps the entire batch inconclusive. The last three processes
+showed clean decode memory, supporting one fresh unchanged screen from that
+settled state. That second screen again favored reuse (3.94–4.39 tokens/s), but
+compression recurred. Both complete batches remain inconclusive and separate;
+no five-pair confirmation or full-state qualification ran for them.
+
+Stop repeating unchanged screens. Capture memory within ingestion and at
+decode/drain/destruction boundaries in one bounded diagnostic with the same
+12GiB budget and 1848 slots. Existing snapshots locate initial compression
+between the start and end of ingestion, despite 18.64GiB reported reclaimable
+at its start in the second screen. Tracked Metal allocation peaked at 10.433GiB;
+there is no continuous process-footprint or buffer-specific compression trace.
+Resolve that evidence gap before changing admission, residency or ownership.
+Prior core-residency confirmation did not establish a latency benefit, so it
+is not an assumed remedy. Defaults, arithmetic and weights remain unchanged.

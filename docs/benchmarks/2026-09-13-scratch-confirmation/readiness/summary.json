@@ -1,0 +1,18 @@
+{
+  "kind": "decode_scratch_readiness_v1",
+  "status": "resource_blocked",
+  "complete": false,
+  "observed_at": "2026-09-13T17:24:23.773497+00:00",
+  "build": "62d1bd6ffa588fd89b13f65fab8fb74edb13a7bb5306a4201d920db55489fcf5",
+  "reclaimable_bytes": 8223391744,
+  "requested_engine_bytes": 12884901888,
+  "required_reclaimable_bytes": 14495514624,
+  "inference_started": false,
+  "measurements": [],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "error": "memory admission requires at least 7700185088 bytes including 32 expert slots; available engine budget is 6612779008 bytes",
+  "limitations": [
+    "Metadata admission only; no new full-model timings or correctness results."
+  ]
+}
