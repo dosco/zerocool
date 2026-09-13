@@ -56,6 +56,7 @@ passed on the unchanged build after host memory became available. Complete
 conversation time fell 2.00% geometrically; the paired 95% ratio interval was
 0.96644–0.99380. All secondary upper bounds stayed below 1.03. This advances
 the selector to later qualification only; the prior packed-Q8 guard and the
-2K/4K, 7K, and sustained-session targets remain open. The next small candidate
-is the narrow BF16 projection, requiring actual model inputs before a normal
-request screen.
+2K/4K, 7K, and sustained-session targets remain open. The current priority is
+the [200ms/token generation stage](qwen_decode_target_stage.md). The narrow
+BF16 projection is deferred because its estimated total saving is too small
+to lead the remaining 79–96ms/token reduction.

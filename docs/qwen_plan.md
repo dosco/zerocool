@@ -1,5 +1,11 @@
 # FreeLLM: quality-preserving inference beyond RAM on a 32GB M1 Pro
 
+Current execution priority: the [200ms/token generation stage](qwen_decode_target_stage.md).
+Use the confirmed router baseline to identify the largest exposed generation
+delay and screen one materially useful change. Defer the small projection
+experiment and separate append optimization; retain correctness, memory, and
+first-token regression guards. Short diagnostics do not replace 2K/4K acceptance.
+
 Approved September 7, 2026. This is the implementation contract; status and
 measured evidence belong in [qwen_engine.md](qwen_engine.md) and the benchmark
 reports. Planned capabilities must not be presented as implemented.

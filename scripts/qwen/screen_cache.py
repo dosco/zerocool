@@ -59,7 +59,11 @@ def validate_correctness(reports,evidence):
                 independent_model_reference=False)
 
 
-def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,gpu_reference='off',capacity_axis=False,memory_budget_bytes=12*1024**3):
+def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,gpu_reference='off',capacity_axis=False,memory_budget_bytes=12*1024**3,output_tokens=33):
+    if type(output_tokens) is not int or not 2<=output_tokens<=8192:
+        raise ValueError('Invalid expected output length')
+    if any(task.get('max_tokens')!=output_tokens for task in workload):
+        raise ValueError('Workload differs from expected output length')
     if raw.get('gpu_reference_mode','off')!=gpu_reference or (gpu_reference=='off' and raw.get('gpu_references')):
         raise ValueError('Changed GPU reference instrumentation')
     if (raw.get('complete') is not True or raw.get('workloads')!=workload or len(workload) not in (1,2) or len(raw.get('runs',[]))!=len(workload) or
@@ -85,8 +89,8 @@ def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,
             row.get('runtime_cache_state')!=('retained' if i else 'empty_at_process_start') or
             row.get('prompt_tokens')!=len(prompt) or row.get('reused_tokens')!=reused or
             row.get('pending_tokens_ingested')!=int(i>0) or row.get('prefill_tokens')!=len(prompt)-reused or
-            row.get('finish_reason')!='length' or row.get('output_tokens')!=33 or
-            not isinstance(outputs,list) or len(outputs)!=33 or
+            row.get('finish_reason')!='length' or row.get('output_tokens')!=output_tokens or
+            not isinstance(outputs,list) or len(outputs)!=output_tokens or
             any(type(t) is not int or not 0<=t<248320 for t in outputs)):
             raise ValueError('Changed output length, instrumentation, workload or actual session reuse')
         if not instrumented and 'decode_diagnostics' in row: raise ValueError('Decode diagnostics cannot qualify normal timing')
@@ -102,7 +106,7 @@ def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,
         if any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in timings.values()):
             raise ValueError('Missing positive finite request timing')
         latency=row.get('token_latency_ms')
-        if not isinstance(latency,list) or len(latency)!=32 or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in latency):
+        if not isinstance(latency,list) or len(latency)!=output_tokens-1 or any(type(v) not in (int,float) or not math.isfinite(v) or v<=0 for v in latency):
             raise ValueError('Missing complete decode timings')
         phases=[]
         for phase,states in row['phases'].items():
@@ -110,7 +114,7 @@ def validate_request(raw,evidence,config,workload,expected,*,instrumented=False,
             phases.append(dict(phase=phase,expert_hits=b['expert_cache']['hits']-a['expert_cache']['hits'],
                 expert_misses=b['expert_cache']['misses']-a['expert_cache']['misses'],
                 expert_read_bytes=b['expert_cache']['application_read_bytes']-a['expert_cache']['application_read_bytes']))
-        observations.append(dict(name=task['name'],**timings,tokens_per_second=32*1000/row['decode_wall_ms'],
+        observations.append(dict(name=task['name'],**timings,tokens_per_second=(output_tokens-1)*1000/row['decode_wall_ms'],
             output_token_ids=outputs,reused_tokens=reused,phases=phases,
             memory_before=row['before']['process'],memory_after=row['after']['process']))
         history=prompt+outputs

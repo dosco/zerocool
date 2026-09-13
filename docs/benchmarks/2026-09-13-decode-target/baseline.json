@@ -1,0 +1,124 @@
+{
+  "kind": "decode_target_baseline_v1",
+  "complete": true,
+  "measurements": [
+    {
+      "pair": 0,
+      "name": "coding_routes_32",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-0-candidate.json",
+      "sha256": "df2d5a245cec9fceec75b69463cb5ffe3eae070da8cdfbc11dc2946dbc9923aa",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 273.90447134375,
+      "expert_read_bytes_per_token": 564451200.0,
+      "gpu_ms_per_token": 114.2796604375,
+      "coordinator_wait_ms_per_token": 111.34773240625
+    },
+    {
+      "pair": 0,
+      "name": "append_128",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-0-candidate.json",
+      "sha256": "df2d5a245cec9fceec75b69463cb5ffe3eae070da8cdfbc11dc2946dbc9923aa",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 294.34260415625,
+      "expert_read_bytes_per_token": 649382400.0,
+      "gpu_ms_per_token": 119.5227165,
+      "coordinator_wait_ms_per_token": 124.661873375
+    },
+    {
+      "pair": 1,
+      "name": "coding_routes_32",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-1-candidate.json",
+      "sha256": "a5c49ed81c5f9de5a9cd6c8de297c51ddaa6ab354f8c482e7c04b4e6963b5a4a",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 281.53030987499994,
+      "expert_read_bytes_per_token": 564537600.0,
+      "gpu_ms_per_token": 126.05980525,
+      "coordinator_wait_ms_per_token": 110.22676090625
+    },
+    {
+      "pair": 1,
+      "name": "append_128",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-1-candidate.json",
+      "sha256": "a5c49ed81c5f9de5a9cd6c8de297c51ddaa6ab354f8c482e7c04b4e6963b5a4a",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 312.1896640624999,
+      "expert_read_bytes_per_token": 649296000.0,
+      "gpu_ms_per_token": 140.9866378125,
+      "coordinator_wait_ms_per_token": 127.13512884375
+    },
+    {
+      "pair": 2,
+      "name": "coding_routes_32",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-2-candidate.json",
+      "sha256": "f63ea39aca373b35f8f187dd84cadabe5a1cf5808fd5c0fac85382ef5bebba0b",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 285.61302734375,
+      "expert_read_bytes_per_token": 564451200.0,
+      "gpu_ms_per_token": 132.087052875,
+      "coordinator_wait_ms_per_token": 111.8385310625
+    },
+    {
+      "pair": 2,
+      "name": "append_128",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-2-candidate.json",
+      "sha256": "f63ea39aca373b35f8f187dd84cadabe5a1cf5808fd5c0fac85382ef5bebba0b",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 296.19468228125004,
+      "expert_read_bytes_per_token": 649382400.0,
+      "gpu_ms_per_token": 129.00069040625,
+      "coordinator_wait_ms_per_token": 123.57698490625
+    },
+    {
+      "pair": 3,
+      "name": "coding_routes_32",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-3-candidate.json",
+      "sha256": "838a1703ea4ad357adf441c53abd645629a372285d193762523d892a283fa91f",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 276.78154818750005,
+      "expert_read_bytes_per_token": 564451200.0,
+      "gpu_ms_per_token": 115.85256603125,
+      "coordinator_wait_ms_per_token": 110.3514264375
+    },
+    {
+      "pair": 3,
+      "name": "append_128",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-3-candidate.json",
+      "sha256": "838a1703ea4ad357adf441c53abd645629a372285d193762523d892a283fa91f",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 294.09791537500007,
+      "expert_read_bytes_per_token": 649382400.0,
+      "gpu_ms_per_token": 122.41212696875,
+      "coordinator_wait_ms_per_token": 125.00064534375
+    },
+    {
+      "pair": 4,
+      "name": "coding_routes_32",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-4-candidate.json",
+      "sha256": "6f2ac211a6a29b9852284dd6ec9d4f7b6fac3a26b6f71af53d555fbc14bc4d6a",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 278.5034361875,
+      "expert_read_bytes_per_token": 564451200.0,
+      "gpu_ms_per_token": 121.234433625,
+      "coordinator_wait_ms_per_token": 111.28067853125
+    },
+    {
+      "pair": 4,
+      "name": "append_128",
+      "source": "docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-4-candidate.json",
+      "sha256": "6f2ac211a6a29b9852284dd6ec9d4f7b6fac3a26b6f71af53d555fbc14bc4d6a",
+      "decode_tokens": 32,
+      "wall_ms_per_token": 298.7167656249999,
+      "expert_read_bytes_per_token": 649382400.0,
+      "gpu_ms_per_token": 131.6402053125,
+      "coordinator_wait_ms_per_token": 125.023578375
+    }
+  ],
+  "target_ms_per_token": 200,
+  "native_build": "3a0ea9334c448434ca7a534a623888e94c20350c29d29f7354bb4be2cc334a53",
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "This summarizes previously completed short requests, not fresh 2K/4K measurements.",
+    "GPU duration and coordinator waits overlap; they do not form a wall-time decomposition."
+  ]
+}
