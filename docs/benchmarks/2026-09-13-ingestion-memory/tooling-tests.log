@@ -1,0 +1,244 @@
+...........................................................................verified weights
+........................................../opt/homebrew/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:2253: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x102c17b50>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:2253: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x102c17790>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...............................................................................................Cached 4K selector triage: at most 10s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "promising",
+  "complete": true,
+  "time_limit_seconds": 10,
+  "started_at": "2026-09-13T23:03:31.285378+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": true,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpu44d56_x/run/cached-run"
+  ],
+  "build": "test",
+  "cached_result": {
+    "exact": true,
+    "pairs": 5,
+    "application_read_bytes": 0,
+    "prompt_tokens": 4096,
+    "comparison_axis": "sparse_selection",
+    "latency_ratio": {
+      "low": 0.97,
+      "median": 0.98,
+      "high": 0.99,
+      "pairs": 5
+    }
+  },
+  "phase_progress": {
+    "available": false,
+    "source": "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpu44d56_x/run/cached-run/cached-4096/progress.jsonl",
+    "limitation": "No phase progress was recorded."
+  },
+  "elapsed_seconds": 0.0014645000919699669,
+  "finished_at": "2026-09-13T23:03:31.286841+00:00"
+}
+..Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "resource_blocked",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-13T23:03:31.288865+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpfvvpjqzt/run/cached-run"
+  ],
+  "build": "test",
+  "error": "memory",
+  "phase_progress": {
+    "available": false,
+    "source": "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpfvvpjqzt/run/cached-run/cached-4096/progress.jsonl",
+    "limitation": "No phase progress was recorded."
+  },
+  "elapsed_seconds": 0.0007019573822617531,
+  "finished_at": "2026-09-13T23:03:31.289565+00:00"
+}
+Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "time_budget_exhausted",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-13T23:03:31.290778+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpfv_iql5s/run/cached-run"
+  ],
+  "build": "test",
+  "error": "Stopped at the triage deadline; no performance decision.",
+  "phase_progress": {
+    "available": false,
+    "source": "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpfv_iql5s/run/cached-run/cached-4096/progress.jsonl",
+    "limitation": "No phase progress was recorded."
+  },
+  "elapsed_seconds": 0.0006440002471208572,
+  "finished_at": "2026-09-13T23:03:31.291422+00:00"
+}
+Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "interrupted",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-13T23:03:31.292483+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpkv77kwde/run/cached-run"
+  ],
+  "build": "test",
+  "error": "Stopped by the user; no performance decision.",
+  "phase_progress": {
+    "available": false,
+    "source": "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmpkv77kwde/run/cached-run/cached-4096/progress.jsonl",
+    "limitation": "No phase progress was recorded."
+  },
+  "elapsed_seconds": 0.0006397906690835953,
+  "finished_at": "2026-09-13T23:03:31.293122+00:00"
+}
+....Cached 4K selector triage: at most 1s, including setup.
+{
+  "kind": "selector_cached_triage",
+  "status": "time_budget_exhausted",
+  "complete": false,
+  "time_limit_seconds": 1,
+  "started_at": "2026-09-13T23:03:31.298264+00:00",
+  "criterion": {
+    "pairs": 5,
+    "context": 4096,
+    "median_ratio_max": 0.99,
+    "upper_95_ratio_below": 1
+  },
+  "advance_to_normal_screen": false,
+  "normal_request_latency_qualified": false,
+  "full_validation": false,
+  "production_promoted": false,
+  "command": [
+    "/repo/.cache/qwen-reference-venv/bin/python",
+    "/repo/scripts/qwen/benchmark_sparse_attention.py",
+    "--track",
+    "selector",
+    "--phase",
+    "cached",
+    "--contexts",
+    "4096",
+    "--output",
+    "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmp6dvrslyn/run/cached-run"
+  ],
+  "build": "build",
+  "error": "Stopped at the triage deadline; no performance decision.",
+  "phase_progress": {
+    "available": true,
+    "source": "/private/var/folders/05/mknp9cx51rx9lnrkmxrs39bw0000gp/T/tmp6dvrslyn/run/cached-run/cached-4096/progress.jsonl",
+    "sha256": "4265b21ba4fd4abdc24ba61ad1e2852d27d434c64722d6fefa6b1af8ed05c414",
+    "identity": {
+      "build": "build"
+    },
+    "events": 5,
+    "status": "interrupted",
+    "complete": false,
+    "last_phase": "reference_priming",
+    "unfinished_phase": "reference_priming",
+    "last_elapsed_ns": 30,
+    "unfinished_phase_elapsed_ns": 18,
+    "completed_phase_ns": {
+      "model_load": 10
+    },
+    "latest_details": {
+      "completed_tokens": 512,
+      "active_tokens": 512,
+      "phase_incomplete": true,
+      "error": "cancelled"
+    },
+    "partial_final_line_ignored": false,
+    "limitations": [
+      "Progress is diagnostic; partial pairs never establish performance or correctness.",
+      "Times end at the last flushed event; silence after it is not measured.",
+      "Interruption/failure timestamps can include resource cleanup."
+    ]
+  },
+  "elapsed_seconds": 0.0011529996991157532,
+  "finished_at": "2026-09-13T23:03:31.299416+00:00"
+}
+..............
+----------------------------------------------------------------------
+Ran 232 tests in 6.895s
+
+OK

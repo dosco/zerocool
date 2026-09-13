@@ -5,6 +5,7 @@
 #include "qwen/bench.hpp"
 #include "qwen/cached_progress.hpp"
 #include "qwen/route_trace.hpp"
+#include "qwen/memory_trace.hpp"
 #include "../scripts/qwen/cached_recovery_checks.hpp"
 #include <bit>
 #include <cmath>
@@ -14,6 +15,34 @@
 #include <CommonCrypto/CommonDigest.h>
 
 using namespace freellm::qwen;
+TEST_CASE("memory tracing observes queued work and bounds detail without hiding cleanup") {
+    CHECK_FALSE(Options{}.memory_observer);
+    const auto path=std::filesystem::temp_directory_path()/("freellm-memory-"+std::to_string(monotonic_ns()));
+    struct Cleanup {std::filesystem::path p;~Cleanup(){std::filesystem::remove(p);}} cleanup{path};
+    Metal gpu;gpu.buffer_diagnostics(true);
+    auto a=gpu.zeros(32,AllocationClass::Resident),b=gpu.zeros(32);
+    gpu.dispatch("binary",{{a},{a},{b}},{32,0},32);
+    const auto before=gpu.memory_counters();
+    CHECK(before["submissions"]==0);CHECK(before["encoded_buffer_references"].get<size_t>()>0);
+    const auto owners=a->owner.use_count();int samples=0;
+    {
+        MemoryTrace trace(path,2);
+        CHECK_THROWS(MemoryTrace(path));
+        for(int i=0;i<3;++i) trace.capture({{"event","layer_encoded"}},[&]{++samples;return gpu.memory_counters();});
+        CHECK(samples==2);CHECK(gpu.memory_counters()==before);CHECK(a->owner.use_count()==owners);
+        CHECK(trace.summary()["omitted"]==1);CHECK(trace.summary()["captured"]==2);
+        gpu.finish();trace.capture({{"event","users_drained"}},[&]{return gpu.memory_counters();},true);
+        CHECK(trace.summary()["records"]==3);CHECK(trace.summary()["lifecycle_records"]==1);
+    }
+    std::ifstream in(path);std::string line;std::vector<Json> rows;
+    while(std::getline(in,line)) rows.push_back(Json::parse(line));
+    REQUIRE(rows.size()==3);CHECK(rows[0]["metal"]["submissions"]==0);
+    CHECK(rows.back()["metal"]["live_command_groups"]==0);
+    CHECK(rows.back()["metal"]["encoded_buffer_references"]==0);
+    CHECK(rows[0]["metal"]["buffer_costs"]["classes"]["resident"]["allocated_bytes"]==16384);
+    CHECK(rows[0]["process"].contains("physical_footprint_peak_bytes"));
+    CHECK_THROWS(MemoryTrace(path,0));CHECK_THROWS(MemoryTrace(path,2049));
+}
 TEST_CASE("GPU reference uses fixed Q8 arithmetic and releases scratch on success and failure") {
     Metal gpu;constexpr uint32_t K=320,N=8,G=64;
     auto w=gpu.allocate(K*N),s=gpu.allocate(K*N/G*2),b=gpu.allocate(K*N/G*2);

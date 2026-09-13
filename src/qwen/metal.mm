@@ -850,16 +850,30 @@ Json Metal::statistics() const {
         {"gpu_command_ns",impl_->gpu_command_ns},
         {"allocation_count",impl_->allocations},{"scratch_reuses",impl_->pool_reuses},{"dispatches",impl_->dispatches},{"submissions",impl_->submissions},{"waits",impl_->waits}};
 }
+Json Metal::memory_counters() const {
+    auto result=timing_counters();
+    result["peak_buffer_bytes"]=peak();
+    result["device_allocated_bytes"]=impl_->device.currentAllocatedSize;
+    result["encoded_buffer_references"]=impl_->current_buffers.size();
+    result["scratch_bytes"]=impl_->scratch[0].bytes+impl_->scratch[1].bytes;
+    result["active_scratch_slot"]=impl_->active_scratch;
+    result["scope"]="Engine charges and device resource sizes; not physical residency. Observation does not drain pending users.";
+    return result;
+}
 Json process_memory() {
     task_vm_info_data_t info{}; mach_msg_type_number_t count=TASK_VM_INFO_COUNT;
     Json j={{"physical_footprint_bytes",nullptr},{"resident_bytes",nullptr},{"compressed_bytes",nullptr},
-        {"compressed_peak_bytes",nullptr},{"decompressions",nullptr},{"page_faults",nullptr},{"pageins",nullptr}};
+        {"compressed_peak_bytes",nullptr},{"decompressions",nullptr},{"page_faults",nullptr},{"pageins",nullptr},
+        {"physical_footprint_peak_bytes",nullptr},{"resident_peak_bytes",nullptr}};
     if(task_info(mach_task_self(),TASK_VM_INFO,reinterpret_cast<task_info_t>(&info),&count)==KERN_SUCCESS) {
         if(count>=TASK_VM_INFO_REV0_COUNT) {
             j["resident_bytes"]=info.resident_size;j["compressed_bytes"]=info.compressed;
             j["compressed_peak_bytes"]=info.compressed_peak;
+            j["resident_peak_bytes"]=info.resident_size_peak;
         }
         if(count>=TASK_VM_INFO_REV1_COUNT) j["physical_footprint_bytes"]=info.phys_footprint;
+        if(count>=TASK_VM_INFO_REV3_COUNT && info.ledger_phys_footprint_peak>=0)
+            j["physical_footprint_peak_bytes"]=info.ledger_phys_footprint_peak;
         if(count>=TASK_VM_INFO_REV5_COUNT) j["decompressions"]=uint32_t(info.decompressions);
     }
     task_events_info_data_t events{};count=TASK_EVENTS_INFO_COUNT;
@@ -918,6 +932,20 @@ uint64_t available_memory() {
     mach_port_deallocate(mach_task_self(),host);
     if(status!=KERN_SUCCESS) throw std::runtime_error("cannot measure current memory availability");
     return (uint64_t(info.free_count)+info.purgeable_count+info.external_page_count)*vm_page_size;
+}
+Json system_memory() {
+    vm_statistics64_data_t info{};mach_msg_type_number_t count=HOST_VM_INFO64_COUNT;
+    const auto host=mach_host_self();
+    const auto status=host_statistics64(host,HOST_VM_INFO64,reinterpret_cast<host_info64_t>(&info),&count);
+    mach_port_deallocate(mach_task_self(),host);
+    if(status!=KERN_SUCCESS) return nullptr;
+    return {{"free_bytes",uint64_t(info.free_count)*vm_page_size},
+        {"file_backed_bytes",uint64_t(info.external_page_count)*vm_page_size},
+        {"anonymous_bytes",uint64_t(info.internal_page_count)*vm_page_size},
+        {"wired_bytes",uint64_t(info.wire_count)*vm_page_size},
+        {"compressor_bytes",uint64_t(info.compressor_page_count)*vm_page_size},
+        {"purgeable_bytes",uint64_t(info.purgeable_count)*vm_page_size},
+        {"scope","System-wide overlapping VM categories; includes other processes. Not additive to process footprint."}};
 }
 Resident::Resident(const Checkpoint& cp,Metal& gpu,int layers,bool streaming) : cp_(cp),gpu_(gpu),streaming_(streaming) {
     std::vector<std::string> keys;

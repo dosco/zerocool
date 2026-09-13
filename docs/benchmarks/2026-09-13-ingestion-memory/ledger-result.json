@@ -1,0 +1,50 @@
+{
+  "path": "/repo/docs/experiments/94095a1824a5466f669c476bbd9502ccba30aa263e0687cc18bfb67dbc8e5c84.json",
+  "id": "94095a1824a5466f669c476bbd9502ccba30aa263e0687cc18bfb67dbc8e5c84",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-ingestion-memory/initial/summary.json",
+      "sha256": "a67adef1b136481c39ec63302ad16cf7ef393df01c7e7048c1237b0244dd9bc5",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-ingestion-memory/initial/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "captured",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-ingestion-memory/delayed-cleanup/summary.json",
+      "sha256": "e2b7a2c9d68b28c0517b6c267738a8d8ecd1fc56c081009bd2b6211140938783",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-ingestion-memory/delayed-cleanup/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "captured",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-ingestion-memory/observations.json",
+      "sha256": "559f58dbdc69a4f1fecbcb77346d699fa667288bc6e4126bb617d1792987f3d9",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-ingestion-memory/observations.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "complete",
+      "recorded_complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-13-ingestion-memory/cleanup-query.json",
+      "sha256": "9328a159367f5c299c6031fbf9f0af7f513dc112a563e85e996bfdbc5af44dc6",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-13-ingestion-memory/cleanup-query.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "recorded_snapshots",
+      "recorded_complete": null
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

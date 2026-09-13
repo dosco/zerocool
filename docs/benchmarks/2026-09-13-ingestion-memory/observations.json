@@ -1,0 +1,200 @@
+{
+  "kind": "ingestion_memory_review_v1",
+  "complete": true,
+  "results": [
+    {
+      "capture": "initial",
+      "configuration": "control",
+      "source": "docs/benchmarks/2026-09-13-ingestion-memory/initial/control-analysis.json",
+      "sha256": "7b063ec4761453d90b7c10d034f91fc8f7fff425001b2f53ff2e7c551bae792c",
+      "peak_footprint_bytes": 11339045440,
+      "onset": {
+        "prefill": {
+          "sequence": 30,
+          "where": {
+            "event": "layer_encoded",
+            "phase": "prefill",
+            "layer": 8,
+            "tokens": 72,
+            "offset": 0
+          },
+          "compressed_bytes": 706592768,
+          "previous_boundary": {
+            "event": "attention_encoded",
+            "phase": "prefill",
+            "layer": 8,
+            "tokens": 72,
+            "offset": 0
+          }
+        },
+        "append": {
+          "sequence": 150,
+          "where": {
+            "event": "forward_begin",
+            "phase": "append",
+            "layer": -1,
+            "tokens": 129,
+            "offset": 104
+          },
+          "compressed_bytes": 6045007872,
+          "previous_boundary": {
+            "event": "request_end"
+          }
+        }
+      },
+      "cleanup": {
+        "model_destroyed": {
+          "physical_footprint_bytes": 3437930304,
+          "resident_bytes": 52150272,
+          "compressed_bytes": 3410739200,
+          "compressed_peak_bytes": 9945300992,
+          "decompressions": 1261122,
+          "page_faults": 1313013,
+          "pageins": 93,
+          "physical_footprint_peak_bytes": 11339045440,
+          "resident_peak_bytes": 9950904320,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 9062694912
+        }
+      }
+    },
+    {
+      "capture": "initial",
+      "configuration": "candidate",
+      "source": "docs/benchmarks/2026-09-13-ingestion-memory/initial/candidate-analysis.json",
+      "sha256": "c773e7774d0e3f689def0bc4595d159734115eb330121095df1b7b1b8ac1a3bc",
+      "peak_footprint_bytes": 11337964096,
+      "onset": {
+        "prefill": null,
+        "append": null
+      },
+      "cleanup": {
+        "model_destroyed": {
+          "physical_footprint_bytes": 35031616,
+          "resident_bytes": 142950400,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 739908,
+          "pageins": 2,
+          "physical_footprint_peak_bytes": 11337964096,
+          "resident_peak_bytes": 11217993728,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 9430515712
+        }
+      }
+    },
+    {
+      "capture": "delayed-cleanup",
+      "configuration": "control",
+      "source": "docs/benchmarks/2026-09-13-ingestion-memory/delayed-cleanup/control-analysis.json",
+      "sha256": "100637ad075a93b2c99c86699a57c5a166a0daf19e1865f9aa3f6c4270f24bf7",
+      "peak_footprint_bytes": 11340110464,
+      "onset": {
+        "prefill": null,
+        "append": null
+      },
+      "cleanup": {
+        "model_destroyed": {
+          "physical_footprint_bytes": 1617945920,
+          "resident_bytes": 1718157312,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 782610,
+          "pageins": 93,
+          "physical_footprint_peak_bytes": 11340110464,
+          "resident_peak_bytes": 11211882496,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 9019949056
+        },
+        "after_destroy_250ms": {
+          "physical_footprint_bytes": 33261952,
+          "resident_bytes": 136052736,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 782610,
+          "pageins": 93,
+          "physical_footprint_peak_bytes": 11340110464,
+          "resident_peak_bytes": 11211882496,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 9019949056
+        },
+        "after_destroy_1000ms": {
+          "physical_footprint_bytes": 33261952,
+          "resident_bytes": 136052736,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 782610,
+          "pageins": 93,
+          "physical_footprint_peak_bytes": 11340110464,
+          "resident_peak_bytes": 11211882496,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 20188938240
+        }
+      }
+    },
+    {
+      "capture": "delayed-cleanup",
+      "configuration": "candidate",
+      "source": "docs/benchmarks/2026-09-13-ingestion-memory/delayed-cleanup/candidate-analysis.json",
+      "sha256": "381f70dcdda2aa03638983d2d2ba8add24c310ee69efeeccc81028a9d637e816",
+      "peak_footprint_bytes": 11338504832,
+      "onset": {
+        "prefill": null,
+        "append": null
+      },
+      "cleanup": {
+        "model_destroyed": {
+          "physical_footprint_bytes": 35195136,
+          "resident_bytes": 140607488,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 740166,
+          "pageins": 2,
+          "physical_footprint_peak_bytes": 11338504832,
+          "resident_peak_bytes": 11224072192,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 20283179008
+        },
+        "after_destroy_250ms": {
+          "physical_footprint_bytes": 35162368,
+          "resident_bytes": 140607488,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 740166,
+          "pageins": 2,
+          "physical_footprint_peak_bytes": 11338504832,
+          "resident_peak_bytes": 11224072192,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 20283179008
+        },
+        "after_destroy_1000ms": {
+          "physical_footprint_bytes": 35162368,
+          "resident_bytes": 140607488,
+          "compressed_bytes": 0,
+          "compressed_peak_bytes": 0,
+          "decompressions": 0,
+          "page_faults": 740166,
+          "pageins": 2,
+          "physical_footprint_peak_bytes": 11338504832,
+          "resident_peak_bytes": 11224072192,
+          "system_swap_used_bytes": 5314445312,
+          "reclaimable_bytes": 20290928640
+        }
+      }
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "These are two separate instrumented diagnostic captures, not a paired latency result.",
+    "The original compressed control has only an immediate cleanup observation. Later clean runs cannot prove its eventual release.",
+    "Observed compression onset brackets an interval; it does not identify individual compressed allocations.",
+    "Physical-footprint peaks are process-lifetime measurements; device allocations and system VM categories are not additive."
+  ]
+}

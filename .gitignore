@@ -125,3 +125,4 @@ Thumbs.db
 !docs/benchmarks/2026-09-13-buffer-costs/**/*.log
 !docs/benchmarks/2026-09-13-decode-scratch/**/*.log
 !docs/benchmarks/2026-09-13-scratch-confirmation/**/*.log
+!docs/benchmarks/2026-09-13-ingestion-memory/**/*.log

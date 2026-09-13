@@ -92,6 +92,11 @@ void Model::check_sparse_status() const {
     if(*reinterpret_cast<const uint32_t*>(sparse_status_->data)) throw std::runtime_error("invalid sparse score");
 }
 Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain();expert_tail_.reset(); }
+void Model::diagnostic_drain() {gpu_.finish();reads_.drain();finish_expert_tail();}
+void Model::observe_memory(const char* event,int layer,uint32_t tokens,uint32_t offset) const {
+    if(options_.memory_observer) options_.memory_observer(
+        {{"event",event},{"phase",phase_},{"layer",layer},{"tokens",tokens},{"offset",offset}},gpu_);
+}
 Json Model::gpu_reference(const std::atomic<bool>* cancel) {
     if(options_.artifact!=Artifact::Mixed || options_.diagnostic_stream_trunk ||
        options_.prefill_pipeline!="serial" || options_.phase_memory!="fixed")
@@ -140,6 +145,7 @@ std::vector<float> Model::forward(std::span<const int> ids,State& state,bool log
     const bool owned=!ingest_active_,reuse=options_.decode_scratch=="reuse" && ids.size()==1;
     bool completed=false,scratch_started=false;
     try {
+        if(ids.size()>1) observe_memory("forward_begin",-1,uint32_t(ids.size()),state.tokens);
         // Multi-token ingestion accounts no retained decode workspace. Its
         // release is included in that append/prefill's ordinary wall time.
         if(options_.decode_scratch=="reuse" && !reuse) gpu_.release_scratch();
@@ -154,9 +160,11 @@ std::vector<float> Model::forward(std::span<const int> ids,State& state,bool log
         if(scratch_started) gpu_.end_scratch(); // forward_impl drained GPU and ngram users
         if(owned) finish_ingest();
         if(route_trace_) route_trace_->commit(state.tokens);
+        if(ids.size()>1) observe_memory("forward_end",-1,uint32_t(ids.size()),state.tokens-uint32_t(ids.size()));
         return result;
     } catch(...) {
         const auto error=std::current_exception();
+        if(completed && options_.memory_observer) state.valid=false;
         if(scratch_started) {
             if(completed) state.valid=false;
             // forward_impl drains I/O before unwinding. Never recycle storage
@@ -541,6 +549,7 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
         ng_future=std::async(std::launch::async,[this,ids,history=state.history,ng]{ngrams_->embedding(ids,history,ng->floats());});
         for(int l=0;l<options_.probe_layers;++l) {
             cancelled(cancel);
+            if(T>1) observe_memory("layer_begin",l,T,state.tokens);
             resident_->activate_layer(l);
             const auto b="model.layers."+std::to_string(l);
             auto& st=state.layers[l];
@@ -554,11 +563,13 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
             gpu_.dispatch("hc_add",{{h},{a},{inj},{after}},{T},Hyper,T);
             gpu_.label("mlp_input",l,T,state.tokens);
             auto [mx,mi]=hyper(after,b+".mlp_hyper_connection",T);
+            if(T>1) observe_memory("attention_encoded",l,T,state.tokens);
             auto m=moe(mx,l,T,cancel);
             gpu_.label("mlp_residual",l,T,state.tokens);
             h=gpu_.allocate(after->bytes);
             gpu_.dispatch("hc_add",{{after},{m},{mi},{h}},{T},Hyper,T);
             st.position+=T;
+            if(T>1) observe_memory("layer_encoded",l,T,state.tokens);
             // The next layer's router is the next CPU dependency. Keep the
             // residual and next attention work in the same command group.
             if(!options_.trace_dir.empty()) {

@@ -107,6 +107,7 @@ public:
     std::string device_name() const;
     Json statistics() const;
     Json timing_counters() const; // Scalar snapshot; never submits, waits, reaps or allocates GPU buffers.
+    Json memory_counters() const; // Same non-mutating contract, plus allocation/ownership gauges.
 private:
     void capture_linear(const Linear& layer,const Linear* up,const Buf& input,uint32_t tokens,const Buf& rows={});
     struct LinearPolicy { uint32_t tile=1, rows=1; bool pair=false; };
@@ -130,6 +131,7 @@ private:
 };
 Linear expert_linear(const Buf& record, int projection);
 Json process_memory();
+Json system_memory(); // Overlapping VM categories, not additive process allocations.
 Json host_conditions();
 uint64_t available_memory();
 Json disk_counters();

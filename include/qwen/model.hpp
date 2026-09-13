@@ -35,6 +35,9 @@ struct Options {
     KernelConfig kernels;
     bool audit_routes=false; // Bounded correctness capture, disabled during timing.
     bool decode_diagnostics=false; // Bounded per-step observation; benchmark timings are instrumented.
+    // Developer harness only. Runs on the coordinator; observers must not mutate
+    // Metal or retain buffers. No production CLI enables this callback.
+    std::function<void(const Json&,const Metal&)> memory_observer;
     std::string gpu_reference="off"; // Benchmark-only boundary instrumentation.
     std::string residency="off", decode_path="reference", prefill_pipeline="serial", phase_memory="fixed";
     bool cached_token_replay=false;
@@ -90,6 +93,8 @@ public:
                               const std::atomic<bool>* cancel = nullptr);
     Json stats() const;
     Json decode_counters() const;
+    Json memory_counters() const { return gpu_.memory_counters(); }
+    void diagnostic_drain(); // Explicit lifecycle boundary, outside measured requests.
     Json gpu_reference(const std::atomic<bool>* cancel=nullptr);
     const MemoryPlan& memory_plan() const { return plan_; }
     const Options& options() const { return options_; }
@@ -105,6 +110,7 @@ public:
     Json cached_token_replay(std::span<const int> tokens, int repetitions,
                              const std::atomic<bool>* cancel=nullptr,CachedProgress* progress=nullptr);
 private:
+    void observe_memory(const char* event,int layer,uint32_t tokens,uint32_t offset) const;
     std::vector<float> forward_impl(std::span<const int> ids, State& state, bool logits,
                                    const std::atomic<bool>* cancel);
     void transition_memory(bool prompt);

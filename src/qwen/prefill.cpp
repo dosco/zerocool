@@ -18,6 +18,7 @@ std::vector<float> Model::forward_panel(std::span<const int> ids,State& state,bo
         ng=gpu_.allocate(uint64_t(T)*Hidden*4);
         ng_future=std::async(std::launch::async,[this,ids,history=state.history,ng]{ngrams_->embedding(ids,history,ng->floats());});
         for(int l=0;l<options_.probe_layers;++l) {
+            observe_memory("layer_begin",l,T,start);
             check_cancel();resident_->activate_layer(l);
             auto& st=state.layers[l];const auto b="model.layers."+std::to_string(l);
             trace_offset_=start;
@@ -54,14 +55,17 @@ std::vector<float> Model::forward_panel(std::span<const int> ids,State& state,bo
                 // up to two groups with reads after these inputs are ready.
                 if(options_.prefill_pipeline=="double") gpu_.end_scratch();
                 else gpu_.finish();
+                observe_memory("microchunk_end",l,n,start+at-n);
             }
             h.reset();
             trace_offset_=start;
+            observe_memory("attention_encoded",l,T,start);
             // Every selected expert is acquired once for the whole panel.
             // Its token rows execute in bounded microbatches inside moe().
             auto contributions=moe(inputs,l,T,cancel);
             h=gpu_.allocate(uint64_t(T)*Hyper*4);
             gpu_.dispatch("hc_add",{{after},{contributions},{injections},{h}},{T},Hyper,T);
+            observe_memory("layer_encoded",l,T,start);
             if(!options_.trace_dir.empty()) {gpu_.finish();trace("layer_"+std::to_string(l),h);}
         }
         // A truncated diagnostic may omit the ngram layer; drain its users too.

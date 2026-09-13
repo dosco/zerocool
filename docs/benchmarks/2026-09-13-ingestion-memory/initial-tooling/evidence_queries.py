@@ -251,22 +251,6 @@ def snapshots(data):
         return value
     def visit(value, pointer):
         if isinstance(value, dict):
-            if value.get('kind')=='memory_boundary_v1':
-                process=optional_object(value.get('process'));metal=optional_object(value.get('metal'))
-                costs=optional_object(metal.get('buffer_costs'));held=None
-                classes=costs.get('classes')
-                if isinstance(classes,dict):
-                    held={}
-                    for name,c in classes.items():
-                        if not isinstance(c,dict):raise ValueError('Invalid buffer class counters')
-                        a,b=c.get('allocated_bytes'),c.get('owner_released_bytes')
-                        held[name]=a-b if type(a) is int and type(b) is int and 0<=b<=a else None
-                found.append(dict(pointer=pointer,where=value.get('where'),lifecycle=value.get('lifecycle'),
-                    monotonic_ns=value.get('monotonic_ns'),process=process,system=value.get('system'),
-                    engine_owner_held_bytes=held,live_buffer_bytes=metal.get('live_buffer_bytes'),
-                    peak_buffer_bytes=metal.get('peak_buffer_bytes'),device_allocated_bytes=metal.get('device_allocated_bytes'),
-                    live_command_groups=metal.get('live_command_groups'),encoded_buffer_references=metal.get('encoded_buffer_references')))
-                return
             if isinstance(value.get('metal'), dict) and isinstance(value.get('memory_plan'), dict):
                 metal = value['metal']
                 process = optional_object(value.get('process'))
@@ -288,21 +272,13 @@ def snapshots(data):
 
 
 def memory(index, selector, limit=10, offset=0):
-    raw, source = index.source(selector);coverage=None
-    if source['path'].endswith('.jsonl'):
-        lines=raw.splitlines();data=[parse(line) if line.strip() else None for line in lines[:MAX_LINES]]
-        coverage=dict(file_lines=len(lines),returned_to_parser=min(len(lines),MAX_LINES),query_truncated=len(lines)>MAX_LINES)
-    else:data=parse(raw)
+    data, source = index.json(selector)
     rows = snapshots(data)
-    if coverage:
-        for row in rows:row['pointer']='line:'+str(int(row['pointer'].split('/')[1])+1)
     return result([source], ['Plans are capacity budgets, not measured allocations; nested categories overlap and are not added.',
         'Physical footprint includes more than Metal allocations; missing values remain null.',
-        'Owner-held bytes and device resource sizes are not physical residency; system VM categories overlap.',
-        'A memory trace query shows recorded samples; it does not establish complete capture or qualify latency.',
         'Only recorded lifecycle boundaries are shown. Model destruction or final drain must not be inferred.'],
         status='recorded_snapshots' if rows else 'missing_measurements', snapshots=rows[offset:offset+limit],
-        total=len(rows), coverage=coverage,next_offset=offset+limit if offset+limit<len(rows) else None)
+        total=len(rows), next_offset=offset+limit if offset+limit<len(rows) else None)
 
 
 def timeline(index, selector, phase=None, layer=None, token=None, limit=10, offset=0):

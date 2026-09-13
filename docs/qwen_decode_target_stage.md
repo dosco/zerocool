@@ -161,3 +161,18 @@ there is no continuous process-footprint or buffer-specific compression trace.
 Resolve that evidence gap before changing admission, residency or ownership.
 Prior core-residency confirmation did not establish a latency benefit, so it
 is not an assumed remedy. Defaults, arithmetic and weights remain unchanged.
+
+The [ingestion and cleanup diagnostic](benchmarks/2026-09-13-ingestion-memory/README.md)
+now brackets compression onset at layer 9 during expert-cache growth in one
+control, with process peaks at 10.559–10.561GiB inside the 12GiB plan. A separate
+versioned follow-up showed an immediate 1.51GiB post-destruction footprint fall
+to 31.7MiB within 250ms; the earlier compressed control lacks delayed samples.
+Do not infer a leak or allocation overrun from its immediate footprint alone.
+All eight diagnostic requests preserve prior output IDs and dispatch counts.
+These instrumented captures do not advance the failed timing screens.
+
+For the next bounded intervention, consider existing core residency while
+holding scratch reuse on, capacity fixed and GPU timing reference enabled.
+This tests the combined configuration; the older failed core-residency result
+remains negative evidence. Promotion still requires complete-request improvement
+with memory observations, followed by the established real-workload gates.
