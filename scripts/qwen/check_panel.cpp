@@ -55,6 +55,7 @@ int main(int argc,char** argv) {
         options.diagnostic_stream_trunk=config.value("diagnostic_stream_trunk",true);
         options.residency=config.value("residency",std::string("off"));
         options.expert_tail=config.value("expert_tail",std::string("wait"));
+        options.decode_scratch=config.value("decode_scratch",std::string("none"));
         options.decode_path=config.value("decode_path",std::string("reference"));
         options.prefill_pipeline=config.value("prefill_pipeline",std::string("serial"));
         options.sparse_selection=config.value("sparse_selection",std::string("cpu"));
@@ -140,7 +141,15 @@ int main(int argc,char** argv) {
             check("cancelled_panel_invalidates_partial_state",stopped && !state.valid && state.tokens==0 && state.layers[0].position>0);
             check("cancelled_panel_drains_gpu",model.stats()["metal"]["live_command_groups"]==0);model.reset_expert_cache();
         }
-        if(options.expert_tail=="overlap") {
+        if(options.expert_tail=="overlap" || options.decode_scratch=="reuse") {
+            const bool scratch=options.decode_scratch=="reuse";
+            const std::string lifetime=scratch?"scratch":"tail";
+            auto exercised=[&](const Json& stats) {return stats[scratch?"decode_scratch_passes":"expert_tail_deferrals"].get<uint64_t>()>0;};
+            auto released=[&](const Json& stats) {
+                if(!scratch) return true;
+                for(const auto& pool:stats["metal"]["scratch_pools"]) if(pool["allocated_bytes"]!=0) return false;
+                return stats["metal"]["active_scratch_slot"]==-1;
+            };
             // Fault only after single-token expert work has been submitted and
             // its tail moved into model ownership. Multi-token panel failures
             // above do not exercise this lifetime.
@@ -150,8 +159,8 @@ int main(int argc,char** argv) {
                 try {model.forward(std::span<const int>(prefix).first(1),state,false);}
                 catch(const std::runtime_error& e) {failed=std::string(e.what()).find("dependency trace")!=std::string::npos;}
                 const auto stats=model.stats();
-                check("failed_decode_tail_invalidates_state",failed && !state.valid && state.tokens==0 && stats["expert_tail_deferrals"].get<uint64_t>()>0);
-                check("failed_decode_tail_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0);
+                check("failed_decode_"+lifetime+"_invalidates_state",failed && !state.valid && state.tokens==0 && exercised(stats));
+                check("failed_decode_"+lifetime+"_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0 && released(stats));
                 model.reset_expert_cache();
             }
             options.dependency_trace=dir/"cancel-tail.jsonl";
@@ -169,8 +178,8 @@ int main(int argc,char** argv) {
                 try {model.forward(std::span<const int>(prefix).first(1),state,false,&cancel);}
                 catch(const std::runtime_error& e) {stopped=std::string(e.what()).find("cancelled")!=std::string::npos;}
                 stop=true;watcher.join();const auto stats=model.stats();
-                check("cancelled_decode_tail_invalidates_state",stopped && !state.valid && state.tokens==0 && stats["expert_tail_deferrals"].get<uint64_t>()>0);
-                check("cancelled_decode_tail_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0);
+                check("cancelled_decode_"+lifetime+"_invalidates_state",stopped && !state.valid && state.tokens==0 && exercised(stats));
+                check("cancelled_decode_"+lifetime+"_drains_gpu",stats["expert_tail_pending"]==false && stats["metal"]["live_command_groups"]==0 && released(stats));
                 model.reset_expert_cache();
             }
         }

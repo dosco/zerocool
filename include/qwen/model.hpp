@@ -19,6 +19,8 @@ struct Options {
     int ready_group = 4;
     bool completion_pipeline = true;
     std::string expert_tail="wait"; // Explicit single-token encode-ahead experiment.
+    std::string decode_scratch="none"; // Explicit bounded single-token temporary reuse.
+    void validate_decode_scratch() const;
     std::filesystem::path dependency_trace;
     std::filesystem::path route_trace;
     int max_tokens = 256;
@@ -140,6 +142,7 @@ private:
     std::unique_ptr<ExpertCache> cache_;
     std::unique_ptr<NgramStore> ngrams_;
     uint64_t decode_passes_=0,append_passes_=0,prefill_passes_=0;
+    uint64_t decode_scratch_passes_=0;
     uint64_t panel_passes_=0;
     uint32_t trace_offset_=0;
     std::array<uint64_t,Layers> expert_wait_ns_{},expert_gpu_ns_{},expert_passes_{};

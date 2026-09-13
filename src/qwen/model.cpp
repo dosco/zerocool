@@ -18,10 +18,17 @@ Buf ints(Metal& gpu,std::span<const int> values) {
     auto b=gpu.allocate(values.size_bytes()); std::memcpy(b->data,values.data(),values.size_bytes()); return b;
 }
 }
+void Options::validate_decode_scratch() const {
+    if(decode_scratch!="none" && decode_scratch!="reuse") throw std::invalid_argument("decode scratch must be none or reuse");
+    if(decode_scratch=="reuse" && (!completion_pipeline || expert_tail!="wait" || decode_path!="reference" ||
+       prefill_pipeline!="serial" || phase_memory!="fixed" || cached_token_replay || diagnostic_stream_trunk || kernels.gdn!="original"))
+        throw std::invalid_argument("decode scratch reuse requires resident normal execution, original GDN, wait tail and serial fixed memory");
+}
 Model::Model(Options options) : options_(std::move(options)),checkpoint_(options_.model,true,options_.artifact),
     reads_(options_.io_workers),
     prepared_(options_.prepared.empty()?nullptr:std::make_shared<PreparedArtifact>(options_.prepared,checkpoint_)),
     store_(checkpoint_,prepared_) {
+    options_.validate_decode_scratch();
     if(options_.expert_tail!="wait" && options_.expert_tail!="overlap")
         throw std::invalid_argument("expert tail must be wait or overlap");
     if(options_.expert_tail=="overlap" && (!options_.completion_pipeline || options_.cached_token_replay))
@@ -130,16 +137,32 @@ void Model::finish_ingest() {
     ingest_active_=false;transition_memory(false);
 }
 std::vector<float> Model::forward(std::span<const int> ids,State& state,bool logits,const std::atomic<bool>* cancel) {
-    const bool owned=!ingest_active_;bool completed=false;
+    const bool owned=!ingest_active_,reuse=options_.decode_scratch=="reuse" && ids.size()==1;
+    bool completed=false,scratch_started=false;
     try {
+        // Multi-token ingestion accounts no retained decode workspace. Its
+        // release is included in that append/prefill's ordinary wall time.
+        if(options_.decode_scratch=="reuse" && !reuse) gpu_.release_scratch();
         if(owned) prepare_ingest(ids.size());
         if(route_trace_) route_trace_->begin(state.trace_session_id,state.tokens,ids,phase_,cache_->capacity());
+        if(reuse) {
+            // This consumes the existing temporary allowance; expert capacity
+            // and the total admitted allocation do not change.
+            gpu_.begin_scratch(0,std::min<uint64_t>(128*MiB,plan_.scratch));scratch_started=true;++decode_scratch_passes_;
+        }
         auto result=forward_impl(ids,state,logits,cancel);completed=true;
+        if(scratch_started) gpu_.end_scratch(); // forward_impl drained GPU and ngram users
         if(owned) finish_ingest();
         if(route_trace_) route_trace_->commit(state.tokens);
         return result;
     } catch(...) {
         const auto error=std::current_exception();
+        if(scratch_started) {
+            if(completed) state.valid=false;
+            // forward_impl drains I/O before unwinding. Never recycle storage
+            // still referenced by a command, including failed/cancelled work.
+            try {gpu_.release_scratch();} catch(...) {}
+        }
         if(route_trace_) {state.valid=false;try {route_trace_->abort();} catch(...) {}}
         if(owned) {if(completed) state.valid=false;try {finish_ingest();} catch(...) {}}
         std::rethrow_exception(error);
@@ -580,13 +603,14 @@ Json Model::decode_counters() const {
 Json Model::stats() const {
     return {{"sparse_selection_cpu_ns",sparse_selection_cpu_ns_},{"sparse_selection_wait_ns",sparse_selection_wait_ns_},
         {"artifact_revision",checkpoint_.revision()},{"model_id",checkpoint_.model_id()},
-        {"execution",{{"cache_policy",options_.cache_policy},{"sparse_selection",options_.sparse_selection},{"residency",options_.residency},{"decode_path",options_.decode_path},{"expert_tail",options_.expert_tail},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
+        {"execution",{{"cache_policy",options_.cache_policy},{"sparse_selection",options_.sparse_selection},{"residency",options_.residency},{"decode_path",options_.decode_path},{"expert_tail",options_.expert_tail},{"decode_scratch",options_.decode_scratch},{"prefill_pipeline",options_.prefill_pipeline},{"phase_memory",options_.phase_memory},{"cached_token_replay",options_.cached_token_replay}}},
         {"phase_memory",{{"policy",options_.phase_memory},{"phase",prompt_memory_?"prompt":"generation"},
             {"prompt_plan",prompt_plan_.json()},{"generation_plan",generation_plan_.json()},{"pressure_resizes",pressure_resizes_},
             {"transition_count",transition_count_},{"transitions",memory_transitions_}}},
         {"memory_plan",plan_.json()},{"metal",gpu_.statistics()},{"process",process_memory()},{"storage",disk_counters()},
         {"diagnostic_stream_trunk",options_.diagnostic_stream_trunk},
         {"expert_tail_deferrals",tail_deferrals_},{"expert_tail_pending",expert_tail_->pending()},
+        {"decode_scratch_passes",decode_scratch_passes_},
         {"completion_pipeline",options_.completion_pipeline},{"ready_group",options_.ready_group},
         {"chunk_tokens",options_.chunk},{"io_workers",options_.io_workers},{"short_append_tokens",options_.short_append},
         {"phase_dependencies",phase_dependencies_},

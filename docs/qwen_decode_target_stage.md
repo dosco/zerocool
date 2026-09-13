@@ -127,3 +127,14 @@ allowance. It does not predict the inference saving. Keep 1848 expert slots,
 unchanged arithmetic, and include cold allocation and pool release in normal
 initial/append comparisons. Release retained temporaries before multi-token
 prefill; cancellation must drain all GPU and I/O users before dropping ownership.
+
+The [bounded decode reuse screen](benchmarks/2026-09-13-decode-scratch/README.md)
+now passes both alternating timing comparisons: initial decode 4.03/4.43 tokens/s,
+append decode 4.06/4.09, with unchanged output tokens and 3238→137 physical
+allocations per token. Retained workspace is about 74MiB within the admitted
+scratch allowance. Conversation ratios were 0.90281/0.93681. Compression and
+decompression were observed, so the declared memory gate keeps this result
+inconclusive and the option disabled by default. Preserve all measurements;
+do not run the later expensive qualification until a fresh clean-memory screen
+passes. Candidate medians leave roughly 37–45ms/token to the short-workload
+200ms goal; 2K/4K and sustained-use acceptance still require their own evidence.

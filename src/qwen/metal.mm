@@ -843,6 +843,7 @@ Json Metal::statistics() const {
         {"expert_reduction","eight partial sums in selected-expert order"},
         {"attention_arithmetic","BF16 scores and probabilities, fixed across chunks"},
         {"live_buffer_bytes",allocated()},{"peak_buffer_bytes",peak()},{"scratch_pools",pools},
+        {"active_scratch_slot",impl_->active_scratch},
         {"live_command_groups",impl_->pending.size()},{"peak_command_groups",impl_->peak_groups},
         {"residency",impl_->residency->json()},{"kernels",impl_->config.json()},{"kernel_dispatches",impl_->kernel_counts},
         {"cpu_encode_ns",impl_->encode_ns},{"cpu_gpu_wait_ns",impl_->host_wait_ns},

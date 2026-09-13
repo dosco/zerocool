@@ -123,3 +123,4 @@ Thumbs.db
 !docs/benchmarks/2026-09-13-decode-target/capture/baseline/screen/fixtures/*.bin
 !docs/benchmarks/2026-09-13-expert-tail/**/*.log
 !docs/benchmarks/2026-09-13-buffer-costs/**/*.log
+!docs/benchmarks/2026-09-13-decode-scratch/**/*.log

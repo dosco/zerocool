@@ -1022,6 +1022,46 @@ TEST_CASE("two scratch workspaces wait before reuse and preserve persistent allo
     gpu.finish();CHECK(output->floats()[0]==5);
     gpu.begin_scratch(0,65536);CHECK_THROWS(gpu.allocate(65537));gpu.end_scratch();
 }
+TEST_CASE("single-token scratch configuration keeps unsupported schedules outside the experiment") {
+    Options options;CHECK(options.decode_scratch=="none");CHECK_NOTHROW(options.validate_decode_scratch());
+    options.decode_scratch="reuse";CHECK_NOTHROW(options.validate_decode_scratch());
+    for(int change=0;change<8;++change) {
+        auto bad=options;
+        switch(change) {
+        case 0:bad.decode_scratch="automatic";break;
+        case 1:bad.completion_pipeline=false;break;
+        case 2:bad.expert_tail="overlap";break;
+        case 3:bad.prefill_pipeline="double";break;
+        case 4:bad.phase_memory="reclaim";break;
+        case 5:bad.cached_token_replay=true;break;
+        case 6:bad.diagnostic_stream_trunk=true;break;
+        case 7:bad.decode_path="grouped";break;
+        }
+        CHECK_THROWS_AS(bad.validate_decode_scratch(),std::invalid_argument);
+    }
+}
+TEST_CASE("whole-step scratch reuse drains pending users on capacity failure and before prefill") {
+    Metal gpu;gpu.budget(2*MiB);auto state=gpu.zeros(2560,AllocationClass::State);
+    for(int step=0;step<4;++step) {
+        gpu.begin_scratch(0,MiB);
+        auto input=gpu.zeros(2560),output=gpu.allocate(2560*4);
+        input->floats()[0]=float(step);
+        gpu.dispatch("binary",{{input},{input},{output}},{2560,0},2560);
+        gpu.copy(output,0,state,0,state->bytes);
+        gpu.end_scratch(); // next reset must wait even when this group is still running
+    }
+    gpu.finish();CHECK(state->floats()[0]==6);
+    CHECK(gpu.statistics()["scratch_reuses"]==6);
+    gpu.release_scratch();CHECK(gpu.allocated()==16384);CHECK(gpu.statistics()["active_scratch_slot"]==-1);
+    gpu.begin_scratch(0,MiB);
+    {
+        auto input=gpu.zeros(2560);input->floats()[0]=9;gpu.copy(input,0,state,0,state->bytes);
+        CHECK_THROWS(gpu.allocate(2*MiB)); // earlier encoded work still owns input
+    }
+    gpu.release_scratch();CHECK(state->floats()[0]==9);
+    CHECK(gpu.statistics()["live_command_groups"]==0);CHECK(gpu.statistics()["active_scratch_slot"]==-1);
+    CHECK(gpu.allocated()==16384);state.reset();CHECK(gpu.allocated()==0);
+}
 TEST_CASE("memory admission includes snapshot and both pipeline workspaces") {
     const auto base=MemoryPlan::make(12*GiB,32*GiB,22*GiB,5*GiB,8192,128,512);
     const auto extra=MemoryPlan::make(12*GiB,32*GiB,22*GiB,5*GiB,8192,128,512,Layers,0,true,65536,true);

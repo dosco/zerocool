@@ -14,7 +14,7 @@ ROOT=Path(__file__).resolve().parents[2]
 def check_configuration(state,config):
     execution=state.get('execution',{})
     for key,default in [('cache_policy','clock'),('sparse_selection','cpu'),('residency','off'),('decode_path','reference'),
-                        ('prefill_pipeline','serial'),('phase_memory','fixed'),('expert_tail','wait')]:
+                        ('prefill_pipeline','serial'),('phase_memory','fixed'),('expert_tail','wait'),('decode_scratch','none')]:
         if execution.get(key,default)!=config.get(key,default):
             raise ValueError('Session execution differs from requested configuration')
     if execution.get('cached_token_replay',False):raise ValueError('Cached replay cannot qualify sessions')
