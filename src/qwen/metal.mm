@@ -14,9 +14,67 @@
 #include <sys/sysctl.h>
 
 namespace freellm::qwen {
+namespace {
+// Owner callbacks can run on I/O threads. This flag excludes only callbacks
+// nested in this thread's command-group destruction from the outside total.
+struct BufferCosts;
+thread_local const BufferCosts* retiring_command_group=nullptr;
+struct BufferCosts {
+    struct Counts {
+        std::atomic<uint64_t> allocations{0},allocated_bytes{0},allocation_ns{0};
+        std::atomic<uint64_t> owner_releases{0},released_bytes{0},outside_release_ns{0};
+    };
+    std::array<Counts,6> classes;
+    std::atomic<uint64_t> groups{0},group_retirement_ns{0};
+    Json json() const {
+        constexpr std::array<const char*,6> names={"temporary","resident","state","expert","snapshot","workspace"};
+        Json rows=Json::object();
+        for(size_t i=0;i<names.size();++i) {
+            const auto& c=classes[i];rows[names[i]]={{"allocations",c.allocations.load()},
+                {"allocated_bytes",c.allocated_bytes.load()},{"allocation_ns",c.allocation_ns.load()},
+                {"owner_releases",c.owner_releases.load()},{"owner_released_bytes",c.released_bytes.load()},
+                {"outside_release_ns",c.outside_release_ns.load()}};
+        }
+        return {{"kind","buffer_costs_v1"},{"classes",rows},{"retired_groups",groups.load()},
+            {"group_retirement_ns",group_retirement_ns.load()},
+            {"scope","Successful physical allocation calls; command-group destruction; last-owner callbacks outside that destruction. CPU interval sums can overlap GPU and other threads; not predicted latency savings."}};
+    }
+};
+struct AllocationTimer {
+    BufferCosts* costs;AllocationClass kind;uint64_t start=0,bytes=0;
+    void begin() {if(costs) start=monotonic_ns();}
+    ~AllocationTimer() {
+        if(!costs || !bytes) return;
+        auto& c=costs->classes.at(size_t(kind));c.allocations.fetch_add(1,std::memory_order_relaxed);
+        c.allocated_bytes.fetch_add(bytes,std::memory_order_relaxed);
+        c.allocation_ns.fetch_add(monotonic_ns()-start,std::memory_order_relaxed);
+    }
+};
+struct ReleaseTimer {
+    BufferCosts* costs;AllocationClass kind;uint64_t bytes,start=0;bool outside;
+    ReleaseTimer(BufferCosts* c,AllocationClass k,uint64_t b):costs(c),kind(k),bytes(b),outside(c!=retiring_command_group) {if(costs && outside) start=monotonic_ns();}
+    ~ReleaseTimer() {
+        if(!costs) return;
+        auto& c=costs->classes.at(size_t(kind));c.owner_releases.fetch_add(1,std::memory_order_relaxed);
+        c.released_bytes.fetch_add(bytes,std::memory_order_relaxed);
+        if(outside) c.outside_release_ns.fetch_add(monotonic_ns()-start,std::memory_order_relaxed);
+    }
+};
+struct GroupRetirementTimer {
+    BufferCosts* costs;const BufferCosts* previous=retiring_command_group;uint64_t start=0;
+    explicit GroupRetirementTimer(BufferCosts* c):costs(c) {if(costs) {start=monotonic_ns();retiring_command_group=costs;}}
+    ~GroupRetirementTimer() {
+        if(costs) {
+            retiring_command_group=previous;costs->groups.fetch_add(1,std::memory_order_relaxed);
+            costs->group_retirement_ns.fetch_add(monotonic_ns()-start,std::memory_order_relaxed);
+        }
+    }
+};
+}
 struct Accounting {
     std::atomic<uint64_t> live{0}, high{0};
     uint64_t limit = 22*GiB;
+    std::unique_ptr<BufferCosts> costs;
 };
 // The last Buffer owner can disappear on an I/O thread. It queues retirement;
 // only the coordinator changes Metal residency and releases the accounting.
@@ -30,7 +88,8 @@ struct ResidencyRegistry {
     bool active=true;
     uint64_t bytes=0, commits=0, removals=0, overhead=0;
     std::string mode="off";
-    void release(void* p,uint64_t charge) {
+    void release(void* p,uint64_t charge,AllocationClass kind) {
+        ReleaseTimer timer(accounting->costs.get(),kind,charge);
         std::lock_guard lock(mutex);
         if(active && entries.contains(p)) retired.push_back(p);
         else { CFRelease(p);accounting->live.fetch_sub(charge); }
@@ -232,6 +291,8 @@ Metal::Metal() : impl_(std::make_unique<Impl>()) {
 Metal::~Metal() { try { finish(); } catch (...) {} impl_->residency->close(impl_->queue); }
 Buf Metal::allocate(uint64_t bytes) {return allocate(bytes,AllocationClass::Temporary);}
 Buf Metal::allocate(uint64_t bytes,AllocationClass kind) {
+    if(size_t(kind)>size_t(AllocationClass::Workspace)) throw std::invalid_argument("invalid allocation class");
+    AllocationTimer timer{impl_->accounting->costs.get(),kind};
     @autoreleasepool {
         const uint64_t charge=(checked_add(bytes,16383)/16384)*16384;
         if(!bytes) throw std::invalid_argument("empty Metal allocation");
@@ -262,6 +323,7 @@ Buf Metal::allocate(uint64_t bytes,AllocationClass kind) {
         auto a=impl_->accounting;
         if(!bytes || charge>a->limit || a->live.load()>a->limit-charge)
             throw std::runtime_error("engine memory budget exceeded");
+        timer.begin();
         id<MTLBuffer> b=[impl_->device newBufferWithLength:charge options:MTLResourceStorageModeShared];
         if(!b) throw std::runtime_error("Metal allocation failed within engine budget");
         const uint64_t actual=b.allocatedSize;++p.allocations;
@@ -270,9 +332,10 @@ Buf Metal::allocate(uint64_t bytes,AllocationClass kind) {
         a->high.store(std::max(live,a->high.load()));
         void* retained=(__bridge_retained void*)b;
         auto registry=p.residency;
-        auto owner=std::shared_ptr<void>(retained,[registry,actual](void* pointer){registry->release(pointer,actual);});
+        auto owner=std::shared_ptr<void>(retained,[registry,actual,kind](void* pointer){registry->release(pointer,actual,kind);});
         registry->enroll(retained,actual,kind);
-        return std::make_shared<Buffer>(Buffer{bytes,static_cast<std::byte*>(b.contents),std::move(owner),retained});
+        auto result=std::make_shared<Buffer>(Buffer{bytes,static_cast<std::byte*>(b.contents),std::move(owner),retained});
+        timer.bytes=actual;return result;
     }
 }
 Buf Metal::zeros(uint64_t floats) {
@@ -327,6 +390,10 @@ void Metal::release_scratch() {
 }
 Buf Metal::upload(std::span<const float> values) {
     auto b=allocate(values.size_bytes()); std::memcpy(b->data,values.data(),values.size_bytes()); return b;
+}
+void Metal::buffer_diagnostics(bool enabled) {
+    if(impl_->allocations) throw std::logic_error("configure buffer diagnostics before allocations");
+    impl_->accounting->costs=enabled?std::make_unique<BufferCosts>():nullptr;
 }
 void Metal::budget(uint64_t bytes) {
     if(!bytes || bytes>22*GiB || bytes<allocated()) throw std::invalid_argument("invalid Metal budget");
@@ -444,7 +511,10 @@ void Metal::reap() {
                 {"gpu_start_seconds",c.gpu_start},{"gpu_end_seconds",c.gpu_end},
                 {"operations",std::move(p.pending.front().operations)}});
         }
-        p.pending.pop_front(); // release this group's buffers immediately
+        {
+            GroupRetirementTimer timer(p.accounting->costs.get());
+            p.pending.pop_front(); // includes both engine owners and Metal's command-buffer references
+        }
     }
     p.residency->drain();
     if(!failure.empty()) throw std::runtime_error("Metal execution: "+failure);
@@ -753,8 +823,9 @@ uint64_t Metal::allocated() const { return impl_->accounting->live.load(); }
 uint64_t Metal::peak() const { return impl_->accounting->high.load(); }
 std::string Metal::device_name() const { return impl_->device.name.UTF8String; }
 Json Metal::timing_counters() const {
-    return {{"cpu_encode_ns",impl_->encode_ns},{"cpu_gpu_wait_ns",impl_->host_wait_ns},
-        {"gpu_command_ns",impl_->gpu_command_ns},{"submissions",impl_->submissions},
+    return {{"buffer_costs",impl_->accounting->costs?impl_->accounting->costs->json():Json(nullptr)},
+        {"cpu_encode_ns",impl_->encode_ns},{"cpu_gpu_wait_ns",impl_->host_wait_ns},
+        {"gpu_command_ns",impl_->gpu_command_ns},{"submissions",impl_->submissions},{"allocation_count",impl_->allocations},
         {"live_command_groups",impl_->pending.size()},{"live_buffer_bytes",allocated()}};
 }
 Json Metal::statistics() const {
@@ -764,7 +835,8 @@ Json Metal::statistics() const {
         pools.push_back({{"capacity_bytes",a.capacity},{"allocated_bytes",a.bytes},{"peak_bytes",a.peak},
             {"unused_retained_bytes",unused},{"reuses",a.reuses},{"allocation_count",a.allocations},{"wait_ns",a.wait_ns}});
     }
-    return {{"device",device_name()},{"physical_bytes",physical()},{"recommended_bytes",recommended()},
+    return {{"buffer_costs",impl_->accounting->costs?impl_->accounting->costs->json():Json(nullptr)},
+        {"device",device_name()},{"physical_bytes",physical()},{"recommended_bytes",recommended()},
         {"build_fingerprint",BuildFingerprint},{"q4_arithmetic","MLX 0.31.1 GEMV BF16 bias sums"},
         {"q8_arithmetic","MLX 0.31.1 fixed per-token QMV, FP32 input bias sums"},
         {"router_arithmetic","M1 SIMD 8x8, sixteen fixed K partitions"},

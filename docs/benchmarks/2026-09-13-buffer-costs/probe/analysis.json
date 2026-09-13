@@ -1,0 +1,47 @@
+{
+  "kind": "buffer_reuse_probe_analysis_v1",
+  "complete": true,
+  "synthetic": true,
+  "pairs": [
+    {
+      "pair": 0,
+      "control_ms": 76.862750125,
+      "pool_ms": 25.0780885,
+      "saved_ms": 51.784661625000005
+    },
+    {
+      "pair": 1,
+      "control_ms": 72.906057375,
+      "pool_ms": 24.249177,
+      "saved_ms": 48.656880375
+    },
+    {
+      "pair": 2,
+      "control_ms": 77.239880125,
+      "pool_ms": 25.781578125,
+      "saved_ms": 51.458302
+    },
+    {
+      "pair": 3,
+      "control_ms": 89.00613525,
+      "pool_ms": 25.73396875,
+      "saved_ms": 63.2721665
+    },
+    {
+      "pair": 4,
+      "control_ms": 78.940760375,
+      "pool_ms": 24.835166625,
+      "saved_ms": 54.10559375
+    }
+  ],
+  "median_saved_ms_per_synthetic_iteration": 51.784661625000005,
+  "clean_memory_observations": true,
+  "material_isolated_opportunity": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Synthetic 3072-buffer workload; no model, SSD reads, actual allocation sequence or token-latency prediction.",
+    "Cold/warmup iterations and pool release are recorded separately from warm means.",
+    "Five alternating pairs in one process; no inference qualification confidence bound."
+  ]
+}

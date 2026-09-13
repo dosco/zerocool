@@ -28,6 +28,7 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
         throw std::invalid_argument("expert tail overlap requires normal completion-pipeline execution");
     expert_tail_=std::make_unique<ExpertTail>();
     options_.kernels.artifact_revision=checkpoint_.revision();
+    gpu_.buffer_diagnostics(options_.decode_diagnostics);
     gpu_.configure(options_.kernels);
     (void)parse_cache_policy(options_.cache_policy);
     if(options_.sparse_selection!="cpu" && options_.sparse_selection!="gpu") throw std::invalid_argument("sparse selection must be cpu or gpu");

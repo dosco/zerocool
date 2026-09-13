@@ -1,0 +1,3611 @@
+{
+  "kind": "buffer_cost_analysis_v1",
+  "complete": true,
+  "requests": [
+    {
+      "name": "coding_routes_32",
+      "decode_ms_per_token": 283.39567187500006,
+      "allocation_ms_per_token": 26.129628125,
+      "temporary_allocation_ms_per_token": 25.8657050625,
+      "group_retirement_ms_per_token": 23.059197375,
+      "outside_owner_release_ms_per_token": 4.82553778125,
+      "observed_cpu_interval_ms_per_token": 54.01436328125,
+      "temporary_reuse_upper_cpu_ms_per_token": 53.75044021874999,
+      "allocation_count_per_token": 3238.0,
+      "memory_disturbance_observed": true,
+      "compressed_peak_bytes": 7972421632,
+      "costs": {
+        "classes": {
+          "expert": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "resident": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "snapshot": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "state": {
+            "allocated_bytes": 163053568,
+            "owner_released_bytes": 163053568,
+            "owner_releases": 1184,
+            "allocations": 1184,
+            "allocation_ns": 8445538,
+            "outside_release_ns": 0
+          },
+          "temporary": {
+            "allocated_bytes": 2496135168,
+            "owner_released_bytes": 2496135168,
+            "owner_releases": 102432,
+            "allocations": 102432,
+            "allocation_ns": 827702562,
+            "outside_release_ns": 154417209
+          },
+          "workspace": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          }
+        },
+        "retired_groups": 9987,
+        "group_retirement_ns": 737894316
+      },
+      "samples": [
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 296877,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27538321,
+              "outside_release_ns": 9368585
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 451,
+          "group_retirement_ns": 24238717
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 279375,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26318503,
+              "outside_release_ns": 2038922
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 318,
+          "group_retirement_ns": 27898200
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 267872,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26468879,
+              "outside_release_ns": 2235075
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 294,
+          "group_retirement_ns": 15617290
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 272581,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 29638515,
+              "outside_release_ns": 2273380
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 323,
+          "group_retirement_ns": 16003701
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 287041,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26874053,
+              "outside_release_ns": 3352621
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 437,
+          "group_retirement_ns": 19350537
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 261879,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25878037,
+              "outside_release_ns": 11906453
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 306,
+          "group_retirement_ns": 15029630
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 287335,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26447773,
+              "outside_release_ns": 23588884
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 336,
+          "group_retirement_ns": 15206841
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 256460,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27703794,
+              "outside_release_ns": 2140125
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 248,
+          "group_retirement_ns": 16306305
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 226038,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25131715,
+              "outside_release_ns": 13930414
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 302,
+          "group_retirement_ns": 34651161
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 268336,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25799788,
+              "outside_release_ns": 2013036
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 317,
+          "group_retirement_ns": 38114588
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 258417,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25336104,
+              "outside_release_ns": 1777453
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 284,
+          "group_retirement_ns": 14161965
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 296373,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27219476,
+              "outside_release_ns": 1880752
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 326,
+          "group_retirement_ns": 35022178
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 242788,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25093395,
+              "outside_release_ns": 1779419
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 261,
+          "group_retirement_ns": 14439537
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 270253,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 23466303,
+              "outside_release_ns": 1672459
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 250,
+          "group_retirement_ns": 34888577
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 251419,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26035451,
+              "outside_release_ns": 2131744
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 384,
+          "group_retirement_ns": 14411957
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 237705,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 23899980,
+              "outside_release_ns": 1859956
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 358,
+          "group_retirement_ns": 27534290
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 278751,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25459347,
+              "outside_release_ns": 1805216
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 308,
+          "group_retirement_ns": 14601763
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 266709,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25458334,
+              "outside_release_ns": 29024290
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 298,
+          "group_retirement_ns": 14726212
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 289961,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24033445,
+              "outside_release_ns": 1705378
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 331,
+          "group_retirement_ns": 14601618
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 280291,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26532414,
+              "outside_release_ns": 1816375
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 300,
+          "group_retirement_ns": 15810040
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 281998,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27771462,
+              "outside_release_ns": 2143367
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 270,
+          "group_retirement_ns": 14530007
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 262210,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 23780050,
+              "outside_release_ns": 1752040
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 268,
+          "group_retirement_ns": 38238586
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 264625,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24664946,
+              "outside_release_ns": 1818667
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 325,
+          "group_retirement_ns": 30832007
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 248163,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24783670,
+              "outside_release_ns": 1832293
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 397,
+          "group_retirement_ns": 23864150
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 250332,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27529878,
+              "outside_release_ns": 1806377
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 313,
+          "group_retirement_ns": 15593365
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 248166,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24877069,
+              "outside_release_ns": 1991796
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 302,
+          "group_retirement_ns": 23040541
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 255044,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25503329,
+              "outside_release_ns": 1828409
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 340,
+          "group_retirement_ns": 33492338
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 271210,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26629276,
+              "outside_release_ns": 15495037
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 268,
+          "group_retirement_ns": 14496116
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 238002,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25270222,
+              "outside_release_ns": 1775176
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 302,
+          "group_retirement_ns": 30603463
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 232165,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24498585,
+              "outside_release_ns": 1756868
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 255,
+          "group_retirement_ns": 38273844
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 239037,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26591802,
+              "outside_release_ns": 1870385
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 256,
+          "group_retirement_ns": 24648005
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 278125,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78004224,
+              "owner_released_bytes": 78004224,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25468646,
+              "outside_release_ns": 2046257
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 259,
+          "group_retirement_ns": 27666787
+        }
+      ]
+    },
+    {
+      "name": "append_128",
+      "decode_ms_per_token": 290.6772812500001,
+      "allocation_ms_per_token": 27.15934340625,
+      "temporary_allocation_ms_per_token": 26.87723971875,
+      "group_retirement_ms_per_token": 23.6537528125,
+      "outside_owner_release_ms_per_token": 7.8082393125,
+      "observed_cpu_interval_ms_per_token": 58.62133553125,
+      "temporary_reuse_upper_cpu_ms_per_token": 58.33923184375,
+      "allocation_count_per_token": 3238.0,
+      "memory_disturbance_observed": true,
+      "compressed_peak_bytes": 7972421632,
+      "costs": {
+        "classes": {
+          "expert": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "resident": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "snapshot": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          },
+          "state": {
+            "allocated_bytes": 163053568,
+            "owner_released_bytes": 163053568,
+            "owner_releases": 1184,
+            "allocations": 1184,
+            "allocation_ns": 9027318,
+            "outside_release_ns": 0
+          },
+          "temporary": {
+            "allocated_bytes": 2502426624,
+            "owner_released_bytes": 2502426624,
+            "owner_releases": 102432,
+            "allocations": 102432,
+            "allocation_ns": 860071671,
+            "outside_release_ns": 249863658
+          },
+          "workspace": {
+            "allocated_bytes": 0,
+            "owner_released_bytes": 0,
+            "owner_releases": 0,
+            "allocations": 0,
+            "allocation_ns": 0,
+            "outside_release_ns": 0
+          }
+        },
+        "retired_groups": 10714,
+        "group_retirement_ns": 756920090
+      },
+      "samples": [
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 293502,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27254050,
+              "outside_release_ns": 12449464
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 476,
+          "group_retirement_ns": 16079959
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 279373,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27422288,
+              "outside_release_ns": 5328583
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 328,
+          "group_retirement_ns": 16778674
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 246129,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26837153,
+              "outside_release_ns": 2068946
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 307,
+          "group_retirement_ns": 26887001
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 287082,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 28817420,
+              "outside_release_ns": 2118678
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 314,
+          "group_retirement_ns": 15652679
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 307628,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26443009,
+              "outside_release_ns": 2223418
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 453,
+          "group_retirement_ns": 15447665
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 303544,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26681456,
+              "outside_release_ns": 1928205
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 324,
+          "group_retirement_ns": 26728706
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 244045,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26093274,
+              "outside_release_ns": 2023918
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 381,
+          "group_retirement_ns": 40376310
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 293918,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27742283,
+              "outside_release_ns": 12956636
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 295,
+          "group_retirement_ns": 15937837
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 264542,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27469329,
+              "outside_release_ns": 9881677
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 295,
+          "group_retirement_ns": 25968212
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 278960,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26415490,
+              "outside_release_ns": 4667630
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 379,
+          "group_retirement_ns": 28712668
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 288669,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 28387979,
+              "outside_release_ns": 1869705
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 305,
+          "group_retirement_ns": 30536623
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 282876,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26339332,
+              "outside_release_ns": 20408537
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 330,
+          "group_retirement_ns": 15151633
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 254166,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27326583,
+              "outside_release_ns": 2299904
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 266,
+          "group_retirement_ns": 38977874
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 278413,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 28977671,
+              "outside_release_ns": 5313405
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 274,
+          "group_retirement_ns": 16730916
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 254251,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25903704,
+              "outside_release_ns": 9272877
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 385,
+          "group_retirement_ns": 21370964
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 316584,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 28108651,
+              "outside_release_ns": 6850756
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 355,
+          "group_retirement_ns": 20867633
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 262169,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 24899620,
+              "outside_release_ns": 1932707
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 300,
+          "group_retirement_ns": 39819493
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 334792,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25798305,
+              "outside_release_ns": 2925956
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 315,
+          "group_retirement_ns": 34246292
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 275413,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 28244235,
+              "outside_release_ns": 19277833
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 363,
+          "group_retirement_ns": 14810284
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 265285,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26034513,
+              "outside_release_ns": 2060464
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 380,
+          "group_retirement_ns": 35112073
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 289544,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26322737,
+              "outside_release_ns": 11754370
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 296,
+          "group_retirement_ns": 20919944
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 286502,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25837221,
+              "outside_release_ns": 2020171
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 308,
+          "group_retirement_ns": 36396585
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 258042,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26191705,
+              "outside_release_ns": 9392703
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 329,
+          "group_retirement_ns": 18211882
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 341957,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27863704,
+              "outside_release_ns": 17327257
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 439,
+          "group_retirement_ns": 14909179
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 280501,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26128777,
+              "outside_release_ns": 11253297
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 328,
+          "group_retirement_ns": 15558661
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 318168,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27060868,
+              "outside_release_ns": 5250632
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 339,
+          "group_retirement_ns": 32203074
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 248378,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25916431,
+              "outside_release_ns": 17705458
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 340,
+          "group_retirement_ns": 31584452
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 278879,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27637090,
+              "outside_release_ns": 11754947
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 291,
+          "group_retirement_ns": 15123088
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 293460,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 26235009,
+              "outside_release_ns": 5903529
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 347,
+          "group_retirement_ns": 15483093
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 263792,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 25162141,
+              "outside_release_ns": 21918797
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 282,
+          "group_retirement_ns": 16851339
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 295750,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27518068,
+              "outside_release_ns": 1970242
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 312,
+          "group_retirement_ns": 15357251
+        },
+        {
+          "classes": {
+            "expert": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "resident": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "snapshot": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            },
+            "state": {
+              "allocated_bytes": 5095424,
+              "owner_released_bytes": 5095424,
+              "owner_releases": 37,
+              "allocations": 37,
+              "allocation_ns": 261004,
+              "outside_release_ns": 0
+            },
+            "temporary": {
+              "allocated_bytes": 78200832,
+              "owner_released_bytes": 78200832,
+              "owner_releases": 3201,
+              "allocations": 3201,
+              "allocation_ns": 27001575,
+              "outside_release_ns": 5752956
+            },
+            "workspace": {
+              "allocated_bytes": 0,
+              "owner_released_bytes": 0,
+              "owner_releases": 0,
+              "allocations": 0,
+              "allocation_ns": 0,
+              "outside_release_ns": 0
+            }
+          },
+          "retired_groups": 278,
+          "group_retirement_ns": 28128046
+        }
+      ]
+    }
+  ],
+  "consider_bounded_reuse": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Measured CPU intervals can overlap GPU and I/O work and cannot be subtracted from request latency.",
+    "Temporary reuse bound includes all group-retirement work; some state, command and residency work would remain.",
+    "Owner callbacks nested in the same executor group retirement are excluded from the outside sum.",
+    "Retired bytes refer to engine-owner releases; they are not physical footprint or proof of immediate driver deallocation.",
+    "Counters are opt-in; disabled or old reports have missing measurements, not zero cost.",
+    "32 steps per request, short initial and append workloads; no 2K/4K or sustained acceptance."
+  ]
+}

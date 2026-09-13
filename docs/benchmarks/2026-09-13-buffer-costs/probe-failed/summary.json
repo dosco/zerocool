@@ -1,0 +1,9 @@
+{
+  "kind": "buffer_reuse_probe_capture_v1",
+  "complete": false,
+  "status": "failed",
+  "synthetic": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "error": "Command '['/tmp/freellm-probe-buffer-reuse', PosixPath('/repo/.cache/benchmarks/buffer-reuse-probe-20260913/probe.json')]' returned non-zero exit status 2."
+}

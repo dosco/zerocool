@@ -1,0 +1,12 @@
+{
+  "kind": "buffer_reuse_probe_capture_v1",
+  "complete": true,
+  "status": "captured",
+  "synthetic": true,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build": "870a3e3a6eeeb730f9cf7b7ca918a1aeb49c4fccfc73faccc28197a17e4886bd",
+  "source": "probe.json",
+  "sha256": "c102b78b349e049622bfa2cfa5eed6c943f8b83a0a7c4eb50e369bd25009ee15",
+  "material_isolated_opportunity": true
+}

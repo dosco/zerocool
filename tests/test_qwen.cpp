@@ -316,6 +316,40 @@ TEST_CASE("loading joins count separately and resize preserves surviving entries
     CHECK(cache.stats().misses==before);
     }
 }
+TEST_CASE("buffer costs count physical allocations and completed retirement without nested double counting") {
+    Metal gpu;CHECK(gpu.statistics()["buffer_costs"].is_null());gpu.buffer_diagnostics(true);
+    CHECK_THROWS(gpu.allocate(128,AllocationClass(99)));
+    auto input=gpu.zeros(32),output=gpu.allocate(128,AllocationClass::State);
+    auto costs=[&] {return gpu.statistics()["buffer_costs"];};
+    CHECK(costs()["classes"]["temporary"]["allocations"]==1);
+    CHECK(costs()["classes"]["state"]["allocations"]==1);
+    CHECK_THROWS(gpu.buffer_diagnostics(false));
+    gpu.dispatch("binary",{{input},{input},{output}},{32,0},32);
+    input.reset();output.reset();
+    CHECK(costs()["classes"]["temporary"]["owner_releases"]==0);
+    CHECK(costs()["retired_groups"]==0);
+    gpu.finish();const auto retired=costs();
+    CHECK(retired["retired_groups"]==1);CHECK(retired["group_retirement_ns"].get<uint64_t>()>0);
+    for(const char* name:{"temporary","state"}) {
+        const auto& c=retired["classes"][name];
+        CHECK(c["allocated_bytes"]==16384);CHECK(c["owner_released_bytes"]==16384);
+        CHECK(c["owner_releases"]==1);CHECK(c["allocation_ns"].get<uint64_t>()>0);
+        CHECK(c["outside_release_ns"]==0); // callback already included in the group-destruction interval
+    }
+    auto off_thread=gpu.allocate(128);
+    std::thread release([b=std::move(off_thread)]()mutable{b.reset();});release.join();
+    CHECK(costs()["classes"]["temporary"]["owner_releases"]==2);
+    CHECK(costs()["classes"]["temporary"]["outside_release_ns"].get<uint64_t>()>0);
+    // Arena views must count only the underlying workspace allocation.
+    gpu.begin_scratch(0,MiB);auto view=gpu.allocate(128);gpu.end_scratch();view.reset();
+    gpu.begin_scratch(0,MiB);view=gpu.allocate(128);gpu.end_scratch();view.reset();
+    CHECK(costs()["classes"]["temporary"]["allocations"]==2);
+    CHECK(costs()["classes"]["workspace"]["allocations"]==1);
+    CHECK(costs()["classes"]["workspace"]["owner_releases"]==0);
+    gpu.release_scratch();CHECK(costs()["classes"]["workspace"]["owner_releases"]==1);
+    const auto final_costs=costs();uint64_t count=0;for(const auto& c:final_costs["classes"].items()) count+=c.value()["allocations"].get<uint64_t>();
+    CHECK(count==gpu.statistics()["allocation_count"]);CHECK(gpu.allocated()==0);
+}
 TEST_CASE("completion pipeline executes later ready experts and rolls leases under forced eviction") {
     for(auto policy:{ExpertCachePolicy::Clock,ExpertCachePolicy::SegmentedLRU}) for(bool deferred:{false,true}) {
     Metal gpu;ReadPool reads(2);std::latch release_first(1);

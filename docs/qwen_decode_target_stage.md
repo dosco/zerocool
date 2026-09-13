@@ -116,3 +116,14 @@ buffer allocation/retirement cost before implementing bounded reuse. Both arms
 still allocate 3238 temporary/state buffers per token. The failed screen also
 recorded a 7.56GiB compression peak in one append despite no net swap growth;
 keep these observations explicit in later comparisons.
+
+The [buffer-cost capture](benchmarks/2026-09-13-buffer-costs/README.md) found
+54–59ms/token in measured allocation/retirement CPU intervals, but its compressed
+model pages keep the full-model opportunity result inconclusive. A separate
+bounded probe of the existing scratch pool saved a median 51.78ms per synthetic
+iteration over five alternating pairs, with no observed process compression.
+This supports testing single-token temporary reuse within the admitted scratch
+allowance. It does not predict the inference saving. Keep 1848 expert slots,
+unchanged arithmetic, and include cold allocation and pool release in normal
+initial/append comparisons. Release retained temporaries before multi-token
+prefill; cancellation must drain all GPU and I/O users before dropping ownership.

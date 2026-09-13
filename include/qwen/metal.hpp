@@ -60,6 +60,8 @@ public:
               uint64_t destination_offset, uint64_t bytes);
     Buf slice(const Buf& source, uint64_t offset, uint64_t bytes);
     void budget(uint64_t bytes);
+    // Opt-in scalar instrumentation, configured before any engine allocation.
+    void buffer_diagnostics(bool enabled);
     void residency(const std::string& mode);
     // Two coordinator-owned temporary pools. The previous GPU user must finish
     // before a pool is reset; persistent allocations always bypass the pools.
