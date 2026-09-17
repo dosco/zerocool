@@ -1,0 +1,1 @@
+{"kind": "owned_process_memory_observer_v1", "pid": 17463, "phase": {"phase": "draft_verify", "consumed_tokens": 0, "monotonic_ns": 5233619857788166}, "vmmap_exit_code": 0, "performance_measurement": false}

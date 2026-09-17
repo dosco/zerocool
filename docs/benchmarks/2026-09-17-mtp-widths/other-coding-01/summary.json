@@ -1,0 +1,822 @@
+{
+  "kind": "mtp_width_screen_v1",
+  "complete": true,
+  "status": "completed_other_coding_diagnostic_screen",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T18:59:49.968670+00:00",
+  "time_limit_seconds": 1500,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate"
+    }
+  ],
+  "workload": [
+    {
+      "name": "merge_intervals",
+      "prompt_text": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity.",
+      "prompt_ids": [
+        248045,
+        846,
+        198,
+        7734,
+        264,
+        12654,
+        709,
+        10562,
+        87682,
+        1494,
+        40798,
+        8,
+        421,
+        78161,
+        48142,
+        7629,
+        26126,
+        13,
+        3301,
+        10300,
+        26126,
+        1973,
+        93183,
+        279,
+        1879,
+        13,
+        13365,
+        449,
+        4147,
+        1103,
+        321,
+        26126,
+        421,
+        5615,
+        506,
+        449,
+        14456,
+        13,
+        28763,
+        279,
+        7873,
+        321,
+        2250,
+        2526,
+        52992,
+        7262,
+        4147,
+        1879,
+        11,
+        48142,
+        26126,
+        11,
+        321,
+        632,
+        27379,
+        81859,
+        26126,
+        13,
+        79091,
+        279,
+        854,
+        22373,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ],
+      "eos_ids": [
+        248046,
+        248044
+      ],
+      "max_tokens": 128,
+      "draft_slots": 32,
+      "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+    },
+    {
+      "name": "retry_backoff",
+      "prompt_text": "Implement an async TypeScript function retry<T>(operation: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T>. Retry only rejected operations. Use exponential backoff between attempts and no delay after the final failure. Reject invalid attempt counts or negative delays before invoking operation. Preserve the final thrown error. Include a short deterministic example that fails twice then succeeds and a test of permanent failure.",
+      "prompt_ids": [
+        248045,
+        846,
+        198,
+        60856,
+        449,
+        3203,
+        84441,
+        709,
+        21979,
+        3025,
+        2163,
+        8987,
+        25,
+        1659,
+        574,
+        7076,
+        3025,
+        7813,
+        1866,
+        78706,
+        25,
+        1324,
+        11,
+        7383,
+        20971,
+        25,
+        1324,
+        1590,
+        7076,
+        3025,
+        13867,
+        76176,
+        1132,
+        17030,
+        7289,
+        13,
+        5272,
+        56768,
+        1142,
+        1783,
+        1881,
+        13161,
+        321,
+        874,
+        7383,
+        1238,
+        279,
+        1534,
+        7652,
+        13,
+        84282,
+        8060,
+        4621,
+        14159,
+        466,
+        7968,
+        30056,
+        1518,
+        44491,
+        5488,
+        13,
+        78503,
+        279,
+        1534,
+        14555,
+        1412,
+        13,
+        28763,
+        264,
+        2716,
+        69892,
+        3010,
+        421,
+        14107,
+        10598,
+        1179,
+        48396,
+        321,
+        264,
+        1228,
+        314,
+        14884,
+        7652,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ],
+      "eos_ids": [
+        248046,
+        248044
+      ],
+      "max_tokens": 128,
+      "draft_slots": 32,
+      "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+    }
+  ],
+  "stage": "other-coding-diagnostic",
+  "performance_measurement": true,
+  "preliminary": true,
+  "advancement_allowed": false,
+  "full_clean_correctness": true,
+  "controlled_change": "requested_width",
+  "recovery": "full-replay",
+  "control_width": 4,
+  "candidate_width": 1,
+  "samples": [
+    {
+      "width": 4,
+      "source": "case-0-pair-0-width-4.json",
+      "input": "case-0-pair-0-width-4.input.json",
+      "sha256": "7169831846e50db52314ec1b157c94921db97c5137097621aa92d7d8ce5792a1",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10454766720,
+      "tokens_per_second": 4.339291349260524,
+      "generated_tokens": 128,
+      "rejected_cycles": 7,
+      "component_ms_per_token": {
+        "draft": 9.47610221875,
+        "verify": 201.5387122421875,
+        "recovery": 17.4399911640625,
+        "wall": 230.4523756328125,
+        "checkpoint_save": 1.2852444453125,
+        "other": 0.7123255625
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.212917,
+        "target_repair": 16.2184781796875,
+        "draft_restore": 0.001160828125,
+        "draft_catchup": 1.0072942890625
+      },
+      "repeated_target_rows": 14,
+      "target_recovery_read_bytes": 364953600,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 35,
+          "accepted": 33
+        },
+        "2": {
+          "proposed": 35,
+          "accepted": 30
+        },
+        "3": {
+          "proposed": 35,
+          "accepted": 28
+        }
+      },
+      "target_expert_bytes_per_committed_token": 658411200.0,
+      "case": 0,
+      "pair": 0,
+      "arm": "4"
+    },
+    {
+      "width": 1,
+      "source": "case-0-pair-0-width-1.json",
+      "input": "case-0-pair-0-width-1.input.json",
+      "sha256": "05fdabdf5b0c5af3522dd25e93c83134bfc9efd5a40db6c53d88a8aaf218516d",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10452554880,
+      "tokens_per_second": 4.05369468019735,
+      "generated_tokens": 128,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 243.305109640625,
+        "recovery": 2.4390585703125,
+        "wall": 246.6885345078125,
+        "checkpoint_save": 0.0,
+        "other": 0.944366296875
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.4388749765625
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 577756800.0,
+      "case": 0,
+      "pair": 0,
+      "arm": "1"
+    },
+    {
+      "width": 1,
+      "source": "case-0-pair-1-width-1.json",
+      "input": "case-0-pair-1-width-1.input.json",
+      "sha256": "fc0af7ca19b61ecb3802877b019f1808a8a8d121e74e0de53ae44a73ff2fbbe1",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10451850432,
+      "tokens_per_second": 3.890571934502306,
+      "generated_tokens": 128,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 253.5501276015625,
+        "recovery": 2.5301272890625,
+        "wall": 257.0316181875,
+        "checkpoint_save": 0.0,
+        "other": 0.951363296875
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.5299498125
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 577756800.0,
+      "case": 0,
+      "pair": 1,
+      "arm": "1"
+    },
+    {
+      "width": 4,
+      "source": "case-0-pair-1-width-4.json",
+      "input": "case-0-pair-1-width-4.input.json",
+      "sha256": "1585e6694e4faf88552f23314d6f29b309b7cd73d82e4f09f7d52995097d913f",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10455176320,
+      "tokens_per_second": 4.3394312080326065,
+      "generated_tokens": 128,
+      "rejected_cycles": 7,
+      "component_ms_per_token": {
+        "draft": 9.524191078125,
+        "verify": 201.5602734296875,
+        "recovery": 17.44316440625,
+        "wall": 230.4449482109375,
+        "checkpoint_save": 1.1953717421875,
+        "other": 0.7219475546875
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.2101992109375,
+        "target_repair": 16.21778190625,
+        "draft_restore": 0.001097,
+        "draft_catchup": 1.013966796875
+      },
+      "repeated_target_rows": 14,
+      "target_recovery_read_bytes": 364953600,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 35,
+          "accepted": 33
+        },
+        "2": {
+          "proposed": 35,
+          "accepted": 30
+        },
+        "3": {
+          "proposed": 35,
+          "accepted": 28
+        }
+      },
+      "target_expert_bytes_per_committed_token": 658411200.0,
+      "case": 0,
+      "pair": 1,
+      "arm": "4"
+    },
+    {
+      "width": 1,
+      "source": "case-1-pair-0-width-1.json",
+      "input": "case-1-pair-0-width-1.input.json",
+      "sha256": "3a607b975dd70b53f45459ccabb444aeb1c1b35725deb77bfe8b6ab1b432f895",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10452997184,
+      "tokens_per_second": 3.6629796101293968,
+      "generated_tokens": 128,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 269.3263772421875,
+        "recovery": 2.701969078125,
+        "wall": 273.0017926484375,
+        "checkpoint_save": 0.0,
+        "other": 0.973446328125
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.70174578125
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 645148800.0,
+      "case": 1,
+      "pair": 0,
+      "arm": "1"
+    },
+    {
+      "width": 4,
+      "source": "case-1-pair-0-width-4.json",
+      "input": "case-1-pair-0-width-4.input.json",
+      "sha256": "f67fcd4e88615f26f3b6a842e85d115827cfd92e9c4511e77612c8c8ee97972d",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10458764416,
+      "tokens_per_second": 3.593663718244174,
+      "generated_tokens": 128,
+      "rejected_cycles": 13,
+      "component_ms_per_token": {
+        "draft": 9.9141809921875,
+        "verify": 225.6295192109375,
+        "recovery": 40.7538994140625,
+        "wall": 278.2675504453125,
+        "checkpoint_save": 1.21108434375,
+        "other": 0.758866484375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.3790719375,
+        "target_repair": 39.225147796875,
+        "draft_restore": 0.0010940625,
+        "draft_catchup": 1.1484140625
+      },
+      "repeated_target_rows": 33,
+      "target_recovery_read_bytes": 1711411200,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 36,
+          "accepted": 35
+        },
+        "2": {
+          "proposed": 36,
+          "accepted": 31
+        },
+        "3": {
+          "proposed": 36,
+          "accepted": 23
+        }
+      },
+      "target_expert_bytes_per_committed_token": 753818400.0,
+      "case": 1,
+      "pair": 0,
+      "arm": "4"
+    },
+    {
+      "width": 4,
+      "source": "case-1-pair-1-width-4.json",
+      "input": "case-1-pair-1-width-4.input.json",
+      "sha256": "4e5d7045553a800465898bf8896f06e448f8d77a5862dd0d3536476fd6c78593",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10457289792,
+      "tokens_per_second": 3.5631136166199955,
+      "generated_tokens": 128,
+      "rejected_cycles": 13,
+      "component_ms_per_token": {
+        "draft": 9.9470217890625,
+        "verify": 225.7453772578125,
+        "recovery": 42.9192792578125,
+        "wall": 280.6534137265625,
+        "checkpoint_save": 1.2724547578125,
+        "other": 0.7692806640625
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.387705078125,
+        "target_repair": 41.36962109375,
+        "draft_restore": 0.0009996953125,
+        "draft_catchup": 1.1608564375
+      },
+      "repeated_target_rows": 33,
+      "target_recovery_read_bytes": 1711411200,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 36,
+          "accepted": 35
+        },
+        "2": {
+          "proposed": 36,
+          "accepted": 31
+        },
+        "3": {
+          "proposed": 36,
+          "accepted": 23
+        }
+      },
+      "target_expert_bytes_per_committed_token": 753818400.0,
+      "case": 1,
+      "pair": 1,
+      "arm": "4"
+    },
+    {
+      "width": 1,
+      "source": "case-1-pair-1-width-1.json",
+      "input": "case-1-pair-1-width-1.input.json",
+      "sha256": "2a4a511caaf7e705d09f7f5b7149bb6ac3e82d5142524a4ab9710594be1b2fef",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10453128320,
+      "tokens_per_second": 3.748508938723832,
+      "generated_tokens": 128,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 263.2681353828125,
+        "recovery": 2.5470022265625,
+        "wall": 266.7727398671875,
+        "checkpoint_save": 0.0,
+        "other": 0.9576022578125
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.546811859375
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 645148800.0,
+      "case": 1,
+      "pair": 1,
+      "arm": "1"
+    }
+  ],
+  "pairs": [
+    {
+      "case": 0,
+      "pair": 0,
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 1.0704534237515069,
+      "control_tps": 4.339291349260524,
+      "candidate_tps": 4.05369468019735
+    },
+    {
+      "case": 0,
+      "pair": 1,
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 1.1153710254139588,
+      "control_tps": 4.3394312080326065,
+      "candidate_tps": 3.890571934502306
+    },
+    {
+      "case": 1,
+      "pair": 0,
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 0.9810766372563089,
+      "control_tps": 3.593663718244174,
+      "candidate_tps": 3.6629796101293968
+    },
+    {
+      "case": 1,
+      "pair": 1,
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 0.9505415819637997,
+      "control_tps": 3.5631136166199955,
+      "candidate_tps": 3.748508938723832
+    }
+  ],
+  "historical_timing_reused": false,
+  "prerequisite": "/repo/docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/summary.json",
+  "case_results": [
+    {
+      "name": "merge_intervals",
+      "geometric_mean_ratio": 1.0926814416414334,
+      "candidate_regresses": true,
+      "candidate_passes_three_percent_gate": false
+    },
+    {
+      "name": "retry_backoff",
+      "geometric_mean_ratio": 0.9656884273953669,
+      "candidate_regresses": false,
+      "candidate_passes_three_percent_gate": true
+    }
+  ],
+  "limitations": [
+    "Two fresh alternating pairs per 128-token coding workload; no confidence bound.",
+    "Workloads remain separate. Previous LRU timing is not pooled into this stage.",
+    "This measures workload crossover and cannot qualify an adaptive policy or production.",
+    "Five fresh pairs, long-context and sustained-session qualification remain outstanding."
+  ],
+  "host_preflight": [
+    {
+      "source": "case-0-pair-0-width-4-host.json",
+      "sha256": "cab8af5ac9f3df23ec9292e5b5be31eae57879ab4c81953369fb57c4027b3874",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275252395549833,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-0-width-1-host.json",
+      "sha256": "b2fa157120fd1388aa0205847c9fcf3cf9a33583c084cd786c979d3d58594956",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275303835874083,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-1-width-1-host.json",
+      "sha256": "ce1a99c64d2e233100524ea8f53a61eb27c572dfc1ba1d0edef9f34afc67729c",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275357357992416,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-1-width-4-host.json",
+      "sha256": "0b59cc9c008b8171c816a21222c92d7da9a3d0c0b2b806244da4b1c372709710",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275412224116625,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-1-pair-0-width-1-host.json",
+      "sha256": "89659e762c60b0bf99c06955ec0e0e0670d33a638788ab19c081917bd605c753",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275463841095375,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-1-pair-0-width-4-host.json",
+      "sha256": "7d476c436f104cf392440774a231f2cbc652f379a9fee03a7739c252b920c1ce",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275524897667875,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-1-pair-1-width-4-host.json",
+      "sha256": "3fc1f77e3343c158a81926def2c22553b6361746b3ae39885c50f06e6e4be493",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275586580848791,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-1-pair-1-width-1-host.json",
+      "sha256": "6994afc3618d99e951cb2f583bba41bf5ce765813074996365f0aa72733c21b0",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5275648673123541,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "elapsed_seconds": 461.3511492917314
+}

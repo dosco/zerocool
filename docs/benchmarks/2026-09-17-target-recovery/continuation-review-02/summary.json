@@ -1,0 +1,120 @@
+{
+  "kind": "target_recovery_continuation_review_v2",
+  "complete": true,
+  "status": "numerically_exact_resources_unqualified",
+  "performance_measurement": false,
+  "resource_qualified": false,
+  "production_promoted": false,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-09/summary.json",
+      "sha256": "70fe1467472ad359f67fed1cf1fff6dab4a99230038b7d8ad668fa5d0741ed6e",
+      "seal_sha256": "9453e0c10b8e975ba3db4d35f4f3b3f790c2399e5fd72ee90bf8287513e25e66"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/memory-diagnostic-02/summary.json",
+      "sha256": "e07bc07df46c815e5530a06411703e19eae542f7cf835a035a183e27e4b17dad",
+      "seal_sha256": "93a533e387d8b474aad2a3f8452251f6ec439175632567c43b8812a2026c2b7e"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/startup-heap-01/summary.json",
+      "sha256": "2bf1606552024eea99e169210ce7f054a00c30eb2af90ef3fd67f2540fd1771a",
+      "seal_sha256": "aca652689b780db01baa897a956dc298940849e9d4b07bd96e9cce13c6b64327"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/early-screen-01/summary.json",
+      "sha256": "fbe52511ca34a7dfa19c358c78a11082347cdcced81df21664304e28dc2e155f",
+      "seal_sha256": "c8526fed0e9df4464125a429a46d1b48b4ba7a7df498cdfa30d99ca8503268c3"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/summary.json",
+      "sha256": "e5a479359bf67b3681032783251a010ce5d17ec7dbbb4477c4d58f9b6c3ec88a",
+      "seal_sha256": "8f085ef0df4920b99ce158cf072bcac87753d503e8a8a64b8bed1b48c9abc09c"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-10/summary.json",
+      "sha256": "6f50e0038192744bce4878db03a1de07a8b137ae4fd0dff3425bdb082900291c",
+      "seal_sha256": "8f5c302c00700b58a81ceb3972b8f86dcc1b1a7d0da4eeb5bfc966d1810d2fd3"
+    }
+  ],
+  "full_model_cases": [
+    "prefix-1",
+    "prefix-2",
+    "prefix-3",
+    "prefix-4",
+    "immediate-eos"
+  ],
+  "all_logits_tokens_future_proposals_state_exact": true,
+  "candidate_recovery_target_forwards": 0,
+  "candidate_recovery_expert_read_bytes": 0,
+  "clean_numerical_runs": 4,
+  "total_numerical_runs": 10,
+  "numerical_peak_physical_bytes": 10509194496,
+  "numerical_peak_compressed_bytes": 33062912,
+  "individually_reassembled_clean_cases": [
+    "prefix-1"
+  ],
+  "full_clean_correctness_stage_passed": false,
+  "usable_timing_pairs": 0,
+  "startup_heap_release": {
+    "exact_outputs_and_state": true,
+    "api_reported_released_bytes": [
+      0,
+      0
+    ],
+    "conclusion": "No clean memory fix established; original diagnostic remains resource_blocked"
+  },
+  "resource_stops": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-09/correctness/case-0-pair-0-full-replay.json",
+      "sha256": "18d4250665eca89d5e46a8848e21af21f25c1b4df9e15e14d431d49df946b65c",
+      "reason": "trial-09/correctness: process compression observed: 24264704 bytes; process decompressions changed: 0 to 512"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/early-screen-01/case-0-pair-0-full-replay.json",
+      "sha256": "d48e336ca35bec2e0ec2b0aae0b7d58f4eba1791fad1d89718fe863ebd24194b",
+      "reason": "early-screen-01: process compression observed: 8339456 bytes; process decompressions changed: 0 to 1150"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-10/correctness/case-1-pair-0-full-replay.json",
+      "sha256": "47d62cae676a8500b95a3a0abc826e9a396831e778fbbf1169f4e1eb265a977b",
+      "reason": "trial-10/correctness: process compression observed: 31195136 bytes; process decompressions changed: 0 to 411"
+    }
+  ],
+  "python_tests": 494,
+  "production_native_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "diagnostic_source_copies": [
+    {
+      "original": "/repo/.cache/recovery-memory-child-02.py",
+      "copy": "diagnostic-sources/recovery-memory-child-02.py",
+      "sha256": "55edc99c6584e4d944e15820403696f44bcc450efe542e0944acf00f2b51cc6e"
+    },
+    {
+      "original": "/repo/.cache/run-recovery-memory-02.py",
+      "copy": "diagnostic-sources/run-recovery-memory-02.py",
+      "sha256": "284219eb6186be28a4ab0eeda13c42754158a78391515f809adc391e1ca87551"
+    },
+    {
+      "original": "/repo/.cache/build-recovery-startup-relief-01.py",
+      "copy": "diagnostic-sources/build-recovery-startup-relief-01.py",
+      "sha256": "7b39cb439e4ccbc4047dc4d48204460a6570ec7f3a6fdfff828893de48823e5c"
+    },
+    {
+      "original": "/repo/.cache/run-recovery-startup-relief-01.py",
+      "copy": "diagnostic-sources/run-recovery-startup-relief-01.py",
+      "sha256": "effbdba16bec29857725ade35de5b0719e1dbceab0db17d8bc74a4c77f24db4c"
+    },
+    {
+      "original": "/repo/.cache/run-recovery-numerical-diagnostic-01.py",
+      "copy": "diagnostic-sources/run-recovery-numerical-diagnostic-01.py",
+      "sha256": "2a2890404e5ee8fba8ab1c0fa094054d0db3f0fa0984e479fc3a5c146560a74c"
+    }
+  ],
+  "limitations": [
+    "Numerical equality does not waive memory gates.",
+    "The first strict clean case reuses validation only; no timing is pooled.",
+    "VM map categories do not identify individual C++ allocation owners.",
+    "Neither recovery nor fixed draft widths is promoted."
+  ]
+}

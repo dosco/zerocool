@@ -1,0 +1,57 @@
+{
+  "kind": "target_recovery_diagnostic_replay_v1",
+  "complete": true,
+  "status": "diagnostic_checks_passed",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T06:52:16.268487+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {},
+  "historical_timing_reused": false,
+  "controlled_change": "target_recovery",
+  "paired_confidence_qualified": false,
+  "capture_source": "/repo/docs/benchmarks/2026-09-17-target-recovery/real-fixture-01",
+  "capture_resources": {
+    "clean_memory": false,
+    "clean_host": true,
+    "peak_physical_bytes": 10511881664
+  },
+  "qualification_eligible": false,
+  "reason": "Capture recorded compression; diagnostic replay only",
+  "host_preflight": [
+    {
+      "source": "replay-host.json",
+      "sha256": "be88b850b6316948f8b666648e9df2b668187103964dd13bc0ebe7af00fe611e",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5231599717333333,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "replay_resources": {
+    "clean_memory": true,
+    "clean_host": true,
+    "peak_physical_bytes": 773000064
+  },
+  "fixture_manifest_sha256": "4145045113c3a0d01afb4ad976c0bad7c6fbfffb544786a4a9e5811f819b61bc",
+  "elapsed_seconds": 26.467356082983315
+}

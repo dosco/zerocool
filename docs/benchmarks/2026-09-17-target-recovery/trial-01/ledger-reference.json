@@ -1,0 +1,20 @@
+{
+  "path": "/repo/docs/experiments/7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e.json",
+  "id": "7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-01/summary.json",
+      "sha256": "ddd641a28f8454785e435469271db12be372a9a27824f3277e11e46869feb9b4",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-01/summary.json"
+      ],
+      "unavailable_aliases": [],
+      "recorded_status": "resource_blocked",
+      "recorded_complete": false
+    }
+  ],
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ]
+}

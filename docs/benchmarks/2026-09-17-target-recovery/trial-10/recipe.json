@@ -1,0 +1,44 @@
+{
+  "kind": "target_recovery_recipe_v1",
+  "arms": [
+    "full-replay",
+    "state-only"
+  ],
+  "controlled_change": "target_recovery",
+  "memory_bytes": 12884901888,
+  "journal_bytes": 16777216,
+  "target_slots": 1460,
+  "draft_slots": 32,
+  "prerequisites": [
+    "exact_saved_state",
+    "exact_full_model",
+    "clean_memory_power_thermal"
+  ],
+  "stage_seconds": {
+    "fixtures": 900,
+    "correctness": 1800,
+    "short": 1200,
+    "all_accepted": 600,
+    "long": 3000
+  },
+  "thresholds": {
+    "first_gain": 0.05,
+    "reverse_gain": 0.05,
+    "all_accepted_regression": 0.02,
+    "long_gain": 0.05,
+    "case_regression": 0.02
+  },
+  "workloads": {
+    "short_case": "lru_cache",
+    "short_tokens": 64,
+    "all_accepted_case": "merge_intervals",
+    "all_accepted_tokens": 16,
+    "long_cases": [
+      "merge_intervals",
+      "lru_cache",
+      "retry_backoff"
+    ],
+    "long_tokens": 128,
+    "long_pairs": 2
+  }
+}

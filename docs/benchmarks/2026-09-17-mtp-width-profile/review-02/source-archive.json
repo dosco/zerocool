@@ -1,0 +1,46 @@
+{
+  "/repo/scripts/qwen/build_mtp_width_profile.py": {
+    "sha256": "1cb4564ea10c9f361c71bc0f8fcb1f79aa03ef4642246b093275e02e9d69f1fc",
+    "snapshot": "tools/build_mtp_width_profile.py"
+  },
+  "/repo/scripts/qwen/build_mtp_width_counters.py": {
+    "sha256": "ad30d7ae4641e3d2c6001166ccbe0004fdaff3e467d515abbfb09d943bf55436",
+    "snapshot": "tools/build_mtp_width_counters.py"
+  },
+  "/repo/scripts/qwen/capture_mtp_width_profile.py": {
+    "sha256": "1aa927de34e9babe87e0e28f13d08430169250f7a2514f6e8a5005867d053548",
+    "snapshot": "tools/capture_mtp_width_profile.py"
+  },
+  "/repo/scripts/qwen/test_mtp_width_profile.py": {
+    "sha256": "92f3c4fc7011b48c7dd3caa0e2e239396f0e661b5a9dbb153361a6d516afe712",
+    "snapshot": "tools/test_mtp_width_profile.py"
+  },
+  "/repo/scripts/qwen/block_compute_profile.py": {
+    "sha256": "8a1ab2930017a361c7cd954902bf979757d7cc512c629e75e6fefac0d84c2860",
+    "snapshot": "tools/block_compute_profile.py"
+  },
+  "/repo/scripts/qwen/evidence_queries.py": {
+    "sha256": "081fa17fe904d32251d4388c092ed1ae75d7f1d06a840de52b405882136fae1e",
+    "snapshot": "tools/evidence_queries.py"
+  },
+  "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/README.md": {
+    "sha256": "15892ec9dcc539fd4460669b1deb917cd356388ac648067c357cba9ec3fa021b",
+    "snapshot": "docs/README.md"
+  },
+  "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/counter-protocol.md": {
+    "sha256": "ad16596dcce5fc30e957ee8139b4afce91aaf7545a89aa0f35de2afca0620fbb",
+    "snapshot": "docs/counter-protocol.md"
+  },
+  "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/next-protocol.md": {
+    "sha256": "e2d45452bec50ac8fa09e77ed0ac6a3787d4f0e77b013b277c7ef38991a0f950",
+    "snapshot": "docs/next-protocol.md"
+  },
+  "/repo/docs/qwen_plan.md": {
+    "sha256": "448f0413ba7765afe2004b43c4608f55aa4f9fe20d8fc7df807bf60c7241ed83",
+    "snapshot": "docs/qwen_plan.md"
+  },
+  "/repo/docs/qwen_evidence_queries.md": {
+    "sha256": "fa5169a54f74898cd13d7bd6b8eed61da88403b5dbaf427e6bbeb673321330f2",
+    "snapshot": "docs/qwen_evidence_queries.md"
+  }
+}

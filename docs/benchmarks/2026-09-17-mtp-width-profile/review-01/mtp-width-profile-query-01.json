@@ -1,0 +1,27 @@
+{
+  "status": "partial_diagnostic",
+  "recorded_status": "resource_blocked",
+  "error": "Fixed 12GiB experiment requires 13.5GiB currently available memory",
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/summary.json",
+      "sha256": "6596d1d8a49bbd1b18cca58b9d61cd8b2e246ac0e51d11fe864f97f33e8123e3",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/summary.json"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Instrumented time is not normal throughput or a speedup estimate.",
+    "Overlap buckets do not establish the cause of a stall or recoverable latency.",
+    "Profile coverage is bounded; unrelated requests and timings are not pooled."
+  ],
+  "performance_measurement": false,
+  "production_promoted": false,
+  "possible_request_benefit": null,
+  "missing_evidence": [
+    "Complete clean exact target profile"
+  ],
+  "smallest_experiment": "Resolve the recorded blocker before one fresh bounded capture; preserve this attempt."
+}

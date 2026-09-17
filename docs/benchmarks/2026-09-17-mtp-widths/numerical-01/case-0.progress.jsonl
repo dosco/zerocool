@@ -1,0 +1,11 @@
+{"phase":"load_target","consumed_tokens":0,"monotonic_ns":5273168393680291}
+{"phase":"prime_target","consumed_tokens":0,"monotonic_ns":5273170139701500}
+{"phase":"prime_draft","consumed_tokens":0,"monotonic_ns":5273197619795041}
+{"phase":"draft_verify","consumed_tokens":0,"monotonic_ns":5273198368206500}
+{"phase":"draft_verify","consumed_tokens":1,"monotonic_ns":5273199503649875}
+{"phase":"draft_verify","consumed_tokens":2,"monotonic_ns":5273200458554708}
+{"phase":"draft_verify","consumed_tokens":3,"monotonic_ns":5273201629012083}
+{"phase":"draft_verify","consumed_tokens":4,"monotonic_ns":5273202485124291}
+{"phase":"draft_verify","consumed_tokens":5,"monotonic_ns":5273203662986625}
+{"phase":"draft_verify","consumed_tokens":6,"monotonic_ns":5273204501665083}
+{"phase":"complete","consumed_tokens":0,"monotonic_ns":5273205949457125}

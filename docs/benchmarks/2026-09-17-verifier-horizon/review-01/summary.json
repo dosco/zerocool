@@ -1,0 +1,226 @@
+{
+  "kind": "verifier_horizon_review_v1",
+  "complete": true,
+  "status": "exact_embedding_storage_and_rejected_fixed_eight_horizons",
+  "recorded_at": "2026-09-17T21:53:29.904816+00:00",
+  "production_promoted": false,
+  "speedup_established": false,
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "python_tests": 525,
+  "removed_resident_allocation_bytes": 675446784,
+  "embedding_host_reserve_bytes": 2097152,
+  "planned_memory_reduction_bytes": 673349632,
+  "numerical_resident_streamed_serial_equal": true,
+  "reports": [
+    {
+      "directory": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/screen-01",
+      "seal_sha256": "19876b1bce6e9d707b33ca84e96b69f16792111cc64067df4fd192110a25ce39",
+      "summary_sha256": "4fdb3777bac1b1fec413fd33886ffd649136ac53a97048ed01dde08b295307ef",
+      "status": "resource_blocked",
+      "complete": false,
+      "samples": [
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/screen-01/validation-serial.json",
+          "sha256": "b84f03a0a2b4a4f139257a74d836b2d26a01264f66c945a46c1172665238b506",
+          "width": 1,
+          "validation": true,
+          "observation": {
+            "clean_memory": false,
+            "clean_host": true,
+            "peak_physical_bytes": 10508391744,
+            "exact_full_logits": true,
+            "verified_tps": 1.3419243993407126,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          }
+        }
+      ]
+    },
+    {
+      "directory": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/streamed-screen-01",
+      "seal_sha256": "287642c3156b350dbc7fe0bdd1ae64a354b42b3e9716850a9ff0cb3b6b1f1ba5",
+      "summary_sha256": "cd3f5b7119905a70bfcd1d12c1a4ea21c4c60f47e85da5ac9009861cd1fb1c17",
+      "status": "resource_blocked",
+      "complete": false,
+      "samples": [
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/streamed-screen-01/validation-serial.json",
+          "sha256": "fa7b96027e708e7fdd1839ef8d96be115a34130234146ab077d889cca3423f90",
+          "width": 1,
+          "validation": true,
+          "observation": {
+            "clean_memory": false,
+            "clean_host": true,
+            "peak_physical_bytes": 9835630656,
+            "exact_full_logits": true,
+            "verified_tps": 1.3374442903370134,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          }
+        }
+      ]
+    },
+    {
+      "directory": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/early-01",
+      "seal_sha256": "42aabb0b2b0201a3c44b95812bd59a452eb3e3bc1d42b0f799bfb12e9dadc4d6",
+      "summary_sha256": "fc8e83fc66f2e959e1053ddc0300fca30286df93e0516c1c75de0f4eb082d0ba",
+      "status": "insufficient_verifier_headroom",
+      "complete": true,
+      "samples": [
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/early-01/numerical-eight.json",
+          "sha256": "93d4437f223667d7a18ba79987f60303c66a67f47f8af3711be94abfa8c3237c",
+          "width": 8,
+          "validation": true,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9827536960,
+            "exact_full_logits": true,
+            "verified_tps": 2.258459129245437,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          }
+        },
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/early-01/pair-0-width-4.json",
+          "sha256": "a5e99fd8e4d32403d215d8c69956e5722f38139d916c65e439e30aee04bf4688",
+          "width": 4,
+          "validation": false,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9704509120,
+            "exact_full_logits": true,
+            "verified_tps": 5.612722681514379,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          },
+          "expert_hits": 6181,
+          "expert_misses": 13610,
+          "expert_hit_rate": 0.3123136779344146,
+          "application_expert_bytes_per_verified_token": 587952000.0,
+          "gpu_command_ms_per_verified_token": 98.2323695625
+        },
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/early-01/pair-0-width-8.json",
+          "sha256": "717614ed913a77a5b7e6b44436f8d21aacdca817208e4822c4922483c1f330a5",
+          "width": 8,
+          "validation": false,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9714323136,
+            "exact_full_logits": true,
+            "verified_tps": 4.3174429014439,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          },
+          "expert_hits": 0,
+          "expert_misses": 15916,
+          "expert_hit_rate": 0.0,
+          "application_expert_bytes_per_verified_token": 687571200.0,
+          "gpu_command_ms_per_verified_token": 151.567495296875
+        }
+      ]
+    },
+    {
+      "directory": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/tiled-early-01",
+      "seal_sha256": "5da8d9a23fc4187da82a43f96b8d5c91d3073aadee8bccaef6dcf9984da62cf2",
+      "summary_sha256": "2ac994f8e8481141c033e1e10e788adb10f92b58ced57db4413e6e246fc823df",
+      "status": "insufficient_verifier_headroom",
+      "complete": true,
+      "samples": [
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/tiled-early-01/numerical-eight.json",
+          "sha256": "98c706af443aff269593bf345bb90abb566200dcbc7172ffb65fe12c44b84fdf",
+          "width": 8,
+          "validation": true,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9828585600,
+            "exact_full_logits": true,
+            "verified_tps": 2.389809401515921,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          }
+        },
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/tiled-early-01/pair-0-width-4.json",
+          "sha256": "d7993c558675bbb7030f3b9646b415e712138b230e470e1384763c8ec34b0028",
+          "width": 4,
+          "validation": false,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9703149120,
+            "exact_full_logits": true,
+            "verified_tps": 5.5640659320513,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          },
+          "expert_hits": 6181,
+          "expert_misses": 13610,
+          "expert_hit_rate": 0.3123136779344146,
+          "application_expert_bytes_per_verified_token": 587952000.0,
+          "gpu_command_ms_per_verified_token": 100.728811
+        },
+        {
+          "source": "/repo/docs/benchmarks/2026-09-17-verifier-horizon/tiled-early-01/pair-0-width-8.json",
+          "sha256": "8f187e1ab9a232ab7aea8c7e43d88328f1ece56f0d313689d5503bbcd57c26f0",
+          "width": 8,
+          "validation": false,
+          "observation": {
+            "clean_memory": true,
+            "clean_host": true,
+            "peak_physical_bytes": 9714765440,
+            "exact_full_logits": true,
+            "verified_tps": 5.430342402260116,
+            "normal_request_latency_qualified": false,
+            "perfect_proposals_only": true
+          },
+          "expert_hits": 0,
+          "expert_misses": 15916,
+          "expert_hit_rate": 0.0,
+          "application_expert_bytes_per_verified_token": 687571200.0,
+          "gpu_command_ms_per_verified_token": 96.798154734375
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "directory": "early-01",
+      "exact_logits_and_state": true,
+      "ratio": 1.3000108651436464,
+      "control_verified_tps": 5.612722681514379,
+      "candidate_verified_tps": 4.3174429014439,
+      "perfect_proposals_only": true,
+      "normal_request_latency_qualified": false
+    },
+    {
+      "directory": "tiled-early-01",
+      "exact_logits_and_state": true,
+      "ratio": 1.024625248259765,
+      "control_verified_tps": 5.5640659320513,
+      "candidate_verified_tps": 5.430342402260116,
+      "perfect_proposals_only": true,
+      "normal_request_latency_qualified": false
+    }
+  ],
+  "allocation_only": {
+    "current_max_expert_slots": 1909,
+    "hypothetical_max_with_128MiB_decode_workspace": 2054,
+    "actual_phase_transition_validated": false
+  },
+  "generated_shader_matches_canonical_source": true,
+  "limitations": [
+    "Every rate is a perfect-proposal verifier ceiling, never real generated-token throughput.",
+    "Two separate early screens, one fresh pair each, without cross-producer timing comparison or paired confidence.",
+    "Compressed serial validation remains unqualified; numerical equality is rechecked independently.",
+    "Embedding rows are validated in the isolated verifier and draft priming; real MTP proposals/session integration remain outstanding.",
+    "Generated base shader is archived and checked against its canonical source in this audit; initial producer receipts bound the canonical shader and native archive."
+  ]
+}

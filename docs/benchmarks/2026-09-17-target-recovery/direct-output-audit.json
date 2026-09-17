@@ -1,0 +1,1038 @@
+{
+  "kind": "mtp_recovery_offline_audit_v1",
+  "complete": true,
+  "inference_launched": false,
+  "comparison": {
+    "comparable": true,
+    "status": "measured",
+    "controlled_change": {
+      "direct_output": [
+        "off",
+        "on"
+      ]
+    },
+    "pairs": [
+      {
+        "case": "merge_intervals",
+        "pair": 0,
+        "exact_all_logits_tokens_and_state": true,
+        "ratio": 1.0019669308082795,
+        "control_tps": 4.412822472712144,
+        "candidate_tps": 4.404159795126524,
+        "control_counters": {
+          "allocation_count": 274909,
+          "scratch_reuses": 25608,
+          "dispatches": 253239,
+          "submissions": 37806
+        },
+        "candidate_counters": {
+          "allocation_count": 215851,
+          "scratch_reuses": 25608,
+          "dispatches": 223710,
+          "submissions": 38128
+        },
+        "direct_writes": 29529,
+        "avoided_copy_bytes": 302376960,
+        "lazy_cache_exact": true
+      },
+      {
+        "case": "lru_cache",
+        "pair": 0,
+        "exact_all_logits_tokens_and_state": true,
+        "ratio": 0.9785076054659666,
+        "control_tps": 3.091553083983944,
+        "candidate_tps": 3.1594573886952495,
+        "control_counters": {
+          "allocation_count": 373525,
+          "scratch_reuses": 80025,
+          "dispatches": 395106,
+          "submissions": 50676
+        },
+        "candidate_counters": {
+          "allocation_count": 304545,
+          "scratch_reuses": 80025,
+          "dispatches": 360616,
+          "submissions": 51593
+        },
+        "direct_writes": 34490,
+        "avoided_copy_bytes": 353177600,
+        "lazy_cache_exact": true
+      },
+      {
+        "case": "retry_backoff",
+        "pair": 0,
+        "exact_all_logits_tokens_and_state": true,
+        "ratio": 0.9758977492909474,
+        "control_tps": 3.626872243074593,
+        "candidate_tps": 3.7164469799318107,
+        "control_counters": {
+          "allocation_count": 306774,
+          "scratch_reuses": 70422,
+          "dispatches": 326159,
+          "submissions": 45631
+        },
+        "candidate_counters": {
+          "allocation_count": 242544,
+          "scratch_reuses": 70422,
+          "dispatches": 294044,
+          "submissions": 46247
+        },
+        "direct_writes": 32115,
+        "avoided_copy_bytes": 328857600,
+        "lazy_cache_exact": true
+      }
+    ],
+    "cases": [
+      {
+        "case": "merge_intervals",
+        "pairs": 1,
+        "geometric_mean_ratio": 1.0019669308082795,
+        "confidence_95": null
+      },
+      {
+        "case": "lru_cache",
+        "pairs": 1,
+        "geometric_mean_ratio": 0.9785076054659666,
+        "confidence_95": null
+      },
+      {
+        "case": "retry_backoff",
+        "pairs": 1,
+        "geometric_mean_ratio": 0.9758977492909474,
+        "confidence_95": null
+      }
+    ],
+    "sources": [
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/summary.json",
+        "sha256": "53ff72284cf671c92a7af9a4e6312e0f376b94ee448a7da765692228cf76a706",
+        "aliases": [
+          "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/summary.json"
+        ],
+        "unavailable_aliases": []
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/producer.json",
+        "sha256": "61c4d85d3ed8ce44aa29cabc794f17c9b7842fdb258cd23508b1cf42092df415"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/identity.json",
+        "sha256": "16f997c25964880d552e80ab096df24a7a1edb995fc3262baee94a7288a835f1"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json",
+        "sha256": "8dcec4f6f02e24fbf9ed18e334be0d109311c2fdda133b29aef7749f0e5a842f"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0.json",
+        "sha256": "d9ddfc67818d8cec6d912a871131c430bb6c6de127969e77221b4e78204524ad"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-on.json",
+        "sha256": "1efa8585c63396c5b4d9db0db476b1930ba02adae2536bb6bfac42df0a71eea1"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0.json",
+        "sha256": "d9ddfc67818d8cec6d912a871131c430bb6c6de127969e77221b4e78204524ad"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json",
+        "sha256": "22388d9e00a3651e7151be3e56113cf3da43088216ca235a087b4f9fadbae93c"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json",
+        "sha256": "2f9c45c9ec07fdebcc6a0329ff1e2dee8b429fc56413c3297027bdcd6f6641fd"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-off.json",
+        "sha256": "ee8fb8b3556b27d4dfb521e512b17641654724443b89e0978822f301252a3fe1"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json",
+        "sha256": "2f9c45c9ec07fdebcc6a0329ff1e2dee8b429fc56413c3297027bdcd6f6641fd"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2-pair-0-off.json",
+        "sha256": "98c840a876b6c0387f11c55de4837b7a85331d05194bdce23911622742fe39a3"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2.json",
+        "sha256": "fedea1baac0ad2d742e65911ba12befa513b5fcdd94a937b9ab5af15c3f76de1"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2-pair-0-on.json",
+        "sha256": "2d49d6f966b513506750c46999ab7b2ff56b3d6f49845641b3df089535b2e525"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2.json",
+        "sha256": "fedea1baac0ad2d742e65911ba12befa513b5fcdd94a937b9ab5af15c3f76de1"
+      }
+    ],
+    "limitations": [
+      "Each workload has its own repetitions; different cases are not repeated samples.",
+      "Fewer than five paired runs have no confidence bound.",
+      "These short screens do not qualify long-context or sustained inference."
+    ],
+    "normal_request_latency_qualified": false,
+    "production_promoted": false
+  },
+  "opportunity": {
+    "status": "measured",
+    "runs": [
+      {
+        "case": 0,
+        "pair": 0,
+        "arm": "off",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json",
+          "sha256": "8dcec4f6f02e24fbf9ed18e334be0d109311c2fdda133b29aef7749f0e5a842f"
+        },
+        "identity": {
+          "workload_sha256": "d9ddfc67818d8cec6d912a871131c430bb6c6de127969e77221b4e78204524ad",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 21255897800
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": false
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 37,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 9.49810025,
+          "verify": 198.7336582109375,
+          "recovery": 16.7766624375,
+          "wall": 226.612333984375,
+          "checkpoint_save": null,
+          "other": 1.6039130859375
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 105,
+        "accepted_proposals": 91,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 35,
+            "accepted": 33
+          },
+          "2": {
+            "proposed": 35,
+            "accepted": 30
+          },
+          "3": {
+            "proposed": 35,
+            "accepted": 28
+          }
+        },
+        "discarded_verification_rows": 14,
+        "repeated_target_rows": 14,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 7,
+        "mean_committed_per_cycle": 3.4594594594594597,
+        "target_expert_application_bytes": 84276633600,
+        "target_expert_bytes_per_committed_token": 658411200.0,
+        "measured_tps": 4.412822472712144,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1215756832,
+          "verify": 25437908251,
+          "recovery": 2147412792,
+          "wall": 29006378750,
+          "checkpoint_save": null,
+          "other": 205300875
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 26.612333984375,
+          "optimistic_zero_phase_tps": 4.765633948833199,
+          "phase_measured": true
+        }
+      },
+      {
+        "case": 0,
+        "pair": 0,
+        "arm": "on",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-on.json",
+          "sha256": "1efa8585c63396c5b4d9db0db476b1930ba02adae2536bb6bfac42df0a71eea1"
+        },
+        "identity": {
+          "workload_sha256": "d9ddfc67818d8cec6d912a871131c430bb6c6de127969e77221b4e78204524ad",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 21255897800
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": true
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 37,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 9.486877578125,
+          "verify": 199.09266990625,
+          "recovery": 16.85121484375,
+          "wall": 227.058064765625,
+          "checkpoint_save": null,
+          "other": 1.6273024375
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 105,
+        "accepted_proposals": 91,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 35,
+            "accepted": 33
+          },
+          "2": {
+            "proposed": 35,
+            "accepted": 30
+          },
+          "3": {
+            "proposed": 35,
+            "accepted": 28
+          }
+        },
+        "discarded_verification_rows": 14,
+        "repeated_target_rows": 14,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 7,
+        "mean_committed_per_cycle": 3.4594594594594597,
+        "target_expert_application_bytes": 84276633600,
+        "target_expert_bytes_per_committed_token": 658411200.0,
+        "measured_tps": 4.404159795126524,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1214320330,
+          "verify": 25483861748,
+          "recovery": 2156955500,
+          "wall": 29063432290,
+          "checkpoint_save": null,
+          "other": 208294712
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 27.058064765625005,
+          "optimistic_zero_phase_tps": 4.757218903055051,
+          "phase_measured": true
+        }
+      },
+      {
+        "case": 1,
+        "pair": 0,
+        "arm": "on",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json",
+          "sha256": "22388d9e00a3651e7151be3e56113cf3da43088216ca235a087b4f9fadbae93c"
+        },
+        "identity": {
+          "workload_sha256": "2f9c45c9ec07fdebcc6a0329ff1e2dee8b429fc56413c3297027bdcd6f6641fd",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 48793480800
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": true
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 44,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 11.5855244375,
+          "verify": 249.10942709375,
+          "recovery": 53.905139640625,
+          "wall": 316.5100449140625,
+          "checkpoint_save": null,
+          "other": 1.9099537421875
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 126,
+        "accepted_proposals": 84,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 42,
+            "accepted": 36
+          },
+          "2": {
+            "proposed": 42,
+            "accepted": 28
+          },
+          "3": {
+            "proposed": 42,
+            "accepted": 20
+          }
+        },
+        "discarded_verification_rows": 42,
+        "repeated_target_rows": 46,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 22,
+        "mean_committed_per_cycle": 2.909090909090909,
+        "target_expert_application_bytes": 102289305600,
+        "target_expert_bytes_per_committed_token": 799135200.0,
+        "measured_tps": 3.1594573886952495,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1482947128,
+          "verify": 31886006668,
+          "recovery": 6899857874,
+          "wall": 40513285749,
+          "checkpoint_save": null,
+          "other": 244474079
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 116.51004491406252,
+          "optimistic_zero_phase_tps": 3.8080019828980327,
+          "phase_measured": true
+        }
+      },
+      {
+        "case": 1,
+        "pair": 0,
+        "arm": "off",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-off.json",
+          "sha256": "ee8fb8b3556b27d4dfb521e512b17641654724443b89e0978822f301252a3fe1"
+        },
+        "identity": {
+          "workload_sha256": "2f9c45c9ec07fdebcc6a0329ff1e2dee8b429fc56413c3297027bdcd6f6641fd",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 48793480800
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": false
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 44,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 12.0138483046875,
+          "verify": 253.08414809375,
+          "recovery": 56.4335061796875,
+          "wall": 323.4620182265625,
+          "checkpoint_save": null,
+          "other": 1.9305156484375
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 126,
+        "accepted_proposals": 84,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 42,
+            "accepted": 36
+          },
+          "2": {
+            "proposed": 42,
+            "accepted": 28
+          },
+          "3": {
+            "proposed": 42,
+            "accepted": 20
+          }
+        },
+        "discarded_verification_rows": 42,
+        "repeated_target_rows": 46,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 22,
+        "mean_committed_per_cycle": 2.909090909090909,
+        "target_expert_application_bytes": 102289305600,
+        "target_expert_bytes_per_committed_token": 799135200.0,
+        "measured_tps": 3.091553083983944,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1537772583,
+          "verify": 32394770956,
+          "recovery": 7223488791,
+          "wall": 41403138333,
+          "checkpoint_save": null,
+          "other": 247106003
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 123.46201822656252,
+          "optimistic_zero_phase_tps": 3.744918444605859,
+          "phase_measured": true
+        }
+      },
+      {
+        "case": 2,
+        "pair": 0,
+        "arm": "off",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2-pair-0-off.json",
+          "sha256": "98c840a876b6c0387f11c55de4837b7a85331d05194bdce23911622742fe39a3"
+        },
+        "identity": {
+          "workload_sha256": "fedea1baac0ad2d742e65911ba12befa513b5fcdd94a937b9ab5af15c3f76de1",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 23158110400
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": false
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 39,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 9.8951139453125,
+          "verify": 224.410135109375,
+          "recovery": 39.7565504765625,
+          "wall": 275.7196650390625,
+          "checkpoint_save": null,
+          "other": 1.6578655078125
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 108,
+        "accepted_proposals": 89,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 36,
+            "accepted": 35
+          },
+          "2": {
+            "proposed": 36,
+            "accepted": 31
+          },
+          "3": {
+            "proposed": 36,
+            "accepted": 23
+          }
+        },
+        "discarded_verification_rows": 19,
+        "repeated_target_rows": 33,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 13,
+        "mean_committed_per_cycle": 3.282051282051282,
+        "target_expert_application_bytes": 96488755200,
+        "target_expert_bytes_per_committed_token": 753818400.0,
+        "measured_tps": 3.626872243074593,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1266574585,
+          "verify": 28724497294,
+          "recovery": 5088838461,
+          "wall": 35292117125,
+          "checkpoint_save": null,
+          "other": 212206785
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 75.71966503906248,
+          "optimistic_zero_phase_tps": 4.237950502789825,
+          "phase_measured": true
+        }
+      },
+      {
+        "case": 2,
+        "pair": 0,
+        "arm": "on",
+        "source": {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-2-pair-0-on.json",
+          "sha256": "2d49d6f966b513506750c46999ab7b2ff56b3d6f49845641b3df089535b2e525"
+        },
+        "identity": {
+          "workload_sha256": "fedea1baac0ad2d742e65911ba12befa513b5fcdd94a937b9ab5af15c3f76de1",
+          "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+          "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "prepared": {
+            "format": "freellm-affine-records-v1",
+            "recipe": "q4-control-lossless",
+            "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+            "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+            "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+            "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+            "prepared_bytes": 100048541696,
+            "expert_record_bytes": 2764800,
+            "expert_stride": 2768896,
+            "ngram_record_bytes": 100,
+            "ngram_cache_dtype": "BF16",
+            "application_read_bytes": 23158110400
+          },
+          "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+          "producer_binary_sha256": null,
+          "admission": {
+            "target": {
+              "limit_bytes": 12884901888,
+              "resident_bytes": 5362515968,
+              "session_bytes": 571326464,
+              "scratch_bytes": 536870912,
+              "kernel_scratch_bytes": 0,
+              "panel_tokens": 512,
+              "panel_scratch_bytes": 155189248,
+              "runtime_control_bytes": 16384,
+              "pipeline_scratch_bytes": 0,
+              "snapshot_bytes": 0,
+              "ngram_bytes": 67108864,
+              "reserve_bytes": 1073741824,
+              "expert_bytes": 4042588160,
+              "expert_slots": 1460,
+              "planned_bytes": 11809357824
+            },
+            "draft_slots": 32,
+            "draft_bytes": 318234624,
+            "host_checkpoint_logits_bytes": 151158784,
+            "combined_bytes": 12280848384,
+            "expert_scratch_reserve_bytes": 2097152
+          },
+          "device": "Apple M1 Pro",
+          "kernel_policy": {
+            "q4_decode": "reference",
+            "route_selection": "simd",
+            "attention_score_tiles": "full",
+            "policy": "candidate",
+            "token_tile": 1,
+            "affine_rows": 1,
+            "q8_decode_rows": 2,
+            "gate_pair": false,
+            "gdn": "original",
+            "gdn_rows": 4,
+            "gdn_block": 8,
+            "shape_table": null,
+            "operator_capture": "",
+            "capture_filter": {
+              "phase": "",
+              "operator": "",
+              "layer": -2
+            },
+            "profile": false,
+            "profile_decode_only": false,
+            "counter_profile": false,
+            "automatic_rules_promoted": false
+          },
+          "validation": false,
+          "mode": "fast-timing",
+          "target_recovery": null,
+          "direct_output": true
+        },
+        "complete": true,
+        "timing_mode": true,
+        "captured_cycles": 39,
+        "captured_committed_tokens": 128,
+        "component_ms_per_token": {
+          "draft": 9.850447578125,
+          "verify": 218.82336946875,
+          "recovery": 38.7611634375,
+          "wall": 269.074200546875,
+          "checkpoint_save": null,
+          "other": 1.6392200625
+        },
+        "recovery_children_ms_per_token": null,
+        "checkpoint_save_measured": false,
+        "proposed_tokens": 108,
+        "accepted_proposals": 89,
+        "acceptance_by_position": {
+          "1": {
+            "proposed": 36,
+            "accepted": 35
+          },
+          "2": {
+            "proposed": 36,
+            "accepted": 31
+          },
+          "3": {
+            "proposed": 36,
+            "accepted": 23
+          }
+        },
+        "discarded_verification_rows": 19,
+        "repeated_target_rows": 33,
+        "repeated_target_rows_basis": "known v1 full-replay schedule",
+        "rejected_cycles": 13,
+        "mean_committed_per_cycle": 3.282051282051282,
+        "target_expert_application_bytes": 96488755200,
+        "target_expert_bytes_per_committed_token": 753818400.0,
+        "measured_tps": 3.7164469799318107,
+        "stop_reason": "length",
+        "phase_ns": {
+          "draft": 1260857290,
+          "verify": 28009391292,
+          "recovery": 4961428920,
+          "wall": 34441497670,
+          "checkpoint_save": null,
+          "other": 209820168
+        },
+        "recovery_part_ns": null,
+        "opportunity": {
+          "target_tps": 5,
+          "budget_ms_per_token": 200.0,
+          "removable_phase": "recovery",
+          "gap_ms_per_token": 69.07420054687498,
+          "optimistic_zero_phase_tps": 4.341916604248082,
+          "phase_measured": true
+        }
+      }
+    ],
+    "sources": [
+      {
+        "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/summary.json",
+        "sha256": "53ff72284cf671c92a7af9a4e6312e0f376b94ee448a7da765692228cf76a706",
+        "aliases": [
+          "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/long-01/summary.json"
+        ],
+        "unavailable_aliases": []
+      }
+    ],
+    "limitations": [
+      "Milliseconds are amortized per committed token, not individual token-delivery latencies.",
+      "Recovery children are included in recovery and must not be added again.",
+      "Legacy checkpoint saving is inside other overhead; separate subdivisions are unavailable.",
+      "Expert bytes are application reads, not observed device traffic.",
+      "Incomplete cycles and runs do not establish a request throughput result.",
+      "Zero-phase throughput subtracts that phase at unchanged other costs; it is an optimistic arithmetic bound, not a forecast."
+    ],
+    "production_promoted": false
+  },
+  "production_promoted": false
+}

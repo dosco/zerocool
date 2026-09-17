@@ -1,3 +1,7 @@
 # Preserve exact tensor fixture bytes and avoid treating packed weights as text.
 docs/benchmarks/**/*.bin binary
 docs/benchmarks/**/*.f32 binary
+
+# Keep hashed macOS diagnostic output byte-for-byte, including its spacing.
+docs/benchmarks/2026-09-17-target-recovery/**/*.vmmap.txt -whitespace
+docs/benchmarks/2026-09-17-target-recovery/**/*.heap.txt -whitespace

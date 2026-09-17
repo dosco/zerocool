@@ -1,0 +1,17 @@
+{
+  "summary.json": "6d83376e00ca5f560527a4eefd295aab717aded1e52eeaf2819adff723475c41",
+  "ledger-input.json": "ce0ebdb110251a460752217338087b921bc14e0ae5e84f8d6cc89ec41ce6c2c6",
+  "recipe.json": "7a68c0ea1c14b02d887327f523955cdbab88aede224bcd955596e8b8280c91d8",
+  "ledger-reference.json": "663e24529492884257ad8fb4d375b8e5455c620ef0794215873b9db6805cb3ef",
+  "fixtures/capture.log": "4b59b0d40bf6e13ce8646c7a3521401de271a5c15abc43ee187756ed67155644",
+  "fixtures/summary.json": "b504eafe0853623cd28202ad208572d54f2b530c4703cc566339498f90c6f381",
+  "fixtures/capture.progress.jsonl": "2dbc2a145a9492af252704b336aa152b751ffdbff1ebac205fcbf2e9cd06de22",
+  "fixtures/capture-recovery-host.log": "6b1c52096abdecbaeefb975b33e8949254286a44c32b6621def024ab908962b9",
+  "fixtures/draft-audit.json": "02068456eccbde296bc31767c53eb86f833ebd7e986823dc7f13149c7b5c6bd7",
+  "fixtures/workload.json": "fd5dcb9af92f306e0f37c884b30d9786c643fca558c2e0314317e864e4d1b963",
+  "fixtures/producer.json": "4ed40c62e2114d6a3dba6cebade3e4beb43e1b86964fc948873d15a30e13cfc1",
+  "fixtures/capture.json": "67dc282a2d73586813b4fdad844fbd9e84a1660569ffb1dc0473c8f468ad5db4",
+  "fixtures/evidence-files.json": "43de4d3bf0f5ced39e1e7858e2e162c63f691b41a7c9d22aba8102e322891813",
+  "fixtures/identity.json": "a3bcdf1f9c6a5dbfa48dab2f0dc16ae1cdc2e6842f430d6e0582f0be4fed8ad0",
+  "fixtures/capture-recovery-host.json": "b968fb5c0487531612a99e72b0b2a49b1aa71ff708f5da70ee3ac5dcc8c1897d"
+}

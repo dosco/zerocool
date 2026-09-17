@@ -1,0 +1,42 @@
+{
+  "kind": "target_recovery_review_v1",
+  "complete": true,
+  "status": "reviewed",
+  "unit_tests": 485,
+  "unit_test_log_sha256": "c4d10cbde63bdc9c98854eadce451386d21fdc7cbb23f55fdf982e858bd259fa",
+  "inputs": {
+    "/repo/scripts/qwen/mtp_evidence.py": "e677cac4490236d4c3e2367acbd6960fa7682bdbfd76a37e966d3a16c5b6a9ef",
+    "/repo/scripts/qwen/trial_recovery.py": "57a5861d783b8f5b4599c46bc80f7ff02afb4d2a2123d0893a34fc4847845afd",
+    "/repo/scripts/qwen/target_recovery_checks.py": "3d8dc0d8e065314fbd21d552fdd2d7aca76662dbd39434eaecb841e55c7bc233",
+    "/repo/scripts/qwen/test_target_recovery.py": "7df89bad6efbab221012db46f47b10f1e675cd21d5fcaac0c69f3ad2ee30ab38",
+    "/repo/scripts/qwen/test_mtp_evidence.py": "9fb5a49fdbb492e20d6255f16845abf9a06b8adfc6e01452f31524beb92baeef",
+    "/repo/scripts/qwen/build_target_recovery.py": "92cfdfbfaefbf1c212c59186bb29f2ea54482ba8a9ed3afeca462602efbe36b2",
+    "/repo/scripts/qwen/mtp_target_recovery.hpp": "dfa82028cd16518d14f2fe64346bc18cb9af6dfd4b7b5f3d4f3cea376add5a06",
+    "/repo/scripts/qwen/probe_target_recovery.cpp": "0bed6a697b23a146666aca693c4f7561555304e40e615032382d1496549f6069"
+  },
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/native-self-test-02/summary.json",
+      "sha256": "8e431bac19514411e79dab264d0ce92816e5819c52e0451e352c304c532badff"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/real-fixture-01/summary.json",
+      "sha256": "faf66d9972838936edc2792fa6d99ce62f00c41b74e1ade65e2814f754b439f1"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/real-replay-diagnostic-01/summary.json",
+      "sha256": "eb6c41644ae358b4c30c4be11148708db11a27ca747968c7ae4fe2dda4c54f2b"
+    }
+  ],
+  "native_producer_binary_sha256": "10d7fa4ffeeef417f5c2c0916b5ff1d943d0a201b63eec8720397bcfe09e92df",
+  "production_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "production_promoted": false,
+  "qualification_eligible": false,
+  "normal_request_latency_qualified": false,
+  "conclusion": "Evidence gates repaired. Real captured prefix states match full-target references, but capture compression blocks qualification.",
+  "limitations": [
+    "Saved-state replay does not replace full-model continuation comparisons.",
+    "No new timing samples; capture recorded 29917184 peak compressed bytes."
+  ]
+}

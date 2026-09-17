@@ -1,0 +1,249 @@
+{
+  "counter_operations": [
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_gate_up",
+      "K": 2560,
+      "N": 640,
+      "rows": 1,
+      "gpu_pass_ms_per_committed_token": 15.2389241875,
+      "dispatches": 4020
+    },
+    {
+      "stage": "gdn",
+      "kernel": "q8_expanded_t4_w8",
+      "K": 2560,
+      "N": 10240,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 14.19536175,
+      "dispatches": 180
+    },
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_gate_up_t4",
+      "K": 2560,
+      "N": 640,
+      "rows": 2,
+      "gpu_pass_ms_per_committed_token": 10.754307562500001,
+      "dispatches": 1175
+    },
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_mm",
+      "K": 640,
+      "N": 2560,
+      "rows": 1,
+      "gpu_pass_ms_per_committed_token": 9.9615228125,
+      "dispatches": 4020
+    },
+    {
+      "stage": "gdn",
+      "kernel": "q8_expanded_t4_w8",
+      "K": 6144,
+      "N": 2560,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 9.0702505,
+      "dispatches": 180
+    },
+    {
+      "stage": "logits",
+      "kernel": "q8_expanded_t4_w8",
+      "K": 2560,
+      "N": 248320,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 8.696989562499999,
+      "dispatches": 5
+    },
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_gate_up_t4",
+      "K": 2560,
+      "N": 640,
+      "rows": 3,
+      "gpu_pass_ms_per_committed_token": 8.480547625,
+      "dispatches": 566
+    },
+    {
+      "stage": "gdn",
+      "kernel": "q8_expanded_t4_w8",
+      "K": 2560,
+      "N": 6144,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 8.4254765625,
+      "dispatches": 180
+    },
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_gate_up_t4",
+      "K": 2560,
+      "N": 640,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 8.241368187499999,
+      "dispatches": 383
+    },
+    {
+      "stage": "attention",
+      "kernel": "q8_expanded_t4_w8",
+      "K": 2560,
+      "N": 12288,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 5.727518312499999,
+      "dispatches": 60
+    },
+    {
+      "stage": "routed_expert",
+      "kernel": "q4_mm_t4",
+      "K": 640,
+      "N": 2560,
+      "rows": 2,
+      "gpu_pass_ms_per_committed_token": 4.9600860625,
+      "dispatches": 1175
+    },
+    {
+      "stage": "mlp_input",
+      "kernel": "q8_mm_t4",
+      "K": 10240,
+      "N": 320,
+      "rows": 4,
+      "gpu_pass_ms_per_committed_token": 4.5351663124999995,
+      "dispatches": 240
+    }
+  ],
+  "status": "instrumented_diagnostic",
+  "hypothesis": "GPU-active time dominates this captured target window; inspect its largest complete command classes.",
+  "smallest_experiment": "Use the recorded dispatch shapes to isolate one costly operation, then require a fresh normal-request screen.",
+  "possible_request_benefit": null,
+  "coverage": {
+    "requested_start": 32,
+    "requested_committed": 16,
+    "first_output": 33,
+    "end_output": 49,
+    "captured_calls": 5,
+    "captured_committed": 16,
+    "captured_verified": 20,
+    "omitted_before": 33,
+    "omitted_after": 79
+  },
+  "dependency_passes": 240,
+  "target_ms_per_committed_token": 243.74799475,
+  "buckets_ms_per_committed_token": {
+    "gpu_active": 143.45499175,
+    "gpu_idle_submitted": 22.528220375,
+    "gpu_idle_ready_expert": 23.3584594375,
+    "gpu_idle_pending_read": 19.3291484375,
+    "gpu_idle_callback": 3.3427241875,
+    "gpu_idle_other": 31.734450562499998
+  },
+  "command_classes": [
+    {
+      "stages": [
+        "attention_input",
+        "attention_residual",
+        "expert_reduce",
+        "gdn",
+        "mlp_input",
+        "mlp_residual",
+        "router"
+      ],
+      "gpu_command_ms_per_committed_token": 57.32639093184844,
+      "command_groups": 175,
+      "dispatches": 5650
+    },
+    {
+      "stages": [
+        "routed_expert"
+      ],
+      "gpu_command_ms_per_committed_token": 51.37020722031593,
+      "command_groups": 3495,
+      "dispatches": 12189
+    },
+    {
+      "stages": [
+        "attention",
+        "attention_input",
+        "attention_residual",
+        "expert_reduce",
+        "mlp_input",
+        "mlp_residual",
+        "router"
+      ],
+      "gpu_command_ms_per_committed_token": 18.364028714131564,
+      "command_groups": 60,
+      "dispatches": 2100
+    },
+    {
+      "stages": [
+        "routed_expert",
+        "shared_expert"
+      ],
+      "gpu_command_ms_per_committed_token": 17.560539301484823,
+      "command_groups": 238,
+      "dispatches": 2937
+    }
+  ],
+  "peak_physical_bytes": 10464941184,
+  "performance_measurement": false,
+  "production_promoted": false,
+  "missing_evidence": [
+    "A causal mechanism and fresh paired normal-request timing before selecting an optimization"
+  ],
+  "limitations": [
+    "Instrumented time is not normal throughput or a speedup estimate.",
+    "Overlap buckets do not establish the cause of a stall or recoverable latency.",
+    "Profile coverage is bounded; unrelated requests and timings are not pooled.",
+    "Counter sampling splits compute passes and perturbs execution; costs only rank an operator experiment.",
+    "Per-dispatch intervals can overlap; their sums are not exclusive portions of request latency.",
+    "Only the declared middle-generation window is traced; the full 128-token request is checked numerically.",
+    "Target verification is separate from unprofiled draft, checkpoint and recovery work.",
+    "Instrumented intervals describe observed overlap, not a causal stall or recoverable latency.",
+    "Mixed command groups retain every stage; no group duration is assigned to each constituent kernel.",
+    "Application expert reads are not observed physical storage traffic.",
+    "One capture per workload has no normal-throughput or promotion conclusion."
+  ],
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/summary.json",
+      "sha256": "fab700a7813de344358fcda4cf83d5a877400f59efb9f3ebf758dcdb530dac26",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/summary.json"
+      ],
+      "unavailable_aliases": []
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile.json",
+      "sha256": "5fa3d888db4a2e4a08946ac9e92adf215230f1447ff421112df7f2e4b42004be"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/producer.json",
+      "sha256": "60128859e1269f32b8f9c03d4db0b0aa00334a07435ebb0ae801ac754f5e584c"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/identity.json",
+      "sha256": "221b3db5bd2d402f82fb4a4721999ff63f5897d787011efae494b8507525b08a"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json",
+      "sha256": "7169831846e50db52314ec1b157c94921db97c5137097621aa92d7d8ce5792a1"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile-cycle-9.profile.json",
+      "sha256": "70fc9fbd964265d0ee6154e68a17b16a9f176b9568b1efd2beb0e15f4d074d02"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile-cycle-10.profile.json",
+      "sha256": "1968f9e1dca28c9001fbbc1e8d87fff27333b742fa7ad1a7be556fc728c80d77"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile-cycle-11.profile.json",
+      "sha256": "20943f649dbaec126084008b5aea57494845997541993003c65683ddbbe7afca"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile-cycle-12.profile.json",
+      "sha256": "00dd36968eb2963ff8c77e04bcd805c61459fb78d7cc95157ff5c3737637b1ba"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/profile-cycle-13.profile.json",
+      "sha256": "2a28d28d8c90cef9a87cd6cd4027be25dfb3ba2951575f85972867a51c98a3a8"
+    }
+  ]
+}

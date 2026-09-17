@@ -1,0 +1,586 @@
+{
+  "kind": "mtp_target_recovery_trial_v1",
+  "complete": false,
+  "status": "resource_blocked",
+  "phase": "fixtures",
+  "stages": [
+    {
+      "name": "fixtures",
+      "directory": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-01/fixtures",
+      "complete": false,
+      "status": "resource_blocked",
+      "summary_sha256": "127df814c66aaeb31ca665eef1936ed50004ff60435d566e91e7f47342f4e1c7",
+      "seal_sha256": "d041f979df393ab3eb81b73d7fce689edb27fb744e2053415a469e2affe80d85"
+    }
+  ],
+  "recipe_sha256": "a76126e77516f8e71b945553ee7a278c78f39ccfbc1ee5cc8da04b4e818f4144",
+  "controlled_change": "target_recovery",
+  "historical_timing_reused": false,
+  "production_promoted": false,
+  "started_at": "2026-09-17T06:01:32.578732+00:00",
+  "related_experiments": [
+    {
+      "id": "02615284b56e004fcbbad6a1407d33b5329d4d29f9c1026ef9d76a74b3a0b125",
+      "status": "failed",
+      "complete": false,
+      "decision": "unfinished",
+      "error": "",
+      "production_promoted": false,
+      "phases": {
+        "recovery": "passed",
+        "capture": "passed",
+        "qualify": "failed"
+      },
+      "kind": "selector_qualification",
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-03/summary.json",
+          "sha256": "02615284b56e004fcbbad6a1407d33b5329d4d29f9c1026ef9d76a74b3a0b125",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-03/summary.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+      "decision": "inconclusive",
+      "production_promoted": false,
+      "hypothesis": "Reserve ngram row capacity but construct rows only on insertion to avoid eagerly touching unused host cache payload.",
+      "expected_effect": "Lower startup row initialization while preserving exact BF16 values, mapping and FIFO behavior; evaluate physical memory separately.",
+      "controlled_change": "Source-copy lazy row construction with unchanged 158275 slots, 64MiB admitted cache, map reservation, original tables, kernels and model precision.",
+      "correctness": "Real prepared tables compare all bytes, logical slots, hit/miss counts, duplicates, EOS history and repeated eviction at small/full capacities. Fresh full-model scratch off/on validation matches the previously qualified eager reference. 38 focused MTP tests pass.",
+      "outcome": "Full fixture initializes 564160 row bytes instead of 51914200 after 123 tokens, retaining the full reserve. Short prompt initializes 375232 bytes before decode. Lazy validation-01/02 remain compression-blocked; three diagnostic maps do not identify a compressed owner. Fresh validation-03 and short-01 are clean. No independent eager/lazy speed effect is established.",
+      "smallest_experiment": "Keep lazy construction explicit and shared in future controlled experiments. Do not infer that it fixes intermittent compression; require independent lifecycle and request qualification before production adoption.",
+      "limitations": [
+        "Initialized bytes are not physical footprint.",
+        "VM maps may perturb execution and classify regions rather than C++ ownership.",
+        "No map timing qualifies speed.",
+        "Earlier failed stages remain incomplete."
+      ],
+      "evidence": [
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/fixture-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/fixture-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "fixture_validated",
+          "sha256": "27042b2c37af09ede9fd55cb10c3a909217fba83768ac4c51b1e612be7c592fe",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-01/summary.json",
+          "recorded_complete": false,
+          "recorded_status": "resource_blocked",
+          "sha256": "231b173dd3cb77f4efa5b1c6a2e08fae65d91753173766e3d4ad24d374d304b3",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-02/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-02/summary.json",
+          "recorded_complete": false,
+          "recorded_status": "resource_blocked",
+          "sha256": "2b966ae672338e41d105a75c9b32a4bbdcbd2d2244eebead3efce4b0c140bbf3",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "memory_captured",
+          "sha256": "074a270b05b3fd010912bbb86e5575022dc2558bb5dff4e0a9c8362b85dca4a1",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-validation-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-validation-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "memory_captured",
+          "sha256": "33ead578c07489c914c4d6728d431d54e3ec3b5eb832c2b52a2b7e078e50f2e3",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-recovery-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/memory-recovery-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "memory_captured",
+          "sha256": "f449bf2099c4ba01192a6cbf75ecebcde32fd823840d459d9c2a6588c685db10",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-03/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-03/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "numerically_validated",
+          "sha256": "1082984ed065d0a6010f2fb544b84f30f48acc67f59122a948ae929ae041b4d4",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/audit-memory-01.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/audit-memory-01.json",
+          "recorded_complete": null,
+          "recorded_status": "unknown",
+          "sha256": "5738453bbb6a94cfe130275bf1d2eedbc52d4eeecb53b98e0f8ab79a7e5c31fc",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-expert-scratch/short-04/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-expert-scratch/short-04/summary.json",
+          "recorded_complete": false,
+          "recorded_status": "resource_blocked",
+          "sha256": "b955d8feb3c582648c5b144a7635385a5f221c4764a038ade42043b34011d9e4",
+          "unavailable_aliases": []
+        }
+      ],
+      "decision_origin": "authored interpretation; original report statuses retained",
+      "recorded_at": "2026-09-17T03:36:51.700544+00:00",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json",
+          "sha256": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+          "aliases": [
+            "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "1b77b8341b349395979897b46d3a04b122c4242f2839de4a10afe9a38c162489",
+      "kind": "admission",
+      "status": "unknown",
+      "complete": null,
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-02/recovery/admission-000.admission.json",
+          "sha256": "1b77b8341b349395979897b46d3a04b122c4242f2839de4a10afe9a38c162489",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-09-selector-qualification/run-02/recovery/admission-000.admission.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48",
+      "decision": "inconclusive",
+      "production_promoted": false,
+      "hypothesis": "Saved expert routes can distinguish insufficient cache capacity from a replacement-policy opportunity.",
+      "expected_effect": "Fewer demand reads at the same expert byte budget; request latency must be measured separately.",
+      "controlled_change": "Offline CLOCK, 75-percent protected SLRU and future-aware MIN on the same serial fixed-order route stream; no native change.",
+      "correctness": "147 Python checks passed, including 16 cache-query tests and independent exhaustive MIN and second-chance CLOCK references. No new model correctness or quality claim.",
+      "outcome": "The five-token Q4 prefill has 1,553 compulsory expert-pass demands and no subsequent reuse. The mixed recovery trace contains only two successive setup tokens before cancellation/replay work. The timing profile lacks routes. These sources cannot select a production policy.",
+      "smallest_experiment": "Capture a deadline-limited 32-token normal continuation with complete routes and explicit phase/session/reset markers; expand promising evidence to 256 tokens plus retained append before screening one policy.",
+      "limitations": [
+        "Retrospective interpretation of short diagnostic fixtures, not a preregistered normal-request comparison.",
+        "Simulations omit asynchronous leases, hit-first ordering and overlap; no latency is predicted.",
+        "Original source status and request completeness remain unknown or as recorded."
+      ],
+      "evidence": [
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-10-cache-simulation/foundation-prefill.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/foundation-prefill.json",
+          "recorded_complete": null,
+          "recorded_status": "simulated",
+          "sha256": "020cf8a575d3022f584db935c7898348d70748a6a00e7b956330fd124abe9675",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-10-cache-simulation/recovery.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/recovery.json",
+          "recorded_complete": null,
+          "recorded_status": "simulated",
+          "sha256": "5293c98ad42210420ff3d532e7b2ff2a09091dd9974faa93e947380574e7ea15",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-10-cache-simulation/profile-coverage.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-10-cache-simulation/profile-coverage.json",
+          "recorded_complete": null,
+          "recorded_status": "insufficient_evidence",
+          "sha256": "41f0eec20f4b5384748c33968506a6f86e7b163e59658ba0c40ac48bdf09a371",
+          "unavailable_aliases": []
+        }
+      ],
+      "decision_origin": "authored interpretation; original report statuses retained",
+      "recorded_at": "2026-09-10T18:26:34.778394+00:00",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48.json",
+          "sha256": "1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48",
+          "aliases": [
+            "/repo/docs/experiments/1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3",
+      "decision": "promising",
+      "production_promoted": false,
+      "hypothesis": "Extending exact packed Q8 word loads to attention and the vocabulary projection can move the four-token perfect-proposal verifier beyond 5 tokens/s within the existing memory budget.",
+      "expected_effect": "First clear the combined six-case isolated gate of at least 10ms/token projected savings and GPU-ratio upper 95% bound below 1; then exact full-model recovery and two clean alternating pairs with every candidate at least 5 verified tokens/s and lower request latency.",
+      "controlled_change": "One output row and four token accumulators keep fixed Q8/64 arithmetic and BF16 rounding; 32-bit loads apply only to three GDN shapes, attention query/output and the vocabulary projection during four-token decode. The same developer binary is used in both arms; 12GiB, 1,460 slots, weights, prompt and perfect proposals are fixed.",
+      "correctness": "19 focused tests and native capture/checkpoint self-tests pass. Three fresh native Metal-validation processes reproduce every vocabulary logit, route, persistent state and rollback/recovery result. Native counts show zero packed priming dispatches, 399 candidate validation dispatches and 532 in each candidate timing run. Capture/operator/verifier audits pass.",
+      "outcome": "Combined isolated GPU ratio 0.583989 with paired 95% interval 0.581480-0.586508; 25.945ms/token median projection. Fresh complete verifier pairs:control 4.629827/candidate 5.281405 and candidate 5.301580/control 4.589407 verified tokens/s. Paired wall ratios 0.876628/0.865668, 14.07%/15.52% higher throughput. Cache hits 21.5921% and 637.921MiB expert reads/token identical. Timing physical memory 9.522-9.531GiB; all 7 verifier processes clean.",
+      "smallest_experiment": "Validate the complete prepared MTP forward independently and admit at most 128 draft expert slots beside 1,460 target slots, then measure real proposal cost, accepted lengths and rejection recovery on coding continuations with this packed verifier. The optimistic result leaves about 11ms/token of perfect-acceptance draft overhead before 5 tokens/s.",
+      "limitations": [
+        "This is a perfect-proposal verifier with no real draft cost and 100 percent acceptance, not production speculative generation.",
+        "Only 16 fixed continuation inputs follow a 72-token prompt per timing process; no 2K/4K/7K or sustained coding qualification.",
+        "Two complete alternating pairs are screening evidence, not a confidence-bounded end-to-end estimate.",
+        "The capture retains its resource-blocked status; only verified input bytes and numerical identity are reused. All operator and verifier timings are fresh.",
+        "The candidate is in a hashed developer build; production source and binary are unchanged.",
+        "The 128-slot draft/target combined estimate of 11.6631GiB is not a measured runtime admission."
+      ],
+      "evidence": [
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-q8-expanded/verifier-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-q8-expanded/verifier-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "expanded_verifier_promising",
+          "sha256": "809d7bb6c706a8e81b16e4e758f61f57c20debdac6ec6d95e8dad2f97a238730",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-q8-expanded/screen-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-q8-expanded/screen-01/summary.json",
+          "recorded_complete": true,
+          "recorded_status": "worth_verifier_screen",
+          "sha256": "9dce7a25d3d7cfc5debbefdf2e7b35806137adb4b95607ad69f07e59b89d642b",
+          "unavailable_aliases": []
+        },
+        {
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-q8-expanded/capture-01/summary.json"
+          ],
+          "path": "/repo/docs/benchmarks/2026-09-16-q8-expanded/capture-01/summary.json",
+          "recorded_complete": false,
+          "recorded_status": "resource_blocked",
+          "sha256": "6c1a14bd5a46ecec13e1a22315a399de64fb0bc3a59cf814017d8c4b5ae3a298",
+          "unavailable_aliases": []
+        }
+      ],
+      "decision_origin": "authored interpretation; original report statuses retained",
+      "recorded_at": "2026-09-16T22:04:48.157487+00:00",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3.json",
+          "sha256": "2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3",
+          "aliases": [
+            "/repo/docs/experiments/2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "2b35b104ebd4a70a3bdf9fdd8a9ab009d0cda74f87cc0c615b7b58c84522c133",
+      "status": "insufficient_isolated_benefit",
+      "complete": true,
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "One layer and first four-token block provide real inputs for three recurring GDN shapes; other layers and contexts remain untested.",
+        "Shape-frequency projections assume 36 calls of each shape per four-token block. They are isolated GPU opportunities, not predicted request savings.",
+        "Repeated weights and five pairs within one process differ from inference. A promising screen still needs full-model state/recovery and normal verifier timing.",
+        "Only verified tensor bytes and numerical identity are reused from the memory-disturbed capture; every timing and memory observation is fresh.",
+        "The packed candidate has one output row and four tokens. It is not combined with the prior output-row-pair candidate."
+      ],
+      "started_at": "2026-09-16T21:33:54.516900+00:00",
+      "kind": "q8_block_packed_screen_v1",
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-16-q8-block-packed/screen-01/summary.json",
+          "sha256": "2b35b104ebd4a70a3bdf9fdd8a9ab009d0cda74f87cc0c615b7b58c84522c133",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-q8-block-packed/screen-01/summary.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "2bb68c57558b06bf6884d549af97269e2b6d2dd897181da33fe12712e9ed2770",
+      "status": "resource_blocked",
+      "complete": false,
+      "error": "recovery timing memory or host disturbed",
+      "pairs": [],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "started_at": "2026-09-16T23:00:10.876417+00:00",
+      "kind": "mtp_recovery_screen_v1",
+      "configurations": [
+        null
+      ],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-timing-01/summary.json",
+          "sha256": "2bb68c57558b06bf6884d549af97269e2b6d2dd897181da33fe12712e9ed2770",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-timing-01/summary.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "306a1d6f5279d72e3d9d92d1dfa441b8f41c4e32198162d79ae4a7d2106eb31c",
+      "status": "resource_blocked",
+      "complete": false,
+      "error": "recovery validation memory or host disturbed",
+      "pairs": [],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "started_at": "2026-09-16T22:56:21.756283+00:00",
+      "kind": "mtp_recovery_screen_v1",
+      "configurations": [
+        null
+      ],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/summary.json",
+          "sha256": "306a1d6f5279d72e3d9d92d1dfa441b8f41c4e32198162d79ae4a7d2106eb31c",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/summary.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "3812766cd01fea2fe375d9965d1d56547ac7f85758ed8c7713146c41d3b2705a",
+      "pairs": [
+        {
+          "pair": 0,
+          "comparison": {
+            "exact_all_logits_tokens_and_state": true,
+            "ratio": 0.959955181940672,
+            "control_tps": 4.838983394612631,
+            "candidate_tps": 5.040843036890544,
+            "control_counters": {
+              "allocation_count": 28000,
+              "scratch_reuses": 0,
+              "dispatches": 22815,
+              "submissions": 4240
+            },
+            "candidate_counters": {
+              "allocation_count": 21780,
+              "scratch_reuses": 0,
+              "dispatches": 19705,
+              "submissions": 4377
+            },
+            "direct_writes": 3110,
+            "avoided_copy_bytes": 31846400,
+            "lazy_cache_exact": true
+          },
+          "observations": [
+            {
+              "clean_memory": true,
+              "clean_host": true,
+              "peak_physical_bytes": 10359280640,
+              "tokens_per_second": 4.838983394612631,
+              "generated_tokens": 16,
+              "proposed_tokens": 12,
+              "accepted_proposals": 12,
+              "acceptance_rate": 1.0,
+              "mean_committed_per_cycle": 4.0,
+              "rejected_cycles": 0,
+              "component_ms_per_token": {
+                "draft": 8.725338625,
+                "verify": 195.052354125,
+                "recovery": 0.8980339375,
+                "wall": 206.6549765625
+              },
+              "completed_requested_length": true,
+              "stop_reason": "length"
+            },
+            {
+              "clean_memory": true,
+              "clean_host": true,
+              "peak_physical_bytes": 10359460864,
+              "tokens_per_second": 5.040843036890544,
+              "generated_tokens": 16,
+              "proposed_tokens": 12,
+              "accepted_proposals": 12,
+              "acceptance_rate": 1.0,
+              "mean_committed_per_cycle": 4.0,
+              "rejected_cycles": 0,
+              "component_ms_per_token": {
+                "draft": 8.7606171875,
+                "verify": 187.0807369375,
+                "recovery": 0.891244875,
+                "wall": 198.379515625
+              },
+              "completed_requested_length": true,
+              "stop_reason": "length"
+            }
+          ]
+        },
+        {
+          "pair": 1,
+          "comparison": {
+            "exact_all_logits_tokens_and_state": true,
+            "ratio": 0.9773760195721215,
+            "control_tps": 4.925353004474952,
+            "candidate_tps": 5.03936346487321,
+            "control_counters": {
+              "allocation_count": 28000,
+              "scratch_reuses": 0,
+              "dispatches": 22815,
+              "submissions": 4293
+            },
+            "candidate_counters": {
+              "allocation_count": 21780,
+              "scratch_reuses": 0,
+              "dispatches": 19705,
+              "submissions": 4364
+            },
+            "direct_writes": 3110,
+            "avoided_copy_bytes": 31846400,
+            "lazy_cache_exact": true
+          },
+          "observations": [
+            {
+              "clean_memory": true,
+              "clean_host": true,
+              "peak_physical_bytes": 10359739392,
+              "tokens_per_second": 4.925353004474952,
+              "generated_tokens": 16,
+              "proposed_tokens": 12,
+              "accepted_proposals": 12,
+              "acceptance_rate": 1.0,
+              "mean_committed_per_cycle": 4.0,
+              "rejected_cycles": 0,
+              "component_ms_per_token": {
+                "draft": 8.614846375,
+                "verify": 192.04905475,
+                "recovery": 0.8835885,
+                "wall": 203.0311328125
+              },
+              "completed_requested_length": true,
+              "stop_reason": "length"
+            },
+            {
+              "clean_memory": true,
+              "clean_host": true,
+              "peak_physical_bytes": 10358854528,
+              "tokens_per_second": 5.03936346487321,
+              "generated_tokens": 16,
+              "proposed_tokens": 12,
+              "accepted_proposals": 12,
+              "acceptance_rate": 1.0,
+              "mean_committed_per_cycle": 4.0,
+              "rejected_cycles": 0,
+              "component_ms_per_token": {
+                "draft": 8.662799375,
+                "verify": 187.1996614375,
+                "recovery": 0.9165676875,
+                "wall": 198.4377604375
+              },
+              "completed_requested_length": true,
+              "stop_reason": "length"
+            }
+          ]
+        }
+      ],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "kind": "report",
+      "status": "unknown",
+      "complete": null,
+      "configurations": [],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/audit-short-01.json",
+          "sha256": "3812766cd01fea2fe375d9965d1d56547ac7f85758ed8c7713146c41d3b2705a",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/audit-short-01.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "39d4c6cc17023b1cdb96303df437185c499c7bbfeb885e299ea581d2354dfb16",
+      "status": "resource_blocked",
+      "complete": false,
+      "error": "recovery validation memory or host disturbed",
+      "pairs": [],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "started_at": "2026-09-16T22:53:33.407404+00:00",
+      "kind": "mtp_recovery_screen_v1",
+      "configurations": [
+        null
+      ],
+      "stale": false,
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-01/summary.json",
+          "sha256": "39d4c6cc17023b1cdb96303df437185c499c7bbfeb885e299ea581d2354dfb16",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-01/summary.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ]
+    }
+  ],
+  "build_directory": "/repo/.cache/target-recovery-builds/eecae143414468a092153242e2fee251ed613dc65ff43e9a65a8fa1e87f6ad95",
+  "error": "Fixed 12GiB experiment requires 13.5GiB currently available memory",
+  "elapsed_seconds": 28.037598458118737
+}

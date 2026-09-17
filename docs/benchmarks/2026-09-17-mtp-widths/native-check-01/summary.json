@@ -1,0 +1,47 @@
+{
+  "kind": "mtp_width_fixture_check_v1",
+  "complete": true,
+  "status": "synthetic_validated",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T07:21:27.600629+00:00",
+  "time_limit_seconds": 180,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {
+    "widths": [
+      2,
+      4
+    ],
+    "real_model_evidence": false
+  },
+  "checks": [
+    {
+      "width": 2,
+      "cases": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 1344917568
+    },
+    {
+      "width": 4,
+      "cases": 8,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 1344917568
+    }
+  ],
+  "real_model_evidence": false,
+  "performance_measurement": false,
+  "source": "ee10136b13b4139ea6fcfa3621049f9f31927277eeb5aa390b775f7ceb05a5ff",
+  "elapsed_seconds": 8.93592554051429
+}

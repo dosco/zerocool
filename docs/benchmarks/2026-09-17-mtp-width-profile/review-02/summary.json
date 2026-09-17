@@ -1,0 +1,106 @@
+{
+  "kind": "mtp_width_profile_review_v1",
+  "complete": true,
+  "status": "clean_interval_capture_lru_resource_blocked",
+  "recorded_at": "2026-09-17T20:41:38.265590+00:00",
+  "performance_measurement": false,
+  "production_promoted": false,
+  "speedup_established": false,
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "python_tests": 515,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/lru-02/summary.json",
+      "sha256": "f1c3701960c45f4a9b94bbdb2b31a2d89997a56d0f3556ef440b0fdfd78c6230",
+      "seal_sha256": "519f93f5b17250780c75d59e93027f60f237be8956d48e02cc51499e336fcc80",
+      "status": "resource_blocked",
+      "complete": false,
+      "clean_memory": false,
+      "clean_host": true,
+      "exact": true,
+      "peak_physical_bytes": 10460517632,
+      "coverage": {
+        "requested_start": 32,
+        "requested_committed": 16,
+        "first_output": 32,
+        "end_output": 48,
+        "captured_calls": 16,
+        "captured_committed": 16,
+        "captured_verified": 16,
+        "omitted_before": 32,
+        "omitted_after": 80
+      },
+      "dependency_passes": 768,
+      "dispatches": 50816,
+      "command_groups": 5347
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-01/summary.json",
+      "sha256": "b4845ed45e3ce20448009296546eae38a8fbe7350e3e8e0f10340ce1e663950b",
+      "seal_sha256": "1c930e4a4fa9da940f0ff1da22a5e86d109466cce56c1c5569e23d699a7a3254",
+      "status": "captured",
+      "complete": true,
+      "clean_memory": true,
+      "clean_host": true,
+      "exact": true,
+      "peak_physical_bytes": 10462139584,
+      "coverage": {
+        "requested_start": 32,
+        "requested_committed": 16,
+        "first_output": 33,
+        "end_output": 49,
+        "captured_calls": 5,
+        "captured_committed": 16,
+        "captured_verified": 20,
+        "omitted_before": 33,
+        "omitted_after": 79
+      },
+      "dependency_passes": 240,
+      "dispatches": 23087,
+      "command_groups": 4322
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/merge-counters-01/summary.json",
+      "sha256": "fab700a7813de344358fcda4cf83d5a877400f59efb9f3ebf758dcdb530dac26",
+      "seal_sha256": "604a8df3f417ddd8d7a2bad1e9bd2117d4a02fc22aa6502ba70d3761f37ddebf",
+      "status": "captured",
+      "complete": true,
+      "clean_memory": true,
+      "clean_host": true,
+      "exact": true,
+      "peak_physical_bytes": 10464941184,
+      "coverage": {
+        "requested_start": 32,
+        "requested_committed": 16,
+        "first_output": 33,
+        "end_output": 49,
+        "captured_calls": 5,
+        "captured_committed": 16,
+        "captured_verified": 20,
+        "omitted_before": 33,
+        "omitted_after": 79
+      },
+      "dependency_passes": 240,
+      "dispatches": 23087,
+      "command_groups": 3980
+    }
+  ],
+  "command_counter_dispatches_routes_and_coverage_match": true,
+  "counter_adjacent_overlaps": 2606,
+  "counter_summed_passes_ms_per_committed": {
+    "multi_row_routed_gate_up": 27.476223375,
+    "generic_hyper_q8": 14.503015625,
+    "gdn_scan": 2.1214608125
+  },
+  "next_protocol": {
+    "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/next-protocol.md",
+    "sha256": "e2d45452bec50ac8fa09e77ed0ac6a3787d4f0e77b013b277c7ef38991a0f950"
+  },
+  "limitations": [
+    "Instrumented intervals only rank experiments; no normal-request timing or speedup is established.",
+    "Adjacent counter intervals overlap and are not exclusive request costs.",
+    "The LRU retry is numerically exact but resource-blocked; its timing does not select an optimization.",
+    "The next multi-row gate/up candidate is proposed, not implemented or qualified."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "mtp_width_profile_review_v1",
+  "complete": true,
+  "status": "implementation_ready_resource_blocked",
+  "recorded_at": "2026-09-17T20:04:17.911040+00:00",
+  "performance_measurement": false,
+  "production_promoted": false,
+  "native_capture_complete": false,
+  "speedup_established": false,
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "candidate_binary_sha256": "94e6d4712b6a632fe697ca16a37c8a29eeed73026f7f8753c8eaaff0e7088bc3",
+  "python_tests": 511,
+  "rechecked_clean_parent_cases": 10,
+  "memory_budget_bytes": 12884901888,
+  "trace_workspace_bytes": 536870912,
+  "required_available_bytes": 14495514624,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/summary.json",
+      "sha256": "6596d1d8a49bbd1b18cca58b9d61cd8b2e246ac0e51d11fe864f97f33e8123e3",
+      "status": "resource_blocked",
+      "complete": false
+    },
+    {
+      "path": "/repo/docs/experiments/eb3fb725c781e44e94a87554c595f143a074751bf098d94dab804bb3a7e4c11e.json",
+      "sha256": "eb3fb725c781e44e94a87554c595f143a074751bf098d94dab804bb3a7e4c11e"
+    }
+  ],
+  "remaining": [
+    "Complete clean LRU and interval-merging native profiles with exact full-request references.",
+    "Use the measured dependency path to choose one controlled optimization, then screen fresh ordinary requests."
+  ],
+  "limitations": [
+    "Compiler and offline tests do not establish full-model profiler execution.",
+    "The first capture stopped before inference; no GPU/read profile exists.",
+    "No resource threshold, cache capacity, arithmetic or production default changed."
+  ]
+}

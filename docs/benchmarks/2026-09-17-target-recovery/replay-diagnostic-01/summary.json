@@ -1,0 +1,20 @@
+{
+  "kind": "target_recovery_diagnostic_replay_v1",
+  "status": "diagnostic_exact",
+  "complete": true,
+  "performance_measurement": false,
+  "production_promoted": false,
+  "qualified_fixture_prerequisite": false,
+  "native_sha256": "d29f651cff3e649648125aa7731d260f9bb665773289b4253432e5330dd09b93",
+  "provenance_sha256": "ea30118878745dcf6921d1d9ea8df51f55cee2c4b27ab7024ea17d3153edb859",
+  "exact_prefix_checks": 8,
+  "peak_physical_bytes": 772639552,
+  "clean_recorded_memory": false,
+  "decompressions_delta": 2,
+  "source_trial_status": "failed",
+  "limitations": [
+    "Capture belongs to a rejected trial with source drift and recorded memory compression.",
+    "This replay is diagnostic correctness evidence only; it does not qualify the fixture prerequisite or establish speed.",
+    "Replay recorded two decompressions and is not memory-clean under qualification criteria."
+  ]
+}

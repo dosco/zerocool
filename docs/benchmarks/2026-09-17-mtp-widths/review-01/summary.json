@@ -1,0 +1,147 @@
+{
+  "kind": "mtp_width_review_v1",
+  "complete": true,
+  "status": "measured_workload_crossover",
+  "recorded_at": "2026-09-17T19:11:36.696531+00:00",
+  "production_promoted": false,
+  "normal_request_latency_qualified": false,
+  "performance_measurement": false,
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "candidate_binary_sha256": "b12a79beadaa6ce501d13cf0840094ec6566dd30d24b68bc0133a6b5884a5deb",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "budget_bytes": 12884901888,
+  "correctness": {
+    "real_model_cases": 10,
+    "exact_logits_tokens_and_state": true,
+    "clean_memory_and_host": true,
+    "native_synthetic_cases": 12,
+    "python_tests": 505,
+    "metal_api_and_shader_validation": true
+  },
+  "timing": {
+    "fresh_long_pairs_per_workload": 2,
+    "workloads": [
+      "lru_cache",
+      "merge_intervals",
+      "retry_backoff"
+    ],
+    "full_length_tokens": 128,
+    "all_long_runs_clean": true,
+    "source_comparisons": [
+      "long-lru-01-comparison.json",
+      "other-coding-01-comparison.json"
+    ],
+    "workloads_pooled": false,
+    "confidence_95": null
+  },
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/native-check-01/summary.json",
+      "sha256": "58bc05dca2f0192687aa223d930aa08e5ba6c337c52a59407ff3ed12c022f300",
+      "seal_sha256": "657f0bf561723093f33e1a0e752cbacdb85ffb6140cb1cb550a20294c096d2a0",
+      "kind": "mtp_width_fixture_check_v1",
+      "status": "synthetic_validated",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/numerical-01/summary.json",
+      "sha256": "ffb6759d67cbbb92112d0c7d117beb0fbdbc3b1b1be21d8cf280a88cee72ad56",
+      "seal_sha256": "14fd11f2a139ef98ec8290894e33784731d12094df8188947bd27e992bbb1841",
+      "kind": "mtp_width_validation_v1",
+      "status": "failed",
+      "complete": false
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/numerical-02/summary.json",
+      "sha256": "913aacee5dcc2c24e272a77a395b17ff23d72ce5fcadfe82e1387d2fa4a20fa6",
+      "seal_sha256": "1325373ca367dba73fb5cb1e2b3aa8313872c7c4c1ae0d91c16b80bd1761d8ed",
+      "kind": "mtp_width_validation_v1",
+      "status": "numerically_exact",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/validation-03/summary.json",
+      "sha256": "e8fe2d243290a08a2c74b03a67b50c9c76bc07e1ad611524248b4e953ec78c6f",
+      "seal_sha256": "1cea0b6ba9e98b7946fc031d00a4a7e98ba56570be6f8de57258c2d653fbc8be",
+      "kind": "mtp_width_validation_v1",
+      "status": "numerically_exact",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/validation-04/summary.json",
+      "sha256": "a2039049fa1fb4df17e29085ef222e63662e765d9d3f21cff74fe09b192d61a0",
+      "seal_sha256": "8c62791f02216a8f45c4bccf4e9eaa5a0c8b1a6770853b29d6feb228b1ec274b",
+      "kind": "mtp_width_validation_v1",
+      "status": "numerically_exact",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-01/summary.json",
+      "sha256": "7f6ad57f3230fdb36353ae44a68ecb1046e411158457bc09d794296ebdd42a66",
+      "seal_sha256": "f0ef08bc3b5ea6bc925fb06c10182985e640fa5d872d34b5c884bfacfbad507b",
+      "kind": "mtp_width_screen_v1",
+      "status": "failed",
+      "complete": false
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/summary.json",
+      "sha256": "737f7ad08db1734d9e49b939f0e5c26f7b6cc4a718b7734e10116b94404e9a7b",
+      "seal_sha256": "4cdee11f331221013893b63eb40349e9925f3904b184e72cc3e26ca5f3186021",
+      "kind": "mtp_width_screen_v1",
+      "status": "insufficient_early_gain",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-1-01/summary.json",
+      "sha256": "cbff3b75bd88bedae7135d8a5f363e6b0c16abe1926d45b6af83a9e53ab58712",
+      "seal_sha256": "71dd6a92062e61db4ca638a1d974b339f3a1b9fbec5dd26a62db262c09b9c77c",
+      "kind": "mtp_width_screen_v1",
+      "status": "resource_blocked",
+      "complete": false
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/summary.json",
+      "sha256": "61b49530c40a9724e36fa2a25c8d0a1376ddd6906508fa413cb2faf24f4a245f",
+      "seal_sha256": "efedcbb4d352cee41977dbab310de89feea466baa881bc7042562ecfd47d16b9",
+      "kind": "mtp_width_screen_v1",
+      "status": "promising_long_lru_diagnostic_screen",
+      "complete": true
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/summary.json",
+      "sha256": "5b06d970a1e0d56819a101bf15f219f38281956bf5750fec507645673fda8cc5",
+      "seal_sha256": "240a5efb67bdfd6fc2c57f20a334c31126742db63633bda8127a6bc266c1436c",
+      "kind": "mtp_width_screen_v1",
+      "status": "completed_other_coding_diagnostic_screen",
+      "complete": true
+    }
+  ],
+  "ledger": [
+    {
+      "path": "/repo/docs/experiments/ac3683fa9c86254d6192a29b3e7bae69badc3015b1882c94272431c7f7ffd58f.json",
+      "sha256": "ac3683fa9c86254d6192a29b3e7bae69badc3015b1882c94272431c7f7ffd58f"
+    },
+    {
+      "path": "/repo/docs/experiments/c00d5a4906e6976885b70800dab7c5bf3a9977bfb47fbbc72ad53fc702a6c310.json",
+      "sha256": "c00d5a4906e6976885b70800dab7c5bf3a9977bfb47fbbc72ad53fc702a6c310"
+    },
+    {
+      "path": "/repo/docs/experiments/7714f444a9961f2a672ed513fdee9785929372dfe0a8750d29a18e7a7a39689c.json",
+      "sha256": "7714f444a9961f2a672ed513fdee9785929372dfe0a8750d29a18e7a7a39689c"
+    },
+    {
+      "path": "/repo/docs/experiments/e263b6f3bd52e475652aa59af53485ff022312f9c19c965a003984b69aa8d462.json",
+      "sha256": "e263b6f3bd52e475652aa59af53485ff022312f9c19c965a003984b69aa8d462"
+    }
+  ],
+  "next_experiment": "Capture a bounded middle-generation target profile using the best measured fixed width for each selected workload.",
+  "limitations": [
+    "Review aggregates source references, not timing samples. Raw reports remain authoritative.",
+    "Width two is rejected for the screened LRU configuration; one token is not a universally best width.",
+    "The earlier incomplete width-one short attempt remains unqualified.",
+    "No measured width meets 5 tokens/s. Target profiling is planned, not yet implemented for these current-width windows.",
+    "Five-pair confirmation, 2K/4K prompts, append latency, 7K reporting and sustained coding remain outstanding.",
+    "Measurement tools retain their frozen versions; final query checks are separately archived."
+  ]
+}

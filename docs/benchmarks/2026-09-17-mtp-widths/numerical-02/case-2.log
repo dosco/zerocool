@@ -1,0 +1,10 @@
+load_target 0
+2026-09-17 11:29:37.552 probe-mtp-forward[7884:216594679] Metal API Validation Enabled
+2026-09-17 11:29:37.552 probe-mtp-forward[7884:216594679] Metal GPU Validation Enabled
+prime_target 0
+prime_draft 0
+draft_verify 0
+draft_verify 2
+draft_verify 4
+draft_verify 6
+complete 0

@@ -1,0 +1,758 @@
+{
+  "status": "measured",
+  "preliminary": true,
+  "full_correctness_stage_passed": true,
+  "advancement_allowed": false,
+  "runs": [
+    {
+      "case": 0,
+      "pair": 0,
+      "arm": "4",
+      "source": {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/pair-0-width-4.json",
+        "sha256": "895bbc3d48c5ca4ff86a767ae1452b339a08581dfc8ba1ca37a4077f5e669ac2"
+      },
+      "identity": {
+        "workload_sha256": "a56d10af39f8944755d357f3e016c5a3e8f4416b3d0d6b69909eed294e699e15",
+        "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+        "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+        "prepared": {
+          "format": "freellm-affine-records-v1",
+          "recipe": "q4-control-lossless",
+          "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+          "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+          "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+          "prepared_bytes": 100048541696,
+          "expert_record_bytes": 2764800,
+          "expert_stride": 2768896,
+          "ngram_record_bytes": 100,
+          "ngram_cache_dtype": "BF16",
+          "application_read_bytes": 48793480800
+        },
+        "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+        "producer_binary_sha256": "b12a79beadaa6ce501d13cf0840094ec6566dd30d24b68bc0133a6b5884a5deb",
+        "admission": {
+          "target": {
+            "limit_bytes": 12884901888,
+            "resident_bytes": 5362515968,
+            "session_bytes": 571326464,
+            "scratch_bytes": 536870912,
+            "kernel_scratch_bytes": 0,
+            "panel_tokens": 512,
+            "panel_scratch_bytes": 155189248,
+            "runtime_control_bytes": 16384,
+            "pipeline_scratch_bytes": 0,
+            "snapshot_bytes": 0,
+            "ngram_bytes": 67108864,
+            "reserve_bytes": 1073741824,
+            "expert_bytes": 4042588160,
+            "expert_slots": 1460,
+            "planned_bytes": 11809357824
+          },
+          "draft_slots": 32,
+          "draft_bytes": 318234624,
+          "host_checkpoint_logits_bytes": 151158784,
+          "combined_bytes": 12297625600,
+          "expert_scratch_reserve_bytes": 2097152,
+          "target_recovery_reserve_bytes": 16777216
+        },
+        "device": "Apple M1 Pro",
+        "kernel_policy": {
+          "q4_decode": "reference",
+          "route_selection": "simd",
+          "attention_score_tiles": "full",
+          "policy": "candidate",
+          "token_tile": 1,
+          "affine_rows": 1,
+          "q8_decode_rows": 2,
+          "gate_pair": false,
+          "gdn": "original",
+          "gdn_rows": 4,
+          "gdn_block": 8,
+          "shape_table": null,
+          "operator_capture": "",
+          "capture_filter": {
+            "phase": "",
+            "operator": "",
+            "layer": -2
+          },
+          "profile": false,
+          "profile_decode_only": false,
+          "counter_profile": false,
+          "automatic_rules_promoted": false
+        },
+        "validation": false,
+        "mode": "fast-timing",
+        "target_recovery": "full-replay",
+        "direct_output": true,
+        "requested_width": 4
+      },
+      "complete": true,
+      "timing_mode": true,
+      "captured_cycles": 22,
+      "captured_committed_tokens": 64,
+      "component_ms_per_token": {
+        "draft": 10.86895509375,
+        "verify": 235.206136703125,
+        "recovery": 52.36422525,
+        "wall": 300.804470015625,
+        "checkpoint_save": 1.557008484375,
+        "other": 0.808144484375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.58741340625,
+        "target_repair": 50.561468125,
+        "draft_restore": 0.001178984375,
+        "draft_catchup": 1.214036484375
+      },
+      "checkpoint_save_measured": true,
+      "proposed_tokens": 60,
+      "accepted_proposals": 42,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 20,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 20,
+          "accepted": 14
+        },
+        "3": {
+          "proposed": 20,
+          "accepted": 10
+        }
+      },
+      "discarded_verification_rows": 18,
+      "repeated_target_rows": 22,
+      "repeated_target_rows_basis": "measured forward calls",
+      "rejected_cycles": 10,
+      "mean_committed_per_cycle": 2.909090909090909,
+      "target_expert_application_bytes": 48137932800,
+      "target_expert_bytes_per_committed_token": 752155200.0,
+      "measured_tps": 3.324418682834254,
+      "stop_reason": "length",
+      "phase_ns": {
+        "draft": 695613126,
+        "verify": 15053192749,
+        "recovery": 3351310416,
+        "wall": 19251486081,
+        "checkpoint_save": 99648543,
+        "other": 51721247
+      },
+      "recovery_part_ns": {
+        "target_restore": 37594458,
+        "target_repair": 3235933960,
+        "draft_restore": 75455,
+        "draft_catchup": 77698335
+      },
+      "opportunity": {
+        "target_tps": 5,
+        "budget_ms_per_token": 200.0,
+        "removable_phase": "recovery",
+        "gap_ms_per_token": 100.80447001562499,
+        "optimistic_zero_phase_tps": 4.025112762802926,
+        "phase_measured": true
+      }
+    },
+    {
+      "case": 0,
+      "pair": 0,
+      "arm": "2",
+      "source": {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/pair-0-width-2.json",
+        "sha256": "b12f9926aa69798a5f3f6e539fa78679507ab4e71c616fda38b047ce1dd3a2fe"
+      },
+      "identity": {
+        "workload_sha256": "a56d10af39f8944755d357f3e016c5a3e8f4416b3d0d6b69909eed294e699e15",
+        "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+        "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+        "prepared": {
+          "format": "freellm-affine-records-v1",
+          "recipe": "q4-control-lossless",
+          "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+          "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+          "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+          "payload_equivalence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+          "prepared_bytes": 100048541696,
+          "expert_record_bytes": 2764800,
+          "expert_stride": 2768896,
+          "ngram_record_bytes": 100,
+          "ngram_cache_dtype": "BF16",
+          "application_read_bytes": 48793480800
+        },
+        "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+        "producer_binary_sha256": "b12a79beadaa6ce501d13cf0840094ec6566dd30d24b68bc0133a6b5884a5deb",
+        "admission": {
+          "target": {
+            "limit_bytes": 12884901888,
+            "resident_bytes": 5362515968,
+            "session_bytes": 571326464,
+            "scratch_bytes": 536870912,
+            "kernel_scratch_bytes": 0,
+            "panel_tokens": 512,
+            "panel_scratch_bytes": 155189248,
+            "runtime_control_bytes": 16384,
+            "pipeline_scratch_bytes": 0,
+            "snapshot_bytes": 0,
+            "ngram_bytes": 67108864,
+            "reserve_bytes": 1073741824,
+            "expert_bytes": 4042588160,
+            "expert_slots": 1460,
+            "planned_bytes": 11809357824
+          },
+          "draft_slots": 32,
+          "draft_bytes": 318234624,
+          "host_checkpoint_logits_bytes": 151158784,
+          "combined_bytes": 12297625600,
+          "expert_scratch_reserve_bytes": 2097152,
+          "target_recovery_reserve_bytes": 16777216
+        },
+        "device": "Apple M1 Pro",
+        "kernel_policy": {
+          "q4_decode": "reference",
+          "route_selection": "simd",
+          "attention_score_tiles": "full",
+          "policy": "candidate",
+          "token_tile": 1,
+          "affine_rows": 1,
+          "q8_decode_rows": 2,
+          "gate_pair": false,
+          "gdn": "original",
+          "gdn_rows": 4,
+          "gdn_block": 8,
+          "shape_table": null,
+          "operator_capture": "",
+          "capture_filter": {
+            "phase": "",
+            "operator": "",
+            "layer": -2
+          },
+          "profile": false,
+          "profile_decode_only": false,
+          "counter_profile": false,
+          "automatic_rules_promoted": false
+        },
+        "validation": false,
+        "mode": "fast-timing",
+        "target_recovery": "full-replay",
+        "direct_output": true,
+        "requested_width": 2
+      },
+      "complete": true,
+      "timing_mode": true,
+      "captured_cycles": 36,
+      "captured_committed_tokens": 64,
+      "component_ms_per_token": {
+        "draft": 6.805255203125,
+        "verify": 301.755965484375,
+        "recovery": 21.781324234375,
+        "wall": 333.70777028125,
+        "checkpoint_save": 2.572098921875,
+        "other": 0.7931264375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.444587234375,
+        "target_repair": 19.807900375,
+        "draft_restore": 0.0011790625,
+        "draft_catchup": 1.527412765625
+      },
+      "checkpoint_save_measured": true,
+      "proposed_tokens": 36,
+      "accepted_proposals": 28,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 36,
+          "accepted": 28
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "discarded_verification_rows": 8,
+      "repeated_target_rows": 8,
+      "repeated_target_rows_basis": "measured forward calls",
+      "rejected_cycles": 8,
+      "mean_committed_per_cycle": 1.7777777777777777,
+      "target_expert_application_bytes": 44615577600,
+      "target_expert_bytes_per_committed_token": 697118400.0,
+      "measured_tps": 2.9966338487030035,
+      "stop_reason": "length",
+      "phase_ns": {
+        "draft": 435536333,
+        "verify": 19312381791,
+        "recovery": 1394004751,
+        "wall": 21357297298,
+        "checkpoint_save": 164614331,
+        "other": 50760092
+      },
+      "recovery_part_ns": {
+        "target_restore": 28453583,
+        "target_repair": 1267705624,
+        "draft_restore": 75460,
+        "draft_catchup": 97754417
+      },
+      "opportunity": {
+        "target_tps": 5,
+        "budget_ms_per_token": 200.0,
+        "removable_phase": "recovery",
+        "gap_ms_per_token": 133.70777028125002,
+        "optimistic_zero_phase_tps": 3.2058839917976183,
+        "phase_measured": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/summary.json",
+      "sha256": "737f7ad08db1734d9e49b939f0e5c26f7b6cc4a718b7734e10116b94404e9a7b",
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/summary.json"
+      ],
+      "unavailable_aliases": []
+    }
+  ],
+  "limitations": [
+    "Milliseconds are amortized per committed token, not individual token-delivery latencies.",
+    "Recovery children are included in recovery and must not be added again.",
+    "Legacy checkpoint saving is inside other overhead; separate subdivisions are unavailable.",
+    "Expert bytes are application reads, not observed device traffic.",
+    "Incomplete cycles and runs do not establish a request throughput result.",
+    "Early screen only; full correctness eligibility is reported separately and production remains unqualified.",
+    "Zero-phase throughput subtracts that phase at unchanged other costs; it is an optimistic arithmetic bound, not a forecast."
+  ],
+  "production_promoted": false,
+  "hypothesis": "A fixed draft length must improve complete requests at the same cache and checkpoint capacity.",
+  "smallest_experiment": "Do not repeat the unchanged rejected width.",
+  "missing_evidence": [
+    "Longer fresh paired requests on the other coding workloads",
+    "Measured workload crossover before any adaptive policy",
+    "Five fresh pairs, long-context and sustained qualification"
+  ],
+  "related_experiments": [
+    {
+      "id": "eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "rejected",
+      "hypothesis": "Existing direct output bindings for single-row experts in four-token verification can remove scatter dispatches and improve real MTP requests without changing arithmetic.",
+      "outcome": "Both alternating short pairs pass: candidate 5.0408/5.0394 versus control 4.8390/4.9254 tokens/s, geometric-mean latency reduction 3.1374%. Exactly 3110 scatters and 6220 allocations removed. Longer 128-token pairs: merge 4.4128 to 4.4042 (+0.1967% latency), LRU 3.0916 to 3.1595 (-2.1492%), retry 3.6269 to 3.7164 (-2.4102%). Across-case latency reduction 1.4612%, not a repeated-pair confidence bound. Peak footprint 9.7273GiB; expert reads remain 627.91/762.11/718.90MiB per committed token. All longer candidates miss 5 tokens/s.",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0.json",
+          "sha256": "eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0",
+          "aliases": [
+            "/repo/docs/experiments/eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "0dfe72d9e04d6c11e77a44f47efa2be66294efc06dbcf3887aa6b2eff3763db6",
+      "kind": "report",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Recovery sample memory or host disturbed",
+      "tags": {
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ],
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "rejection_reason": []
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-06/ledger-input.json",
+          "sha256": "0dfe72d9e04d6c11e77a44f47efa2be66294efc06dbcf3887aa6b2eff3763db6",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-06/ledger-input.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "1cd08f573ea1d8da0ae9b1fb7a1ecca20d5c3e47063a0de256baed843d5bf9b4",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Recovery sample memory or host disturbed",
+      "tags": {
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "rejection_reason": [],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ]
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/1cd08f573ea1d8da0ae9b1fb7a1ecca20d5c3e47063a0de256baed843d5bf9b4.json",
+          "sha256": "1cd08f573ea1d8da0ae9b1fb7a1ecca20d5c3e47063a0de256baed843d5bf9b4",
+          "aliases": [
+            "/repo/docs/experiments/1cd08f573ea1d8da0ae9b1fb7a1ecca20d5c3e47063a0de256baed843d5bf9b4.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "23458f96179c630f93634829ac338d25ba94fbd504890e95bcb9fa377007015e",
+      "kind": "report",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Recovery sample memory or host disturbed",
+      "tags": {
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ],
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "rejection_reason": []
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-07/ledger-input.json",
+          "sha256": "23458f96179c630f93634829ac338d25ba94fbd504890e95bcb9fa377007015e",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-07/ledger-input.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "57608b47f4e4866249c2206435c366f775cdbf90882992e1c63552803f06a060",
+      "kind": "report",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Recovery sample memory or host disturbed",
+      "tags": {
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ],
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "rejection_reason": []
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-08/ledger-input.json",
+          "sha256": "57608b47f4e4866249c2206435c366f775cdbf90882992e1c63552803f06a060",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-08/ledger-input.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "5aaa397d813983b6fb0d2f215adb636d085f195dd2c767ad5da4397cfec5bfb1",
+      "kind": "report",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Capture resources disturbed",
+      "tags": {
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ],
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "rejection_reason": []
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-05/ledger-input.json",
+          "sha256": "5aaa397d813983b6fb0d2f215adb636d085f195dd2c767ad5da4397cfec5bfb1",
+          "aliases": [
+            "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-05/ledger-input.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "63200699e854f19adc5a5bf9f73f1ded2ee8c83807ce5941335b136b70bfef49",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Capture resources disturbed",
+      "tags": {
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "rejection_reason": [],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ]
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/63200699e854f19adc5a5bf9f73f1ded2ee8c83807ce5941335b136b70bfef49.json",
+          "sha256": "63200699e854f19adc5a5bf9f73f1ded2ee8c83807ce5941335b136b70bfef49",
+          "aliases": [
+            "/repo/docs/experiments/63200699e854f19adc5a5bf9f73f1ded2ee8c83807ce5941335b136b70bfef49.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Avoid repeated full target forwards after partial draft rejection",
+      "outcome": "Fixed 12GiB experiment requires 13.5GiB currently available memory",
+      "tags": {
+        "configuration": [
+          "12GiB",
+          "1460-target-slots",
+          "32-draft-slots",
+          "direct-output"
+        ],
+        "optimization": [
+          "target-state-recovery"
+        ],
+        "rejection_reason": [],
+        "workload": [
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ]
+      },
+      "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e.json",
+          "sha256": "7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e",
+          "aliases": [
+            "/repo/docs/experiments/7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Updating only private attention state during target-aligned MTP catch-up avoids discarded computation without changing proposals or target output.",
+      "outcome": "Fresh timing stops at the first memory gate: clean control 4.841001 tokens/s; candidate 4.319057 tokens/s with 53.859MiB peak compression and 73 decompressions, unchanged swap. Zero usable pairs. The candidate numerical validation also had 76.219MiB peak compression. Original reports remain resource_blocked; no historical timings pooled.",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819.json",
+          "sha256": "8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819",
+          "aliases": [
+            "/repo/docs/experiments/8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    },
+    {
+      "id": "867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda",
+      "kind": "experiment_ledger_v1",
+      "status": "unknown",
+      "complete": null,
+      "decision": "blocked",
+      "hypothesis": "Remove repeated full target forwards after partial MTP rejection with a bounded exact state journal",
+      "outcome": "Implementation and offline analysis are ready; real-model attempt stopped before load. Final host preflight has 9.61GiB available versus the required 13.5GiB. No new speed measurement.",
+      "tags": {
+        "configuration": [
+          "12GiB",
+          "16MiB-journal",
+          "1460-target-slots",
+          "32-draft-slots"
+        ],
+        "optimization": [
+          "target-state-recovery",
+          "optimization-evidence-tooling"
+        ],
+        "rejection_reason": [],
+        "workload": [
+          "synthetic-prefix-boundaries",
+          "lru_cache",
+          "merge_intervals",
+          "retry_backoff"
+        ]
+      },
+      "rerun_rationale": "The native candidate removes whole target replay work, a different mechanism from rejected expert scratch reuse. The current stop is resource admission, not a measured rejection.",
+      "sources": [
+        {
+          "path": "/repo/docs/experiments/867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda.json",
+          "sha256": "867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda",
+          "aliases": [
+            "/repo/docs/experiments/867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda.json"
+          ],
+          "unavailable_aliases": []
+        }
+      ],
+      "stale": false
+    }
+  ],
+  "validated_comparison": {
+    "comparable": true,
+    "status": "measured",
+    "preliminary": true,
+    "full_correctness_stage_passed": true,
+    "advancement_allowed": false,
+    "controlled_change": {
+      "requested_width": [
+        "4",
+        "2"
+      ]
+    },
+    "pairs": [
+      {
+        "case": "lru_cache",
+        "pair": 0,
+        "exact_all_logits_tokens_and_state": true,
+        "ratio": 1.109384346129949,
+        "control_tps": 3.324418682834254,
+        "candidate_tps": 2.9966338487030035
+      }
+    ],
+    "cases": [
+      {
+        "case": "lru_cache",
+        "pairs": 1,
+        "geometric_mean_ratio": 1.109384346129949,
+        "confidence_95": null
+      }
+    ],
+    "sources": [
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/summary.json",
+        "sha256": "737f7ad08db1734d9e49b939f0e5c26f7b6cc4a718b7734e10116b94404e9a7b",
+        "aliases": [
+          "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/summary.json"
+        ],
+        "unavailable_aliases": []
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/producer.json",
+        "sha256": "f8164c714862b75b5c9d36be96209249d074f2e490982a0302653cf9b593f6f8"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/identity.json",
+        "sha256": "aa841f355c0cf0a1e23dbc791ad391f2c1b73e896311079de7656e7573c0180e"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/pair-0-width-4.json",
+        "sha256": "895bbc3d48c5ca4ff86a767ae1452b339a08581dfc8ba1ca37a4077f5e669ac2"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/case-0.json",
+        "sha256": "a56d10af39f8944755d357f3e016c5a3e8f4416b3d0d6b69909eed294e699e15"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/pair-0-width-2.json",
+        "sha256": "b12f9926aa69798a5f3f6e539fa78679507ab4e71c616fda38b047ce1dd3a2fe"
+      },
+      {
+        "path": "/repo/docs/benchmarks/2026-09-17-mtp-widths/screen-width-2-02/case-0.json",
+        "sha256": "a56d10af39f8944755d357f3e016c5a3e8f4416b3d0d6b69909eed294e699e15"
+      }
+    ],
+    "limitations": [
+      "Each workload has its own repetitions; different cases are not repeated samples.",
+      "Fewer than five paired runs have no confidence bound.",
+      "These short screens do not qualify long-context or sustained inference.",
+      "Preliminary timing does not allow advancement. Numerical qualification is reported separately; promotion requires fresh timing evidence."
+    ],
+    "normal_request_latency_qualified": false,
+    "production_promoted": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "kind": "verifier_horizon_kernel_test_v1",
+  "performance_measurement": false,
+  "before": {
+    "physical_footprint_bytes": 1573760,
+    "resident_bytes": 4620288,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 580,
+    "pageins": 1,
+    "physical_footprint_peak_bytes": 1606528,
+    "resident_peak_bytes": 4620288,
+    "system_swap_used_bytes": 2642477056,
+    "reclaimable_bytes": 19891273728
+  },
+  "host_before": {
+    "monotonic_ns": 5284420973975833,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "cases": [
+    {
+      "K": 2560,
+      "N": 6144,
+      "rows": 8,
+      "float_output": false,
+      "exact_reference": true,
+      "guards_intact": true,
+      "output_sha256": "747b5b27329eac011031ddfe01fbe4192d38d907e56e0fd004dffaa3a8dc0eda"
+    },
+    {
+      "K": 2560,
+      "N": 6144,
+      "rows": 8,
+      "float_output": true,
+      "exact_reference": true,
+      "guards_intact": true,
+      "output_sha256": "8aad5f340cea3c96a3e387c160924438d824f34477159e80a57b1692e912f606"
+    },
+    {
+      "K": 6144,
+      "N": 2560,
+      "rows": 8,
+      "float_output": false,
+      "exact_reference": true,
+      "guards_intact": true,
+      "output_sha256": "507837cb243ecece716d2cdfa2eb4b66f4629c8ee9c16584c0e6ba1e0e545d95"
+    },
+    {
+      "K": 6144,
+      "N": 2560,
+      "rows": 8,
+      "float_output": true,
+      "exact_reference": true,
+      "guards_intact": true,
+      "output_sha256": "46466ff2d0887a72b5f7b42f3b34ad8480b5a4acd0f053bb4992d68d459288c2"
+    }
+  ],
+  "peak_gpu_bytes": 17219584,
+  "after": {
+    "physical_footprint_bytes": 27674304,
+    "resident_bytes": 17317888,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 3561,
+    "pageins": 21,
+    "physical_footprint_peak_bytes": 61572800,
+    "resident_peak_bytes": 50184192,
+    "system_swap_used_bytes": 2642477056,
+    "reclaimable_bytes": 19833356288
+  },
+  "host_after": {
+    "monotonic_ns": 5284421120770125,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "complete": true
+}

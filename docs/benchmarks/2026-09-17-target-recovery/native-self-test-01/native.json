@@ -1,0 +1,50 @@
+{
+  "kind": "target_recovery_synthetic_v1",
+  "complete": true,
+  "real_model_evidence": false,
+  "performance_measurement": false,
+  "cases": [
+    {
+      "offset": 3,
+      "keep": 1,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 3,
+      "keep": 2,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 3,
+      "keep": 3,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 3,
+      "keep": 4,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 8188,
+      "keep": 1,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 8188,
+      "keep": 2,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 8188,
+      "keep": 3,
+      "all_persistent_buffers_exact": true
+    },
+    {
+      "offset": 8188,
+      "keep": 4,
+      "all_persistent_buffers_exact": true
+    }
+  ],
+  "peak_physical_bytes": 1342738304,
+  "all_buffers_released": true
+}

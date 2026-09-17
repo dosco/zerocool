@@ -1,0 +1,30 @@
+Process:         probe-mtp-forward [84470]
+Path:            /Users/USER/*/probe-mtp-forward
+Load Address:    0x1046cc000
+Identifier:      probe-mtp-forward
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  Python [84466]
+Target Type:     live task
+
+Date/Time:       2026-09-17 11:10:41.644 -0700
+Launch Time:     2026-09-17 11:10:04.842 -0700
+OS Version:      macOS 15.6.1 (24G90)
+Report Version:  7
+Analysis Tool:   /usr/bin/heap
+
+Physical footprint:         9.7G
+Physical footprint (peak):  9.7G
+Idle exit:                  untracked
+----
+
+Process 84470: 1 zone
+
+All zones: 95464 nodes malloced - Sizes: 50704KB[1] 3072KB[36] 1248KB[1] 704KB[1] 448KB[1] 416KB[2] 384KB[3] 352KB[4] 288KB[2] 256KB[20] 224KB[14] 192KB[12] 160KB[14] 128KB[54] 96KB[23] 64KB[45] 32KB[2] 31.5KB[4] 30.5KB[3] 29.5KB[4] 28KB[1] 27.5KB[3] 27KB[2] 25.5KB[3] 23KB[1] 22KB[2] 18.5KB[1] 18KB[1] 16KB[3] 13.5KB[1] 12.5KB[1] 10KB[2] 9KB[11] 8.5KB[68] 8KB[36] 6.5KB[1] 5.5KB[1] 5KB[65] 4.5KB[1] 4KB[19] 3.5KB[158] 3KB[57] 2.5KB[95] 2KB[38] 1.5KB[21] 1KB[98] 960[1] 944[2] 928[5] 896[1] 864[4] 848[1] 832[6] 816[4] 800[1] 784[23] 768[11] 752[1] 736[4] 720[3] 688[14] 672[6] 656[95] 640[13] 624[5] 608[101] 592[6] 576[10] 560[2] 544[3] 528[8] 512[35] 496[16] 480[10] 464[4] 448[7] 432[82] 416[7] 384[5] 368[3914] 352[48] 336[42] 320[22] 304[15] 288[541] 272[13] 256[128] 240[167] 224[91] 208[255] 192[913] 176[203] 160[618] 144[1553] 128[8466] 112[9601] 96[551] 80[4073] 64[15061] 48[27988] 32[11584] 16[8185] 
+
+Found:  347 ObjC classes  53 Swift classes  36 C++ classes  72 CFTypes
+Derived 188 type names for non-objects from allocation backtraces
+
+Active blocks in all zones that match pattern 'malloc[32k-]':
+

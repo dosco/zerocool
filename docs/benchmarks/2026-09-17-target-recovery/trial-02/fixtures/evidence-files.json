@@ -1,0 +1,12 @@
+{
+  "summary.json": "3170f48ee8d431ec0a46f921b33b7581d1a658ea598ae5d882c473f86b5dd1ef",
+  "capture.progress.jsonl": "75995c25ee1954c5eb13d812cb790baecd452afe8dfc3c96b1eb555e1249e85f",
+  "capture-recovery-host.log": "bc82172b9d98856bb2783856d8b2c0f0450edd90d9c323f2a68dd441a2559b17",
+  "draft-audit.json": "02068456eccbde296bc31767c53eb86f833ebd7e986823dc7f13149c7b5c6bd7",
+  "workload.json": "f25200f8ecdfe155841971807a979372693477c1ec9f77d373ee203fa947547f",
+  "producer.json": "6bf482f763ba95ee26589260a40b0f16144443dfb655ec5b350907007dadf656",
+  "capture.json": "608bce5b9424c24fb2d060fa90d4412abba6bfeccc5b72481f569564e474a963",
+  "identity.json": "0395bd4bc4559b81a7e6f93e8bfbeea0f072bcb49e217536f85960bc7fd13d6b",
+  "capture-recovery.log": "3c7d9a07e5ab30f0d3c1759083b9fd34c32c9a4a12b81310cbe7e02c3f18c47e",
+  "capture-recovery-host.json": "600b51afca9a9a3fc4618d4ed81ae28a9c4cf2172e87458da2acd2e420ebd91b"
+}

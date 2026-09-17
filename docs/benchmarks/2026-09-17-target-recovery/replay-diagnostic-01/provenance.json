@@ -1,0 +1,18 @@
+{
+  "kind": "target_recovery_diagnostic_replay_provenance_v1",
+  "complete": false,
+  "production_promoted": false,
+  "source_trial": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-02/summary.json",
+  "source_trial_status": "failed",
+  "source_capture": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-02/fixtures/capture.json",
+  "source_capture_sha256": "608bce5b9424c24fb2d060fa90d4412abba6bfeccc5b72481f569564e474a963",
+  "fixture_manifest": "/repo/.cache/target-recovery-fixtures/c5a7bdbf230a94a64af7f15c59c513f3d6c065df4de2bc1beba6f423ffb83cb6/manifest.json",
+  "fixture_manifest_sha256": "d88d5609f9c745d10bfff18bb72b95bebc9dd153c4afcd79fdcf226a2262b081",
+  "producer_sha256": "6bf482f763ba95ee26589260a40b0f16144443dfb655ec5b350907007dadf656",
+  "binary": "/repo/.cache/target-recovery-builds/47f6bbb8e7a3f7492e507654d85e5ff88ca0ad044261e2e62e59373f068bbf1a/probe-mtp-forward",
+  "binary_sha256": "239e88db69faac55b5821ccae8bf8f8833eed612fa26106cc9fb248afa8a004b",
+  "limitations": [
+    "Capture belongs to a rejected trial with source drift and recorded memory compression.",
+    "This replay is diagnostic correctness evidence only; it does not qualify the fixture prerequisite or establish speed."
+  ]
+}

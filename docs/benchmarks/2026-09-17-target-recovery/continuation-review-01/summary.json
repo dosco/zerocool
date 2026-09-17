@@ -1,0 +1,41 @@
+{
+  "kind": "target_recovery_continuation_review_v1",
+  "complete": true,
+  "status": "diagnostic_exact",
+  "performance_measurement": false,
+  "production_promoted": false,
+  "resource_qualified": false,
+  "numerical": {
+    "checked_forced_prefixes": [
+      1
+    ],
+    "generated_tokens": 8,
+    "exact_all_logits_tokens_and_state": true,
+    "eliminated_target_forward_calls": 1,
+    "eliminated_target_read_bytes": 0,
+    "candidate_target_recovery_forward_calls": 0,
+    "candidate_target_recovery_read_bytes": 0
+  },
+  "blocker": "Candidate validation blocked: system swap decreased: 3589996544 to 3581607936 bytes (range 3581607936..3589996544); no process compression or decompression observed",
+  "clean_real_fixture": {
+    "source": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-06/fixtures/summary.json",
+    "sha256": "5f57ae40e3e1fef0f2ec643a958d8390b9315a3c60a0c2539c8481ae834a6aea"
+  },
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-08/correctness/case-0-pair-0-full-replay.json",
+      "sha256": "a6ad75a06a527870179fe87050c599ff51e4f7102b634166aee1729cf99c757b"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-17-target-recovery/trial-08/correctness/case-0-pair-0-state-only.json",
+      "sha256": "1dcd2d0fd1c99be53436e45f3a254c9baa190c6d9d281f78807e33c0be0dd801"
+    }
+  ],
+  "limitations": [
+    "Only forced prefix one has a complete full-model pair. Other full-model prefix and EOS cases remain unqualified.",
+    "Metal validation is enabled; these process timings are not performance measurements.",
+    "Existing resource criteria remain unchanged; original blocked trials retain their status.",
+    "The memory-region diagnostic did not reproduce prior process compression; no allocation-specific cause was identified."
+  ],
+  "next_stage": "Finish recovery prerequisites and screen its complete request latency; then measure fixed draft widths 1/2/4 with the selected recovery path."
+}
