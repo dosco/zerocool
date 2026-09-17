@@ -1,0 +1,228 @@
+{
+  "kind": "mtp_continuation_screen_v1",
+  "complete": true,
+  "status": "continuation_screen_complete",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T00:13:48.148780+00:00",
+  "time_limit_seconds": 1200,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate"
+    }
+  ],
+  "workload": [
+    {
+      "name": "merge_intervals",
+      "prompt_text": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity.",
+      "prompt_ids": [
+        248045,
+        846,
+        198,
+        7734,
+        264,
+        12654,
+        709,
+        10562,
+        87682,
+        1494,
+        40798,
+        8,
+        421,
+        78161,
+        48142,
+        7629,
+        26126,
+        13,
+        3301,
+        10300,
+        26126,
+        1973,
+        93183,
+        279,
+        1879,
+        13,
+        13365,
+        449,
+        4147,
+        1103,
+        321,
+        26126,
+        421,
+        5615,
+        506,
+        449,
+        14456,
+        13,
+        28763,
+        279,
+        7873,
+        321,
+        2250,
+        2526,
+        52992,
+        7262,
+        4147,
+        1879,
+        11,
+        48142,
+        26126,
+        11,
+        321,
+        632,
+        27379,
+        81859,
+        26126,
+        13,
+        79091,
+        279,
+        854,
+        22373,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ],
+      "eos_ids": [
+        248046,
+        248044
+      ],
+      "max_tokens": 16,
+      "draft_slots": 32,
+      "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+    }
+  ],
+  "fixture_source": "/repo/docs/benchmarks/2026-09-16-mtp-continuation/fixture-02",
+  "cases": [
+    {
+      "case": 0,
+      "name": "merge_intervals",
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 0.8016829467378345
+    }
+  ],
+  "paired_confidence_qualified": false,
+  "screen_scope": "selected_cases",
+  "selected_case_names": [
+    "merge_intervals"
+  ],
+  "validation_source": "/repo/docs/benchmarks/2026-09-16-mtp-continuation/validation-01",
+  "host_preflight": [
+    {
+      "source": "case-0-serial-host.json",
+      "sha256": "2bcb3342fc416c2ef4e167489ac0f650031a805f3e8184ba83b6198647156d8c",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5207690278659125,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-fast-timing-host.json",
+      "sha256": "bdbaeaef39c6051feab25a80f10678e0b39012393eb8d11f08da37fc408bda23",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5207716305501833,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "samples": [
+    {
+      "case": 0,
+      "mode": "serial",
+      "source": "case-0-serial.json",
+      "sha256": "49d840093e79a0e6a7ae8eafeb5a38c1d0bc921f9193dc262374668d5d4f8d42",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10486551680,
+      "tokens_per_second": 3.912686526952383,
+      "generated_tokens": 16,
+      "proposed_tokens": 0,
+      "accepted_proposals": 0,
+      "acceptance_rate": null,
+      "mean_committed_per_cycle": 1.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 254.64129425,
+        "recovery": 0.0001458125,
+        "wall": 255.5788696875
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 0,
+      "mode": "fast-timing",
+      "source": "case-0-fast-timing.json",
+      "sha256": "a2f7646e6b3100a18a74e852c137ea94b69e7aafe0d50c6b8b1f6346ece373cc",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10413986880,
+      "tokens_per_second": 4.880590940438085,
+      "generated_tokens": 16,
+      "proposed_tokens": 12,
+      "accepted_proposals": 12,
+      "acceptance_rate": 1.0,
+      "mean_committed_per_cycle": 4.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 8.601341125,
+        "verify": 193.7310234375,
+        "recovery": 0.88868225,
+        "wall": 204.893221375
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    }
+  ],
+  "all_candidates_at_least_5_tps": false,
+  "all_requested_lengths_complete": true,
+  "elapsed_seconds": 55.31470404192805
+}

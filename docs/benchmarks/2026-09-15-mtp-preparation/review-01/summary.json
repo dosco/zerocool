@@ -1,0 +1,71 @@
+{
+  "kind": "mtp_preparation_review_v1",
+  "complete": true,
+  "status": "passed",
+  "source_files": {
+    "mtp-models.lock.json": "e0076b86441bebc2319f97a63ac2659466e77dbebe9a2ffcad723fcf05becf60",
+    "scripts/qwen/mtp_source.py": "f37e2b2c0eb5ad8d90b2293bd27bceb9b3c94da250cfc6895cb967abd2f66c5c",
+    "scripts/qwen/prepare_mtp.py": "84f4f84115529eb5521dc5d930bf87405698e9d06b1a4ab6b9dc36bd7b240da4",
+    "scripts/qwen/test_mtp.py": "ec0c84ee0765224b26ce11a52fd11dd6668d0ffe76731ef3ea8759892895aca8",
+    "scripts/qwen/verify_mtp.py": "c5b71574859523b018964c6c6847bef4cbd5197257fb5aa27ea653fc29f946d7",
+    "scripts/qwen/check_mtp.cpp": "ec2411b74ee1ef01e2288f5c4a212743f2870f407c23d04d4b2e78d74667d6ff",
+    "scripts/qwen/build_mtp_check.py": "b8738499146cc0f1c7c1a38af2f996e989eefa2c7e3b3e686e5ec8288e8c7942",
+    "scripts/qwen/prepare_storage.py": "a5a1689fe7f2646e9af83aa960f421753961f612970717aed2e044a9a3c24c57",
+    "scripts/qwen/verify_checkpoint.py": "46892cf53bfdbada8357fb13596c1c42c4e59cb779ec3b77aa12273d9e7a7f0b",
+    "scripts/qwen/build_identity.py": "6e2346aebfa2add4b6f9eadaaeb02b4dda3c32b95c860695a5ef70940802e37b",
+    "scripts/qwen/qualification_evidence.py": "a26e1f257d9d2540c34762cf9dafaf05d6095b506ee45fef29280ab7863490fd"
+  },
+  "native_report": "../native-02/summary.json",
+  "native_report_sha256": "3013e437453139b195301a2c0289bc43274ad2ef67aa2ed2373f505b47a6238a",
+  "original_report_sha256": "e6986dfaf2068cac37bad13d129b291390fbd976531ab62e3bbdbcf840ae9852",
+  "prepared_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "prepared_bytes_unchanged": true,
+  "production_build_unchanged": true,
+  "tests": {
+    "command": ".cache/qwen-reference-venv/bin/python -m unittest discover -s scripts/qwen -p test_mtp.py -v",
+    "passed": 12,
+    "native_matrices": 25,
+    "one_token_calls": 100,
+    "four_token_calls": 25,
+    "clean_memory": true
+  },
+  "fixes": [
+    {
+      "issue": "Dense tensors with the same shape could exchange offsets and still pass the artifact audit.",
+      "reproduced_before": true,
+      "change": "Require canonical tensor offsets, part sizes, dtypes and normalization conventions before opening payloads.",
+      "regression_passed": true
+    },
+    {
+      "issue": "Source inspection pinned a raw Hub API checksum that also includes mutable downloads and likes.",
+      "reproduced_before": true,
+      "change": "Keep local API snapshot integrity but exclude its checksum from cross-inspection immutable identity. Require the source lock; continue pinning tensor ranges, shard hashes, config/index and tokenizer identities.",
+      "regression_passed": true
+    },
+    {
+      "issue": "Raw file writes assumed all bytes were written and could publish incomplete payloads.",
+      "change": "Complete partial writes or fail before publication; validate saved tensor bindings on retry.",
+      "regression_passed": true
+    },
+    {
+      "issue": "Clean-memory classification did not check decompression or require valid swap counters.",
+      "change": "Require complete nonnegative integer counters, zero compression/decompression and unchanged observed swap; freeze verifier helper dependencies.",
+      "regression_passed": true
+    }
+  ],
+  "metadata_replay": {
+    "network_used": false,
+    "live_counters_modified": true,
+    "all_immutable_fields_unchanged": true,
+    "inventory_sha256": "df0aeea953841bc08a4857db06945a58baa247950828e81a6d5e0d84eeda6be8"
+  },
+  "limitations": [
+    "The source inspection replay used locally saved metadata and simulated counter changes, not a new network observation.",
+    "Existing prepared bytes passed the stricter audit; quantization was not repeated because arithmetic and format are unchanged.",
+    "Native checks cover matrix decoding and kernels, not a full MTP forward, acceptance, full residency or speed.",
+    "The original perfect-verifier performance gate remains incomplete."
+  ],
+  "native_draft_implemented": false,
+  "acceptance_qualified": false,
+  "production_promoted": false
+}

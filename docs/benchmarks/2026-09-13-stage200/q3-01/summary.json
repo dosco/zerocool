@@ -1,0 +1,45 @@
+{
+  "kind": "stage200_q3_v1",
+  "complete": false,
+  "status": "failed",
+  "phase": "tuning-capture",
+  "measurements": [],
+  "started_at": "2026-09-14T02:36:59.687609+00:00",
+  "time_limit_seconds": 900,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "name": "control",
+      "kernel_policy": "candidate",
+      "token_tile": 1,
+      "gdn_path": "original",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8,
+      "expert_slots": 1460,
+      "cache_policy": "clock",
+      "residency": "off",
+      "decode_path": "reference",
+      "prefill_pipeline": "serial",
+      "phase_memory": "fixed",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "expert_tail": "wait",
+      "decode_scratch": "reuse",
+      "memory_pressure_policy": "observe"
+    }
+  ],
+  "workload": [],
+  "error": "Command '[PosixPath('/repo/build/qwen/qwen_q3_probe'), 'capture', PosixPath('/repo/.cache/qwen-mixed-reference'), PosixPath('/repo/.cache/prepared/q4-records-v1'), PosixPath('/repo/.cache/benchmarks/stage200/q3-01/tuning.workload.json'), PosixPath('/repo/.cache/benchmarks/stage200/q3-01/tuning'), 1460]' returned non-zero exit status 1.",
+  "elapsed_seconds": 21.673276209272444
+}

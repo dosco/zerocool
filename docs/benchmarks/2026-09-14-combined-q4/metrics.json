@@ -1,0 +1,637 @@
+{
+  "kind": "combined_q4_summary_v1",
+  "complete": true,
+  "status": "screen_gate_not_met",
+  "source_sha256": "42e572292ad7419b331e1c55a1b158f3c4a147417863685b837105d9de029aeb",
+  "arms": [
+    {
+      "arm": "A",
+      "config": {
+        "name": "A",
+        "kernel_policy": "candidate",
+        "token_tile": 1,
+        "gdn_path": "original",
+        "panel": 512,
+        "chunk": 128,
+        "ready_group": 4,
+        "io_workers": 8,
+        "expert_slots": 1072,
+        "cache_policy": "clock",
+        "residency": "core-cache",
+        "decode_path": "reference",
+        "prefill_pipeline": "serial",
+        "phase_memory": "fixed",
+        "q8_decode_rows": 2,
+        "route_selection": "simd",
+        "expert_tail": "wait",
+        "decode_scratch": "reuse",
+        "memory_pressure_policy": "observe",
+        "decode_submission": "immediate",
+        "q4_decode": "reference"
+      },
+      "phases": [
+        {
+          "name": "coding_routes_32",
+          "median_tokens_per_second": 3.4263683656502852,
+          "median_decode_ms_per_token": 291.98578189062505,
+          "median_ttft_ms": 15175.632563,
+          "median_expert_read_bytes_per_token": 674524800.0,
+          "median_gpu_command_ms_per_token": 181.357543953125
+        },
+        {
+          "name": "append_128",
+          "median_tokens_per_second": 3.1981550707222,
+          "median_decode_ms_per_token": 312.68075129687503,
+          "median_ttft_ms": 26304.5525625,
+          "median_expert_read_bytes_per_token": 772243200.0,
+          "median_gpu_command_ms_per_token": 187.46768589062498
+        }
+      ],
+      "allocation": {
+        "limit_bytes": 12884901888,
+        "resident_bytes": 5362515968,
+        "session_bytes": 571326464,
+        "scratch_bytes": 536870912,
+        "kernel_scratch_bytes": 0,
+        "panel_tokens": 512,
+        "panel_scratch_bytes": 155189248,
+        "runtime_control_bytes": 16384,
+        "pipeline_scratch_bytes": 0,
+        "snapshot_bytes": 0,
+        "ngram_bytes": 67108864,
+        "reserve_bytes": 1073741824,
+        "expert_bytes": 2968256512,
+        "expert_slots": 1072,
+        "planned_bytes": 10735026176
+      },
+      "peak_sampled_physical_bytes": 9123826304,
+      "peak_metal_bytes": 9053487104,
+      "median_conversation_ms": 60829.5141875
+    },
+    {
+      "arm": "B",
+      "config": {
+        "name": "B",
+        "kernel_policy": "candidate",
+        "token_tile": 1,
+        "gdn_path": "original",
+        "panel": 512,
+        "chunk": 128,
+        "ready_group": 4,
+        "io_workers": 8,
+        "expert_slots": 1072,
+        "cache_policy": "clock",
+        "residency": "core-cache",
+        "decode_path": "reference",
+        "prefill_pipeline": "serial",
+        "phase_memory": "fixed",
+        "q8_decode_rows": 2,
+        "route_selection": "simd",
+        "expert_tail": "wait",
+        "decode_scratch": "reuse",
+        "memory_pressure_policy": "observe",
+        "decode_submission": "immediate",
+        "q4_decode": "packed-r2"
+      },
+      "phases": [
+        {
+          "name": "coding_routes_32",
+          "median_tokens_per_second": 3.3046140327960276,
+          "median_decode_ms_per_token": 302.63509893749995,
+          "median_ttft_ms": 15055.921645999999,
+          "median_expert_read_bytes_per_token": 674524800.0,
+          "median_gpu_command_ms_per_token": 183.49545671875
+        },
+        {
+          "name": "append_128",
+          "median_tokens_per_second": 2.982016267666303,
+          "median_decode_ms_per_token": 335.41964910937503,
+          "median_ttft_ms": 26244.516104000002,
+          "median_expert_read_bytes_per_token": 772243200.0,
+          "median_gpu_command_ms_per_token": 206.95957571875
+        }
+      ],
+      "allocation": {
+        "limit_bytes": 12884901888,
+        "resident_bytes": 5362515968,
+        "session_bytes": 571326464,
+        "scratch_bytes": 536870912,
+        "kernel_scratch_bytes": 0,
+        "panel_tokens": 512,
+        "panel_scratch_bytes": 155189248,
+        "runtime_control_bytes": 16384,
+        "pipeline_scratch_bytes": 0,
+        "snapshot_bytes": 0,
+        "ngram_bytes": 67108864,
+        "reserve_bytes": 1073741824,
+        "expert_bytes": 2968256512,
+        "expert_slots": 1072,
+        "planned_bytes": 10735026176
+      },
+      "peak_sampled_physical_bytes": 9120909952,
+      "peak_metal_bytes": 9053487104,
+      "median_conversation_ms": 61718.1896875
+    },
+    {
+      "arm": "C",
+      "config": {
+        "name": "C",
+        "kernel_policy": "candidate",
+        "token_tile": 1,
+        "gdn_path": "original",
+        "panel": 512,
+        "chunk": 128,
+        "ready_group": 4,
+        "io_workers": 8,
+        "expert_slots": 1460,
+        "cache_policy": "clock",
+        "residency": "core-cache",
+        "decode_path": "reference",
+        "prefill_pipeline": "serial",
+        "phase_memory": "fixed",
+        "q8_decode_rows": 2,
+        "route_selection": "simd",
+        "expert_tail": "wait",
+        "decode_scratch": "reuse",
+        "memory_pressure_policy": "observe",
+        "decode_submission": "immediate",
+        "q4_decode": "reference"
+      },
+      "phases": [
+        {
+          "name": "coding_routes_32",
+          "median_tokens_per_second": 3.689040236599994,
+          "median_decode_ms_per_token": 271.07431575,
+          "median_ttft_ms": 14949.925062499999,
+          "median_expert_read_bytes_per_token": 617976000.0,
+          "median_gpu_command_ms_per_token": 165.8332176875
+        },
+        {
+          "name": "append_128",
+          "median_tokens_per_second": 3.456181037719351,
+          "median_decode_ms_per_token": 289.4960755156251,
+          "median_ttft_ms": 28149.904667,
+          "median_expert_read_bytes_per_token": 709084800.0,
+          "median_gpu_command_ms_per_token": 175.26398509375002
+        }
+      ],
+      "allocation": {
+        "limit_bytes": 12884901888,
+        "resident_bytes": 5362515968,
+        "session_bytes": 571326464,
+        "scratch_bytes": 536870912,
+        "kernel_scratch_bytes": 0,
+        "panel_tokens": 512,
+        "panel_scratch_bytes": 155189248,
+        "runtime_control_bytes": 16384,
+        "pipeline_scratch_bytes": 0,
+        "snapshot_bytes": 0,
+        "ngram_bytes": 67108864,
+        "reserve_bytes": 1073741824,
+        "expert_bytes": 4042588160,
+        "expert_slots": 1460,
+        "planned_bytes": 11809357824
+      },
+      "peak_sampled_physical_bytes": 10194064064,
+      "peak_metal_bytes": 10127818752,
+      "median_conversation_ms": 61038.08225000001
+    },
+    {
+      "arm": "D",
+      "config": {
+        "name": "D",
+        "kernel_policy": "candidate",
+        "token_tile": 1,
+        "gdn_path": "original",
+        "panel": 512,
+        "chunk": 128,
+        "ready_group": 4,
+        "io_workers": 8,
+        "expert_slots": 1460,
+        "cache_policy": "clock",
+        "residency": "core-cache",
+        "decode_path": "reference",
+        "prefill_pipeline": "serial",
+        "phase_memory": "fixed",
+        "q8_decode_rows": 2,
+        "route_selection": "simd",
+        "expert_tail": "wait",
+        "decode_scratch": "reuse",
+        "memory_pressure_policy": "observe",
+        "decode_submission": "immediate",
+        "q4_decode": "packed-r2"
+      },
+      "phases": [
+        {
+          "name": "coding_routes_32",
+          "median_tokens_per_second": 3.569806820891563,
+          "median_decode_ms_per_token": 280.246145171875,
+          "median_ttft_ms": 14927.012438,
+          "median_expert_read_bytes_per_token": 617457600.0,
+          "median_gpu_command_ms_per_token": 162.579461890625
+        },
+        {
+          "name": "append_128",
+          "median_tokens_per_second": 3.182524225729482,
+          "median_decode_ms_per_token": 314.2170963593749,
+          "median_ttft_ms": 28095.505188000003,
+          "median_expert_read_bytes_per_token": 708998400.0,
+          "median_gpu_command_ms_per_token": 189.81474403125
+        }
+      ],
+      "allocation": {
+        "limit_bytes": 12884901888,
+        "resident_bytes": 5362515968,
+        "session_bytes": 571326464,
+        "scratch_bytes": 536870912,
+        "kernel_scratch_bytes": 0,
+        "panel_tokens": 512,
+        "panel_scratch_bytes": 155189248,
+        "runtime_control_bytes": 16384,
+        "pipeline_scratch_bytes": 0,
+        "snapshot_bytes": 0,
+        "ngram_bytes": 67108864,
+        "reserve_bytes": 1073741824,
+        "expert_bytes": 4042588160,
+        "expert_slots": 1460,
+        "planned_bytes": 11809357824
+      },
+      "peak_sampled_physical_bytes": 10198864512,
+      "peak_metal_bytes": 10127818752,
+      "median_conversation_ms": 62045.341355
+    }
+  ],
+  "contrasts": {
+    "B/A": {
+      "phases": [
+        {
+          "phase": 0,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                0.9892144447033383,
+                1.029435047822475
+              ],
+              "median": 1.0093247462629067
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9792909169098329,
+                1.0052366300680773
+              ],
+              "median": 0.9922637734889551
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                1.005182125847799,
+                1.069119233386226
+              ],
+              "median": 1.0371506796170125
+            }
+          },
+          "decode_savings_ms_per_token": [
+            -1.5452278437499558,
+            -19.753406249999955
+          ],
+          "median_decode_saving_ms": -10.649317046874955
+        },
+        {
+          "phase": 1,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.0218481780424304,
+                1.0149128537477494
+              ],
+              "median": 1.0183805158950898
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9968767928894686,
+                0.9985614908270443
+              ],
+              "median": 0.9977191418582565
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                1.0875321108627054,
+                1.0578760233991074
+              ],
+              "median": 1.0727040671309065
+            }
+          },
+          "decode_savings_ms_per_token": [
+            -27.403463562500065,
+            -18.074332062499934
+          ],
+          "median_decode_saving_ms": -22.7388978125
+        }
+      ],
+      "conversation_ratios": [
+        1.0085872373874498,
+        1.0207181946048252
+      ],
+      "median_conversation_ratio": 1.0146527159961374
+    },
+    "D/C": {
+      "phases": [
+        {
+          "phase": 0,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.019916746346481,
+                1.0029902795505699
+              ],
+              "median": 1.0114535129485254
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9983168313080367,
+                0.9986182827147996
+              ],
+              "median": 0.9984675570114181
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                1.0572634023299958,
+                1.0105010177855125
+              ],
+              "median": 1.033882210057754
+            }
+          },
+          "decode_savings_ms_per_token": [
+            -15.49136846875001,
+            -2.8522903749999955
+          ],
+          "median_decode_saving_ms": -9.171829421875003
+        },
+        {
+          "phase": 1,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.0111403603759466,
+                1.029296338678779
+              ],
+              "median": 1.020218349527363
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9962214673215231,
+                1.00018994883355
+              ],
+              "median": 0.9982057080775365
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                1.0585197833081517,
+                1.113558188959057
+              ],
+              "median": 1.0860389861336044
+            }
+          },
+          "decode_savings_ms_per_token": [
+            -17.338751312499767,
+            -32.103290374999915
+          ],
+          "median_decode_saving_ms": -24.72102084374984
+        }
+      ],
+      "conversation_ratios": [
+        1.014420207618836,
+        1.018738191037087
+      ],
+      "median_conversation_ratio": 1.0165791993279614
+    },
+    "C/A": {
+      "phases": [
+        {
+          "phase": 0,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                0.9489609272563666,
+                0.9784985782792724
+              ],
+              "median": 0.9637297527678195
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9748818459816841,
+                0.9956152609776217
+              ],
+              "median": 0.9852485534796529
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                0.9072522754754708,
+                0.9504280813016884
+              ],
+              "median": 0.9288401783885796
+            }
+          },
+          "decode_savings_ms_per_token": [
+            27.655902343749972,
+            14.167029937500047
+          ],
+          "median_decode_saving_ms": 20.91146614062501
+        },
+        {
+          "phase": 1,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.0885944273034147,
+                0.9719936428519849
+              ],
+              "median": 1.0302940350777
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                1.1426512621331095,
+                0.9973964289398425
+              ],
+              "median": 1.070023845536476
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                0.9464050579239883,
+                0.905247878991054
+              ],
+              "median": 0.9258264684575211
+            }
+          },
+          "decode_savings_ms_per_token": [
+            16.778837249999924,
+            29.590514312499977
+          ],
+          "median_decode_saving_ms": 23.18467578124995
+        }
+      ],
+      "conversation_ratios": [
+        1.0318533999030035,
+        0.9745940327940527
+      ],
+      "median_conversation_ratio": 1.003223716348528
+    },
+    "D/B": {
+      "phases": [
+        {
+          "phase": 0,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                0.9784138783249482,
+                0.9533622977419828
+              ],
+              "median": 0.9658880880334655
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9938220998222272,
+                0.9890602594682476
+              ],
+              "median": 0.9914411796452374
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                0.9542595345413714,
+                0.8983175248333919
+              ],
+              "median": 0.9262885296873816
+            }
+          },
+          "decode_savings_ms_per_token": [
+            13.709761718749917,
+            31.068145812500006
+          ],
+          "median_decode_saving_ms": 22.38895376562496
+        },
+        {
+          "phase": 1,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.077187184142649,
+                0.9857688708071655
+              ],
+              "median": 1.0314780274749071
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                1.1419001075344046,
+                0.9990229869588403
+              ],
+              "median": 1.0704615472466226
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                0.9211576070528631,
+                0.9528963379369433
+              ],
+              "median": 0.9370269724949032
+            }
+          },
+          "decode_savings_ms_per_token": [
+            26.843549500000222,
+            15.561555999999996
+          ],
+          "median_decode_saving_ms": 21.20255275000011
+        }
+      ],
+      "conversation_ratios": [
+        1.0378209255087998,
+        0.9727035015267271
+      ],
+      "median_conversation_ratio": 1.0052622135177636
+    },
+    "D/A": {
+      "phases": [
+        {
+          "phase": 0,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                0.9678611413372532,
+                0.9814245625681627
+              ],
+              "median": 0.974642851952708
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                0.9732409553801644,
+                0.9942396021621195
+              ],
+              "median": 0.983740278771142
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                0.9592046275408268,
+                0.960408543487288
+              ],
+              "median": 0.9598065855140574
+            }
+          },
+          "decode_savings_ms_per_token": [
+            12.164533874999961,
+            11.314739562500051
+          ],
+          "median_decode_saving_ms": 11.739636718750006
+        },
+        {
+          "phase": 1,
+          "metrics": {
+            "request_ms": {
+              "ratios": [
+                1.1007217615268219,
+                1.0004694978065969
+              ],
+              "median": 1.0505956296667094
+            },
+            "time_to_first_token_ms": {
+              "ratios": [
+                1.1383337169990368,
+                0.9975858832281064
+              ],
+              "median": 1.0679598001135715
+            },
+            "decode_wall_ms": {
+              "ratios": [
+                1.0017884768354388,
+                1.0080461886883054
+              ],
+              "median": 1.0049173327618721
+            }
+          },
+          "decode_savings_ms_per_token": [
+            -0.5599140624998427,
+            -2.5127760624999382
+          ],
+          "median_decode_saving_ms": -1.5363450624998904
+        }
+      ],
+      "conversation_ratios": [
+        1.0467329401618066,
+        0.9928561619641527
+      ],
+      "median_conversation_ratio": 1.0197945510629798
+    }
+  },
+  "gates": {
+    "clean_memory": true,
+    "material_decode_gain": false,
+    "conversation_gain": false,
+    "secondary_latencies": false,
+    "kernel_gain_at_both_capacities": false
+  },
+  "confidence_95": null,
+  "production_promoted": false,
+  "normal_request_latency_qualified": false,
+  "limitations": [
+    "Two directional pairs; no confidence-qualified gain or regression claim.",
+    "Normal short conversations; no 2K/4K or 20-minute acceptance.",
+    "GPU command durations overlap reads and cannot be added to request time.",
+    "Memory peaks are sampled boundaries and native allocation high-water marks, not continuous OS footprint."
+  ]
+}

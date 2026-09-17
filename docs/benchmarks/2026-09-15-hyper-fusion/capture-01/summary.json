@@ -1,0 +1,705 @@
+{
+  "kind": "hyper_raw_capture_v1",
+  "complete": true,
+  "status": "captured",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-15T20:01:35.167395+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "name": "A",
+      "kernel_policy": "candidate",
+      "token_tile": 1,
+      "gdn_path": "original",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8,
+      "expert_slots": 1072,
+      "cache_policy": "clock",
+      "residency": "core-cache",
+      "decode_path": "reference",
+      "prefill_pipeline": "serial",
+      "phase_memory": "fixed",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "expert_tail": "wait",
+      "decode_scratch": "reuse",
+      "memory_pressure_policy": "observe",
+      "decode_submission": "immediate",
+      "q4_decode": "reference"
+    }
+  ],
+  "workload": [
+    {
+      "name": "coding_routes_32",
+      "tokens": [
+        248045,
+        846,
+        198,
+        7734,
+        264,
+        12654,
+        709,
+        10562,
+        87682,
+        1494,
+        40798,
+        8,
+        421,
+        78161,
+        48142,
+        7629,
+        26126,
+        13,
+        3301,
+        10300,
+        26126,
+        1973,
+        93183,
+        279,
+        1879,
+        13,
+        13365,
+        449,
+        4147,
+        1103,
+        321,
+        26126,
+        421,
+        5615,
+        506,
+        449,
+        14456,
+        13,
+        28763,
+        279,
+        7873,
+        321,
+        2250,
+        2526,
+        52992,
+        7262,
+        4147,
+        1879,
+        11,
+        48142,
+        26126,
+        11,
+        321,
+        632,
+        27379,
+        81859,
+        26126,
+        13,
+        79091,
+        279,
+        854,
+        22373,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ],
+      "max_tokens": 2
+    }
+  ],
+  "producer": {
+    "kind": "hyper_capture_producer_v1",
+    "complete": true,
+    "instrumentation": "developer source-copy Model::hyper hook; production build unchanged",
+    "base_native_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "original_model_sha256": "0212f655c7892e4e95e70f012d2b8d8add6e1d44223ad9f1fd4542053a53bcc6",
+    "instrumented_model_sha256": "f2740595fc4026f442fb03c0043ae4a409c4a95dd946adfa952ae824541b4c9a",
+    "source_file": "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.cpp",
+    "helper_sha256": "78949324cd24c008d680a161c63dabaa3e26db3c904d3e4aa970b627560f6363",
+    "frozen_build_inputs": {
+      "/repo/src/qwen/model.cpp": "0212f655c7892e4e95e70f012d2b8d8add6e1d44223ad9f1fd4542053a53bcc6",
+      "/repo/build/qwen/compile_commands.json": "0ad994a850048b6ac5428358c595eebcc1fbb2283a0970b3f0730479489e16d5",
+      "/repo/build/qwen/CMakeFiles/freellm.dir/link.txt": "a5234b8b30bbdd307bb081368b2b62f50c3f01af41902785ce748492a729c570",
+      "/repo/build/qwen/libfreellm_lib.a": "4efaa7c41e2663b28d727f33912f7977350f4951b6fda566a5c9ac8b6ddeb36e",
+      "/repo/build/qwen/CMakeFiles/freellm.dir/src/qwen/main.cpp.o": "712013c439081e57c855b83f87ed1bbcc010801eccba351bb914f7f8825b8354",
+      "/repo/build/qwen/bin/freellm": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f"
+    },
+    "compile_command": [
+      "/usr/bin/c++",
+      "-I/repo/include",
+      "-I/repo/build/qwen/_deps/minja-src/include",
+      "-I/repo/build/qwen/generated",
+      "-I/repo/build/_deps/json-src/include",
+      "-O3",
+      "-DNDEBUG",
+      "-std=c++23",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Werror",
+      "-fno-fast-math",
+      "-o",
+      "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.o",
+      "-c",
+      "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.cpp"
+    ],
+    "link_command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "-Wl,-search_paths_first",
+      "-Wl,-headerpad_max_install_names",
+      "CMakeFiles/freellm.dir/src/qwen/main.cpp.o",
+      "-o",
+      "/repo/.cache/hyper-fusion-capture-build-20260915-v2/freellm-hyper-capture",
+      "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.o",
+      "libfreellm_lib.a",
+      "-framework",
+      "Metal",
+      "-framework",
+      "Foundation",
+      "-framework",
+      "IOKit"
+    ],
+    "binary": "/repo/.cache/hyper-fusion-capture-build-20260915-v2/freellm-hyper-capture",
+    "capture_environment": "FREELLM_HYPER_CAPTURE_DIR",
+    "actual_binary_is_base_native_build": false,
+    "normal_request_latency_qualified": false,
+    "binary_sha256": "99b163dd9e0474e30ef9c335bcf46513debcf94398b4370be8de75fe77c33613",
+    "object_sha256": "60686d99d7a3422edc6f196332ae1c7f87590b2d6fafdb6ffa119e61e532aab7"
+  },
+  "producer_path": "/repo/.cache/hyper-fusion-capture-build-20260915-v2/producer.json",
+  "actual_binary_is_base_native_build": false,
+  "performance_comparison": false,
+  "capture_scope": "first decode token; complete raw hyper inputs and outputs in layers 0 and 3",
+  "fixtures": {
+    "manifest_sha256": "e54f43d3bc27e91d5a530eeebff329fae5ae7e3e01e2980df1c7988bac8a8264",
+    "cases": 4,
+    "original_weight_bytes_verified": true,
+    "actual_raw_inputs_verified": true,
+    "capture_producer_sha256": "e3c5190b56e1b5891769fdfa1a2a9bb4623695fb1b1bf572aed3bc9c1ac7432e",
+    "total_bytes": 28467264,
+    "source_proof": {
+      "receipt_sha256": "ef0ea00fd2b85e37f81aa5f0c3633d29a22dca52d807a2092ea418feb94002f0",
+      "files": {
+        "config.json": {
+          "size": 135742,
+          "device": 16777229,
+          "inode": 510126376,
+          "mtime_ns": 1788885072380265526,
+          "ctime_ns": 1788885072382514198,
+          "sha256": "e3304833db1235a0368fd59bc66d7a8724943262c3e465e629e9e6a892e10ea1"
+        },
+        "model.safetensors.index.json": {
+          "size": 317973,
+          "device": 16777229,
+          "inode": 510136441,
+          "mtime_ns": 1788886448544760756,
+          "ctime_ns": 1788886448545424050,
+          "sha256": "2e00305e9a602d2b061344445aca52bb4d013a9b78cec6eb2decfbd3b41dfb52"
+        },
+        "model-00001.safetensors": {
+          "size": 10131671103,
+          "device": 16777229,
+          "inode": 510126388,
+          "mtime_ns": 1788885358203059642,
+          "ctime_ns": 1788885358204312563,
+          "sha256": "f944a290da33b369aca7af4d1d2ac7f35421917cd354e94b2c84104d06589e4f"
+        },
+        "model-00005.safetensors": {
+          "size": 10008047700,
+          "device": 16777229,
+          "inode": 510127626,
+          "mtime_ns": 1788885901365037657,
+          "ctime_ns": 1788885901367636000,
+          "sha256": "001a119e0e7397bcacffd91b20d246ccfc1260c5fc4f9508925f1b718fd272a4"
+        },
+        "model-00006.safetensors": {
+          "size": 10412855614,
+          "device": 16777229,
+          "inode": 510127680,
+          "mtime_ns": 1788885970940107356,
+          "ctime_ns": 1788885970949023766,
+          "sha256": "c03d042c95831b6e79eb2e5cb361423d681f55ebecb7905688015ecf8cb47bb5"
+        },
+        "model-00007.safetensors": {
+          "size": 10003320652,
+          "device": 16777229,
+          "inode": 510128589,
+          "mtime_ns": 1788886166160521992,
+          "ctime_ns": 1788886166170321655,
+          "sha256": "11c2e0ba7d8c24430a1cc3b16f6c127315d16f18109b4871c0ccb7d50203c4e4"
+        },
+        "model-00009.safetensors": {
+          "size": 10413658096,
+          "device": 16777229,
+          "inode": 510129375,
+          "mtime_ns": 1788886444745425115,
+          "ctime_ns": 1788886444749961966,
+          "sha256": "750853b2812719c2b76136677f1378bca9c316c3c350588bb50ccce8bdfde187"
+        },
+        "model-00010.safetensors": {
+          "size": 10011809426,
+          "device": 16777229,
+          "inode": 510135913,
+          "mtime_ns": 1788886486597561937,
+          "ctime_ns": 1788886486599072484,
+          "sha256": "f68e9de983c1cd2cbd56ec4fad8f6da15ee09e3c79732347d63e87021b3d7e3f"
+        },
+        "model-00011.safetensors": {
+          "size": 4876940562,
+          "device": 16777229,
+          "inode": 509702573,
+          "mtime_ns": 1788850084191111171,
+          "ctime_ns": 1788850142389821352,
+          "sha256": "8e7b68292208146a0298e8e07548efd25889ba1c36d39a5ed27ab46b0d635436"
+        },
+        "model-00004.safetensors": {
+          "size": 10314427650,
+          "device": 16777229,
+          "inode": 510127153,
+          "mtime_ns": 1788885611064085452,
+          "ctime_ns": 1788885611069629682,
+          "sha256": "1b5375ca95f7537986d3d4b04a631d02c5733ec3f51ede0c86af2778fdf2aef5"
+        },
+        "model-00008.safetensors": {
+          "size": 10022166479,
+          "device": 16777229,
+          "inode": 510128751,
+          "mtime_ns": 1788886251899662149,
+          "ctime_ns": 1788886251911481278,
+          "sha256": "ebb07a5d262f2627225a72d6dd594b79e88e7291a0f56b0351d56e57b542f5f8"
+        }
+      },
+      "tensors": {
+        "model.layers.0.attn_hyper_connection.hc_norm.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 9321387831,
+          "bytes": 20480,
+          "shape": [
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "5f48d006440c4e3686e900896f99ca7ef767cc46bcee6e11333185c10cf90804"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_down.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 6026742111,
+          "bytes": 3276800,
+          "shape": [
+            320,
+            2560
+          ],
+          "dtype": "U32",
+          "sha256": "c626b24dbf7d61a242f227cc6ba2691c444a4e0a48ba73ff70be7a55678a34de"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_down.scales": {
+          "file": "model-00001.safetensors",
+          "offset": 9387741423,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "c3aca5b26581afdfb6d273186b8f67dbc583188fdfffd1eb2569cdb3a82f2183"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_down.biases": {
+          "file": "model-00001.safetensors",
+          "offset": 5221853119,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "a488ff81f604e8ecffd7d807cbb15a9787a8823620a30195a46745cec39a0175"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_up.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 9999882119,
+          "bytes": 3276800,
+          "shape": [
+            10240,
+            80
+          ],
+          "dtype": "U32",
+          "sha256": "6b76acb71fd290dc592d51a91e24d9c34f95525b097fe1c8e1d3997ff2454570"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_up.scales": {
+          "file": "model-00001.safetensors",
+          "offset": 6352277503,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "24ebfdbf2aba7426f544baada7bf4d418a0b4ee125183e7f57179f47a80ad69c"
+        },
+        "model.layers.0.attn_hyper_connection.input_mix_weight_up.biases": {
+          "file": "model-00001.safetensors",
+          "offset": 5273583991,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "757cfe88967af72871290101f4d9803eb1b1e50861d1c1f3ecf85ffcf6982bf7"
+        },
+        "model.layers.0.attn_hyper_connection.block_inject_weight.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 10079523903,
+          "bytes": 81920,
+          "shape": [
+            4,
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "97548dcae39b501c2958bb607d3954b484fce8abe4ae758e8bb09e988d37abc9"
+        },
+        "model.layers.0.mlp_hyper_connection.hc_norm.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 4665501255,
+          "bytes": 20480,
+          "shape": [
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "abf8f1e35e99f1e0b45dc4deef60979a8a6e97f8262ad05bc5fec45c5bb626c2"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_down.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 4665818695,
+          "bytes": 3276800,
+          "shape": [
+            320,
+            2560
+          ],
+          "dtype": "U32",
+          "sha256": "d98b43e49dbc2635eb0ed3040a2c95d302d5c90b0e4c0720160e6051849fa249"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_down.scales": {
+          "file": "model-00001.safetensors",
+          "offset": 9150440591,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "666401d416c8d98153c398f9de48688fc4c14c579558aa32890e16b5afe0cd63"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_down.biases": {
+          "file": "model-00001.safetensors",
+          "offset": 8300346319,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "78df33edece2ff346ea33d2f42efab95db28e0ed8cad17344c9b2f66c542bd0a"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_up.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 4669095495,
+          "bytes": 3276800,
+          "shape": [
+            10240,
+            80
+          ],
+          "dtype": "U32",
+          "sha256": "505c8cf223e2a2a665761fcdc63a4031b31174cd1c34476ac99046010a1cfd34"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_up.scales": {
+          "file": "model-00001.safetensors",
+          "offset": 9559240551,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "3e57d699b1796d28f7fd1843d0b8b31668812c39fdf2971ba3f1c74ca9e6bd41"
+        },
+        "model.layers.0.mlp_hyper_connection.input_mix_weight_up.biases": {
+          "file": "model-00001.safetensors",
+          "offset": 9529369383,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "cb18f43f109a9ba4e1846dd0a14585e626a12665ede80a2cdc02c7ff8834b409"
+        },
+        "model.layers.0.mlp_hyper_connection.block_inject_weight.weight": {
+          "file": "model-00001.safetensors",
+          "offset": 7978137695,
+          "bytes": 81920,
+          "shape": [
+            4,
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "d6314c879c97c0dabd28fe94f7c96f4615c0c6d3acad9de62e60798e04776b4e"
+        },
+        "model.layers.3.attn_hyper_connection.hc_norm.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 8090964268,
+          "bytes": 20480,
+          "shape": [
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "c82f73a5984fb4faaca51fcb55bb5c9a8710018d6760a4148091346bdef8b9ea"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_down.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 5669682604,
+          "bytes": 3276800,
+          "shape": [
+            320,
+            2560
+          ],
+          "dtype": "U32",
+          "sha256": "53ef36929bc3ea2941a36238e884117f5988372ac66e9e2afe4252a18d721e9e"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_down.scales": {
+          "file": "model-00007.safetensors",
+          "offset": 3356338092,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "84f06433ae31281d693b677b535688a8df7805033aa19dbfa65e7a6b9d026f5e"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_down.biases": {
+          "file": "model-00007.safetensors",
+          "offset": 6407891212,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "591c743ad7466def3d61131e799d97e14122144882da77062f8bc8be83a14a26"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_up.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 6854882828,
+          "bytes": 3276800,
+          "shape": [
+            10240,
+            80
+          ],
+          "dtype": "U32",
+          "sha256": "cce9e52b106c0ffefa6cc4418cacb8a696105e81f5a9df92823c3a134c2be07d"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_up.scales": {
+          "file": "model-00007.safetensors",
+          "offset": 3356542892,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "ce5c4144b94399212851c58e2ccde09aa59b889cdb35200646b01854ce035bf3"
+        },
+        "model.layers.3.attn_hyper_connection.input_mix_weight_up.biases": {
+          "file": "model-00007.safetensors",
+          "offset": 3356440492,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "d8ec2144201a4fdcffa654404f23feb62468edfaa340cad1ebe61d298de0ab9c"
+        },
+        "model.layers.3.attn_hyper_connection.block_inject_weight.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 3807256492,
+          "bytes": 81920,
+          "shape": [
+            4,
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "ccbf0a9f9ea43e4b69a5aea034e6ef78c407dfd6ad5285b2de3516b7dfc7316c"
+        },
+        "model.layers.3.mlp_hyper_connection.hc_norm.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 9056432876,
+          "bytes": 20480,
+          "shape": [
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "6f7638e1f417ae21e3686b70eceb3e395eb82e652e0b8362a40b3221e20e142d"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_down.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 932176460,
+          "bytes": 3276800,
+          "shape": [
+            320,
+            2560
+          ],
+          "dtype": "U32",
+          "sha256": "0726307c4c64215c04f9c070216129041814181c6c7ae5c5d9a7f0535b3fb8c2"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_down.scales": {
+          "file": "model-00007.safetensors",
+          "offset": 9058439916,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "0e8da6b83b7beac223bef449fa2b7105dad5aebdb6f84270b3a279ccddf9839f"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_down.biases": {
+          "file": "model-00007.safetensors",
+          "offset": 8084369452,
+          "bytes": 102400,
+          "shape": [
+            320,
+            160
+          ],
+          "dtype": "BF16",
+          "sha256": "52ef2312f21ac3a2a3c65959ba53cf7e9f7a4eb322dea74d5290a282b0a443c3"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_up.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 1384743596,
+          "bytes": 3276800,
+          "shape": [
+            10240,
+            80
+          ],
+          "dtype": "U32",
+          "sha256": "91ae5018bc94cf48977daf91ac99c566ea9a5f15b88e70d194750709d8a27c91"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_up.scales": {
+          "file": "model-00007.safetensors",
+          "offset": 1381364396,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "cc9da983e1dc357aab68fcd0015bf10d743c573daad7764878c3049bb3f073f6"
+        },
+        "model.layers.3.mlp_hyper_connection.input_mix_weight_up.biases": {
+          "file": "model-00007.safetensors",
+          "offset": 6854780428,
+          "bytes": 102400,
+          "shape": [
+            10240,
+            5
+          ],
+          "dtype": "BF16",
+          "sha256": "4751fcfadfe106111536969249f1a18120e5bfe95be4799d25448d2132056f14"
+        },
+        "model.layers.3.mlp_hyper_connection.block_inject_weight.weight": {
+          "file": "model-00007.safetensors",
+          "offset": 1404348076,
+          "bytes": 81920,
+          "shape": [
+            4,
+            10240
+          ],
+          "dtype": "BF16",
+          "sha256": "4326d2930151a805441ef7f4c79bbf59f16c63647cf29865794d51a3fb1f36a0"
+        }
+      }
+    },
+    "producer": {
+      "kind": "hyper_capture_producer_v1",
+      "complete": true,
+      "instrumentation": "developer source-copy Model::hyper hook; production build unchanged",
+      "base_native_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+      "original_model_sha256": "0212f655c7892e4e95e70f012d2b8d8add6e1d44223ad9f1fd4542053a53bcc6",
+      "instrumented_model_sha256": "f2740595fc4026f442fb03c0043ae4a409c4a95dd946adfa952ae824541b4c9a",
+      "source_file": "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.cpp",
+      "helper_sha256": "78949324cd24c008d680a161c63dabaa3e26db3c904d3e4aa970b627560f6363",
+      "frozen_build_inputs": {
+        "/repo/src/qwen/model.cpp": "0212f655c7892e4e95e70f012d2b8d8add6e1d44223ad9f1fd4542053a53bcc6",
+        "/repo/build/qwen/compile_commands.json": "0ad994a850048b6ac5428358c595eebcc1fbb2283a0970b3f0730479489e16d5",
+        "/repo/build/qwen/CMakeFiles/freellm.dir/link.txt": "a5234b8b30bbdd307bb081368b2b62f50c3f01af41902785ce748492a729c570",
+        "/repo/build/qwen/libfreellm_lib.a": "4efaa7c41e2663b28d727f33912f7977350f4951b6fda566a5c9ac8b6ddeb36e",
+        "/repo/build/qwen/CMakeFiles/freellm.dir/src/qwen/main.cpp.o": "712013c439081e57c855b83f87ed1bbcc010801eccba351bb914f7f8825b8354",
+        "/repo/build/qwen/bin/freellm": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f"
+      },
+      "compile_command": [
+        "/usr/bin/c++",
+        "-I/repo/include",
+        "-I/repo/build/qwen/_deps/minja-src/include",
+        "-I/repo/build/qwen/generated",
+        "-I/repo/build/_deps/json-src/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=c++23",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-Werror",
+        "-fno-fast-math",
+        "-o",
+        "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.o",
+        "-c",
+        "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.cpp"
+      ],
+      "link_command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "-Wl,-search_paths_first",
+        "-Wl,-headerpad_max_install_names",
+        "CMakeFiles/freellm.dir/src/qwen/main.cpp.o",
+        "-o",
+        "/repo/.cache/hyper-fusion-capture-build-20260915-v2/freellm-hyper-capture",
+        "/repo/.cache/hyper-fusion-capture-build-20260915-v2/model.capture.o",
+        "libfreellm_lib.a",
+        "-framework",
+        "Metal",
+        "-framework",
+        "Foundation",
+        "-framework",
+        "IOKit"
+      ],
+      "binary": "/repo/.cache/hyper-fusion-capture-build-20260915-v2/freellm-hyper-capture",
+      "capture_environment": "FREELLM_HYPER_CAPTURE_DIR",
+      "actual_binary_is_base_native_build": false,
+      "normal_request_latency_qualified": false,
+      "binary_sha256": "99b163dd9e0474e30ef9c335bcf46513debcf94398b4370be8de75fe77c33613",
+      "object_sha256": "60686d99d7a3422edc6f196332ae1c7f87590b2d6fafdb6ffa119e61e532aab7"
+    },
+    "normal_request_latency_qualified": false
+  },
+  "fixture_manifest_sha256": "e54f43d3bc27e91d5a530eeebff329fae5ae7e3e01e2980df1c7988bac8a8264",
+  "capture_cases": 4,
+  "elapsed_seconds": 18.227048667147756
+}

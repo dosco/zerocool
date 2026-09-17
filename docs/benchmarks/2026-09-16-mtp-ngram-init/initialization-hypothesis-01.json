@@ -1,0 +1,19 @@
+{
+  "kind": "ngram_initialization_hypothesis_v1",
+  "complete": true,
+  "source": "/repo/docs/benchmarks/2026-09-16-mtp-expert-scratch/short-04",
+  "source_sha256": "62e850e065e8c33d48cfde2ddcf8a30e98c6e058a3d17c84ebc76f8df8743903",
+  "recorded_status": "resource_blocked",
+  "recorded_complete": false,
+  "compression_before_load": 0,
+  "compression_before_decode": 55672832,
+  "compression_after_decode": 55672832,
+  "predecode_decompressions": 101,
+  "decode_decompressions": 12,
+  "reserved_row_bytes": 51914200,
+  "lazy_initialized_after_123_tokens": 564160,
+  "compressed_pages_identified": false,
+  "causal_attribution": false,
+  "performance_qualified": false,
+  "conclusion": "Compression was already present before generation. Eager row construction is a candidate source of cold pages; matching byte magnitudes do not identify compressed pages."
+}

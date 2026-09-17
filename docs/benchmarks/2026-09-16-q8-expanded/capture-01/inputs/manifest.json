@@ -1,0 +1,234 @@
+{
+  "kind": "q8_expanded_inputs_v1",
+  "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "bytes": 360448,
+  "byte_limit": 1048576,
+  "case_limit": 6,
+  "weight_payloads_copied": false,
+  "normal_request_latency_qualified": false,
+  "cases": [
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 26214400,
+          "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+        },
+        "s": {
+          "bytes": 819200,
+          "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+        },
+        "b": {
+          "bytes": 819200,
+          "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+        },
+        "x": {
+          "file": "0-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 15728640,
+          "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+        },
+        "s": {
+          "bytes": 491520,
+          "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+        },
+        "b": {
+          "bytes": 491520,
+          "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+        },
+        "x": {
+          "file": "1-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 15728640,
+          "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+        },
+        "s": {
+          "bytes": 491520,
+          "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+        },
+        "b": {
+          "bytes": 491520,
+          "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+        },
+        "x": {
+          "file": "2-x.bin",
+          "bytes": 98304,
+          "sha256": "c62a494943141fc7d675bdddf659625aee5e9da9e704502ebbf7dd1008c11481"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 12288,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "attention",
+        "layer": 3,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 31457280,
+          "sha256": "08d32425dbff4f43c7a1d4eb12e002834f9845b88c30cabaa00f53b6298d1ee6"
+        },
+        "s": {
+          "bytes": 983040,
+          "sha256": "724448111bbec600cb81af754949352ccb7862ebc04537f07b8176592e417dcf"
+        },
+        "b": {
+          "bytes": 983040,
+          "sha256": "7217dd028a7a5267dbf43ee83f0f8614739581cf16b55ed23bbf48d37bdfb3dd"
+        },
+        "x": {
+          "file": "3-x.bin",
+          "bytes": 40960,
+          "sha256": "3289eb0be98b788b285f759a06bb6d711d2e09b0c5234355228602890c3ddff2"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "attention",
+        "layer": 3,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 15728640,
+          "sha256": "cd995dac361af02ed624b5d474e8ae11e0dcffefb1bd302a1ce37ce231c8ff63"
+        },
+        "s": {
+          "bytes": 491520,
+          "sha256": "83ce6c314dd302d140cf48391aee4e6c1d9a8cda47b325092fb1dadcce290df1"
+        },
+        "b": {
+          "bytes": 491520,
+          "sha256": "216da2eb2733fda335e24136ee4e321ffbd23b8699165a0b2fbf2ce3b5774a9e"
+        },
+        "x": {
+          "file": "4-x.bin",
+          "bytes": 98304,
+          "sha256": "74dd4948cc734eb19529d3437e610c777072956e73f78dcb79bc29788426eb7b"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 248320,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "logits",
+        "layer": -1,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "bytes": 635699200,
+          "sha256": "cfc9b05743c84088c5cb967be53c6292c1821fa1dc0bd511a821af2fe776de2e"
+        },
+        "s": {
+          "bytes": 19865600,
+          "sha256": "81823fe51798cdf493588b5dc78ba2569c1ce016651743d340a7225adc3228f7"
+        },
+        "b": {
+          "bytes": 19865600,
+          "sha256": "ca15063034f62a4e28317e6092dbec362a57cac98193338609b35681eeff3c25"
+        },
+        "x": {
+          "file": "5-x.bin",
+          "bytes": 40960,
+          "sha256": "1af2c3a0f77dbb4742c160892d299e84558214309724fa950ebaac26f6e9be27"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "mtp_continuation_selected_case_audit_v1",
+  "passed": true,
+  "source": "docs/benchmarks/2026-09-16-mtp-continuation/retry-backoff-01",
+  "source_seal_sha256": "5862b0c1b21332137e29e3d29bc23f0a19c2842aeda94f6d537f07ebc5727555",
+  "recorded_complete": true,
+  "recorded_status": "continuation_screen_complete",
+  "selected_cases": [
+    "retry_backoff"
+  ],
+  "exact_all_logits_tokens_and_state": true,
+  "clean_memory_and_host": true,
+  "completed_tokens_per_arm": 128,
+  "paired_confidence_qualified": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

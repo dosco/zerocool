@@ -1,0 +1,2944 @@
+{
+  "kind": "q4_read_arrivals_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source_seal_sha256": "7e153096e082d2fc47809e16a503d2ae6a7fcc42370969e1d8a037eb71449e25",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 147,
+    "archived_tooling": []
+  },
+  "hits_per_batch": 8,
+  "recorded_complete": true,
+  "recomputed_status": "diagnostic_gain",
+  "modes": {
+    "check": {
+      "mode": "check",
+      "hits_per_batch": 8,
+      "status": "checked",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [],
+      "captures": [],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 178450432,
+          "write_bytes": 8192,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 178405376,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 179335168,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 178294784,
+          "write_bytes": 0,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 1,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 1,
+        "expert_executions_per_arm": 64,
+        "detailed_batches": 0,
+        "detailed_experts": 0
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows.",
+        "Selected file ranges are invalidated before every batch preparation; invalidation time is included in preparation and excluded from coordinator wall time.",
+        "Storage coverage requires every timing arm to observe device read bytes within 90\u2013110% of preparation plus timed application bytes. Aggregate coverage cannot replace a failed arm.",
+        "Device counters are systemwide. Matching byte coverage supports exercised device reads, but does not isolate this process or establish physical NAND traffic."
+      ],
+      "cache_preparation": "invalidate-selected-file-ranges",
+      "native_performance_status": null,
+      "storage_criteria": {
+        "scope": "each-timing-arm",
+        "minimum_device_to_application_ratio": 0.9,
+        "maximum_device_to_application_ratio": 1.1
+      },
+      "storage_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 178450432,
+          "device_to_application_ratio": 1.0084953703703703,
+          "within_declared_range": true,
+          "invalidation_ns": 7647458,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 178405376,
+          "device_to_application_ratio": 1.0082407407407408,
+          "within_declared_range": true,
+          "invalidation_ns": 7523376,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 179335168,
+          "device_to_application_ratio": 1.0134953703703704,
+          "within_declared_range": true,
+          "invalidation_ns": 7484418,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 178294784,
+          "device_to_application_ratio": 1.0076157407407407,
+          "within_declared_range": true,
+          "invalidation_ns": 7353375,
+          "invalidation_calls": 64
+        }
+      ],
+      "device_reads_exercised": null
+    },
+    "timing": {
+      "mode": "timing",
+      "hits_per_batch": 8,
+      "status": "diagnostic_gain",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [
+        {
+          "group": 1,
+          "metrics": {
+            "gpu_command_ns": {
+              "reference_ns": [
+                53592733,
+                53594423,
+                53596043,
+                53584821,
+                53581501
+              ],
+              "packed_ns": [
+                28487834,
+                28436834,
+                28460322,
+                28500426,
+                28476154
+              ],
+              "reference_median_ns": 53592733,
+              "packed_median_ns": 28476154,
+              "ratios": [
+                0.5315615085351217,
+                0.5305931551870612,
+                0.5310153587271359,
+                0.5318749875081229,
+                0.5314549512153458
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.5312998032896349,
+                "low": 0.5306781049889288,
+                "high": 0.5319222299203277,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "wall_ns": {
+              "reference_ns": [
+                73166294,
+                74282083,
+                73120751,
+                73979291,
+                73210916
+              ],
+              "packed_ns": [
+                51523333,
+                49043954,
+                50375041,
+                51227836,
+                51227793
+              ],
+              "reference_median_ns": 73210916,
+              "packed_median_ns": 51227793,
+              "ratios": [
+                0.7041949261500111,
+                0.6602393473537892,
+                0.6889294804972668,
+                0.6924618404358592,
+                0.6997288901562166
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.6889361011449804,
+                "low": 0.6676408492088051,
+                "high": 0.7109105921594155,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_encode_ns": {
+              "reference_ns": [
+                1832867,
+                2090329,
+                1842090,
+                1715661,
+                1983589
+              ],
+              "packed_ns": [
+                1939518,
+                1719305,
+                1724921,
+                2011423,
+                1859271
+              ],
+              "reference_median_ns": 1842090,
+              "packed_median_ns": 1859271,
+              "ratios": [
+                1.0581880736572813,
+                0.8225044957037864,
+                0.936393444402825,
+                1.1723895338298183,
+                0.9373267345201047
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9781928608599487,
+                "low": 0.827369428051802,
+                "high": 1.1565103091740798,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_gpu_wait_ns": {
+              "reference_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "packed_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "reference_median_ns": 0,
+              "packed_median_ns": 0,
+              "ratios": [
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "confidence_95": null,
+              "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+            },
+            "coordinator_wait_ns": {
+              "reference_ns": [
+                69451373,
+                70099074,
+                69305095,
+                70485576,
+                69172286
+              ],
+              "packed_ns": [
+                47551617,
+                45523921,
+                46904912,
+                47173040,
+                47513287
+              ],
+              "reference_median_ns": 69451373,
+              "packed_median_ns": 47173040,
+              "ratios": [
+                0.6846749739562384,
+                0.649422572971506,
+                0.6767887988610362,
+                0.6692580621033728,
+                0.6868832844414019
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.6732685238371467,
+                "low": 0.6546234733590806,
+                "high": 0.6924446244860015,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "preparation_ns": {
+              "reference_ns": [
+                199491498,
+                202453375,
+                202578662,
+                203026122,
+                209514795
+              ],
+              "packed_ns": [
+                199577872,
+                195969374,
+                197665544,
+                204449627,
+                209557789
+              ],
+              "reference_median_ns": 202578662,
+              "packed_median_ns": 199577872,
+              "ratios": [
+                1.0004329708326718,
+                0.967972867826975,
+                0.9757471100287947,
+                1.00701143767106,
+                1.0002052074651817
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9901531962786012,
+                "low": 0.9688975634894917,
+                "high": 1.0118751342193495,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            }
+          }
+        },
+        {
+          "group": 4,
+          "metrics": {
+            "gpu_command_ns": {
+              "reference_ns": [
+                52790342,
+                48455425,
+                52856725,
+                52913090,
+                52891429
+              ],
+              "packed_ns": [
+                27222760,
+                27283383,
+                27251093,
+                27218010,
+                27226463
+              ],
+              "reference_median_ns": 52856725,
+              "packed_median_ns": 27226463,
+              "ratios": [
+                0.5156769016575039,
+                0.5630614735089002,
+                0.5155652946715863,
+                0.5143908624501045,
+                0.5147613425230012
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.5243524086499237,
+                "low": 0.49905130271759807,
+                "high": 0.5509362403419316,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "wall_ns": {
+              "reference_ns": [
+                69363547,
+                64813415,
+                69279041,
+                68224708,
+                69712542
+              ],
+              "packed_ns": [
+                43750540,
+                43666875,
+                43168041,
+                43602667,
+                43806415
+              ],
+              "reference_median_ns": 69279041,
+              "packed_median_ns": 43666875,
+              "ratios": [
+                0.6307425426211264,
+                0.6737320506873461,
+                0.6231039052633538,
+                0.6391037540241287,
+                0.6283864243538846
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.6387627672059131,
+                "low": 0.6145170871579361,
+                "high": 0.6639650569450991,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_encode_ns": {
+              "reference_ns": [
+                938431,
+                813193,
+                924799,
+                823899,
+                1128719
+              ],
+              "packed_ns": [
+                971331,
+                950986,
+                810049,
+                905665,
+                964261
+              ],
+              "reference_median_ns": 924799,
+              "packed_median_ns": 950986,
+              "ratios": [
+                1.0350585178878362,
+                1.1694468594786231,
+                0.8759189834764095,
+                1.0992427469871915,
+                0.8542967735990977
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9991307879764517,
+                "low": 0.8410272857038347,
+                "high": 1.186955938827864,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_gpu_wait_ns": {
+              "reference_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "packed_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "reference_median_ns": 0,
+              "packed_median_ns": 0,
+              "ratios": [
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "confidence_95": null,
+              "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+            },
+            "coordinator_wait_ns": {
+              "reference_ns": [
+                67361579,
+                63075837,
+                67320251,
+                66480663,
+                67402416
+              ],
+              "packed_ns": [
+                41691460,
+                41591336,
+                41409709,
+                41664290,
+                41755288
+              ],
+              "reference_median_ns": 67320251,
+              "packed_median_ns": 41664290,
+              "ratios": [
+                0.6189204680014998,
+                0.6593861925288443,
+                0.6151151902270834,
+                0.6267129134978693,
+                0.6194924526147549
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.627721728352123,
+                "low": 0.6060272832218255,
+                "high": 0.6501927869494072,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "preparation_ns": {
+              "reference_ns": [
+                202019375,
+                204809585,
+                198819749,
+                198160959,
+                215127672
+              ],
+              "packed_ns": [
+                198442170,
+                203329584,
+                197583418,
+                200520999,
+                208596834
+              ],
+              "reference_median_ns": 202019375,
+              "packed_median_ns": 200520999,
+              "ratios": [
+                0.9822927627609975,
+                0.9927737708174156,
+                0.9937816489246247,
+                1.0119097122455891,
+                0.9696420365670112
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9899815074832196,
+                "low": 0.9707894385541784,
+                "high": 1.0095529949505646,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            }
+          }
+        }
+      ],
+      "captures": [],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 711413760,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710377472,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 711344128,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710512640,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710488064,
+          "write_bytes": 16384,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 710557696,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 711254016,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 710938624,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 710553600,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 709574656,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 712077312,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710541312,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 711340032,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 711475200,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710336512,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 710500352,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 710684672,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710131712,
+          "write_bytes": 57344,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 711544832,
+          "write_bytes": 278528,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 710316032,
+          "write_bytes": 57344,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 4,
+        "expert_executions_per_arm": 256,
+        "detailed_batches": 0,
+        "detailed_experts": 0
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows.",
+        "Selected file ranges are invalidated before every batch preparation; invalidation time is included in preparation and excluded from coordinator wall time.",
+        "Storage coverage requires every timing arm to observe device read bytes within 90\u2013110% of preparation plus timed application bytes. Aggregate coverage cannot replace a failed arm.",
+        "Device counters are systemwide. Matching byte coverage supports exercised device reads, but does not isolate this process or establish physical NAND traffic."
+      ],
+      "cache_preparation": "invalidate-selected-file-ranges",
+      "native_performance_status": "diagnostic_gain",
+      "storage_criteria": {
+        "scope": "each-timing-arm",
+        "minimum_device_to_application_ratio": 0.9,
+        "maximum_device_to_application_ratio": 1.1
+      },
+      "storage_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711413760,
+          "device_to_application_ratio": 1.0051215277777779,
+          "within_declared_range": true,
+          "invalidation_ns": 29184541,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710377472,
+          "device_to_application_ratio": 1.0036574074074074,
+          "within_declared_range": true,
+          "invalidation_ns": 29775915,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711344128,
+          "device_to_application_ratio": 1.0050231481481482,
+          "within_declared_range": true,
+          "invalidation_ns": 29189585,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710512640,
+          "device_to_application_ratio": 1.0038483796296296,
+          "within_declared_range": true,
+          "invalidation_ns": 29414416,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710488064,
+          "device_to_application_ratio": 1.0038136574074075,
+          "within_declared_range": true,
+          "invalidation_ns": 28967459,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710557696,
+          "device_to_application_ratio": 1.0039120370370371,
+          "within_declared_range": true,
+          "invalidation_ns": 29597670,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711254016,
+          "device_to_application_ratio": 1.0048958333333333,
+          "within_declared_range": true,
+          "invalidation_ns": 29304295,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710938624,
+          "device_to_application_ratio": 1.0044502314814814,
+          "within_declared_range": true,
+          "invalidation_ns": 29237542,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710553600,
+          "device_to_application_ratio": 1.00390625,
+          "within_declared_range": true,
+          "invalidation_ns": 29288292,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 709574656,
+          "device_to_application_ratio": 1.0025231481481482,
+          "within_declared_range": true,
+          "invalidation_ns": 28838246,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 712077312,
+          "device_to_application_ratio": 1.0060590277777777,
+          "within_declared_range": true,
+          "invalidation_ns": 29457418,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710541312,
+          "device_to_application_ratio": 1.0038888888888888,
+          "within_declared_range": true,
+          "invalidation_ns": 29135539,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711340032,
+          "device_to_application_ratio": 1.005017361111111,
+          "within_declared_range": true,
+          "invalidation_ns": 29646624,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711475200,
+          "device_to_application_ratio": 1.0052083333333333,
+          "within_declared_range": true,
+          "invalidation_ns": 28947958,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710336512,
+          "device_to_application_ratio": 1.003599537037037,
+          "within_declared_range": true,
+          "invalidation_ns": 29312125,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710500352,
+          "device_to_application_ratio": 1.0038310185185184,
+          "within_declared_range": true,
+          "invalidation_ns": 28926293,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710684672,
+          "device_to_application_ratio": 1.0040914351851853,
+          "within_declared_range": true,
+          "invalidation_ns": 29503791,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710131712,
+          "device_to_application_ratio": 1.003310185185185,
+          "within_declared_range": true,
+          "invalidation_ns": 29248919,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 711544832,
+          "device_to_application_ratio": 1.005306712962963,
+          "within_declared_range": true,
+          "invalidation_ns": 29732124,
+          "invalidation_calls": 256
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 707788800,
+          "observed_device_read_bytes": 710316032,
+          "device_to_application_ratio": 1.0035706018518518,
+          "within_declared_range": true,
+          "invalidation_ns": 29324246,
+          "invalidation_calls": 256
+        }
+      ],
+      "device_reads_exercised": true
+    },
+    "trace": {
+      "mode": "trace",
+      "hits_per_batch": 8,
+      "status": "captured",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [],
+      "captures": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 64,
+          "occupancy_histogram": {
+            "1": 64
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5082570541279333,
+              "gpu_start_ns": 5082570541618250,
+              "gpu_end_ns": 5082570541829000,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570541292291,
+              "gpu_start_ns": 5082570541854167,
+              "gpu_end_ns": 5082570542064250,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570541992833,
+              "gpu_start_ns": 5082570542077292,
+              "gpu_end_ns": 5082570542282750,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570542245708,
+              "gpu_start_ns": 5082570542314167,
+              "gpu_end_ns": 5082570542523167,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570542384708,
+              "gpu_start_ns": 5082570542543375,
+              "gpu_end_ns": 5082570542751417,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570542637000,
+              "gpu_start_ns": 5082570542773917,
+              "gpu_end_ns": 5082570542982625,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570542859875,
+              "gpu_start_ns": 5082570543003125,
+              "gpu_end_ns": 5082570543209292,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570543086666,
+              "gpu_start_ns": 5082570543230500,
+              "gpu_end_ns": 5082570543439667,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570549805333,
+              "gpu_start_ns": 5082570550162250,
+              "gpu_end_ns": 5082570550373500,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570549816166,
+              "gpu_start_ns": 5082570550404251,
+              "gpu_end_ns": 5082570550614376,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570550512291,
+              "gpu_start_ns": 5082570550635750,
+              "gpu_end_ns": 5082570550846376,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570550726625,
+              "gpu_start_ns": 5082570550865667,
+              "gpu_end_ns": 5082570551076001,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570550954375,
+              "gpu_start_ns": 5082570551095917,
+              "gpu_end_ns": 5082570551303917,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570551180875,
+              "gpu_start_ns": 5082570551325875,
+              "gpu_end_ns": 5082570551533375,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570551410625,
+              "gpu_start_ns": 5082570551554000,
+              "gpu_end_ns": 5082570551762500,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570551638958,
+              "gpu_start_ns": 5082570551782167,
+              "gpu_end_ns": 5082570551991875,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570558159375,
+              "gpu_start_ns": 5082570558522292,
+              "gpu_end_ns": 5082570558737250,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570558171000,
+              "gpu_start_ns": 5082570558762126,
+              "gpu_end_ns": 5082570558974750,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570558895750,
+              "gpu_start_ns": 5082570558995625,
+              "gpu_end_ns": 5082570559203250,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570559085458,
+              "gpu_start_ns": 5082570559223292,
+              "gpu_end_ns": 5082570559431501,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570559318791,
+              "gpu_start_ns": 5082570559452417,
+              "gpu_end_ns": 5082570559661625,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570559540333,
+              "gpu_start_ns": 5082570559683500,
+              "gpu_end_ns": 5082570559891750,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570559767583,
+              "gpu_start_ns": 5082570559912626,
+              "gpu_end_ns": 5082570560120375,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570559995791,
+              "gpu_start_ns": 5082570560140500,
+              "gpu_end_ns": 5082570560347876,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570566676416,
+              "gpu_start_ns": 5082570567033750,
+              "gpu_end_ns": 5082570567246667,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570566687916,
+              "gpu_start_ns": 5082570567274042,
+              "gpu_end_ns": 5082570567484042,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570567387041,
+              "gpu_start_ns": 5082570567505167,
+              "gpu_end_ns": 5082570567711625,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570567597375,
+              "gpu_start_ns": 5082570567731375,
+              "gpu_end_ns": 5082570567938126,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570567817458,
+              "gpu_start_ns": 5082570567959042,
+              "gpu_end_ns": 5082570568166917,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570568105333,
+              "gpu_start_ns": 5082570568181001,
+              "gpu_end_ns": 5082570568389792,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570568262416,
+              "gpu_start_ns": 5082570568410292,
+              "gpu_end_ns": 5082570568620667,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570568494500,
+              "gpu_start_ns": 5082570568639875,
+              "gpu_end_ns": 5082570568847375,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570575602625,
+              "gpu_start_ns": 5082570575963750,
+              "gpu_end_ns": 5082570576175375,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570575613541,
+              "gpu_start_ns": 5082570576201042,
+              "gpu_end_ns": 5082570576412542,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570576311041,
+              "gpu_start_ns": 5082570576433500,
+              "gpu_end_ns": 5082570576643376,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570576526791,
+              "gpu_start_ns": 5082570576663501,
+              "gpu_end_ns": 5082570576872250,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570576748958,
+              "gpu_start_ns": 5082570576893167,
+              "gpu_end_ns": 5082570577103792,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570576982458,
+              "gpu_start_ns": 5082570577126751,
+              "gpu_end_ns": 5082570577335126,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570577210833,
+              "gpu_start_ns": 5082570577358126,
+              "gpu_end_ns": 5082570577572292,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570577445750,
+              "gpu_start_ns": 5082570577592625,
+              "gpu_end_ns": 5082570577800542,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570584043791,
+              "gpu_start_ns": 5082570584420792,
+              "gpu_end_ns": 5082570584635292,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570584060791,
+              "gpu_start_ns": 5082570584660125,
+              "gpu_end_ns": 5082570584871125,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570584773250,
+              "gpu_start_ns": 5082570584892625,
+              "gpu_end_ns": 5082570585099792,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570584977708,
+              "gpu_start_ns": 5082570585120250,
+              "gpu_end_ns": 5082570585328250,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570585208000,
+              "gpu_start_ns": 5082570585348250,
+              "gpu_end_ns": 5082570585558417,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570585439041,
+              "gpu_start_ns": 5082570585581667,
+              "gpu_end_ns": 5082570585791000,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570585671916,
+              "gpu_start_ns": 5082570585811125,
+              "gpu_end_ns": 5082570586017501,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570585899375,
+              "gpu_start_ns": 5082570586038126,
+              "gpu_end_ns": 5082570586246542,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570592502708,
+              "gpu_start_ns": 5082570592859917,
+              "gpu_end_ns": 5082570593072126,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570592513500,
+              "gpu_start_ns": 5082570593096625,
+              "gpu_end_ns": 5082570593304500,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570593201125,
+              "gpu_start_ns": 5082570593325917,
+              "gpu_end_ns": 5082570593536750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570593416041,
+              "gpu_start_ns": 5082570593557251,
+              "gpu_end_ns": 5082570593763750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570593644541,
+              "gpu_start_ns": 5082570593784375,
+              "gpu_end_ns": 5082570593993875,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570593870625,
+              "gpu_start_ns": 5082570594017417,
+              "gpu_end_ns": 5082570594226167,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570594106125,
+              "gpu_start_ns": 5082570594246375,
+              "gpu_end_ns": 5082570594454750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570594333583,
+              "gpu_start_ns": 5082570594475417,
+              "gpu_end_ns": 5082570594683250,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570600909416,
+              "gpu_start_ns": 5082570601265042,
+              "gpu_end_ns": 5082570601479792,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570600920125,
+              "gpu_start_ns": 5082570601504375,
+              "gpu_end_ns": 5082570601711625,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570601637750,
+              "gpu_start_ns": 5082570601733251,
+              "gpu_end_ns": 5082570601939792,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570601822666,
+              "gpu_start_ns": 5082570601962750,
+              "gpu_end_ns": 5082570602169750,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570602049208,
+              "gpu_start_ns": 5082570602190751,
+              "gpu_end_ns": 5082570602400500,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570602278000,
+              "gpu_start_ns": 5082570602422626,
+              "gpu_end_ns": 5082570602634375,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570602540833,
+              "gpu_start_ns": 5082570602654875,
+              "gpu_end_ns": 5082570602864667,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570602736250,
+              "gpu_start_ns": 5082570602885125,
+              "gpu_end_ns": 5082570603095292,
+              "experts": 1
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                15500,
+                28375,
+                728667,
+                981417,
+                1120333,
+                1372500,
+                1595292,
+                1822041,
+                11792,
+                22500,
+                718416,
+                932625,
+                1160292,
+                1386667,
+                1616375,
+                1844625,
+                11834,
+                23334,
+                747917,
+                937500,
+                1170750,
+                1392167,
+                1619375,
+                1847500,
+                12666,
+                24083,
+                722958,
+                933167,
+                1153167,
+                1440917,
+                1597958,
+                1829959,
+                12000,
+                22791,
+                720041,
+                935708,
+                1157792,
+                1391208,
+                1619500,
+                1854375,
+                10750,
+                27625,
+                739917,
+                944250,
+                1174500,
+                1405416,
+                1638250,
+                1865625,
+                12083,
+                22750,
+                710084,
+                924833,
+                1153250,
+                1379167,
+                1614625,
+                1842000,
+                10583,
+                21167,
+                738542,
+                923291,
+                1149792,
+                1378459,
+                1641208,
+                1836584
+              ],
+              "read_complete_to_submission_ns": [
+                4730667,
+                4026416,
+                4090917,
+                3666792,
+                3224708,
+                2736709,
+                2239084,
+                1826875,
+                16083,
+                4655208,
+                4627791,
+                4186000,
+                3788500,
+                3364584,
+                2886792,
+                2479583,
+                616459,
+                28750,
+                5242125,
+                4743500,
+                4389000,
+                3921167,
+                3482000,
+                3080375,
+                1307708,
+                662333,
+                727583,
+                5542125,
+                5106083,
+                4688333,
+                4179000,
+                3778875,
+                1976500,
+                1324958,
+                1393500,
+                940291,
+                6152792,
+                5634958,
+                5145708,
+                4723667,
+                2569625,
+                1979416,
+                2047375,
+                1570083,
+                1178459,
+                5901458,
+                5465750,
+                5056875,
+                3223625,
+                2634459,
+                2645709,
+                2205000,
+                1858000,
+                1383792,
+                6108917,
+                5690042,
+                3915958,
+                3325334,
+                3354459,
+                2878583,
+                2528667,
+                2057292,
+                1645625,
+                6375417
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 17213669,
+          "gpu_command_ns": 13396714
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 64,
+          "occupancy_histogram": {
+            "1": 64
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5082570675065000,
+              "gpu_start_ns": 5082570675427751,
+              "gpu_end_ns": 5082570675542917,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570675077375,
+              "gpu_start_ns": 5082570675573250,
+              "gpu_end_ns": 5082570675685042,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570675686166,
+              "gpu_start_ns": 5082570675764167,
+              "gpu_end_ns": 5082570675874667,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570675797583,
+              "gpu_start_ns": 5082570675895000,
+              "gpu_end_ns": 5082570676005500,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570675984416,
+              "gpu_start_ns": 5082570676048000,
+              "gpu_end_ns": 5082570676159667,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570676121000,
+              "gpu_start_ns": 5082570676188875,
+              "gpu_end_ns": 5082570676300417,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570676263416,
+              "gpu_start_ns": 5082570676329500,
+              "gpu_end_ns": 5082570676440501,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570676401166,
+              "gpu_start_ns": 5082570676476917,
+              "gpu_end_ns": 5082570676587292,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570682893208,
+              "gpu_start_ns": 5082570683220000,
+              "gpu_end_ns": 5082570683334667,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570682905000,
+              "gpu_start_ns": 5082570683359626,
+              "gpu_end_ns": 5082570683471001,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570683492458,
+              "gpu_start_ns": 5082570683589625,
+              "gpu_end_ns": 5082570683699626,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570683577250,
+              "gpu_start_ns": 5082570683720751,
+              "gpu_end_ns": 5082570683831750,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570683804750,
+              "gpu_start_ns": 5082570683871042,
+              "gpu_end_ns": 5082570683982292,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570683951750,
+              "gpu_start_ns": 5082570684020792,
+              "gpu_end_ns": 5082570684132250,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570684095875,
+              "gpu_start_ns": 5082570684162792,
+              "gpu_end_ns": 5082570684272501,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570684226125,
+              "gpu_start_ns": 5082570684287376,
+              "gpu_end_ns": 5082570684397126,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570690572625,
+              "gpu_start_ns": 5082570690903501,
+              "gpu_end_ns": 5082570691017375,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570690586083,
+              "gpu_start_ns": 5082570691046917,
+              "gpu_end_ns": 5082570691158792,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691158125,
+              "gpu_start_ns": 5082570691236750,
+              "gpu_end_ns": 5082570691347667,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691267750,
+              "gpu_start_ns": 5082570691367792,
+              "gpu_end_ns": 5082570691477375,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691452375,
+              "gpu_start_ns": 5082570691516792,
+              "gpu_end_ns": 5082570691628042,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691586041,
+              "gpu_start_ns": 5082570691702792,
+              "gpu_end_ns": 5082570691812917,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691785208,
+              "gpu_start_ns": 5082570691852167,
+              "gpu_end_ns": 5082570691964501,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570691929958,
+              "gpu_start_ns": 5082570692005500,
+              "gpu_end_ns": 5082570692115042,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570699291791,
+              "gpu_start_ns": 5082570699619875,
+              "gpu_end_ns": 5082570699735375,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570699302208,
+              "gpu_start_ns": 5082570699765042,
+              "gpu_end_ns": 5082570699876876,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570699877500,
+              "gpu_start_ns": 5082570699929751,
+              "gpu_end_ns": 5082570700039792,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570700051541,
+              "gpu_start_ns": 5082570700128376,
+              "gpu_end_ns": 5082570700238042,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570700149125,
+              "gpu_start_ns": 5082570700257625,
+              "gpu_end_ns": 5082570700370001,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570700341500,
+              "gpu_start_ns": 5082570700408375,
+              "gpu_end_ns": 5082570700519542,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570700486000,
+              "gpu_start_ns": 5082570700551917,
+              "gpu_end_ns": 5082570700662375,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570700627708,
+              "gpu_start_ns": 5082570700701292,
+              "gpu_end_ns": 5082570700811542,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570707148416,
+              "gpu_start_ns": 5082570707473250,
+              "gpu_end_ns": 5082570707587875,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570707159041,
+              "gpu_start_ns": 5082570707617250,
+              "gpu_end_ns": 5082570707729375,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570707734791,
+              "gpu_start_ns": 5082570707806875,
+              "gpu_end_ns": 5082570707917625,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570707844166,
+              "gpu_start_ns": 5082570707937750,
+              "gpu_end_ns": 5082570708047542,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570708026958,
+              "gpu_start_ns": 5082570708090126,
+              "gpu_end_ns": 5082570708201292,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570708164083,
+              "gpu_start_ns": 5082570708231292,
+              "gpu_end_ns": 5082570708341875,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570708310333,
+              "gpu_start_ns": 5082570708389875,
+              "gpu_end_ns": 5082570708501792,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570708467791,
+              "gpu_start_ns": 5082570708542375,
+              "gpu_end_ns": 5082570708653625,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570714855458,
+              "gpu_start_ns": 5082570715177042,
+              "gpu_end_ns": 5082570715291792,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570714867625,
+              "gpu_start_ns": 5082570715320917,
+              "gpu_end_ns": 5082570715432125,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570715437916,
+              "gpu_start_ns": 5082570715510917,
+              "gpu_end_ns": 5082570715622417,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570715546958,
+              "gpu_start_ns": 5082570715642625,
+              "gpu_end_ns": 5082570715753876,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570715728083,
+              "gpu_start_ns": 5082570715795417,
+              "gpu_end_ns": 5082570715906250,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570715866958,
+              "gpu_start_ns": 5082570715932042,
+              "gpu_end_ns": 5082570716042542,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570716002125,
+              "gpu_start_ns": 5082570716067792,
+              "gpu_end_ns": 5082570716177792,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570716138250,
+              "gpu_start_ns": 5082570716212375,
+              "gpu_end_ns": 5082570716322125,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570722939291,
+              "gpu_start_ns": 5082570723271625,
+              "gpu_end_ns": 5082570723386875,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570722953541,
+              "gpu_start_ns": 5082570723417126,
+              "gpu_end_ns": 5082570723529375,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570723535083,
+              "gpu_start_ns": 5082570723584792,
+              "gpu_end_ns": 5082570723696167,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570723661958,
+              "gpu_start_ns": 5082570723729292,
+              "gpu_end_ns": 5082570723839375,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570723804208,
+              "gpu_start_ns": 5082570723870126,
+              "gpu_end_ns": 5082570723980125,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570723950166,
+              "gpu_start_ns": 5082570724018500,
+              "gpu_end_ns": 5082570724129125,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570724098708,
+              "gpu_start_ns": 5082570724170376,
+              "gpu_end_ns": 5082570724282000,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570724242000,
+              "gpu_start_ns": 5082570724317750,
+              "gpu_end_ns": 5082570724427167,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570730830375,
+              "gpu_start_ns": 5082570731157000,
+              "gpu_end_ns": 5082570731270750,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570730841500,
+              "gpu_start_ns": 5082570731300667,
+              "gpu_end_ns": 5082570731411917,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570731444458,
+              "gpu_start_ns": 5082570731528875,
+              "gpu_end_ns": 5082570731639375,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570731521541,
+              "gpu_start_ns": 5082570731660375,
+              "gpu_end_ns": 5082570731770625,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570731747916,
+              "gpu_start_ns": 5082570731815042,
+              "gpu_end_ns": 5082570731926375,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570731889375,
+              "gpu_start_ns": 5082570731955417,
+              "gpu_end_ns": 5082570732066626,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570732028500,
+              "gpu_start_ns": 5082570732095000,
+              "gpu_end_ns": 5082570732205875,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570732165958,
+              "gpu_start_ns": 5082570732231625,
+              "gpu_end_ns": 5082570732342000,
+              "experts": 1
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                14125,
+                26375,
+                634916,
+                746167,
+                932916,
+                1069334,
+                1211708,
+                1349375,
+                12000,
+                23667,
+                610917,
+                695542,
+                922959,
+                1069834,
+                1213917,
+                1344084,
+                12625,
+                26000,
+                597750,
+                707167,
+                891750,
+                1025250,
+                1224375,
+                1369042,
+                11250,
+                21583,
+                596625,
+                770541,
+                868042,
+                1060292,
+                1204750,
+                1346417,
+                11458,
+                22000,
+                597500,
+                706708,
+                889458,
+                1026458,
+                1172625,
+                1330041,
+                12042,
+                24084,
+                594208,
+                703083,
+                884125,
+                1022833,
+                1157959,
+                1294042,
+                12666,
+                26833,
+                608167,
+                734875,
+                877083,
+                1022916,
+                1171375,
+                1314625,
+                12334,
+                23375,
+                626125,
+                703041,
+                929375,
+                1070709,
+                1209792,
+                1347167
+              ],
+              "read_complete_to_submission_ns": [
+                4542875,
+                3944417,
+                3932333,
+                3361750,
+                2958125,
+                2390959,
+                1862291,
+                1355291,
+                16667,
+                4653917,
+                4533625,
+                3960500,
+                3610792,
+                3055667,
+                2528417,
+                1990375,
+                617459,
+                33292,
+                5129709,
+                4562292,
+                4164292,
+                3586333,
+                3101542,
+                2606375,
+                1310833,
+                657875,
+                600542,
+                6241000,
+                5761209,
+                5252625,
+                4715834,
+                3543042,
+                2019250,
+                1368166,
+                1263166,
+                711083,
+                5581625,
+                5014167,
+                4446042,
+                3973250,
+                2482375,
+                1890167,
+                1831666,
+                1283250,
+                889792,
+                5440458,
+                4904667,
+                4403917,
+                3429166,
+                2760458,
+                2691167,
+                2150417,
+                1714667,
+                1032375,
+                5901333,
+                5378709,
+                3980042,
+                3327292,
+                3285000,
+                2696000,
+                2344625,
+                1746125,
+                1214584,
+                5953000
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 11888793,
+          "gpu_command_ns": 7124676
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 16,
+          "occupancy_histogram": {
+            "4": 16
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5082570827343541,
+              "gpu_start_ns": 5082570827835000,
+              "gpu_end_ns": 5082570828659500,
+              "experts": 4
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570827367916,
+              "gpu_start_ns": 5082570828686126,
+              "gpu_end_ns": 5082570829508751,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570840117041,
+              "gpu_start_ns": 5082570840484792,
+              "gpu_end_ns": 5082570841309500,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570840139416,
+              "gpu_start_ns": 5082570841335250,
+              "gpu_end_ns": 5082570841927125,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570849349333,
+              "gpu_start_ns": 5082570849717875,
+              "gpu_end_ns": 5082570850084667,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082570849369583,
+              "gpu_start_ns": 5082570850110625,
+              "gpu_end_ns": 5082570850532625,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570858543625,
+              "gpu_start_ns": 5082570858931167,
+              "gpu_end_ns": 5082570859374667,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082570858563708,
+              "gpu_start_ns": 5082570859401125,
+              "gpu_end_ns": 5082570859823042,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570867652291,
+              "gpu_start_ns": 5082570868046375,
+              "gpu_end_ns": 5082570868564417,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082570867674375,
+              "gpu_start_ns": 5082570868590375,
+              "gpu_end_ns": 5082570869096375,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570877800708,
+              "gpu_start_ns": 5082570878194125,
+              "gpu_end_ns": 5082570878862167,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082570877823041,
+              "gpu_start_ns": 5082570878888375,
+              "gpu_end_ns": 5082570879456542,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570886264708,
+              "gpu_start_ns": 5082570886648167,
+              "gpu_end_ns": 5082570887311376,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082570886284166,
+              "gpu_start_ns": 5082570887337000,
+              "gpu_end_ns": 5082570888001250,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570895950791,
+              "gpu_start_ns": 5082570896314250,
+              "gpu_end_ns": 5082570897139875,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082570895970958,
+              "gpu_start_ns": 5082570897166250,
+              "gpu_end_ns": 5082570897989125,
+              "experts": 4
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                27041,
+                26958,
+                26708,
+                26583,
+                50875,
+                50750,
+                50708,
+                50625,
+                22958,
+                22875,
+                22750,
+                22583,
+                44916,
+                44791,
+                44708,
+                44666,
+                21792,
+                21708,
+                21458,
+                21292,
+                41458,
+                41333,
+                41292,
+                41250,
+                20834,
+                20750,
+                20500,
+                20375,
+                40375,
+                40250,
+                40208,
+                40125,
+                28791,
+                28708,
+                28416,
+                28250,
+                50292,
+                50167,
+                50084,
+                50042,
+                26292,
+                26208,
+                25917,
+                25792,
+                48041,
+                47875,
+                47833,
+                47750,
+                28042,
+                27958,
+                27708,
+                27583,
+                46958,
+                46833,
+                46750,
+                46708,
+                21125,
+                21041,
+                20708,
+                20583,
+                40708,
+                40542,
+                40500,
+                40417
+              ],
+              "read_complete_to_submission_ns": [
+                7106500,
+                5919250,
+                5279166,
+                4621291,
+                3313166,
+                2604375,
+                1308291,
+                55833,
+                28500,
+                8023250,
+                7407375,
+                5852208,
+                5256291,
+                4553041,
+                3254208,
+                1782875,
+                632708,
+                25500,
+                5248042,
+                4545542,
+                3983875,
+                3233125,
+                1953333,
+                1289458,
+                1316792,
+                706459,
+                25125,
+                6255459,
+                5655792,
+                4492167,
+                3777875,
+                3135250,
+                2906583,
+                2306500,
+                1262375,
+                33583,
+                6137709,
+                5396834,
+                4731125,
+                3583584,
+                4071750,
+                3384417,
+                2005083,
+                662375,
+                52791,
+                6609500,
+                5957083,
+                5298291,
+                3587083,
+                2981750,
+                2350833,
+                1696000,
+                757541,
+                51125,
+                4901583,
+                4259916,
+                5224166,
+                4614416,
+                3998500,
+                3327541,
+                2767667,
+                1694583,
+                45875,
+                6250083
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 13757543,
+          "gpu_command_ns": 9954115
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 16,
+          "occupancy_histogram": {
+            "4": 16
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5082570983933583,
+              "gpu_start_ns": 5082570984292250,
+              "gpu_end_ns": 5082570984720125,
+              "experts": 4
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5082570983954875,
+              "gpu_start_ns": 5082570984745250,
+              "gpu_end_ns": 5082570985165792,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570992625000,
+              "gpu_start_ns": 5082570993010292,
+              "gpu_end_ns": 5082570993436500,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5082570992645625,
+              "gpu_start_ns": 5082570993462625,
+              "gpu_end_ns": 5082570993886501,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082571001223541,
+              "gpu_start_ns": 5082571001589876,
+              "gpu_end_ns": 5082571002017750,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5082571001243166,
+              "gpu_start_ns": 5082571002044001,
+              "gpu_end_ns": 5082571002464500,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082571009560916,
+              "gpu_start_ns": 5082571009922375,
+              "gpu_end_ns": 5082571010349375,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5082571009581541,
+              "gpu_start_ns": 5082571010375001,
+              "gpu_end_ns": 5082571010797417,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082571017593916,
+              "gpu_start_ns": 5082571017960417,
+              "gpu_end_ns": 5082571018387125,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5082571017613541,
+              "gpu_start_ns": 5082571018413292,
+              "gpu_end_ns": 5082571018835792,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082571026327416,
+              "gpu_start_ns": 5082571026762792,
+              "gpu_end_ns": 5082571027188917,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5082571026362666,
+              "gpu_start_ns": 5082571027214751,
+              "gpu_end_ns": 5082571027637917,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082571035486875,
+              "gpu_start_ns": 5082571035857917,
+              "gpu_end_ns": 5082571036287000,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5082571035508875,
+              "gpu_start_ns": 5082571036312500,
+              "gpu_end_ns": 5082571036735292,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082571043521250,
+              "gpu_start_ns": 5082571043881417,
+              "gpu_end_ns": 5082571044308667,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5082571043540750,
+              "gpu_start_ns": 5082571044335167,
+              "gpu_end_ns": 5082571044755875,
+              "experts": 4
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                26208,
+                26125,
+                25917,
+                25750,
+                46959,
+                46834,
+                46792,
+                46709,
+                21000,
+                20917,
+                20667,
+                20542,
+                41084,
+                40959,
+                40917,
+                40875,
+                21250,
+                21166,
+                20875,
+                20750,
+                40333,
+                40166,
+                40125,
+                40083,
+                21875,
+                21791,
+                21541,
+                21416,
+                41958,
+                41791,
+                41708,
+                41666,
+                20625,
+                20541,
+                20291,
+                20208,
+                39750,
+                39583,
+                39541,
+                39458,
+                22458,
+                22375,
+                22125,
+                22000,
+                57208,
+                57083,
+                57000,
+                56958,
+                23042,
+                22959,
+                22792,
+                22667,
+                44625,
+                44459,
+                44417,
+                44375,
+                20167,
+                20042,
+                19875,
+                19709,
+                39125,
+                39000,
+                38959,
+                38917
+              ],
+              "read_complete_to_submission_ns": [
+                6079083,
+                4693583,
+                4021708,
+                2717542,
+                2115834,
+                1412250,
+                702459,
+                51959,
+                24542,
+                5653500,
+                4954750,
+                4291125,
+                3723792,
+                2680292,
+                1327625,
+                678667,
+                1208583,
+                26041,
+                5624708,
+                4516541,
+                3900291,
+                3196666,
+                2499000,
+                1865791,
+                1277250,
+                670375,
+                25625,
+                5255500,
+                4675333,
+                3970958,
+                2563958,
+                1907333,
+                2382750,
+                1783083,
+                1100708,
+                24541,
+                5077875,
+                4370000,
+                3666875,
+                3032750,
+                3242791,
+                1985791,
+                1292583,
+                606250,
+                62250,
+                5726208,
+                4564458,
+                3926041,
+                4310459,
+                3252375,
+                2628500,
+                1973250,
+                798000,
+                48959,
+                5647042,
+                4996125,
+                4349209,
+                3748042,
+                3060000,
+                2380625,
+                1500792,
+                760542,
+                43250,
+                5027875
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 10423707,
+          "gpu_command_ns": 6794614
+        }
+      ],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 177582080,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 177418240,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 177549312,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 177467392,
+          "write_bytes": 0,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 1,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 1,
+        "expert_executions_per_arm": 64,
+        "detailed_batches": 32,
+        "detailed_experts": 256
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows.",
+        "Selected file ranges are invalidated before every batch preparation; invalidation time is included in preparation and excluded from coordinator wall time.",
+        "Storage coverage requires every timing arm to observe device read bytes within 90\u2013110% of preparation plus timed application bytes. Aggregate coverage cannot replace a failed arm.",
+        "Device counters are systemwide. Matching byte coverage supports exercised device reads, but does not isolate this process or establish physical NAND traffic."
+      ],
+      "cache_preparation": "invalidate-selected-file-ranges",
+      "native_performance_status": null,
+      "storage_criteria": {
+        "scope": "each-timing-arm",
+        "minimum_device_to_application_ratio": 0.9,
+        "maximum_device_to_application_ratio": 1.1
+      },
+      "storage_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 177582080,
+          "device_to_application_ratio": 1.003587962962963,
+          "within_declared_range": true,
+          "invalidation_ns": 7199209,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 177418240,
+          "device_to_application_ratio": 1.002662037037037,
+          "within_declared_range": true,
+          "invalidation_ns": 7296208,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 177549312,
+          "device_to_application_ratio": 1.0034027777777779,
+          "within_declared_range": true,
+          "invalidation_ns": 7221167,
+          "invalidation_calls": 64
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 176947200,
+          "observed_device_read_bytes": 177467392,
+          "device_to_application_ratio": 1.0029398148148148,
+          "within_declared_range": true,
+          "invalidation_ns": 7195457,
+          "invalidation_calls": 64
+        }
+      ],
+      "device_reads_exercised": null
+    }
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

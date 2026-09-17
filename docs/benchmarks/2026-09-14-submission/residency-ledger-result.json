@@ -1,0 +1,50 @@
+{
+  "id": "7ec2bc01afad254866d731d1c257d704284db77151219faad8afe4cd754cc9df",
+  "limitations": [
+    "Ledger decisions are authored interpretations, not new measurements.",
+    "Ledger JSON is durable; SQLite can be deleted and rebuilt from it."
+  ],
+  "path": "/repo/docs/experiments/7ec2bc01afad254866d731d1c257d704284db77151219faad8afe4cd754cc9df.json",
+  "sources": [
+    {
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-14-submission/residency-confirm-01/summary.json"
+      ],
+      "path": "/repo/docs/benchmarks/2026-09-14-submission/residency-confirm-01/summary.json",
+      "recorded_complete": true,
+      "recorded_status": "improvement_not_demonstrated",
+      "sha256": "b878e39b878f57f0672368624c323c68e330f7d9925a4e1bea38b40436dc6beb",
+      "unavailable_aliases": []
+    },
+    {
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-14-submission/confirmation-decision.json"
+      ],
+      "path": "/repo/docs/benchmarks/2026-09-14-submission/confirmation-decision.json",
+      "recorded_complete": null,
+      "recorded_status": "gain_below_stage_target",
+      "sha256": "72b246dfdbed2036fa58ca129b5f1fac10774e81499fcd39b5fa38b1e6a18334",
+      "unavailable_aliases": []
+    },
+    {
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-14-submission/residency-state-01/summary.json"
+      ],
+      "path": "/repo/docs/benchmarks/2026-09-14-submission/residency-state-01/summary.json",
+      "recorded_complete": true,
+      "recorded_status": "state_qualified",
+      "sha256": "d7abe538769d019b7a20281075d9922061b55fd17115b50b1f63ce40574e6653",
+      "unavailable_aliases": []
+    },
+    {
+      "aliases": [
+        "/repo/docs/benchmarks/2026-09-14-submission/verification.json"
+      ],
+      "path": "/repo/docs/benchmarks/2026-09-14-submission/verification.json",
+      "recorded_complete": true,
+      "recorded_status": "complete",
+      "sha256": "5627def0baa3120384134d30eb4026bb045322a5ba7dadaeacf17f9a4f3faf2a",
+      "unavailable_aliases": []
+    }
+  ]
+}

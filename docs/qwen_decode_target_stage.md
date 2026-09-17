@@ -1,5 +1,32 @@
 # Generation target: 200ms per token
 
+Continuation: [current-build implementation and experiment gates](qwen_stage200.md).
+The [submission/residency follow-up](benchmarks/2026-09-14-submission/README.md)
+confirms a 4.35% short-request gain, but misses the 20ms/token append gate and
+does not reach 5 tokens/s. The [capacity follow-up](benchmarks/2026-09-14-cache-residency/README.md)
+finds 1.77% lower conversation latency in two clean pairs, below the 20ms/token
+stage gate. Keep 1072 slots as the experimental reference; do not extend this
+capacity screen into expensive qualification. The clean resident-decode trace
+now supports isolating the GPU work before routing: its largest command class
+takes about 64–67ms/token and precedes expert read admission. Profile its
+constituent real-weight operators before selecting a kernel change. The planned
+previous-token top-two predictor has almost no observed uncached demand here.
+The [resident-operator screen](benchmarks/2026-09-14-resident-operators/README.md)
+now rejects Q8 load-ahead: exact outputs, but only a 0.47ms/token rough isolated
+projection and no clear combined-kernel gain. The subsequent four-step capture
+completed at the unchanged allocation. [Packed Q4 expert probes](benchmarks/2026-09-14-q4-packed/README.md)
+then cut isolated GPU time by 43–47%, preserving exact outputs, but project only
+about 14ms/token. The next [combined Q4/cache stage](qwen_combined_decode_stage.md)
+now tests each component and the combination on normal requests. Its
+[completed screen](benchmarks/2026-09-14-combined-q4/README.md) fails: packed Q4
+is slower at both cache sizes, the combined conversation regresses 1.98%,
+and cache alone regresses append TTFT despite faster decode. Keep reference
+Q4/1072 slots; no five-pair or long qualification for this candidate. Prior
+individual failures remain unchanged. Investigate the isolated-versus-runtime
+GPU difference before another kernel candidate.
+Small attention-history savings, sliding-window replacement and purgeable-buffer
+experiments are deferred. Q3 remains an isolated format/operator experiment.
+
 This is the current near-term priority. Pause the narrow-projection experiment
 and defer separate append optimization while identifying a credible path to
 5 tokens/s. Preserve exact arithmetic, all selected experts, artifact identity,

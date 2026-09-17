@@ -3,6 +3,126 @@
 This is the specialized engine authorized in the September 2026 plan. It is
 experimental. The presence of all four commands does **not** mean that the
 numerical, coding-quality, or M1 performance acceptance gates have passed.
+The latest [submission/residency follow-up](benchmarks/2026-09-14-submission/README.md)
+measured 4.35% lower short-conversation latency with core-plus-expert residency
+across five fresh alternating pairs (95% interval: 3.21–5.48% reduction).
+Native logits/routes/state, cancellation and recovery checks pass. Median
+generation is 3.80 tokens/s initially and 3.31 after the append; the append
+saving misses the 20ms/token stage gate. The 5 tokens/s target remains open,
+and the option remains explicit. Duplicate ownership removal and coalescing
+expert reads failed their speed gates; immediate expert execution stays selected.
+
+The [cache-capacity follow-up](benchmarks/2026-09-14-cache-residency/README.md)
+compares 1072 and 1460 slots under the same residency setting and 12GiB maximum.
+Two clean pairs show 1.77% lower conversation latency, with initial/append
+generation medians 4.11/3.69 versus 4.37/3.87 tokens/s. This is a directional
+screen, not a confidence-qualified gain, and misses the 20ms/token stage gate.
+The experimental reference remains 1072 slots. A clean 16-step dependency
+capture now separates pending-read idle from resident GPU work; next isolate
+the resident operators before routing. No new native code or precision change
+was introduced in this follow-up.
+
+The [resident-operator investigation](benchmarks/2026-09-14-resident-operators/README.md)
+rejects Q8 load-ahead and now completes its previously blocked GPU breakdown.
+The resulting [packed-Q4 developer kernels](benchmarks/2026-09-14-q4-packed/README.md)
+pass byte-exact checks on 64 real expert/input combinations and reduce isolated
+expert GPU time by 43–47%, including a separate locality intervention. Their
+rough 14ms/token projection misses the individual stage gate. The
+[combined request stage](qwen_combined_decode_stage.md) now adds the explicit
+`--q4-decode packed-r2` native path, with default `reference`. Full-model
+logits/routes/state, forced eviction, cancellation and failure checks pass, as
+do 72 native tests and 64 real expert/input cases. The
+[completed four-arm screen](benchmarks/2026-09-14-combined-q4/README.md) rejects
+the change: packed Q4 slows decode at both cache sizes; the combination is
+1.98% slower for whole conversations. Larger cache alone improves decode; its
+append TTFT penalty appears in only one of the two rounds and remains unresolved.
+All runs have clean sampled memory and exact outputs.
+Keep reference Q4 and 1072 slots; skip long qualification for this candidate.
+
+The [native Q4 replay](benchmarks/2026-09-14-native-q4-replay/README.md) adds a
+short developer runner and an evidence auditor. Four independently sealed
+conditions retain the isolated GPU gain through scatter, resident allocations
+and the actual all-hit expert coordinator. That coordinator reduces replay wall
+time by 9.8% with one expert per group and 33.1% with four. The older command trace
+shows 72–77% of expert-bearing groups contain only one expert. Real read arrivals
+and surrounding resident computation remain absent from the replay, so its gain
+does not overturn the normal request result. All 280 Python tests pass, native
+operator outputs remain exact, and the native library fingerprint is unchanged.
+The [prepared-record arrival follow-up](benchmarks/2026-09-14-q4-read-arrivals/README.md)
+now implements that diagnostic with separate check, timing and event-capture
+processes. Initial reads were mostly served from the OS file cache; those sealed
+inconclusive results are retained. A scoped invalidation preflight and per-arm
+device counters qualify two fresh storage conditions. With two ready experts
+and six misses, packed Q4 cuts expert GPU time about 47% and replay coordinator
+wall time 6.6–7.0%; most captured groups still contain one expert. All outputs
+remain exact, peak sampled footprint stays below 5.052GiB, and all 294 Python
+tests pass. This does not reproduce or overturn the full-request regression.
+The [shared-expert follow-up](benchmarks/2026-09-15-q4-shared-arrivals/README.md)
+now adds the real three-operation resident prelude to the first expert command.
+It passes 32 independent CPU reference cases, same-byte native checks and all
+311 Python tests. Five fresh pairs retain a 37.3–38.0% combined GPU reduction
+and 6.9–8.2% lower replay wall time; shared/routed command durations are not
+misreported as isolated expert costs. Exact command joins, actual device reads
+and bounded allocations are verified. This also does not reproduce the full
+request regression. The
+[scratch-lifetime follow-up](benchmarks/2026-09-15-q4-scratch-lifetime/README.md)
+implements a 48-pass shared/routed arena with 1,296 buffers /20.25MiB retained,
+compared with 27 buffers /0.42MiB for the fresh batch control. Both forward
+attempts pass exact output checks but stop at compressed-memory observations
+in validation, before timing. The batch condition passes complete ownership,
+read and memory audits, but one slow group-four observation makes its wall
+comparison inconclusive. All 318 Python tests pass. Both scopes release to the
+same charged allocation total. A separately sealed validation-off forward trace
+verifies all 192 captured passes with zero observed compression/decompression
+and a 5.0674GiB sampled peak. That capture provides no timing qualification;
+compressed-page attribution remains unresolved.
+This is a partial replay, covering 27.2% of measured full-token scratch bytes.
+Native library, model bytes and defaults remain unchanged.
+
+The [matched validation-memory stage](benchmarks/2026-09-15-q4-validation-memory/README.md)
+now records all 228 setup/execution/release observations across four fresh
+off/on/on/off processes. Native work and allocations match; no compression,
+decompression or swap change occurs. Validation adds about 51MiB physical
+footprint after warmup, without reproducing the earlier block. Its developer
+observer preserves partial evidence and enforces process/engine bounds plus
+host/swap guards at each phase. All 327 Python tests pass. The admitted fresh
+full forward-lifetime sequence qualifies the bounded diagnostic with 7.1–8.3%
+lower shared/routed coordinator time and exact outputs. Fresh batch timing is
+inconclusive at group one; earlier outcomes remain unchanged. This closes the
+current memory attribution attempt, not the full-request regression. Next use
+a small actual-request profile before further isolated fixture expansion.
+
+The [actual-request runner and analyzer](benchmarks/2026-09-15-q4-request-context/README.md)
+are implemented and all 340 Python tests pass. They compare normal Q4 paths
+first and capture complete short decode traces only if a slowdown recurs.
+The first attempt is sealed as resource-blocked before inference: the final
+admission reported 9.421GiB reclaimable versus the required 13.5GiB. No timings
+or new inference correctness results were produced. Resume at the same build,
+artifact, 1072 slots and 12GiB budget once admission is available.
+The user-requested retry after Brave closed then passed admission and completed
+the reference conversation. It stopped before the packed variant because
+process compression reached a cumulative 104.547MiB. Physical peak was
+8.563GiB and observed swap was unchanged. The observed 3.709/3.464 tokens/s
+remain memory-disturbed and unpaired; independent audits confirm the stop and
+the complete reference dispatch/reuse coverage. Native source remains unchanged.
+
+The separate [reference diagnostic](benchmarks/2026-09-15-reference-diagnostic/README.md)
+then completed in 51.836 seconds, with 354 Python tests and independent raw
+reconstruction passing. All 32 decode forwards remain included despite a
+108.75MiB compression peak. Physical peak stayed at 8.604GiB with unchanged
+swap. GPU execution occupies 126.51/145.44ms per token and pending-read idle
+58.37/61.83ms; the largest mixed GPU class contains resident work before routing.
+The selected next experiment is a bounded, exact complete hyper-block fusion
+screen. It is proposed, not implemented; the native engine and strict
+qualification rules remain unchanged, and no speedup is claimed.
+
+The preceding [bounded memory/dependency/Q3 stage](benchmarks/2026-09-13-stage200/README.md)
+implements benchmark-only pressure release and complete decode-window tracing,
+plus a developer Q3 operator probe. It provisionally retains 1460 expert slots
+after the prescribed fallback. Live pressure release was not exercised, Q3
+timing was inconclusive despite 14.8% smaller records, and the 2K request timed
+out. No additional speedup or production default is promoted.
+
 The September 11 [Q8 confirmation](benchmarks/2026-09-11-q8-confirmation/README.md)
 measured 11.1% lower short-conversation time across five fresh pairs, but its
 initial first-token confidence guard remained inconclusive. The subsequent
@@ -16,8 +136,9 @@ benchmark-only selector preserving top-ten identity, tie order and softmax
 arithmetic. Its [short screen](benchmarks/2026-09-11-route-selection/README.md)
 passed two alternating pairs with 1.85% less conversation time and initial
 generation increasing from 3.53 to 3.71 tokens/s. Fresh all-layer state and
-failure checks passed; five-pair confirmation and long-workload qualification
-remain open. Original independent-model evidence is under
+failure checks passed. The later [five-pair confirmation](benchmarks/2026-09-12-route-five-pairs/README.md)
+passed with 2.00% lower conversation time; long-workload qualification remains
+open. Original independent-model evidence is under
 `docs/benchmarks/2026-09-08-validation/`; the earlier Q4 baseline and audit are
 under `docs/benchmarks/2026-09-08-audit-q8/`.
 
@@ -45,7 +166,8 @@ After correcting both, all 48 layers and all 248,320 logits match the independen
 five-token reference exactly for Q4 and mixed precision. Source/prepared layouts,
 cache sizes, batching and short session continuation preserve all retained state.
 The mixed runtime is explicitly selectable; Q4 stays the default. Long-context
-correctness, coding quality, calibration/Q3 and prediction remain pending.
+correctness, coding quality, original-weight calibration/Q3 and prediction
+remain pending. The new Q4-derived Q3 operator probe does not qualify model quality.
 Layer-major panels are implemented behind explicit `--panel 256|512|1024`;
 the default remains `--panel 0` while panel qualification continues.
 The [September 8 report](benchmarks/2026-09-08-validation/README.md) records 30 native

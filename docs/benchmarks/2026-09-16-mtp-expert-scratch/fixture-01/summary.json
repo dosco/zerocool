@@ -1,0 +1,42 @@
+{
+  "kind": "mtp_expert_scratch_fixture_v1",
+  "complete": true,
+  "status": "fixture_validated",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T01:52:08.435961+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {},
+  "host_preflight": [
+    {
+      "source": "fixture-host.json",
+      "sha256": "62231bdb99aa51986ef0d2b71d6779d7f5971c78b39093c2ef6f041e82f5270a",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5213591094582416,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "native_source": "native.json",
+  "native_sha256": "132c1bfe7009eef84aca158c797ca5b4aa9cd179b1f51e6d5cf8b3ecb4318125",
+  "elapsed_seconds": 8.818601166829467
+}

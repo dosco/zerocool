@@ -1,0 +1,34 @@
+{
+  "kind": "block_cache_lease_ablation_v1",
+  "complete": true,
+  "source_summary_sha256": "a3d6f1225307ec83bf39d93254f97fe75ad6853c8c816ea5d96dbf3122c21304",
+  "source_seal_sha256": "0ebf2abea0e25ab0793bfd06e6fbfaf749f9ae5ad4bd61d26cb84a97f57d5fb9",
+  "observations": [
+    {
+      "slots": 1072,
+      "trace_source": "/repo/docs/benchmarks/2026-09-16-block-cache/capture-02/capture-1072.cache.jsonl",
+      "trace_sha256": "1a78b4a2a4a7f4b13cefd5f15d0dbb7792340c963b8c5c76efcac86f1e63d2ea",
+      "native_misses": 4937,
+      "immediate_release_misses": 4937,
+      "immediate_release_hits": 0,
+      "miss_difference": 0,
+      "trace_events": 38134,
+      "trace_bytes": 4434894
+    },
+    {
+      "slots": 1460,
+      "trace_source": "/repo/docs/benchmarks/2026-09-16-block-cache/capture-02/capture-1460.cache.jsonl",
+      "trace_sha256": "2f32852ce4fbf2718b9bfdaf6f63359c16553faaeb3ed86b83006163e350a600",
+      "native_misses": 3871,
+      "immediate_release_misses": 3877,
+      "immediate_release_hits": 1060,
+      "miss_difference": 6,
+      "trace_events": 38134,
+      "trace_bytes": 4773196
+    }
+  ],
+  "performance_measurement": false,
+  "limitations": [
+    "Same observed demand order with immediate release instead of observed pins. No latency or alternative I/O/GPU schedule is simulated."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "qwen_mtp_preparation_audit_v1",
+  "passed": true,
+  "manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "prepared_bytes": 1515716608,
+  "expert_records": 512,
+  "native_draft_implemented": false,
+  "acceptance_qualified": false,
+  "production_promoted": false
+}

@@ -1,0 +1,359 @@
+{
+  "kind": "mtp_direct_output_screen_v1",
+  "complete": true,
+  "status": "promising_short_screen",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T04:03:08.071251+00:00",
+  "time_limit_seconds": 1500,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate"
+    }
+  ],
+  "workload": [
+    {
+      "name": "merge_intervals",
+      "prompt_text": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity.",
+      "prompt_ids": [
+        248045,
+        846,
+        198,
+        7734,
+        264,
+        12654,
+        709,
+        10562,
+        87682,
+        1494,
+        40798,
+        8,
+        421,
+        78161,
+        48142,
+        7629,
+        26126,
+        13,
+        3301,
+        10300,
+        26126,
+        1973,
+        93183,
+        279,
+        1879,
+        13,
+        13365,
+        449,
+        4147,
+        1103,
+        321,
+        26126,
+        421,
+        5615,
+        506,
+        449,
+        14456,
+        13,
+        28763,
+        279,
+        7873,
+        321,
+        2250,
+        2526,
+        52992,
+        7262,
+        4147,
+        1879,
+        11,
+        48142,
+        26126,
+        11,
+        321,
+        632,
+        27379,
+        81859,
+        26126,
+        13,
+        79091,
+        279,
+        854,
+        22373,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ],
+      "eos_ids": [
+        248046,
+        248044
+      ],
+      "max_tokens": 16,
+      "draft_slots": 32,
+      "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+    }
+  ],
+  "numerical_reference": "/repo/docs/benchmarks/2026-09-16-mtp-ngram-init/validation-03",
+  "historical_timing_reused": false,
+  "ngram_initialization": "lazy",
+  "expert_scratch": false,
+  "pairs": [
+    {
+      "case": 0,
+      "pair": 0,
+      "name": "merge_intervals",
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 0.959955181940672,
+      "control_tps": 4.838983394612631,
+      "candidate_tps": 5.040843036890544,
+      "control_counters": {
+        "allocation_count": 28000,
+        "scratch_reuses": 0,
+        "dispatches": 22815,
+        "submissions": 4240
+      },
+      "candidate_counters": {
+        "allocation_count": 21780,
+        "scratch_reuses": 0,
+        "dispatches": 19705,
+        "submissions": 4377
+      },
+      "direct_writes": 3110,
+      "avoided_copy_bytes": 31846400,
+      "lazy_cache_exact": true
+    },
+    {
+      "case": 0,
+      "pair": 1,
+      "name": "merge_intervals",
+      "exact_all_logits_tokens_and_state": true,
+      "ratio": 0.9773760195721215,
+      "control_tps": 4.925353004474952,
+      "candidate_tps": 5.03936346487321,
+      "control_counters": {
+        "allocation_count": 28000,
+        "scratch_reuses": 0,
+        "dispatches": 22815,
+        "submissions": 4293
+      },
+      "candidate_counters": {
+        "allocation_count": 21780,
+        "scratch_reuses": 0,
+        "dispatches": 19705,
+        "submissions": 4364
+      },
+      "direct_writes": 3110,
+      "avoided_copy_bytes": 31846400,
+      "lazy_cache_exact": true
+    }
+  ],
+  "samples": [
+    {
+      "case": 0,
+      "pair": 0,
+      "arm": "off",
+      "source": "case-0-pair-0-off.json",
+      "sha256": "e8cf34a31b0ff54ec1c5e717b49a803bc72cc4856fe6d8785cc00aedc1ba0d45",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10359280640,
+      "tokens_per_second": 4.838983394612631,
+      "generated_tokens": 16,
+      "proposed_tokens": 12,
+      "accepted_proposals": 12,
+      "acceptance_rate": 1.0,
+      "mean_committed_per_cycle": 4.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 8.725338625,
+        "verify": 195.052354125,
+        "recovery": 0.8980339375,
+        "wall": 206.6549765625
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 0,
+      "pair": 0,
+      "arm": "on",
+      "source": "case-0-pair-0-on.json",
+      "sha256": "0eaf0d7d37a64a2a2993ef8d130c9864950c55e8e87f35cf27f30106a357c7ba",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10359460864,
+      "tokens_per_second": 5.040843036890544,
+      "generated_tokens": 16,
+      "proposed_tokens": 12,
+      "accepted_proposals": 12,
+      "acceptance_rate": 1.0,
+      "mean_committed_per_cycle": 4.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 8.7606171875,
+        "verify": 187.0807369375,
+        "recovery": 0.891244875,
+        "wall": 198.379515625
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 0,
+      "pair": 1,
+      "arm": "on",
+      "source": "case-0-pair-1-on.json",
+      "sha256": "913eac8db4f50bdcc73887a5674a5f10c2d3746831fe63c941e9704b13b07893",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10358854528,
+      "tokens_per_second": 5.03936346487321,
+      "generated_tokens": 16,
+      "proposed_tokens": 12,
+      "accepted_proposals": 12,
+      "acceptance_rate": 1.0,
+      "mean_committed_per_cycle": 4.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 8.662799375,
+        "verify": 187.1996614375,
+        "recovery": 0.9165676875,
+        "wall": 198.4377604375
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 0,
+      "pair": 1,
+      "arm": "off",
+      "source": "case-0-pair-1-off.json",
+      "sha256": "1236ab0cd177fc115b2c6cfd3da3b96aba2434d2db239a7d3261d6a2a3b9df7e",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10359739392,
+      "tokens_per_second": 4.925353004474952,
+      "generated_tokens": 16,
+      "proposed_tokens": 12,
+      "accepted_proposals": 12,
+      "acceptance_rate": 1.0,
+      "mean_committed_per_cycle": 4.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 8.614846375,
+        "verify": 192.04905475,
+        "recovery": 0.8835885,
+        "wall": 203.0311328125
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    }
+  ],
+  "paired_confidence_qualified": false,
+  "early_stop": false,
+  "fixture_source": "/repo/docs/benchmarks/2026-09-16-mtp-direct-output/fixture-01",
+  "validation_source": "docs/benchmarks/2026-09-16-mtp-direct-output/validation-01",
+  "short_source": null,
+  "selected_case_names": [
+    "merge_intervals"
+  ],
+  "host_preflight": [
+    {
+      "source": "case-0-pair-0-off-host.json",
+      "sha256": "f5689be6b4503ba65a67e902c84910c1d2b4e0872e9ef6b550b996b13c253e77",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5221450661489291,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-0-on-host.json",
+      "sha256": "9ebaf550fdcf720ddc7579e7997c816cb72cd1dba555e812d9ccb5e0afdaa45b",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5221476361278791,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-1-on-host.json",
+      "sha256": "3a5569d8c90e1d3d6f264277cefb9b526f9089868f2954ec34943cec1d9d9220",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5221501404108875,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-0-pair-1-off-host.json",
+      "sha256": "5aa6253711899b6b688e8a5e6a71cddfe2b7077b594f692a14d63f0b4a09a54b",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5221526396890958,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "geometric_mean_ratio": 0.9686264371225914,
+  "all_candidates_at_least_5_tps": true,
+  "elapsed_seconds": 105.59811845887452
+}

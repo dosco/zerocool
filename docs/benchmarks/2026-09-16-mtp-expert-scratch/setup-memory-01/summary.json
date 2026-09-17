@@ -1,0 +1,32 @@
+{
+  "kind": "mtp_setup_memory_diagnostic_v1",
+  "complete": true,
+  "samples": [
+    {
+      "stage": "start",
+      "rss_bytes": 13926400,
+      "available_bytes": 15267495936
+    },
+    {
+      "stage": "imports",
+      "rss_bytes": 36044800,
+      "available_bytes": 15259238400
+    },
+    {
+      "stage": "tokenized",
+      "rss_bytes": 170360832,
+      "available_bytes": 15098249216
+    },
+    {
+      "stage": "artifact_audited",
+      "rss_bytes": 193019904,
+      "available_bytes": 16374120448
+    },
+    {
+      "stage": "collected",
+      "rss_bytes": 193019904,
+      "available_bytes": 16375513088
+    }
+  ],
+  "model_loaded": false
+}

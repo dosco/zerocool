@@ -1,0 +1,25 @@
+{
+  "kind": "block_gdn_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": false,
+  "recorded_status": "failed",
+  "source_seal_sha256": "7b062b1decdd296946193ce1d3109009d5ac520370d5b3e497d5d4f1de413ab3",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 197,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/build_block_gdn.py",
+        "sha256": "8c46f359e401ba9b8f3a7593f38c6313e57591658006d9808e24448b108bb375",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-gdn/capture-sources/scripts/qwen/build_block_gdn.py"
+      },
+      {
+        "original": "scripts/qwen/test_block_gdn.py",
+        "sha256": "ae5c1bc80437bf37ca45071a2f9bdb8bfef1638dfd106c2a018d2252b0dd5ecf",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-gdn/capture-sources/scripts/qwen/test_block_gdn.py"
+      }
+    ]
+  },
+  "production_promoted": false
+}

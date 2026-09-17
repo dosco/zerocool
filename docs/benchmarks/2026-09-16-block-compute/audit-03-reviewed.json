@@ -1,0 +1,15 @@
+{
+  "kind": "block_compute_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": true,
+  "recorded_status": "captured",
+  "source_seal_sha256": "16c09435b635cdc0661383e2de5a651bd6f0923b7e162ecbe6e414f34c759f55",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 193,
+    "archived_tooling": []
+  },
+  "performance_measurement": false,
+  "production_promoted": false
+}

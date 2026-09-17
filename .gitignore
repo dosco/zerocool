@@ -126,3 +126,14 @@ Thumbs.db
 !docs/benchmarks/2026-09-13-decode-scratch/**/*.log
 !docs/benchmarks/2026-09-13-scratch-confirmation/**/*.log
 !docs/benchmarks/2026-09-13-ingestion-memory/**/*.log
+!docs/benchmarks/2026-09-13-stage200/**/*.log
+!docs/benchmarks/2026-09-13-stage200/q3-02/tuning/*.bin
+!docs/benchmarks/2026-09-14-submission/**/*.log
+!docs/benchmarks/2026-09-14-native-q4-replay/**/*.log
+# Local executables are retained for replay; source and hashes are versioned.
+docs/benchmarks/2026-09-14-native-q4-replay/qwen_q4_check
+docs/benchmarks/2026-09-14-native-q4-replay/qwen_q4_check_coordinator
+
+!docs/benchmarks/2026-09-14-q4-read-arrivals/**/*.log
+
+!docs/benchmarks/2026-09-15-q4-shared-arrivals/**/*.log

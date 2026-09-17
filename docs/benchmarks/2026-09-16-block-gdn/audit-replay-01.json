@@ -1,0 +1,14 @@
+{
+  "kind": "block_gdn_replay_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": true,
+  "recorded_status": "insufficient_isolated_benefit",
+  "source_seal_sha256": "9502deef591acb025ce1d56bb9b0624ca04359234c0d664f3aee19f9b7381f71",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 198,
+    "archived_tooling": []
+  },
+  "production_promoted": false
+}

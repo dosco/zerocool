@@ -1,0 +1,31 @@
+{
+  "kind": "block_cache_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": true,
+  "status": "no_cache_candidate_selected",
+  "source_seal_sha256": "0ebf2abea0e25ab0793bfd06e6fbfaf749f9ae5ad4bd61d26cb84a97f57d5fb9",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 189,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/block_cache_replay.py",
+        "sha256": "00dcb153f99cb88274ee0c82cbf1604edb0f411f5d9cc1dc93f0d23cf04d3589",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-cache/screen-sources/scripts/qwen/block_cache_replay.py"
+      },
+      {
+        "original": "scripts/qwen/capture_block_cache.py",
+        "sha256": "4c91db79c036f42a8e816a4db4421aa1846bf7ec4623d32ddb3a828f3414e97f",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-cache/screen-sources/scripts/qwen/capture_block_cache.py"
+      },
+      {
+        "original": "scripts/qwen/test_block_cache.py",
+        "sha256": "be411866eb14ed50e90c3ec1583753d2f1cac1269664a122fd08661e5e19fb0c",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-cache/screen-sources/scripts/qwen/test_block_cache.py"
+      }
+    ]
+  },
+  "production_promoted": false,
+  "latency_prediction": null
+}

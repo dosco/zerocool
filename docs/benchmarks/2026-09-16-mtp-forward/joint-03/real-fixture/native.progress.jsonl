@@ -1,0 +1,3 @@
+{"phase":"fixture_forward","consumed_tokens":0,"monotonic_ns":5202352127826583}
+{"phase":"fixture_serial_replay","consumed_tokens":0,"monotonic_ns":5202352370931000}
+{"phase":"complete","consumed_tokens":0,"monotonic_ns":5202352846207083}

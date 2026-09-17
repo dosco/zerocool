@@ -1,0 +1,16 @@
+{
+  "kind": "external_vmmap_observation_v1",
+  "performance_measurement": false,
+  "observed_wall_time": 1789603209.933447,
+  "processes": [
+    [
+      "69835",
+      "/repo/.cache/mtp-continuation-build-01/probe-mtp-forward"
+    ]
+  ],
+  "sampled_run": "validation-01",
+  "limitation": "External memory inspection may perturb this correctness-only run; it cannot qualify normal latency.",
+  "progress_before": "{\"phase\":\"prime_target\",\"consumed_tokens\":0,\"monotonic_ns\":5206841393562375}",
+  "exit_code": 0,
+  "progress_after": "{\"phase\":\"prime_target\",\"consumed_tokens\":0,\"monotonic_ns\":5206841393562375}"
+}

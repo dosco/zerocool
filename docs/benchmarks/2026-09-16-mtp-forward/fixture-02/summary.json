@@ -1,0 +1,218 @@
+{
+  "kind": "mtp_forward_fixture_v1",
+  "complete": true,
+  "status": "forward_fixture_validated",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-16T22:39:56.339032+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {
+    "kind": "four_row_mtp_fixture"
+  },
+  "host_preflight": [
+    {
+      "source": "fixture-host.json",
+      "sha256": "cae68978e306c006f98fad31691af71a33d8dbe346d8746cafb6d8f6ba815fdf",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5202058607076125,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "native": {
+    "clean_memory": true,
+    "clean_host": true,
+    "peak_physical_bytes": 1528828288
+  },
+  "reference": {
+    "kind": "mtp_numpy_forward_reference_v1",
+    "complete": true,
+    "passed": true,
+    "cases": [
+      {
+        "name": "embedding",
+        "exact": true,
+        "relative_l2": 0.0,
+        "max_abs": 0.0,
+        "passed": true
+      },
+      {
+        "name": "embedding_norm",
+        "exact": true,
+        "relative_l2": 0.0,
+        "max_abs": 0.0,
+        "passed": true
+      },
+      {
+        "name": "hidden_norm",
+        "exact": true,
+        "relative_l2": 0.0,
+        "max_abs": 0.0,
+        "passed": true
+      },
+      {
+        "name": "fused",
+        "exact": false,
+        "relative_l2": 2.342206243048394e-05,
+        "max_abs": 0.001953125,
+        "passed": true
+      },
+      {
+        "name": "attention_input",
+        "exact": false,
+        "relative_l2": 0.0003554872667907835,
+        "max_abs": 0.0078125,
+        "passed": true
+      },
+      {
+        "name": "q",
+        "exact": false,
+        "relative_l2": 0.0011169602699283685,
+        "max_abs": 0.25,
+        "passed": true
+      },
+      {
+        "name": "k",
+        "exact": false,
+        "relative_l2": 0.00033570057064262346,
+        "max_abs": 0.03125,
+        "passed": true
+      },
+      {
+        "name": "v",
+        "exact": false,
+        "relative_l2": 0.0005342758943408214,
+        "max_abs": 0.0078125,
+        "passed": true
+      },
+      {
+        "name": "attention_gated",
+        "exact": false,
+        "relative_l2": 0.0011308902590858848,
+        "max_abs": 0.01171875,
+        "passed": true
+      },
+      {
+        "name": "attention",
+        "exact": false,
+        "relative_l2": 0.0034328257307748625,
+        "max_abs": 0.0078125,
+        "passed": true
+      },
+      {
+        "name": "after_attention",
+        "exact": false,
+        "relative_l2": 0.0019985240846613437,
+        "max_abs": 0.015625,
+        "passed": true
+      },
+      {
+        "name": "moe_input",
+        "exact": false,
+        "relative_l2": 0.004062766886947098,
+        "max_abs": 0.0625,
+        "passed": true
+      },
+      {
+        "name": "router",
+        "exact": false,
+        "relative_l2": 0.0008106359875157906,
+        "max_abs": 0.04829120635986328,
+        "passed": true
+      },
+      {
+        "name": "routes",
+        "exact": true,
+        "relative_l2": 0.0,
+        "max_abs": 0.0,
+        "passed": true
+      },
+      {
+        "name": "route_weights",
+        "exact": false,
+        "relative_l2": 0.0020234924272228534,
+        "max_abs": 0.0009526759386062622,
+        "passed": true
+      },
+      {
+        "name": "expert_out",
+        "exact": false,
+        "relative_l2": 0.014591645548596316,
+        "max_abs": 0.125,
+        "passed": true
+      },
+      {
+        "name": "shared",
+        "exact": false,
+        "relative_l2": 0.0068439329163285266,
+        "max_abs": 0.03515625,
+        "passed": true
+      },
+      {
+        "name": "shared_gate",
+        "exact": false,
+        "relative_l2": 0.0031351198579628436,
+        "max_abs": 0.0078125,
+        "passed": true
+      },
+      {
+        "name": "moe",
+        "exact": false,
+        "relative_l2": 0.010058272977794103,
+        "max_abs": 0.0234375,
+        "passed": true
+      },
+      {
+        "name": "wide",
+        "exact": false,
+        "relative_l2": 0.007487085155274933,
+        "max_abs": 0.0625,
+        "passed": true
+      },
+      {
+        "name": "mixed",
+        "exact": false,
+        "relative_l2": 0.010091758728814673,
+        "max_abs": 0.53125,
+        "passed": true
+      },
+      {
+        "name": "logits",
+        "exact": false,
+        "relative_l2": 0.009612876088436188,
+        "max_abs": 0.1875,
+        "passed": true
+      }
+    ],
+    "native_sha256": "8f14514f99ca1d2d6009c28521ed80307deb78be8f9ca87c677352bd7268c511",
+    "input_sha256": "51e5882157c859a792cdf95963f5527dfdd694bdfc1508c14861f4dd35632987",
+    "oracle_sha256": "bf0bc87392f492bb00f115e0d02cfc7129e0a81135ebfbe2705f373cf945ec03",
+    "limits": {
+      "relative_l2": 0.02,
+      "exact_routes": true,
+      "exact_greedy": true
+    },
+    "production_promoted": false
+  },
+  "acceptance_qualified": false,
+  "elapsed_seconds": 14.287829750217497
+}

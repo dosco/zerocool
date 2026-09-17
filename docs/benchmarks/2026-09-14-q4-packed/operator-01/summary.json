@@ -1,0 +1,193 @@
+{
+  "kind": "q4_packed_operator_screen_v1",
+  "complete": true,
+  "status": "insufficient_benefit",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-14T20:36:34.312897+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "81e6f5ced54d2802716bd5dd211e47428da0d39d65d55b8fe7564ce94bd26b79",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": [],
+  "verified_records": [
+    {
+      "layer": 0,
+      "expert": 139,
+      "sha256": "7a51dd80e6fb0e96c84a0a3b9a052053649d26c474767939b6ead82629cb82e0"
+    },
+    {
+      "layer": 0,
+      "expert": 167,
+      "sha256": "5f54c3cc6d6066a41bec3c96990ea6a45a607cd30f1030bd51c7928cfef35a91"
+    },
+    {
+      "layer": 16,
+      "expert": 62,
+      "sha256": "76f3e8eb660c5812f3c17481002e24deeda6782198000bbdcec754b090c40604"
+    },
+    {
+      "layer": 16,
+      "expert": 74,
+      "sha256": "27f5334b0e325e2711e12068d643d46e73857db082a75be8063843c832cec592"
+    },
+    {
+      "layer": 32,
+      "expert": 26,
+      "sha256": "2a938c692581fb6156234c3b3c2b67037c36b31456b994d41849c8f3e5fa32bb"
+    },
+    {
+      "layer": 32,
+      "expert": 28,
+      "sha256": "fd44a1d1c3e5752581f81dda52f53000c09c2b5909478d7bbdc882b6bcbbdc51"
+    },
+    {
+      "layer": 47,
+      "expert": 48,
+      "sha256": "786764ec11970d6a19882559fd00c503668e66d26c8db774eb92412a307c3c88"
+    },
+    {
+      "layer": 47,
+      "expert": 126,
+      "sha256": "e8be3e30c992546200161c6e03d9453f867dfec864e3b2b4b1401ea84cc63200"
+    }
+  ],
+  "clean_memory": true,
+  "results": [
+    {
+      "group": 1,
+      "variants": [
+        {
+          "variant": 1,
+          "gpu_confidence_95": {
+            "geometric_mean": 0.7979918657877416,
+            "low": 0.7649084159037947,
+            "high": 0.832506225089688,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "wall_confidence_95": {
+            "geometric_mean": 0.9640658241283063,
+            "low": 0.8902979457014509,
+            "high": 1.0439459259000239,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "isolated_frequency_projection_ms": [
+            7.937485934235156,
+            5.371111328713596,
+            6.325050489977002,
+            6.1164755607023835,
+            6.014677346684039
+          ],
+          "median_isolated_frequency_projection_ms": 6.1164755607023835
+        },
+        {
+          "variant": 2,
+          "gpu_confidence_95": {
+            "geometric_mean": 0.5349507178924517,
+            "low": 0.5185572154088343,
+            "high": 0.5518624793370761,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "wall_confidence_95": {
+            "geometric_mean": 0.8988351848011138,
+            "low": 0.8480451033188325,
+            "high": 0.9526671238059271,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "isolated_frequency_projection_ms": [
+            15.827594907023013,
+            15.086480998434126,
+            14.112102217040956,
+            14.105714508332312,
+            14.062896952964365
+          ],
+          "median_isolated_frequency_projection_ms": 14.112102217040956
+        }
+      ]
+    },
+    {
+      "group": 4,
+      "variants": [
+        {
+          "variant": 1,
+          "gpu_confidence_95": {
+            "geometric_mean": 0.7835736014686472,
+            "low": 0.7802612005122296,
+            "high": 0.7869000643828924,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "wall_confidence_95": {
+            "geometric_mean": 0.8788937456363956,
+            "low": 0.8609441986824079,
+            "high": 0.8972175168854611,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "isolated_frequency_projection_ms": [
+            6.513290572911501,
+            6.547878147102892,
+            6.51735404971987,
+            6.370864575728774,
+            6.392570212483406
+          ],
+          "median_isolated_frequency_projection_ms": 6.513290572911501
+        },
+        {
+          "variant": 2,
+          "gpu_confidence_95": {
+            "geometric_mean": 0.5287725174665937,
+            "low": 0.4957645762024041,
+            "high": 0.5639781231844359,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "wall_confidence_95": {
+            "geometric_mean": 0.7234721070515492,
+            "low": 0.6954216169004125,
+            "high": 0.7526540403137385,
+            "pairs": 5,
+            "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+            "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+          },
+          "isolated_frequency_projection_ms": [
+            14.524608850479126,
+            12.550860992632806,
+            14.371726429089904,
+            14.444839325733483,
+            14.440377708524466
+          ],
+          "median_isolated_frequency_projection_ms": 14.440377708524466
+        }
+      ]
+    }
+  ],
+  "advance_to_request_screen": false,
+  "limitations": [
+    "Eight original Q4 experts and eight real inputs per layer; no quantization change.",
+    "Single-token expert shapes only. Stored inputs need not have selected every fixture expert.",
+    "Existing paired-gate/row-two kernels are a diagnostic third arm, not the predeclared primary candidate.",
+    "Isolated frequency projection uses 480 experts/token and omits SSD/dependency overlap; it is not request latency.",
+    "Five pairs in one process use resident records and correlated inputs; full-model state and timing remain unqualified."
+  ],
+  "elapsed_seconds": 4.085658666677773
+}

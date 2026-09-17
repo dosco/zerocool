@@ -1,0 +1,14 @@
+{
+  "kind": "q8_expanded_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": false,
+  "recorded_status": "resource_blocked",
+  "source_seal_sha256": "b5bedb3e0545ecce78ea19ae0dd1a84d94a286cea962e2ec1b840c4aa5b3dc60",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 209,
+    "archived_tooling": []
+  },
+  "production_promoted": false
+}

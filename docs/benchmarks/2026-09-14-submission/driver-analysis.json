@@ -1,0 +1,334 @@
+{
+  "kind": "submission_driver_timeline_v1",
+  "complete": true,
+  "build": "50f025d339e8c4038dd97623a18912cf6ea32975cad663faba28612c9cffabfb",
+  "source_seal_sha256": "f32911839df4b4f69435ad04a3ec109e65b84601b295fd73cd1f60e28e4e982e",
+  "normal_clean_memory": false,
+  "traced_clean_memory": false,
+  "phases": [
+    {
+      "name": "coding_routes_32",
+      "captured_tokens": 16,
+      "tokens": [
+        {
+          "offset": 72,
+          "before_driver": 7.012352999999992,
+          "in_driver": 532.8483149999997,
+          "after_driver": 47.15494400000003,
+          "commit_api_overlap": 1.8967620000000012,
+          "command_groups": 395,
+          "total_commit_api_ms": 2.575892
+        },
+        {
+          "offset": 73,
+          "before_driver": 3.74904,
+          "in_driver": 43.09126200000005,
+          "after_driver": 23.31618699999999,
+          "commit_api_overlap": 1.1047509999999994,
+          "command_groups": 304,
+          "total_commit_api_ms": 1.461079
+        },
+        {
+          "offset": 74,
+          "before_driver": 3.450614000000002,
+          "in_driver": 16.342755,
+          "after_driver": 20.43843199999998,
+          "commit_api_overlap": 1.0505499999999985,
+          "command_groups": 284,
+          "total_commit_api_ms": 1.404757
+        },
+        {
+          "offset": 75,
+          "before_driver": 4.005223000000002,
+          "in_driver": 16.250655999999996,
+          "after_driver": 21.40428100000001,
+          "commit_api_overlap": 1.109207,
+          "command_groups": 310,
+          "total_commit_api_ms": 1.464661
+        },
+        {
+          "offset": 76,
+          "before_driver": 5.754842999999995,
+          "in_driver": 37.44674299999998,
+          "after_driver": 30.885427999999997,
+          "commit_api_overlap": 1.4730820000000004,
+          "command_groups": 375,
+          "total_commit_api_ms": 2.198204
+        },
+        {
+          "offset": 77,
+          "before_driver": 3.366237999999999,
+          "in_driver": 19.036582000000006,
+          "after_driver": 22.098257999999984,
+          "commit_api_overlap": 1.0089139999999996,
+          "command_groups": 284,
+          "total_commit_api_ms": 1.432996
+        },
+        {
+          "offset": 78,
+          "before_driver": 4.0126649999999975,
+          "in_driver": 24.273414999999986,
+          "after_driver": 23.711088999999994,
+          "commit_api_overlap": 1.2242469999999999,
+          "command_groups": 318,
+          "total_commit_api_ms": 1.706998
+        },
+        {
+          "offset": 79,
+          "before_driver": 2.5732909999999993,
+          "in_driver": 35.70528699999998,
+          "after_driver": 18.205382999999998,
+          "commit_api_overlap": 0.8246219999999996,
+          "command_groups": 246,
+          "total_commit_api_ms": 1.401586
+        },
+        {
+          "offset": 80,
+          "before_driver": 3.813553999999999,
+          "in_driver": 26.734819999999996,
+          "after_driver": 21.838024000000004,
+          "commit_api_overlap": 1.098429,
+          "command_groups": 310,
+          "total_commit_api_ms": 1.43514
+        },
+        {
+          "offset": 81,
+          "before_driver": 4.527863000000005,
+          "in_driver": 37.38648200000001,
+          "after_driver": 30.75182,
+          "commit_api_overlap": 1.4817829999999999,
+          "command_groups": 330,
+          "total_commit_api_ms": 2.029742
+        },
+        {
+          "offset": 82,
+          "before_driver": 4.065304,
+          "in_driver": 39.70125800000002,
+          "after_driver": 26.892183000000013,
+          "commit_api_overlap": 1.56633,
+          "command_groups": 277,
+          "total_commit_api_ms": 2.227828
+        },
+        {
+          "offset": 83,
+          "before_driver": 3.6655219999999984,
+          "in_driver": 59.95978900000002,
+          "after_driver": 25.904446999999994,
+          "commit_api_overlap": 1.107632,
+          "command_groups": 271,
+          "total_commit_api_ms": 1.650753
+        },
+        {
+          "offset": 84,
+          "before_driver": 2.81417,
+          "in_driver": 18.141841000000003,
+          "after_driver": 15.992282000000003,
+          "commit_api_overlap": 0.8084039999999998,
+          "command_groups": 247,
+          "total_commit_api_ms": 1.129321
+        },
+        {
+          "offset": 85,
+          "before_driver": 2.461107999999999,
+          "in_driver": 18.344911000000007,
+          "after_driver": 15.784281000000002,
+          "commit_api_overlap": 0.7522139999999997,
+          "command_groups": 249,
+          "total_commit_api_ms": 1.100632
+        },
+        {
+          "offset": 86,
+          "before_driver": 4.497783,
+          "in_driver": 34.12902600000001,
+          "after_driver": 24.482098000000008,
+          "commit_api_overlap": 1.2913359999999998,
+          "command_groups": 349,
+          "total_commit_api_ms": 1.672628
+        },
+        {
+          "offset": 87,
+          "before_driver": 4.2923950000000035,
+          "in_driver": 16.665843,
+          "after_driver": 23.90575000000002,
+          "commit_api_overlap": 1.294611999999999,
+          "command_groups": 336,
+          "total_commit_api_ms": 1.653108
+        }
+      ],
+      "means": {
+        "before_driver": 4.003872875,
+        "in_driver": 61.003686562499986,
+        "after_driver": 24.547805437500003,
+        "commit_api_overlap": 1.1933046874999997,
+        "command_groups": 305.3125,
+        "total_commit_api_ms": 1.6590828125000001
+      }
+    },
+    {
+      "name": "append_128",
+      "captured_tokens": 16,
+      "tokens": [
+        {
+          "offset": 217,
+          "before_driver": 7.533892999999991,
+          "in_driver": 438.98612700000047,
+          "after_driver": 42.33038,
+          "commit_api_overlap": 2.2389929999999985,
+          "command_groups": 423,
+          "total_commit_api_ms": 2.768621
+        },
+        {
+          "offset": 218,
+          "before_driver": 3.8064319999999974,
+          "in_driver": 16.112447000000007,
+          "after_driver": 21.986674999999984,
+          "commit_api_overlap": 1.0929179999999992,
+          "command_groups": 318,
+          "total_commit_api_ms": 1.444253
+        },
+        {
+          "offset": 219,
+          "before_driver": 3.6879049999999993,
+          "in_driver": 37.82578699999996,
+          "after_driver": 21.08646300000002,
+          "commit_api_overlap": 0.9916619999999998,
+          "command_groups": 296,
+          "total_commit_api_ms": 1.402951
+        },
+        {
+          "offset": 220,
+          "before_driver": 3.7656819999999986,
+          "in_driver": 19.175449000000015,
+          "after_driver": 23.494588999999998,
+          "commit_api_overlap": 1.18379,
+          "command_groups": 317,
+          "total_commit_api_ms": 1.559132
+        },
+        {
+          "offset": 221,
+          "before_driver": 6.770736,
+          "in_driver": 46.51052299999998,
+          "after_driver": 34.349391000000004,
+          "commit_api_overlap": 1.6796750000000003,
+          "command_groups": 384,
+          "total_commit_api_ms": 2.362178
+        },
+        {
+          "offset": 222,
+          "before_driver": 3.9074490000000024,
+          "in_driver": 40.83562899999999,
+          "after_driver": 23.87754100000002,
+          "commit_api_overlap": 1.1250739999999997,
+          "command_groups": 306,
+          "total_commit_api_ms": 1.59099
+        },
+        {
+          "offset": 223,
+          "before_driver": 4.294003999999999,
+          "in_driver": 52.73833299999999,
+          "after_driver": 28.211300000000005,
+          "commit_api_overlap": 1.484627,
+          "command_groups": 325,
+          "total_commit_api_ms": 2.002502
+        },
+        {
+          "offset": 224,
+          "before_driver": 3.222615999999999,
+          "in_driver": 30.81519800000001,
+          "after_driver": 21.77957700000001,
+          "commit_api_overlap": 1.0147859999999995,
+          "command_groups": 283,
+          "total_commit_api_ms": 1.382248
+        },
+        {
+          "offset": 225,
+          "before_driver": 3.3708609999999957,
+          "in_driver": 20.941534999999995,
+          "after_driver": 19.145627,
+          "commit_api_overlap": 0.9623319999999997,
+          "command_groups": 272,
+          "total_commit_api_ms": 1.39408
+        },
+        {
+          "offset": 226,
+          "before_driver": 5.219249000000001,
+          "in_driver": 50.72983399999996,
+          "after_driver": 32.89330200000004,
+          "commit_api_overlap": 1.7718279999999993,
+          "command_groups": 356,
+          "total_commit_api_ms": 2.424452
+        },
+        {
+          "offset": 227,
+          "before_driver": 3.334343999999999,
+          "in_driver": 35.68274699999999,
+          "after_driver": 20.648082999999996,
+          "commit_api_overlap": 1.0002089999999997,
+          "command_groups": 286,
+          "total_commit_api_ms": 1.644624
+        },
+        {
+          "offset": 228,
+          "before_driver": 3.3367720000000056,
+          "in_driver": 45.58578499999997,
+          "after_driver": 23.116581999999994,
+          "commit_api_overlap": 1.1852889999999991,
+          "command_groups": 287,
+          "total_commit_api_ms": 1.72517
+        },
+        {
+          "offset": 229,
+          "before_driver": 3.335103999999997,
+          "in_driver": 29.338674999999988,
+          "after_driver": 18.688446999999996,
+          "commit_api_overlap": 0.8621629999999993,
+          "command_groups": 270,
+          "total_commit_api_ms": 1.194
+        },
+        {
+          "offset": 230,
+          "before_driver": 2.973434999999998,
+          "in_driver": 27.846298999999988,
+          "after_driver": 18.51620500000002,
+          "commit_api_overlap": 0.9510739999999995,
+          "command_groups": 279,
+          "total_commit_api_ms": 1.32699
+        },
+        {
+          "offset": 231,
+          "before_driver": 4.950905999999998,
+          "in_driver": 38.659883,
+          "after_driver": 27.88166799999998,
+          "commit_api_overlap": 1.5585750000000007,
+          "command_groups": 370,
+          "total_commit_api_ms": 1.872289
+        },
+        {
+          "offset": 232,
+          "before_driver": 4.807855999999997,
+          "in_driver": 15.426163999999995,
+          "after_driver": 23.34013699999999,
+          "commit_api_overlap": 1.5900450000000008,
+          "command_groups": 335,
+          "total_commit_api_ms": 1.926215
+        }
+      ],
+      "means": {
+        "before_driver": 4.269827749999998,
+        "in_driver": 59.20065093750002,
+        "after_driver": 25.084122937500005,
+        "commit_api_overlap": 1.2933149999999998,
+        "command_groups": 319.1875,
+        "total_commit_api_ms": 1.7512934375
+      }
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "limitations": [
+    "Driver timestamps measure CPU scheduling; GPU timestamps may contain device stalls or preemption.",
+    "The first three means partition GPU-idle submitted time. Commit API overlap and total commit time are not additive.",
+    "Memory compression or host variation can affect these observations; no causal savings prediction follows.",
+    "Source capture preserves full decode coverage and original command groups; profiling still adds overhead."
+  ],
+  "timestamp_documentation": "https://developer.apple.com/documentation/metal/mtlcommandbuffer/kernelstarttime"
+}

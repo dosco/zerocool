@@ -1,0 +1,402 @@
+{
+  "kind": "native_mtp_forward_v1",
+  "complete": true,
+  "production_promoted": false,
+  "mode": "fixture",
+  "validation": true,
+  "input_sha256": "8e0176adebc468a75c2589105fb0b2318aa64c16ead4d3e23f6d8209780926fe",
+  "draft_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "before_load": {
+    "physical_footprint_bytes": 1786816,
+    "resident_bytes": 4915200,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 563,
+    "pageins": 1,
+    "physical_footprint_peak_bytes": 1786816,
+    "resident_peak_bytes": 4915200,
+    "system_swap_used_bytes": 3724410880,
+    "reclaimable_bytes": 20741636096
+  },
+  "host_before": {
+    "monotonic_ns": 5202300181115333,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "fixture_tensors": {
+    "embedding": {
+      "bytes": 40960,
+      "sha256": "5d587030826e71437626dad314e02f19e0dadbe8ee8c097a2fd8306e4d888035"
+    },
+    "embedding_norm": {
+      "bytes": 40960,
+      "sha256": "eb335385304e4b28063deeebc041c0d12c080ed75b8208733df9e2069ba5a695"
+    },
+    "hidden_norm": {
+      "bytes": 163840,
+      "sha256": "396693ca6a9f66232e87689970d8c801f9fbd329a49368c6e7f160e84d544db3"
+    },
+    "fused": {
+      "bytes": 163840,
+      "sha256": "e2a3913d1bbf700fd07dc65e5e2f0ab82d1e34076d3618057bc71ca1ee2ed8cf"
+    },
+    "attention_input": {
+      "bytes": 40960,
+      "sha256": "d8ca299b9e4ff6371dc5d3b8a973c6dc7727523209a72475b6f4d163fd47fb18"
+    },
+    "q": {
+      "bytes": 98304,
+      "sha256": "85ce20675f49abfdc96b3ca78d6601245ca51536eb011bf1d4ca6f76559f58d5"
+    },
+    "k": {
+      "bytes": 8192,
+      "sha256": "72eb63ab7365082d48778c1030394c8f126922717b751bbe2cfd5438ffd60416"
+    },
+    "v": {
+      "bytes": 8192,
+      "sha256": "6404a2b9472d6650be23ada29058bf9bda18ae7d940c4a6c85029578e3daa70c"
+    },
+    "attention_gated": {
+      "bytes": 98304,
+      "sha256": "db6029c44859d82a4029623d587b1576bacd33fab0bfb098ccd01ad19ab62a22"
+    },
+    "attention": {
+      "bytes": 40960,
+      "sha256": "e1512e7752cdac2e989b6e12255e5fa504254a6ef705b7c49a0be84c16252513"
+    },
+    "after_attention": {
+      "bytes": 163840,
+      "sha256": "2001f7900c105140110df4c7d53ae3e58acb02e38cebb19d731314ee0d251dfa"
+    },
+    "moe_input": {
+      "bytes": 40960,
+      "sha256": "3e370620f045439b4d18f8cce3656a45789abd4c074b734b755294f33580ad77"
+    },
+    "router": {
+      "bytes": 8192,
+      "sha256": "4bbe642df95fc17fddb4a3daa620d2b01bd7029bb9fbc58c20e26ce46e917505"
+    },
+    "routes": {
+      "bytes": 160,
+      "sha256": "9577ee10dbb4cc2ae36f8f4abbc30e38fc13d619ff4d0e37c3b57c28b4781ad7"
+    },
+    "route_weights": {
+      "bytes": 160,
+      "sha256": "23ed5bbcc30e4fee94792fcc7d9667a8a587f05d9f5135043a3b7030c34e95fe"
+    },
+    "expert_out": {
+      "bytes": 409600,
+      "sha256": "7f1bb69cb38eecd5b67f5aa77c7d5f2fab49ab785fa71c5ef58f60ae72ea0c22"
+    },
+    "shared": {
+      "bytes": 40960,
+      "sha256": "68f4625a81acdc09b0d4e4fa4b521beabf234bd4a5b7837e46e25e23c710e60e"
+    },
+    "shared_gate": {
+      "bytes": 16,
+      "sha256": "dbc69bc59e40910552467a92ea0befdb20d19b9a1f5ae40345334c079d6e129d"
+    },
+    "moe": {
+      "bytes": 40960,
+      "sha256": "8907b8779213e7cb70772de0e2d78c74c2165919aa2c737e66d07f380596d4fa"
+    },
+    "wide": {
+      "bytes": 163840,
+      "sha256": "e605a3f21c058c02c41b3da6c046f50889f31176119dcd69d011b684e6358d2d"
+    },
+    "mixed": {
+      "bytes": 40960,
+      "sha256": "f9a78bc4edd14498e888110afd6319129d5c574a55acc38e9041a75d52e5cf88"
+    },
+    "logits": {
+      "bytes": 3973120,
+      "sha256": "8fff9e4b8b032f681b29502990bb52c9c5d60a4082bea89402b2fd9603e5a124"
+    }
+  },
+  "greedy_ids": [
+    332,
+    906,
+    12,
+    846
+  ],
+  "full_logits_sha256": "8fff9e4b8b032f681b29502990bb52c9c5d60a4082bea89402b2fd9603e5a124",
+  "serial_block_exact": true,
+  "causal_prefix_exact": true,
+  "rollback_exact": true,
+  "proper_prefix_replay_exact": true,
+  "cancellation_before_update": true,
+  "overflow_rejected_before_write": true,
+  "bad_restore_rejected_before_write": true,
+  "draft": {
+    "recipe": "mtp-affine-q4-experts-q8-dense-64-v1",
+    "expert_cache": {
+      "hits": 54,
+      "misses": 175,
+      "evictions": 165,
+      "application_read_bytes": 483840000,
+      "ready_hits": 54,
+      "loading_joins": 0,
+      "hit_rate": 0.23580786026200873,
+      "layer_hits": [
+        54,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "layer_misses": [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "policy": "clock",
+      "protected_entries": 0,
+      "probation_entries": 0,
+      "entry_metadata_bytes": 800,
+      "diagnostic_cache_state": "c05f0687e6017880bf608cb547a130493ccc836206dad827378e335590a05625"
+    },
+    "expert_read_bytes": 484556800,
+    "budget_bytes": 219717632,
+    "context": 32,
+    "norm_convention": "BF16(1+w), once at load"
+  },
+  "metal": {
+    "buffer_costs": null,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "q8_arithmetic": "MLX 0.31.1 fixed per-token QMV, FP32 input bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 1477279744,
+    "peak_buffer_bytes": 1483522048,
+    "scratch_pools": [
+      {
+        "capacity_bytes": 0,
+        "allocated_bytes": 0,
+        "peak_bytes": 0,
+        "unused_retained_bytes": 0,
+        "reuses": 0,
+        "allocation_count": 0,
+        "wait_ns": 0
+      },
+      {
+        "capacity_bytes": 0,
+        "allocated_bytes": 0,
+        "peak_bytes": 0,
+        "unused_retained_bytes": 0,
+        "reuses": 0,
+        "allocation_count": 0,
+        "wait_ns": 0
+      }
+    ],
+    "active_scratch_slot": -1,
+    "live_command_groups": 0,
+    "peak_command_groups": 2,
+    "residency": {
+      "mode": "off",
+      "registered_bytes": 0,
+      "allocations": 0,
+      "bytes_by_class": {},
+      "set_overhead_bytes": 0,
+      "commits": 0,
+      "removals": 0,
+      "pending_retirements": 0,
+      "physical_residency_guaranteed": false
+    },
+    "kernels": {
+      "q4_decode": "reference",
+      "route_selection": "simd",
+      "attention_score_tiles": "full",
+      "policy": "candidate",
+      "token_tile": 1,
+      "affine_rows": 1,
+      "q8_decode_rows": 2,
+      "gate_pair": false,
+      "gdn": "original",
+      "gdn_rows": 4,
+      "gdn_block": 8,
+      "shape_table": null,
+      "operator_capture": "",
+      "capture_filter": {
+        "phase": "",
+        "operator": "",
+        "layer": -2
+      },
+      "profile": false,
+      "profile_decode_only": false,
+      "counter_profile": false,
+      "automatic_rules_promoted": false
+    },
+    "kernel_dispatches": {
+      "affine_embedding": 12,
+      "norm": 48,
+      "mtp_wide_norm": 12,
+      "q8_mm_t4": 30,
+      "hc_add": 36,
+      "unary": 96,
+      "hc_mix": 36,
+      "plain_mm": 36,
+      "index_store": 12,
+      "norm_rope": 24,
+      "kv_store": 24,
+      "attention_scores": 12,
+      "attention_softmax": 12,
+      "attention_values": 12,
+      "router_mm": 12,
+      "router_accumulate": 12,
+      "route_simd": 12,
+      "q8_gate_up_t4": 2,
+      "q4_gate_up_t4": 7,
+      "q4_mm_t4": 7,
+      "scatter_experts": 229,
+      "q4_gate_up": 222,
+      "q4_mm": 222,
+      "moe_sum": 12,
+      "copy_words": 7,
+      "q8_mv_packed_r2_w8": 58,
+      "q8_mm": 34,
+      "q8_mv_packed_r2_w4": 24,
+      "q8_gate_up": 8,
+      "q8_mm_t2": 28,
+      "q8_gate_up_t2": 2
+    },
+    "cpu_encode_ns": 55643445,
+    "cpu_gpu_wait_ns": 539784915,
+    "gpu_command_ns": 565183482,
+    "allocation_count": 1524,
+    "scratch_reuses": 0,
+    "dispatches": 1300,
+    "submissions": 120,
+    "waits": 40
+  },
+  "after": {
+    "physical_footprint_bytes": 1523618432,
+    "resident_bytes": 1513848832,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 94625,
+    "pageins": 326,
+    "physical_footprint_peak_bytes": 1528058496,
+    "resident_peak_bytes": 1516060672,
+    "system_swap_used_bytes": 3724410880,
+    "reclaimable_bytes": 20489863168
+  },
+  "after_destroy": {
+    "physical_footprint_bytes": 1349800384,
+    "resident_bytes": 1347469312,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 94634,
+    "pageins": 326,
+    "physical_footprint_peak_bytes": 1528058496,
+    "resident_peak_bytes": 1516060672,
+    "system_swap_used_bytes": 3724410880,
+    "reclaimable_bytes": 20656635904
+  },
+  "host_after": {
+    "monotonic_ns": 5202301337103333,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  }
+}

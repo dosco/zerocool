@@ -1,0 +1,96 @@
+{
+  "kind": "cache_residency_demand_analysis_v1",
+  "complete": true,
+  "status": "simulated",
+  "capacities": [
+    1072,
+    1460
+  ],
+  "results": [
+    {
+      "source": "/repo/docs/benchmarks/2026-09-10-normal-routes/raw",
+      "source_seal_sha256": "458e1fb8685cdb40b57297d5a523128dca9c233ef7496fc3452edcd140166788",
+      "curve": "2026-09-10-normal-routes.json",
+      "curve_sha256": "c6db1fd7cecf9836d274c74f50919322df4212739003217c54ceca7968467244",
+      "added_slot_bytes": 1074331648,
+      "phases": [
+        {
+          "request_id": 1,
+          "phase": "prefill",
+          "demands": 7688,
+          "control_misses": 7688,
+          "candidate_misses": 7688,
+          "fewer_read_fraction": 0.0,
+          "avoided_application_bytes": 0
+        },
+        {
+          "request_id": 1,
+          "phase": "decode",
+          "demands": 15360,
+          "control_misses": 7823,
+          "candidate_misses": 7170,
+          "fewer_read_fraction": 0.08347181388214242,
+          "avoided_application_bytes": 1805414400
+        }
+      ],
+      "predicted_latency_saving_ms": null,
+      "predicted_tokens_per_second": null
+    },
+    {
+      "source": "/repo/docs/benchmarks/2026-09-10-extended-routes/raw",
+      "source_seal_sha256": "c327e939bba956954c96b4d29cfbe0747d4d71a5670ca3d159da8ba67ac14ac7",
+      "curve": "2026-09-10-extended-routes.json",
+      "curve_sha256": "f474183b7841d42daa451b0a1416155c400825c4503793d3cabed8c59e1e34ba",
+      "added_slot_bytes": 1074331648,
+      "phases": [
+        {
+          "request_id": 1,
+          "phase": "prefill",
+          "demands": 7688,
+          "control_misses": 7688,
+          "candidate_misses": 7688,
+          "fewer_read_fraction": 0.0,
+          "avoided_application_bytes": 0
+        },
+        {
+          "request_id": 1,
+          "phase": "decode",
+          "demands": 122880,
+          "control_misses": 64704,
+          "candidate_misses": 57151,
+          "fewer_read_fraction": 0.11673157764589515,
+          "avoided_application_bytes": 20882534400
+        },
+        {
+          "request_id": 2,
+          "phase": "append",
+          "demands": 8958,
+          "control_misses": 8923,
+          "candidate_misses": 8884,
+          "fewer_read_fraction": 0.00437072733385635,
+          "avoided_application_bytes": 107827200
+        },
+        {
+          "request_id": 2,
+          "phase": "decode",
+          "demands": 15360,
+          "control_misses": 9293,
+          "candidate_misses": 8466,
+          "fewer_read_fraction": 0.08899171419347895,
+          "avoided_application_bytes": 2286489600
+        }
+      ],
+      "predicted_latency_saving_ms": null,
+      "predicted_tokens_per_second": null
+    }
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Historical route builds differ from the current runtime. This measures saved demands, not new inference.",
+    "Fixed ascending demand order and immediate release omit native hit-first admission and GPU leases.",
+    "Read counts are application bytes. Device traffic, residency, compression and latency are not simulated.",
+    "Short and extended captures share a prompt; they are not independent workloads.",
+    "The append follows 32 or 256 generation steps, not the required 4K history."
+  ]
+}

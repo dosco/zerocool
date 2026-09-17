@@ -1,0 +1,19 @@
+{
+  "hypothesis": "Faster resident computation before router completion advances required expert reads and reduces token latency.",
+  "expected_effect": "Seek a measured opportunity on the order of 20ms per token without more memory or changed model arithmetic; attainable savings remain unknown.",
+  "controlled_change": "Next isolate the constituent operators of the largest resident command class using saved real-weight inputs. Current evidence changes only instrumentation at 1072 slots and core-cache residency, with identical normal and traced workloads.",
+  "correctness": "The clean capture preserves output tokens and verifies all 48 layers, ten selected experts per layer, sixteen decode forwards per phase and complete GPU/buffer coverage. No optimized operator is implemented or qualified.",
+  "outcome": "Resident command groups containing GDN, projections, residuals, reduction and routing account for 66.64/63.54ms of traced GPU time per token. Pending-read idle is 52.71/58.37ms. Driver scheduling is only 6.36/6.97ms and buffer CPU intervals total about 3.3ms. Of 2820 previous-token top-two predictions, only one overlaps an observed new miss. Trace overhead/variation is 24.83%/14.98%.",
+  "decision": "proposed",
+  "smallest_experiment": "Use bounded real-input operator replay to split the resident command group. Screen one exact kernel only if its measured cost and saving support a material request gain, then compare normal requests under the same 1072-slot allocation.",
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-14-cache-residency/resident-analysis.json",
+    "/repo/docs/benchmarks/2026-09-14-cache-residency/profile-01/summary.json"
+  ],
+  "limitations": [
+    "Command-group duration is not the duration of a single GDN kernel, and is not wholly removable.",
+    "Traced intervals cannot be subtracted or rescaled into predicted normal-request latency.",
+    "The prefetch check is retrospective miss overlap, not a live scheduler or cache simulation.",
+    "Short context and one normal/traced pair do not qualify production."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "kind": "perfect_draft_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": false,
+  "status": "resource_blocked",
+  "source_seal_sha256": "2e2603a06d03c7f7282f86e9c2fa87cd3dfc6ac662adaded9b9e1403701e15e8",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 179,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/perfect_draft.py",
+        "sha256": "18f79f7598dca7e9e780261ead83796b882f3b2528b8dd0b905128b5085dd156",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-perfect-draft/initial-sources/scripts/qwen/perfect_draft.py"
+      }
+    ]
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "speculative_decoding_qualified": false,
+  "actual_draft_measured": false
+}

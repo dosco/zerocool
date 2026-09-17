@@ -1,0 +1,861 @@
+{
+  "kind": "block_cache_capture_v1",
+  "complete": true,
+  "status": "no_cache_candidate_selected",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-16T17:22:19.291765+00:00",
+  "time_limit_seconds": 300,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1072,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate"
+    },
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate"
+    }
+  ],
+  "workload": {
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7734,
+      264,
+      12654,
+      709,
+      10562,
+      87682,
+      1494,
+      40798,
+      8,
+      421,
+      78161,
+      48142,
+      7629,
+      26126,
+      13,
+      3301,
+      10300,
+      26126,
+      1973,
+      93183,
+      279,
+      1879,
+      13,
+      13365,
+      449,
+      4147,
+      1103,
+      321,
+      26126,
+      421,
+      5615,
+      506,
+      449,
+      14456,
+      13,
+      28763,
+      279,
+      7873,
+      321,
+      2250,
+      2526,
+      52992,
+      7262,
+      4147,
+      1879,
+      11,
+      48142,
+      26126,
+      11,
+      321,
+      632,
+      27379,
+      81859,
+      26126,
+      13,
+      79091,
+      279,
+      854,
+      22373,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198,
+      248068,
+      271,
+      248069,
+      271
+    ],
+    "continuation_ids": [
+      71093,
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142
+    ],
+    "expected_next_ids": [
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142,
+      7629
+    ],
+    "expected_prompt_id": 71093
+  },
+  "criteria": {
+    "slots": [
+      1072,
+      1460
+    ],
+    "width": 4,
+    "context": 8192,
+    "memory_bytes": 12884901888,
+    "trace_workspace_bytes": 33554432,
+    "process_seconds": 120,
+    "stage_seconds": 300,
+    "policies": [
+      "clock",
+      "slru"
+    ],
+    "simulated_slots": [
+      1072,
+      1460,
+      1536
+    ],
+    "minimum_miss_reduction": 0.1,
+    "draft_cache_slots": 128,
+    "minimum_remaining_bytes": 134217728,
+    "selection_order": [
+      [
+        "slru",
+        1460
+      ],
+      [
+        "clock",
+        1536
+      ]
+    ]
+  },
+  "limitations": [
+    "Instrumented capture is not a latency measurement; no old timings are pooled.",
+    "Native CLOCK replay includes actual admission order and leases and must exactly reproduce captured snapshots and counters.",
+    "Counterfactuals hold captured admission/pin/release order fixed. Alternative read completion, GPU timing and policy-specific hit-first ordering are not predicted.",
+    "The short fixed continuation is not representative coding-quality, long-context, real-draft acceptance or sustained-use qualification.",
+    "Application read estimates are simulated, not observed device traffic or predicted tokens/s. Draft memory/traffic remain unmeasured."
+  ],
+  "captures": [
+    {
+      "slots": 1072,
+      "source": "capture-1072.json",
+      "sha256": "a0be56df0d784564c6a4dc1e3ed0806e0217f5aade8cf46c88d13cb7c2ae6106",
+      "trace_source": "capture-1072.cache.jsonl",
+      "trace_sha256": "1a78b4a2a4a7f4b13cefd5f15d0dbb7792340c963b8c5c76efcac86f1e63d2ea",
+      "observation": {
+        "exact_logits_state_routes": true,
+        "exact_initial_cache": true,
+        "clean_memory": true,
+        "clean_host": true,
+        "peak_physical_bytes": 9150302976,
+        "peak_compressed_bytes": 0,
+        "native_replay": {
+          "capacity": 1072,
+          "forwards": [
+            {
+              "offset": 0,
+              "tokens": 72,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "distinct_records": 7688
+            },
+            {
+              "offset": 72,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 1154,
+              "distinct_records": 1154
+            },
+            {
+              "offset": 76,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 1130,
+              "distinct_records": 1130
+            },
+            {
+              "offset": 80,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 1283,
+              "distinct_records": 1283
+            },
+            {
+              "offset": 84,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 0,
+              "misses": 1370,
+              "distinct_records": 1370
+            }
+          ],
+          "snapshots_verified": 7,
+          "max_pins": 32,
+          "native_counts_exact": true,
+          "native_slot_state_exact": true
+        },
+        "curves": [
+          {
+            "capacity": 1072,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 0,
+                "misses": 1154
+              },
+              {
+                "hits": 0,
+                "misses": 1130
+              },
+              {
+                "hits": 0,
+                "misses": 1283
+              },
+              {
+                "hits": 0,
+                "misses": 1370
+              }
+            ],
+            "decode_hits": 0,
+            "decode_misses": 4937,
+            "decode_application_read_bytes": 13649817600,
+            "decode_hit_fraction": 0.0,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1072,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 0,
+                "misses": 1154
+              },
+              {
+                "hits": 0,
+                "misses": 1130
+              },
+              {
+                "hits": 0,
+                "misses": 1283
+              },
+              {
+                "hits": 0,
+                "misses": 1370
+              }
+            ],
+            "decode_hits": 0,
+            "decode_misses": 4937,
+            "decode_application_read_bytes": 13649817600,
+            "decode_hit_fraction": 0.0,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1460,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 44,
+                "misses": 1110
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 251,
+                "misses": 1032
+              },
+              {
+                "hits": 532,
+                "misses": 838
+              }
+            ],
+            "decode_hits": 1056,
+            "decode_misses": 3881,
+            "decode_application_read_bytes": 10730188800,
+            "decode_hit_fraction": 0.2138950779825805,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1460,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 44,
+                "misses": 1110
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 401,
+                "misses": 882
+              },
+              {
+                "hits": 371,
+                "misses": 999
+              }
+            ],
+            "decode_hits": 1045,
+            "decode_misses": 3892,
+            "decode_application_read_bytes": 10760601600,
+            "decode_hit_fraction": 0.2116670042535953,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1536,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 55,
+                "misses": 1099
+              },
+              {
+                "hits": 214,
+                "misses": 916
+              },
+              {
+                "hits": 315,
+                "misses": 968
+              },
+              {
+                "hits": 477,
+                "misses": 893
+              }
+            ],
+            "decode_hits": 1061,
+            "decode_misses": 3876,
+            "decode_application_read_bytes": 10716364800,
+            "decode_hit_fraction": 0.21490783876848288,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1536,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 55,
+                "misses": 1099
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 403,
+                "misses": 880
+              },
+              {
+                "hits": 446,
+                "misses": 924
+              }
+            ],
+            "decode_hits": 1133,
+            "decode_misses": 3804,
+            "decode_application_read_bytes": 10517299200,
+            "decode_hit_fraction": 0.229491594085477,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          }
+        ],
+        "performance_measurement": false
+      }
+    },
+    {
+      "slots": 1460,
+      "source": "capture-1460.json",
+      "sha256": "a5e29b243d86f2eb1850f228bdbf479bfcb7e9e449421c2fc30db3887ffc95c0",
+      "trace_source": "capture-1460.cache.jsonl",
+      "trace_sha256": "2f32852ce4fbf2718b9bfdaf6f63359c16553faaeb3ed86b83006163e350a600",
+      "observation": {
+        "exact_logits_state_routes": true,
+        "exact_initial_cache": true,
+        "clean_memory": true,
+        "clean_host": true,
+        "peak_physical_bytes": 10225488576,
+        "peak_compressed_bytes": 0,
+        "native_replay": {
+          "capacity": 1460,
+          "forwards": [
+            {
+              "offset": 0,
+              "tokens": 72,
+              "phase": "prefill",
+              "hits": 0,
+              "misses": 7688,
+              "distinct_records": 7688
+            },
+            {
+              "offset": 72,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 47,
+              "misses": 1107,
+              "distinct_records": 1154
+            },
+            {
+              "offset": 76,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 229,
+              "misses": 901,
+              "distinct_records": 1130
+            },
+            {
+              "offset": 80,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 252,
+              "misses": 1031,
+              "distinct_records": 1283
+            },
+            {
+              "offset": 84,
+              "tokens": 4,
+              "phase": "decode",
+              "hits": 538,
+              "misses": 832,
+              "distinct_records": 1370
+            }
+          ],
+          "snapshots_verified": 7,
+          "max_pins": 32,
+          "native_counts_exact": true,
+          "native_slot_state_exact": true
+        },
+        "curves": [
+          {
+            "capacity": 1072,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 0,
+                "misses": 1154
+              },
+              {
+                "hits": 0,
+                "misses": 1130
+              },
+              {
+                "hits": 0,
+                "misses": 1283
+              },
+              {
+                "hits": 0,
+                "misses": 1370
+              }
+            ],
+            "decode_hits": 0,
+            "decode_misses": 4937,
+            "decode_application_read_bytes": 13649817600,
+            "decode_hit_fraction": 0.0,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1072,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 0,
+                "misses": 1154
+              },
+              {
+                "hits": 0,
+                "misses": 1130
+              },
+              {
+                "hits": 0,
+                "misses": 1283
+              },
+              {
+                "hits": 0,
+                "misses": 1370
+              }
+            ],
+            "decode_hits": 0,
+            "decode_misses": 4937,
+            "decode_application_read_bytes": 13649817600,
+            "decode_hit_fraction": 0.0,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1460,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 47,
+                "misses": 1107
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 252,
+                "misses": 1031
+              },
+              {
+                "hits": 538,
+                "misses": 832
+              }
+            ],
+            "decode_hits": 1066,
+            "decode_misses": 3871,
+            "decode_application_read_bytes": 10702540800,
+            "decode_hit_fraction": 0.21592059955438525,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1460,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 47,
+                "misses": 1107
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 401,
+                "misses": 882
+              },
+              {
+                "hits": 376,
+                "misses": 994
+              }
+            ],
+            "decode_hits": 1053,
+            "decode_misses": 3884,
+            "decode_application_read_bytes": 10738483200,
+            "decode_hit_fraction": 0.2132874215110391,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1536,
+            "policy": "clock",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 55,
+                "misses": 1099
+              },
+              {
+                "hits": 214,
+                "misses": 916
+              },
+              {
+                "hits": 315,
+                "misses": 968
+              },
+              {
+                "hits": 489,
+                "misses": 881
+              }
+            ],
+            "decode_hits": 1073,
+            "decode_misses": 3864,
+            "decode_application_read_bytes": 10683187200,
+            "decode_hit_fraction": 0.21733846465464857,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          },
+          {
+            "capacity": 1536,
+            "policy": "slru",
+            "blocks": [
+              {
+                "hits": 0,
+                "misses": 7688
+              },
+              {
+                "hits": 55,
+                "misses": 1099
+              },
+              {
+                "hits": 229,
+                "misses": 901
+              },
+              {
+                "hits": 403,
+                "misses": 880
+              },
+              {
+                "hits": 457,
+                "misses": 913
+              }
+            ],
+            "decode_hits": 1144,
+            "decode_misses": 3793,
+            "decode_application_read_bytes": 10486886400,
+            "decode_hit_fraction": 0.2317196678144622,
+            "simulated": true,
+            "latency_prediction": null,
+            "ordering": "captured native acquire/pin/release order"
+          }
+        ],
+        "performance_measurement": false
+      }
+    }
+  ],
+  "token_source": {
+    "path": "/repo/docs/benchmarks/2026-09-15-q4-request-context/capture-02",
+    "source_seal_sha256": "82ad1f44affaba36ea4db1a89fb29dcba63c7306ccba61b330cc0b2f662688a6",
+    "raw_sha256": "0c9d82785b25baf06366ab9b399f9438237e8b29c4f71ba32b625ce4dd6540e1",
+    "source_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "recorded_stage_complete": false,
+    "recorded_stage_status": "resource_blocked",
+    "use": "fixed tokens and artifact identity only; no timing reused"
+  },
+  "binary": "/repo/.cache/block-cache-trace-build-02/probe-perfect-draft",
+  "actual_draft_measured": false,
+  "reference_sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-16-perfect-draft-capacity/screen-02/pair-0-slots-1072-width-4.json",
+      "sha256": "20bf13408fd6888b7b1e790d4706b6d4ba8a0b8db778a67ad28296f7dcda3c04"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-16-perfect-draft-capacity/screen-02/pair-0-slots-1460-width-4.json",
+      "sha256": "edeb400137f09d51d785164e38d000ef0e2639d189d45cb86d5f03ba5272b0ef"
+    }
+  ],
+  "host_preflight": [
+    {
+      "source": "capture-1072-host.json",
+      "sha256": "d3a9e211300cbf9ffef3d35c6389db3e9b3d779004a4c88017e48fd213bb8cc4",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5182999181020833,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "capture-1460-host.json",
+      "sha256": "80e0449cb9cf90cf7394c41a84be1c087b25eb163137c24733cab3535c824531",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5183024913126208,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "protocol_sha256": "701779e0c561f38bc58d06dd27c115bdfe4fed942377a514fe09fed3ce2ab09c",
+  "producer_sha256": "639d9f8f5409a7012aad3f066ad606e03f853842b226033402bf90f08f42123e",
+  "host_producer_sha256": "8d6f06ba432457a8bfc9c071f4ea89cbe01b34f80cb5c0652f16299f6bb9349d",
+  "mtp_manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "joint_memory_plans": [
+    {
+      "target_slots": 1072,
+      "draft_slots": 128,
+      "target_bytes": 10870560256,
+      "draft_bytes": 578250752,
+      "total_bytes": 11448811008,
+      "remaining_bytes": 1436090880,
+      "fits_with_headroom": true,
+      "native_draft_allocation_measured": false
+    },
+    {
+      "target_slots": 1460,
+      "draft_slots": 128,
+      "target_bytes": 11944891904,
+      "draft_bytes": 578250752,
+      "total_bytes": 12523142656,
+      "remaining_bytes": 361759232,
+      "fits_with_headroom": true,
+      "native_draft_allocation_measured": false
+    },
+    {
+      "target_slots": 1536,
+      "draft_slots": 128,
+      "target_bytes": 12155328000,
+      "draft_bytes": 578250752,
+      "total_bytes": 12733578752,
+      "remaining_bytes": 151323136,
+      "fits_with_headroom": true,
+      "native_draft_allocation_measured": false
+    }
+  ],
+  "selected_candidate": null,
+  "candidates": [
+    {
+      "policy": "slru",
+      "slots": 1460,
+      "simulated_miss_reductions": [
+        -0.002834321051275346,
+        -0.0033583053474555147
+      ],
+      "fits_joint_plan": true,
+      "meets_screen": false
+    },
+    {
+      "policy": "clock",
+      "slots": 1536,
+      "simulated_miss_reductions": [
+        0.001288327750579743,
+        0.001808318264014508
+      ],
+      "fits_joint_plan": true,
+      "meets_screen": false
+    }
+  ],
+  "latency_prediction": null,
+  "elapsed_seconds": 53.6032954165712
+}

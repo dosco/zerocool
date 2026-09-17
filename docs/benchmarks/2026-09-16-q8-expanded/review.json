@@ -1,0 +1,41 @@
+{
+  "complete": true,
+  "focused_tests": 19,
+  "test_modules": [
+    "test_q8_expanded_evidence",
+    "test_verify_q8_expanded",
+    "test_q8_expanded",
+    "test_q8_block_packed",
+    "test_block_gdn"
+  ],
+  "test_sources": {
+    "test_q8_expanded_evidence": "e9d43cc4d26f1ef8e35dddc5bd6c3fff13b46ad8e70c41d6a5e19cdffaabc992",
+    "test_verify_q8_expanded": "603bdfe860e45022889446da1e27be85704adaa3f850bea2be220bbf723f4768",
+    "test_q8_expanded": "d2a331069502f0d8d0865181a48bc1deb8eda68a7d98b9900c2b2ba47609068a",
+    "test_q8_block_packed": "b5ea5068f8b010606ddf21aa000b554336ba419daffc4058d4d7b47c97bc1023",
+    "test_block_gdn": "f401d5cd6e483182bcfbdf9d0e52d1597e7669a9479949ecf02f226815da3b76"
+  },
+  "native_self_tests": {
+    "capture_configuration": "passed",
+    "checkpoint_copy_restore": "passed"
+  },
+  "audits": {
+    "audit-capture-reviewed.json": true,
+    "audit-screen-reviewed.json": true,
+    "audit-verifier-reviewed.json": true
+  },
+  "native_build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "native_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "production_promoted": false,
+  "reviewed_contracts": [
+    "same executable and fixed 12GiB budget in both verifier timing arms",
+    "one explicit selector; only six declared stage/shape combinations",
+    "zero packed priming dispatches;399 validation and532 timing dispatches",
+    "full-vocabulary logits, selected experts and persistent state equal",
+    "causal prefix, zero acceptance, partial recovery and replay equal",
+    "paired order preserved; all startup blocks included",
+    "operator and verifier processes clean; original input capture remains blocked",
+    "selected source ranges rehashed; no weight files duplicated",
+    "19 focused tests include corrupted bytes, changed dtype/bounds and missing scope counts"
+  ]
+}

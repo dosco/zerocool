@@ -1,0 +1,102 @@
+{
+  "kind": "independent_reference_diagnostic_review_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source": "/repo/docs/benchmarks/2026-09-15-reference-diagnostic/capture-01",
+  "source_seal_sha256": "1a7320acaf82401d911b47f03a7813a513cdf702fbdfa0bb4e9e68a52a12eac9",
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "status": "diagnostic_captured_with_pressure",
+  "method": "Independent raw JSON checks and a separate interval sweep; no diagnostic analyzer or runner imported.",
+  "checks": [
+    "Sealed inventory and all frozen source hashes",
+    "Protocol and previous reference seals",
+    "Exact 17-output histories and reuse",
+    "101600 command dispatches, 1536 layer passes, 15360 selected records",
+    "All 32 token intervals and ownership bounds",
+    "Separate exclusive overlap partition and per-phase ranking",
+    "Mixed stage and layer command populations kept whole",
+    "76 chronological memory snapshots with unsigned non-resetting counters",
+    "Cumulative 12GiB / 512MiB peaks and no observed swap growth",
+    "All compression-disturbed tokens retained; decompression totals reconcile"
+  ],
+  "coverage": {
+    "phases": 2,
+    "forwards": 32,
+    "dispatches": 101600,
+    "dependency_passes": 1536,
+    "selected_experts": 15360,
+    "explicit_dependency_file": true,
+    "omitted_tokens": 0
+  },
+  "memory_maxima": {
+    "physical_footprint_bytes": 9216690944,
+    "physical_footprint_peak_bytes": 9238858368,
+    "compressed_bytes": 111902720,
+    "compressed_peak_bytes": 114032640,
+    "decompressions": 561,
+    "system_swap_used_bytes": 1876819968
+  },
+  "observed_decompressions": 561,
+  "phases": [
+    {
+      "name": "coding_routes_32",
+      "decode_ms_per_token": 274.6886796875001,
+      "forward_ms": 274.05691675,
+      "exclusive_buckets_ms": {
+        "gpu_active": 126.5099758125,
+        "gpu_idle_submitted": 30.116029,
+        "gpu_idle_ready_expert": 11.85856375,
+        "gpu_idle_pending_read": 58.3688413125,
+        "gpu_idle_callback": 9.4255890625,
+        "gpu_idle_other": 37.7779178125
+      },
+      "inside_token_decompressions": 354,
+      "phase_decompressions": {
+        "ingest": 131,
+        "decode": 356,
+        "inside_token_forwards": 354,
+        "outside_token_forwards": 2,
+        "outside_ingest_and_decode": 12,
+        "request": 499
+      },
+      "mean_miss_queue_ms": 0.12018992612071125,
+      "mean_read_service_ms": 2.463691120210368,
+      "new_miss_records": 3993,
+      "mean_gpu_command_count": 357.875
+    },
+    {
+      "name": "append_128",
+      "decode_ms_per_token": 298.36960156249984,
+      "forward_ms": 297.7431118125,
+      "exclusive_buckets_ms": {
+        "gpu_active": 145.438797375,
+        "gpu_idle_submitted": 31.1871210625,
+        "gpu_idle_ready_expert": 11.958991125,
+        "gpu_idle_pending_read": 61.834351687499996,
+        "gpu_idle_callback": 9.68514975,
+        "gpu_idle_other": 37.6387008125
+      },
+      "inside_token_decompressions": 2,
+      "phase_decompressions": {
+        "ingest": 44,
+        "decode": 2,
+        "inside_token_forwards": 2,
+        "outside_token_forwards": 0,
+        "outside_ingest_and_decode": 0,
+        "request": 46
+      },
+      "mean_miss_queue_ms": 0.13944920721131904,
+      "mean_read_service_ms": 2.539306937471474,
+      "new_miss_records": 4382,
+      "mean_gpu_command_count": 374.4375
+    }
+  ],
+  "conclusion": "Complete diagnostic evidence, not qualified normal latency. Largest observed category is GPU-active; the largest command population mixes trunk stages. Pending expert reads are the largest separate idle population. Neither class totals nor wait buckets establish recoverable latency.",
+  "limitations": [
+    "One traced short reference request; no paired control or instrumentation correction.",
+    "Compression and decompression coexist with timings; their causal contribution is not identified.",
+    "No new full persistent-state comparison or long-context/coding qualification."
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

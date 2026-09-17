@@ -1,0 +1,572 @@
+[
+  {
+    "kind": "decode_overlap_timeline_v1",
+    "complete": true,
+    "build": "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "captured_tokens": 16,
+    "target_ms_per_token": 200,
+    "mean_forward_ms": 322.775598875,
+    "mean_buckets_ms": {
+      "gpu_active": 129.4675514375,
+      "gpu_idle_submitted": 76.4404064375,
+      "gpu_idle_ready_expert": 15.4478340625,
+      "gpu_idle_pending_read": 50.0430693125,
+      "gpu_idle_callback": 12.178975875,
+      "gpu_idle_other": 39.19776175
+    },
+    "mean_layer_boundary_submission_gap_ms": 36.0615203125,
+    "tokens": [
+      {
+        "step": 0,
+        "offset": 72,
+        "forward_ms": 862.370042,
+        "buckets_ms": {
+          "gpu_active": 191.771956,
+          "gpu_idle_submitted": 471.349804,
+          "gpu_idle_ready_expert": 22.431538,
+          "gpu_idle_pending_read": 70.291549,
+          "gpu_idle_callback": 12.206441,
+          "gpu_idle_other": 94.318754
+        },
+        "expert_read_bytes": 1197158400,
+        "command_groups": 401,
+        "layer_boundary_submission_gap_ms": 69.658848
+      },
+      {
+        "step": 1,
+        "offset": 73,
+        "forward_ms": 317.871833,
+        "buckets_ms": {
+          "gpu_active": 125.960832,
+          "gpu_idle_submitted": 84.716894,
+          "gpu_idle_ready_expert": 13.367765,
+          "gpu_idle_pending_read": 48.782148,
+          "gpu_idle_callback": 11.616151,
+          "gpu_idle_other": 33.428043
+        },
+        "expert_read_bytes": 622080000,
+        "command_groups": 321,
+        "layer_boundary_submission_gap_ms": 33.885349
+      },
+      {
+        "step": 2,
+        "offset": 74,
+        "forward_ms": 241.244667,
+        "buckets_ms": {
+          "gpu_active": 105.740876,
+          "gpu_idle_submitted": 37.665008,
+          "gpu_idle_ready_expert": 13.938146,
+          "gpu_idle_pending_read": 40.928911,
+          "gpu_idle_callback": 11.252019,
+          "gpu_idle_other": 31.719707
+        },
+        "expert_read_bytes": 519782400,
+        "command_groups": 294,
+        "layer_boundary_submission_gap_ms": 32.00776
+      },
+      {
+        "step": 3,
+        "offset": 75,
+        "forward_ms": 256.689375,
+        "buckets_ms": {
+          "gpu_active": 106.275787,
+          "gpu_idle_submitted": 42.062685,
+          "gpu_idle_ready_expert": 14.728144,
+          "gpu_idle_pending_read": 50.803528,
+          "gpu_idle_callback": 11.913653,
+          "gpu_idle_other": 30.905578
+        },
+        "expert_read_bytes": 611020800,
+        "command_groups": 314,
+        "layer_boundary_submission_gap_ms": 31.940181
+      },
+      {
+        "step": 4,
+        "offset": 76,
+        "forward_ms": 399.743375,
+        "buckets_ms": {
+          "gpu_active": 194.094782,
+          "gpu_idle_submitted": 64.844091,
+          "gpu_idle_ready_expert": 15.055964,
+          "gpu_idle_pending_read": 76.517769,
+          "gpu_idle_callback": 12.15431,
+          "gpu_idle_other": 37.076459
+        },
+        "expert_read_bytes": 1034035200,
+        "command_groups": 398,
+        "layer_boundary_submission_gap_ms": 37.040472
+      },
+      {
+        "step": 5,
+        "offset": 77,
+        "forward_ms": 372.55675,
+        "buckets_ms": {
+          "gpu_active": 210.647777,
+          "gpu_idle_submitted": 49.816234,
+          "gpu_idle_ready_expert": 10.13062,
+          "gpu_idle_pending_read": 23.499599,
+          "gpu_idle_callback": 16.572984,
+          "gpu_idle_other": 61.889536
+        },
+        "expert_read_bytes": 508723200,
+        "command_groups": 276,
+        "layer_boundary_submission_gap_ms": 42.337219
+      },
+      {
+        "step": 6,
+        "offset": 78,
+        "forward_ms": 293.046042,
+        "buckets_ms": {
+          "gpu_active": 109.53383,
+          "gpu_idle_submitted": 59.274397,
+          "gpu_idle_ready_expert": 19.602888,
+          "gpu_idle_pending_read": 59.206531,
+          "gpu_idle_callback": 11.165607,
+          "gpu_idle_other": 34.262789
+        },
+        "expert_read_bytes": 677376000,
+        "command_groups": 324,
+        "layer_boundary_submission_gap_ms": 32.650139
+      },
+      {
+        "step": 7,
+        "offset": 79,
+        "forward_ms": 215.201542,
+        "buckets_ms": {
+          "gpu_active": 105.807922,
+          "gpu_idle_submitted": 33.672549,
+          "gpu_idle_ready_expert": 12.332193,
+          "gpu_idle_pending_read": 19.233642,
+          "gpu_idle_callback": 11.231194,
+          "gpu_idle_other": 32.924042
+        },
+        "expert_read_bytes": 326246400,
+        "command_groups": 256,
+        "layer_boundary_submission_gap_ms": 30.684642
+      },
+      {
+        "step": 8,
+        "offset": 80,
+        "forward_ms": 260.680166,
+        "buckets_ms": {
+          "gpu_active": 106.498374,
+          "gpu_idle_submitted": 44.606384,
+          "gpu_idle_ready_expert": 18.101144,
+          "gpu_idle_pending_read": 47.229078,
+          "gpu_idle_callback": 11.422645,
+          "gpu_idle_other": 32.822541
+        },
+        "expert_read_bytes": 588902400,
+        "command_groups": 308,
+        "layer_boundary_submission_gap_ms": 32.793096
+      },
+      {
+        "step": 9,
+        "offset": 81,
+        "forward_ms": 312.057291,
+        "buckets_ms": {
+          "gpu_active": 116.378054,
+          "gpu_idle_submitted": 51.40878,
+          "gpu_idle_ready_expert": 18.124789,
+          "gpu_idle_pending_read": 80.895439,
+          "gpu_idle_callback": 11.737651,
+          "gpu_idle_other": 33.512578
+        },
+        "expert_read_bytes": 881971200,
+        "command_groups": 358,
+        "layer_boundary_submission_gap_ms": 33.756009
+      },
+      {
+        "step": 10,
+        "offset": 82,
+        "forward_ms": 300.542667,
+        "buckets_ms": {
+          "gpu_active": 128.761246,
+          "gpu_idle_submitted": 47.998771,
+          "gpu_idle_ready_expert": 19.886345,
+          "gpu_idle_pending_read": 58.700454,
+          "gpu_idle_callback": 11.302564,
+          "gpu_idle_other": 33.893287
+        },
+        "expert_read_bytes": 702259200,
+        "command_groups": 332,
+        "layer_boundary_submission_gap_ms": 33.900802
+      },
+      {
+        "step": 11,
+        "offset": 83,
+        "forward_ms": 296.716958,
+        "buckets_ms": {
+          "gpu_active": 118.702995,
+          "gpu_idle_submitted": 60.724017,
+          "gpu_idle_ready_expert": 15.08723,
+          "gpu_idle_pending_read": 53.051821,
+          "gpu_idle_callback": 15.209487,
+          "gpu_idle_other": 33.941408
+        },
+        "expert_read_bytes": 646963200,
+        "command_groups": 323,
+        "layer_boundary_submission_gap_ms": 33.66322
+      },
+      {
+        "step": 12,
+        "offset": 84,
+        "forward_ms": 220.292041,
+        "buckets_ms": {
+          "gpu_active": 106.196057,
+          "gpu_idle_submitted": 33.092502,
+          "gpu_idle_ready_expert": 10.866909,
+          "gpu_idle_pending_read": 24.071218,
+          "gpu_idle_callback": 11.31331,
+          "gpu_idle_other": 34.752045
+        },
+        "expert_read_bytes": 337305600,
+        "command_groups": 250,
+        "layer_boundary_submission_gap_ms": 32.005597
+      },
+      {
+        "step": 13,
+        "offset": 85,
+        "forward_ms": 218.296917,
+        "buckets_ms": {
+          "gpu_active": 104.972773,
+          "gpu_idle_submitted": 39.039287,
+          "gpu_idle_ready_expert": 9.823074,
+          "gpu_idle_pending_read": 19.495929,
+          "gpu_idle_callback": 11.991769,
+          "gpu_idle_other": 32.974085
+        },
+        "expert_read_bytes": 323481600,
+        "command_groups": 249,
+        "layer_boundary_submission_gap_ms": 32.390012
+      },
+      {
+        "step": 14,
+        "offset": 86,
+        "forward_ms": 292.097958,
+        "buckets_ms": {
+          "gpu_active": 108.779295,
+          "gpu_idle_submitted": 54.56493,
+          "gpu_idle_ready_expert": 15.907473,
+          "gpu_idle_pending_read": 67.554492,
+          "gpu_idle_callback": 11.362722,
+          "gpu_idle_other": 33.929046
+        },
+        "expert_read_bytes": 757555200,
+        "command_groups": 332,
+        "layer_boundary_submission_gap_ms": 33.980677
+      },
+      {
+        "step": 15,
+        "offset": 87,
+        "forward_ms": 305.001958,
+        "buckets_ms": {
+          "gpu_active": 131.358267,
+          "gpu_idle_submitted": 48.21017,
+          "gpu_idle_ready_expert": 17.781123,
+          "gpu_idle_pending_read": 60.427001,
+          "gpu_idle_callback": 12.411107,
+          "gpu_idle_other": 34.81429
+        },
+        "expert_read_bytes": 746496000,
+        "command_groups": 337,
+        "layer_boundary_submission_gap_ms": 34.290302
+      }
+    ],
+    "normal_request_latency_qualified": false,
+    "production_promoted": false,
+    "limitations": [
+      "Original command groups are preserved, but trace collection and JSON writing add overhead.",
+      "Bucket precedence is GPU active, submitted command, ready expert, pending read, callback, other; buckets sum to captured forward time.",
+      "Overlap does not establish why a coordinator waited or predict a speedup; ready work can be blocked by buffer or GPU capacity.",
+      "Layer boundary gaps overlap the buckets and must not be added to them.",
+      "Only the captured short-request token positions are covered; no 2K/4K acceptance claim."
+    ]
+  },
+  {
+    "kind": "decode_overlap_timeline_v1",
+    "complete": true,
+    "build": "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "captured_tokens": 16,
+    "target_ms_per_token": 200,
+    "mean_forward_ms": 348.5898020625,
+    "mean_buckets_ms": {
+      "gpu_active": 158.3619860625,
+      "gpu_idle_submitted": 75.6835641875,
+      "gpu_idle_ready_expert": 15.82149975,
+      "gpu_idle_pending_read": 46.2654988125,
+      "gpu_idle_callback": 11.8233784375,
+      "gpu_idle_other": 40.6338748125
+    },
+    "mean_layer_boundary_submission_gap_ms": 36.7878401875,
+    "tokens": [
+      {
+        "step": 0,
+        "offset": 217,
+        "forward_ms": 699.875792,
+        "buckets_ms": {
+          "gpu_active": 150.531443,
+          "gpu_idle_submitted": 375.121257,
+          "gpu_idle_ready_expert": 25.70932,
+          "gpu_idle_pending_read": 74.242082,
+          "gpu_idle_callback": 12.022724,
+          "gpu_idle_other": 62.248966
+        },
+        "expert_read_bytes": 1183334400,
+        "command_groups": 431,
+        "layer_boundary_submission_gap_ms": 53.803676
+      },
+      {
+        "step": 1,
+        "offset": 218,
+        "forward_ms": 256.171209,
+        "buckets_ms": {
+          "gpu_active": 107.019842,
+          "gpu_idle_submitted": 42.646584,
+          "gpu_idle_ready_expert": 14.049942,
+          "gpu_idle_pending_read": 48.6069,
+          "gpu_idle_callback": 11.582813,
+          "gpu_idle_other": 32.265128
+        },
+        "expert_read_bytes": 591667200,
+        "command_groups": 324,
+        "layer_boundary_submission_gap_ms": 32.702681
+      },
+      {
+        "step": 2,
+        "offset": 219,
+        "forward_ms": 318.869333,
+        "buckets_ms": {
+          "gpu_active": 179.389701,
+          "gpu_idle_submitted": 50.724621,
+          "gpu_idle_ready_expert": 11.731722,
+          "gpu_idle_pending_read": 29.12239,
+          "gpu_idle_callback": 14.190481,
+          "gpu_idle_other": 33.710418
+        },
+        "expert_read_bytes": 555724800,
+        "command_groups": 292,
+        "layer_boundary_submission_gap_ms": 34.187974
+      },
+      {
+        "step": 3,
+        "offset": 220,
+        "forward_ms": 296.470833,
+        "buckets_ms": {
+          "gpu_active": 146.332997,
+          "gpu_idle_submitted": 46.998907,
+          "gpu_idle_ready_expert": 13.733273,
+          "gpu_idle_pending_read": 44.175673,
+          "gpu_idle_callback": 11.684654,
+          "gpu_idle_other": 33.545329
+        },
+        "expert_read_bytes": 627609600,
+        "command_groups": 307,
+        "layer_boundary_submission_gap_ms": 34.12939
+      },
+      {
+        "step": 4,
+        "offset": 221,
+        "forward_ms": 465.143208,
+        "buckets_ms": {
+          "gpu_active": 252.962708,
+          "gpu_idle_submitted": 78.729997,
+          "gpu_idle_ready_expert": 15.446975,
+          "gpu_idle_pending_read": 64.540722,
+          "gpu_idle_callback": 12.288353,
+          "gpu_idle_other": 41.174453
+        },
+        "expert_read_bytes": 1108684800,
+        "command_groups": 427,
+        "layer_boundary_submission_gap_ms": 40.557634
+      },
+      {
+        "step": 5,
+        "offset": 222,
+        "forward_ms": 334.995791,
+        "buckets_ms": {
+          "gpu_active": 150.902752,
+          "gpu_idle_submitted": 54.614456,
+          "gpu_idle_ready_expert": 18.616481,
+          "gpu_idle_pending_read": 35.135292,
+          "gpu_idle_callback": 11.368146,
+          "gpu_idle_other": 64.358664
+        },
+        "expert_read_bytes": 591667200,
+        "command_groups": 301,
+        "layer_boundary_submission_gap_ms": 35.006928
+      },
+      {
+        "step": 6,
+        "offset": 223,
+        "forward_ms": 343.414166,
+        "buckets_ms": {
+          "gpu_active": 131.347667,
+          "gpu_idle_submitted": 68.689822,
+          "gpu_idle_ready_expert": 17.08955,
+          "gpu_idle_pending_read": 68.675443,
+          "gpu_idle_callback": 11.136269,
+          "gpu_idle_other": 46.475415
+        },
+        "expert_read_bytes": 862617600,
+        "command_groups": 359,
+        "layer_boundary_submission_gap_ms": 35.243843
+      },
+      {
+        "step": 7,
+        "offset": 224,
+        "forward_ms": 293.045917,
+        "buckets_ms": {
+          "gpu_active": 146.186429,
+          "gpu_idle_submitted": 54.412367,
+          "gpu_idle_ready_expert": 12.301683,
+          "gpu_idle_pending_read": 35.646048,
+          "gpu_idle_callback": 11.631392,
+          "gpu_idle_other": 32.867998
+        },
+        "expert_read_bytes": 536371200,
+        "command_groups": 299,
+        "layer_boundary_submission_gap_ms": 33.133301
+      },
+      {
+        "step": 8,
+        "offset": 225,
+        "forward_ms": 241.329667,
+        "buckets_ms": {
+          "gpu_active": 114.08768,
+          "gpu_idle_submitted": 39.352199,
+          "gpu_idle_ready_expert": 11.555854,
+          "gpu_idle_pending_read": 33.307669,
+          "gpu_idle_callback": 11.569228,
+          "gpu_idle_other": 31.457037
+        },
+        "expert_read_bytes": 456192000,
+        "command_groups": 287,
+        "layer_boundary_submission_gap_ms": 31.620091
+      },
+      {
+        "step": 9,
+        "offset": 226,
+        "forward_ms": 424.125375,
+        "buckets_ms": {
+          "gpu_active": 185.06584,
+          "gpu_idle_submitted": 93.299485,
+          "gpu_idle_ready_expert": 20.602165,
+          "gpu_idle_pending_read": 72.740108,
+          "gpu_idle_callback": 11.593859,
+          "gpu_idle_other": 40.823918
+        },
+        "expert_read_bytes": 970444800,
+        "command_groups": 362,
+        "layer_boundary_submission_gap_ms": 40.009972
+      },
+      {
+        "step": 10,
+        "offset": 227,
+        "forward_ms": 393.206541,
+        "buckets_ms": {
+          "gpu_active": 243.897334,
+          "gpu_idle_submitted": 43.87115,
+          "gpu_idle_ready_expert": 14.642979,
+          "gpu_idle_pending_read": 26.459686,
+          "gpu_idle_callback": 11.606351,
+          "gpu_idle_other": 52.729041
+        },
+        "expert_read_bytes": 627609600,
+        "command_groups": 286,
+        "layer_boundary_submission_gap_ms": 40.987052
+      },
+      {
+        "step": 11,
+        "offset": 228,
+        "forward_ms": 348.249,
+        "buckets_ms": {
+          "gpu_active": 180.072582,
+          "gpu_idle_submitted": 71.31783,
+          "gpu_idle_ready_expert": 12.42514,
+          "gpu_idle_pending_read": 31.026751,
+          "gpu_idle_callback": 12.451271,
+          "gpu_idle_other": 40.955426
+        },
+        "expert_read_bytes": 608256000,
+        "command_groups": 306,
+        "layer_boundary_submission_gap_ms": 39.356807
+      },
+      {
+        "step": 12,
+        "offset": 229,
+        "forward_ms": 237.011167,
+        "buckets_ms": {
+          "gpu_active": 107.180295,
+          "gpu_idle_submitted": 42.078356,
+          "gpu_idle_ready_expert": 14.734315,
+          "gpu_idle_pending_read": 29.267473,
+          "gpu_idle_callback": 11.053732,
+          "gpu_idle_other": 32.696996
+        },
+        "expert_read_bytes": 434073600,
+        "command_groups": 271,
+        "layer_boundary_submission_gap_ms": 32.490304
+      },
+      {
+        "step": 13,
+        "offset": 230,
+        "forward_ms": 235.928417,
+        "buckets_ms": {
+          "gpu_active": 105.998054,
+          "gpu_idle_submitted": 42.578601,
+          "gpu_idle_ready_expert": 11.881939,
+          "gpu_idle_pending_read": 32.18384,
+          "gpu_idle_callback": 11.721268,
+          "gpu_idle_other": 31.564715
+        },
+        "expert_read_bytes": 431308800,
+        "command_groups": 273,
+        "layer_boundary_submission_gap_ms": 32.165636
+      },
+      {
+        "step": 14,
+        "offset": 231,
+        "forward_ms": 318.484459,
+        "buckets_ms": {
+          "gpu_active": 117.833032,
+          "gpu_idle_submitted": 60.819442,
+          "gpu_idle_ready_expert": 20.489596,
+          "gpu_idle_pending_read": 73.614156,
+          "gpu_idle_callback": 11.419487,
+          "gpu_idle_other": 34.308746
+        },
+        "expert_read_bytes": 862617600,
+        "command_groups": 362,
+        "layer_boundary_submission_gap_ms": 34.49635
+      },
+      {
+        "step": 15,
+        "offset": 232,
+        "forward_ms": 371.115958,
+        "buckets_ms": {
+          "gpu_active": 214.983421,
+          "gpu_idle_submitted": 45.681953,
+          "gpu_idle_ready_expert": 18.133062,
+          "gpu_idle_pending_read": 41.503748,
+          "gpu_idle_callback": 11.854027,
+          "gpu_idle_other": 38.959747
+        },
+        "expert_read_bytes": 729907200,
+        "command_groups": 318,
+        "layer_boundary_submission_gap_ms": 38.713804
+      }
+    ],
+    "normal_request_latency_qualified": false,
+    "production_promoted": false,
+    "limitations": [
+      "Original command groups are preserved, but trace collection and JSON writing add overhead.",
+      "Bucket precedence is GPU active, submitted command, ready expert, pending read, callback, other; buckets sum to captured forward time.",
+      "Overlap does not establish why a coordinator waited or predict a speedup; ready work can be blocked by buffer or GPU capacity.",
+      "Layer boundary gaps overlap the buckets and must not be added to them.",
+      "Only the captured short-request token positions are covered; no 2K/4K acceptance claim."
+    ]
+  }
+]

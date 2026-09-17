@@ -1,0 +1,1104 @@
+{
+  "kind": "native_mtp_prepared_check_v1",
+  "complete": true,
+  "production_promoted": false,
+  "full_draft_verified": false,
+  "acceptance_qualified": false,
+  "manifest_sha256": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "before": {
+    "physical_footprint_bytes": 2180096,
+    "resident_bytes": 5226496,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 607,
+    "pageins": 1,
+    "physical_footprint_peak_bytes": 2180096,
+    "resident_peak_bytes": 5226496,
+    "system_swap_used_bytes": 1876819968,
+    "reclaimable_bytes": 10547445760
+  },
+  "host_before": {
+    "monotonic_ns": 5127355366544500,
+    "thermal_state": 0,
+    "low_power_mode": true,
+    "power_source": "Battery Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "cases": [
+    {
+      "name": "mtp.fc_embedding.weight",
+      "input": 2560,
+      "output": 2560,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.fc_hidden.weight",
+      "input": 2560,
+      "output": 2560,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.hyper_connection_mixer.input_mix_weight_down.weight",
+      "input": 10240,
+      "output": 320,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 1280,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.hyper_connection_mixer.input_mix_weight_up.weight",
+      "input": 320,
+      "output": 10240,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 40960,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.attn_hyper_connection.input_mix_weight_down.weight",
+      "input": 10240,
+      "output": 320,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 1280,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.attn_hyper_connection.input_mix_weight_up.weight",
+      "input": 320,
+      "output": 10240,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 40960,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.mlp.shared_expert.down_proj.weight",
+      "input": 640,
+      "output": 2560,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.mlp.shared_expert.gate_proj.weight",
+      "input": 2560,
+      "output": 640,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.mlp.shared_expert.up_proj.weight",
+      "input": 2560,
+      "output": 640,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.mlp_hyper_connection.input_mix_weight_down.weight",
+      "input": 10240,
+      "output": 320,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 320,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 1280,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.mlp_hyper_connection.input_mix_weight_up.weight",
+      "input": 320,
+      "output": 10240,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 40960,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.self_attn.indexer.index_qk_proj.weight",
+      "input": 2560,
+      "output": 640,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.self_attn.k_proj.weight",
+      "input": 2560,
+      "output": 512,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2048,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.self_attn.o_proj.weight",
+      "input": 6144,
+      "output": 2560,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.self_attn.q_proj.weight",
+      "input": 2560,
+      "output": 12288,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 12288,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 12288,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 12288,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 12288,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 49152,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "mtp.layers.0.self_attn.v_proj.weight",
+      "input": 2560,
+      "output": 512,
+      "bits": 8,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 512,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2048,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert0/projection0",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert0/projection1",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert0/projection2",
+      "input": 640,
+      "output": 2560,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert256/projection0",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert256/projection1",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert256/projection2",
+      "input": 640,
+      "output": 2560,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert511/projection0",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert511/projection1",
+      "input": 2560,
+      "output": 640,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 640,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        }
+      ]
+    },
+    {
+      "name": "expert511/projection2",
+      "input": 640,
+      "output": 2560,
+      "bits": 4,
+      "cases": [
+        {
+          "tokens": 1,
+          "column_start": 0,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 1,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 2,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 1,
+          "column_start": 3,
+          "output_values": 2560,
+          "exact_decoded_columns": true
+        },
+        {
+          "tokens": 4,
+          "column_start": 0,
+          "output_values": 10240,
+          "exact_decoded_columns": true
+        }
+      ]
+    }
+  ],
+  "validation": true,
+  "byte_budget": 201326592,
+  "metal": {
+    "buffer_costs": null,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368,
+    "recommended_bytes": 22906503168,
+    "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "q4_arithmetic": "MLX 0.31.1 GEMV BF16 bias sums",
+    "q8_arithmetic": "MLX 0.31.1 fixed per-token QMV, FP32 input bias sums",
+    "router_arithmetic": "M1 SIMD 8x8, sixteen fixed K partitions",
+    "expert_reduction": "eight partial sums in selected-expert order",
+    "attention_arithmetic": "BF16 scores and probabilities, fixed across chunks",
+    "live_buffer_bytes": 98041856,
+    "peak_buffer_bytes": 100876288,
+    "scratch_pools": [
+      {
+        "capacity_bytes": 0,
+        "allocated_bytes": 0,
+        "peak_bytes": 0,
+        "unused_retained_bytes": 0,
+        "reuses": 0,
+        "allocation_count": 0,
+        "wait_ns": 0
+      },
+      {
+        "capacity_bytes": 0,
+        "allocated_bytes": 0,
+        "peak_bytes": 0,
+        "unused_retained_bytes": 0,
+        "reuses": 0,
+        "allocation_count": 0,
+        "wait_ns": 0
+      }
+    ],
+    "active_scratch_slot": -1,
+    "live_command_groups": 0,
+    "peak_command_groups": 1,
+    "residency": {
+      "mode": "off",
+      "registered_bytes": 0,
+      "allocations": 0,
+      "bytes_by_class": {},
+      "set_overhead_bytes": 0,
+      "commits": 0,
+      "removals": 0,
+      "pending_retirements": 0,
+      "physical_residency_guaranteed": false
+    },
+    "kernels": {
+      "q4_decode": "reference",
+      "route_selection": "serial",
+      "attention_score_tiles": "full",
+      "policy": "candidate",
+      "token_tile": 4,
+      "affine_rows": 1,
+      "q8_decode_rows": 2,
+      "gate_pair": false,
+      "gdn": "original",
+      "gdn_rows": 4,
+      "gdn_block": 8,
+      "shape_table": null,
+      "operator_capture": "",
+      "capture_filter": {
+        "phase": "",
+        "operator": "",
+        "layer": -2
+      },
+      "profile": false,
+      "profile_decode_only": false,
+      "counter_profile": false,
+      "automatic_rules_promoted": false
+    },
+    "kernel_dispatches": {
+      "q8_mv_packed_r2_w8": 48,
+      "q8_mm_t4": 16,
+      "q8_mv_packed_r2_w4": 16,
+      "q4_mm": 36,
+      "q4_mm_t4": 9
+    },
+    "cpu_encode_ns": 17789378,
+    "cpu_gpu_wait_ns": 155734582,
+    "gpu_command_ns": 108255149,
+    "allocation_count": 254,
+    "scratch_reuses": 0,
+    "dispatches": 125,
+    "submissions": 125,
+    "waits": 125
+  },
+  "after": {
+    "physical_footprint_bytes": 160008192,
+    "resident_bytes": 161611776,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 11590,
+    "pageins": 980,
+    "physical_footprint_peak_bytes": 163907584,
+    "resident_peak_bytes": 164446208,
+    "system_swap_used_bytes": 1876819968,
+    "reclaimable_bytes": 10303569920
+  },
+  "after_destroy": {
+    "physical_footprint_bytes": 139692032,
+    "resident_bytes": 158547968,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 11592,
+    "pageins": 980,
+    "physical_footprint_peak_bytes": 163907584,
+    "resident_peak_bytes": 164446208,
+    "system_swap_used_bytes": 1876819968,
+    "reclaimable_bytes": 10308042752
+  },
+  "host_after": {
+    "monotonic_ns": 5127356335230500,
+    "thermal_state": 0,
+    "low_power_mode": true,
+    "power_source": "Battery Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  }
+}

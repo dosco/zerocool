@@ -1,0 +1,30 @@
+{
+  "kind": "block_gdn_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": false,
+  "recorded_status": "failed",
+  "source_seal_sha256": "cdec829eb2a36521293abdd75490d39a9c0122d9e57a520744d1f9ce1beb24db",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 197,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/build_block_gdn.py",
+        "sha256": "42287486a3d42b2bbd68f127b0f8480a149c2b7783dbe82518b371d0cbee7c02",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-gdn/screen-sources/scripts/qwen/build_block_gdn.py"
+      },
+      {
+        "original": "scripts/qwen/screen_block_gdn.py",
+        "sha256": "5710d8a95c0cf4e622bf185235e88f82fe24dfea006e812e442d03b2178703ad",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-gdn/screen-sources/scripts/qwen/screen_block_gdn.py"
+      },
+      {
+        "original": "scripts/qwen/test_block_gdn.py",
+        "sha256": "216b46abd05828f596ef46c3502dbf0baef3bde574803359cf25b98c399ebb4e",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-gdn/screen-sources/scripts/qwen/test_block_gdn.py"
+      }
+    ]
+  },
+  "production_promoted": false
+}

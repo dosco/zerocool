@@ -1,0 +1,416 @@
+{
+  "build_sha256": "abe129fa9e1650d125042ad70b69e249c36fe53fbd11e663712a157c42b994c3",
+  "source": "docs/benchmarks/2026-09-16-mtp-expert-scratch/validation-02/case-0-pair-0-off.json",
+  "source_sha256": "2bdd04097bd493578802a9249d74b620e282e4a3d396eda200d7356a917524fc",
+  "checks": [
+    {
+      "source": "docs/benchmarks/2026-09-16-mtp-ngram-init/fixture-01",
+      "seal_sha256": "8aaa2bba8b725cb4ace7a3a1b6dcae2108f32ea33a6b034bfba4184101eacf34",
+      "status": "fixture_validated",
+      "complete": true,
+      "seal_valid": true
+    },
+    {
+      "source": "docs/benchmarks/2026-09-16-mtp-ngram-init/validation-01",
+      "seal_sha256": "c939e0511e90be2436c50b4f1cc1677f3a642cd684072cc8007a939a1562a52e",
+      "status": "resource_blocked",
+      "complete": false,
+      "seal_valid": true,
+      "raw_sha256": "aaac40d223691ba4a07105f7dc293ed24264d6ca2bde161555024ac8b42b51dc",
+      "exact_fields": {
+        "input_sha256": true,
+        "admission": true,
+        "prime_logits_sha256": true,
+        "row_logits_sha256": true,
+        "committed_token_ids": true,
+        "final_target_state": true,
+        "final_draft_state": true,
+        "boundaries": true,
+        "next_id": true,
+        "stop_reason": true
+      },
+      "cache_counters_exact": true
+    },
+    {
+      "source": "docs/benchmarks/2026-09-16-mtp-ngram-init/validation-02",
+      "seal_sha256": "ca65d19759a8bbe3c3de7d03eb2fca9b13e2739a6ac8955cefcd8f41f8d2c664",
+      "status": "resource_blocked",
+      "complete": false,
+      "seal_valid": true,
+      "raw_sha256": "1713766766a2c7412899832a6fe9687591831577817cdb543ad484a9abec2d69",
+      "exact_fields": {
+        "input_sha256": true,
+        "admission": true,
+        "prime_logits_sha256": true,
+        "row_logits_sha256": true,
+        "committed_token_ids": true,
+        "final_target_state": true,
+        "final_draft_state": true,
+        "boundaries": true,
+        "next_id": true,
+        "stop_reason": true
+      },
+      "cache_counters_exact": true
+    },
+    {
+      "source": "docs/benchmarks/2026-09-16-mtp-ngram-init/memory-01",
+      "seal_sha256": "8386bc5219da5635cfed218ce3ddca5e527325ce35e8e31f8f0a438fad2578b5",
+      "status": "memory_captured",
+      "complete": true,
+      "seal_valid": true
+    }
+  ],
+  "memory_map": {
+    "source": "docs/benchmarks/2026-09-16-mtp-ngram-init/memory-01/vmmap.txt",
+    "sha256": "91be5d3a21d0521e31f716875f6d16d73a323e87e2500b31ddab232f08e08b67",
+    "page_bytes": 16384,
+    "categories": {
+      "Activity Tracing": {
+        "virtual_bytes": 262144,
+        "resident_bytes": 32768,
+        "dirty_bytes": 32768,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 32768,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "Dispatch continuations": {
+        "virtual_bytes": 67108864,
+        "resident_bytes": 131072,
+        "dirty_bytes": 131072,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "IOAccelerator": {
+        "virtual_bytes": 753664,
+        "resident_bytes": 753664,
+        "dirty_bytes": 753664,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 16
+      },
+      "IOAccelerator (graphics)": {
+        "virtual_bytes": 10217259008,
+        "resident_bytes": 10217259008,
+        "dirty_bytes": 10217259008,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 10217259008,
+        "empty_bytes": 0,
+        "regions": 3744
+      },
+      "IOKit": {
+        "virtual_bytes": 65536,
+        "resident_bytes": 65536,
+        "dirty_bytes": 65536,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 16384,
+        "empty_bytes": 0,
+        "regions": 4
+      },
+      "Kernel Alloc Once": {
+        "virtual_bytes": 32768,
+        "resident_bytes": 16384,
+        "dirty_bytes": 16384,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "MALLOC guard page": {
+        "virtual_bytes": 98304,
+        "resident_bytes": 0,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 6
+      },
+      "MALLOC metadata": {
+        "virtual_bytes": 147456,
+        "resident_bytes": 147456,
+        "dirty_bytes": 147456,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 6
+      },
+      "MALLOC_LARGE": {
+        "virtual_bytes": 51920896,
+        "resident_bytes": 376832,
+        "dirty_bytes": 376832,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "MALLOC_LARGE metadata": {
+        "virtual_bytes": 16384,
+        "resident_bytes": 16384,
+        "dirty_bytes": 16384,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "MALLOC_MEDIUM": {
+        "virtual_bytes": 536870912,
+        "resident_bytes": 5570560,
+        "dirty_bytes": 5570560,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 4
+      },
+      "MALLOC_SMALL": {
+        "virtual_bytes": 50331648,
+        "resident_bytes": 1982464,
+        "dirty_bytes": 1982464,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 6
+      },
+      "MALLOC_SMALL (empty)": {
+        "virtual_bytes": 16777216,
+        "resident_bytes": 81920,
+        "dirty_bytes": 81920,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 2
+      },
+      "MALLOC_TINY": {
+        "virtual_bytes": 12582912,
+        "resident_bytes": 6307840,
+        "dirty_bytes": 6307840,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 12
+      },
+      "STACK GUARD": {
+        "virtual_bytes": 58900480,
+        "resident_bytes": 0,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 11
+      },
+      "Stack": {
+        "virtual_bytes": 13942784,
+        "resident_bytes": 311296,
+        "dirty_bytes": 311296,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 11
+      },
+      "__AUTH": {
+        "virtual_bytes": 859013,
+        "resident_bytes": 308347,
+        "dirty_bytes": 182518,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 163
+      },
+      "__AUTH_CONST": {
+        "virtual_bytes": 13583483,
+        "resident_bytes": 4658299,
+        "dirty_bytes": 98304,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 297
+      },
+      "__DATA": {
+        "virtual_bytes": 3312026,
+        "resident_bytes": 1733919,
+        "dirty_bytes": 630784,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 276
+      },
+      "__DATA_CONST": {
+        "virtual_bytes": 11265311,
+        "resident_bytes": 3487334,
+        "dirty_bytes": 34734,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 298
+      },
+      "__DATA_DIRTY": {
+        "virtual_bytes": 465469,
+        "resident_bytes": 239698,
+        "dirty_bytes": 239370,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 89
+      },
+      "__FONT_DATA": {
+        "virtual_bytes": 2294,
+        "resident_bytes": 0,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "__LINKEDIT": {
+        "virtual_bytes": 648757248,
+        "resident_bytes": 9601024,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 3
+      },
+      "__OBJC_RO": {
+        "virtual_bytes": 64370606,
+        "resident_bytes": 21761556,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "__OBJC_RW": {
+        "virtual_bytes": 2453668,
+        "resident_bytes": 487588,
+        "dirty_bytes": 45220,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "__TEXT": {
+        "virtual_bytes": 247910400,
+        "resident_bytes": 141004800,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 307
+      },
+      "__TPRO_CONST": {
+        "virtual_bytes": 131236,
+        "resident_bytes": 49152,
+        "dirty_bytes": 49152,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 2
+      },
+      "mapped file": {
+        "virtual_bytes": 303939584,
+        "resident_bytes": 2048000,
+        "dirty_bytes": 0,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 8
+      },
+      "owned unmapped memory": {
+        "virtual_bytes": 16384,
+        "resident_bytes": 0,
+        "dirty_bytes": 0,
+        "swapped_bytes": 16384,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "page table in kernel": {
+        "virtual_bytes": 5493555,
+        "resident_bytes": 5493555,
+        "dirty_bytes": 5493555,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      },
+      "shared memory": {
+        "virtual_bytes": 753664,
+        "resident_bytes": 212992,
+        "dirty_bytes": 212992,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 13
+      },
+      "unused but dirty shlib __DATA": {
+        "virtual_bytes": 368148,
+        "resident_bytes": 286228,
+        "dirty_bytes": 260014,
+        "swapped_bytes": 0,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 98
+      }
+    },
+    "total": {
+      "virtual_bytes": 12330752901,
+      "resident_bytes": 10424425677,
+      "dirty_bytes": 10240299827,
+      "swapped_bytes": 16384,
+      "volatile_bytes": 0,
+      "nonvolatile_bytes": 10217308160,
+      "empty_bytes": 0,
+      "regions": 5386
+    },
+    "swapped_categories": {
+      "owned unmapped memory": {
+        "virtual_bytes": 16384,
+        "resident_bytes": 0,
+        "dirty_bytes": 0,
+        "swapped_bytes": 16384,
+        "volatile_bytes": 0,
+        "nonvolatile_bytes": 0,
+        "empty_bytes": 0,
+        "regions": 1
+      }
+    },
+    "allocation_ownership_identified": false,
+    "performance_measurement": false
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

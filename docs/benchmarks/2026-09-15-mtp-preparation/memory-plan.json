@@ -1,0 +1,19 @@
+{
+  "kind": "qwen_mtp_combined_budget_v1",
+  "native_allocation_measured": false,
+  "target_budget_bytes": 12884901888,
+  "target_plan_bytes": 10870560256,
+  "draft_plan_bytes": 1641506816,
+  "combined_bytes": 12512067072,
+  "remaining_bytes": 372834816,
+  "expert_slots": 1072,
+  "cache_shrink_required_by_plan": false,
+  "sidecar_prepared_bytes": 1515716608,
+  "target_source": "docs/benchmarks/2026-09-15-perfect-draft/screen-01/validate-1.json",
+  "target_source_sha256": "ebc42c5755989beb5e725ed0cb81d004ff43d03c0b05baf20e40217e219051cb",
+  "limitations": [
+    "The target source is memory disturbed serial validation; only its declared allocation plan is reused.",
+    "Draft state and scratch are allowances, not measured allocations from an implemented MTP forward pass.",
+    "The original verifier performance gate remains incomplete. Fits on paper does not establish clean memory or speed."
+  ]
+}

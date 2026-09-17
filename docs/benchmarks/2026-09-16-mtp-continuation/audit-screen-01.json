@@ -1,0 +1,160 @@
+{
+  "kind": "mtp_continuation_screen_audit_v1",
+  "passed": true,
+  "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01",
+  "source_seal_sha256": "63fe586117570c88c30904da60ee59da125bb7cd83a25ed19e33884a0b748ad8",
+  "recorded_complete": false,
+  "recorded_status": "resource_blocked",
+  "reconstructed_samples": [
+    {
+      "case": 0,
+      "name": "merge_intervals",
+      "mode": "serial",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01/case-0-serial.json",
+      "sha256": "a64b877f11eec25560f31ce070c49ee818638ff5fd815f8ec41560a534229c6e",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10491122880,
+      "tokens_per_second": 4.117266526670976,
+      "generated_tokens": 128,
+      "proposed_tokens": 0,
+      "accepted_proposals": 0,
+      "acceptance_rate": null,
+      "mean_committed_per_cycle": 1.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 241.9780631796875,
+        "recovery": 0.00014840625,
+        "wall": 242.8795885625
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 0,
+      "name": "merge_intervals",
+      "mode": "fast-timing",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01/case-0-fast-timing.json",
+      "sha256": "9a290cc469d4f104597be54f3a7f1217d77fb6829d67bc8e4eaacf459df9b938",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10490385472,
+      "tokens_per_second": 4.403844300279601,
+      "generated_tokens": 128,
+      "proposed_tokens": 105,
+      "accepted_proposals": 91,
+      "acceptance_rate": 0.8666666666666667,
+      "mean_committed_per_cycle": 3.4594594594594597,
+      "rejected_cycles": 7,
+      "component_ms_per_token": {
+        "draft": 9.4659886328125,
+        "verify": 199.3119837265625,
+        "recovery": 16.6811940234375,
+        "wall": 227.0743313828125
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 1,
+      "name": "lru_cache",
+      "mode": "fast-timing",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01/case-1-fast-timing.json",
+      "sha256": "1dd1431106eef1394bb06f0f925b4d0babf19827da61f9f8207ba2a8e5323816",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10492007488,
+      "tokens_per_second": 3.198707099303706,
+      "generated_tokens": 128,
+      "proposed_tokens": 126,
+      "accepted_proposals": 84,
+      "acceptance_rate": 0.6666666666666666,
+      "mean_committed_per_cycle": 2.909090909090909,
+      "rejected_cycles": 22,
+      "component_ms_per_token": {
+        "draft": 11.5016344140625,
+        "verify": 245.686569671875,
+        "recovery": 53.5618776484375,
+        "wall": 312.6263108671875
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 1,
+      "name": "lru_cache",
+      "mode": "serial",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01/case-1-serial.json",
+      "sha256": "ec8b963423c1b6621fb12e35773d5dcbf04f044b16c00be19fd9930c8a6cdc4e",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10489009408,
+      "tokens_per_second": 4.062916236047538,
+      "generated_tokens": 128,
+      "proposed_tokens": 0,
+      "accepted_proposals": 0,
+      "acceptance_rate": null,
+      "mean_committed_per_cycle": 1.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 245.2494629296875,
+        "recovery": 0.0001474453125,
+        "wall": 246.12862828125
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    },
+    {
+      "case": 2,
+      "name": "retry_backoff",
+      "mode": "serial",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01/case-2-serial.json",
+      "sha256": "06b5404ae1b1e4800179e3070c4da39d3b36394b071db148bfb745eec3b33c58",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10489517184,
+      "tokens_per_second": 3.885246080460681,
+      "generated_tokens": 128,
+      "proposed_tokens": 0,
+      "accepted_proposals": 0,
+      "acceptance_rate": null,
+      "mean_committed_per_cycle": 1.0,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 256.49428284375,
+        "recovery": 0.000148765625,
+        "wall": 257.3839543984375
+      },
+      "completed_requested_length": true,
+      "stop_reason": "length"
+    }
+  ],
+  "reconstructed_pairs": [
+    {
+      "case": 0,
+      "name": "merge_intervals",
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 0.9349255436686466
+    },
+    {
+      "case": 1,
+      "name": "lru_cache",
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 1.270174514237941
+    }
+  ],
+  "completed_requested_lengths": true,
+  "all_observed_memory_and_host_clean": true,
+  "whole_suite_complete": false,
+  "paired_confidence_qualified": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Two complete single timing pairs; TypeScript has only a serial observation before thermal preflight stopped the run.",
+    "All pairs are directional screens, not confidence-bounded estimates.",
+    "No 256-token, long-context, retained-session or sustained quality qualification."
+  ]
+}

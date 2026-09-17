@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "recorded_status": "resource_blocked",
+  "recorded_complete": false,
+  "numerical_equality_verified": true,
+  "validation_sources": [
+    {
+      "mode": "validate",
+      "source": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/validate.json",
+      "sha256": "436b6fdbfa9d37b2e57e12a101ae9ad92ab257e62c88ce23a5062899aa531b55",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10546419008,
+      "max_observed_compressed_peak_bytes": 0,
+      "decompressions": 0,
+      "observed_swap_range_bytes": 0
+    },
+    {
+      "mode": "fast-validate",
+      "source": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/fast-validate.json",
+      "sha256": "658a038b62a39f789206fd005e6af725e6fff328ca54d77bf9c0116832d2b071",
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10547565824,
+      "max_observed_compressed_peak_bytes": 79921152,
+      "decompressions": 190,
+      "observed_swap_range_bytes": 0
+    }
+  ],
+  "timing_samples": [],
+  "timing_pairs_numerically_equal": 0,
+  "usable_timing_pairs": 0,
+  "timing_qualified": false,
+  "paired_confidence_qualified": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build_files": 44
+}

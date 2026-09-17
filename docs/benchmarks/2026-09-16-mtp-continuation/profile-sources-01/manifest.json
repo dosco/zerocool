@@ -1,0 +1,5 @@
+{
+  "scripts/qwen/build_mtp_target_profile.py": "48a5793abbdcacc5f9fecf3ae54be2d3b20fa44d1c59268df872f2c9f6b6f51c",
+  "scripts/qwen/test_mtp_target_profile.py": "d43279c7c72c99d51f4ed2b71d0464d20e283d24827eb082fa9f5936d675fb31",
+  "scripts/qwen/capture_mtp_target_profile.py": "af73ef443d0a458af77995d06051bb9b2a05d249fbdfbc5a671954c8707a68da"
+}

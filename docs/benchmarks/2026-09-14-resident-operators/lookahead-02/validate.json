@@ -1,0 +1,640 @@
+{
+  "validation" : true,
+  "shader_sha256" : "37bcea0d282003274896ebcd0d72e206b7f78db47ec04c10192a2981b6c77288",
+  "memory_before" : {
+    "system_swap_used_bytes" : 5869797376,
+    "physical_footprint_bytes" : 235849728,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "normal_request_latency_qualified" : false,
+  "production_promoted" : false,
+  "limitations" : [
+    "Old captured activations; current reference shader, original producer identity retained.",
+    "Six resident matrices; repeated dispatches reuse weight caches. No full-model state or SSD work.",
+    "One lookahead candidate. Group size and arithmetic fixed. No normal-request speed claim."
+  ],
+  "dispatch_repeats" : 1,
+  "cases" : [
+    {
+      "fp32_output_sha256" : "401d135c1d4c15b86259444e29d2cc56ff5cccc49caeae71bf5b2ddcc8bfd099",
+      "K" : 2560,
+      "exact" : true,
+      "N" : 10240,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 26214400,
+              "file" : "0-w.bin",
+              "sha256" : "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+            },
+            "b" : {
+              "bytes" : 819200,
+              "file" : "0-b.bin",
+              "sha256" : "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+            },
+            "s" : {
+              "bytes" : 819200,
+              "file" : "0-s.bin",
+              "sha256" : "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+            },
+            "x" : {
+              "bytes" : 10240,
+              "file" : "0-x.bin",
+              "sha256" : "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 10240,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 2560,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 0,
+            "offset" : 72,
+            "stage" : "gdn"
+          }
+        }
+      },
+      "width" : 8
+    },
+    {
+      "fp32_output_sha256" : "a39e04ba7723b1e440e18f86ac50c25f0d9bb33af3bca0fa902add6bd8e96d8c",
+      "K" : 2560,
+      "exact" : true,
+      "N" : 6144,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 15728640,
+              "file" : "1-w.bin",
+              "sha256" : "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+            },
+            "b" : {
+              "bytes" : 491520,
+              "file" : "1-b.bin",
+              "sha256" : "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+            },
+            "s" : {
+              "bytes" : 491520,
+              "file" : "1-s.bin",
+              "sha256" : "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+            },
+            "x" : {
+              "bytes" : 10240,
+              "file" : "1-x.bin",
+              "sha256" : "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 6144,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 2560,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 0,
+            "offset" : 72,
+            "stage" : "gdn"
+          }
+        }
+      },
+      "width" : 8
+    },
+    {
+      "fp32_output_sha256" : "71adc423e1ce866dce28e5c8713254d019d5024f2a7a550e6fa26c2bc4a05653",
+      "K" : 6144,
+      "exact" : true,
+      "N" : 2560,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 15728640,
+              "file" : "2-w.bin",
+              "sha256" : "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+            },
+            "b" : {
+              "bytes" : 491520,
+              "file" : "2-b.bin",
+              "sha256" : "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+            },
+            "s" : {
+              "bytes" : 491520,
+              "file" : "2-s.bin",
+              "sha256" : "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+            },
+            "x" : {
+              "bytes" : 24576,
+              "file" : "2-x.bin",
+              "sha256" : "5fa69acdb6b03e26ef60c68012108c9af3f62f4db51ae9f5e2616e6d34481347"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 2560,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 6144,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 0,
+            "offset" : 72,
+            "stage" : "gdn"
+          }
+        }
+      },
+      "width" : 8
+    },
+    {
+      "fp32_output_sha256" : "16a3a787bd11da8ff5a58095f254bf5295fa5da0b1b30a70d128e20960f71ae8",
+      "K" : 2560,
+      "exact" : true,
+      "N" : 12288,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 31457280,
+              "file" : "0-w.bin",
+              "sha256" : "b6beab19fefc4dab921a5ca22970e3b522de1c729d11309be1f6db1f939e7414"
+            },
+            "b" : {
+              "bytes" : 983040,
+              "file" : "0-b.bin",
+              "sha256" : "ac4a8db368be9ccb36c6f62ab0ed0ab572a1a723363e3a747ba61af3e363ee6f"
+            },
+            "s" : {
+              "bytes" : 983040,
+              "file" : "0-s.bin",
+              "sha256" : "940a7d21358bdb9ca7021e12db7788c5b42774d01b6b371624a8f079a437c290"
+            },
+            "x" : {
+              "bytes" : 10240,
+              "file" : "0-x.bin",
+              "sha256" : "5d3aa7ca43f484cd39152bc3f42368b1f00ccbe2af3171e787c0c67910b0bc76"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 12288,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 2560,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 31,
+            "offset" : 72,
+            "stage" : "attention"
+          }
+        }
+      },
+      "width" : 8
+    },
+    {
+      "fp32_output_sha256" : "d07416c308c5b719da261529a9c96a8843eab5b8071769768c5d4c0865fd612d",
+      "K" : 2560,
+      "exact" : true,
+      "N" : 512,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 1310720,
+              "file" : "1-w.bin",
+              "sha256" : "55970f121c05edba25fc60abae6e28747a8c332d0d98a786485fcba03d925c3d"
+            },
+            "b" : {
+              "bytes" : 40960,
+              "file" : "1-b.bin",
+              "sha256" : "caf9852475e678c791f1c9006bb8e0637e0800a9c01578857ec799729920f726"
+            },
+            "s" : {
+              "bytes" : 40960,
+              "file" : "1-s.bin",
+              "sha256" : "4f19315f8bc4c935de1ecd358fc35ca8147cdd5343232efe1a70a7c42a1c7c26"
+            },
+            "x" : {
+              "bytes" : 10240,
+              "file" : "1-x.bin",
+              "sha256" : "5d3aa7ca43f484cd39152bc3f42368b1f00ccbe2af3171e787c0c67910b0bc76"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 512,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 2560,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 31,
+            "offset" : 72,
+            "stage" : "attention"
+          }
+        }
+      },
+      "width" : 8
+    },
+    {
+      "fp32_output_sha256" : "e2ff10739a8d2cbb539cdcb616bb8d5fb61dfd2b954220db9c159d4e26aecd44",
+      "K" : 6144,
+      "exact" : true,
+      "N" : 2560,
+      "origin" : {
+        "manifest" : "1ddec378e0a2550eda51c351e5e9315863c15b61773617c457b4d8e2f8df9189",
+        "case" : {
+          "phase" : "decode",
+          "tensors" : {
+            "w" : {
+              "bytes" : 15728640,
+              "file" : "2-w.bin",
+              "sha256" : "ec963d016bf856c969517177b9ee0fe89b59c68c5f2c9169609e081d291a2d76"
+            },
+            "b" : {
+              "bytes" : 491520,
+              "file" : "2-b.bin",
+              "sha256" : "1f53fac70a94e75a0b125dc23f881bf87d994c8502a3202e71fe737c2acc627a"
+            },
+            "s" : {
+              "bytes" : 491520,
+              "file" : "2-s.bin",
+              "sha256" : "d9a4a7965af852b19167ea1facb0a2a798d9564008df84469d71fbd974300f4f"
+            },
+            "x" : {
+              "bytes" : 24576,
+              "file" : "2-x.bin",
+              "sha256" : "c566f232a42b57074cfa6e138d068aaff5d7cd436e6b9e024294a32e0b8381c9"
+            }
+          },
+          "matrix" : {
+            "fused" : false,
+            "N" : 2560,
+            "rows" : 1,
+            "bits" : 8,
+            "K" : 6144,
+            "group" : 64,
+            "gathered" : false
+          },
+          "context" : {
+            "tokens" : 1,
+            "layer" : 31,
+            "offset" : 72,
+            "stage" : "attention"
+          }
+        }
+      },
+      "width" : 8
+    }
+  ],
+  "pairs" : [
+    {
+      "pair" : 0,
+      "case" : 0,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 3710.7089999999998,
+            "gpu_us" : 1482.9589053988457
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 2511.7919999999999,
+            "gpu_us" : 1921.4581698179245
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 1,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 1824.2080000000001,
+            "gpu_us" : 751.04180723428726
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 4194.4170000000004,
+            "gpu_us" : 1005.8749467134476
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256870400,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 2,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256886784,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 3779.4169999999999,
+            "gpu_us" : 815.33379852771759
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256624640,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256886784,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 2986.125,
+            "gpu_us" : 1643.6250880360603
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256886784,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 3,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256886784,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 4671,
+            "gpu_us" : 1784.0005457401276
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256886784,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256903168,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 5442.2089999999998,
+            "gpu_us" : 2540.5418127775192
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256903168,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 4,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256903168,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 2824.5,
+            "gpu_us" : 150.74945986270905
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256657408,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 1855.7909999999999,
+            "gpu_us" : 192.37492233514786
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 5,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 3520.9589999999998,
+            "gpu_us" : 1285.2493673563004
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256657408,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 3084.7919999999999,
+            "gpu_us" : 2029.3332636356354
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "case" : 6,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 7722.25,
+            "gpu_us" : 5737.8336787223816
+          },
+          "candidate" : false,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256657408,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "wall_us" : 8698.0419999999995,
+            "gpu_us" : 5952.3750096559525
+          },
+          "candidate" : true,
+          "memory_after" : {
+            "system_swap_used_bytes" : 5869797376,
+            "physical_footprint_bytes" : 256919552,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          }
+        }
+      ]
+    }
+  ],
+  "memory_after" : {
+    "system_swap_used_bytes" : 5869797376,
+    "physical_footprint_bytes" : 256657408,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "complete" : true,
+  "kind" : "q8_lookahead_probe_v1",
+  "device" : "Apple M1 Pro",
+  "max_shared_buffer_bytes" : 113233920
+}

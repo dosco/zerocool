@@ -1,0 +1,17 @@
+{
+  "kind": "perfect_draft_capacity_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": true,
+  "status": "verifier_capacity_below_floor",
+  "source_seal_sha256": "5eb58cc2492dbe2a0452b91c1ab17000f847594b7b4caf619b9b18d142ebdb0e",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 184,
+    "archived_tooling": []
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "speculative_decoding_qualified": false,
+  "actual_draft_measured": false
+}

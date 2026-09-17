@@ -1,0 +1,15 @@
+{
+  "summary.json": "ffb8dd3c91a06c1d00a92ca0667e6569a66df3711a0c020d01925b546cfbf915",
+  "metadata-replay-inventory.json": "df0aeea953841bc08a4857db06945a58baa247950828e81a6d5e0d84eeda6be8",
+  "sources/mtp-models.lock.json": "e0076b86441bebc2319f97a63ac2659466e77dbebe9a2ffcad723fcf05becf60",
+  "sources/scripts/qwen/build_mtp_check.py": "b8738499146cc0f1c7c1a38af2f996e989eefa2c7e3b3e686e5ec8288e8c7942",
+  "sources/scripts/qwen/verify_mtp.py": "c5b71574859523b018964c6c6847bef4cbd5197257fb5aa27ea653fc29f946d7",
+  "sources/scripts/qwen/prepare_storage.py": "a5a1689fe7f2646e9af83aa960f421753961f612970717aed2e044a9a3c24c57",
+  "sources/scripts/qwen/qualification_evidence.py": "a26e1f257d9d2540c34762cf9dafaf05d6095b506ee45fef29280ab7863490fd",
+  "sources/scripts/qwen/mtp_source.py": "f37e2b2c0eb5ad8d90b2293bd27bceb9b3c94da250cfc6895cb967abd2f66c5c",
+  "sources/scripts/qwen/prepare_mtp.py": "84f4f84115529eb5521dc5d930bf87405698e9d06b1a4ab6b9dc36bd7b240da4",
+  "sources/scripts/qwen/check_mtp.cpp": "ec2411b74ee1ef01e2288f5c4a212743f2870f407c23d04d4b2e78d74667d6ff",
+  "sources/scripts/qwen/build_identity.py": "6e2346aebfa2add4b6f9eadaaeb02b4dda3c32b95c860695a5ef70940802e37b",
+  "sources/scripts/qwen/verify_checkpoint.py": "46892cf53bfdbada8357fb13596c1c42c4e59cb779ec3b77aa12273d9e7a7f0b",
+  "sources/scripts/qwen/test_mtp.py": "ec0c84ee0765224b26ce11a52fd11dd6668d0ffe76731ef3ea8759892895aca8"
+}

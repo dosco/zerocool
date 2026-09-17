@@ -1,0 +1,5287 @@
+{
+  "kind": "reference_diagnostic_opportunities_v1",
+  "complete": true,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "device": "Apple M1 Pro",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "model_id": "qwen3.8-flash-next:mixed-4_8bit",
+    "memory_plan": {
+      "limit_bytes": 12884901888,
+      "resident_bytes": 5362515968,
+      "session_bytes": 571326464,
+      "scratch_bytes": 536870912,
+      "kernel_scratch_bytes": 0,
+      "panel_tokens": 512,
+      "panel_scratch_bytes": 155189248,
+      "runtime_control_bytes": 16384,
+      "pipeline_scratch_bytes": 0,
+      "snapshot_bytes": 0,
+      "ngram_bytes": 67108864,
+      "reserve_bytes": 1073741824,
+      "expert_bytes": 2968256512,
+      "expert_slots": 1072,
+      "planned_bytes": 10735026176
+    },
+    "execution": {
+      "cache_policy": "clock",
+      "sparse_selection": "cpu",
+      "residency": "core-cache",
+      "decode_path": "reference",
+      "expert_tail": "wait",
+      "decode_scratch": "reuse",
+      "prefill_pipeline": "serial",
+      "phase_memory": "fixed",
+      "cached_token_replay": false
+    },
+    "runtime": {
+      "completion_pipeline": true,
+      "ready_group": 4,
+      "chunk_tokens": 128,
+      "io_workers": 8,
+      "short_append_tokens": 32
+    },
+    "kernels": {
+      "route_selection": "simd",
+      "attention_score_tiles": "full",
+      "policy": "candidate",
+      "token_tile": 1,
+      "affine_rows": 1,
+      "q8_decode_rows": 2,
+      "gate_pair": false,
+      "gdn": "original",
+      "gdn_rows": 4,
+      "gdn_block": 8,
+      "shape_table": null,
+      "operator_capture": "",
+      "capture_filter": {
+        "phase": "",
+        "operator": "",
+        "layer": -2
+      },
+      "profile": true,
+      "profile_decode_only": true,
+      "counter_profile": false,
+      "automatic_rules_promoted": false
+    }
+  },
+  "phases": [
+    {
+      "name": "coding_routes_32",
+      "observed_forward_ms": 274.05691675,
+      "distance_to_200ms": 74.05691675000003,
+      "exclusive_buckets": [
+        {
+          "category": "gpu_active",
+          "ms_per_token": 126.5099758125,
+          "fraction_of_forward": 0.461619350143623
+        },
+        {
+          "category": "gpu_idle_pending_read",
+          "ms_per_token": 58.3688413125,
+          "fraction_of_forward": 0.212980726794592
+        },
+        {
+          "category": "gpu_idle_other",
+          "ms_per_token": 37.7779178125,
+          "fraction_of_forward": 0.1378469781405362
+        },
+        {
+          "category": "gpu_idle_submitted",
+          "ms_per_token": 30.116029,
+          "fraction_of_forward": 0.10988968772305215
+        },
+        {
+          "category": "gpu_idle_ready_expert",
+          "ms_per_token": 11.85856375,
+          "fraction_of_forward": 0.04327044137629852
+        },
+        {
+          "category": "gpu_idle_callback",
+          "ms_per_token": 9.4255890625,
+          "fraction_of_forward": 0.03439281582189806
+        }
+      ],
+      "gpu_command_classes": [
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 54.07641897909343,
+          "command_groups": 560,
+          "dispatches": 18080
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "gpu_command_ms_per_token": 27.76717476081103,
+          "command_groups": 4174,
+          "dispatches": 15543
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "gpu_command_ms_per_token": 20.390817371662706,
+          "command_groups": 706,
+          "dispatches": 9615
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 17.06964580807835,
+          "command_groups": 192,
+          "dispatches": 6720
+        },
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "gpu_command_ms_per_token": 5.171184835489839,
+          "command_groups": 16,
+          "dispatches": 160
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 1.4737501041963696,
+          "command_groups": 16,
+          "dispatches": 496
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "gpu_command_ms_per_token": 0.5609844229184091,
+          "command_groups": 62,
+          "dispatches": 186
+        }
+      ],
+      "layer_command_classes": [
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "layers": [
+            -1,
+            47
+          ],
+          "gpu_command_ms_per_token": 5.171184835489839,
+          "command_groups": 16,
+          "dispatches": 160
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            0,
+            1
+          ],
+          "gpu_command_ms_per_token": 1.9029401009902358,
+          "command_groups": 16,
+          "dispatches": 672
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            17,
+            18
+          ],
+          "gpu_command_ms_per_token": 1.6953539452515543,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            41,
+            42
+          ],
+          "gpu_command_ms_per_token": 1.6855702851898968,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            40,
+            41
+          ],
+          "gpu_command_ms_per_token": 1.681281253695488,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            43,
+            44
+          ],
+          "gpu_command_ms_per_token": 1.6791069647297263,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            36,
+            37
+          ],
+          "gpu_command_ms_per_token": 1.6676692757755518,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            39,
+            40
+          ],
+          "gpu_command_ms_per_token": 1.662830705754459,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            35,
+            36
+          ],
+          "gpu_command_ms_per_token": 1.6550495638512075,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            37,
+            38
+          ],
+          "gpu_command_ms_per_token": 1.6288593178614974,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            19,
+            20
+          ],
+          "gpu_command_ms_per_token": 1.6055625746957958,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            3,
+            4
+          ],
+          "gpu_command_ms_per_token": 1.593112072441727,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            45,
+            46
+          ],
+          "gpu_command_ms_per_token": 1.5786223812028766,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            32,
+            33
+          ],
+          "gpu_command_ms_per_token": 1.5785052673891187,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            18,
+            19
+          ],
+          "gpu_command_ms_per_token": 1.5661769430153072,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            44,
+            45
+          ],
+          "gpu_command_ms_per_token": 1.5611068229191005,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            42,
+            43
+          ],
+          "gpu_command_ms_per_token": 1.5468437341041863,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            25,
+            26
+          ],
+          "gpu_command_ms_per_token": 1.5451067592948675,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            21,
+            22
+          ],
+          "gpu_command_ms_per_token": 1.5293958131223917,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            33,
+            34
+          ],
+          "gpu_command_ms_per_token": 1.529218687210232,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            29,
+            30
+          ],
+          "gpu_command_ms_per_token": 1.5214192681014538,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            27,
+            28
+          ],
+          "gpu_command_ms_per_token": 1.5177084133028984,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            31,
+            32
+          ],
+          "gpu_command_ms_per_token": 1.5167760429903865,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            46,
+            47
+          ],
+          "gpu_command_ms_per_token": 1.5070286463014781,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            28,
+            29
+          ],
+          "gpu_command_ms_per_token": 1.50190107524395,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            24,
+            25
+          ],
+          "gpu_command_ms_per_token": 1.4969842741265893,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            38,
+            39
+          ],
+          "gpu_command_ms_per_token": 1.4965730370022357,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            20,
+            21
+          ],
+          "gpu_command_ms_per_token": 1.480033912230283,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "layers": [
+            -1,
+            0
+          ],
+          "gpu_command_ms_per_token": 1.4737501041963696,
+          "command_groups": 16,
+          "dispatches": 496
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            2,
+            3
+          ],
+          "gpu_command_ms_per_token": 1.4630547375418246,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            9,
+            10
+          ],
+          "gpu_command_ms_per_token": 1.4611640363000333,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            12,
+            13
+          ],
+          "gpu_command_ms_per_token": 1.4599062269553542,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            15,
+            16
+          ],
+          "gpu_command_ms_per_token": 1.459028571844101,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            1,
+            2
+          ],
+          "gpu_command_ms_per_token": 1.45482033258304,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            16,
+            17
+          ],
+          "gpu_command_ms_per_token": 1.4515987713821232,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            5,
+            6
+          ],
+          "gpu_command_ms_per_token": 1.4435572666116059,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            23,
+            24
+          ],
+          "gpu_command_ms_per_token": 1.4364817179739475,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            8,
+            9
+          ],
+          "gpu_command_ms_per_token": 1.4332056744024158,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            22,
+            23
+          ],
+          "gpu_command_ms_per_token": 1.4290052931755781,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            7,
+            8
+          ],
+          "gpu_command_ms_per_token": 1.4265128411352634,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            4,
+            5
+          ],
+          "gpu_command_ms_per_token": 1.4190520159900188,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            11,
+            12
+          ],
+          "gpu_command_ms_per_token": 1.413851568941027,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            34,
+            35
+          ],
+          "gpu_command_ms_per_token": 1.4040209935046732,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            13,
+            14
+          ],
+          "gpu_command_ms_per_token": 1.403125177603215,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            30,
+            31
+          ],
+          "gpu_command_ms_per_token": 1.3951040455140173,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            26,
+            27
+          ],
+          "gpu_command_ms_per_token": 1.3473124708980322,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            14,
+            15
+          ],
+          "gpu_command_ms_per_token": 1.331916602794081,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            6,
+            7
+          ],
+          "gpu_command_ms_per_token": 1.3049558037891984,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            10,
+            11
+          ],
+          "gpu_command_ms_per_token": 1.2776535004377365,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.6942501640878618,
+          "command_groups": 120,
+          "dispatches": 414
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.6687762215733528,
+          "command_groups": 89,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.6639657076448202,
+          "command_groups": 96,
+          "dispatches": 333
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            46
+          ],
+          "gpu_command_ms_per_token": 0.6515421555377543,
+          "command_groups": 88,
+          "dispatches": 339
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.6444323807954788,
+          "command_groups": 94,
+          "dispatches": 348
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.63457025680691,
+          "command_groups": 97,
+          "dispatches": 348
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.6281250389292836,
+          "command_groups": 75,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.6198702612891793,
+          "command_groups": 77,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            47
+          ],
+          "gpu_command_ms_per_token": 0.6187682156451046,
+          "command_groups": 93,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.6181797361932695,
+          "command_groups": 83,
+          "dispatches": 321
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.6090229726396501,
+          "command_groups": 81,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.6080885650590062,
+          "command_groups": 81,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            45
+          ],
+          "gpu_command_ms_per_token": 0.6071479874663055,
+          "command_groups": 90,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            44
+          ],
+          "gpu_command_ms_per_token": 0.6057191058062017,
+          "command_groups": 87,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.6038143765181303,
+          "command_groups": 104,
+          "dispatches": 354
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            43
+          ],
+          "gpu_command_ms_per_token": 0.597755191847682,
+          "command_groups": 83,
+          "dispatches": 321
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.5942891584709287,
+          "command_groups": 79,
+          "dispatches": 300
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.5894710775464773,
+          "command_groups": 93,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.5876173381693661,
+          "command_groups": 83,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.5857268115505576,
+          "command_groups": 96,
+          "dispatches": 345
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.5795778706669807,
+          "command_groups": 84,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.5782812368124723,
+          "command_groups": 87,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.5763309309259057,
+          "command_groups": 97,
+          "dispatches": 342
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.5752471042796969,
+          "command_groups": 89,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.5734504084102809,
+          "command_groups": 80,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.5720027256757021,
+          "command_groups": 90,
+          "dispatches": 336
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.5706977681256831,
+          "command_groups": 91,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.5670313257724047,
+          "command_groups": 82,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.5620261654257774,
+          "command_groups": 89,
+          "dispatches": 339
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.5615626578219235,
+          "command_groups": 76,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.5597657291218638,
+          "command_groups": 76,
+          "dispatches": 309
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.5533048533834517,
+          "command_groups": 96,
+          "dispatches": 336
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.5532084032893181,
+          "command_groups": 79,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.5519533297047019,
+          "command_groups": 92,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.5422265967354178,
+          "command_groups": 87,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.541601562872529,
+          "command_groups": 83,
+          "dispatches": 306
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.5405496922321618,
+          "command_groups": 94,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.5386694683693349,
+          "command_groups": 82,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.5382292438298464,
+          "command_groups": 83,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.5341193173080683,
+          "command_groups": 85,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.5321743083186448,
+          "command_groups": 15,
+          "dispatches": 225
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.5260132602415979,
+          "command_groups": 75,
+          "dispatches": 309
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.5255130818113685,
+          "command_groups": 83,
+          "dispatches": 321
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.522643094882369,
+          "command_groups": 82,
+          "dispatches": 303
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.5220784223638475,
+          "command_groups": 86,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.5216586869210005,
+          "command_groups": 88,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.520632485859096,
+          "command_groups": 83,
+          "dispatches": 306
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.5190963274799287,
+          "command_groups": 78,
+          "dispatches": 309
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.5085702869109809,
+          "command_groups": 88,
+          "dispatches": 321
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.5052654887549579,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.48998958664014935,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.4889296251349151,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            45
+          ],
+          "gpu_command_ms_per_token": 0.4852344864048064,
+          "command_groups": 16,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.4820336471311748,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.4780807066708803,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.4756067064590752,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.4750443040393293,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            43
+          ],
+          "gpu_command_ms_per_token": 0.4734660033136606,
+          "command_groups": 15,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.47346361679956317,
+          "command_groups": 15,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.4674219526350498,
+          "command_groups": 15,
+          "dispatches": 216
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.462645897641778,
+          "command_groups": 15,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            44
+          ],
+          "gpu_command_ms_per_token": 0.46138541074469686,
+          "command_groups": 16,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            47
+          ],
+          "gpu_command_ms_per_token": 0.4525154363363981,
+          "command_groups": 16,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.44641405111178756,
+          "command_groups": 15,
+          "dispatches": 222
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.44220825657248497,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.4421354387886822,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.4420026671141386,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.4403931088745594,
+          "command_groups": 15,
+          "dispatches": 219
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.43853133684024215,
+          "command_groups": 15,
+          "dispatches": 216
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.43683062540367246,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.4336043493822217,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.43296359945088625,
+          "command_groups": 15,
+          "dispatches": 192
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.4307682975195348,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.41956244967877865,
+          "command_groups": 15,
+          "dispatches": 219
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            46
+          ],
+          "gpu_command_ms_per_token": 0.4195467918179929,
+          "command_groups": 15,
+          "dispatches": 186
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.41863019578158855,
+          "command_groups": 15,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.4177421797066927,
+          "command_groups": 15,
+          "dispatches": 216
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.4174141795374453,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.4143021651543677,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.40924997301772237,
+          "command_groups": 14,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.40671619353815913,
+          "command_groups": 15,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.405742262955755,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.40445831837132573,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.40136720053851604,
+          "command_groups": 15,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.4011354176327586,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.39290112908929586,
+          "command_groups": 15,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.38672389928251505,
+          "command_groups": 15,
+          "dispatches": 189
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.3788514877669513,
+          "command_groups": 14,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.37462235195562243,
+          "command_groups": 14,
+          "dispatches": 186
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.37298438837751746,
+          "command_groups": 14,
+          "dispatches": 180
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.36952365189790726,
+          "command_groups": 14,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.3551926929503679,
+          "command_groups": 14,
+          "dispatches": 183
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.3520650789141655,
+          "command_groups": 15,
+          "dispatches": 171
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.35033334279432893,
+          "command_groups": 14,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.3440415603108704,
+          "command_groups": 13,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.18860155250877142,
+          "command_groups": 7,
+          "dispatches": 87
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.08645054185763001,
+          "command_groups": 9,
+          "dispatches": 27
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.027143280021846294,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.022578169591724873,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.01927342964336276,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.01927342964336276,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.01904950477182865,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.019023427739739418,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.016348902136087418,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.01627608435228467,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.011151074431836605,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.011026044376194477,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.011026044376194477,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.011018186341971159,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.011002644896507263,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.010999967344105244,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.010835938155651093,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.01053122105076909,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.00833597732707858,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.008263043127954006,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.008247385267168283,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.008226546924561262,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.00822398578748107,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.00819528941065073,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.00819528941065073,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.00818487023934722,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.008179689757525921,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.008171889930963516,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.008171889930963516,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.008164090104401112,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.008164031896740198,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            46
+          ],
+          "gpu_command_ms_per_token": 0.008138013072311878,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.008135451935231686,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.008124974556267262,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.008119794074445963,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            43
+          ],
+          "gpu_command_ms_per_token": 0.008111936040222645,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.008101575076580048,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.008085917215794325,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.008085917215794325,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.008065078873187304,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.008062517736107111,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.008062517736107111,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.008054717909544706,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.008046859875321388,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.008031260222196579,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.008026021532714367,
+          "command_groups": 1,
+          "dispatches": 3
+        }
+      ]
+    },
+    {
+      "name": "append_128",
+      "observed_forward_ms": 297.7431118125,
+      "distance_to_200ms": 97.74311181249999,
+      "exclusive_buckets": [
+        {
+          "category": "gpu_active",
+          "ms_per_token": 145.438797375,
+          "fraction_of_forward": 0.4884707373737273
+        },
+        {
+          "category": "gpu_idle_pending_read",
+          "ms_per_token": 61.834351687499996,
+          "fraction_of_forward": 0.2076768503932323
+        },
+        {
+          "category": "gpu_idle_other",
+          "ms_per_token": 37.6387008125,
+          "fraction_of_forward": 0.1264133386105083
+        },
+        {
+          "category": "gpu_idle_submitted",
+          "ms_per_token": 31.1871210625,
+          "fraction_of_forward": 0.104745063194408
+        },
+        {
+          "category": "gpu_idle_ready_expert",
+          "ms_per_token": 11.958991125,
+          "fraction_of_forward": 0.040165466976549324
+        },
+        {
+          "category": "gpu_idle_callback",
+          "ms_per_token": 9.68514975,
+          "fraction_of_forward": 0.032528543451574805
+        }
+      ],
+      "gpu_command_classes": [
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 61.70125521020964,
+          "command_groups": 560,
+          "dispatches": 18080
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "gpu_command_ms_per_token": 33.226043509785086,
+          "command_groups": 4439,
+          "dispatches": 15939
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "gpu_command_ms_per_token": 22.410350968129933,
+          "command_groups": 690,
+          "dispatches": 9171
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 19.966130319517106,
+          "command_groups": 192,
+          "dispatches": 6720
+        },
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "gpu_command_ms_per_token": 5.717854248359799,
+          "command_groups": 16,
+          "dispatches": 160
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "gpu_command_ms_per_token": 1.5689113643020391,
+          "command_groups": 16,
+          "dispatches": 496
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "gpu_command_ms_per_token": 0.8482499979436398,
+          "command_groups": 78,
+          "dispatches": 234
+        }
+      ],
+      "layer_command_classes": [
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "layers": [
+            -1,
+            47
+          ],
+          "gpu_command_ms_per_token": 5.717854248359799,
+          "command_groups": 16,
+          "dispatches": 160
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            0,
+            1
+          ],
+          "gpu_command_ms_per_token": 2.0177161204628646,
+          "command_groups": 16,
+          "dispatches": 672
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            31,
+            32
+          ],
+          "gpu_command_ms_per_token": 1.9464816432446241,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            12,
+            13
+          ],
+          "gpu_command_ms_per_token": 1.9054192816838622,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            13,
+            14
+          ],
+          "gpu_command_ms_per_token": 1.9022656488232315,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            35,
+            36
+          ],
+          "gpu_command_ms_per_token": 1.8504063482396305,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            32,
+            33
+          ],
+          "gpu_command_ms_per_token": 1.8458464764989913,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            15,
+            16
+          ],
+          "gpu_command_ms_per_token": 1.8410964403301477,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            17,
+            18
+          ],
+          "gpu_command_ms_per_token": 1.8329582526348531,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            11,
+            12
+          ],
+          "gpu_command_ms_per_token": 1.8316953210160136,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            16,
+            17
+          ],
+          "gpu_command_ms_per_token": 1.815908879507333,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            30,
+            31
+          ],
+          "gpu_command_ms_per_token": 1.8109686789102852,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            33,
+            34
+          ],
+          "gpu_command_ms_per_token": 1.8096796702593565,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            25,
+            26
+          ],
+          "gpu_command_ms_per_token": 1.8070106161758304,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            36,
+            37
+          ],
+          "gpu_command_ms_per_token": 1.805882784537971,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            45,
+            46
+          ],
+          "gpu_command_ms_per_token": 1.80273677688092,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            27,
+            28
+          ],
+          "gpu_command_ms_per_token": 1.7935626674443483,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            29,
+            30
+          ],
+          "gpu_command_ms_per_token": 1.7734633875079453,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            24,
+            25
+          ],
+          "gpu_command_ms_per_token": 1.771981711499393,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            20,
+            21
+          ],
+          "gpu_command_ms_per_token": 1.76981498952955,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            40,
+            41
+          ],
+          "gpu_command_ms_per_token": 1.7698020674288273,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            37,
+            38
+          ],
+          "gpu_command_ms_per_token": 1.765950524713844,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            28,
+            29
+          ],
+          "gpu_command_ms_per_token": 1.7645314219407737,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            43,
+            44
+          ],
+          "gpu_command_ms_per_token": 1.7627004417590797,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            21,
+            22
+          ],
+          "gpu_command_ms_per_token": 1.7542839632369578,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            44,
+            45
+          ],
+          "gpu_command_ms_per_token": 1.7469479353167117,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            10,
+            11
+          ],
+          "gpu_command_ms_per_token": 1.7387057887390256,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            41,
+            42
+          ],
+          "gpu_command_ms_per_token": 1.7364295781590044,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            26,
+            27
+          ],
+          "gpu_command_ms_per_token": 1.7281692707911134,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            34,
+            35
+          ],
+          "gpu_command_ms_per_token": 1.7170652281492949,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            8,
+            9
+          ],
+          "gpu_command_ms_per_token": 1.713807345367968,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            46,
+            47
+          ],
+          "gpu_command_ms_per_token": 1.710234209895134,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            39,
+            40
+          ],
+          "gpu_command_ms_per_token": 1.7100624972954392,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            23,
+            24
+          ],
+          "gpu_command_ms_per_token": 1.7056562355719507,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            14,
+            15
+          ],
+          "gpu_command_ms_per_token": 1.7028438160195947,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            19,
+            20
+          ],
+          "gpu_command_ms_per_token": 1.6977397608570755,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            9,
+            10
+          ],
+          "gpu_command_ms_per_token": 1.6613592742942274,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            38,
+            39
+          ],
+          "gpu_command_ms_per_token": 1.6540078213438392,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            18,
+            19
+          ],
+          "gpu_command_ms_per_token": 1.6385235358029604,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            22,
+            23
+          ],
+          "gpu_command_ms_per_token": 1.6271848580799997,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            42,
+            43
+          ],
+          "gpu_command_ms_per_token": 1.6152005991898477,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            7,
+            8
+          ],
+          "gpu_command_ms_per_token": 1.6037889290601015,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            5,
+            6
+          ],
+          "gpu_command_ms_per_token": 1.5953307738527656,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "layers": [
+            -1,
+            0
+          ],
+          "gpu_command_ms_per_token": 1.5689113643020391,
+          "command_groups": 16,
+          "dispatches": 496
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            4,
+            5
+          ],
+          "gpu_command_ms_per_token": 1.5550651005469263,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            6,
+            7
+          ],
+          "gpu_command_ms_per_token": 1.5512187383137643,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            3,
+            4
+          ],
+          "gpu_command_ms_per_token": 1.5215389430522919,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            1,
+            2
+          ],
+          "gpu_command_ms_per_token": 1.512333401478827,
+          "command_groups": 16,
+          "dispatches": 512
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "layers": [
+            2,
+            3
+          ],
+          "gpu_command_ms_per_token": 1.4720077742822468,
+          "command_groups": 16,
+          "dispatches": 560
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.7974299369379878,
+          "command_groups": 93,
+          "dispatches": 339
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.7954636821523309,
+          "command_groups": 96,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.7803569315001369,
+          "command_groups": 101,
+          "dispatches": 351
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.7642187993042171,
+          "command_groups": 89,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.7637004018761218,
+          "command_groups": 88,
+          "dispatches": 339
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.7623436395078897,
+          "command_groups": 103,
+          "dispatches": 357
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.7523150416091084,
+          "command_groups": 106,
+          "dispatches": 357
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.7520905928686261,
+          "command_groups": 102,
+          "dispatches": 348
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.7391614490188658,
+          "command_groups": 92,
+          "dispatches": 348
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.7341664750128984,
+          "command_groups": 88,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            45
+          ],
+          "gpu_command_ms_per_token": 0.7328256615437567,
+          "command_groups": 89,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.7309320499189198,
+          "command_groups": 125,
+          "dispatches": 417
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.7272789953276515,
+          "command_groups": 86,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.7250836351886392,
+          "command_groups": 90,
+          "dispatches": 339
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.7226248853839934,
+          "command_groups": 93,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.7198905805125833,
+          "command_groups": 96,
+          "dispatches": 333
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            43
+          ],
+          "gpu_command_ms_per_token": 0.7193749770522118,
+          "command_groups": 95,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.7157032378017902,
+          "command_groups": 94,
+          "dispatches": 342
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            46
+          ],
+          "gpu_command_ms_per_token": 0.7125523407012224,
+          "command_groups": 90,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.7110649021342397,
+          "command_groups": 87,
+          "dispatches": 333
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.6990209221839905,
+          "command_groups": 96,
+          "dispatches": 342
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.6974168354645371,
+          "command_groups": 91,
+          "dispatches": 321
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.6962781772017479,
+          "command_groups": 95,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.6951458053663373,
+          "command_groups": 87,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.693538982886821,
+          "command_groups": 89,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.6825366872362792,
+          "command_groups": 87,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.682140642311424,
+          "command_groups": 88,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.6807027384638786,
+          "command_groups": 83,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.6776718073524535,
+          "command_groups": 90,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.6774219800718129,
+          "command_groups": 88,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.6759558455087245,
+          "command_groups": 89,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            44
+          ],
+          "gpu_command_ms_per_token": 0.6749012973159552,
+          "command_groups": 94,
+          "dispatches": 330
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.6732164765708148,
+          "command_groups": 94,
+          "dispatches": 327
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            47
+          ],
+          "gpu_command_ms_per_token": 0.6685154512524605,
+          "command_groups": 84,
+          "dispatches": 306
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.6659842329099774,
+          "command_groups": 93,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.6614847807213664,
+          "command_groups": 86,
+          "dispatches": 318
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.6595570594072342,
+          "command_groups": 112,
+          "dispatches": 369
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.6590184639208019,
+          "command_groups": 82,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.6555001018568873,
+          "command_groups": 83,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.6537085282616317,
+          "command_groups": 88,
+          "dispatches": 312
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.64322620164603,
+          "command_groups": 97,
+          "dispatches": 345
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.6397056276910007,
+          "command_groups": 97,
+          "dispatches": 345
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.6255778716877103,
+          "command_groups": 92,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.6166066159494221,
+          "command_groups": 97,
+          "dispatches": 336
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.6142916390672326,
+          "command_groups": 100,
+          "dispatches": 348
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.5851068417541683,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.5742809735238552,
+          "command_groups": 91,
+          "dispatches": 324
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.5704583018086851,
+          "command_groups": 78,
+          "dispatches": 309
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.5536012467928231,
+          "command_groups": 85,
+          "dispatches": 315
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            47
+          ],
+          "gpu_command_ms_per_token": 0.5515390657819808,
+          "command_groups": 16,
+          "dispatches": 222
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.5514897056855261,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.551036442629993,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.5502525600604713,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.5374946631491184,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.5330258863978088,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.5310572450980544,
+          "command_groups": 15,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.5268125096336007,
+          "command_groups": 15,
+          "dispatches": 213
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.5251666298136115,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.5242865299805999,
+          "command_groups": 15,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.522481685038656,
+          "command_groups": 15,
+          "dispatches": 204
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.5215363344177604,
+          "command_groups": 15,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.5189973744563758,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.5184480105526745,
+          "command_groups": 15,
+          "dispatches": 207
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.5039063398726285,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.5027657607570291,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            46
+          ],
+          "gpu_command_ms_per_token": 0.487554760184139,
+          "command_groups": 16,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.48699998296797276,
+          "command_groups": 15,
+          "dispatches": 216
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.4805442877113819,
+          "command_groups": 14,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.4789635422639549,
+          "command_groups": 15,
+          "dispatches": 192
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.47850259579718113,
+          "command_groups": 14,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.475239590741694,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.47418236499652267,
+          "command_groups": 13,
+          "dispatches": 180
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.4738722927868366,
+          "command_groups": 15,
+          "dispatches": 183
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.4731796798296273,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.4723776364699006,
+          "command_groups": 14,
+          "dispatches": 180
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            43
+          ],
+          "gpu_command_ms_per_token": 0.4722761223092675,
+          "command_groups": 16,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.46634109457954764,
+          "command_groups": 13,
+          "dispatches": 180
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.45787764247506857,
+          "command_groups": 15,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.4551354795694351,
+          "command_groups": 15,
+          "dispatches": 201
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            44
+          ],
+          "gpu_command_ms_per_token": 0.45327330008149147,
+          "command_groups": 16,
+          "dispatches": 198
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.45065348967909813,
+          "command_groups": 13,
+          "dispatches": 180
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.44907547999173403,
+          "command_groups": 14,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.44459878699854016,
+          "command_groups": 14,
+          "dispatches": 189
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.44287502532824874,
+          "command_groups": 15,
+          "dispatches": 210
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            45
+          ],
+          "gpu_command_ms_per_token": 0.43773173820227385,
+          "command_groups": 15,
+          "dispatches": 195
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.4129739245399833,
+          "command_groups": 15,
+          "dispatches": 189
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.4071875591762364,
+          "command_groups": 14,
+          "dispatches": 171
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.4007472889497876,
+          "command_groups": 13,
+          "dispatches": 171
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.3971066907979548,
+          "command_groups": 13,
+          "dispatches": 171
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.3968490054830909,
+          "command_groups": 13,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.3845026367343962,
+          "command_groups": 14,
+          "dispatches": 165
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.3793046926148236,
+          "command_groups": 13,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.37630985025316477,
+          "command_groups": 12,
+          "dispatches": 159
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.35882811062037945,
+          "command_groups": 14,
+          "dispatches": 174
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.3377239336259663,
+          "command_groups": 14,
+          "dispatches": 153
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.19215879729017615,
+          "command_groups": 7,
+          "dispatches": 84
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            0
+          ],
+          "gpu_command_ms_per_token": 0.09771884651854634,
+          "command_groups": 9,
+          "dispatches": 27
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            26
+          ],
+          "gpu_command_ms_per_token": 0.05805213004350662,
+          "command_groups": 4,
+          "dispatches": 12
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            25
+          ],
+          "gpu_command_ms_per_token": 0.04213536158204079,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            22
+          ],
+          "gpu_command_ms_per_token": 0.04044274101033807,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            13
+          ],
+          "gpu_command_ms_per_token": 0.03483856562525034,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            38
+          ],
+          "gpu_command_ms_per_token": 0.03483070759102702,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            29
+          ],
+          "gpu_command_ms_per_token": 0.03211456350982189,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            34
+          ],
+          "gpu_command_ms_per_token": 0.030989584047347307,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            16
+          ],
+          "gpu_command_ms_per_token": 0.030687544494867325,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            7
+          ],
+          "gpu_command_ms_per_token": 0.02843746915459633,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            5
+          ],
+          "gpu_command_ms_per_token": 0.027111906092613935,
+          "command_groups": 3,
+          "dispatches": 9
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            45
+          ],
+          "gpu_command_ms_per_token": 0.024382839910686016,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            9
+          ],
+          "gpu_command_ms_per_token": 0.022640626411885023,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            10
+          ],
+          "gpu_command_ms_per_token": 0.022419262677431107,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            40
+          ],
+          "gpu_command_ms_per_token": 0.021104176994413137,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            36
+          ],
+          "gpu_command_ms_per_token": 0.019778672140091658,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            23
+          ],
+          "gpu_command_ms_per_token": 0.01928384881466627,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            1
+          ],
+          "gpu_command_ms_per_token": 0.0190989812836051,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            39
+          ],
+          "gpu_command_ms_per_token": 0.01629424514248967,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            2
+          ],
+          "gpu_command_ms_per_token": 0.016148434951901436,
+          "command_groups": 2,
+          "dispatches": 6
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            24
+          ],
+          "gpu_command_ms_per_token": 0.011296884622424841,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            35
+          ],
+          "gpu_command_ms_per_token": 0.011117197573184967,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            21
+          ],
+          "gpu_command_ms_per_token": 0.011101597920060158,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            19
+          ],
+          "gpu_command_ms_per_token": 0.011054682545363903,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            37
+          ],
+          "gpu_command_ms_per_token": 0.010828138329088688,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            8
+          ],
+          "gpu_command_ms_per_token": 0.008273404091596603,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            20
+          ],
+          "gpu_command_ms_per_token": 0.00825000461190939,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            18
+          ],
+          "gpu_command_ms_per_token": 0.008249946404248476,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            41
+          ],
+          "gpu_command_ms_per_token": 0.008244765922427177,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            17
+          ],
+          "gpu_command_ms_per_token": 0.008226546924561262,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            3
+          ],
+          "gpu_command_ms_per_token": 0.008210947271436453,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            42
+          ],
+          "gpu_command_ms_per_token": 0.008174509275704622,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            33
+          ],
+          "gpu_command_ms_per_token": 0.008164090104401112,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            15
+          ],
+          "gpu_command_ms_per_token": 0.008135393727570772,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            14
+          ],
+          "gpu_command_ms_per_token": 0.008117174729704857,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            28
+          ],
+          "gpu_command_ms_per_token": 0.008114613592624664,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            32
+          ],
+          "gpu_command_ms_per_token": 0.008111936040222645,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            30
+          ],
+          "gpu_command_ms_per_token": 0.008098955731838942,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            4
+          ],
+          "gpu_command_ms_per_token": 0.008054659701883793,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            31
+          ],
+          "gpu_command_ms_per_token": 0.008033879566937685,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            12
+          ],
+          "gpu_command_ms_per_token": 0.008031202014535666,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            11
+          ],
+          "gpu_command_ms_per_token": 0.007958384230732918,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            27
+          ],
+          "gpu_command_ms_per_token": 0.007947906851768494,
+          "command_groups": 1,
+          "dispatches": 3
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "layers": [
+            6
+          ],
+          "gpu_command_ms_per_token": 0.007942668162286282,
+          "command_groups": 1,
+          "dispatches": 3
+        }
+      ]
+    }
+  ],
+  "equal_phase_mean_buckets": [
+    {
+      "category": "gpu_active",
+      "ms_per_token": 135.97438659375
+    },
+    {
+      "category": "gpu_idle_pending_read",
+      "ms_per_token": 60.1015965
+    },
+    {
+      "category": "gpu_idle_other",
+      "ms_per_token": 37.7083093125
+    },
+    {
+      "category": "gpu_idle_submitted",
+      "ms_per_token": 30.65157503125
+    },
+    {
+      "category": "gpu_idle_ready_expert",
+      "ms_per_token": 11.9087774375
+    },
+    {
+      "category": "gpu_idle_callback",
+      "ms_per_token": 9.555369406250001
+    }
+  ],
+  "largest_observed_category": "gpu_active",
+  "possible_latency_saving_ms": null,
+  "causal_bottleneck_identified": false,
+  "limitations": [
+    "One instrumented reference conversation generates hypotheses only. There is no packed comparison, clean timing qualification or production promotion.",
+    "The 512MiB compression peak limit is a declared operational diagnostic allowance, not an empirically established safe or harmless amount of compression.",
+    "Memory and swap gates inspect completed-run boundaries and lifetime peaks; they do not provide live cancellation at the compression threshold. Native allocations stay admitted, and runtime/disk/cancellation guards remain active.",
+    "All captured tokens remain included. Compression and decompression annotations do not identify the affected allocation or establish the cause of any stall.",
+    "Exclusive token buckets reconcile to forward time. GPU command classes, read service, CPU costs and boundary gaps overlap and are not additional or removable milliseconds.",
+    "The previous normal request is used only for exact output/workload checks. Its disturbed timings are not a control, pooled sample or instrumentation correction.",
+    "The short initial/retained-append workload does not qualify 2K/4K/7K contexts, coding quality, or sustained operation."
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "performance_comparison": false,
+  "candidate_qualified": false
+}

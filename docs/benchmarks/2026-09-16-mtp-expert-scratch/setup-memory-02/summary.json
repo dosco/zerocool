@@ -1,0 +1,46 @@
+{
+  "kind": "mtp_setup_memory_diagnostic_v1",
+  "complete": true,
+  "status": "setup_measured",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T02:13:40.701099+00:00",
+  "time_limit_seconds": 120,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {},
+  "samples": [
+    {
+      "stage": "before_setup",
+      "rss_bytes": 169590784,
+      "available_bytes": 14176305152
+    },
+    {
+      "stage": "after_setup",
+      "rss_bytes": 207896576,
+      "available_bytes": 14156464128
+    },
+    {
+      "stage": "after_prerequisites",
+      "rss_bytes": 207978496,
+      "available_bytes": 14171815936
+    },
+    {
+      "stage": "after_identity",
+      "rss_bytes": 208044032,
+      "available_bytes": 14159855616
+    }
+  ],
+  "model_loaded": false,
+  "gpu_used": false,
+  "elapsed_seconds": 6.825292165391147
+}

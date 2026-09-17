@@ -1,0 +1,569 @@
+{
+  "kind": "mtp_ngram_init_fixture_v1",
+  "complete": true,
+  "exact_outputs_and_cache": true,
+  "duplicate_rows_and_hits": true,
+  "eos_history": true,
+  "ring_wraparound": true,
+  "cases": [
+    {
+      "budget_bytes": 65536,
+      "tokens": 123,
+      "initial": {
+        "capacity_rows": 154,
+        "constructed_rows": 0,
+        "cached_rows": 0,
+        "next_slot": 0,
+        "reserved_row_bytes": 50512,
+        "initialized_row_bytes": 0,
+        "hits": 0,
+        "misses": 0
+      },
+      "final": {
+        "capacity_rows": 154,
+        "constructed_rows": 154,
+        "cached_rows": 154,
+        "next_slot": 16,
+        "reserved_row_bytes": 50512,
+        "initialized_row_bytes": 50512,
+        "hits": 1764,
+        "misses": 2172
+      },
+      "boundaries": [
+        {
+          "step": 0,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 16,
+            "cached_rows": 16,
+            "next_slot": 16,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 5248,
+            "hits": 16,
+            "misses": 16
+          },
+          "output_sha256": "54cf820f32a619d91a0cb82e16f732173f39df9952398d0427ae18eed7cebc40"
+        },
+        {
+          "step": 1,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 48,
+            "cached_rows": 48,
+            "next_slot": 48,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 15744,
+            "hits": 48,
+            "misses": 48
+          },
+          "output_sha256": "8974d3464e76ae2725ac6ff21a42a600180138f40eece08adef51ae97c67834b"
+        },
+        {
+          "step": 2,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 96,
+            "cached_rows": 96,
+            "next_slot": 96,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 31488,
+            "hits": 96,
+            "misses": 96
+          },
+          "output_sha256": "e18977f8e8e6939f8a08030ce93b4613e94d0294b58a8ad109961edd2801d49d"
+        },
+        {
+          "step": 3,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 136,
+            "cached_rows": 136,
+            "next_slot": 136,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 44608,
+            "hits": 280,
+            "misses": 136
+          },
+          "output_sha256": "94c1c457158b0e042820d1f907a3164c81cfde8c4fab3cc880cfa5ebd78ef83f"
+        },
+        {
+          "step": 4,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 26,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 434,
+            "misses": 334
+          },
+          "output_sha256": "5e7a1cd780d08068bf1c49c2a82dc730923359d9c2f37dc03410bd3457e04745"
+        },
+        {
+          "step": 5,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 108,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 588,
+            "misses": 724
+          },
+          "output_sha256": "63f92defc294367d79b8f2fc9d1a3dc5aac0b48ad3eddfc34da26c8fb1972a68"
+        },
+        {
+          "step": 6,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 124,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 604,
+            "misses": 740
+          },
+          "output_sha256": "83959e29983879985db8f3f4bb125b92866c771636f93bcc90f317b80d71a1a9"
+        },
+        {
+          "step": 7,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 2,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 636,
+            "misses": 772
+          },
+          "output_sha256": "5d1f9747948b671986d8ab42d267a7b49c7169c068e1fa46832d99b559795f8f"
+        },
+        {
+          "step": 8,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 50,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 684,
+            "misses": 820
+          },
+          "output_sha256": "42a302fdd25754c1d2754e58ace50cad0d8c2a3ca7697791726907f4ba9236c0"
+        },
+        {
+          "step": 9,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 90,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 868,
+            "misses": 860
+          },
+          "output_sha256": "c25da4abe37730f0262c7521847845d05e616e46abbab5d094439194fe05cb5c"
+        },
+        {
+          "step": 10,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 134,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1022,
+            "misses": 1058
+          },
+          "output_sha256": "590ddf18aba74f1211e0292c694e413644b7d709a3087d02f28d4f9388073f2d"
+        },
+        {
+          "step": 11,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 62,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1176,
+            "misses": 1448
+          },
+          "output_sha256": "e38f4e2f4f4f92ea1ff0bb7f74f4d19ad5f2cdf4f1bd30660df7e8d0b05730a5"
+        },
+        {
+          "step": 12,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 78,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1192,
+            "misses": 1464
+          },
+          "output_sha256": "047bf6b67b8d075531321386be59c9fe372b785c2b95eeec6c508c24a0aeadc2"
+        },
+        {
+          "step": 13,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 110,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1224,
+            "misses": 1496
+          },
+          "output_sha256": "d9d2cc5b2bf6f5917a30d7e0b44e23cee9237caf256c945d2449d0602e6022ef"
+        },
+        {
+          "step": 14,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 4,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1272,
+            "misses": 1544
+          },
+          "output_sha256": "823191293d0992dc53459d297235ad06cd7060dd079a0fce57e30b68fa7498ea"
+        },
+        {
+          "step": 15,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 44,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1456,
+            "misses": 1584
+          },
+          "output_sha256": "5452f2f19d30f343df5449bc305beb54de2201c8bf7c7d9ad8d8044e7ce68832"
+        },
+        {
+          "step": 16,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 88,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1610,
+            "misses": 1782
+          },
+          "output_sha256": "d4525b650a6999f4811c16d58a62be47acb2d4f5bc2b482c406dd2bc89b0ff95"
+        },
+        {
+          "step": 17,
+          "lazy": {
+            "capacity_rows": 154,
+            "constructed_rows": 154,
+            "cached_rows": 154,
+            "next_slot": 16,
+            "reserved_row_bytes": 50512,
+            "initialized_row_bytes": 50512,
+            "hits": 1764,
+            "misses": 2172
+          },
+          "output_sha256": "eeb39b9024e1c6c0eb7902dfc23acb65f8c06948740b374d4b522e30102fe895"
+        }
+      ]
+    },
+    {
+      "budget_bytes": 67108864,
+      "tokens": 123,
+      "initial": {
+        "capacity_rows": 158275,
+        "constructed_rows": 0,
+        "cached_rows": 0,
+        "next_slot": 0,
+        "reserved_row_bytes": 51914200,
+        "initialized_row_bytes": 0,
+        "hits": 0,
+        "misses": 0
+      },
+      "final": {
+        "capacity_rows": 158275,
+        "constructed_rows": 1720,
+        "cached_rows": 1720,
+        "next_slot": 1720,
+        "reserved_row_bytes": 51914200,
+        "initialized_row_bytes": 564160,
+        "hits": 2216,
+        "misses": 1720
+      },
+      "boundaries": [
+        {
+          "step": 0,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 16,
+            "cached_rows": 16,
+            "next_slot": 16,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 5248,
+            "hits": 16,
+            "misses": 16
+          },
+          "output_sha256": "54cf820f32a619d91a0cb82e16f732173f39df9952398d0427ae18eed7cebc40"
+        },
+        {
+          "step": 1,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 48,
+            "cached_rows": 48,
+            "next_slot": 48,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 15744,
+            "hits": 48,
+            "misses": 48
+          },
+          "output_sha256": "8974d3464e76ae2725ac6ff21a42a600180138f40eece08adef51ae97c67834b"
+        },
+        {
+          "step": 2,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 96,
+            "cached_rows": 96,
+            "next_slot": 96,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 31488,
+            "hits": 96,
+            "misses": 96
+          },
+          "output_sha256": "e18977f8e8e6939f8a08030ce93b4613e94d0294b58a8ad109961edd2801d49d"
+        },
+        {
+          "step": 3,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 136,
+            "cached_rows": 136,
+            "next_slot": 136,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 44608,
+            "hits": 280,
+            "misses": 136
+          },
+          "output_sha256": "94c1c457158b0e042820d1f907a3164c81cfde8c4fab3cc880cfa5ebd78ef83f"
+        },
+        {
+          "step": 4,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 312,
+            "cached_rows": 312,
+            "next_slot": 312,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 102336,
+            "hits": 456,
+            "misses": 312
+          },
+          "output_sha256": "5e7a1cd780d08068bf1c49c2a82dc730923359d9c2f37dc03410bd3457e04745"
+        },
+        {
+          "step": 5,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 584,
+            "cached_rows": 584,
+            "next_slot": 584,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 191552,
+            "hits": 728,
+            "misses": 584
+          },
+          "output_sha256": "63f92defc294367d79b8f2fc9d1a3dc5aac0b48ad3eddfc34da26c8fb1972a68"
+        },
+        {
+          "step": 6,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 600,
+            "cached_rows": 600,
+            "next_slot": 600,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 196800,
+            "hits": 744,
+            "misses": 600
+          },
+          "output_sha256": "83959e29983879985db8f3f4bb125b92866c771636f93bcc90f317b80d71a1a9"
+        },
+        {
+          "step": 7,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 632,
+            "cached_rows": 632,
+            "next_slot": 632,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 207296,
+            "hits": 776,
+            "misses": 632
+          },
+          "output_sha256": "5d1f9747948b671986d8ab42d267a7b49c7169c068e1fa46832d99b559795f8f"
+        },
+        {
+          "step": 8,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 680,
+            "cached_rows": 680,
+            "next_slot": 680,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 223040,
+            "hits": 824,
+            "misses": 680
+          },
+          "output_sha256": "42a302fdd25754c1d2754e58ace50cad0d8c2a3ca7697791726907f4ba9236c0"
+        },
+        {
+          "step": 9,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 704,
+            "cached_rows": 704,
+            "next_slot": 704,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 230912,
+            "hits": 1024,
+            "misses": 704
+          },
+          "output_sha256": "c25da4abe37730f0262c7521847845d05e616e46abbab5d094439194fe05cb5c"
+        },
+        {
+          "step": 10,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 880,
+            "cached_rows": 880,
+            "next_slot": 880,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 288640,
+            "hits": 1200,
+            "misses": 880
+          },
+          "output_sha256": "590ddf18aba74f1211e0292c694e413644b7d709a3087d02f28d4f9388073f2d"
+        },
+        {
+          "step": 11,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1152,
+            "cached_rows": 1152,
+            "next_slot": 1152,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 377856,
+            "hits": 1472,
+            "misses": 1152
+          },
+          "output_sha256": "e38f4e2f4f4f92ea1ff0bb7f74f4d19ad5f2cdf4f1bd30660df7e8d0b05730a5"
+        },
+        {
+          "step": 12,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1168,
+            "cached_rows": 1168,
+            "next_slot": 1168,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 383104,
+            "hits": 1488,
+            "misses": 1168
+          },
+          "output_sha256": "047bf6b67b8d075531321386be59c9fe372b785c2b95eeec6c508c24a0aeadc2"
+        },
+        {
+          "step": 13,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1200,
+            "cached_rows": 1200,
+            "next_slot": 1200,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 393600,
+            "hits": 1520,
+            "misses": 1200
+          },
+          "output_sha256": "d9d2cc5b2bf6f5917a30d7e0b44e23cee9237caf256c945d2449d0602e6022ef"
+        },
+        {
+          "step": 14,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1248,
+            "cached_rows": 1248,
+            "next_slot": 1248,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 409344,
+            "hits": 1568,
+            "misses": 1248
+          },
+          "output_sha256": "823191293d0992dc53459d297235ad06cd7060dd079a0fce57e30b68fa7498ea"
+        },
+        {
+          "step": 15,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1272,
+            "cached_rows": 1272,
+            "next_slot": 1272,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 417216,
+            "hits": 1768,
+            "misses": 1272
+          },
+          "output_sha256": "5452f2f19d30f343df5449bc305beb54de2201c8bf7c7d9ad8d8044e7ce68832"
+        },
+        {
+          "step": 16,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1448,
+            "cached_rows": 1448,
+            "next_slot": 1448,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 474944,
+            "hits": 1944,
+            "misses": 1448
+          },
+          "output_sha256": "d4525b650a6999f4811c16d58a62be47acb2d4f5bc2b482c406dd2bc89b0ff95"
+        },
+        {
+          "step": 17,
+          "lazy": {
+            "capacity_rows": 158275,
+            "constructed_rows": 1720,
+            "cached_rows": 1720,
+            "next_slot": 1720,
+            "reserved_row_bytes": 51914200,
+            "initialized_row_bytes": 564160,
+            "hits": 2216,
+            "misses": 1720
+          },
+          "output_sha256": "eeb39b9024e1c6c0eb7902dfc23acb65f8c06948740b374d4b522e30102fe895"
+        }
+      ]
+    }
+  ],
+  "model_loaded": false,
+  "gpu_used": false,
+  "production_promoted": false
+}

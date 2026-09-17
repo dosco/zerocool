@@ -1,0 +1,78 @@
+{
+  "kind": "mtp_current_profile_audit_v1",
+  "passed": true,
+  "source": "docs/benchmarks/2026-09-16-mtp-continuation/profile-03",
+  "source_seal_sha256": "ef25427c8f3c0e16bb917828b4b5f8bba18177e51a8d05f3da2ea86846d67597",
+  "reference_source": "docs/benchmarks/2026-09-16-mtp-continuation/short-reference-01",
+  "reference_seal_sha256": "8b341db704245b42d681eb3b9b115e1185cb0dc8dc3cd443d0da0572c3985ade",
+  "exact_outputs_states_and_initial_cache": true,
+  "complete_target_population": true,
+  "captured_target_passes": 192,
+  "dispatches": 21751,
+  "submissions": 4107,
+  "target_allocation_count": 26932,
+  "target_scratch_reuses": 0,
+  "target_blocks": [
+    {
+      "offset": 72,
+      "allocation_count": 6412,
+      "scratch_reuses": 0,
+      "dispatches": 5197,
+      "submissions": 1130
+    },
+    {
+      "offset": 76,
+      "allocation_count": 6316,
+      "scratch_reuses": 0,
+      "dispatches": 5125,
+      "submissions": 947
+    },
+    {
+      "offset": 80,
+      "allocation_count": 6928,
+      "scratch_reuses": 0,
+      "dispatches": 5584,
+      "submissions": 1120
+    },
+    {
+      "offset": 84,
+      "allocation_count": 7276,
+      "scratch_reuses": 0,
+      "dispatches": 5845,
+      "submissions": 910
+    }
+  ],
+  "normal_allocation_comparison": [
+    {
+      "mode": "serial",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/short-reference-01/case-0-serial.json",
+      "allocation_count": 3825,
+      "scratch_reuses": 48015,
+      "decode_scratch_passes": 16
+    },
+    {
+      "mode": "real_mtp",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/short-reference-01/case-0-fast-timing.json",
+      "allocation_count": 28000,
+      "scratch_reuses": 0,
+      "decode_scratch_passes": 0
+    }
+  ],
+  "mean_buckets_ms_per_token": {
+    "gpu_active": 106.946147625,
+    "gpu_idle_submitted": 26.4698269375,
+    "gpu_idle_ready_expert": 18.8818636875,
+    "gpu_idle_pending_read": 29.6603633125,
+    "gpu_idle_callback": 2.780179125,
+    "gpu_idle_other": 18.6003900625
+  },
+  "clean_memory_and_host": true,
+  "performance_measurement": false,
+  "production_promoted": false,
+  "limitations": [
+    "One short real-draft workload, four complete target calls; draft computation itself is not profiled.",
+    "Intervals describe observed overlap, not the cause of a wait or attainable savings.",
+    "Instrumented time is not normal request latency. No counter-derived isolated kernel costs are collected.",
+    "Allocation counts do not establish allocation time or attainable savings. The normal MTP totals include draft work; per-target capture counters isolate the target."
+  ]
+}

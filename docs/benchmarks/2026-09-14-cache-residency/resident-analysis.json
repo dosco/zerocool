@@ -1,0 +1,1246 @@
+{
+  "kind": "resident_decode_analysis_v1",
+  "complete": true,
+  "status": "captured",
+  "source_seal_sha256": "85aaffad64ba37bf740d88251ee5f5f5c795962a550939b5d02c0d725f2238a7",
+  "analysis_tools": {
+    "profile_resident_decode.py": "1881736fcc39322cf724acdc16833a76271c4ae4382969feb8fbccf5e14ca64d",
+    "cache_residency.py": "66bafe74fe6275074ea60a3920cd258c48d33716a0f8a02559aa7e9440a8d760",
+    "measure_buffer_costs.py": "fe7ac71974da91b3438899ae0126bc2339d3476bd2be62d249ac477a9f119634",
+    "stage200.py": "019131f9e6c8d92465275e6714e7476a15040745a11bd1bf17a5bac29de1aa30",
+    "submission_timeline.py": "dc14b2cb4e1c4d934eb55a89d306a587f9787e06454caa2995f66d60b4e0d0ba",
+    "decode_timeline.py": "ca97adf06b72454b0abbc6daa338d20cb9d4f1dca4833e9b482f9f3ec8bc6d13"
+  },
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 128,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/profile_resident_decode.py",
+        "sha256": "1cc13c1b9529a46039d797f9a6a7ae6cc027bef187d0ebfa51c1477d5777e4c9",
+        "available_at": "docs/benchmarks/2026-09-14-cache-residency/screen-sources/scripts/qwen/profile_resident_decode.py"
+      }
+    ]
+  },
+  "timelines": [
+    {
+      "kind": "decode_overlap_timeline_v1",
+      "complete": true,
+      "build": "81e6f5ced54d2802716bd5dd211e47428da0d39d65d55b8fe7564ce94bd26b79",
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "captured_tokens": 16,
+      "target_ms_per_token": 200,
+      "mean_forward_ms": 298.6579505625,
+      "mean_buckets_ms": {
+        "gpu_active": 156.3400399375,
+        "gpu_idle_submitted": 28.8831958125,
+        "gpu_idle_ready_expert": 10.630062,
+        "gpu_idle_pending_read": 52.7102730625,
+        "gpu_idle_callback": 9.61986675,
+        "gpu_idle_other": 40.474513
+      },
+      "mean_layer_boundary_submission_gap_ms": 39.6154608125,
+      "tokens": [
+        {
+          "step": 0,
+          "offset": 72,
+          "forward_ms": 437.949875,
+          "buckets_ms": {
+            "gpu_active": 208.554799,
+            "gpu_idle_submitted": 49.904422,
+            "gpu_idle_ready_expert": 14.777139,
+            "gpu_idle_pending_read": 100.081871,
+            "gpu_idle_callback": 9.995184,
+            "gpu_idle_other": 54.63646
+          },
+          "expert_read_bytes": 1246924800,
+          "command_groups": 515,
+          "layer_boundary_submission_gap_ms": 51.652556
+        },
+        {
+          "step": 1,
+          "offset": 73,
+          "forward_ms": 301.921958,
+          "buckets_ms": {
+            "gpu_active": 163.441384,
+            "gpu_idle_submitted": 27.083308,
+            "gpu_idle_ready_expert": 9.791139,
+            "gpu_idle_pending_read": 49.596437,
+            "gpu_idle_callback": 10.10519,
+            "gpu_idle_other": 41.9045
+          },
+          "expert_read_bytes": 652492800,
+          "command_groups": 345,
+          "layer_boundary_submission_gap_ms": 41.067557
+        },
+        {
+          "step": 2,
+          "offset": 74,
+          "forward_ms": 338.639334,
+          "buckets_ms": {
+            "gpu_active": 164.584079,
+            "gpu_idle_submitted": 25.393174,
+            "gpu_idle_ready_expert": 9.790563,
+            "gpu_idle_pending_read": 34.481996,
+            "gpu_idle_callback": 9.532981,
+            "gpu_idle_other": 94.856541
+          },
+          "expert_read_bytes": 541900800,
+          "command_groups": 314,
+          "layer_boundary_submission_gap_ms": 93.930215
+        },
+        {
+          "step": 3,
+          "offset": 75,
+          "forward_ms": 337.658291,
+          "buckets_ms": {
+            "gpu_active": 230.311286,
+            "gpu_idle_submitted": 24.002823,
+            "gpu_idle_ready_expert": 8.803285,
+            "gpu_idle_pending_read": 28.386542,
+            "gpu_idle_callback": 9.557777,
+            "gpu_idle_other": 36.596578
+          },
+          "expert_read_bytes": 633139200,
+          "command_groups": 326,
+          "layer_boundary_submission_gap_ms": 35.861139
+        },
+        {
+          "step": 4,
+          "offset": 76,
+          "forward_ms": 394.584916,
+          "buckets_ms": {
+            "gpu_active": 228.727466,
+            "gpu_idle_submitted": 34.718046,
+            "gpu_idle_ready_expert": 10.806442,
+            "gpu_idle_pending_read": 73.635899,
+            "gpu_idle_callback": 9.197936,
+            "gpu_idle_other": 37.499127
+          },
+          "expert_read_bytes": 1034035200,
+          "command_groups": 450,
+          "layer_boundary_submission_gap_ms": 36.522513
+        },
+        {
+          "step": 5,
+          "offset": 77,
+          "forward_ms": 280.822708,
+          "buckets_ms": {
+            "gpu_active": 168.06912,
+            "gpu_idle_submitted": 24.397338,
+            "gpu_idle_ready_expert": 9.655606,
+            "gpu_idle_pending_read": 33.340161,
+            "gpu_idle_callback": 9.479353,
+            "gpu_idle_other": 35.88113
+          },
+          "expert_read_bytes": 561254400,
+          "command_groups": 325,
+          "layer_boundary_submission_gap_ms": 35.128138
+        },
+        {
+          "step": 6,
+          "offset": 78,
+          "forward_ms": 289.723709,
+          "buckets_ms": {
+            "gpu_active": 137.5827,
+            "gpu_idle_submitted": 30.246999,
+            "gpu_idle_ready_expert": 12.401432,
+            "gpu_idle_pending_read": 63.656975,
+            "gpu_idle_callback": 9.259814,
+            "gpu_idle_other": 36.575789
+          },
+          "expert_read_bytes": 760320000,
+          "command_groups": 367,
+          "layer_boundary_submission_gap_ms": 35.689262
+        },
+        {
+          "step": 7,
+          "offset": 79,
+          "forward_ms": 207.145375,
+          "buckets_ms": {
+            "gpu_active": 114.661346,
+            "gpu_idle_submitted": 19.907517,
+            "gpu_idle_ready_expert": 8.115482,
+            "gpu_idle_pending_read": 21.307678,
+            "gpu_idle_callback": 9.750774,
+            "gpu_idle_other": 33.402578
+          },
+          "expert_read_bytes": 345600000,
+          "command_groups": 262,
+          "layer_boundary_submission_gap_ms": 33.059011
+        },
+        {
+          "step": 8,
+          "offset": 80,
+          "forward_ms": 255.018125,
+          "buckets_ms": {
+            "gpu_active": 104.093576,
+            "gpu_idle_submitted": 30.047827,
+            "gpu_idle_ready_expert": 12.228979,
+            "gpu_idle_pending_read": 63.871962,
+            "gpu_idle_callback": 10.993116,
+            "gpu_idle_other": 33.782665
+          },
+          "expert_read_bytes": 688435200,
+          "command_groups": 361,
+          "layer_boundary_submission_gap_ms": 33.029933
+        },
+        {
+          "step": 9,
+          "offset": 81,
+          "forward_ms": 300.02125,
+          "buckets_ms": {
+            "gpu_active": 120.436744,
+            "gpu_idle_submitted": 35.069788,
+            "gpu_idle_ready_expert": 13.833634,
+            "gpu_idle_pending_read": 83.988603,
+            "gpu_idle_callback": 9.761816,
+            "gpu_idle_other": 36.930665
+          },
+          "expert_read_bytes": 887500800,
+          "command_groups": 405,
+          "layer_boundary_submission_gap_ms": 36.118302
+        },
+        {
+          "step": 10,
+          "offset": 82,
+          "forward_ms": 284.555875,
+          "buckets_ms": {
+            "gpu_active": 157.211299,
+            "gpu_idle_submitted": 26.472128,
+            "gpu_idle_ready_expert": 9.516279,
+            "gpu_idle_pending_read": 47.130567,
+            "gpu_idle_callback": 9.353229,
+            "gpu_idle_other": 34.872373
+          },
+          "expert_read_bytes": 605491200,
+          "command_groups": 334,
+          "layer_boundary_submission_gap_ms": 34.093174
+        },
+        {
+          "step": 11,
+          "offset": 83,
+          "forward_ms": 267.943584,
+          "buckets_ms": {
+            "gpu_active": 127.670982,
+            "gpu_idle_submitted": 28.123943,
+            "gpu_idle_ready_expert": 11.172523,
+            "gpu_idle_pending_read": 57.510022,
+            "gpu_idle_callback": 9.588899,
+            "gpu_idle_other": 33.877215
+          },
+          "expert_read_bytes": 666316800,
+          "command_groups": 342,
+          "layer_boundary_submission_gap_ms": 33.31906
+        },
+        {
+          "step": 12,
+          "offset": 84,
+          "forward_ms": 207.9375,
+          "buckets_ms": {
+            "gpu_active": 110.803528,
+            "gpu_idle_submitted": 21.068033,
+            "gpu_idle_ready_expert": 8.360061,
+            "gpu_idle_pending_read": 25.660723,
+            "gpu_idle_callback": 9.428739,
+            "gpu_idle_other": 32.616416
+          },
+          "expert_read_bytes": 356659200,
+          "command_groups": 268,
+          "layer_boundary_submission_gap_ms": 32.328267
+        },
+        {
+          "step": 13,
+          "offset": 85,
+          "forward_ms": 210.975375,
+          "buckets_ms": {
+            "gpu_active": 102.549908,
+            "gpu_idle_submitted": 21.697299,
+            "gpu_idle_ready_expert": 8.976731,
+            "gpu_idle_pending_read": 35.37875,
+            "gpu_idle_callback": 9.294397,
+            "gpu_idle_other": 33.07829
+          },
+          "expert_read_bytes": 392601600,
+          "command_groups": 275,
+          "layer_boundary_submission_gap_ms": 32.466969
+        },
+        {
+          "step": 14,
+          "offset": 86,
+          "forward_ms": 360.493667,
+          "buckets_ms": {
+            "gpu_active": 204.223222,
+            "gpu_idle_submitted": 33.036489,
+            "gpu_idle_ready_expert": 11.29076,
+            "gpu_idle_pending_read": 65.765837,
+            "gpu_idle_callback": 9.505687,
+            "gpu_idle_other": 36.671672
+          },
+          "expert_read_bytes": 890265600,
+          "command_groups": 403,
+          "layer_boundary_submission_gap_ms": 36.052847
+        },
+        {
+          "step": 15,
+          "offset": 87,
+          "forward_ms": 303.135667,
+          "buckets_ms": {
+            "gpu_active": 158.5192,
+            "gpu_idle_submitted": 30.961999,
+            "gpu_idle_ready_expert": 10.560937,
+            "gpu_idle_pending_read": 59.570346,
+            "gpu_idle_callback": 9.112976,
+            "gpu_idle_other": 34.410209
+          },
+          "expert_read_bytes": 771379200,
+          "command_groups": 376,
+          "layer_boundary_submission_gap_ms": 33.52843
+        }
+      ],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Original command groups are preserved, but trace collection and JSON writing add overhead.",
+        "Bucket precedence is GPU active, submitted command, ready expert, pending read, callback, other; buckets sum to captured forward time.",
+        "Overlap does not establish why a coordinator waited or predict a speedup; ready work can be blocked by buffer or GPU capacity.",
+        "Layer boundary gaps overlap the buckets and must not be added to them.",
+        "Only the captured short-request token positions are covered; no 2K/4K acceptance claim."
+      ]
+    },
+    {
+      "kind": "decode_overlap_timeline_v1",
+      "complete": true,
+      "build": "81e6f5ced54d2802716bd5dd211e47428da0d39d65d55b8fe7564ce94bd26b79",
+      "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "captured_tokens": 16,
+      "target_ms_per_token": 200,
+      "mean_forward_ms": 297.962049625,
+      "mean_buckets_ms": {
+        "gpu_active": 150.4168394375,
+        "gpu_idle_submitted": 31.3842771875,
+        "gpu_idle_ready_expert": 11.585230875,
+        "gpu_idle_pending_read": 58.3657601875,
+        "gpu_idle_callback": 9.945454125,
+        "gpu_idle_other": 36.2644878125
+      },
+      "mean_layer_boundary_submission_gap_ms": 35.6152283125,
+      "tokens": [
+        {
+          "step": 0,
+          "offset": 217,
+          "forward_ms": 363.714625,
+          "buckets_ms": {
+            "gpu_active": 107.581843,
+            "gpu_idle_submitted": 55.860045,
+            "gpu_idle_ready_expert": 20.057993,
+            "gpu_idle_pending_read": 121.071176,
+            "gpu_idle_callback": 9.526564,
+            "gpu_idle_other": 49.617004
+          },
+          "expert_read_bytes": 1238630400,
+          "command_groups": 522,
+          "layer_boundary_submission_gap_ms": 47.417515
+        },
+        {
+          "step": 1,
+          "offset": 218,
+          "forward_ms": 241.266584,
+          "buckets_ms": {
+            "gpu_active": 105.68243,
+            "gpu_idle_submitted": 29.02823,
+            "gpu_idle_ready_expert": 11.435647,
+            "gpu_idle_pending_read": 53.136422,
+            "gpu_idle_callback": 9.712433,
+            "gpu_idle_other": 32.271422
+          },
+          "expert_read_bytes": 619315200,
+          "command_groups": 348,
+          "layer_boundary_submission_gap_ms": 32.24364
+        },
+        {
+          "step": 2,
+          "offset": 219,
+          "forward_ms": 238.952625,
+          "buckets_ms": {
+            "gpu_active": 103.810885,
+            "gpu_idle_submitted": 28.092352,
+            "gpu_idle_ready_expert": 10.746731,
+            "gpu_idle_pending_read": 53.527841,
+            "gpu_idle_callback": 9.744023,
+            "gpu_idle_other": 33.030793
+          },
+          "expert_read_bytes": 591667200,
+          "command_groups": 337,
+          "layer_boundary_submission_gap_ms": 32.952431
+        },
+        {
+          "step": 3,
+          "offset": 220,
+          "forward_ms": 246.48425,
+          "buckets_ms": {
+            "gpu_active": 104.59704,
+            "gpu_idle_submitted": 28.665377,
+            "gpu_idle_ready_expert": 11.575555,
+            "gpu_idle_pending_read": 58.322298,
+            "gpu_idle_callback": 9.556021,
+            "gpu_idle_other": 33.767959
+          },
+          "expert_read_bytes": 655257600,
+          "command_groups": 341,
+          "layer_boundary_submission_gap_ms": 33.187136
+        },
+        {
+          "step": 4,
+          "offset": 221,
+          "forward_ms": 406.680166,
+          "buckets_ms": {
+            "gpu_active": 233.265039,
+            "gpu_idle_submitted": 37.642848,
+            "gpu_idle_ready_expert": 11.852278,
+            "gpu_idle_pending_read": 73.525103,
+            "gpu_idle_callback": 9.425866,
+            "gpu_idle_other": 40.969032
+          },
+          "expert_read_bytes": 1111449600,
+          "command_groups": 469,
+          "layer_boundary_submission_gap_ms": 39.629262
+        },
+        {
+          "step": 5,
+          "offset": 222,
+          "forward_ms": 298.260666,
+          "buckets_ms": {
+            "gpu_active": 174.369789,
+            "gpu_idle_submitted": 26.988024,
+            "gpu_idle_ready_expert": 10.081986,
+            "gpu_idle_pending_read": 43.819393,
+            "gpu_idle_callback": 9.491804,
+            "gpu_idle_other": 33.50967
+          },
+          "expert_read_bytes": 688435200,
+          "command_groups": 356,
+          "layer_boundary_submission_gap_ms": 32.878299
+        },
+        {
+          "step": 6,
+          "offset": 223,
+          "forward_ms": 311.462917,
+          "buckets_ms": {
+            "gpu_active": 131.417102,
+            "gpu_idle_submitted": 35.118754,
+            "gpu_idle_ready_expert": 13.17109,
+            "gpu_idle_pending_read": 86.930857,
+            "gpu_idle_callback": 9.627862,
+            "gpu_idle_other": 35.197252
+          },
+          "expert_read_bytes": 934502400,
+          "command_groups": 421,
+          "layer_boundary_submission_gap_ms": 34.474224
+        },
+        {
+          "step": 7,
+          "offset": 224,
+          "forward_ms": 293.184584,
+          "buckets_ms": {
+            "gpu_active": 174.441575,
+            "gpu_idle_submitted": 25.954028,
+            "gpu_idle_ready_expert": 10.184392,
+            "gpu_idle_pending_read": 33.792066,
+            "gpu_idle_callback": 9.912686,
+            "gpu_idle_other": 38.899837
+          },
+          "expert_read_bytes": 591667200,
+          "command_groups": 328,
+          "layer_boundary_submission_gap_ms": 37.712553
+        },
+        {
+          "step": 8,
+          "offset": 225,
+          "forward_ms": 267.213459,
+          "buckets_ms": {
+            "gpu_active": 143.518716,
+            "gpu_idle_submitted": 26.017225,
+            "gpu_idle_ready_expert": 9.90943,
+            "gpu_idle_pending_read": 42.704732,
+            "gpu_idle_callback": 9.370441,
+            "gpu_idle_other": 35.692915
+          },
+          "expert_read_bytes": 575078400,
+          "command_groups": 329,
+          "layer_boundary_submission_gap_ms": 34.947305
+        },
+        {
+          "step": 9,
+          "offset": 226,
+          "forward_ms": 332.020917,
+          "buckets_ms": {
+            "gpu_active": 122.929612,
+            "gpu_idle_submitted": 41.884355,
+            "gpu_idle_ready_expert": 14.510498,
+            "gpu_idle_pending_read": 102.347171,
+            "gpu_idle_callback": 11.92169,
+            "gpu_idle_other": 38.427591
+          },
+          "expert_read_bytes": 1042329600,
+          "command_groups": 460,
+          "layer_boundary_submission_gap_ms": 38.015059
+        },
+        {
+          "step": 10,
+          "offset": 227,
+          "forward_ms": 302.746459,
+          "buckets_ms": {
+            "gpu_active": 165.702344,
+            "gpu_idle_submitted": 29.114981,
+            "gpu_idle_ready_expert": 11.262691,
+            "gpu_idle_pending_read": 49.650546,
+            "gpu_idle_callback": 9.944275,
+            "gpu_idle_other": 37.071622
+          },
+          "expert_read_bytes": 716083200,
+          "command_groups": 358,
+          "layer_boundary_submission_gap_ms": 36.203218
+        },
+        {
+          "step": 11,
+          "offset": 228,
+          "forward_ms": 292.749542,
+          "buckets_ms": {
+            "gpu_active": 177.793083,
+            "gpu_idle_submitted": 26.511019,
+            "gpu_idle_ready_expert": 9.757521,
+            "gpu_idle_pending_read": 34.96069,
+            "gpu_idle_callback": 10.510978,
+            "gpu_idle_other": 33.216251
+          },
+          "expert_read_bytes": 635904000,
+          "command_groups": 338,
+          "layer_boundary_submission_gap_ms": 33.116762
+        },
+        {
+          "step": 12,
+          "offset": 229,
+          "forward_ms": 218.265875,
+          "buckets_ms": {
+            "gpu_active": 111.344951,
+            "gpu_idle_submitted": 23.420513,
+            "gpu_idle_ready_expert": 9.235612,
+            "gpu_idle_pending_read": 31.34228,
+            "gpu_idle_callback": 9.792106,
+            "gpu_idle_other": 33.130413
+          },
+          "expert_read_bytes": 439603200,
+          "command_groups": 293,
+          "layer_boundary_submission_gap_ms": 32.864384
+        },
+        {
+          "step": 13,
+          "offset": 230,
+          "forward_ms": 222.181875,
+          "buckets_ms": {
+            "gpu_active": 103.374074,
+            "gpu_idle_submitted": 24.652813,
+            "gpu_idle_ready_expert": 10.145567,
+            "gpu_idle_pending_read": 42.555604,
+            "gpu_idle_callback": 9.664898,
+            "gpu_idle_other": 31.788919
+          },
+          "expert_read_bytes": 514252800,
+          "command_groups": 310,
+          "layer_boundary_submission_gap_ms": 31.777135
+        },
+        {
+          "step": 14,
+          "offset": 231,
+          "forward_ms": 405.894958,
+          "buckets_ms": {
+            "gpu_active": 244.562162,
+            "gpu_idle_submitted": 35.599555,
+            "gpu_idle_ready_expert": 11.749017,
+            "gpu_idle_pending_read": 63.92825,
+            "gpu_idle_callback": 10.870599,
+            "gpu_idle_other": 39.185375
+          },
+          "expert_read_bytes": 1017446400,
+          "command_groups": 433,
+          "layer_boundary_submission_gap_ms": 38.550556
+        },
+        {
+          "step": 15,
+          "offset": 232,
+          "forward_ms": 326.313292,
+          "buckets_ms": {
+            "gpu_active": 202.278786,
+            "gpu_idle_submitted": 27.598316,
+            "gpu_idle_ready_expert": 9.687686,
+            "gpu_idle_pending_read": 42.237734,
+            "gpu_idle_callback": 10.05502,
+            "gpu_idle_other": 34.45575
+          },
+          "expert_read_bytes": 743731200,
+          "command_groups": 368,
+          "layer_boundary_submission_gap_ms": 33.874174
+        }
+      ],
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Original command groups are preserved, but trace collection and JSON writing add overhead.",
+        "Bucket precedence is GPU active, submitted command, ready expert, pending read, callback, other; buckets sum to captured forward time.",
+        "Overlap does not establish why a coordinator waited or predict a speedup; ready work can be blocked by buffer or GPU capacity.",
+        "Layer boundary gaps overlap the buckets and must not be added to them.",
+        "Only the captured short-request token positions are covered; no 2K/4K acceptance claim."
+      ]
+    }
+  ],
+  "driver": {
+    "kind": "submission_driver_timeline_v1",
+    "complete": true,
+    "build": "81e6f5ced54d2802716bd5dd211e47428da0d39d65d55b8fe7564ce94bd26b79",
+    "source_seal_sha256": "85aaffad64ba37bf740d88251ee5f5f5c795962a550939b5d02c0d725f2238a7",
+    "normal_clean_memory": true,
+    "traced_clean_memory": true,
+    "phases": [
+      {
+        "name": "coding_routes_32",
+        "captured_tokens": 16,
+        "tokens": [
+          {
+            "offset": 72,
+            "before_driver": 7.437082000000002,
+            "in_driver": 13.874586999999996,
+            "after_driver": 28.592752999999963,
+            "commit_api_overlap": 1.4521589999999989,
+            "command_groups": 515,
+            "total_commit_api_ms": 1.991412
+          },
+          {
+            "offset": 73,
+            "before_driver": 3.1499369999999987,
+            "in_driver": 5.644095000000003,
+            "after_driver": 18.289275999999994,
+            "commit_api_overlap": 0.9313699999999985,
+            "command_groups": 345,
+            "total_commit_api_ms": 1.339622
+          },
+          {
+            "offset": 74,
+            "before_driver": 2.886587999999997,
+            "in_driver": 5.337796,
+            "after_driver": 17.168789999999998,
+            "commit_api_overlap": 0.8216289999999988,
+            "command_groups": 314,
+            "total_commit_api_ms": 1.245172
+          },
+          {
+            "offset": 75,
+            "before_driver": 2.8865240000000005,
+            "in_driver": 4.929802,
+            "after_driver": 16.186497000000003,
+            "commit_api_overlap": 0.7398769999999999,
+            "command_groups": 326,
+            "total_commit_api_ms": 1.220871
+          },
+          {
+            "offset": 76,
+            "before_driver": 5.847875999999997,
+            "in_driver": 6.878416999999995,
+            "after_driver": 21.991753000000035,
+            "commit_api_overlap": 1.0112569999999992,
+            "command_groups": 450,
+            "total_commit_api_ms": 1.574712
+          },
+          {
+            "offset": 77,
+            "before_driver": 2.730794,
+            "in_driver": 5.173246000000001,
+            "after_driver": 16.493298,
+            "commit_api_overlap": 0.8190429999999992,
+            "command_groups": 325,
+            "total_commit_api_ms": 1.234297
+          },
+          {
+            "offset": 78,
+            "before_driver": 3.9882050000000024,
+            "in_driver": 6.562732000000003,
+            "after_driver": 19.696061999999994,
+            "commit_api_overlap": 1.0826919999999989,
+            "command_groups": 367,
+            "total_commit_api_ms": 1.483328
+          },
+          {
+            "offset": 79,
+            "before_driver": 2.054358999999999,
+            "in_driver": 4.362833999999999,
+            "after_driver": 13.490324000000012,
+            "commit_api_overlap": 0.6970919999999994,
+            "command_groups": 262,
+            "total_commit_api_ms": 1.058347
+          },
+          {
+            "offset": 80,
+            "before_driver": 3.6402110000000008,
+            "in_driver": 6.6260720000000015,
+            "after_driver": 19.781543,
+            "commit_api_overlap": 1.0916189999999995,
+            "command_groups": 361,
+            "total_commit_api_ms": 1.387822
+          },
+          {
+            "offset": 81,
+            "before_driver": 4.375697999999995,
+            "in_driver": 7.570750999999996,
+            "after_driver": 23.123338999999966,
+            "commit_api_overlap": 1.2197489999999986,
+            "command_groups": 405,
+            "total_commit_api_ms": 1.545279
+          },
+          {
+            "offset": 82,
+            "before_driver": 2.9447689999999977,
+            "in_driver": 5.726035999999999,
+            "after_driver": 17.801323000000018,
+            "commit_api_overlap": 0.8390730000000001,
+            "command_groups": 334,
+            "total_commit_api_ms": 1.27049
+          },
+          {
+            "offset": 83,
+            "before_driver": 3.234600999999998,
+            "in_driver": 6.134368999999999,
+            "after_driver": 18.754973000000017,
+            "commit_api_overlap": 0.9878699999999992,
+            "command_groups": 342,
+            "total_commit_api_ms": 1.343406
+          },
+          {
+            "offset": 84,
+            "before_driver": 2.2387330000000003,
+            "in_driver": 4.514716000000001,
+            "after_driver": 14.314584000000005,
+            "commit_api_overlap": 0.6682559999999996,
+            "command_groups": 268,
+            "total_commit_api_ms": 1.009048
+          },
+          {
+            "offset": 85,
+            "before_driver": 2.3348229999999965,
+            "in_driver": 4.688035000000001,
+            "after_driver": 14.674441,
+            "commit_api_overlap": 0.7378819999999993,
+            "command_groups": 275,
+            "total_commit_api_ms": 1.069999
+          },
+          {
+            "offset": 86,
+            "before_driver": 4.8535949999999985,
+            "in_driver": 7.0825170000000055,
+            "after_driver": 21.10037599999999,
+            "commit_api_overlap": 1.028959,
+            "command_groups": 403,
+            "total_commit_api_ms": 1.476962
+          },
+          {
+            "offset": 87,
+            "before_driver": 3.730966,
+            "in_driver": 6.664233000000002,
+            "after_driver": 20.566799999999997,
+            "commit_api_overlap": 0.9947819999999994,
+            "command_groups": 376,
+            "total_commit_api_ms": 1.345077
+          }
+        ],
+        "means": {
+          "before_driver": 3.645922562499999,
+          "in_driver": 6.360639875,
+          "after_driver": 18.876633249999998,
+          "commit_api_overlap": 0.9452068124999993,
+          "command_groups": 354.25,
+          "total_commit_api_ms": 1.34974025
+        }
+      },
+      {
+        "name": "append_128",
+        "captured_tokens": 16,
+        "tokens": [
+          {
+            "offset": 217,
+            "before_driver": 6.219096999999998,
+            "in_driver": 15.576986,
+            "after_driver": 34.063962000000025,
+            "commit_api_overlap": 1.5664509999999991,
+            "command_groups": 522,
+            "total_commit_api_ms": 1.926368
+          },
+          {
+            "offset": 218,
+            "before_driver": 3.405611999999999,
+            "in_driver": 6.3521249999999965,
+            "after_driver": 19.270493000000002,
+            "commit_api_overlap": 0.9724589999999995,
+            "command_groups": 348,
+            "total_commit_api_ms": 1.242838
+          },
+          {
+            "offset": 219,
+            "before_driver": 3.119486999999999,
+            "in_driver": 6.138460000000003,
+            "after_driver": 18.834404999999983,
+            "commit_api_overlap": 0.9673699999999991,
+            "command_groups": 337,
+            "total_commit_api_ms": 1.275991
+          },
+          {
+            "offset": 220,
+            "before_driver": 3.248627,
+            "in_driver": 6.369748000000005,
+            "after_driver": 19.047002000000006,
+            "commit_api_overlap": 1.0454629999999998,
+            "command_groups": 341,
+            "total_commit_api_ms": 1.309756
+          },
+          {
+            "offset": 221,
+            "before_driver": 6.616262000000003,
+            "in_driver": 7.758668999999996,
+            "after_driver": 23.267916999999986,
+            "commit_api_overlap": 1.2992099999999989,
+            "command_groups": 469,
+            "total_commit_api_ms": 1.874131
+          },
+          {
+            "offset": 222,
+            "before_driver": 2.992019,
+            "in_driver": 5.6092210000000025,
+            "after_driver": 18.38678400000001,
+            "commit_api_overlap": 0.852992999999999,
+            "command_groups": 356,
+            "total_commit_api_ms": 1.266494
+          },
+          {
+            "offset": 223,
+            "before_driver": 4.058271999999998,
+            "in_driver": 7.638341999999995,
+            "after_driver": 23.422139999999988,
+            "commit_api_overlap": 1.1794549999999986,
+            "command_groups": 421,
+            "total_commit_api_ms": 1.463547
+          },
+          {
+            "offset": 224,
+            "before_driver": 3.153398000000001,
+            "in_driver": 5.938527000000001,
+            "after_driver": 16.86210300000002,
+            "commit_api_overlap": 0.9449199999999989,
+            "command_groups": 328,
+            "total_commit_api_ms": 1.330215
+          },
+          {
+            "offset": 225,
+            "before_driver": 2.987261999999999,
+            "in_driver": 5.741761999999997,
+            "after_driver": 17.28820100000001,
+            "commit_api_overlap": 0.888908,
+            "command_groups": 329,
+            "total_commit_api_ms": 1.212945
+          },
+          {
+            "offset": 226,
+            "before_driver": 5.954812000000005,
+            "in_driver": 8.597375000000005,
+            "after_driver": 27.332168000000006,
+            "commit_api_overlap": 1.2940379999999976,
+            "command_groups": 460,
+            "total_commit_api_ms": 1.610837
+          },
+          {
+            "offset": 227,
+            "before_driver": 3.648899999999998,
+            "in_driver": 6.3237910000000035,
+            "after_driver": 19.14229,
+            "commit_api_overlap": 1.163703,
+            "command_groups": 358,
+            "total_commit_api_ms": 1.513874
+          },
+          {
+            "offset": 228,
+            "before_driver": 3.425140999999999,
+            "in_driver": 5.498031000000001,
+            "after_driver": 17.587846999999993,
+            "commit_api_overlap": 0.8106239999999993,
+            "command_groups": 338,
+            "total_commit_api_ms": 1.284259
+          },
+          {
+            "offset": 229,
+            "before_driver": 2.6297560000000013,
+            "in_driver": 5.1587010000000015,
+            "after_driver": 15.632056000000008,
+            "commit_api_overlap": 0.7838749999999994,
+            "command_groups": 293,
+            "total_commit_api_ms": 1.109707
+          },
+          {
+            "offset": 230,
+            "before_driver": 2.906686999999999,
+            "in_driver": 5.457030999999995,
+            "after_driver": 16.28909500000002,
+            "commit_api_overlap": 0.7695889999999987,
+            "command_groups": 310,
+            "total_commit_api_ms": 1.167673
+          },
+          {
+            "offset": 231,
+            "before_driver": 6.106550999999994,
+            "in_driver": 7.284287,
+            "after_driver": 22.20871700000003,
+            "commit_api_overlap": 1.208747999999999,
+            "command_groups": 433,
+            "total_commit_api_ms": 1.766706
+          },
+          {
+            "offset": 232,
+            "before_driver": 3.498472000000001,
+            "in_driver": 6.138627000000003,
+            "after_driver": 17.961217000000005,
+            "commit_api_overlap": 0.8662179999999994,
+            "command_groups": 368,
+            "total_commit_api_ms": 1.354134
+          }
+        ],
+        "means": {
+          "before_driver": 3.9981471875,
+          "in_driver": 6.9738551875,
+          "after_driver": 20.412274812500005,
+          "commit_api_overlap": 1.0383764999999991,
+          "command_groups": 375.6875,
+          "total_commit_api_ms": 1.4193421875
+        }
+      }
+    ],
+    "normal_request_latency_qualified": false,
+    "limitations": [
+      "Driver timestamps measure CPU scheduling; GPU timestamps may contain device stalls or preemption.",
+      "The first three means partition GPU-idle submitted time. Commit API overlap and total commit time are not additive.",
+      "Memory compression or host variation can affect these observations; no causal savings prediction follows.",
+      "Source capture preserves full decode coverage and original command groups; profiling still adds overhead."
+    ],
+    "timestamp_documentation": "https://developer.apple.com/documentation/metal/mtlcommandbuffer/kernelstarttime"
+  },
+  "buffers": [
+    {
+      "name": "coding_routes_32",
+      "allocation_ms_per_token": 2.68533275,
+      "group_retirement_ms_per_token": 0.634845875,
+      "outside_owner_release_ms_per_token": 0.0,
+      "allocation_count_per_token": 237.0625,
+      "costs": {
+        "classes": {
+          "expert": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "resident": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "snapshot": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "state": {
+            "owner_releases": 592,
+            "allocated_bytes": 81526784,
+            "allocations": 592,
+            "outside_release_ns": 0,
+            "allocation_ns": 21879703,
+            "owner_released_bytes": 81526784
+          },
+          "temporary": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "workspace": {
+            "owner_releases": 0,
+            "allocated_bytes": 78004224,
+            "allocations": 3201,
+            "outside_release_ns": 0,
+            "allocation_ns": 21085621,
+            "owner_released_bytes": 0
+          }
+        },
+        "retired_groups": 5668,
+        "group_retirement_ns": 10157534
+      },
+      "causal_latency_saving_ms": null
+    },
+    {
+      "name": "append_128",
+      "allocation_ms_per_token": 2.6575525,
+      "group_retirement_ms_per_token": 0.64829425,
+      "outside_owner_release_ms_per_token": 0.0,
+      "allocation_count_per_token": 237.0625,
+      "costs": {
+        "classes": {
+          "expert": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "resident": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "snapshot": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "state": {
+            "owner_releases": 592,
+            "allocated_bytes": 81526784,
+            "allocations": 592,
+            "outside_release_ns": 0,
+            "allocation_ns": 22124844,
+            "owner_released_bytes": 81526784
+          },
+          "temporary": {
+            "owner_releases": 0,
+            "allocated_bytes": 0,
+            "allocations": 0,
+            "outside_release_ns": 0,
+            "allocation_ns": 0,
+            "owner_released_bytes": 0
+          },
+          "workspace": {
+            "owner_releases": 0,
+            "allocated_bytes": 78200832,
+            "allocations": 3201,
+            "outside_release_ns": 0,
+            "allocation_ns": 20395996,
+            "owner_released_bytes": 0
+          }
+        },
+        "retired_groups": 6011,
+        "group_retirement_ns": 10372708
+      },
+      "causal_latency_saving_ms": null
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "coding_routes_32",
+      "queue_ms": {
+        "mean": 0.11809126334252067,
+        "median": 0.026208,
+        "p95": 0.16725,
+        "p99": 2.4935
+      },
+      "service_ms": {
+        "mean": 2.5123302094713105,
+        "median": 2.451416,
+        "p95": 3.868334,
+        "p99": 4.319542
+      },
+      "gpu_command_classes": [
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_ms_per_token": 66.64368574274704
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "gpu_ms_per_token": 35.8180298935622
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "gpu_ms_per_token": 24.652283755131066
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_ms_per_token": 20.736810110975057
+        },
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "gpu_ms_per_token": 5.722583213355392
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "gpu_ms_per_token": 1.759489590767771
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "gpu_ms_per_token": 1.0071590077131987
+        }
+      ],
+      "previous_top_two": {
+        "proposed": 1410,
+        "selected_again": 799,
+        "observed_new_misses": 1,
+        "live_prefetch_run": false,
+        "predicted_latency_saving_ms": null,
+        "scope": "Retrospective overlap with actual misses, excluding first captured token and layer zero. No simulated admission, evictions, bandwidth contention or proof of readiness at prefetch time."
+      }
+    },
+    {
+      "name": "append_128",
+      "queue_ms": {
+        "mean": 0.13827749817434962,
+        "median": 0.0276455,
+        "p95": 0.239417,
+        "p99": 2.523625
+      },
+      "service_ms": {
+        "mean": 2.505533267457782,
+        "median": 2.4223545,
+        "p95": 3.866125,
+        "p99": 4.193917
+      },
+      "gpu_command_classes": [
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "gdn",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_ms_per_token": 63.54321580147371
+        },
+        {
+          "stages": [
+            "routed_expert"
+          ],
+          "gpu_ms_per_token": 34.61228625383228
+        },
+        {
+          "stages": [
+            "routed_expert",
+            "shared_expert"
+          ],
+          "gpu_ms_per_token": 23.30554911168292
+        },
+        {
+          "stages": [
+            "attention",
+            "attention_input",
+            "attention_residual",
+            "expert_reduce",
+            "mlp_input",
+            "mlp_residual",
+            "router"
+          ],
+          "gpu_ms_per_token": 20.63157019438222
+        },
+        {
+          "stages": [
+            "expert_reduce",
+            "logits",
+            "mlp_residual"
+          ],
+          "gpu_ms_per_token": 5.903622426558286
+        },
+        {
+          "stages": [
+            "attention_input",
+            "attention_residual",
+            "embedding",
+            "gdn",
+            "mlp_input",
+            "router"
+          ],
+          "gpu_ms_per_token": 1.553179754409939
+        },
+        {
+          "stages": [
+            "shared_expert"
+          ],
+          "gpu_ms_per_token": 0.8674164419062436
+        }
+      ],
+      "previous_top_two": {
+        "proposed": 1410,
+        "selected_again": 660,
+        "observed_new_misses": 0,
+        "live_prefetch_run": false,
+        "predicted_latency_saving_ms": null,
+        "scope": "Retrospective overlap with actual misses, excluding first captured token and layer zero. No simulated admission, evictions, bandwidth contention or proof of readiness at prefetch time."
+      }
+    }
+  ],
+  "trace_to_normal_decode_ratios": [
+    1.2482635263057893,
+    1.1498401307913522
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "One short normal/traced conversation; sixteen decode steps per phase.",
+    "GPU idle categories are exclusive observations, not causes or guaranteed recoverable latency.",
+    "Buffer CPU intervals overlap the timeline and must not be added to its rows.",
+    "A faster traced process reflects run variation; no instrumentation adjustment is applied.",
+    "1072 slots with core-cache residency. No 2K/4K, sustained-use or larger-cache qualification."
+  ]
+}

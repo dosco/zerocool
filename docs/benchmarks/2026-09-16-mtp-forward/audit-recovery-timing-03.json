@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "recorded_status": "below_absolute_target",
+  "recorded_complete": true,
+  "numerical_equality_verified": true,
+  "validation_sources": [
+    {
+      "mode": "validate",
+      "source": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/validate.json",
+      "sha256": "436b6fdbfa9d37b2e57e12a101ae9ad92ab257e62c88ce23a5062899aa531b55",
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10546419008,
+      "max_observed_compressed_peak_bytes": 0,
+      "decompressions": 0,
+      "observed_swap_range_bytes": 0
+    },
+    {
+      "mode": "fast-validate",
+      "source": "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/fast-validate.json",
+      "sha256": "658a038b62a39f789206fd005e6af725e6fff328ca54d77bf9c0116832d2b071",
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10547565824,
+      "max_observed_compressed_peak_bytes": 79921152,
+      "decompressions": 190,
+      "observed_swap_range_bytes": 0
+    }
+  ],
+  "timing_samples": [
+    {
+      "source": "pair-0-control.json",
+      "sha256": "3c819b3fd5e0e9dec5622f5841943800871420f87e2451648e11695e23e34b35",
+      "tokens_per_second": 4.871931820549134,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10412069824,
+      "max_observed_compressed_peak_bytes": 0,
+      "decompressions": 0,
+      "observed_swap_range_bytes": 0
+    },
+    {
+      "source": "pair-0-candidate.json",
+      "sha256": "0af3f6a103af3b9000b94084a550d795c54090e566c70a1da5401056e48c108f",
+      "tokens_per_second": 4.971294464102419,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10411807744,
+      "max_observed_compressed_peak_bytes": 0,
+      "decompressions": 0,
+      "observed_swap_range_bytes": 0
+    }
+  ],
+  "timing_pairs_numerically_equal": 1,
+  "usable_timing_pairs": 1,
+  "timing_qualified": true,
+  "paired_confidence_qualified": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "build_files": 44
+}

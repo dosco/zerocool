@@ -1,0 +1,240 @@
+{
+  "kind": "q4_scratch_full_request_context_v1",
+  "complete": true,
+  "context_only": true,
+  "part_of_sealed_run": false,
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "source_report": {
+    "path": "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-0-A.json",
+    "sha256": "a9841b666a74186f318f45cd3afe86e576e3caaee30a62c7cab47784e29fe84e",
+    "seal_path": "docs/benchmarks/2026-09-14-combined-q4/screen-01/evidence-files.json",
+    "seal_sha256": "ef6c35ca63f9eb0108a432124efc78c392158f1c7cdb2724f55559363578cbb7",
+    "report_hash_matches_seal_entry": true,
+    "json_paths": [
+      "runs[0].phases.decode",
+      "runs[1].phases.decode"
+    ],
+    "lines": [
+      226,
+      1912,
+      3508,
+      5298
+    ]
+  },
+  "measured": {
+    "scope": "Completed unprofiled normal-request control: 72-token initial prompt and a retained-history 128-token append; 32 decode forwards each. These are not 2K/4K/7K acceptance workloads.",
+    "requests": [
+      {
+        "run": 0,
+        "name": "coding_routes_32",
+        "prompt_tokens": 72,
+        "prefill_tokens": 72,
+        "reused_tokens": 0,
+        "output_tokens": 33,
+        "decode_forward_passes": 32,
+        "new_arena_allocations": 3201,
+        "arena_reuses": 99231,
+        "scratch_requests_per_token": 3201,
+        "total_new_allocations": 4385,
+        "nonarena_new_allocations_per_token": 37,
+        "scratch_before_bytes": 0,
+        "scratch_after_bytes": 78004224,
+        "unused_scratch_after_bytes": 0,
+        "scratch_capacity_bytes": 134217728,
+        "registered_state_bytes": 571342848,
+        "profiling_enabled": false,
+        "gpu_reference_mode": "off",
+        "execution": {
+          "cache_policy": "clock",
+          "sparse_selection": "cpu",
+          "residency": "core-cache",
+          "decode_path": "reference",
+          "expert_tail": "wait",
+          "decode_scratch": "reuse",
+          "prefill_pipeline": "serial",
+          "phase_memory": "fixed",
+          "cached_token_replay": false
+        }
+      },
+      {
+        "run": 1,
+        "name": "append_128",
+        "prompt_tokens": 233,
+        "prefill_tokens": 129,
+        "reused_tokens": 104,
+        "output_tokens": 33,
+        "decode_forward_passes": 32,
+        "new_arena_allocations": 3201,
+        "arena_reuses": 99231,
+        "scratch_requests_per_token": 3201,
+        "total_new_allocations": 4385,
+        "nonarena_new_allocations_per_token": 37,
+        "scratch_before_bytes": 0,
+        "scratch_after_bytes": 78200832,
+        "unused_scratch_after_bytes": 0,
+        "scratch_capacity_bytes": 134217728,
+        "registered_state_bytes": 571342848,
+        "profiling_enabled": false,
+        "gpu_reference_mode": "off",
+        "execution": {
+          "cache_policy": "clock",
+          "sparse_selection": "cpu",
+          "residency": "core-cache",
+          "decode_path": "reference",
+          "expert_tail": "wait",
+          "decode_scratch": "reuse",
+          "prefill_pipeline": "serial",
+          "phase_memory": "fixed",
+          "cached_token_replay": false
+        }
+      }
+    ]
+  },
+  "source_derived": {
+    "sources": {
+      "src/qwen/model.cpp": {
+        "sha256": "0212f655c7892e4e95e70f012d2b8d8add6e1d44223ad9f1fd4542053a53bcc6",
+        "lines": [
+          169,
+          182,
+          185,
+          299,
+          313,
+          327,
+          336,
+          360,
+          411,
+          429,
+          439,
+          497,
+          531,
+          547,
+          623
+        ]
+      },
+      "src/qwen/metal.mm": {
+        "sha256": "5eedeea988d83cb64d1bcfbefcf5dfc1cf4b3f21548374b076b1a2dbac2f66b2",
+        "lines": [
+          113,
+          304,
+          308,
+          312,
+          378,
+          739,
+          763,
+          823,
+          841,
+          864
+        ]
+      },
+      "src/qwen/pipeline.cpp": {
+        "sha256": "31de0c60314efb921f29301920b59ffda82777480ce9ee3608d415266dfd404b",
+        "lines": [
+          7,
+          22,
+          25,
+          26
+        ]
+      }
+    },
+    "short_context_breakdown": [
+      {
+        "category": "routed_experts",
+        "buffers": 1440,
+        "rounded_bytes": 23592960
+      },
+      {
+        "category": "shared_experts",
+        "buffers": 144,
+        "rounded_bytes": 2359296
+      },
+      {
+        "category": "gated_residual_inputs",
+        "buffers": 768,
+        "rounded_bytes": 22020096
+      },
+      {
+        "category": "gated_deltanet",
+        "buffers": 324,
+        "rounded_bytes": 10616832
+      },
+      {
+        "category": "router_positions_contributions_reduction",
+        "buffers": 288,
+        "rounded_bytes": 10223616
+      },
+      {
+        "category": "residual_outputs",
+        "buffers": 96,
+        "rounded_bytes": 4718592
+      },
+      {
+        "category": "attention",
+        "buffers": 120,
+        "rounded_bytes": 2752512
+      },
+      {
+        "category": "embedding_ngram_logits",
+        "buffers": 21,
+        "rounded_bytes": 1720320
+      }
+    ],
+    "reconciliation": "Static shapes at final history length 104 sum exactly to the measured 3201 buffers and 78004224 bytes. Individual categories were not instrumented.",
+    "long_context_estimates": [
+      {
+        "history_length": 4096,
+        "buffers": 3237,
+        "rounded_bytes": 89210880
+      },
+      {
+        "history_length": 7168,
+        "buffers": 3237,
+        "rounded_bytes": 97468416
+      },
+      {
+        "history_length": 8192,
+        "buffers": 3237,
+        "rounded_bytes": 100220928
+      }
+    ],
+    "nonarena_state_update_estimate": {
+      "allocations_per_token": 37,
+      "rounded_bytes_per_token": 5095424,
+      "gdn_updates": {
+        "count": 36,
+        "logical_bytes_each": 122880,
+        "rounded_bytes_each": 131072
+      },
+      "ngram_update": {
+        "count": 1,
+        "logical_bytes_each": 368640,
+        "rounded_bytes_each": 376832
+      },
+      "attribution": "State allocation attribution is derived from source and matches measured total-minus-arena allocation counts; per-category cost instrumentation was disabled."
+    },
+    "assumptions": [
+      "Single-token full 48-layer decode; ten router-selected experts per layer; scatter expert path; original GDN; CPU sparse selection; full logits.",
+      "Scratch charges round to 16KiB and remain retained through the full forward; state replacements are outside scratch.",
+      "Sparse attention above history length 2048 adds pooled index keys and score buffers. Long-context values are estimates, not measurements."
+    ]
+  },
+  "proposed_diagnostic": {
+    "passes": 48,
+    "experts_per_pass": 8,
+    "shared_chains_per_pass": 1,
+    "buffers": 1296,
+    "rounded_bytes": 21233664,
+    "measured_short_context_buffer_fraction": 0.40487347703842547,
+    "measured_short_context_byte_fraction": 0.2722117202268431,
+    "missing_two_experts_per_layer_bytes": 4718592,
+    "remaining_surrounding_scratch_bytes": 52051968,
+    "scope": "Targeted shared/routed expert scratch-lifetime intervention, not a full-token working-set replica."
+  },
+  "limitations": [
+    "No GPU run or performance comparison was performed to create this report.",
+    "Only raw request counters and retained arena totals are measured; category breakdowns, long-context footprints and state byte attribution are source-derived.",
+    "Bounded replay omits surrounding operators, persistent model state, the full expert cache and ordinary state replacement costs.",
+    "A negative 20.25MiB replay cannot rule out an effect in the complete measured 74.39MiB arena or the estimated larger long-context arenas.",
+    "Context outside the new run seal; no production, normal-request throughput or full-model correctness qualification."
+  ]
+}

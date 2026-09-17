@@ -1,0 +1,68 @@
+{
+  "kind": "host_load_observation_v1",
+  "unix_time": 1789604269.614866,
+  "cpu_percent_sum": 221.7,
+  "top_cpu": [
+    {
+      "pid": 72102,
+      "cpu_percent": 96.3,
+      "rss_mib": 25.203125,
+      "executable": "spotlightknowledged"
+    },
+    {
+      "pid": 63914,
+      "cpu_percent": 96.1,
+      "rss_mib": 12.390625,
+      "executable": "Python"
+    },
+    {
+      "pid": 74347,
+      "cpu_percent": 11.3,
+      "rss_mib": 311.421875,
+      "executable": "codex"
+    },
+    {
+      "pid": 72208,
+      "cpu_percent": 6.7,
+      "rss_mib": 12.671875,
+      "executable": "Python"
+    },
+    {
+      "pid": 74359,
+      "cpu_percent": 3.1,
+      "rss_mib": 710.09375,
+      "executable": "Codex (Renderer)"
+    },
+    {
+      "pid": 673,
+      "cpu_percent": 2.1,
+      "rss_mib": 82.0,
+      "executable": "iTerm2"
+    },
+    {
+      "pid": 89664,
+      "cpu_percent": 1.4,
+      "rss_mib": 183.390625,
+      "executable": "CloudflareWARP"
+    },
+    {
+      "pid": 607,
+      "cpu_percent": 1.2,
+      "rss_mib": 35.890625,
+      "executable": "com.apple.DriverKit-AppleBCMWLAN"
+    },
+    {
+      "pid": 3626,
+      "cpu_percent": 0.6,
+      "rss_mib": 41.5625,
+      "executable": "Claude Helper"
+    },
+    {
+      "pid": 620,
+      "cpu_percent": 0.5,
+      "rss_mib": 9.359375,
+      "executable": "trustd"
+    }
+  ],
+  "limitation": "Point-in-time process CPU percentages and resident memory, not physical footprint or a causal thermal diagnosis."
+}

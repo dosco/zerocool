@@ -1,0 +1,516 @@
+{
+  "kind": "q4_scratch_lifetime_comparison_v1",
+  "complete": true,
+  "original_lifetime_stage_qualified": false,
+  "production_promoted": false,
+  "normal_request_latency_qualified": false,
+  "runs": [
+    {
+      "run": "forward-01",
+      "source_sha256": "3172fc4da1ed727704d73e5221d83b9f8a119d8469b80394ef553afa56d89662",
+      "status": "resource_blocked",
+      "complete": false,
+      "elapsed_seconds": 6.916160749271512,
+      "modes": {
+        "check": {
+          "status": "disturbed",
+          "clean_memory": false,
+          "clean_host": true,
+          "compressed_bytes_range": [
+            29032448,
+            29409280
+          ],
+          "decompression_delta_sum": 16,
+          "peak_sampled_physical_bytes": 5485326080,
+          "scratch_allocated_bytes": 21233664,
+          "final_live_bytes": 5385306112,
+          "paired_metrics": null
+        }
+      }
+    },
+    {
+      "run": "forward-02",
+      "source_sha256": "d187b5c5051d9b6a4cf620edd8c3a84b5f9fa3fc7223af77666241c1f116d6ce",
+      "status": "resource_blocked",
+      "complete": false,
+      "elapsed_seconds": 6.1668022917583585,
+      "modes": {
+        "check": {
+          "status": "disturbed",
+          "clean_memory": false,
+          "clean_host": true,
+          "compressed_bytes_range": [
+            28901376,
+            29278208
+          ],
+          "decompression_delta_sum": 15,
+          "peak_sampled_physical_bytes": 5488537280,
+          "scratch_allocated_bytes": 21233664,
+          "final_live_bytes": 5385306112,
+          "paired_metrics": null
+        }
+      }
+    },
+    {
+      "run": "batch-01",
+      "source_sha256": "a8bb77acb486c163ea2eb4dbfde43e910eea32d5e3c54ea99291fc4fdf630c14",
+      "status": "no_clear_arrival_gain",
+      "complete": true,
+      "elapsed_seconds": 31.32368495874107,
+      "modes": {
+        "check": {
+          "status": "checked",
+          "clean_memory": true,
+          "clean_host": true,
+          "compressed_bytes_range": [
+            0,
+            0
+          ],
+          "decompression_delta_sum": 0,
+          "peak_sampled_physical_bytes": 5476494976,
+          "scratch_allocated_bytes": 442368,
+          "final_live_bytes": 5385306112,
+          "paired_metrics": null
+        },
+        "timing": {
+          "status": "no_clear_arrival_gain",
+          "clean_memory": true,
+          "clean_host": true,
+          "compressed_bytes_range": [
+            0,
+            0
+          ],
+          "decompression_delta_sum": 0,
+          "peak_sampled_physical_bytes": 5425360448,
+          "scratch_allocated_bytes": 442368,
+          "final_live_bytes": 5385306112,
+          "paired_metrics": [
+            {
+              "group": 1,
+              "metrics": {
+                "gpu_command_ns": {
+                  "reference_ns": [
+                    98812423,
+                    99576397,
+                    99856595,
+                    98821553,
+                    98895679
+                  ],
+                  "packed_ns": [
+                    61646926,
+                    61183968,
+                    61235623,
+                    61966744,
+                    61783600
+                  ],
+                  "reference_median_ns": 98895679,
+                  "packed_median_ns": 61646926,
+                  "ratios": [
+                    0.6238782951410877,
+                    0.6144424767648502,
+                    0.61323564057036,
+                    0.6270569740995672,
+                    0.6247350806904314
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.6206435955880336,
+                    "low": 0.6127886148397684,
+                    "high": 0.6285992647646759,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "wall_ns": {
+                  "reference_ns": [
+                    177281709,
+                    179503294,
+                    183537376,
+                    187397329,
+                    183330378
+                  ],
+                  "packed_ns": [
+                    166923999,
+                    164202046,
+                    175911208,
+                    176048706,
+                    173619957
+                  ],
+                  "reference_median_ns": 183330378,
+                  "packed_median_ns": 173619957,
+                  "ratios": [
+                    0.9415748524852048,
+                    0.9147578428282213,
+                    0.9584489646403139,
+                    0.9394408497679281,
+                    0.9470332134481281
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.940140857924563,
+                    "low": 0.9203255571836788,
+                    "high": 0.9603827969787994,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "cpu_encode_ns": {
+                  "reference_ns": [
+                    3047930,
+                    3327087,
+                    3208883,
+                    3061988,
+                    3185513
+                  ],
+                  "packed_ns": [
+                    3041739,
+                    3422919,
+                    3193735,
+                    3156047,
+                    2992197
+                  ],
+                  "reference_median_ns": 3185513,
+                  "packed_median_ns": 3156047,
+                  "ratios": [
+                    0.9979687853723674,
+                    1.0288035750192286,
+                    0.9952793542176515,
+                    1.030718278451777,
+                    0.939314013158948
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.9978586797895656,
+                    "low": 0.9523832129437806,
+                    "high": 1.0455055604703865,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "cpu_gpu_wait_ns": {
+                  "reference_ns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "packed_ns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "reference_median_ns": 0,
+                  "packed_median_ns": 0,
+                  "ratios": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                  ],
+                  "confidence_95": null,
+                  "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+                },
+                "coordinator_wait_ns": {
+                  "reference_ns": [
+                    169820791,
+                    171378142,
+                    175679119,
+                    179895988,
+                    175389458
+                  ],
+                  "packed_ns": [
+                    159522345,
+                    155920088,
+                    168135966,
+                    168180876,
+                    166425072
+                  ],
+                  "reference_median_ns": 175389458,
+                  "packed_median_ns": 166425072,
+                  "ratios": [
+                    0.9393569777919595,
+                    0.9098014844856936,
+                    0.957062893740946,
+                    0.9348784142979331,
+                    0.9488886840621857
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.9378591871272761,
+                    "low": 0.9157044451731583,
+                    "high": 0.960549945471443,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "preparation_ns": {
+                  "reference_ns": [
+                    113957169,
+                    118051169,
+                    125740290,
+                    116209086,
+                    114839624
+                  ],
+                  "packed_ns": [
+                    115292167,
+                    109735125,
+                    130100955,
+                    113070789,
+                    111912121
+                  ],
+                  "reference_median_ns": 116209086,
+                  "packed_median_ns": 113070789,
+                  "ratios": [
+                    1.011714910187002,
+                    0.9295555980474873,
+                    1.034679934331311,
+                    0.9729943921940837,
+                    0.9745079015584377
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.9840270795889619,
+                    "low": 0.9350797355768459,
+                    "high": 1.0355366034823072,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                }
+              }
+            },
+            {
+              "group": 4,
+              "metrics": {
+                "gpu_command_ns": {
+                  "reference_ns": [
+                    98600675,
+                    98524596,
+                    99292727,
+                    99890824,
+                    98567171
+                  ],
+                  "packed_ns": [
+                    60880999,
+                    60819002,
+                    68694727,
+                    60930628,
+                    60964757
+                  ],
+                  "reference_median_ns": 98600675,
+                  "packed_median_ns": 60930628,
+                  "ratios": [
+                    0.6174501239469202,
+                    0.6172976542832005,
+                    0.6918404708534192,
+                    0.6099722232744822,
+                    0.6185097571685404
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 0.6303065456350668,
+                    "low": 0.5906275187527069,
+                    "high": 0.6726512545663362,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "wall_ns": {
+                  "reference_ns": [
+                    179240621,
+                    184666665,
+                    175291833,
+                    187724253,
+                    184342037
+                  ],
+                  "packed_ns": [
+                    165667332,
+                    174485583,
+                    419830372,
+                    175374787,
+                    174576918
+                  ],
+                  "reference_median_ns": 184342037,
+                  "packed_median_ns": 174576918,
+                  "ratios": [
+                    0.9242733654666372,
+                    0.944867786506027,
+                    2.395036692896012,
+                    0.9342148614116472,
+                    0.9470271721039949
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 1.130989499547439,
+                    "low": 0.671767860543773,
+                    "high": 1.904135823126681,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "cpu_encode_ns": {
+                  "reference_ns": [
+                    2736578,
+                    2914351,
+                    2730980,
+                    3138012,
+                    2884851
+                  ],
+                  "packed_ns": [
+                    2780256,
+                    3072211,
+                    3676546,
+                    3009345,
+                    3085329
+                  ],
+                  "reference_median_ns": 2884851,
+                  "packed_median_ns": 3072211,
+                  "ratios": [
+                    1.015960809448881,
+                    1.0541664336245016,
+                    1.3462368819984034,
+                    0.9589972887292973,
+                    1.0694933637820463
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 1.0813856927662,
+                    "low": 0.9207588132579351,
+                    "high": 1.2700340194211621,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "cpu_gpu_wait_ns": {
+                  "reference_ns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "packed_ns": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "reference_median_ns": 0,
+                  "packed_median_ns": 0,
+                  "ratios": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                  ],
+                  "confidence_95": null,
+                  "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+                },
+                "coordinator_wait_ns": {
+                  "reference_ns": [
+                    172447219,
+                    177497079,
+                    168307163,
+                    179735546,
+                    177017487
+                  ],
+                  "packed_ns": [
+                    158654163,
+                    166896040,
+                    411016539,
+                    167650625,
+                    166951414
+                  ],
+                  "reference_median_ns": 177017487,
+                  "packed_median_ns": 166951414,
+                  "ratios": [
+                    0.9200157817563878,
+                    0.9402748537625231,
+                    2.4420620707628466,
+                    0.9327627658025975,
+                    0.9431351491279503
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 1.1319581895594077,
+                    "low": 0.663728585716995,
+                    "high": 1.9305019709621996,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                },
+                "preparation_ns": {
+                  "reference_ns": [
+                    113406291,
+                    125323423,
+                    123559793,
+                    113102292,
+                    117331962
+                  ],
+                  "packed_ns": [
+                    122256665,
+                    140382376,
+                    309300625,
+                    115307330,
+                    111886082
+                  ],
+                  "reference_median_ns": 117331962,
+                  "packed_median_ns": 122256665,
+                  "ratios": [
+                    1.0780412966684538,
+                    1.120160722070287,
+                    2.503246545581377,
+                    1.0194959621154274,
+                    0.9535857075329568
+                  ],
+                  "confidence_95": {
+                    "geometric_mean": 1.2406032694173597,
+                    "low": 0.7577131830513851,
+                    "high": 2.0312388731194435,
+                    "pairs": 5,
+                    "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                    "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+                  },
+                  "ratio_limitation": null
+                }
+              }
+            }
+          ]
+        },
+        "trace": {
+          "status": "captured",
+          "clean_memory": true,
+          "clean_host": true,
+          "compressed_bytes_range": [
+            0,
+            0
+          ],
+          "decompression_delta_sum": 0,
+          "peak_sampled_physical_bytes": 5425294912,
+          "scratch_allocated_bytes": 442368,
+          "final_live_bytes": 5385306112,
+          "paired_metrics": null
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Forward attempts have no timing or trace; exactness does not imply clean memory.",
+    "The batch group-four slow observation is retained; no pair exclusions or pooling.",
+    "This48-pass replay covers20.25MiB of the measured74.390625MiB full-token scratch."
+  ]
+}

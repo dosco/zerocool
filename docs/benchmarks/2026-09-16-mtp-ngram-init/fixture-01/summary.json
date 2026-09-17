@@ -1,0 +1,45 @@
+{
+  "kind": "mtp_expert_scratch_fixture_v1",
+  "complete": true,
+  "status": "fixture_validated",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-17T03:08:57.378847+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {},
+  "ngram_initialization": "lazy",
+  "numerical_reference": "/repo/docs/benchmarks/2026-09-16-mtp-expert-scratch/validation-02",
+  "historical_timing_reused": false,
+  "host_preflight": [
+    {
+      "source": "fixture-host.json",
+      "sha256": "7c58abbb479387de24f88ffaf858ac0f85b276f67106feb034ddac332cfc2695",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5218199965004083,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "ngram_exact": true,
+  "scratch_exact": true,
+  "elapsed_seconds": 10.612599084153771
+}

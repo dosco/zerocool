@@ -1,0 +1,4 @@
+[ 86%] Built target freellm_lib
+[ 93%] Building CXX object CMakeFiles/qwen_q4_check.dir/scripts/qwen/check_q4.cpp.o
+[100%] Linking CXX executable qwen_q4_check
+[100%] Built target qwen_q4_check

@@ -1,0 +1,218 @@
+{
+  "kind": "q4_scratch_lifetime_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source_seal_sha256": "6be4851f1409052456cee6fd2e8ff6556e285a34109dad3b5f7b8f6eaeb54795",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 154,
+    "archived_tooling": []
+  },
+  "scope": "forward",
+  "recorded_complete": false,
+  "recomputed_status": "resource_blocked",
+  "modes": {
+    "check": {
+      "mode": "check",
+      "hits_per_batch": 2,
+      "status": "disturbed",
+      "clean_memory": false,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 6,
+        "capture_cycles": 6,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180,
+        "hits_per_batch": 2,
+        "cache_preparation": "invalidate-selected-file-ranges",
+        "shared_chains_per_batch": 1,
+        "shared_layer_order": [
+          0,
+          16,
+          32,
+          47,
+          0,
+          16,
+          32,
+          47
+        ],
+        "shared_gpu_scope": "shared-and-routed-command-intervals",
+        "passes": 48,
+        "retained_payload": "shared-and-routed-temporaries",
+        "batch_scratch_bytes": 442368,
+        "forward_scratch_bytes": 21233664
+      },
+      "results": [],
+      "captures": [],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 1068941312,
+          "write_bytes": 7528448,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 1065857024,
+          "write_bytes": 2166784,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 1063759872,
+          "write_bytes": 8372224,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 1065807872,
+          "write_bytes": 10575872,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 1,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 6,
+        "expert_executions_per_arm": 384,
+        "detailed_batches": 0,
+        "detailed_experts": 0,
+        "shared_chains_per_arm": 48
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "One rotating shared-expert chain precedes eight routed experts per batch. Routing, other model operators and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows.",
+        "GPU duration includes shared and routed work in mixed command groups; it is not pure routed-expert time. Shared command profiles are captured only in the separate trace process.",
+        "Selected file ranges are invalidated before every batch preparation; invalidation time is included in preparation and excluded from coordinator wall time.",
+        "Storage coverage requires every timing arm to observe device read bytes within 90\u2013110% of preparation plus timed application bytes. Aggregate coverage cannot replace a failed arm.",
+        "Device counters are systemwide. Matching byte coverage supports exercised device reads, but does not isolate this process or establish physical NAND traffic.",
+        "The 48 passes repeat the same eight expert and four shared-layer fixtures six times; they are not 48 distinct model layers or a complete model forward pass.",
+        "Both scopes drain GPU work and explicitly prepare file reads between passes. The forward condition retains its scratch arena across those boundaries.",
+        "Batch and forward scope timings come from separate processes; packed/reference pairs within each scope are the statistical units. Cross-scope absolute differences are contextual.",
+        "The fixed expert cache remains eight slots. This measures temporary-buffer lifetime and does not vary expert-cache capacity."
+      ],
+      "gpu_scope": "shared-and-routed-command-intervals",
+      "cache_preparation": "invalidate-selected-file-ranges",
+      "native_performance_status": null,
+      "storage_criteria": {
+        "scope": "each-timing-arm",
+        "minimum_device_to_application_ratio": 0.9,
+        "maximum_device_to_application_ratio": 1.1
+      },
+      "storage_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "application_read_bytes": 1061683200,
+          "observed_device_read_bytes": 1068941312,
+          "device_to_application_ratio": 1.0068364197530864,
+          "within_declared_range": true,
+          "invalidation_ns": 43829877,
+          "invalidation_calls": 384
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "application_read_bytes": 1061683200,
+          "observed_device_read_bytes": 1065857024,
+          "device_to_application_ratio": 1.003931327160494,
+          "within_declared_range": true,
+          "invalidation_ns": 44095456,
+          "invalidation_calls": 384
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "application_read_bytes": 1061683200,
+          "observed_device_read_bytes": 1063759872,
+          "device_to_application_ratio": 1.0019560185185186,
+          "within_declared_range": true,
+          "invalidation_ns": 43817084,
+          "invalidation_calls": 384
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "application_read_bytes": 1061683200,
+          "observed_device_read_bytes": 1065807872,
+          "device_to_application_ratio": 1.0038850308641976,
+          "within_declared_range": true,
+          "invalidation_ns": 43811582,
+          "invalidation_calls": 384
+        }
+      ],
+      "device_reads_exercised": null,
+      "scope": "forward",
+      "shared_reference": {
+        "reference_manifest_sha256": "3c624b05246af473174119e41530016fd4afc2d6854771735e3e9ec6b850bb92",
+        "expected_native_sha256": "155e75079cfaf0a49d1ba20bf26da5fbb522fafefe50b94a303ad97f4dc57d9e",
+        "verified_cases": 32,
+        "independent_cpu_reference_passed": true,
+        "shared_outputs_exact": true
+      },
+      "scratch_lifetime": {
+        "passes": 48,
+        "scope": "forward",
+        "retained_payload": "shared-and-routed-temporaries",
+        "buffers_per_pass": 27,
+        "buffer_charge_bytes": 16384,
+        "retained_scratch_bytes": 21233664,
+        "retained_buffers": 1296,
+        "scope_begins_per_arm": 1,
+        "scope_ends_per_arm": 1,
+        "reused_buffers_per_arm": 1296,
+        "captures": [],
+        "complete_model_forward": false,
+        "inferred_cursor_basis": "All scratch requests are charged 16384 bytes; used prefix is allocated minus unused retained bytes"
+      }
+    }
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

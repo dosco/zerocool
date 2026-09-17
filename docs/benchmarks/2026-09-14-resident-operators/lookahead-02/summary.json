@@ -1,0 +1,265 @@
+{
+  "kind": "q8_lookahead_screen_v1",
+  "complete": true,
+  "status": "insufficient_benefit",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-14T17:18:53.675300+00:00",
+  "time_limit_seconds": 240,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "81e6f5ced54d2802716bd5dd211e47428da0d39d65d55b8fe7564ce94bd26b79",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": [],
+  "verified_weight_tensors": [
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.weight",
+      "bytes": 26214400,
+      "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.scales",
+      "bytes": 819200,
+      "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.biases",
+      "bytes": 819200,
+      "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.weight",
+      "bytes": 15728640,
+      "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.scales",
+      "bytes": 491520,
+      "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.biases",
+      "bytes": 491520,
+      "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.out_proj.weight",
+      "bytes": 15728640,
+      "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.out_proj.scales",
+      "bytes": 491520,
+      "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+    },
+    {
+      "tensor": "language_model.model.layers.0.linear_attn.out_proj.biases",
+      "bytes": 491520,
+      "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.q_proj.weight",
+      "bytes": 31457280,
+      "sha256": "b6beab19fefc4dab921a5ca22970e3b522de1c729d11309be1f6db1f939e7414"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.q_proj.scales",
+      "bytes": 983040,
+      "sha256": "940a7d21358bdb9ca7021e12db7788c5b42774d01b6b371624a8f079a437c290"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.q_proj.biases",
+      "bytes": 983040,
+      "sha256": "ac4a8db368be9ccb36c6f62ab0ed0ab572a1a723363e3a747ba61af3e363ee6f"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.k_proj.weight",
+      "bytes": 1310720,
+      "sha256": "55970f121c05edba25fc60abae6e28747a8c332d0d98a786485fcba03d925c3d"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.k_proj.scales",
+      "bytes": 40960,
+      "sha256": "4f19315f8bc4c935de1ecd358fc35ca8147cdd5343232efe1a70a7c42a1c7c26"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.k_proj.biases",
+      "bytes": 40960,
+      "sha256": "caf9852475e678c791f1c9006bb8e0637e0800a9c01578857ec799729920f726"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.o_proj.weight",
+      "bytes": 15728640,
+      "sha256": "ec963d016bf856c969517177b9ee0fe89b59c68c5f2c9169609e081d291a2d76"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.o_proj.scales",
+      "bytes": 491520,
+      "sha256": "d9a4a7965af852b19167ea1facb0a2a798d9564008df84469d71fbd974300f4f"
+    },
+    {
+      "tensor": "language_model.model.layers.31.self_attn.o_proj.biases",
+      "bytes": 491520,
+      "sha256": "1f53fac70a94e75a0b125dc23f881bf87d994c8502a3202e71fe737c2acc627a"
+    }
+  ],
+  "clean_memory": true,
+  "cases": [
+    {
+      "case": 0,
+      "confidence_95": {
+        "geometric_mean": 0.8329441054602275,
+        "low": 0.5238915631693349,
+        "high": 1.324311998123715,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        0.261526060057804,
+        0.00962629565037787,
+        0.0028476642910391092,
+        0.0029895745683461428,
+        -0.004071596777066588
+      ],
+      "median_saving_ms": 0.0029895745683461428
+    },
+    {
+      "case": 1,
+      "confidence_95": {
+        "geometric_mean": 0.9687148633489738,
+        "low": 0.9470895824767633,
+        "high": 0.9908339230373119,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        0.006132788257673383,
+        0.0023229222279042006,
+        0.0025624758563935757,
+        0.0027395726647228003,
+        0.0011392985470592976
+      ],
+      "median_saving_ms": 0.0025624758563935757
+    },
+    {
+      "case": 2,
+      "confidence_95": {
+        "geometric_mean": 0.9631093621598023,
+        "low": 0.9311088389036201,
+        "high": 0.9962096854027134,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        -0.0011146184988319874,
+        0.005994806997478008,
+        0.004770845407620072,
+        0.004498724592849612,
+        0.003631517756730318
+      ],
+      "median_saving_ms": 0.004498724592849612
+    },
+    {
+      "case": 3,
+      "confidence_95": {
+        "geometric_mean": 0.9844387543343406,
+        "low": 0.9721744575648164,
+        "high": 0.9968577691938953,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        0.0018346472643315792,
+        0.00515757710672915,
+        0.0014375254977494478,
+        0.002496119122952223,
+        0.006286456482484937
+      ],
+      "median_saving_ms": 0.002496119122952223
+    },
+    {
+      "case": 4,
+      "confidence_95": {
+        "geometric_mean": 1.083647059288929,
+        "low": 0.9277965126793539,
+        "high": 1.265677261185587,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        0.0005663896445184946,
+        -0.002399698132649064,
+        -0.00011199153959751129,
+        -0.0001861772034317255,
+        -0.002990884240716696
+      ],
+      "median_saving_ms": -0.0001861772034317255
+    },
+    {
+      "case": 5,
+      "confidence_95": {
+        "geometric_mean": 0.9637131078480011,
+        "low": 0.919222678305533,
+        "high": 1.0103568766928916,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        0.0008437782526016235,
+        -0.0010533840395510197,
+        0.003947934601455927,
+        0.006101588951423764,
+        0.010958319762721658
+      ],
+      "median_saving_ms": 0.003947934601455927
+    },
+    {
+      "case": 6,
+      "confidence_95": {
+        "geometric_mean": 0.9738449666104921,
+        "low": 0.8357919729693611,
+        "high": 1.1347010376556423,
+        "pairs": 5,
+        "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+        "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+      },
+      "savings_ms": [
+        -0.06807551835663617,
+        -0.013954442692920566,
+        -0.0007773342076689005,
+        -0.005158828571438789,
+        0.22324608289636672
+      ],
+      "median_saving_ms": -0.005158828571438789
+    }
+  ],
+  "shape_frequency_projection_ms": [
+    9.641326731070876,
+    0.6376424571499228,
+    0.4284532042220235,
+    0.4669076297432184,
+    0.16032799612730742
+  ],
+  "median_shape_frequency_projection_ms": 0.4669076297432184,
+  "advance_to_request_screen": false,
+  "limitations": [
+    "Old real activations, with all packed weights rehashed against the pinned mixed artifact.",
+    "Only six matrices from two layers, width 8, even row counts. Width 4 and partial iterations are not qualified.",
+    "Shape frequencies project isolated GPU savings, not request savings. Repeated weights change cache behavior.",
+    "Five pairs in one process are correlated; intervals are screening evidence only."
+  ],
+  "elapsed_seconds": 3.778940041549504
+}

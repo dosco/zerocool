@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "source_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+  "consumer_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "file_locks_sha256": {
+    "models.lock.json": "3ea4eca6568e725e329be172973f777c7a33572db0e04066d71182f000094d77",
+    "mixed-models.lock.json": "a8257f7f5feb9aa5ae9614c684d9ebb332988e3d3a9755368bbeb049aebdb187"
+  },
+  "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+  "tensor_count": 816,
+  "expert_payload_bytes": 67947724800,
+  "ngram_payload_bytes": 32000153600,
+  "evidence_path": "docs/benchmarks/2026-09-08-mixed/payload-equivalence.json",
+  "evidence_sha256": "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+  "scope": "Lossless expert/ngram payload compatibility only; not numerical or performance qualification"
+}

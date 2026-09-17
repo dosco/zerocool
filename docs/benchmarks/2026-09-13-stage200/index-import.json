@@ -1,0 +1,1 @@
+{"documents":1045,"issues":[],"limitations":["Import is a snapshot; queries verify selected raw files again.","Files over 64MiB and malformed files are reported as issues; JSONL indexing is bounded."],"paths":1368,"sources":["/repo/docs/benchmarks/2026-09-13-stage200"]}

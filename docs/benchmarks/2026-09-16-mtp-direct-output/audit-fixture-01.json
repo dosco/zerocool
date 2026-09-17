@@ -1,0 +1,45 @@
+{
+  "source": "docs/benchmarks/2026-09-16-mtp-direct-output/fixture-01",
+  "seal_sha256": "0aa8fccd8fb3ac820cba3bc18067edf10c1d8aea71267c16db5c8a723fce81e8",
+  "seal_valid": true,
+  "native_sha256": "e871c305fed27e4cb713f55e84fe0c263fcbfd5068c47b794a2295f473f3bf1b",
+  "checks": {
+    "destinations_and_sentinels_exact": true,
+    "mixed_rows_exact": true,
+    "reversed_reads": true,
+    "forced_eviction": true,
+    "all_hits": true,
+    "invalid_destinations_rejected": true,
+    "scope_exclusion": true,
+    "cancellation_drained": true,
+    "read_failure_drained": true,
+    "encode_failure_drained": true,
+    "delayed_completion_safe": true,
+    "all_buffers_released": true
+  },
+  "row_cases": [
+    {
+      "rows": 1,
+      "exact": true,
+      "direct_writes": 8
+    },
+    {
+      "rows": 2,
+      "exact": true,
+      "direct_writes": 4
+    },
+    {
+      "rows": 3,
+      "exact": true,
+      "direct_writes": 4
+    },
+    {
+      "rows": 4,
+      "exact": true,
+      "direct_writes": 4
+    }
+  ],
+  "ngram_exact": true,
+  "performance_measurement": false,
+  "production_promoted": false
+}

@@ -1,0 +1,62 @@
+{
+  "kind": "stage200_q3_v1",
+  "complete": true,
+  "status": "operator_regression",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-14T02:40:32.132958+00:00",
+  "time_limit_seconds": 900,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "name": "control",
+      "kernel_policy": "candidate",
+      "token_tile": 1,
+      "gdn_path": "original",
+      "panel": 512,
+      "chunk": 128,
+      "ready_group": 4,
+      "io_workers": 8,
+      "expert_slots": 1460,
+      "cache_policy": "clock",
+      "residency": "off",
+      "decode_path": "reference",
+      "prefill_pipeline": "serial",
+      "phase_memory": "fixed",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "expert_tail": "wait",
+      "decode_scratch": "reuse",
+      "memory_pressure_policy": "observe"
+    }
+  ],
+  "workload": [],
+  "tuning": {
+    "status": "operator_regression",
+    "one_token_geomean_ratio": 1.0579807445099985,
+    "one_token_upper_95": 1.2069981873748086,
+    "ratios": [
+      1.1713546735397924,
+      1.2034676057259797,
+      0.9765810971734384,
+      0.9685264365156874,
+      0.9941369248077871
+    ],
+    "clean_memory": true,
+    "advance_to_quality_stage": false,
+    "quality_qualified": false,
+    "normal_request_latency_qualified": false
+  },
+  "advance_to_quality_stage": false,
+  "heldout_status": "not_run",
+  "elapsed_seconds": 28.64948737528175
+}

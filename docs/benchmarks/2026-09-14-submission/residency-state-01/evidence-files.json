@@ -1,0 +1,11 @@
+{
+  "summary.json": "d7abe538769d019b7a20281075d9922061b55fd17115b50b1f63ce40574e6653",
+  "state-candidate.json": "758a6373e28caf515f9cdd0a51f32b00286f4164e494b2b16ebff53b47778139",
+  "state-candidate.log": "cc2cb73a669ac8cadf8c1bf6631611de85b95dffde9435cf76e93b16023936c6",
+  "workload.json": "b67a21e0597bf29514cc9e93750cfc3636b1fc69ec47b05e64a3031469aa9e83",
+  "state-control.json": "52696d38c95a266b5941f2da90d914f3af829f4ef2334f046d5995dba774ba4f",
+  "control.case.json": "1ddcd78f16e1c34cb5b510652dc0fff7672879cc5ba8b3bc3b93e5feb460af70",
+  "identity.json": "612636e1eae6c4d77777d43007828148e00daa3fbf7745c285db61c23e557d8c",
+  "candidate.case.json": "36de5ff1c0865650a189bc24dab6782575b58caac529bae7f057381e7ba51cb1",
+  "state-control.log": "e4bcf95a23259351040c00b7f9499989f1d343f14217a25f58b3d81e797f78da"
+}

@@ -1,0 +1,946 @@
+{
+  "validation" : true,
+  "reference_shader_sha256" : "c57f10fcd20906ce1930f31cdc289b0d61f6f451ef37381da7186e01605aaf8a",
+  "exact" : true,
+  "fixture_manifest" : {
+    "origin" : "existing-Q4-experts",
+    "capture_mode" : "teacher-forced recorded continuation; no sampling or EOS override",
+    "build" : "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+    "layers" : {
+      "16" : {
+        "experts" : [
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-16-62.bin",
+              "sha256" : "76f3e8eb660c5812f3c17481002e24deeda6782198000bbdcec754b090c40604"
+            },
+            "expert" : 62
+          },
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-16-74.bin",
+              "sha256" : "27f5334b0e325e2711e12068d643d46e73857db082a75be8063843c832cec592"
+            },
+            "expert" : 74
+          }
+        ],
+        "offsets" : [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "inputs" : {
+          "bytes" : 81920,
+          "file" : "inputs-16.bin",
+          "sha256" : "8fd5bec2686a85ac4ab2b99cb571d9d050acbd08a9dff1b1a0d02de6cc34a2c2"
+        }
+      },
+      "32" : {
+        "experts" : [
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-32-26.bin",
+              "sha256" : "2a938c692581fb6156234c3b3c2b67037c36b31456b994d41849c8f3e5fa32bb"
+            },
+            "expert" : 26
+          },
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-32-28.bin",
+              "sha256" : "fd44a1d1c3e5752581f81dda52f53000c09c2b5909478d7bbdc882b6bcbbdc51"
+            },
+            "expert" : 28
+          }
+        ],
+        "offsets" : [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "inputs" : {
+          "bytes" : 81920,
+          "file" : "inputs-32.bin",
+          "sha256" : "31886e76db45b2e78736dabbeb4fa6ee92bc8f5f37a0070c5dc8ab3f6ca49afd"
+        }
+      },
+      "0" : {
+        "experts" : [
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-0-139.bin",
+              "sha256" : "7a51dd80e6fb0e96c84a0a3b9a052053649d26c474767939b6ead82629cb82e0"
+            },
+            "expert" : 139
+          },
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-0-167.bin",
+              "sha256" : "5f54c3cc6d6066a41bec3c96990ea6a45a607cd30f1030bd51c7928cfef35a91"
+            },
+            "expert" : 167
+          }
+        ],
+        "offsets" : [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "inputs" : {
+          "bytes" : 81920,
+          "file" : "inputs-0.bin",
+          "sha256" : "c7b5f74de55ccf11fc4d18455ef46de8662647a5ca812a69c54457d0c53909a7"
+        }
+      },
+      "47" : {
+        "experts" : [
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-47-48.bin",
+              "sha256" : "786764ec11970d6a19882559fd00c503668e66d26c8db774eb92412a307c3c88"
+            },
+            "expert" : 48
+          },
+          {
+            "selected_at" : 72,
+            "record" : {
+              "bytes" : 2764800,
+              "file" : "expert-47-126.bin",
+              "sha256" : "e8be3e30c992546200161c6e03d9453f867dfec864e3b2b4b1401ea84cc63200"
+            },
+            "expert" : 126
+          }
+        ],
+        "offsets" : [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79
+        ],
+        "inputs" : {
+          "bytes" : 81920,
+          "file" : "inputs-47.bin",
+          "sha256" : "2685994bd6b9754f08d5c14b422333ce22411f1f41f58de88c4d67e03a4a05b8"
+        }
+      }
+    },
+    "after" : {
+      "decode_scratch_passes" : 8,
+      "ngram_misses" : 1256,
+      "phase_memory" : {
+        "policy" : "fixed",
+        "phase" : "generation",
+        "prompt_plan" : {
+          "reserve_bytes" : 1073741824,
+          "session_bytes" : 571326464,
+          "runtime_control_bytes" : 16384,
+          "planned_bytes" : 11809357824,
+          "scratch_bytes" : 536870912,
+          "resident_bytes" : 5362515968,
+          "expert_slots" : 1460,
+          "kernel_scratch_bytes" : 0,
+          "panel_scratch_bytes" : 155189248,
+          "limit_bytes" : 12884901888,
+          "pipeline_scratch_bytes" : 0,
+          "snapshot_bytes" : 0,
+          "expert_bytes" : 4042588160,
+          "ngram_bytes" : 67108864,
+          "panel_tokens" : 512
+        },
+        "pressure_resizes" : 0,
+        "transitions" : [
+
+        ],
+        "generation_plan" : {
+          "reserve_bytes" : 1073741824,
+          "session_bytes" : 571326464,
+          "runtime_control_bytes" : 16384,
+          "planned_bytes" : 11809357824,
+          "scratch_bytes" : 536870912,
+          "resident_bytes" : 5362515968,
+          "expert_slots" : 1460,
+          "kernel_scratch_bytes" : 0,
+          "panel_scratch_bytes" : 155189248,
+          "limit_bytes" : 12884901888,
+          "pipeline_scratch_bytes" : 0,
+          "snapshot_bytes" : 0,
+          "expert_bytes" : 4042588160,
+          "ngram_bytes" : 67108864,
+          "panel_tokens" : 512
+        },
+        "transition_count" : 0
+      },
+      "sparse_selection_wait_ns" : 0,
+      "artifact_revision" : "b2c422f3c643e36f04227a64d61796b44a4b1029",
+      "completion_pipeline" : true,
+      "storage" : {
+        "scope" : "internal device counters, including other processes",
+        "devices" : [
+          {
+            "write_bytes" : 0,
+            "read_bytes" : 0,
+            "registry_id" : 4294969813
+          },
+          {
+            "write_bytes" : 19805432713216,
+            "read_bytes" : 81807819583488,
+            "registry_id" : 4294969822
+          }
+        ]
+      },
+      "layer_expert_wait_ns" : [
+        29424667,
+        20354830,
+        17149579,
+        13565040,
+        15051917,
+        15636205,
+        15291083,
+        18100042,
+        13687791,
+        14462418,
+        15487254,
+        13080914,
+        16862168,
+        13557502,
+        17430165,
+        12541248,
+        10155625,
+        15224166,
+        16794501,
+        14993621,
+        16467334,
+        15801332,
+        20287626,
+        14541585,
+        14879164,
+        16371123,
+        12829999,
+        16287791,
+        11570127,
+        11071544,
+        15691375,
+        13375582,
+        13617790,
+        15142666,
+        16053959,
+        14850996,
+        19720712,
+        15545916,
+        21974296,
+        14723748,
+        17374338,
+        14761252,
+        15682293,
+        10336917,
+        10211581,
+        12687333,
+        14482746,
+        13271290
+      ],
+      "model_id" : "qwen3.8-flash-next:mixed-4_8bit",
+      "sparse_selection_cpu_ns" : 0,
+      "expert_tail_pending" : false,
+      "process" : {
+        "reclaimable_bytes" : 9516482560,
+        "decompressions" : 0,
+        "resident_bytes" : 10064084992,
+        "pageins" : 1,
+        "system_swap_used_bytes" : 5163319296,
+        "physical_footprint_peak_bytes" : 10134049216,
+        "compressed_bytes" : 0,
+        "compressed_peak_bytes" : 0,
+        "resident_peak_bytes" : 10064117760,
+        "page_faults" : 637649,
+        "physical_footprint_bytes" : 10133541312
+      },
+      "short_append_tokens" : 32,
+      "layer_expert_gpu_ns" : [
+        29376834,
+        27446705,
+        34206168,
+        30150002,
+        28558799,
+        30038330,
+        27998998,
+        27301251,
+        27705128,
+        29485807,
+        29061257,
+        27992796,
+        23879327,
+        26251672,
+        25188589,
+        27087300,
+        25626931,
+        28985379,
+        26094490,
+        29706341,
+        31710125,
+        28857879,
+        27654200,
+        30195258,
+        33207378,
+        30969958,
+        29519383,
+        30422719,
+        28688674,
+        29863882,
+        28081589,
+        25611048,
+        30099680,
+        27340634,
+        29354755,
+        28690423,
+        31159543,
+        28738124,
+        27940530,
+        32016421,
+        27358383,
+        25473044,
+        29530006,
+        29992963,
+        27430469,
+        27946706,
+        31213292,
+        31224510
+      ],
+      "gpu_timing_scope" : "expert pipeline command groups can include shared work",
+      "memory_pressure" : {
+        "event_count" : 0,
+        "source" : "dispatch-memorypressure",
+        "counts" : [
+          0,
+          0,
+          0
+        ],
+        "events" : [
+
+        ],
+        "policy" : "observe"
+      },
+      "ready_group" : 4,
+      "phase_dependencies" : {
+        "prefill" : {
+          "coordinator_wait_ns" : 163613167,
+          "completion_waits" : 96,
+          "ready_hits" : 0,
+          "read_queue_sum_ns" : 8541859247,
+          "ready_to_encode_sum_ns" : 152163821113,
+          "ready_to_gpu_sum_ns" : 171098029609,
+          "read_service_sum_ns" : 17708661974,
+          "loading_joins" : 0,
+          "new_misses" : 7795
+        },
+        "decode" : {
+          "coordinator_wait_ns" : 574849984,
+          "completion_waits" : 1238,
+          "ready_hits" : 1644,
+          "read_queue_sum_ns" : 410171703,
+          "ready_to_encode_sum_ns" : 3814661209,
+          "ready_to_gpu_sum_ns" : 7900811334,
+          "read_service_sum_ns" : 6024209210,
+          "loading_joins" : 0,
+          "new_misses" : 2196
+        }
+      },
+      "expert_cache_occupancy" : 1460,
+      "expert_cache" : {
+        "loading_joins" : 0,
+        "layer_hits" : [
+          6,
+          24,
+          30,
+          45,
+          42,
+          30,
+          30,
+          24,
+          32,
+          37,
+          33,
+          36,
+          28,
+          35,
+          27,
+          42,
+          42,
+          31,
+          26,
+          39,
+          30,
+          38,
+          18,
+          43,
+          30,
+          33,
+          36,
+          33,
+          33,
+          39,
+          32,
+          35,
+          37,
+          33,
+          29,
+          37,
+          27,
+          29,
+          14,
+          39,
+          41,
+          34,
+          38,
+          46,
+          48,
+          51,
+          49,
+          53
+        ],
+        "layer_misses" : [
+          327,
+          255,
+          242,
+          175,
+          178,
+          223,
+          247,
+          247,
+          197,
+          182,
+          196,
+          195,
+          235,
+          185,
+          208,
+          143,
+          153,
+          201,
+          236,
+          203,
+          218,
+          207,
+          279,
+          172,
+          210,
+          204,
+          196,
+          197,
+          229,
+          185,
+          219,
+          174,
+          164,
+          203,
+          245,
+          201,
+          218,
+          224,
+          274,
+          167,
+          182,
+          206,
+          230,
+          184,
+          198,
+          190,
+          200,
+          187
+        ],
+        "protected_entries" : 0,
+        "application_read_bytes" : 27623116800,
+        "policy" : "clock",
+        "entry_metadata_bytes" : 116800,
+        "evictions" : 8531,
+        "ready_hits" : 1644,
+        "hit_rate" : 0.14129780833691449,
+        "probation_entries" : 0,
+        "hits" : 1644,
+        "misses" : 9991
+      },
+      "checkpoint_application_read_bytes" : 5349291005,
+      "expert_tail_deferrals" : 0,
+      "diagnostic_stream_trunk" : false,
+      "memory_plan" : {
+        "reserve_bytes" : 1073741824,
+        "session_bytes" : 571326464,
+        "runtime_control_bytes" : 16384,
+        "planned_bytes" : 11809357824,
+        "scratch_bytes" : 536870912,
+        "resident_bytes" : 5362515968,
+        "expert_slots" : 1460,
+        "kernel_scratch_bytes" : 0,
+        "panel_scratch_bytes" : 155189248,
+        "limit_bytes" : 12884901888,
+        "pipeline_scratch_bytes" : 0,
+        "snapshot_bytes" : 0,
+        "expert_bytes" : 4042588160,
+        "ngram_bytes" : 67108864,
+        "panel_tokens" : 512
+      },
+      "metal" : {
+        "kernel_dispatches" : {
+          "q4_mm" : 11635,
+          "router_accumulate" : 432,
+          "gdn_gate" : 324,
+          "router_mm" : 432,
+          "attention_values" : 108,
+          "q8_mm" : 400,
+          "gather_rows" : 9,
+          "q8_mv_packed_r2_w4" : 1160,
+          "gdn_qk" : 324,
+          "attention_softmax" : 108,
+          "conv_update" : 333,
+          "ple_gate" : 9,
+          "q8_gate_up" : 432,
+          "route_simd" : 432,
+          "index_store" : 108,
+          "attention_scores" : 108,
+          "q8_mv_packed_r2_w8" : 2049,
+          "binary" : 18,
+          "hc_mix" : 873,
+          "unary" : 2610,
+          "plain_mm" : 2052,
+          "gdn_scan" : 324,
+          "scatter_experts" : 11635,
+          "norm_rope" : 216,
+          "hc_add" : 864,
+          "q4_gate_up" : 11635,
+          "moe_sum" : 432,
+          "conv" : 333,
+          "kv_store" : 216,
+          "affine_embedding" : 9,
+          "norm" : 900
+        },
+        "buffer_costs" : null,
+        "scratch_pools" : [
+          {
+            "allocated_bytes" : 78004224,
+            "reuses" : 22407,
+            "allocation_count" : 3201,
+            "capacity_bytes" : 134217728,
+            "wait_ns" : 499,
+            "unused_retained_bytes" : 0,
+            "peak_bytes" : 78004224
+          },
+          {
+            "allocated_bytes" : 0,
+            "reuses" : 0,
+            "allocation_count" : 0,
+            "capacity_bytes" : 0,
+            "wait_ns" : 0,
+            "unused_retained_bytes" : 0,
+            "peak_bytes" : 0
+          }
+        ],
+        "cpu_gpu_wait_ns" : 18881197152,
+        "recommended_bytes" : 22906503168,
+        "router_arithmetic" : "M1 SIMD 8x8, sixteen fixed K partitions",
+        "live_command_groups" : 0,
+        "waits" : 11789,
+        "allocation_count" : 40111,
+        "live_buffer_bytes" : 10054451200,
+        "build_fingerprint" : "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+        "residency" : {
+          "pending_retirements" : 0,
+          "physical_residency_guaranteed" : false,
+          "registered_bytes" : 0,
+          "mode" : "off",
+          "commits" : 0,
+          "set_overhead_bytes" : 0,
+          "allocations" : 0,
+          "removals" : 0,
+          "bytes_by_class" : {
+
+          }
+        },
+        "kernels" : {
+          "automatic_rules_promoted" : false,
+          "gdn_rows" : 4,
+          "capture_filter" : {
+            "phase" : "",
+            "operator" : "",
+            "layer" : -2
+          },
+          "profile" : false,
+          "route_selection" : "simd",
+          "affine_rows" : 1,
+          "gate_pair" : false,
+          "token_tile" : 1,
+          "shape_table" : null,
+          "counter_profile" : false,
+          "policy" : "candidate",
+          "operator_capture" : "",
+          "gdn_block" : 8,
+          "gdn" : "original",
+          "q8_decode_rows" : 2,
+          "attention_score_tiles" : "full",
+          "profile_decode_only" : false
+        },
+        "q8_arithmetic" : "MLX 0.31.1 fixed per-token QMV, FP32 input bias sums",
+        "gpu_command_ns" : 14031280313,
+        "peak_command_groups" : 1,
+        "scratch_reuses" : 22407,
+        "submissions" : 12508,
+        "active_scratch_slot" : -1,
+        "cpu_encode_ns" : 134342417,
+        "attention_arithmetic" : "BF16 scores and probabilities, fixed across chunks",
+        "physical_bytes" : 34359738368,
+        "dispatches" : 50520,
+        "peak_buffer_bytes" : 10054959104,
+        "q4_arithmetic" : "MLX 0.31.1 GEMV BF16 bias sums",
+        "device" : "Apple M1 Pro",
+        "expert_reduction" : "eight partial sums in selected-expert order"
+      },
+      "passes" : {
+        "decode" : 8,
+        "short_append" : 0,
+        "prefill" : 1,
+        "panel" : 0
+      },
+      "io_workers" : 8,
+      "execution" : {
+        "residency" : "off",
+        "decode_path" : "reference",
+        "prefill_pipeline" : "serial",
+        "phase_memory" : "fixed",
+        "cached_token_replay" : false,
+        "decode_scratch" : "reuse",
+        "cache_policy" : "clock",
+        "sparse_selection" : "cpu",
+        "expert_tail" : "wait"
+      },
+      "ngram_hits" : 24,
+      "prepared" : {
+        "recipe" : "q4-control-lossless",
+        "manifest_sha256" : "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+        "ngram_cache_dtype" : "BF16",
+        "application_read_bytes" : 27623242400,
+        "payload_equivalence_sha256" : "b07f0427783f312c1fa96b14cb859659a1d713ca9425df8fcef8f77c6c9d8550",
+        "expert_record_bytes" : 2764800,
+        "source_revision" : "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+        "consumer_revision" : "b2c422f3c643e36f04227a64d61796b44a4b1029",
+        "format" : "freellm-affine-records-v1",
+        "expert_stride" : 2768896,
+        "ngram_record_bytes" : 100,
+        "prepared_bytes" : 100048541696
+      },
+      "chunk_tokens" : 128,
+      "layer_expert_passes" : [
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    "workload" : {
+      "tokens" : [
+        248045,
+        8678,
+        198,
+        24342,
+        286,
+        4879,
+        369,
+        716,
+        310,
+        830,
+        11553,
+        13,
+        5044,
+        1683,
+        15060,
+        1472,
+        279,
+        3274,
+        11,
+        9307,
+        1328,
+        30800,
+        11,
+        2814,
+        47675,
+        25605,
+        11,
+        321,
+        60445,
+        55404,
+        11,
+        27224,
+        11,
+        321,
+        30246,
+        303,
+        279,
+        1534,
+        4087,
+        13,
+        248046,
+        198,
+        248045,
+        846,
+        198,
+        18842,
+        411,
+        351,
+        992,
+        5638,
+        321,
+        6297,
+        7873,
+        47801,
+        13,
+        79091,
+        34647,
+        321,
+        4011,
+        14834,
+        21851,
+        11,
+        28647,
+        264,
+        34773,
+        7873,
+        11,
+        321,
+        2873,
+        29551,
+        6813,
+        13
+      ],
+      "split" : "tuning",
+      "source_offset" : 0,
+      "continuation" : [
+        20500,
+        1472,
+        279,
+        1301,
+        321,
+        21966,
+        9463,
+        18948
+      ]
+    },
+    "kind" : "q3_probe_capture_v2",
+    "complete" : true,
+    "artifact_revision" : "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "quality_qualified" : false
+  },
+  "normal_request_latency_qualified" : false,
+  "candidate_shader_sha256" : "355e844dc28ac70ac2f3aecf0097b1739d0e5f16dc429ab7441c938cd6a9285e",
+  "production_promoted" : false,
+  "output_modes" : [
+    "BF16",
+    "FP32"
+  ],
+  "pairs" : [
+    {
+      "pair" : 0,
+      "group" : 1,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79300224,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 343.34503288846463,
+            "wall_us_per_expert" : 757.07356249999998
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79038080,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 0
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79300224,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 146.9036506023258,
+            "wall_us_per_expert" : 544.650390625
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 2
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 228.61328034196049,
+            "wall_us_per_expert" : 646.55014062500004
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 1
+        }
+      ]
+    },
+    {
+      "pair" : 0,
+      "group" : 4,
+      "arms" : [
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 286.57489747274667,
+            "wall_us_per_expert" : 410.33332812499998
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 0
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 142.51239190343767,
+            "wall_us_per_expert" : 261.72915625000002
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 2
+        },
+        {
+          "memory_before" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "sample" : {
+            "gpu_us_per_expert" : 206.27150661312044,
+            "wall_us_per_expert" : 324.236328125
+          },
+          "memory_after" : {
+            "system_swap_used_bytes" : 6485639168,
+            "physical_footprint_bytes" : 79332992,
+            "compressed_bytes" : 0,
+            "decompressions" : 0
+          },
+          "variant" : 1
+        }
+      ]
+    }
+  ],
+  "expert_input_cases" : 64,
+  "complete" : true,
+  "kind" : "q4_packed_operator_probe_v1",
+  "device" : "Apple M1 Pro",
+  "max_shared_buffer_bytes" : 25231360,
+  "cycles" : 1
+}

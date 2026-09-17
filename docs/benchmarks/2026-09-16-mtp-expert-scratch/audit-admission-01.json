@@ -1,0 +1,28 @@
+{
+  "kind": "mtp_expert_scratch_admission_audit_v1",
+  "complete": true,
+  "reports": [
+    {
+      "directory": "short-02",
+      "status": "resource_blocked",
+      "complete": false,
+      "summary_sha256": "373befe17018aa2602de3849135b085c7d8011006da3dd3a7befc264c0139670",
+      "samples": 0
+    },
+    {
+      "directory": "short-03",
+      "status": "resource_blocked",
+      "complete": false,
+      "summary_sha256": "85cf60a77413637c72bb06b90af8913aaf25ba4429fac4088d64459ce442db21",
+      "samples": 0
+    },
+    {
+      "directory": "setup-memory-02",
+      "status": "setup_measured",
+      "complete": true,
+      "summary_sha256": "7fdccbdbe66fe989905cf0bdd080d59a708633203c5d2ed9a17d5a024982fe66",
+      "samples": 4
+    }
+  ],
+  "performance_qualified": false
+}

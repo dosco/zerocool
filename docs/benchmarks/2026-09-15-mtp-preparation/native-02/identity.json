@@ -1,0 +1,16 @@
+{
+  "/repo/scripts/qwen/verify_mtp.py": "c5b71574859523b018964c6c6847bef4cbd5197257fb5aa27ea653fc29f946d7",
+  "/repo/scripts/qwen/prepare_mtp.py": "84f4f84115529eb5521dc5d930bf87405698e9d06b1a4ab6b9dc36bd7b240da4",
+  "/repo/scripts/qwen/mtp_source.py": "f37e2b2c0eb5ad8d90b2293bd27bceb9b3c94da250cfc6895cb967abd2f66c5c",
+  "/repo/mtp-models.lock.json": "e0076b86441bebc2319f97a63ac2659466e77dbebe9a2ffcad723fcf05becf60",
+  "/repo/.cache/mtp-check-build-01/check-mtp": "f02ac9825463d91ddc4b6a6c673e0cee89366a3ddd228661bf3b14d83a18652c",
+  "/repo/scripts/qwen/prepare_storage.py": "a5a1689fe7f2646e9af83aa960f421753961f612970717aed2e044a9a3c24c57",
+  "/repo/scripts/qwen/verify_checkpoint.py": "46892cf53bfdbada8357fb13596c1c42c4e59cb779ec3b77aa12273d9e7a7f0b",
+  "/repo/scripts/qwen/build_identity.py": "6e2346aebfa2add4b6f9eadaaeb02b4dda3c32b95c860695a5ef70940802e37b",
+  "/repo/scripts/qwen/qualification_evidence.py": "a26e1f257d9d2540c34762cf9dafaf05d6095b506ee45fef29280ab7863490fd",
+  "/repo/.cache/prepared/mtp-q4-q8-v1/manifest.json": "3ee3961302503a0c7f3895754715b3e8aaff471e26ecd6cff3a74d63dc6ee047",
+  "/repo/.cache/prepared/mtp-q4-q8-v1/source-inventory.json": "e0076b86441bebc2319f97a63ac2659466e77dbebe9a2ffcad723fcf05becf60",
+  "/repo/.cache/prepared/mtp-q4-q8-v1/source-download.json": "91bf22b89c9b7ba1aaecceed14ce6bb799a916f5bf008d4bc799dc0114116ea1",
+  "/repo/.cache/prepared/mtp-q4-q8-v1/experts.bin": "0fb4398206829b2a841f6580df5e6e682a1a94a8b1513a4fa2a16dc65b938773",
+  "/repo/.cache/prepared/mtp-q4-q8-v1/dense.bin": "11444e14a6ff40b791d82457b35b6de89538939bb85b3fb2079c66076de1bd07"
+}

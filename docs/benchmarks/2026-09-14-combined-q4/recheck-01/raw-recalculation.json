@@ -1,0 +1,132 @@
+{
+  "kind": "combined_q4_independent_recheck_v1",
+  "complete": true,
+  "audit_passed": true,
+  "raw_comparisons": [
+    {
+      "control": "A",
+      "candidate": "B",
+      "pairs": [
+        {
+          "pair": 0,
+          "decode_change_percent": [
+            0.5182125847799091,
+            8.75321108627054
+          ],
+          "append_ttft_change_percent": -0.31232071105313786,
+          "conversation_change_percent": 0.858723738744982
+        },
+        {
+          "pair": 1,
+          "decode_change_percent": [
+            6.911923338622605,
+            5.787602339910736
+          ],
+          "append_ttft_change_percent": -0.14385091729557375,
+          "conversation_change_percent": 2.0718194604825158
+        }
+      ]
+    },
+    {
+      "control": "C",
+      "candidate": "D",
+      "pairs": [
+        {
+          "pair": 0,
+          "decode_change_percent": [
+            5.726340232999583,
+            5.851978330815166
+          ],
+          "append_ttft_change_percent": -0.37785326784769424,
+          "conversation_change_percent": 1.4420207618836
+        },
+        {
+          "pair": 1,
+          "decode_change_percent": [
+            1.050101778551249,
+            11.355818895905688
+          ],
+          "append_ttft_change_percent": 0.018994883354994663,
+          "conversation_change_percent": 1.873819103708696
+        }
+      ]
+    },
+    {
+      "control": "A",
+      "candidate": "C",
+      "pairs": [
+        {
+          "pair": 0,
+          "decode_change_percent": [
+            -9.274772452452918,
+            -5.359494207601168
+          ],
+          "append_ttft_change_percent": 14.265126213310953,
+          "conversation_change_percent": 3.185339990300351
+        },
+        {
+          "pair": 1,
+          "decode_change_percent": [
+            -4.957191869831156,
+            -9.475212100894604
+          ],
+          "append_ttft_change_percent": -0.2603571060157517,
+          "conversation_change_percent": -2.5405967205947344
+        }
+      ]
+    },
+    {
+      "control": "A",
+      "candidate": "D",
+      "pairs": [
+        {
+          "pair": 0,
+          "decode_change_percent": [
+            -4.07953724591732,
+            0.17884768354388125
+          ],
+          "append_ttft_change_percent": 13.833371699903685,
+          "conversation_change_percent": 4.673294016180662
+        },
+        {
+          "pair": 1,
+          "decode_change_percent": [
+            -3.959145651271201,
+            0.8046188688305422
+          ],
+          "append_ttft_change_percent": -0.24141167718936263,
+          "conversation_change_percent": -0.7143838035847283
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "recomputed_from_raw_not_summary": true,
+    "expected_decode_dispatches_per_phase": 15360,
+    "all_outputs_and_reuse_identical": true,
+    "profiling_disabled": true,
+    "zero_observed_compression": true,
+    "cross_phase_decompressions_unchanged": true,
+    "existing_seal_state_and_screen_audits_reproduced": true
+  },
+  "source_hashes": {
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-0-A.json": "a9841b666a74186f318f45cd3afe86e576e3caaee30a62c7cab47784e29fe84e",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-0-B.json": "52679e57264f10e220c2c79c5d7555499cec44a86abd823a1d46be1d5eeb2dfd",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-0-C.json": "8a9348933d6ea6750ed34d9c9c89c8dcc04e0abf897f129558b88517343a98bd",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-0-D.json": "80c4882ae81a5ff3497de41ba57ba50f19043d0a5249daa814afcb20aaf4273b",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-1-A.json": "95001f5e7ccaada8c6aa7afc6846e6b1b6f46ecbc198028870cd57f8315bd190",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-1-B.json": "dc09c2fc7f5dd036f806cef62a387e4d630782952b743011eb0a9d9839da446b",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-1-C.json": "d7d4d3de234cb4220a4f0ce3e03f1c99386a873e93633f4a686d44e053bfd583",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/pair-1-D.json": "ccb5e075750bd0f89db88be9aa79dcb9f101486e8d06b7489e29bd5575a1744f",
+    "docs/benchmarks/2026-09-14-combined-q4/state-01/evidence-files.json": "81e0b9e27f360881c7352faa55f0a97235c8ee6223fa280149d85abc8682433a",
+    "docs/benchmarks/2026-09-14-combined-q4/screen-01/evidence-files.json": "ef6c35ca63f9eb0108a432124efc78c392158f1c7cdb2724f55559363578cbb7"
+  },
+  "interpretation": "Keep packed Q4 unselected: both decode phases lose in all four component pairs. Treat the larger-cache append penalty as unresolved: +14.27 percent in round zero but -0.26 percent in round one. This does not overturn the failed combined screening gates.",
+  "confidence_qualified": false,
+  "new_gpu_runs": false,
+  "limitations": [
+    "Only two pairs per cache size, one short token workload.",
+    "No controlled GPU frequency, wattage, or continuous thermal record; do not attribute the result to throttling.",
+    "Direct Metal microbenchmarks and full requests differ in runtime wrappers, command composition, live working set, read contention and pacing. The causal difference remains unmeasured."
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "kind": "q3_probe_result_v1",
+  "complete": true,
+  "build": "d95cddfaa48093e0448486ab11a7bcabad751d933f7edfc6838516de615d86d4",
+  "origin": "Q4-to-Q3 exploratory; not original-weight quantization",
+  "quality_qualified": false,
+  "capture_mode": "teacher-forced recorded continuation; no sampling or EOS override",
+  "normal_request_latency_qualified": false,
+  "validation": true,
+  "input_scope": "real layer inputs; each row need not have selected both fixture experts",
+  "cases": [
+    {
+      "layer": 0,
+      "expert": 139,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 139,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 139,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 139,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 167,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 167,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 167,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 0,
+      "expert": 167,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 62,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 62,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 62,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 62,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 74,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 74,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 74,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 16,
+      "expert": 74,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 26,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 26,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 26,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 26,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 28,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 28,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 28,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 32,
+      "expert": 28,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 48,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 48,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 48,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 48,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 126,
+      "rows": 1,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 126,
+      "rows": 2,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 126,
+      "rows": 4,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    },
+    {
+      "layer": 47,
+      "expert": 126,
+      "rows": 8,
+      "q4_record_bytes": 2764800,
+      "q3_record_bytes": 2355200,
+      "q4_aligned_bytes": 2768896,
+      "q3_aligned_bytes": 2359296,
+      "exact_expanded_reference": true
+    }
+  ],
+  "memory": {
+    "physical_footprint_bytes": 64374464,
+    "resident_bytes": 96075776,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 9575,
+    "pageins": 17,
+    "physical_footprint_peak_bytes": 72730304,
+    "resident_peak_bytes": 99926016,
+    "system_swap_used_bytes": 5163319296,
+    "reclaimable_bytes": 19938787328
+  },
+  "peak_gpu_bytes": 6422528
+}

@@ -1,0 +1,203 @@
+{
+  "kind": "independent_hyper_fusion_review_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source_seals": {
+    "capture": "a62c5111076d9df9d3d85fbdc6e6241a40a185b0ece59d5541a3d39137ac32c7",
+    "screen": "94f855a8e9db5f8afca9199097f6c0b7ab9c83ac04abf06f3f3564ee711bdb6e"
+  },
+  "native_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "capture_status": "captured",
+  "screen_status": "insufficient_benefit",
+  "method": "Independent source/receipt/hash checks, direct safetensors header and selected payload reads, and raw paired-log Student-t recomputation; no screen analyzer imported.",
+  "checks": [
+    "Developer source copy contains exactly the declared capture hook; actual binary hash is separate from native fingerprint",
+    "Native current source, binaries and all frozen tooling hashes preserved",
+    "Captured first two tokens match the matching original request prefix",
+    "Four actual complete-block inputs and native outputs preserved byte-for-byte",
+    "All 96 target-block header shapes and affine-Q8 group 64 metadata rechecked against checkpoint",
+    "32 selected tensors re-read directly from original checkpoint and match prepared payloads",
+    "Four native-reference/fused results and 12 separate synthetic tail checks verified",
+    "Five alternating pairs for every fixture plus full weighted cycle retained",
+    "Wall confidence bounds and 96-block frequency projection independently recomputed",
+    "Both processes have clean observed memory and are inside byte/time bounds"
+  ],
+  "selected_original_weight_bytes_rechecked": 28262400,
+  "eligible_blocks": 96,
+  "real_fixtures": 4,
+  "synthetic_tail_cases": 12,
+  "frequency_weights": [
+    36,
+    36,
+    12,
+    12
+  ],
+  "cycle": [
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    2,
+    3
+  ],
+  "validation_gpu_stage_seconds": 0.137949167,
+  "timing_gpu_stage_seconds": 1.313629583,
+  "shared_buffer_bytes": 29810944,
+  "memory": [
+    {
+      "validation": true,
+      "observations": 4,
+      "peak_physical_bytes": 90195648
+    },
+    {
+      "validation": false,
+      "observations": 104,
+      "peak_physical_bytes": 66864896
+    }
+  ],
+  "paired_results": [
+    {
+      "case": 0,
+      "ratios": [
+        0.9122197866274006,
+        1.006126927662201,
+        1.004227028069689,
+        1.0020686759155903,
+        1.0045451913797279
+      ],
+      "wall_confidence_95": {
+        "geometric_mean": 0.9851224728996391,
+        "low": 0.9338998871597234,
+        "high": 1.039154517475515
+      },
+      "median_wall_saving_ms": -0.00124087499999996,
+      "frequency_projection_ms": null,
+      "gpu_projection_ms": null
+    },
+    {
+      "case": 1,
+      "ratios": [
+        1.0088718317288081,
+        1.0043255366869592,
+        1.0034895047075454,
+        1.013753000801353,
+        1.005101930892163
+      ],
+      "wall_confidence_95": {
+        "geometric_mean": 1.007101213664525,
+        "low": 1.0018504004496454,
+        "high": 1.0123795469955867
+      },
+      "median_wall_saving_ms": -0.0014948125000000232,
+      "frequency_projection_ms": null,
+      "gpu_projection_ms": null
+    },
+    {
+      "case": 2,
+      "ratios": [
+        1.002776657933478,
+        1.0039910932145761,
+        1.017718070110112,
+        1.0054893931568023,
+        1.021525306300155
+      ],
+      "wall_confidence_95": {
+        "geometric_mean": 1.010270419392062,
+        "low": 0.9995821938055224,
+        "high": 1.0210729308941537
+      },
+      "median_wall_saving_ms": -0.00160546875,
+      "frequency_projection_ms": null,
+      "gpu_projection_ms": null
+    },
+    {
+      "case": 3,
+      "ratios": [
+        1.0028815995332927,
+        1.0116165859774071,
+        1.0038792421523388,
+        1.0059720091973576,
+        1.0076306448825492
+      ],
+      "wall_confidence_95": {
+        "geometric_mean": 1.006391287799442,
+        "low": 1.0021189004016962,
+        "high": 1.0106818898961316
+      },
+      "median_wall_saving_ms": -0.0017551874999999768,
+      "frequency_projection_ms": null,
+      "gpu_projection_ms": null
+    },
+    {
+      "case": 4,
+      "ratios": [
+        1.0109504182620783,
+        1.0145310129406515,
+        1.01686681653192,
+        1.0033335484380408,
+        1.0094405251995007
+      ],
+      "wall_confidence_95": {
+        "geometric_mean": 1.0110137585042542,
+        "low": 1.0045732624610393,
+        "high": 1.0174955457014674
+      },
+      "median_wall_saving_ms": -0.02630859375,
+      "frequency_projection_ms": [
+        -0.31570312500000003,
+        -0.42129674999999955,
+        -0.48465637500000047,
+        -0.09718762500000047,
+        -0.27582825000000044
+      ],
+      "gpu_projection_ms": [
+        -0.4063434898853302,
+        -0.5050781182944775,
+        -0.530750141479075,
+        -0.14760950580239296,
+        -0.3093596315011382
+      ]
+    }
+  ],
+  "primary_result": {
+    "case": 4,
+    "ratios": [
+      1.0109504182620783,
+      1.0145310129406515,
+      1.01686681653192,
+      1.0033335484380408,
+      1.0094405251995007
+    ],
+    "wall_confidence_95": {
+      "geometric_mean": 1.0110137585042542,
+      "low": 1.0045732624610393,
+      "high": 1.0174955457014674
+    },
+    "median_wall_saving_ms": -0.02630859375,
+    "frequency_projection_ms": [
+      -0.31570312500000003,
+      -0.42129674999999955,
+      -0.48465637500000047,
+      -0.09718762500000047,
+      -0.27582825000000044
+    ],
+    "gpu_projection_ms": [
+      -0.4063434898853302,
+      -0.5050781182944775,
+      -0.530750141479075,
+      -0.14760950580239296,
+      -0.3093596315011382
+    ]
+  },
+  "conclusion": "Candidate is byte exact on the four real blocks and synthetic tail checks, but complete-cycle wall time is about 1.10% slower. The predeclared gain/materiality gate fails. Do not integrate or launch full-model qualification for this candidate.",
+  "limitations": [
+    "Repeated four-fixture resident workload with preallocated buffers, not a request or full-model state proof.",
+    "Projected per-token milliseconds are a screening heuristic, not measured request latency.",
+    "Five pairs occur within one timing process; confidence assumptions can be violated by temporal correlation.",
+    "Full checkpoint shards were not rehashed; verified receipt fingerprints and direct selected payload reads were checked."
+  ],
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

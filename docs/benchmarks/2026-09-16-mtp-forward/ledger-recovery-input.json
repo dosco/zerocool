@@ -1,0 +1,20 @@
+{
+  "hypothesis": "Updating only private attention state during target-aligned MTP catch-up avoids discarded computation without changing proposals or target output.",
+  "expected_effect": "Reduce catch-up work at the same 12GiB budget, 1460 target slots and 32 draft slots; count complete decode wall time.",
+  "controlled_change": "Bounded native state-only K/V/index catch-up, grouping at most four corrected rows. Full-layer priming and all trained proposal forward arithmetic remain unchanged.",
+  "correctness": "Independent 22-boundary CPU fixture passes; full versus state-only private state is byte-identical for full and proper prefixes with no expert cache access. Joint forced-rejection boundaries and all future timing proposals/target state compare exactly. Offline audits and 20 focused tests pass.",
+  "outcome": "Fresh timing stops at the first memory gate: clean control 4.841001 tokens/s; candidate 4.319057 tokens/s with 53.859MiB peak compression and 73 decompressions, unchanged swap. Zero usable pairs. The candidate numerical validation also had 76.219MiB peak compression. Original reports remain resource_blocked; no historical timings pooled.",
+  "decision": "blocked",
+  "smallest_experiment": "After a material resource change, collect one clean full-layer versus state-only pair under the same budget. Separately reduce target verification latency; eliminating all catch-up from the clean 4.7904 result still leaves about 202.65ms/token.",
+  "limitations": [
+    "Compression-disturbed timing establishes neither a speed gain nor a regression. Five alternating pairs were not reached.",
+    "The earlier 4.7904 real-draft screen is separate evidence, not a control pooled into this experiment.",
+    "Short 72-token prompt and 16-token continuation only; long contexts, sustained sessions, tool workflows and non-greedy sampling remain unqualified. Production is unchanged."
+  ],
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/fixture-04/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-01/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-02/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/recovery-timing-01/summary.json"
+  ]
+}

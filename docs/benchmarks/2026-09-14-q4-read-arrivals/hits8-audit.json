@@ -1,0 +1,2597 @@
+{
+  "kind": "q4_read_arrivals_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source_seal_sha256": "9ef8894e957979d61cf31932659e0c3a5029eec001f7c52125465d50aeb7df40",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 147,
+    "archived_tooling": []
+  },
+  "hits_per_batch": 8,
+  "recorded_complete": true,
+  "recomputed_status": "no_clear_arrival_gain",
+  "modes": {
+    "check": {
+      "mode": "check",
+      "hits_per_batch": 8,
+      "status": "checked",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [],
+      "captures": [],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 1093632,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 16384,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 1,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 1,
+        "expert_executions_per_arm": 64,
+        "detailed_batches": 0,
+        "detailed_experts": 0
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows."
+      ]
+    },
+    "timing": {
+      "mode": "timing",
+      "hits_per_batch": 8,
+      "status": "no_clear_arrival_gain",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [
+        {
+          "group": 1,
+          "metrics": {
+            "gpu_command_ns": {
+              "reference_ns": [
+                24779422,
+                35746965,
+                21332452,
+                27040861,
+                25184204
+              ],
+              "packed_ns": [
+                24487920,
+                22700729,
+                22049660,
+                17685182,
+                26518997
+              ],
+              "reference_median_ns": 25184204,
+              "packed_median_ns": 22700729,
+              "ratios": [
+                0.9882361259273925,
+                0.6350393383046644,
+                1.0336205139474826,
+                0.6540169708353591,
+                1.053001198687876
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.8511538573557377,
+                "low": 0.6199975356851909,
+                "high": 1.1684931748815914,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "wall_ns": {
+              "reference_ns": [
+                55416165,
+                62816291,
+                56850956,
+                61219582,
+                54917999
+              ],
+              "packed_ns": [
+                56318166,
+                54289001,
+                51728791,
+                51693623,
+                55225583
+              ],
+              "reference_median_ns": 56850956,
+              "packed_median_ns": 54289001,
+              "ratios": [
+                1.016276857122827,
+                0.864250342319638,
+                0.9099018669096787,
+                0.8443968630821426,
+                1.0056007867293197
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9253875953684656,
+                "low": 0.8324961499501139,
+                "high": 1.0286440384296625,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_encode_ns": {
+              "reference_ns": [
+                2502830,
+                2638127,
+                2735746,
+                2723169,
+                2703499
+              ],
+              "packed_ns": [
+                2758692,
+                2583663,
+                2646792,
+                2630623,
+                2709190
+              ],
+              "reference_median_ns": 2703499,
+              "packed_median_ns": 2646792,
+              "ratios": [
+                1.1022290766851923,
+                0.9793550500032788,
+                0.967484554487149,
+                0.9660153299336178,
+                1.0021050497891806
+              ],
+              "confidence_95": {
+                "geometric_mean": 1.002191391559467,
+                "low": 0.9358296828591536,
+                "high": 1.0732589526838776,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_gpu_wait_ns": {
+              "reference_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "packed_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "reference_median_ns": 0,
+              "packed_median_ns": 0,
+              "ratios": [
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "confidence_95": null,
+              "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+            },
+            "coordinator_wait_ns": {
+              "reference_ns": [
+                50474506,
+                57568989,
+                51528250,
+                55929581,
+                49605382
+              ],
+              "packed_ns": [
+                50854790,
+                49204055,
+                46557332,
+                46578384,
+                49843618
+              ],
+              "reference_median_ns": 51528250,
+              "packed_median_ns": 49204055,
+              "ratios": [
+                1.0075341797302584,
+                0.8546972224924777,
+                0.9035302382673582,
+                0.8328040934188297,
+                1.0048026240378514
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9177569390009352,
+                "low": 0.8217639158457247,
+                "high": 1.0249632319490807,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "preparation_ns": {
+              "reference_ns": [
+                81427000,
+                84534583,
+                81055498,
+                85773956,
+                85868455
+              ],
+              "packed_ns": [
+                87089125,
+                91550377,
+                87245623,
+                81467250,
+                82992790
+              ],
+              "reference_median_ns": 84534583,
+              "packed_median_ns": 87089125,
+              "ratios": [
+                1.069536210347919,
+                1.0829931816189358,
+                1.0763689712942113,
+                0.9497900504903842,
+                0.9665108100524227
+              ],
+              "confidence_95": {
+                "geometric_mean": 1.0273616339603242,
+                "low": 0.9487000715546899,
+                "high": 1.1125454277704059,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            }
+          }
+        },
+        {
+          "group": 4,
+          "metrics": {
+            "gpu_command_ns": {
+              "reference_ns": [
+                25147719,
+                25090306,
+                24017092,
+                23085419,
+                21623963
+              ],
+              "packed_ns": [
+                19541135,
+                19774092,
+                24873967,
+                21771846,
+                19305884
+              ],
+              "reference_median_ns": 24017092,
+              "packed_median_ns": 19774092,
+              "ratios": [
+                0.7770539745572949,
+                0.7881168129236845,
+                1.035677716519552,
+                0.9430994516495456,
+                0.8928004547547552
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.8820956109743461,
+                "low": 0.7584767051433238,
+                "high": 1.0258623127432431,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "wall_ns": {
+              "reference_ns": [
+                45686706,
+                45601167,
+                44258958,
+                42040958,
+                41445626
+              ],
+              "packed_ns": [
+                38249416,
+                39824875,
+                44913331,
+                41556625,
+                37764002
+              ],
+              "reference_median_ns": 44258958,
+              "packed_median_ns": 39824875,
+              "ratios": [
+                0.8372110696709016,
+                0.8733301715721442,
+                1.014785097290361,
+                0.9884794965899683,
+                0.9111697818245043
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.9225520880604461,
+                "low": 0.8339883564891082,
+                "high": 1.0205206686189563,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_encode_ns": {
+              "reference_ns": [
+                1686234,
+                1564488,
+                1599105,
+                1576122,
+                1596747
+              ],
+              "packed_ns": [
+                1589482,
+                1552088,
+                1683182,
+                1582501,
+                1622043
+              ],
+              "reference_median_ns": 1596747,
+              "packed_median_ns": 1589482,
+              "ratios": [
+                0.9426224355575797,
+                0.992074084301062,
+                1.0525775355589533,
+                1.0040472755281635,
+                1.0158422091915627
+              ],
+              "confidence_95": {
+                "geometric_mean": 1.0007907393987872,
+                "low": 0.9521483103174403,
+                "high": 1.0519181657030403,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "cpu_gpu_wait_ns": {
+              "reference_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "packed_ns": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "reference_median_ns": 0,
+              "packed_median_ns": 0,
+              "ratios": [
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "confidence_95": null,
+              "ratio_limitation": "A zero wait duration makes its multiplicative ratio undefined; no ratio is imputed."
+            },
+            "coordinator_wait_ns": {
+              "reference_ns": [
+                42395165,
+                42559839,
+                41168749,
+                38952083,
+                38356170
+              ],
+              "packed_ns": [
+                35129331,
+                36835625,
+                41663830,
+                38479209,
+                34630546
+              ],
+              "reference_median_ns": 41168749,
+              "packed_median_ns": 36835625,
+              "ratios": [
+                0.8286164471821256,
+                0.8655019818096586,
+                1.0120256508158652,
+                0.987860110074216,
+                0.9028676742229477
+              ],
+              "confidence_95": {
+                "geometric_mean": 0.916698536175514,
+                "low": 0.8245550884170368,
+                "high": 1.0191389490295784,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            },
+            "preparation_ns": {
+              "reference_ns": [
+                85196581,
+                83118337,
+                81282707,
+                84786792,
+                83300088
+              ],
+              "packed_ns": [
+                77702500,
+                85731000,
+                84864959,
+                85538711,
+                87387835
+              ],
+              "reference_median_ns": 83300088,
+              "packed_median_ns": 85538711,
+              "ratios": [
+                0.9120377729711947,
+                1.0314330518908241,
+                1.0440715144981576,
+                1.0088683506270646,
+                1.0490725411958748
+              ],
+              "confidence_95": {
+                "geometric_mean": 1.0077778920355818,
+                "low": 0.9379734037598215,
+                "high": 1.082777268102306,
+                "pairs": 5,
+                "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+                "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+              },
+              "ratio_limitation": null
+            }
+          }
+        }
+      ],
+      "captures": [],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 241664,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 36864,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 892928,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 823296,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 1,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 77824,
+          "write_bytes": 69632,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 385024,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 192512,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 2,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 204800,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 36864,
+          "write_bytes": 233472,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 65536,
+          "write_bytes": 86016,
+          "reason": null
+        },
+        {
+          "pair": 3,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 348160,
+          "write_bytes": 147456,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 499712,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 221184,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 364544,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 4,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 1658880,
+          "write_bytes": 65536,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 4,
+        "expert_executions_per_arm": 256,
+        "detailed_batches": 0,
+        "detailed_experts": 0
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows."
+      ]
+    },
+    "trace": {
+      "mode": "trace",
+      "hits_per_batch": 8,
+      "status": "captured",
+      "clean_memory": true,
+      "clean_host": true,
+      "criteria": {
+        "timing_pairs": 5,
+        "groups": [
+          1,
+          4
+        ],
+        "timing_cycles": 4,
+        "capture_cycles": 1,
+        "cases_per_cycle": 64,
+        "cache_slots": 8,
+        "io_workers": 8,
+        "max_live_groups": 2,
+        "budget_bytes": 12884901888,
+        "gpu_upper_95_below": 1,
+        "wall_upper_95_max": 1.03,
+        "process_seconds": 60,
+        "stage_seconds": 180
+      },
+      "results": [],
+      "captures": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 64,
+          "occupancy_histogram": {
+            "1": 64
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5081532957241000,
+              "gpu_start_ns": 5081532957670250,
+              "gpu_end_ns": 5081532957744792,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532957264208,
+              "gpu_start_ns": 5081532957775250,
+              "gpu_end_ns": 5081532957846292,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532957881333,
+              "gpu_start_ns": 5081532958001250,
+              "gpu_end_ns": 5081532958069376,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532957967875,
+              "gpu_start_ns": 5081532958094751,
+              "gpu_end_ns": 5081532958162250,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532958189250,
+              "gpu_start_ns": 5081532958250125,
+              "gpu_end_ns": 5081532958317125,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532958272541,
+              "gpu_start_ns": 5081532958342250,
+              "gpu_end_ns": 5081532958409876,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532958421791,
+              "gpu_start_ns": 5081532958481375,
+              "gpu_end_ns": 5081532958549292,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081532958513500,
+              "gpu_start_ns": 5081532958582375,
+              "gpu_end_ns": 5081532958652000,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532961737375,
+              "gpu_start_ns": 5081532962098501,
+              "gpu_end_ns": 5081532962312000,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532961758000,
+              "gpu_start_ns": 5081532962344125,
+              "gpu_end_ns": 5081532962551667,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532962449875,
+              "gpu_start_ns": 5081532962572500,
+              "gpu_end_ns": 5081532962779376,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532962658666,
+              "gpu_start_ns": 5081532962799001,
+              "gpu_end_ns": 5081532963009626,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532962883625,
+              "gpu_start_ns": 5081532963030000,
+              "gpu_end_ns": 5081532963240625,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532963116916,
+              "gpu_start_ns": 5081532963263042,
+              "gpu_end_ns": 5081532963469750,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532963347708,
+              "gpu_start_ns": 5081532963490500,
+              "gpu_end_ns": 5081532963698125,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081532963580291,
+              "gpu_start_ns": 5081532963717875,
+              "gpu_end_ns": 5081532963926501,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532966856666,
+              "gpu_start_ns": 5081532967233500,
+              "gpu_end_ns": 5081532967404625,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532966879833,
+              "gpu_start_ns": 5081532967429751,
+              "gpu_end_ns": 5081532967600251,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532967533666,
+              "gpu_start_ns": 5081532967611667,
+              "gpu_end_ns": 5081532967781626,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532967691625,
+              "gpu_start_ns": 5081532967800500,
+              "gpu_end_ns": 5081532967969376,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532967890625,
+              "gpu_start_ns": 5081532967989625,
+              "gpu_end_ns": 5081532968159542,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532968080291,
+              "gpu_start_ns": 5081532968183625,
+              "gpu_end_ns": 5081532968351500,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532968292000,
+              "gpu_start_ns": 5081532968364667,
+              "gpu_end_ns": 5081532968535750,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081532968439916,
+              "gpu_start_ns": 5081532968554542,
+              "gpu_end_ns": 5081532968721750,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532971846500,
+              "gpu_start_ns": 5081532972209000,
+              "gpu_end_ns": 5081532972420875,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532971868166,
+              "gpu_start_ns": 5081532972445667,
+              "gpu_end_ns": 5081532972655625,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532972547875,
+              "gpu_start_ns": 5081532972676375,
+              "gpu_end_ns": 5081532972885625,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532972771250,
+              "gpu_start_ns": 5081532972905042,
+              "gpu_end_ns": 5081532973113501,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532972989791,
+              "gpu_start_ns": 5081532973133875,
+              "gpu_end_ns": 5081532973343292,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532973223958,
+              "gpu_start_ns": 5081532973365376,
+              "gpu_end_ns": 5081532973572126,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532973451791,
+              "gpu_start_ns": 5081532973593125,
+              "gpu_end_ns": 5081532973802500,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081532973679291,
+              "gpu_start_ns": 5081532973823125,
+              "gpu_end_ns": 5081532974032250,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532976802458,
+              "gpu_start_ns": 5081532977253000,
+              "gpu_end_ns": 5081532977325500,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532976823791,
+              "gpu_start_ns": 5081532977355792,
+              "gpu_end_ns": 5081532977425667,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532977468750,
+              "gpu_start_ns": 5081532977582542,
+              "gpu_end_ns": 5081532977650500,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532977532708,
+              "gpu_start_ns": 5081532977675125,
+              "gpu_end_ns": 5081532977745876,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532977766250,
+              "gpu_start_ns": 5081532977835625,
+              "gpu_end_ns": 5081532977904292,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532977862500,
+              "gpu_start_ns": 5081532977928750,
+              "gpu_end_ns": 5081532977996251,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532978001166,
+              "gpu_start_ns": 5081532978068250,
+              "gpu_end_ns": 5081532978135625,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081532978098208,
+              "gpu_start_ns": 5081532978167500,
+              "gpu_end_ns": 5081532978236751,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532981060000,
+              "gpu_start_ns": 5081532981477917,
+              "gpu_end_ns": 5081532981551000,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532981082625,
+              "gpu_start_ns": 5081532981580917,
+              "gpu_end_ns": 5081532981651125,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532981714041,
+              "gpu_start_ns": 5081532981836250,
+              "gpu_end_ns": 5081532981903750,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532981763083,
+              "gpu_start_ns": 5081532981925875,
+              "gpu_end_ns": 5081532981993042,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532982012500,
+              "gpu_start_ns": 5081532982103501,
+              "gpu_end_ns": 5081532982173375,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532982089833,
+              "gpu_start_ns": 5081532982193417,
+              "gpu_end_ns": 5081532982262292,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532982275791,
+              "gpu_start_ns": 5081532982336501,
+              "gpu_end_ns": 5081532982405750,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081532982369500,
+              "gpu_start_ns": 5081532982435125,
+              "gpu_end_ns": 5081532982503001,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532985474875,
+              "gpu_start_ns": 5081532985936751,
+              "gpu_end_ns": 5081532986010667,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532985497125,
+              "gpu_start_ns": 5081532986041625,
+              "gpu_end_ns": 5081532986110250,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986142375,
+              "gpu_start_ns": 5081532986227375,
+              "gpu_end_ns": 5081532986293625,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986212791,
+              "gpu_start_ns": 5081532986313750,
+              "gpu_end_ns": 5081532986380750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986403875,
+              "gpu_start_ns": 5081532986490875,
+              "gpu_end_ns": 5081532986558875,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986482958,
+              "gpu_start_ns": 5081532986578917,
+              "gpu_end_ns": 5081532986648126,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986666166,
+              "gpu_start_ns": 5081532986721001,
+              "gpu_end_ns": 5081532986788417,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081532986752625,
+              "gpu_start_ns": 5081532986820625,
+              "gpu_end_ns": 5081532986888126,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532989759125,
+              "gpu_start_ns": 5081532990173292,
+              "gpu_end_ns": 5081532990246792,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532989779916,
+              "gpu_start_ns": 5081532990277042,
+              "gpu_end_ns": 5081532990349500,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532990379000,
+              "gpu_start_ns": 5081532990469417,
+              "gpu_end_ns": 5081532990537292,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532990462541,
+              "gpu_start_ns": 5081532990557251,
+              "gpu_end_ns": 5081532990626375,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532990647750,
+              "gpu_start_ns": 5081532990735917,
+              "gpu_end_ns": 5081532990802876,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532990728375,
+              "gpu_start_ns": 5081532990825625,
+              "gpu_end_ns": 5081532990892750,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532990916333,
+              "gpu_start_ns": 5081532990980792,
+              "gpu_end_ns": 5081532991051042,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081532991008833,
+              "gpu_start_ns": 5081532991085875,
+              "gpu_end_ns": 5081532991153042,
+              "experts": 1
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                33625,
+                56708,
+                673375,
+                759625,
+                980959,
+                1064041,
+                1213208,
+                1304875,
+                31792,
+                52334,
+                744000,
+                952625,
+                1177542,
+                1410625,
+                1641333,
+                1873875,
+                37791,
+                60875,
+                714083,
+                871834,
+                1070792,
+                1260083,
+                1471750,
+                1619625,
+                36792,
+                58291,
+                737500,
+                960584,
+                1179083,
+                1412792,
+                1640583,
+                1868041,
+                35208,
+                56458,
+                700834,
+                764667,
+                998167,
+                1094250,
+                1232875,
+                1329833,
+                35667,
+                58084,
+                688958,
+                737750,
+                987125,
+                1064208,
+                1250083,
+                1343750,
+                33917,
+                56000,
+                700875,
+                771083,
+                962084,
+                1041000,
+                1224166,
+                1310584,
+                37542,
+                58250,
+                656667,
+                740083,
+                925250,
+                1005667,
+                1193583,
+                1286000
+              ],
+              "read_complete_to_submission_ns": [
+                2447792,
+                2114417,
+                2428125,
+                2169750,
+                2055250,
+                1762000,
+                1581500,
+                1313542,
+                39959,
+                2609375,
+                2957042,
+                2829875,
+                2689209,
+                2536666,
+                2406625,
+                2202958,
+                418708,
+                69458,
+                3201708,
+                2999625,
+                2933334,
+                2729500,
+                2624042,
+                2372458,
+                805459,
+                501333,
+                748292,
+                3627084,
+                3513333,
+                3389375,
+                3230000,
+                3049708,
+                1115625,
+                828125,
+                1141542,
+                773542,
+                3316959,
+                3093959,
+                2900500,
+                2782500,
+                1477584,
+                1254125,
+                1559750,
+                1182792,
+                997084,
+                3448208,
+                3343000,
+                3126584,
+                2043542,
+                1704875,
+                1917750,
+                1564708,
+                1406000,
+                1052333,
+                3773083,
+                3627042,
+                2209792,
+                1953166,
+                2247542,
+                1919625,
+                1801625,
+                1457584,
+                1202583,
+                3735750
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 12924749,
+          "gpu_command_ns": 7466305
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 64,
+          "occupancy_histogram": {
+            "1": 64
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5081533031650041,
+              "gpu_start_ns": 5081533032015042,
+              "gpu_end_ns": 5081533032130876,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533031673583,
+              "gpu_start_ns": 5081533032161000,
+              "gpu_end_ns": 5081533032272792,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533032297416,
+              "gpu_start_ns": 5081533032388250,
+              "gpu_end_ns": 5081533032498251,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533032373291,
+              "gpu_start_ns": 5081533032524000,
+              "gpu_end_ns": 5081533032633542,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533032623666,
+              "gpu_start_ns": 5081533032685501,
+              "gpu_end_ns": 5081533032797750,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533032760416,
+              "gpu_start_ns": 5081533032827750,
+              "gpu_end_ns": 5081533032938250,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533032903125,
+              "gpu_start_ns": 5081533032970751,
+              "gpu_end_ns": 5081533033082375,
+              "experts": 1
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533033044500,
+              "gpu_start_ns": 5081533033112375,
+              "gpu_end_ns": 5081533033223750,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533035993666,
+              "gpu_start_ns": 5081533036381167,
+              "gpu_end_ns": 5081533036499500,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533036016791,
+              "gpu_start_ns": 5081533036530417,
+              "gpu_end_ns": 5081533036641375,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533036646083,
+              "gpu_start_ns": 5081533036720376,
+              "gpu_end_ns": 5081533036831626,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533036757875,
+              "gpu_start_ns": 5081533036850667,
+              "gpu_end_ns": 5081533036960042,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533036940583,
+              "gpu_start_ns": 5081533037002000,
+              "gpu_end_ns": 5081533037113792,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533037076416,
+              "gpu_start_ns": 5081533037144125,
+              "gpu_end_ns": 5081533037256292,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533037224000,
+              "gpu_start_ns": 5081533037293375,
+              "gpu_end_ns": 5081533037403501,
+              "experts": 1
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533037374791,
+              "gpu_start_ns": 5081533037448750,
+              "gpu_end_ns": 5081533037559126,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533040098708,
+              "gpu_start_ns": 5081533040452875,
+              "gpu_end_ns": 5081533040568501,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533040120041,
+              "gpu_start_ns": 5081533040598792,
+              "gpu_end_ns": 5081533040715542,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533040718416,
+              "gpu_start_ns": 5081533040793792,
+              "gpu_end_ns": 5081533040903876,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533040825750,
+              "gpu_start_ns": 5081533040923625,
+              "gpu_end_ns": 5081533041034251,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533041003291,
+              "gpu_start_ns": 5081533041070500,
+              "gpu_end_ns": 5081533041181875,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533041143208,
+              "gpu_start_ns": 5081533041209251,
+              "gpu_end_ns": 5081533041319250,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533041281125,
+              "gpu_start_ns": 5081533041348000,
+              "gpu_end_ns": 5081533041458000,
+              "experts": 1
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533041419916,
+              "gpu_start_ns": 5081533041493875,
+              "gpu_end_ns": 5081533041604417,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533044031583,
+              "gpu_start_ns": 5081533044385042,
+              "gpu_end_ns": 5081533044501042,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533044051875,
+              "gpu_start_ns": 5081533044532000,
+              "gpu_end_ns": 5081533044644751,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533044644000,
+              "gpu_start_ns": 5081533044723750,
+              "gpu_end_ns": 5081533044836001,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533044767125,
+              "gpu_start_ns": 5081533044855375,
+              "gpu_end_ns": 5081533044966042,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533044938041,
+              "gpu_start_ns": 5081533045005376,
+              "gpu_end_ns": 5081533045116000,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533045084625,
+              "gpu_start_ns": 5081533045150417,
+              "gpu_end_ns": 5081533045260751,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533045224000,
+              "gpu_start_ns": 5081533045292625,
+              "gpu_end_ns": 5081533045402875,
+              "experts": 1
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533045365541,
+              "gpu_start_ns": 5081533045438875,
+              "gpu_end_ns": 5081533045549667,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533047821708,
+              "gpu_start_ns": 5081533048181625,
+              "gpu_end_ns": 5081533048296917,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533047842125,
+              "gpu_start_ns": 5081533048327626,
+              "gpu_end_ns": 5081533048439875,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533048443375,
+              "gpu_start_ns": 5081533048520167,
+              "gpu_end_ns": 5081533048630625,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533048548375,
+              "gpu_start_ns": 5081533048650251,
+              "gpu_end_ns": 5081533048761625,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533048739958,
+              "gpu_start_ns": 5081533048803875,
+              "gpu_end_ns": 5081533048915917,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533048872833,
+              "gpu_start_ns": 5081533048940251,
+              "gpu_end_ns": 5081533049050417,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533049010833,
+              "gpu_start_ns": 5081533049079792,
+              "gpu_end_ns": 5081533049190375,
+              "experts": 1
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533049151791,
+              "gpu_start_ns": 5081533049226751,
+              "gpu_end_ns": 5081533049338000,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533051443333,
+              "gpu_start_ns": 5081533051771500,
+              "gpu_end_ns": 5081533051887000,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533051465208,
+              "gpu_start_ns": 5081533051917250,
+              "gpu_end_ns": 5081533052029501,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052041333,
+              "gpu_start_ns": 5081533052152376,
+              "gpu_end_ns": 5081533052193126,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052230375,
+              "gpu_start_ns": 5081533052364042,
+              "gpu_end_ns": 5081533052403500,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052301708,
+              "gpu_start_ns": 5081533052424542,
+              "gpu_end_ns": 5081533052480000,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052515291,
+              "gpu_start_ns": 5081533052627751,
+              "gpu_end_ns": 5081533052668667,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052581541,
+              "gpu_start_ns": 5081533052678750,
+              "gpu_end_ns": 5081533052719001,
+              "experts": 1
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533052757250,
+              "gpu_start_ns": 5081533052864376,
+              "gpu_end_ns": 5081533052904750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533055294416,
+              "gpu_start_ns": 5081533055706875,
+              "gpu_end_ns": 5081533055754792,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533055314041,
+              "gpu_start_ns": 5081533055785917,
+              "gpu_end_ns": 5081533055828125,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533055878375,
+              "gpu_start_ns": 5081533055968875,
+              "gpu_end_ns": 5081533056006917,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533055926708,
+              "gpu_start_ns": 5081533056049375,
+              "gpu_end_ns": 5081533056086875,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533056127875,
+              "gpu_start_ns": 5081533056229751,
+              "gpu_end_ns": 5081533056269376,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533056170541,
+              "gpu_start_ns": 5081533056289376,
+              "gpu_end_ns": 5081533056344750,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533056370375,
+              "gpu_start_ns": 5081533056455167,
+              "gpu_end_ns": 5081533056495375,
+              "experts": 1
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533056439500,
+              "gpu_start_ns": 5081533056515375,
+              "gpu_end_ns": 5081533056555251,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533059132000,
+              "gpu_start_ns": 5081533059547375,
+              "gpu_end_ns": 5081533059595667,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533059156041,
+              "gpu_start_ns": 5081533059626251,
+              "gpu_end_ns": 5081533059669042,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533059716333,
+              "gpu_start_ns": 5081533059814250,
+              "gpu_end_ns": 5081533059853125,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533059758708,
+              "gpu_start_ns": 5081533059888042,
+              "gpu_end_ns": 5081533059926875,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533059953833,
+              "gpu_start_ns": 5081533060042875,
+              "gpu_end_ns": 5081533060081125,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533060014958,
+              "gpu_start_ns": 5081533060088417,
+              "gpu_end_ns": 5081533060128667,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533060155125,
+              "gpu_start_ns": 5081533060241042,
+              "gpu_end_ns": 5081533060296751,
+              "experts": 1
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533060203916,
+              "gpu_start_ns": 5081533060311875,
+              "gpu_end_ns": 5081533060350875,
+              "experts": 1
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                36875,
+                60292,
+                683458,
+                759208,
+                1009500,
+                1146125,
+                1288792,
+                1430084,
+                38500,
+                61500,
+                690083,
+                801667,
+                984292,
+                1119666,
+                1267167,
+                1417916,
+                35625,
+                56833,
+                654875,
+                761917,
+                939375,
+                1079000,
+                1216834,
+                1355583,
+                32542,
+                52750,
+                644209,
+                767125,
+                938000,
+                1084167,
+                1223500,
+                1364958,
+                34667,
+                54917,
+                656042,
+                760750,
+                952250,
+                1084875,
+                1222833,
+                1363750,
+                31750,
+                53500,
+                629375,
+                818250,
+                889542,
+                1102875,
+                1169041,
+                1344709,
+                29750,
+                49250,
+                613417,
+                661542,
+                862667,
+                905083,
+                1104875,
+                1173917,
+                31334,
+                55250,
+                615250,
+                657458,
+                852542,
+                913500,
+                1053584,
+                1102291
+              ],
+              "read_complete_to_submission_ns": [
+                1920291,
+                1625042,
+                2012375,
+                1822625,
+                1829875,
+                1714458,
+                1593667,
+                1438542,
+                47833,
+                2371583,
+                2760375,
+                2505500,
+                2272917,
+                1982875,
+                1791750,
+                1680458,
+                374250,
+                66750,
+                2761875,
+                2636000,
+                2518500,
+                2397625,
+                2228125,
+                2088000,
+                582208,
+                333667,
+                653750,
+                2829084,
+                2696416,
+                2482125,
+                2257417,
+                2135708,
+                816125,
+                592417,
+                926042,
+                770000,
+                2812333,
+                2698292,
+                2558542,
+                2419041,
+                1025708,
+                815750,
+                1158500,
+                1122500,
+                899333,
+                2822666,
+                2637708,
+                2570292,
+                1583458,
+                1235125,
+                1518042,
+                1323042,
+                1204417,
+                913125,
+                3113625,
+                2964542,
+                1985875,
+                1765541,
+                2016333,
+                1728708,
+                1570042,
+                1292000,
+                1064750,
+                3295333
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 11196788,
+          "gpu_command_ns": 5637057
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 16,
+          "occupancy_histogram": {
+            "4": 16
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5081533101467625,
+              "gpu_start_ns": 5081533101901750,
+              "gpu_end_ns": 5081533102175542,
+              "experts": 4
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533101502291,
+              "gpu_start_ns": 5081533102203000,
+              "gpu_end_ns": 5081533102469292,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533105923000,
+              "gpu_start_ns": 5081533106352167,
+              "gpu_end_ns": 5081533106628626,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533105953958,
+              "gpu_start_ns": 5081533106658875,
+              "gpu_end_ns": 5081533106924500,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533109980833,
+              "gpu_start_ns": 5081533110453500,
+              "gpu_end_ns": 5081533110731125,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533110014875,
+              "gpu_start_ns": 5081533110764750,
+              "gpu_end_ns": 5081533111030500,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533114081125,
+              "gpu_start_ns": 5081533114518250,
+              "gpu_end_ns": 5081533114789917,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533114117333,
+              "gpu_start_ns": 5081533114818251,
+              "gpu_end_ns": 5081533115082875,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533118048333,
+              "gpu_start_ns": 5081533118474625,
+              "gpu_end_ns": 5081533118747042,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533118081250,
+              "gpu_start_ns": 5081533118775000,
+              "gpu_end_ns": 5081533119040042,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533122320375,
+              "gpu_start_ns": 5081533122764542,
+              "gpu_end_ns": 5081533123029125,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533122355041,
+              "gpu_start_ns": 5081533123061875,
+              "gpu_end_ns": 5081533123327792,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533126115833,
+              "gpu_start_ns": 5081533126539125,
+              "gpu_end_ns": 5081533126808375,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533126147625,
+              "gpu_start_ns": 5081533126833792,
+              "gpu_end_ns": 5081533127099167,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533130274000,
+              "gpu_start_ns": 5081533130701917,
+              "gpu_end_ns": 5081533130970876,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533130307875,
+              "gpu_start_ns": 5081533131000751,
+              "gpu_end_ns": 5081533131265542,
+              "experts": 4
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                53625,
+                53417,
+                52917,
+                52834,
+                87416,
+                87166,
+                87083,
+                87041,
+                47250,
+                47042,
+                46875,
+                46542,
+                77458,
+                77083,
+                77042,
+                77000,
+                47750,
+                47583,
+                47083,
+                46792,
+                80792,
+                80500,
+                80459,
+                80417,
+                51292,
+                51167,
+                51042,
+                50875,
+                87000,
+                86875,
+                86792,
+                86750,
+                44333,
+                44042,
+                43792,
+                43583,
+                76459,
+                76167,
+                76084,
+                76042,
+                53500,
+                53417,
+                53167,
+                53000,
+                87583,
+                87333,
+                87291,
+                87250,
+                52625,
+                52417,
+                51875,
+                51542,
+                83292,
+                83042,
+                83000,
+                82959,
+                48375,
+                47959,
+                47709,
+                47542,
+                81334,
+                81125,
+                81084,
+                81042
+              ],
+              "read_complete_to_submission_ns": [
+                2445625,
+                2031834,
+                1694209,
+                1421959,
+                1155750,
+                804125,
+                519083,
+                99041,
+                57875,
+                2931667,
+                2533709,
+                2141792,
+                1854917,
+                1418375,
+                972958,
+                529542,
+                515875,
+                59792,
+                2569000,
+                2339500,
+                1995625,
+                1708875,
+                1407959,
+                982709,
+                784459,
+                395834,
+                62042,
+                2632334,
+                2339000,
+                1986208,
+                1594917,
+                1185083,
+                1222417,
+                833875,
+                495458,
+                54375,
+                2550959,
+                2242459,
+                1942709,
+                1601500,
+                1827584,
+                1395250,
+                957542,
+                509459,
+                99208,
+                2865041,
+                2558416,
+                2226958,
+                1813083,
+                1416333,
+                1067500,
+                823625,
+                545084,
+                95584,
+                2424167,
+                2140625,
+                2512000,
+                2103959,
+                1672667,
+                1246667,
+                840417,
+                390750,
+                92209,
+                2805417
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 8385374,
+          "gpu_command_ns": 4298159
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "captured_batches": 8,
+          "captured_experts": 64,
+          "captured_commands": 16,
+          "occupancy_histogram": {
+            "4": 16
+          },
+          "commands": [
+            {
+              "batch": 0,
+              "submitted_ns": 5081533169165166,
+              "gpu_start_ns": 5081533169634042,
+              "gpu_end_ns": 5081533169793792,
+              "experts": 4
+            },
+            {
+              "batch": 0,
+              "submitted_ns": 5081533169198625,
+              "gpu_start_ns": 5081533169823376,
+              "gpu_end_ns": 5081533169987375,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533172361333,
+              "gpu_start_ns": 5081533172780626,
+              "gpu_end_ns": 5081533172961875,
+              "experts": 4
+            },
+            {
+              "batch": 1,
+              "submitted_ns": 5081533172389750,
+              "gpu_start_ns": 5081533172986250,
+              "gpu_end_ns": 5081533173135625,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533175470708,
+              "gpu_start_ns": 5081533175899126,
+              "gpu_end_ns": 5081533176084167,
+              "experts": 4
+            },
+            {
+              "batch": 2,
+              "submitted_ns": 5081533175503916,
+              "gpu_start_ns": 5081533176108000,
+              "gpu_end_ns": 5081533176257750,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533178699708,
+              "gpu_start_ns": 5081533179128750,
+              "gpu_end_ns": 5081533179311001,
+              "experts": 4
+            },
+            {
+              "batch": 3,
+              "submitted_ns": 5081533178733916,
+              "gpu_start_ns": 5081533179338667,
+              "gpu_end_ns": 5081533179492792,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533181977875,
+              "gpu_start_ns": 5081533182415792,
+              "gpu_end_ns": 5081533182590376,
+              "experts": 4
+            },
+            {
+              "batch": 4,
+              "submitted_ns": 5081533182010958,
+              "gpu_start_ns": 5081533182620667,
+              "gpu_end_ns": 5081533182779251,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533185460625,
+              "gpu_start_ns": 5081533185853875,
+              "gpu_end_ns": 5081533186279667,
+              "experts": 4
+            },
+            {
+              "batch": 5,
+              "submitted_ns": 5081533185494875,
+              "gpu_start_ns": 5081533186307792,
+              "gpu_end_ns": 5081533186734876,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533189046708,
+              "gpu_start_ns": 5081533189409042,
+              "gpu_end_ns": 5081533189836625,
+              "experts": 4
+            },
+            {
+              "batch": 6,
+              "submitted_ns": 5081533189077500,
+              "gpu_start_ns": 5081533189864542,
+              "gpu_end_ns": 5081533190289875,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533192635666,
+              "gpu_start_ns": 5081533193008251,
+              "gpu_end_ns": 5081533193434751,
+              "experts": 4
+            },
+            {
+              "batch": 7,
+              "submitted_ns": 5081533192667458,
+              "gpu_start_ns": 5081533193462292,
+              "gpu_end_ns": 5081533193888125,
+              "experts": 4
+            }
+          ],
+          "readiness_by_acquisition": {
+            "ready_hit": {
+              "ready_to_submission_ns": [
+                54375,
+                54250,
+                54000,
+                53875,
+                87292,
+                86959,
+                86875,
+                86834,
+                48042,
+                47792,
+                47583,
+                47208,
+                75584,
+                75417,
+                75375,
+                75292,
+                49958,
+                49833,
+                49500,
+                49167,
+                82250,
+                82083,
+                82000,
+                81958,
+                45917,
+                45833,
+                45333,
+                45167,
+                79333,
+                79041,
+                79000,
+                78916,
+                50709,
+                50625,
+                50125,
+                49834,
+                82750,
+                82417,
+                82375,
+                82292,
+                53542,
+                53250,
+                52792,
+                52542,
+                86750,
+                86500,
+                86375,
+                86334,
+                49708,
+                49625,
+                49250,
+                48917,
+                79667,
+                79084,
+                79000,
+                78875,
+                45500,
+                45333,
+                45041,
+                44833,
+                76542,
+                76417,
+                76375,
+                76333
+              ],
+              "read_complete_to_submission_ns": [
+                1982666,
+                1734666,
+                1474875,
+                1169416,
+                915750,
+                597084,
+                351584,
+                101959,
+                58500,
+                2030833,
+                1790708,
+                1530375,
+                1297625,
+                1051750,
+                756750,
+                361084,
+                313500,
+                61042,
+                1988167,
+                1650167,
+                1422791,
+                1153416,
+                880000,
+                648750,
+                641500,
+                316292,
+                56583,
+                2034333,
+                1805208,
+                1533666,
+                1206875,
+                974458,
+                909709,
+                660292,
+                372209,
+                70417,
+                2104458,
+                1837417,
+                1559958,
+                1189333,
+                1486250,
+                1077292,
+                804084,
+                422417,
+                97750,
+                2357542,
+                2070709,
+                1803834,
+                1399208,
+                1147083,
+                907042,
+                563292,
+                345792,
+                88542,
+                1938084,
+                1675000,
+                1728083,
+                1495041,
+                1143125,
+                895500,
+                660833,
+                405583,
+                88042,
+                2009250
+              ]
+            },
+            "new_miss": {
+              "ready_to_submission_ns": [],
+              "read_complete_to_submission_ns": []
+            }
+          },
+          "gpu_interval_overlap_pairs": 0,
+          "coordinator_wait_ns": 7993124,
+          "gpu_command_ns": 4216827
+        }
+      ],
+      "device_observations": [
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 442368,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 1,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 303104,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "reference",
+          "available": true,
+          "read_bytes": 233472,
+          "write_bytes": 0,
+          "reason": null
+        },
+        {
+          "pair": 0,
+          "group": 4,
+          "variant": "packed-r2",
+          "available": true,
+          "read_bytes": 266240,
+          "write_bytes": 0,
+          "reason": null
+        }
+      ],
+      "device_observations_complete": true,
+      "coverage": {
+        "pairs": 1,
+        "groups": [
+          1,
+          4
+        ],
+        "cycles_per_arm": 1,
+        "expert_executions_per_arm": 64,
+        "detailed_batches": 32,
+        "detailed_experts": 256
+      },
+      "output_sha256": "05b73dca9c175709ede2bf65096b68e9193d32277a3d95f97d142adfe7728d45",
+      "wall_scope": "sum-of-coordinator-windows-excludes-preparation",
+      "disk_counter_scope": "entire-arm-including-preparation-and-other-processes",
+      "normal_request_latency_qualified": false,
+      "production_promoted": false,
+      "limitations": [
+        "Eight fixed original Q4 experts; the rotating hit population is declared, not inferred from normal requests.",
+        "Wall time sums coordinator/encoding/drain intervals and excludes explicit cache preparation between batches.",
+        "Preparation bytes and logical expert-load calls are separate from timed demand bytes and calls.",
+        "Internal-device counters cover preparation and unrelated processes; missing observations stay unavailable.",
+        "Detailed events come from a separate one-pair capture. They are not pooled with timing or used as exclusive wait costs.",
+        "Whole-command GPU timestamp intervals may overlap; their sums are not exclusive elapsed time.",
+        "Hit read-complete-to-submission intervals include time before batch admission; ready-to-submission starts at admission or read completion, whichever is later.",
+        "Ready-group size is a cap. Mixed misses may submit smaller groups; captured occupancy is measured from actual submissions.",
+        "Resident allocation is present, but other model operators, routing and final token reduction are absent.",
+        "Boundary memory/host observations can miss brief events. Repeated fixtures and within-process pairs are correlated.",
+        "No normal-request throughput projection, complete-request qualification or production selection follows."
+      ]
+    }
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false
+}

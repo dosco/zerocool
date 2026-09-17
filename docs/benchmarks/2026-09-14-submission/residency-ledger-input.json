@@ -1,0 +1,19 @@
+{
+  "hypothesis": "Requesting Metal residency for core weights and the expert cache reduces driver cost while preserving immediate expert execution.",
+  "expected_effect": "Lower complete-request latency; the stage also requires median savings of at least 20ms per token in initial and append decode.",
+  "controlled_change": "Residency off versus core-cache at 1072 slots, the same 12GiB maximum, unchanged mixed artifact and arithmetic. Two screen pairs, separate state validation, then five fresh alternating pairs.",
+  "correctness": "All output tokens and arithmetic dispatch counts match. Separate full-model native checks show exact logits, routes and persistent state, with fresh replay, forced eviction, cancellation, failure and recovery.",
+  "outcome": "Five fresh pairs show 4.35% lower conversation latency, paired 95% interval 3.21-5.48%. Median generation changes from 3.566/3.188 to 3.796/3.309 tokens per second. All ten processes were clean. Paired median savings 22.59/11.24ms miss the append stage target. The original collector conflated a missed target with no gain; the corrected interpretation preserves the measurements and failed advancement gate.",
+  "decision": "promising",
+  "smallest_experiment": "Compare 1072 and 1460 expert slots under core-cache residency and immediate execution, admitting the same 12GiB maximum and stopping on memory disturbance.",
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-14-submission/residency-confirm-01/summary.json",
+    "/repo/docs/benchmarks/2026-09-14-submission/confirmation-decision.json",
+    "/repo/docs/benchmarks/2026-09-14-submission/residency-state-01/summary.json",
+    "/repo/docs/benchmarks/2026-09-14-submission/verification.json"
+  ],
+  "limitations": [
+    "Single M1 Pro, short 72-token initial request and 128-token retained append; no 2K/4K/7K or sustained-coding acceptance.",
+    "Production defaults remain unchanged. Paired intervals assume approximately independent log ratios; temporal host effects can violate this."
+  ]
+}

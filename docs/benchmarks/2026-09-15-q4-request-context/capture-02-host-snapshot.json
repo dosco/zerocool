@@ -1,0 +1,15 @@
+{
+  "kind": "q4_request_retry_host_snapshot_v1",
+  "brave_processes_observed": false,
+  "application_rss_bytes": {
+    "openclaw-gateway": 125714432,
+    "ChatGPT.app": 2227208192,
+    "Claude.app": 1233321984,
+    "OrbStack": 644759552
+  },
+  "limitations": [
+    "Read-only process snapshot taken after capture-02 stopped. It does not establish the host conditions during inference.",
+    "Summed RSS can count shared pages more than once; it is not unique physical memory or a guaranteed amount reclaimable by closing an application.",
+    "No process was stopped or changed."
+  ]
+}

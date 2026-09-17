@@ -1,0 +1,936 @@
+{
+  "complete" : true,
+  "reference_shader_sha256" : "61b35f0bed3e5d96ad4b1dfbe7ed0b04f93fbbc1ebd4134f3589a64638db8c23",
+  "timing_memory_before" : {
+    "system_swap_used_bytes" : 1876819968,
+    "physical_footprint_bytes" : 89097920,
+    "physical_footprint_peak_bytes" : 90195648,
+    "compressed_peak_bytes" : 0,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "inputs_unchanged" : true,
+  "production_promoted" : false,
+  "kind" : "hyper_fusion_probe_v1",
+  "reference_dispatches_per_block" : 8,
+  "fixture_manifest_sha256" : "e54f43d3bc27e91d5a530eeebff329fae5ae7e3e01e2980df1c7988bac8a8264",
+  "timing_memory_after" : {
+    "system_swap_used_bytes" : 1876819968,
+    "physical_footprint_bytes" : 89097920,
+    "physical_footprint_peak_bytes" : 90195648,
+    "compressed_peak_bytes" : 0,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "candidate_shader_sha256" : "ecdf54e2fe40ab3294fc551e5bda79819204a871c2c5d8b4bd513ceaca037b64",
+  "candidate_dispatches_per_block" : 6,
+  "gpu_stage_elapsed_seconds" : 0.13794916700000001,
+  "memory_before" : {
+    "system_swap_used_bytes" : 1876819968,
+    "physical_footprint_bytes" : 1590144,
+    "physical_footprint_peak_bytes" : 1622912,
+    "compressed_peak_bytes" : 0,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "max_shared_buffer_bytes" : 29810944,
+  "neighbor_guards_intact" : true,
+  "memory_after" : {
+    "system_swap_used_bytes" : 1876819968,
+    "physical_footprint_bytes" : 89097920,
+    "physical_footprint_peak_bytes" : 90195648,
+    "compressed_peak_bytes" : 0,
+    "compressed_bytes" : 0,
+    "decompressions" : 0
+  },
+  "dispatch_repeats" : 32,
+  "validation" : true,
+  "edge_cases" : 12,
+  "normal_request_latency_qualified" : false,
+  "cases" : [
+    {
+      "output_sha256" : "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230",
+      "injection_sha256" : "35c2ad70d535ca5a9f3b8f6b626b6e922a51e4b585e01d6826df6926a91fa7fb",
+      "exact" : true,
+      "origin" : {
+        "offset" : 72,
+        "base" : "model.layers.0.attn_hyper_connection",
+        "frequency" : 36,
+        "id" : 0,
+        "layer" : 0,
+        "input" : {
+          "bytes" : 40960,
+          "dtype" : "F32",
+          "file" : "case0.input.f32",
+          "shape" : [
+            1,
+            10240
+          ],
+          "sha256" : "f18b9571e471c4463682692e592ceebc0fc4ab430e337e41ec1930757e629249"
+        },
+        "native_output" : {
+          "bytes" : 10240,
+          "dtype" : "F32",
+          "file" : "case0.output.f32",
+          "shape" : [
+            1,
+            2560
+          ],
+          "sha256" : "56e2fd2c66ab185a1e17baf9e5fd93cc7e171022748ba41e51d516d73cd74230"
+        },
+        "native_injection" : {
+          "bytes" : 16,
+          "dtype" : "F32",
+          "file" : "case0.injection.f32",
+          "shape" : [
+            1,
+            4
+          ],
+          "sha256" : "35c2ad70d535ca5a9f3b8f6b626b6e922a51e4b585e01d6826df6926a91fa7fb"
+        },
+        "stage" : "attention_input",
+        "tensors" : {
+          "down_w" : {
+            "sha256" : "c626b24dbf7d61a242f227cc6ba2691c444a4e0a48ba73ff70be7a55678a34de",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 6026742111,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                2560
+              ],
+              "sha256" : "c626b24dbf7d61a242f227cc6ba2691c444a4e0a48ba73ff70be7a55678a34de"
+            },
+            "file" : "case0.down_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_down.weight",
+            "shape" : [
+              320,
+              2560
+            ]
+          },
+          "down_s" : {
+            "sha256" : "c3aca5b26581afdfb6d273186b8f67dbc583188fdfffd1eb2569cdb3a82f2183",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 9387741423,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "c3aca5b26581afdfb6d273186b8f67dbc583188fdfffd1eb2569cdb3a82f2183"
+            },
+            "file" : "case0.down_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_down.scales",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "down_b" : {
+            "sha256" : "a488ff81f604e8ecffd7d807cbb15a9787a8823620a30195a46745cec39a0175",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 5221853119,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "a488ff81f604e8ecffd7d807cbb15a9787a8823620a30195a46745cec39a0175"
+            },
+            "file" : "case0.down_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_down.biases",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "up_b" : {
+            "sha256" : "757cfe88967af72871290101f4d9803eb1b1e50861d1c1f3ecf85ffcf6982bf7",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 5273583991,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "757cfe88967af72871290101f4d9803eb1b1e50861d1c1f3ecf85ffcf6982bf7"
+            },
+            "file" : "case0.up_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_up.biases",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "inject" : {
+            "sha256" : "97548dcae39b501c2958bb607d3954b484fce8abe4ae758e8bb09e988d37abc9",
+            "source" : {
+              "bytes" : 81920,
+              "dtype" : "BF16",
+              "offset" : 10079523903,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                4,
+                10240
+              ],
+              "sha256" : "97548dcae39b501c2958bb607d3954b484fce8abe4ae758e8bb09e988d37abc9"
+            },
+            "file" : "case0.inject.bin",
+            "dtype" : "BF16",
+            "bytes" : 81920,
+            "source_name" : "model.layers.0.attn_hyper_connection.block_inject_weight.weight",
+            "shape" : [
+              4,
+              10240
+            ]
+          },
+          "norm" : {
+            "sha256" : "5f48d006440c4e3686e900896f99ca7ef767cc46bcee6e11333185c10cf90804",
+            "source" : {
+              "bytes" : 20480,
+              "dtype" : "BF16",
+              "offset" : 9321387831,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240
+              ],
+              "sha256" : "5f48d006440c4e3686e900896f99ca7ef767cc46bcee6e11333185c10cf90804"
+            },
+            "file" : "case0.norm.bin",
+            "dtype" : "BF16",
+            "bytes" : 20480,
+            "source_name" : "model.layers.0.attn_hyper_connection.hc_norm.weight",
+            "shape" : [
+              10240
+            ]
+          },
+          "up_s" : {
+            "sha256" : "24ebfdbf2aba7426f544baada7bf4d418a0b4ee125183e7f57179f47a80ad69c",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 6352277503,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "24ebfdbf2aba7426f544baada7bf4d418a0b4ee125183e7f57179f47a80ad69c"
+            },
+            "file" : "case0.up_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_up.scales",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "up_w" : {
+            "sha256" : "6b76acb71fd290dc592d51a91e24d9c34f95525b097fe1c8e1d3997ff2454570",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 9999882119,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                80
+              ],
+              "sha256" : "6b76acb71fd290dc592d51a91e24d9c34f95525b097fe1c8e1d3997ff2454570"
+            },
+            "file" : "case0.up_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.0.attn_hyper_connection.input_mix_weight_up.weight",
+            "shape" : [
+              10240,
+              80
+            ]
+          }
+        }
+      },
+      "native_reference_exact" : true
+    },
+    {
+      "output_sha256" : "a9c98f41f6b3a315cc932090580824db7823a329541700b7bb550c32e768a321",
+      "injection_sha256" : "ce9fa01f6649611803e2c0f2fd03dc4a283909405ebf9014ff4a1bca99b2bde4",
+      "exact" : true,
+      "origin" : {
+        "offset" : 72,
+        "base" : "model.layers.0.mlp_hyper_connection",
+        "frequency" : 36,
+        "id" : 1,
+        "layer" : 0,
+        "input" : {
+          "bytes" : 40960,
+          "dtype" : "F32",
+          "file" : "case1.input.f32",
+          "shape" : [
+            1,
+            10240
+          ],
+          "sha256" : "5bb44a01a04a6fd5afedb13d5e5170005600d0ad8ce8c7130ed938cf52b84bb6"
+        },
+        "native_output" : {
+          "bytes" : 10240,
+          "dtype" : "F32",
+          "file" : "case1.output.f32",
+          "shape" : [
+            1,
+            2560
+          ],
+          "sha256" : "a9c98f41f6b3a315cc932090580824db7823a329541700b7bb550c32e768a321"
+        },
+        "native_injection" : {
+          "bytes" : 16,
+          "dtype" : "F32",
+          "file" : "case1.injection.f32",
+          "shape" : [
+            1,
+            4
+          ],
+          "sha256" : "ce9fa01f6649611803e2c0f2fd03dc4a283909405ebf9014ff4a1bca99b2bde4"
+        },
+        "stage" : "mlp_input",
+        "tensors" : {
+          "down_w" : {
+            "sha256" : "d98b43e49dbc2635eb0ed3040a2c95d302d5c90b0e4c0720160e6051849fa249",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 4665818695,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                2560
+              ],
+              "sha256" : "d98b43e49dbc2635eb0ed3040a2c95d302d5c90b0e4c0720160e6051849fa249"
+            },
+            "file" : "case1.down_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_down.weight",
+            "shape" : [
+              320,
+              2560
+            ]
+          },
+          "down_s" : {
+            "sha256" : "666401d416c8d98153c398f9de48688fc4c14c579558aa32890e16b5afe0cd63",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 9150440591,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "666401d416c8d98153c398f9de48688fc4c14c579558aa32890e16b5afe0cd63"
+            },
+            "file" : "case1.down_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_down.scales",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "down_b" : {
+            "sha256" : "78df33edece2ff346ea33d2f42efab95db28e0ed8cad17344c9b2f66c542bd0a",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 8300346319,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "78df33edece2ff346ea33d2f42efab95db28e0ed8cad17344c9b2f66c542bd0a"
+            },
+            "file" : "case1.down_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_down.biases",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "up_b" : {
+            "sha256" : "cb18f43f109a9ba4e1846dd0a14585e626a12665ede80a2cdc02c7ff8834b409",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 9529369383,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "cb18f43f109a9ba4e1846dd0a14585e626a12665ede80a2cdc02c7ff8834b409"
+            },
+            "file" : "case1.up_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_up.biases",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "inject" : {
+            "sha256" : "d6314c879c97c0dabd28fe94f7c96f4615c0c6d3acad9de62e60798e04776b4e",
+            "source" : {
+              "bytes" : 81920,
+              "dtype" : "BF16",
+              "offset" : 7978137695,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                4,
+                10240
+              ],
+              "sha256" : "d6314c879c97c0dabd28fe94f7c96f4615c0c6d3acad9de62e60798e04776b4e"
+            },
+            "file" : "case1.inject.bin",
+            "dtype" : "BF16",
+            "bytes" : 81920,
+            "source_name" : "model.layers.0.mlp_hyper_connection.block_inject_weight.weight",
+            "shape" : [
+              4,
+              10240
+            ]
+          },
+          "norm" : {
+            "sha256" : "abf8f1e35e99f1e0b45dc4deef60979a8a6e97f8262ad05bc5fec45c5bb626c2",
+            "source" : {
+              "bytes" : 20480,
+              "dtype" : "BF16",
+              "offset" : 4665501255,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240
+              ],
+              "sha256" : "abf8f1e35e99f1e0b45dc4deef60979a8a6e97f8262ad05bc5fec45c5bb626c2"
+            },
+            "file" : "case1.norm.bin",
+            "dtype" : "BF16",
+            "bytes" : 20480,
+            "source_name" : "model.layers.0.mlp_hyper_connection.hc_norm.weight",
+            "shape" : [
+              10240
+            ]
+          },
+          "up_s" : {
+            "sha256" : "3e57d699b1796d28f7fd1843d0b8b31668812c39fdf2971ba3f1c74ca9e6bd41",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 9559240551,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "3e57d699b1796d28f7fd1843d0b8b31668812c39fdf2971ba3f1c74ca9e6bd41"
+            },
+            "file" : "case1.up_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_up.scales",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "up_w" : {
+            "sha256" : "505c8cf223e2a2a665761fcdc63a4031b31174cd1c34476ac99046010a1cfd34",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 4669095495,
+              "file" : "model-00001.safetensors",
+              "shape" : [
+                10240,
+                80
+              ],
+              "sha256" : "505c8cf223e2a2a665761fcdc63a4031b31174cd1c34476ac99046010a1cfd34"
+            },
+            "file" : "case1.up_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.0.mlp_hyper_connection.input_mix_weight_up.weight",
+            "shape" : [
+              10240,
+              80
+            ]
+          }
+        }
+      },
+      "native_reference_exact" : true
+    },
+    {
+      "output_sha256" : "29ec5c782009dbd09ff523effc7f22cbf3ed13666a696b88f92eb46a78d25d82",
+      "injection_sha256" : "2003abb6c431bb22c9f12c4b424b844804adff879a69742c434e2791d8e55d66",
+      "exact" : true,
+      "origin" : {
+        "offset" : 72,
+        "base" : "model.layers.3.attn_hyper_connection",
+        "frequency" : 12,
+        "id" : 2,
+        "layer" : 3,
+        "input" : {
+          "bytes" : 40960,
+          "dtype" : "F32",
+          "file" : "case2.input.f32",
+          "shape" : [
+            1,
+            10240
+          ],
+          "sha256" : "11bb8d7c19621cd9f6b20aafffa7d4fa1bc634d7f2926df26749f0bbdde118ed"
+        },
+        "native_output" : {
+          "bytes" : 10240,
+          "dtype" : "F32",
+          "file" : "case2.output.f32",
+          "shape" : [
+            1,
+            2560
+          ],
+          "sha256" : "29ec5c782009dbd09ff523effc7f22cbf3ed13666a696b88f92eb46a78d25d82"
+        },
+        "native_injection" : {
+          "bytes" : 16,
+          "dtype" : "F32",
+          "file" : "case2.injection.f32",
+          "shape" : [
+            1,
+            4
+          ],
+          "sha256" : "2003abb6c431bb22c9f12c4b424b844804adff879a69742c434e2791d8e55d66"
+        },
+        "stage" : "attention_input",
+        "tensors" : {
+          "down_w" : {
+            "sha256" : "53ef36929bc3ea2941a36238e884117f5988372ac66e9e2afe4252a18d721e9e",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 5669682604,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                2560
+              ],
+              "sha256" : "53ef36929bc3ea2941a36238e884117f5988372ac66e9e2afe4252a18d721e9e"
+            },
+            "file" : "case2.down_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_down.weight",
+            "shape" : [
+              320,
+              2560
+            ]
+          },
+          "down_s" : {
+            "sha256" : "84f06433ae31281d693b677b535688a8df7805033aa19dbfa65e7a6b9d026f5e",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 3356338092,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "84f06433ae31281d693b677b535688a8df7805033aa19dbfa65e7a6b9d026f5e"
+            },
+            "file" : "case2.down_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_down.scales",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "down_b" : {
+            "sha256" : "591c743ad7466def3d61131e799d97e14122144882da77062f8bc8be83a14a26",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 6407891212,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "591c743ad7466def3d61131e799d97e14122144882da77062f8bc8be83a14a26"
+            },
+            "file" : "case2.down_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_down.biases",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "up_b" : {
+            "sha256" : "d8ec2144201a4fdcffa654404f23feb62468edfaa340cad1ebe61d298de0ab9c",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 3356440492,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "d8ec2144201a4fdcffa654404f23feb62468edfaa340cad1ebe61d298de0ab9c"
+            },
+            "file" : "case2.up_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_up.biases",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "inject" : {
+            "sha256" : "ccbf0a9f9ea43e4b69a5aea034e6ef78c407dfd6ad5285b2de3516b7dfc7316c",
+            "source" : {
+              "bytes" : 81920,
+              "dtype" : "BF16",
+              "offset" : 3807256492,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                4,
+                10240
+              ],
+              "sha256" : "ccbf0a9f9ea43e4b69a5aea034e6ef78c407dfd6ad5285b2de3516b7dfc7316c"
+            },
+            "file" : "case2.inject.bin",
+            "dtype" : "BF16",
+            "bytes" : 81920,
+            "source_name" : "model.layers.3.attn_hyper_connection.block_inject_weight.weight",
+            "shape" : [
+              4,
+              10240
+            ]
+          },
+          "norm" : {
+            "sha256" : "c82f73a5984fb4faaca51fcb55bb5c9a8710018d6760a4148091346bdef8b9ea",
+            "source" : {
+              "bytes" : 20480,
+              "dtype" : "BF16",
+              "offset" : 8090964268,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240
+              ],
+              "sha256" : "c82f73a5984fb4faaca51fcb55bb5c9a8710018d6760a4148091346bdef8b9ea"
+            },
+            "file" : "case2.norm.bin",
+            "dtype" : "BF16",
+            "bytes" : 20480,
+            "source_name" : "model.layers.3.attn_hyper_connection.hc_norm.weight",
+            "shape" : [
+              10240
+            ]
+          },
+          "up_s" : {
+            "sha256" : "ce5c4144b94399212851c58e2ccde09aa59b889cdb35200646b01854ce035bf3",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 3356542892,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "ce5c4144b94399212851c58e2ccde09aa59b889cdb35200646b01854ce035bf3"
+            },
+            "file" : "case2.up_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_up.scales",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "up_w" : {
+            "sha256" : "cce9e52b106c0ffefa6cc4418cacb8a696105e81f5a9df92823c3a134c2be07d",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 6854882828,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                80
+              ],
+              "sha256" : "cce9e52b106c0ffefa6cc4418cacb8a696105e81f5a9df92823c3a134c2be07d"
+            },
+            "file" : "case2.up_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.3.attn_hyper_connection.input_mix_weight_up.weight",
+            "shape" : [
+              10240,
+              80
+            ]
+          }
+        }
+      },
+      "native_reference_exact" : true
+    },
+    {
+      "output_sha256" : "92ab275fa2b4179a4c114b924379c487d13c0fda5478d47064640887e0b75a0e",
+      "injection_sha256" : "92525b9fbaf63a4d89cf6e2e5768d71e9a40beef94e1396dc82d8037d6908de7",
+      "exact" : true,
+      "origin" : {
+        "offset" : 72,
+        "base" : "model.layers.3.mlp_hyper_connection",
+        "frequency" : 12,
+        "id" : 3,
+        "layer" : 3,
+        "input" : {
+          "bytes" : 40960,
+          "dtype" : "F32",
+          "file" : "case3.input.f32",
+          "shape" : [
+            1,
+            10240
+          ],
+          "sha256" : "f7802b061d210ab376d60e24581a39db3e3a5d97e8ba5a9e96bab1cf0adf0640"
+        },
+        "native_output" : {
+          "bytes" : 10240,
+          "dtype" : "F32",
+          "file" : "case3.output.f32",
+          "shape" : [
+            1,
+            2560
+          ],
+          "sha256" : "92ab275fa2b4179a4c114b924379c487d13c0fda5478d47064640887e0b75a0e"
+        },
+        "native_injection" : {
+          "bytes" : 16,
+          "dtype" : "F32",
+          "file" : "case3.injection.f32",
+          "shape" : [
+            1,
+            4
+          ],
+          "sha256" : "92525b9fbaf63a4d89cf6e2e5768d71e9a40beef94e1396dc82d8037d6908de7"
+        },
+        "stage" : "mlp_input",
+        "tensors" : {
+          "down_w" : {
+            "sha256" : "0726307c4c64215c04f9c070216129041814181c6c7ae5c5d9a7f0535b3fb8c2",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 932176460,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                2560
+              ],
+              "sha256" : "0726307c4c64215c04f9c070216129041814181c6c7ae5c5d9a7f0535b3fb8c2"
+            },
+            "file" : "case3.down_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_down.weight",
+            "shape" : [
+              320,
+              2560
+            ]
+          },
+          "down_s" : {
+            "sha256" : "0e8da6b83b7beac223bef449fa2b7105dad5aebdb6f84270b3a279ccddf9839f",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 9058439916,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "0e8da6b83b7beac223bef449fa2b7105dad5aebdb6f84270b3a279ccddf9839f"
+            },
+            "file" : "case3.down_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_down.scales",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "down_b" : {
+            "sha256" : "52ef2312f21ac3a2a3c65959ba53cf7e9f7a4eb322dea74d5290a282b0a443c3",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 8084369452,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                320,
+                160
+              ],
+              "sha256" : "52ef2312f21ac3a2a3c65959ba53cf7e9f7a4eb322dea74d5290a282b0a443c3"
+            },
+            "file" : "case3.down_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_down.biases",
+            "shape" : [
+              320,
+              160
+            ]
+          },
+          "up_b" : {
+            "sha256" : "4751fcfadfe106111536969249f1a18120e5bfe95be4799d25448d2132056f14",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 6854780428,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "4751fcfadfe106111536969249f1a18120e5bfe95be4799d25448d2132056f14"
+            },
+            "file" : "case3.up_b.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_up.biases",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "inject" : {
+            "sha256" : "4326d2930151a805441ef7f4c79bbf59f16c63647cf29865794d51a3fb1f36a0",
+            "source" : {
+              "bytes" : 81920,
+              "dtype" : "BF16",
+              "offset" : 1404348076,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                4,
+                10240
+              ],
+              "sha256" : "4326d2930151a805441ef7f4c79bbf59f16c63647cf29865794d51a3fb1f36a0"
+            },
+            "file" : "case3.inject.bin",
+            "dtype" : "BF16",
+            "bytes" : 81920,
+            "source_name" : "model.layers.3.mlp_hyper_connection.block_inject_weight.weight",
+            "shape" : [
+              4,
+              10240
+            ]
+          },
+          "norm" : {
+            "sha256" : "6f7638e1f417ae21e3686b70eceb3e395eb82e652e0b8362a40b3221e20e142d",
+            "source" : {
+              "bytes" : 20480,
+              "dtype" : "BF16",
+              "offset" : 9056432876,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240
+              ],
+              "sha256" : "6f7638e1f417ae21e3686b70eceb3e395eb82e652e0b8362a40b3221e20e142d"
+            },
+            "file" : "case3.norm.bin",
+            "dtype" : "BF16",
+            "bytes" : 20480,
+            "source_name" : "model.layers.3.mlp_hyper_connection.hc_norm.weight",
+            "shape" : [
+              10240
+            ]
+          },
+          "up_s" : {
+            "sha256" : "cc9da983e1dc357aab68fcd0015bf10d743c573daad7764878c3049bb3f073f6",
+            "source" : {
+              "bytes" : 102400,
+              "dtype" : "BF16",
+              "offset" : 1381364396,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                5
+              ],
+              "sha256" : "cc9da983e1dc357aab68fcd0015bf10d743c573daad7764878c3049bb3f073f6"
+            },
+            "file" : "case3.up_s.bin",
+            "dtype" : "BF16",
+            "bytes" : 102400,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_up.scales",
+            "shape" : [
+              10240,
+              5
+            ]
+          },
+          "up_w" : {
+            "sha256" : "91ae5018bc94cf48977daf91ac99c566ea9a5f15b88e70d194750709d8a27c91",
+            "source" : {
+              "bytes" : 3276800,
+              "dtype" : "U32",
+              "offset" : 1384743596,
+              "file" : "model-00007.safetensors",
+              "shape" : [
+                10240,
+                80
+              ],
+              "sha256" : "91ae5018bc94cf48977daf91ac99c566ea9a5f15b88e70d194750709d8a27c91"
+            },
+            "file" : "case3.up_w.bin",
+            "dtype" : "U32",
+            "bytes" : 3276800,
+            "source_name" : "model.layers.3.mlp_hyper_connection.input_mix_weight_up.weight",
+            "shape" : [
+              10240,
+              80
+            ]
+          }
+        }
+      },
+      "native_reference_exact" : true
+    }
+  ],
+  "device" : "Apple M1 Pro",
+  "pairs" : [
+
+  ]
+}

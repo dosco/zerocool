@@ -1,0 +1,18 @@
+{
+  "hypothesis": "Affine Q3 gate/up with Q4 down can reduce expert storage by at least 14% without more than 3% operator latency cost.",
+  "expected_effect": "Establish a bounded storage/kernel feasibility result before original-weight conversion or coding-quality evaluation.",
+  "controlled_change": "Eight real expert records across layers 0/16/32/47, teacher-forced input fixtures, group-64 Q3 with BF16 metadata, unchanged Q4 down; rows 1/2/4/8, five alternating timing pairs.",
+  "correctness": "All 32 real-weight operator cases passed exact expanded-code arithmetic checks with separate Metal validation. No original-weight or model-quality claim.",
+  "outcome": "Padded records shrink from 2768896 to 2359296 bytes (14.79%). One-token geometric latency ratio is 1.05798, 95% interval 0.92736-1.20700. The latency gate is inconclusive, not a proven regression. Held-out capture was not run.",
+  "decision": "inconclusive",
+  "smallest_experiment": "Only consider a preregistered operator-only timing protocol on preserved fixtures to resolve variance; do not begin full conversion or quality qualification from this result.",
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/summary.json",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning-timing.json",
+    "/repo/docs/benchmarks/2026-09-13-stage200/verification.json"
+  ],
+  "limitations": [
+    "Single M1 Pro host; short screens cannot qualify 2K/4K generation or sustained coding.",
+    "No production default is promoted."
+  ]
+}

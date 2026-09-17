@@ -1,0 +1,22 @@
+{
+  "kind": "combined_q4_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "source_seal_sha256": "81e0b9e27f360881c7352faa55f0a97235c8ee6223fa280149d85abc8682433a",
+  "recorded_complete": true,
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 141,
+    "archived_tooling": []
+  },
+  "decision": {
+    "exact_logits_routes_state": true,
+    "all_48_layers": true,
+    "continued_equals_fresh": true,
+    "forced_eviction": true,
+    "cancellation_failure_checked": true,
+    "decode_dispatch_checked": true,
+    "independent_model_reference": false
+  },
+  "production_promoted": false
+}

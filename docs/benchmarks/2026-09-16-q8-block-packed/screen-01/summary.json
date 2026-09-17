@@ -1,0 +1,377 @@
+{
+  "kind": "q8_block_packed_screen_v1",
+  "complete": true,
+  "status": "insufficient_isolated_benefit",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-16T21:33:54.516900+00:00",
+  "time_limit_seconds": 180,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7734,
+      264,
+      12654,
+      709,
+      10562,
+      87682,
+      1494,
+      40798,
+      8,
+      421,
+      78161,
+      48142,
+      7629,
+      26126,
+      13,
+      3301,
+      10300,
+      26126,
+      1973,
+      93183,
+      279,
+      1879,
+      13,
+      13365,
+      449,
+      4147,
+      1103,
+      321,
+      26126,
+      421,
+      5615,
+      506,
+      449,
+      14456,
+      13,
+      28763,
+      279,
+      7873,
+      321,
+      2250,
+      2526,
+      52992,
+      7262,
+      4147,
+      1879,
+      11,
+      48142,
+      26126,
+      11,
+      321,
+      632,
+      27379,
+      81859,
+      26126,
+      13,
+      79091,
+      279,
+      854,
+      22373,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198,
+      248068,
+      271,
+      248069,
+      271
+    ],
+    "continuation_ids": [
+      71093,
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142
+    ],
+    "expected_next_ids": [
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142,
+      7629
+    ],
+    "expected_prompt_id": 71093
+  },
+  "criteria": {
+    "width": 4,
+    "expert_slots": 1460,
+    "memory_bytes": 12884901888,
+    "candidate_output_rows": 1,
+    "control_output_rows": 1,
+    "token_tile": 4,
+    "pairs": 5,
+    "repeats": 32,
+    "minimum_projection_ms_per_token": 10,
+    "paired_ratio_upper_below": 1,
+    "stage_seconds": 180,
+    "production_promoted": false,
+    "normal_request_latency_qualified": false,
+    "weight_load_bits": 32
+  },
+  "limitations": [
+    "One layer and first four-token block provide real inputs for three recurring GDN shapes; other layers and contexts remain untested.",
+    "Shape-frequency projections assume 36 calls of each shape per four-token block. They are isolated GPU opportunities, not predicted request savings.",
+    "Repeated weights and five pairs within one process differ from inference. A promising screen still needs full-model state/recovery and normal verifier timing.",
+    "Only verified tensor bytes and numerical identity are reused from the memory-disturbed capture; every timing and memory observation is fresh.",
+    "The packed candidate has one output row and four tokens. It is not combined with the prior output-row-pair candidate."
+  ],
+  "variant": {
+    "candidate": "q8_block_packed_t4_w8",
+    "control": "q8_mm_t4",
+    "reference": "q8_mm",
+    "token_tile": 4,
+    "output_rows": 1,
+    "lane_width": 8,
+    "weight_load_bits": 32
+  },
+  "source_proof": {
+    "path": "/repo/docs/benchmarks/2026-09-16-block-gdn/screen-03",
+    "source_seal_sha256": "f5f7bd1b728d965fc21ff7a0b71111333f56f31db27a1067a335a1c12da97b44",
+    "recorded_complete": false,
+    "recorded_status": "resource_blocked",
+    "exact_logits_state_routes": true,
+    "capture_clean_memory": false,
+    "verified_weights": [
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.weight",
+        "bytes": 26214400,
+        "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.scales",
+        "bytes": 819200,
+        "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_qkv.biases",
+        "bytes": 819200,
+        "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.weight",
+        "bytes": 15728640,
+        "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.scales",
+        "bytes": 491520,
+        "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.in_proj_z.biases",
+        "bytes": 491520,
+        "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.out_proj.weight",
+        "bytes": 15728640,
+        "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.out_proj.scales",
+        "bytes": 491520,
+        "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+      },
+      {
+        "tensor": "language_model.model.layers.0.linear_attn.out_proj.biases",
+        "bytes": 491520,
+        "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+      }
+    ],
+    "use": "verified tensor bytes and numerical identity only; no capture timing or memory samples reused"
+  },
+  "token_source": {
+    "path": "/repo/docs/benchmarks/2026-09-15-q4-request-context/capture-02",
+    "source_seal_sha256": "82ad1f44affaba36ea4db1a89fb29dcba63c7306ccba61b330cc0b2f662688a6",
+    "raw_sha256": "0c9d82785b25baf06366ab9b399f9438237e8b29c4f71ba32b625ce4dd6540e1",
+    "source_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "recorded_stage_complete": false,
+    "recorded_stage_status": "resource_blocked",
+    "use": "fixed tokens and artifact identity only; no timing reused"
+  },
+  "host_preflight": [
+    {
+      "source": "validate-host.json",
+      "sha256": "2543e5f17944f75b16fb80ce392d38b71746f707790e58a7bca6554bda9e5004",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5198093821058000,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "timing-host.json",
+      "sha256": "1343a7af6d22fad70f95ecf37b7aab7e66b8d1f6f8a6eae3af44c63d94f1d0db",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5198094999206625,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "build_directory": "/repo/.cache/q8-block-packed-build-01",
+  "source_timing_reused": false,
+  "native_model_loaded": false,
+  "validate": {
+    "exact": true,
+    "clean_memory": true,
+    "clean_host": true,
+    "cases": [
+      {
+        "K": 2560,
+        "N": 10240,
+        "paired_ratios": [
+          0.8953811888929993
+        ]
+      },
+      {
+        "K": 2560,
+        "N": 6144,
+        "paired_ratios": [
+          0.9036095159967186
+        ]
+      },
+      {
+        "K": 6144,
+        "N": 2560,
+        "paired_ratios": [
+          0.7540432138698409
+        ]
+      }
+    ],
+    "peak_physical_bytes": 99960448,
+    "production_promoted": false,
+    "normal_request_latency_qualified": false
+  },
+  "timing": {
+    "exact": true,
+    "clean_memory": true,
+    "clean_host": true,
+    "cases": [
+      {
+        "K": 2560,
+        "N": 10240,
+        "paired_ratios": [
+          0.6927394447625371,
+          0.732929713647063,
+          0.7121773623965131,
+          0.7076623481036262,
+          0.7141634790310313
+        ]
+      },
+      {
+        "K": 2560,
+        "N": 6144,
+        "paired_ratios": [
+          0.8160069101317426,
+          0.8225373981042459,
+          0.8176187783293989,
+          0.8140073742159663,
+          0.8211833733053915
+        ]
+      },
+      {
+        "K": 6144,
+        "N": 2560,
+        "paired_ratios": [
+          0.77112288921474,
+          0.7834134247556813,
+          0.7758062463756304,
+          0.7764239818421582,
+          0.7572300717321693
+        ]
+      }
+    ],
+    "peak_physical_bytes": 51644032,
+    "production_promoted": false,
+    "normal_request_latency_qualified": false,
+    "status": "insufficient_isolated_benefit",
+    "advance_to_verifier_screen": false,
+    "shape_frequency_projection_ms": [
+      7.917104812500003,
+      6.930831375,
+      7.452831656250002,
+      7.5601051874999925,
+      7.578116999999995
+    ],
+    "median_projection_ms_per_token": 7.5601051874999925,
+    "weighted_ratios": [
+      0.7444573351859688,
+      0.7695458058898336,
+      0.755965279067772,
+      0.7530455500226567,
+      0.7525605237495804
+    ],
+    "confidence_95": {
+      "geometric_mean": 0.7550709529266926,
+      "low": 0.7438589136790718,
+      "high": 0.7664519890388779,
+      "pairs": 5,
+      "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+      "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+    },
+    "limitations": [
+      "One layer and first four-token block provide real inputs for three recurring GDN shapes; other layers and contexts remain untested.",
+      "Shape-frequency projections assume 36 calls of each shape per four-token block. They are isolated GPU opportunities, not predicted request savings.",
+      "Repeated weights and five pairs within one process differ from inference. A promising screen still needs full-model state/recovery and normal verifier timing.",
+      "Only verified tensor bytes and numerical identity are reused from the memory-disturbed capture; every timing and memory observation is fresh.",
+      "The packed candidate has one output row and four tokens. It is not combined with the prior output-row-pair candidate."
+    ]
+  },
+  "advance_to_verifier_screen": false,
+  "elapsed_seconds": 4.891203415580094
+}

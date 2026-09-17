@@ -1,0 +1,3394 @@
+{
+  "kind": "request_diagnostic_memory_v1",
+  "complete": true,
+  "hard_limits_passed": true,
+  "reasons": [],
+  "diagnostic_usable": true,
+  "strict_memory_clean": false,
+  "budget_bytes": 12884901888,
+  "compression_peak_limit_bytes": 536870912,
+  "chronological_observations": [
+    {
+      "index": 0,
+      "phase": "coding_routes_32",
+      "boundary": "request.before",
+      "process": {
+        "physical_footprint_bytes": 5486767936,
+        "physical_footprint_peak_bytes": 5517160064,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": null
+    },
+    {
+      "index": 1,
+      "phase": "coding_routes_32",
+      "boundary": "ingest.before",
+      "process": {
+        "physical_footprint_bytes": 5486767936,
+        "physical_footprint_peak_bytes": 5517160064,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 2,
+      "phase": "coding_routes_32",
+      "boundary": "ingest.after",
+      "process": {
+        "physical_footprint_bytes": 9039137344,
+        "physical_footprint_peak_bytes": 9092631104,
+        "compressed_bytes": 111902720,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 131,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3552369408,
+        "physical_footprint_peak_bytes": 3575471040,
+        "compressed_bytes": 111902720,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 131,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 3,
+      "phase": "coding_routes_32",
+      "boundary": "decode.before",
+      "process": {
+        "physical_footprint_bytes": 9039137344,
+        "physical_footprint_peak_bytes": 9092631104,
+        "compressed_bytes": 111902720,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 131,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 4,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9039137344,
+        "physical_footprint_peak_bytes": 9092631104,
+        "compressed_bytes": 111886336,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 132,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 0,
+      "offset": 72,
+      "forward_begin_ns": 5110102099366500
+    },
+    {
+      "index": 5,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9120598592,
+        "physical_footprint_peak_bytes": 9120598592,
+        "compressed_bytes": 108527616,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 337,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 81461248,
+        "physical_footprint_peak_bytes": 27967488,
+        "compressed_bytes": -3358720,
+        "compressed_peak_bytes": 0,
+        "decompressions": 205,
+        "system_swap_used_bytes": 0
+      },
+      "step": 0,
+      "offset": 72,
+      "forward_end_ns": 5110102469058708
+    },
+    {
+      "index": 6,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9120598592,
+        "physical_footprint_peak_bytes": 9120598592,
+        "compressed_bytes": 108527616,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 337,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 1,
+      "offset": 73,
+      "forward_begin_ns": 5110102469643833
+    },
+    {
+      "index": 7,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9123498560,
+        "physical_footprint_peak_bytes": 9123498560,
+        "compressed_bytes": 108199936,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 357,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2899968,
+        "physical_footprint_peak_bytes": 2899968,
+        "compressed_bytes": -327680,
+        "compressed_peak_bytes": 0,
+        "decompressions": 20,
+        "system_swap_used_bytes": 0
+      },
+      "step": 1,
+      "offset": 73,
+      "forward_end_ns": 5110102722907125
+    },
+    {
+      "index": 8,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9123498560,
+        "physical_footprint_peak_bytes": 9123498560,
+        "compressed_bytes": 108199936,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 357,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 2,
+      "offset": 74,
+      "forward_begin_ns": 5110102723475125
+    },
+    {
+      "index": 9,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9126267456,
+        "physical_footprint_peak_bytes": 9126283840,
+        "compressed_bytes": 107905024,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 375,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2768896,
+        "physical_footprint_peak_bytes": 2785280,
+        "compressed_bytes": -294912,
+        "compressed_peak_bytes": 0,
+        "decompressions": 18,
+        "system_swap_used_bytes": 0
+      },
+      "step": 2,
+      "offset": 74,
+      "forward_end_ns": 5110102956670458
+    },
+    {
+      "index": 10,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9126283840,
+        "physical_footprint_peak_bytes": 9126283840,
+        "compressed_bytes": 107905024,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 375,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 3,
+      "offset": 75,
+      "forward_begin_ns": 5110102957244291
+    },
+    {
+      "index": 11,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9128741440,
+        "physical_footprint_peak_bytes": 9128757824,
+        "compressed_bytes": 107560960,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 396,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2457600,
+        "physical_footprint_peak_bytes": 2473984,
+        "compressed_bytes": -344064,
+        "compressed_peak_bytes": 0,
+        "decompressions": 21,
+        "system_swap_used_bytes": 0
+      },
+      "step": 3,
+      "offset": 75,
+      "forward_end_ns": 5110103205956416
+    },
+    {
+      "index": 12,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9128741440,
+        "physical_footprint_peak_bytes": 9128757824,
+        "compressed_bytes": 107560960,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 396,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 4,
+      "offset": 76,
+      "forward_begin_ns": 5110103206531583
+    },
+    {
+      "index": 13,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9132427840,
+        "physical_footprint_peak_bytes": 9132427840,
+        "compressed_bytes": 107298816,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 412,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3686400,
+        "physical_footprint_peak_bytes": 3670016,
+        "compressed_bytes": -262144,
+        "compressed_peak_bytes": 0,
+        "decompressions": 16,
+        "system_swap_used_bytes": 0
+      },
+      "step": 4,
+      "offset": 76,
+      "forward_end_ns": 5110103560295916
+    },
+    {
+      "index": 14,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9132444224,
+        "physical_footprint_peak_bytes": 9132444224,
+        "compressed_bytes": 107298816,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 412,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 16384,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 5,
+      "offset": 77,
+      "forward_begin_ns": 5110103560861750
+    },
+    {
+      "index": 15,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9136425536,
+        "physical_footprint_peak_bytes": 9136425536,
+        "compressed_bytes": 107069440,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 426,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3981312,
+        "physical_footprint_peak_bytes": 3981312,
+        "compressed_bytes": -229376,
+        "compressed_peak_bytes": 0,
+        "decompressions": 14,
+        "system_swap_used_bytes": 0
+      },
+      "step": 5,
+      "offset": 77,
+      "forward_end_ns": 5110103833149083
+    },
+    {
+      "index": 16,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9136425536,
+        "physical_footprint_peak_bytes": 9136425536,
+        "compressed_bytes": 107069440,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 426,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 6,
+      "offset": 78,
+      "forward_begin_ns": 5110103833714208
+    },
+    {
+      "index": 17,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9139292736,
+        "physical_footprint_peak_bytes": 9139292736,
+        "compressed_bytes": 106921984,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 435,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2867200,
+        "physical_footprint_peak_bytes": 2867200,
+        "compressed_bytes": -147456,
+        "compressed_peak_bytes": 0,
+        "decompressions": 9,
+        "system_swap_used_bytes": 0
+      },
+      "step": 6,
+      "offset": 78,
+      "forward_end_ns": 5110104117526583
+    },
+    {
+      "index": 18,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9139292736,
+        "physical_footprint_peak_bytes": 9139292736,
+        "compressed_bytes": 106921984,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 435,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 7,
+      "offset": 79,
+      "forward_begin_ns": 5110104118092000
+    },
+    {
+      "index": 19,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9142979136,
+        "physical_footprint_peak_bytes": 9142979136,
+        "compressed_bytes": 106610688,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 454,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3686400,
+        "physical_footprint_peak_bytes": 3686400,
+        "compressed_bytes": -311296,
+        "compressed_peak_bytes": 0,
+        "decompressions": 19,
+        "system_swap_used_bytes": 0
+      },
+      "step": 7,
+      "offset": 79,
+      "forward_end_ns": 5110104324038500
+    },
+    {
+      "index": 20,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9142979136,
+        "physical_footprint_peak_bytes": 9142979136,
+        "compressed_bytes": 106594304,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 455,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 8,
+      "offset": 80,
+      "forward_begin_ns": 5110104324586291
+    },
+    {
+      "index": 21,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9145879104,
+        "physical_footprint_peak_bytes": 9145895488,
+        "compressed_bytes": 106479616,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 462,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2899968,
+        "physical_footprint_peak_bytes": 2916352,
+        "compressed_bytes": -114688,
+        "compressed_peak_bytes": 0,
+        "decompressions": 7,
+        "system_swap_used_bytes": 0
+      },
+      "step": 8,
+      "offset": 80,
+      "forward_end_ns": 5110104591523375
+    },
+    {
+      "index": 22,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9145879104,
+        "physical_footprint_peak_bytes": 9145895488,
+        "compressed_bytes": 106479616,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 462,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 9,
+      "offset": 81,
+      "forward_begin_ns": 5110104592133958
+    },
+    {
+      "index": 23,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9148828288,
+        "physical_footprint_peak_bytes": 9148828288,
+        "compressed_bytes": 106397696,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 467,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2949184,
+        "physical_footprint_peak_bytes": 2932800,
+        "compressed_bytes": -81920,
+        "compressed_peak_bytes": 0,
+        "decompressions": 5,
+        "system_swap_used_bytes": 0
+      },
+      "step": 9,
+      "offset": 81,
+      "forward_end_ns": 5110104891504875
+    },
+    {
+      "index": 24,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9148828288,
+        "physical_footprint_peak_bytes": 9148828288,
+        "compressed_bytes": 106397696,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 467,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 10,
+      "offset": 82,
+      "forward_begin_ns": 5110104892082083
+    },
+    {
+      "index": 25,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9151728256,
+        "physical_footprint_peak_bytes": 9151728256,
+        "compressed_bytes": 106315776,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 472,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2899968,
+        "physical_footprint_peak_bytes": 2899968,
+        "compressed_bytes": -81920,
+        "compressed_peak_bytes": 0,
+        "decompressions": 5,
+        "system_swap_used_bytes": 0
+      },
+      "step": 10,
+      "offset": 82,
+      "forward_end_ns": 5110105147702958
+    },
+    {
+      "index": 26,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9151728256,
+        "physical_footprint_peak_bytes": 9151728256,
+        "compressed_bytes": 106315776,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 472,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 11,
+      "offset": 83,
+      "forward_begin_ns": 5110105148279666
+    },
+    {
+      "index": 27,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9152531072,
+        "physical_footprint_peak_bytes": 9152547456,
+        "compressed_bytes": 106119168,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 482,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 802816,
+        "physical_footprint_peak_bytes": 819200,
+        "compressed_bytes": -196608,
+        "compressed_peak_bytes": 0,
+        "decompressions": 10,
+        "system_swap_used_bytes": 0
+      },
+      "step": 11,
+      "offset": 83,
+      "forward_end_ns": 5110105454973958
+    },
+    {
+      "index": 28,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9152547456,
+        "physical_footprint_peak_bytes": 9152547456,
+        "compressed_bytes": 106119168,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 482,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 12,
+      "offset": 84,
+      "forward_begin_ns": 5110105455553458
+    },
+    {
+      "index": 29,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9155414656,
+        "physical_footprint_peak_bytes": 9155431040,
+        "compressed_bytes": 106102784,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 483,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2867200,
+        "physical_footprint_peak_bytes": 2883584,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 12,
+      "offset": 84,
+      "forward_end_ns": 5110105667948125
+    },
+    {
+      "index": 30,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9155414656,
+        "physical_footprint_peak_bytes": 9155431040,
+        "compressed_bytes": 106102784,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 483,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 13,
+      "offset": 85,
+      "forward_begin_ns": 5110105668539708
+    },
+    {
+      "index": 31,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9158298240,
+        "physical_footprint_peak_bytes": 9158314624,
+        "compressed_bytes": 106086400,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 484,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2883584,
+        "physical_footprint_peak_bytes": 2883584,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 13,
+      "offset": 85,
+      "forward_end_ns": 5110105877268250
+    },
+    {
+      "index": 32,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9158298240,
+        "physical_footprint_peak_bytes": 9158314624,
+        "compressed_bytes": 106086400,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 484,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 14,
+      "offset": 86,
+      "forward_begin_ns": 5110105877827125
+    },
+    {
+      "index": 33,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9161296512,
+        "physical_footprint_peak_bytes": 9161296512,
+        "compressed_bytes": 106053632,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 486,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2998272,
+        "physical_footprint_peak_bytes": 2981888,
+        "compressed_bytes": -32768,
+        "compressed_peak_bytes": 0,
+        "decompressions": 2,
+        "system_swap_used_bytes": 0
+      },
+      "step": 14,
+      "offset": 86,
+      "forward_end_ns": 5110106165717000
+    },
+    {
+      "index": 34,
+      "phase": "coding_routes_32",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9161296512,
+        "physical_footprint_peak_bytes": 9161296512,
+        "compressed_bytes": 106053632,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 486,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 15,
+      "offset": 87,
+      "forward_begin_ns": 5110106166289208
+    },
+    {
+      "index": 35,
+      "phase": "coding_routes_32",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9164262016,
+        "physical_footprint_peak_bytes": 9164294784,
+        "compressed_bytes": 106037248,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 487,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2965504,
+        "physical_footprint_peak_bytes": 2998272,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 15,
+      "offset": 87,
+      "forward_end_ns": 5110106492890125
+    },
+    {
+      "index": 36,
+      "phase": "coding_routes_32",
+      "boundary": "decode.after",
+      "process": {
+        "physical_footprint_bytes": 9164294784,
+        "physical_footprint_peak_bytes": 9164294784,
+        "compressed_bytes": 106037248,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 487,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 32768,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 37,
+      "phase": "coding_routes_32",
+      "boundary": "request.after",
+      "process": {
+        "physical_footprint_bytes": 9164606080,
+        "physical_footprint_peak_bytes": 9164606080,
+        "compressed_bytes": 105840640,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 499,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 311296,
+        "physical_footprint_peak_bytes": 311296,
+        "compressed_bytes": -196608,
+        "compressed_peak_bytes": 0,
+        "decompressions": 12,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 38,
+      "phase": "append_128",
+      "boundary": "request.before",
+      "process": {
+        "physical_footprint_bytes": 9165458048,
+        "physical_footprint_peak_bytes": 9165458048,
+        "compressed_bytes": 105578496,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 515,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 851968,
+        "physical_footprint_peak_bytes": 851968,
+        "compressed_bytes": -262144,
+        "compressed_peak_bytes": 0,
+        "decompressions": 16,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 39,
+      "phase": "append_128",
+      "boundary": "ingest.before",
+      "process": {
+        "physical_footprint_bytes": 9165458048,
+        "physical_footprint_peak_bytes": 9165458048,
+        "compressed_bytes": 105578496,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 515,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 40,
+      "phase": "append_128",
+      "boundary": "ingest.after",
+      "process": {
+        "physical_footprint_bytes": 9095383680,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104857600,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 559,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": -70074368,
+        "physical_footprint_peak_bytes": 73400320,
+        "compressed_bytes": -720896,
+        "compressed_peak_bytes": 0,
+        "decompressions": 44,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 41,
+      "phase": "append_128",
+      "boundary": "decode.before",
+      "process": {
+        "physical_footprint_bytes": 9095383680,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104857600,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 559,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 42,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9095383680,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104857600,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 559,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 0,
+      "offset": 217,
+      "forward_begin_ns": 5110130362337333
+    },
+    {
+      "index": 43,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9172175488,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 76791808,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 0,
+      "offset": 217,
+      "forward_end_ns": 5110130734886916
+    },
+    {
+      "index": 44,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9172191872,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 1,
+      "offset": 218,
+      "forward_begin_ns": 5110130735459958
+    },
+    {
+      "index": 45,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9175059072,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2867200,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 1,
+      "offset": 218,
+      "forward_end_ns": 5110130985111916
+    },
+    {
+      "index": 46,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9175059072,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 2,
+      "offset": 219,
+      "forward_begin_ns": 5110130985683250
+    },
+    {
+      "index": 47,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9177942656,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2883584,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 2,
+      "offset": 219,
+      "forward_end_ns": 5110131231269875
+    },
+    {
+      "index": 48,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9177959040,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104841216,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 560,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 3,
+      "offset": 220,
+      "forward_begin_ns": 5110131231843958
+    },
+    {
+      "index": 49,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9179908800,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 1949760,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": -16384,
+        "compressed_peak_bytes": 0,
+        "decompressions": 1,
+        "system_swap_used_bytes": 0
+      },
+      "step": 3,
+      "offset": 220,
+      "forward_end_ns": 5110131486450541
+    },
+    {
+      "index": 50,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9179925184,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 16384,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 4,
+      "offset": 221,
+      "forward_begin_ns": 5110131487009666
+    },
+    {
+      "index": 51,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9183038144,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3112960,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 4,
+      "offset": 221,
+      "forward_end_ns": 5110131904080875
+    },
+    {
+      "index": 52,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9183038144,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 5,
+      "offset": 222,
+      "forward_begin_ns": 5110131904659750
+    },
+    {
+      "index": 53,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9185970880,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2932736,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 5,
+      "offset": 222,
+      "forward_end_ns": 5110132215620750
+    },
+    {
+      "index": 54,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9185970880,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 6,
+      "offset": 223,
+      "forward_begin_ns": 5110132216192250
+    },
+    {
+      "index": 55,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9188903616,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2932736,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 6,
+      "offset": 223,
+      "forward_end_ns": 5110132568923416
+    },
+    {
+      "index": 56,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9188903616,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 7,
+      "offset": 224,
+      "forward_begin_ns": 5110132569488666
+    },
+    {
+      "index": 57,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9191836352,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2932736,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 7,
+      "offset": 224,
+      "forward_end_ns": 5110132877364500
+    },
+    {
+      "index": 58,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9191836352,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 8,
+      "offset": 225,
+      "forward_begin_ns": 5110132877934875
+    },
+    {
+      "index": 59,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9194752704,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2916352,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 8,
+      "offset": 225,
+      "forward_end_ns": 5110133148996458
+    },
+    {
+      "index": 60,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9194752704,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 9,
+      "offset": 226,
+      "forward_begin_ns": 5110133149584583
+    },
+    {
+      "index": 61,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9197718208,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2965504,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 9,
+      "offset": 226,
+      "forward_end_ns": 5110133466592833
+    },
+    {
+      "index": 62,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9197718208,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 10,
+      "offset": 227,
+      "forward_begin_ns": 5110133467165125
+    },
+    {
+      "index": 63,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9200569024,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2850816,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 10,
+      "offset": 227,
+      "forward_end_ns": 5110133763557708
+    },
+    {
+      "index": 64,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9200569024,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 11,
+      "offset": 228,
+      "forward_begin_ns": 5110133764132125
+    },
+    {
+      "index": 65,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9203600064,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3031040,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 11,
+      "offset": 228,
+      "forward_end_ns": 5110134062693458
+    },
+    {
+      "index": 66,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9203600064,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 12,
+      "offset": 229,
+      "forward_begin_ns": 5110134063256500
+    },
+    {
+      "index": 67,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9206500032,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2899968,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 12,
+      "offset": 229,
+      "forward_end_ns": 5110134285109500
+    },
+    {
+      "index": 68,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9206500032,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 13,
+      "offset": 230,
+      "forward_begin_ns": 5110134285677875
+    },
+    {
+      "index": 69,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9210350272,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3850240,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 13,
+      "offset": 230,
+      "forward_end_ns": 5110134511102208
+    },
+    {
+      "index": 70,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9210350272,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 14,
+      "offset": 231,
+      "forward_begin_ns": 5110134511663250
+    },
+    {
+      "index": 71,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9213430528,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 3080256,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 14,
+      "offset": 231,
+      "forward_end_ns": 5110134850472666
+    },
+    {
+      "index": 72,
+      "phase": "append_128",
+      "boundary": "token.before",
+      "process": {
+        "physical_footprint_bytes": 9213430528,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 0,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 15,
+      "offset": 232,
+      "forward_begin_ns": 5110134851050250
+    },
+    {
+      "index": 73,
+      "phase": "append_128",
+      "boundary": "token.after",
+      "process": {
+        "physical_footprint_bytes": 9216363264,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 2932736,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      },
+      "step": 15,
+      "offset": 232,
+      "forward_end_ns": 5110135134795583
+    },
+    {
+      "index": 74,
+      "phase": "append_128",
+      "boundary": "decode.after",
+      "process": {
+        "physical_footprint_bytes": 9216396032,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 32768,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    },
+    {
+      "index": 75,
+      "phase": "append_128",
+      "boundary": "request.after",
+      "process": {
+        "physical_footprint_bytes": 9216690944,
+        "physical_footprint_peak_bytes": 9238858368,
+        "compressed_bytes": 104824832,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 561,
+        "system_swap_used_bytes": 1876819968
+      },
+      "change_since_previous": {
+        "physical_footprint_bytes": 294912,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": 0,
+        "compressed_peak_bytes": 0,
+        "decompressions": 0,
+        "system_swap_used_bytes": 0
+      }
+    }
+  ],
+  "phases": [
+    {
+      "name": "coding_routes_32",
+      "first_observation": 0,
+      "last_observation": 37,
+      "tokens": [
+        {
+          "step": 0,
+          "offset": 72,
+          "input_token_id": 71093,
+          "forward_ms": 369.692,
+          "before_observation": 4,
+          "after_observation": 5,
+          "memory_before": {
+            "physical_footprint_bytes": 9039137344,
+            "physical_footprint_peak_bytes": 9092631104,
+            "compressed_bytes": 111886336,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 132,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9120598592,
+            "physical_footprint_peak_bytes": 9120598592,
+            "compressed_bytes": 108527616,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 337,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 81461248,
+            "physical_footprint_peak_bytes": 27967488,
+            "compressed_bytes": -3358720,
+            "compressed_peak_bytes": 0,
+            "decompressions": 205,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 1,
+          "offset": 73,
+          "input_token_id": 12305,
+          "forward_ms": 253.262125,
+          "before_observation": 6,
+          "after_observation": 7,
+          "memory_before": {
+            "physical_footprint_bytes": 9120598592,
+            "physical_footprint_peak_bytes": 9120598592,
+            "compressed_bytes": 108527616,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 337,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9123498560,
+            "physical_footprint_peak_bytes": 9123498560,
+            "compressed_bytes": 108199936,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 357,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2899968,
+            "physical_footprint_peak_bytes": 2899968,
+            "compressed_bytes": -327680,
+            "compressed_peak_bytes": 0,
+            "decompressions": 20,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 2,
+          "offset": 74,
+          "input_token_id": 198,
+          "forward_ms": 233.194875,
+          "before_observation": 8,
+          "after_observation": 9,
+          "memory_before": {
+            "physical_footprint_bytes": 9123498560,
+            "physical_footprint_peak_bytes": 9123498560,
+            "compressed_bytes": 108199936,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 357,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9126267456,
+            "physical_footprint_peak_bytes": 9126283840,
+            "compressed_bytes": 107905024,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 375,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2768896,
+            "physical_footprint_peak_bytes": 2785280,
+            "compressed_bytes": -294912,
+            "compressed_peak_bytes": 0,
+            "decompressions": 18,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 3,
+          "offset": 75,
+          "input_token_id": 727,
+          "forward_ms": 248.711959,
+          "before_observation": 10,
+          "after_observation": 11,
+          "memory_before": {
+            "physical_footprint_bytes": 9126283840,
+            "physical_footprint_peak_bytes": 9126283840,
+            "compressed_bytes": 107905024,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 375,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9128741440,
+            "physical_footprint_peak_bytes": 9128757824,
+            "compressed_bytes": 107560960,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 396,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2457600,
+            "physical_footprint_peak_bytes": 2473984,
+            "compressed_bytes": -344064,
+            "compressed_peak_bytes": 0,
+            "decompressions": 21,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 4,
+          "offset": 76,
+          "input_token_id": 10562,
+          "forward_ms": 353.762542,
+          "before_observation": 12,
+          "after_observation": 13,
+          "memory_before": {
+            "physical_footprint_bytes": 9128741440,
+            "physical_footprint_peak_bytes": 9128757824,
+            "compressed_bytes": 107560960,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 396,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9132427840,
+            "physical_footprint_peak_bytes": 9132427840,
+            "compressed_bytes": 107298816,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 412,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3686400,
+            "physical_footprint_peak_bytes": 3670016,
+            "compressed_bytes": -262144,
+            "compressed_peak_bytes": 0,
+            "decompressions": 16,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 5,
+          "offset": 77,
+          "input_token_id": 87682,
+          "forward_ms": 272.28725,
+          "before_observation": 14,
+          "after_observation": 15,
+          "memory_before": {
+            "physical_footprint_bytes": 9132444224,
+            "physical_footprint_peak_bytes": 9132444224,
+            "compressed_bytes": 107298816,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 412,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9136425536,
+            "physical_footprint_peak_bytes": 9136425536,
+            "compressed_bytes": 107069440,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 426,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3981312,
+            "physical_footprint_peak_bytes": 3981312,
+            "compressed_bytes": -229376,
+            "compressed_peak_bytes": 0,
+            "decompressions": 14,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 6,
+          "offset": 78,
+          "input_token_id": 1494,
+          "forward_ms": 283.812375,
+          "before_observation": 16,
+          "after_observation": 17,
+          "memory_before": {
+            "physical_footprint_bytes": 9136425536,
+            "physical_footprint_peak_bytes": 9136425536,
+            "compressed_bytes": 107069440,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 426,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9139292736,
+            "physical_footprint_peak_bytes": 9139292736,
+            "compressed_bytes": 106921984,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 435,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2867200,
+            "physical_footprint_peak_bytes": 2867200,
+            "compressed_bytes": -147456,
+            "compressed_peak_bytes": 0,
+            "decompressions": 9,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 7,
+          "offset": 79,
+          "input_token_id": 40798,
+          "forward_ms": 205.946375,
+          "before_observation": 18,
+          "after_observation": 19,
+          "memory_before": {
+            "physical_footprint_bytes": 9139292736,
+            "physical_footprint_peak_bytes": 9139292736,
+            "compressed_bytes": 106921984,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 435,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9142979136,
+            "physical_footprint_peak_bytes": 9142979136,
+            "compressed_bytes": 106610688,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 454,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3686400,
+            "physical_footprint_peak_bytes": 3686400,
+            "compressed_bytes": -311296,
+            "compressed_peak_bytes": 0,
+            "decompressions": 19,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 8,
+          "offset": 80,
+          "input_token_id": 1590,
+          "forward_ms": 266.936584,
+          "before_observation": 20,
+          "after_observation": 21,
+          "memory_before": {
+            "physical_footprint_bytes": 9142979136,
+            "physical_footprint_peak_bytes": 9142979136,
+            "compressed_bytes": 106594304,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 455,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9145879104,
+            "physical_footprint_peak_bytes": 9145895488,
+            "compressed_bytes": 106479616,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 462,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2899968,
+            "physical_footprint_peak_bytes": 2916352,
+            "compressed_bytes": -114688,
+            "compressed_peak_bytes": 0,
+            "decompressions": 7,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 9,
+          "offset": 81,
+          "input_token_id": 198,
+          "forward_ms": 299.370791,
+          "before_observation": 22,
+          "after_observation": 23,
+          "memory_before": {
+            "physical_footprint_bytes": 9145879104,
+            "physical_footprint_peak_bytes": 9145895488,
+            "compressed_bytes": 106479616,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 462,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9148828288,
+            "physical_footprint_peak_bytes": 9148828288,
+            "compressed_bytes": 106397696,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 467,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2949184,
+            "physical_footprint_peak_bytes": 2932800,
+            "compressed_bytes": -81920,
+            "compressed_peak_bytes": 0,
+            "decompressions": 5,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 10,
+          "offset": 82,
+          "input_token_id": 262,
+          "forward_ms": 255.620792,
+          "before_observation": 24,
+          "after_observation": 25,
+          "memory_before": {
+            "physical_footprint_bytes": 9148828288,
+            "physical_footprint_peak_bytes": 9148828288,
+            "compressed_bytes": 106397696,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 467,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9151728256,
+            "physical_footprint_peak_bytes": 9151728256,
+            "compressed_bytes": 106315776,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 472,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2899968,
+            "physical_footprint_peak_bytes": 2899968,
+            "compressed_bytes": -81920,
+            "compressed_peak_bytes": 0,
+            "decompressions": 5,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 11,
+          "offset": 83,
+          "input_token_id": 4071,
+          "forward_ms": 306.694167,
+          "before_observation": 26,
+          "after_observation": 27,
+          "memory_before": {
+            "physical_footprint_bytes": 9151728256,
+            "physical_footprint_peak_bytes": 9151728256,
+            "compressed_bytes": 106315776,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 472,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9152531072,
+            "physical_footprint_peak_bytes": 9152547456,
+            "compressed_bytes": 106119168,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 482,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 802816,
+            "physical_footprint_peak_bytes": 819200,
+            "compressed_bytes": -196608,
+            "compressed_peak_bytes": 0,
+            "decompressions": 10,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 12,
+          "offset": 84,
+          "input_token_id": 198,
+          "forward_ms": 212.394583,
+          "before_observation": 28,
+          "after_observation": 29,
+          "memory_before": {
+            "physical_footprint_bytes": 9152547456,
+            "physical_footprint_peak_bytes": 9152547456,
+            "compressed_bytes": 106119168,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 482,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9155414656,
+            "physical_footprint_peak_bytes": 9155431040,
+            "compressed_bytes": 106102784,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 483,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2867200,
+            "physical_footprint_peak_bytes": 2883584,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 13,
+          "offset": 85,
+          "input_token_id": 262,
+          "forward_ms": 208.728375,
+          "before_observation": 30,
+          "after_observation": 31,
+          "memory_before": {
+            "physical_footprint_bytes": 9155414656,
+            "physical_footprint_peak_bytes": 9155431040,
+            "compressed_bytes": 106102784,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 483,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9158298240,
+            "physical_footprint_peak_bytes": 9158314624,
+            "compressed_bytes": 106086400,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 484,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2883584,
+            "physical_footprint_peak_bytes": 2883584,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 14,
+          "offset": 86,
+          "input_token_id": 38754,
+          "forward_ms": 287.8895,
+          "before_observation": 32,
+          "after_observation": 33,
+          "memory_before": {
+            "physical_footprint_bytes": 9158298240,
+            "physical_footprint_peak_bytes": 9158314624,
+            "compressed_bytes": 106086400,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 484,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9161296512,
+            "physical_footprint_peak_bytes": 9161296512,
+            "compressed_bytes": 106053632,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 486,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2998272,
+            "physical_footprint_peak_bytes": 2981888,
+            "compressed_bytes": -32768,
+            "compressed_peak_bytes": 0,
+            "decompressions": 2,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 15,
+          "offset": 87,
+          "input_token_id": 48142,
+          "forward_ms": 326.60075,
+          "before_observation": 34,
+          "after_observation": 35,
+          "memory_before": {
+            "physical_footprint_bytes": 9161296512,
+            "physical_footprint_peak_bytes": 9161296512,
+            "compressed_bytes": 106053632,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 486,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9164262016,
+            "physical_footprint_peak_bytes": 9164294784,
+            "compressed_bytes": 106037248,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 487,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2965504,
+            "physical_footprint_peak_bytes": 2998272,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        }
+      ],
+      "decode_gaps": [
+        {
+          "boundary": "decode_to_first_token",
+          "preceding_step": null,
+          "following_step": 0,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 0,
+          "following_step": 1,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 1,
+          "following_step": 2,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 2,
+          "following_step": 3,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 3,
+          "following_step": 4,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 4,
+          "following_step": 5,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 16384,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 5,
+          "following_step": 6,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 6,
+          "following_step": 7,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 7,
+          "following_step": 8,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 8,
+          "following_step": 9,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 9,
+          "following_step": 10,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 10,
+          "following_step": 11,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 11,
+          "following_step": 12,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 12,
+          "following_step": 13,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 13,
+          "following_step": 14,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 14,
+          "following_step": 15,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "last_token_to_decode",
+          "preceding_step": 15,
+          "following_step": null,
+          "process_change": {
+            "physical_footprint_bytes": 32768,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        }
+      ],
+      "ingest_process_change": {
+        "physical_footprint_bytes": 3552369408,
+        "physical_footprint_peak_bytes": 3575471040,
+        "compressed_bytes": 111902720,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 131,
+        "system_swap_used_bytes": 0
+      },
+      "decode_process_change": {
+        "physical_footprint_bytes": 125157440,
+        "physical_footprint_peak_bytes": 71663680,
+        "compressed_bytes": -5865472,
+        "compressed_peak_bytes": 0,
+        "decompressions": 356,
+        "system_swap_used_bytes": 0
+      },
+      "request_process_change": {
+        "physical_footprint_bytes": 3677838144,
+        "physical_footprint_peak_bytes": 3647446016,
+        "compressed_bytes": 105840640,
+        "compressed_peak_bytes": 114032640,
+        "decompressions": 499,
+        "system_swap_used_bytes": 0
+      },
+      "decompressions": {
+        "ingest": 131,
+        "decode": 356,
+        "inside_token_forwards": 354,
+        "outside_token_forwards": 2,
+        "outside_ingest_and_decode": 12,
+        "request": 499
+      }
+    },
+    {
+      "name": "append_128",
+      "first_observation": 38,
+      "last_observation": 75,
+      "tokens": [
+        {
+          "step": 0,
+          "offset": 217,
+          "input_token_id": 71093,
+          "forward_ms": 372.549458,
+          "before_observation": 42,
+          "after_observation": 43,
+          "memory_before": {
+            "physical_footprint_bytes": 9095383680,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104857600,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 559,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9172175488,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 76791808,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 1,
+          "offset": 218,
+          "input_token_id": 12305,
+          "forward_ms": 249.651792,
+          "before_observation": 44,
+          "after_observation": 45,
+          "memory_before": {
+            "physical_footprint_bytes": 9172191872,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9175059072,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2867200,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 2,
+          "offset": 219,
+          "input_token_id": 198,
+          "forward_ms": 245.586292,
+          "before_observation": 46,
+          "after_observation": 47,
+          "memory_before": {
+            "physical_footprint_bytes": 9175059072,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9177942656,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2883584,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 3,
+          "offset": 220,
+          "input_token_id": 727,
+          "forward_ms": 254.606458,
+          "before_observation": 48,
+          "after_observation": 49,
+          "memory_before": {
+            "physical_footprint_bytes": 9177959040,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104841216,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 560,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9179908800,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 1949760,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": -16384,
+            "compressed_peak_bytes": 0,
+            "decompressions": 1,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 4,
+          "offset": 221,
+          "input_token_id": 10562,
+          "forward_ms": 417.070625,
+          "before_observation": 50,
+          "after_observation": 51,
+          "memory_before": {
+            "physical_footprint_bytes": 9179925184,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9183038144,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3112960,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 5,
+          "offset": 222,
+          "input_token_id": 87682,
+          "forward_ms": 310.960958,
+          "before_observation": 52,
+          "after_observation": 53,
+          "memory_before": {
+            "physical_footprint_bytes": 9183038144,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9185970880,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2932736,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 6,
+          "offset": 223,
+          "input_token_id": 1494,
+          "forward_ms": 352.731,
+          "before_observation": 54,
+          "after_observation": 55,
+          "memory_before": {
+            "physical_footprint_bytes": 9185970880,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9188903616,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2932736,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 7,
+          "offset": 224,
+          "input_token_id": 40798,
+          "forward_ms": 307.875666,
+          "before_observation": 56,
+          "after_observation": 57,
+          "memory_before": {
+            "physical_footprint_bytes": 9188903616,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9191836352,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2932736,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 8,
+          "offset": 225,
+          "input_token_id": 1590,
+          "forward_ms": 271.061042,
+          "before_observation": 58,
+          "after_observation": 59,
+          "memory_before": {
+            "physical_footprint_bytes": 9191836352,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9194752704,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2916352,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 9,
+          "offset": 226,
+          "input_token_id": 198,
+          "forward_ms": 317.008084,
+          "before_observation": 60,
+          "after_observation": 61,
+          "memory_before": {
+            "physical_footprint_bytes": 9194752704,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9197718208,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2965504,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 10,
+          "offset": 227,
+          "input_token_id": 262,
+          "forward_ms": 296.391625,
+          "before_observation": 62,
+          "after_observation": 63,
+          "memory_before": {
+            "physical_footprint_bytes": 9197718208,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9200569024,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2850816,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 11,
+          "offset": 228,
+          "input_token_id": 4071,
+          "forward_ms": 298.56125,
+          "before_observation": 64,
+          "after_observation": 65,
+          "memory_before": {
+            "physical_footprint_bytes": 9200569024,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9203600064,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3031040,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 12,
+          "offset": 229,
+          "input_token_id": 198,
+          "forward_ms": 221.852833,
+          "before_observation": 66,
+          "after_observation": 67,
+          "memory_before": {
+            "physical_footprint_bytes": 9203600064,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9206500032,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2899968,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 13,
+          "offset": 230,
+          "input_token_id": 262,
+          "forward_ms": 225.42425,
+          "before_observation": 68,
+          "after_observation": 69,
+          "memory_before": {
+            "physical_footprint_bytes": 9206500032,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9210350272,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3850240,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 14,
+          "offset": 231,
+          "input_token_id": 38754,
+          "forward_ms": 338.809333,
+          "before_observation": 70,
+          "after_observation": 71,
+          "memory_before": {
+            "physical_footprint_bytes": 9210350272,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9213430528,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 3080256,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "step": 15,
+          "offset": 232,
+          "input_token_id": 48142,
+          "forward_ms": 283.74525,
+          "before_observation": 72,
+          "after_observation": 73,
+          "memory_before": {
+            "physical_footprint_bytes": 9213430528,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 9216363264,
+            "physical_footprint_peak_bytes": 9238858368,
+            "compressed_bytes": 104824832,
+            "compressed_peak_bytes": 114032640,
+            "decompressions": 561,
+            "system_swap_used_bytes": 1876819968
+          },
+          "process_change": {
+            "physical_footprint_bytes": 2932736,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        }
+      ],
+      "decode_gaps": [
+        {
+          "boundary": "decode_to_first_token",
+          "preceding_step": null,
+          "following_step": 0,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 0,
+          "following_step": 1,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 1,
+          "following_step": 2,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 2,
+          "following_step": 3,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 3,
+          "following_step": 4,
+          "process_change": {
+            "physical_footprint_bytes": 16384,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 4,
+          "following_step": 5,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 5,
+          "following_step": 6,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 6,
+          "following_step": 7,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 7,
+          "following_step": 8,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 8,
+          "following_step": 9,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 9,
+          "following_step": 10,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 10,
+          "following_step": 11,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 11,
+          "following_step": 12,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 12,
+          "following_step": 13,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 13,
+          "following_step": 14,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "between_tokens",
+          "preceding_step": 14,
+          "following_step": 15,
+          "process_change": {
+            "physical_footprint_bytes": 0,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        },
+        {
+          "boundary": "last_token_to_decode",
+          "preceding_step": 15,
+          "following_step": null,
+          "process_change": {
+            "physical_footprint_bytes": 32768,
+            "physical_footprint_peak_bytes": 0,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "system_swap_used_bytes": 0
+          }
+        }
+      ],
+      "ingest_process_change": {
+        "physical_footprint_bytes": -70074368,
+        "physical_footprint_peak_bytes": 73400320,
+        "compressed_bytes": -720896,
+        "compressed_peak_bytes": 0,
+        "decompressions": 44,
+        "system_swap_used_bytes": 0
+      },
+      "decode_process_change": {
+        "physical_footprint_bytes": 121012352,
+        "physical_footprint_peak_bytes": 0,
+        "compressed_bytes": -32768,
+        "compressed_peak_bytes": 0,
+        "decompressions": 2,
+        "system_swap_used_bytes": 0
+      },
+      "request_process_change": {
+        "physical_footprint_bytes": 51232896,
+        "physical_footprint_peak_bytes": 73400320,
+        "compressed_bytes": -753664,
+        "compressed_peak_bytes": 0,
+        "decompressions": 46,
+        "system_swap_used_bytes": 0
+      },
+      "decompressions": {
+        "ingest": 44,
+        "decode": 2,
+        "inside_token_forwards": 2,
+        "outside_token_forwards": 0,
+        "outside_ingest_and_decode": 0,
+        "request": 46
+      }
+    }
+  ],
+  "between_requests_process_change": {
+    "physical_footprint_bytes": 851968,
+    "physical_footprint_peak_bytes": 851968,
+    "compressed_bytes": -262144,
+    "compressed_peak_bytes": 0,
+    "decompressions": 16,
+    "system_swap_used_bytes": 0
+  },
+  "observed_decompressions": 561,
+  "stable_observed_swap": true,
+  "maxima": {
+    "physical_footprint_bytes": 9216690944,
+    "physical_footprint_peak_bytes": 9238858368,
+    "compressed_bytes": 111902720,
+    "compressed_peak_bytes": 114032640,
+    "decompressions": 561,
+    "system_swap_used_bytes": 1876819968
+  },
+  "coverage": {
+    "request_phases": 2,
+    "decode_forwards": 32,
+    "omitted_decode_forwards": 0,
+    "observations": 76,
+    "includes_ingestion_and_between_token_gaps": true
+  },
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "These are lifecycle and token boundary observations plus lifetime peaks, not a continuous physical-memory guard.",
+    "The compression peak allowance is an operational diagnostic bound, not an empirical safety or performance threshold.",
+    "Compressed-byte changes are signed net changes between samples. Gross compression traffic and unsampled churn are unknown.",
+    "Token before/after process gauges bracket the forward; their exact sampling timestamps are not recorded.",
+    "Between-token and phase-boundary decompressions are reported separately and are not attributed to a kernel or SSD read.",
+    "System swap observations include other processes. An observed increase fails the diagnostic bound; decreases are permitted but do not satisfy strict stable-swap evidence.",
+    "Decompressions before the first process observation are outside the measured interval. Lifetime compression and physical peaks include initialization.",
+    "Every token is retained. Compression-disturbed diagnostic timing cannot qualify normal-request latency."
+  ],
+  "observation_costs": [
+    {
+      "name": "coding_routes_32",
+      "sample_calls_ms": 1.935501,
+      "mean_sample_calls_ms_per_token": 0.1209688125,
+      "timing_correction_applied": false
+    },
+    {
+      "name": "append_128",
+      "sample_calls_ms": 1.899372,
+      "mean_sample_calls_ms_per_token": 0.11871075,
+      "timing_correction_applied": false
+    }
+  ]
+}

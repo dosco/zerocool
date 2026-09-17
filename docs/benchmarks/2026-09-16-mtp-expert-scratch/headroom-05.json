@@ -1,0 +1,28 @@
+{
+  "kind": "benchmark_host_preflight_v1",
+  "complete": true,
+  "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "host": {
+    "monotonic_ns": 5215062102036541,
+    "thermal_state": 1,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "process": {
+    "physical_footprint_bytes": 1885184,
+    "resident_bytes": 5341184,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 607,
+    "pageins": 1,
+    "physical_footprint_peak_bytes": 1885184,
+    "resident_peak_bytes": 5341184,
+    "system_swap_used_bytes": 3690725376,
+    "reclaimable_bytes": 13380255744
+  },
+  "model_loaded": false,
+  "gpu_used": false
+}

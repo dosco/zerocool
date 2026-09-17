@@ -1,0 +1,25 @@
+{
+  "root": "/repo",
+  "build": "b301cbe6bf581cc79b764111ebfd51f07d633e259ba1b0d23c47e3936877c161",
+  "assets": {},
+  "files": {
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-0-167.bin": "5f54c3cc6d6066a41bec3c96990ea6a45a607cd30f1030bd51c7928cfef35a91",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/inputs-16.bin": "8fd5bec2686a85ac4ab2b99cb571d9d050acbd08a9dff1b1a0d02de6cc34a2c2",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-0-139.bin": "7a51dd80e6fb0e96c84a0a3b9a052053649d26c474767939b6ead82629cb82e0",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-47-126.bin": "e8be3e30c992546200161c6e03d9453f867dfec864e3b2b4b1401ea84cc63200",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/inputs-0.bin": "c7b5f74de55ccf11fc4d18455ef46de8662647a5ca812a69c54457d0c53909a7",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-32-26.bin": "2a938c692581fb6156234c3b3c2b67037c36b31456b994d41849c8f3e5fa32bb",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-32-28.bin": "fd44a1d1c3e5752581f81dda52f53000c09c2b5909478d7bbdc882b6bcbbdc51",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/inputs-47.bin": "2685994bd6b9754f08d5c14b422333ce22411f1f41f58de88c4d67e03a4a05b8",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-47-48.bin": "786764ec11970d6a19882559fd00c503668e66d26c8db774eb92412a307c3c88",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/manifest.json": "2e8b13c276e330e4d7d8b9d27e137f5fd8feae48f657a75547649b1ef774e8f3",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/inputs-32.bin": "31886e76db45b2e78736dabbeb4fa6ee92bc8f5f37a0070c5dc8ab3f6ca49afd",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-16-74.bin": "27f5334b0e325e2711e12068d643d46e73857db082a75be8063843c832cec592",
+    "/repo/docs/benchmarks/2026-09-13-stage200/q3-02/tuning/expert-16-62.bin": "76f3e8eb660c5812f3c17481002e24deeda6782198000bbdcec754b090c40604",
+    "/repo/scripts/qwen/probe_submission.cpp": "749f204b717987e0db9a72808691475558a7de14cd330e620529c04e84927353",
+    "/repo/scripts/qwen/screen_submission.py": "f9e335c71846387fdc1e249f4ecaac5633bf77c0af3a8024cf40ec5d56e9c4f4",
+    "/repo/build/qwen/qwen_submission_probe": "5c5e4f6b6a7e14bd63d2ffc6fa12ea0c4ea18cab13dd5a44c25b2cdf75feba47",
+    "/repo/build/qwen/test_qwen": "34a624114512748b5ddead60f3c0e268df84625dc323bc70be1f9b662508e5a0",
+    "/repo/tests/test_qwen.cpp": "c1c7122f6d2838ba21ef161bcedbe411632aefaba56ecba70c94cc823c799495"
+  }
+}

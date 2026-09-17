@@ -1,0 +1,3 @@
+# Preserve exact tensor fixture bytes and avoid treating packed weights as text.
+docs/benchmarks/**/*.bin binary
+docs/benchmarks/**/*.f32 binary

@@ -1,0 +1,16 @@
+{
+  "hypothesis": "Removing duplicate Metal command resource references materially reduces expert submission latency.",
+  "expected_effect": "At least 20ms per token of plausible savings before a full request screen.",
+  "controlled_change": "Retained versus externally owned command buffers on eight fixed real Q4 expert records and inputs; five alternating isolated pairs.",
+  "correctness": "Separate Metal validation and exact output hashes passed; caller-release and active-boundary lifetime tests pass.",
+  "outcome": "Primary one-expert ratio 0.99726, 95% interval 0.98526 to 1.00941. Optimistic scaling gives 0.13ms per token, below the experiment gate.",
+  "decision": "rejected",
+  "smallest_experiment": "No repeat without a new reason to expect ownership bookkeeping to dominate; keep normal retained command references.",
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-14-submission/ownership-01/summary.json"
+  ],
+  "limitations": [
+    "Single M1 Pro, short 72-token initial request and 128-token retained append; no 2K/4K/7K or sustained-coding acceptance.",
+    "Production defaults remain unchanged. Paired intervals assume approximately independent log ratios; temporal host effects can violate this."
+  ]
+}

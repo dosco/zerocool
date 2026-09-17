@@ -1,0 +1,472 @@
+{
+  "kind": "q8_expanded_fixture_v1",
+  "complete": true,
+  "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "input_manifest_sha256": "910d10e4ddb11f0912c5d64a7a9df05919ff5a18fac9c9cafe700f87254f0d7b",
+  "input_bytes": 360448,
+  "weight_payloads_copied": false,
+  "checkpoint_proof": {
+    "receipt_sha256": "ef0ea00fd2b85e37f81aa5f0c3633d29a22dca52d807a2092ea418feb94002f0",
+    "files": {
+      "config.json": {
+        "size": 135742,
+        "device": 16777229,
+        "inode": 510126376,
+        "mtime_ns": 1788885072380265526,
+        "ctime_ns": 1788885072382514198,
+        "sha256": "e3304833db1235a0368fd59bc66d7a8724943262c3e465e629e9e6a892e10ea1"
+      },
+      "model.safetensors.index.json": {
+        "size": 317973,
+        "device": 16777229,
+        "inode": 510136441,
+        "mtime_ns": 1788886448544760756,
+        "ctime_ns": 1788886448545424050,
+        "sha256": "2e00305e9a602d2b061344445aca52bb4d013a9b78cec6eb2decfbd3b41dfb52"
+      },
+      "model-00011.safetensors": {
+        "size": 4876940562,
+        "device": 16777229,
+        "inode": 509702573,
+        "mtime_ns": 1788850084191111171,
+        "ctime_ns": 1788850142389821352,
+        "sha256": "8e7b68292208146a0298e8e07548efd25889ba1c36d39a5ed27ab46b0d635436"
+      },
+      "model-00007.safetensors": {
+        "size": 10003320652,
+        "device": 16777229,
+        "inode": 510128589,
+        "mtime_ns": 1788886166160521992,
+        "ctime_ns": 1788886166170321655,
+        "sha256": "11c2e0ba7d8c24430a1cc3b16f6c127315d16f18109b4871c0ccb7d50203c4e4"
+      },
+      "model-00001.safetensors": {
+        "size": 10131671103,
+        "device": 16777229,
+        "inode": 510126388,
+        "mtime_ns": 1788885358203059642,
+        "ctime_ns": 1788885358204312563,
+        "sha256": "f944a290da33b369aca7af4d1d2ac7f35421917cd354e94b2c84104d06589e4f"
+      }
+    },
+    "tensors": {}
+  },
+  "frequency_proof": {
+    "source": "/repo/docs/benchmarks/2026-09-16-block-compute/capture-03",
+    "seal_sha256": "16c09435b635cdc0661383e2de5a651bd6f0923b7e162ecbe6e414f34c759f55",
+    "cases": [
+      {
+        "name": "head",
+        "dispatches": 4,
+        "frequency": 1
+      },
+      {
+        "name": "attention_q",
+        "dispatches": 48,
+        "frequency": 12
+      },
+      {
+        "name": "attention_o",
+        "dispatches": 48,
+        "frequency": 12
+      },
+      {
+        "name": "gdn_qkv",
+        "dispatches": 144,
+        "frequency": 36
+      },
+      {
+        "name": "gdn_z",
+        "dispatches": 144,
+        "frequency": 36
+      },
+      {
+        "name": "gdn_out",
+        "dispatches": 144,
+        "frequency": 36
+      }
+    ],
+    "uses_timing": false
+  },
+  "cases": [
+    {
+      "name": "head",
+      "frequency": 1,
+      "matrix": {
+        "K": 2560,
+        "N": 248320,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "logits",
+        "layer": -1,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "lm_head.weight",
+          "file": "model-00011.safetensors",
+          "offset": 3280000594,
+          "bytes": 635699200,
+          "sha256": "cfc9b05743c84088c5cb967be53c6292c1821fa1dc0bd511a821af2fe776de2e",
+          "dtype": "U32",
+          "shape": [
+            248320,
+            640
+          ]
+        },
+        "s": {
+          "tensor": "lm_head.scales",
+          "file": "model-00011.safetensors",
+          "offset": 19885970,
+          "bytes": 19865600,
+          "sha256": "81823fe51798cdf493588b5dc78ba2569c1ce016651743d340a7225adc3228f7",
+          "dtype": "BF16",
+          "shape": [
+            248320,
+            40
+          ]
+        },
+        "b": {
+          "tensor": "lm_head.biases",
+          "file": "model-00011.safetensors",
+          "offset": 20370,
+          "bytes": 19865600,
+          "sha256": "ca15063034f62a4e28317e6092dbec362a57cac98193338609b35681eeff3c25",
+          "dtype": "BF16",
+          "shape": [
+            248320,
+            40
+          ]
+        },
+        "x": {
+          "file": "5-x.bin",
+          "bytes": 40960,
+          "sha256": "1af2c3a0f77dbb4742c160892d299e84558214309724fa950ebaac26f6e9be27"
+        }
+      }
+    },
+    {
+      "name": "attention_q",
+      "frequency": 12,
+      "matrix": {
+        "K": 2560,
+        "N": 12288,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "attention",
+        "layer": 3,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "model.layers.3.self_attn.q_proj.weight",
+          "file": "model-00007.safetensors",
+          "offset": 1487128492,
+          "bytes": 31457280,
+          "sha256": "08d32425dbff4f43c7a1d4eb12e002834f9845b88c30cabaa00f53b6298d1ee6",
+          "dtype": "U32",
+          "shape": [
+            12288,
+            640
+          ]
+        },
+        "s": {
+          "tensor": "model.layers.3.self_attn.q_proj.scales",
+          "file": "model-00007.safetensors",
+          "offset": 1407256236,
+          "bytes": 983040,
+          "sha256": "724448111bbec600cb81af754949352ccb7862ebc04537f07b8176592e417dcf",
+          "dtype": "BF16",
+          "shape": [
+            12288,
+            40
+          ]
+        },
+        "b": {
+          "tensor": "model.layers.3.self_attn.q_proj.biases",
+          "file": "model-00007.safetensors",
+          "offset": 1406273196,
+          "bytes": 983040,
+          "sha256": "7217dd028a7a5267dbf43ee83f0f8614739581cf16b55ed23bbf48d37bdfb3dd",
+          "dtype": "BF16",
+          "shape": [
+            12288,
+            40
+          ]
+        },
+        "x": {
+          "file": "3-x.bin",
+          "bytes": 40960,
+          "sha256": "3289eb0be98b788b285f759a06bb6d711d2e09b0c5234355228602890c3ddff2"
+        }
+      }
+    },
+    {
+      "name": "attention_o",
+      "frequency": 12,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "attention",
+        "layer": 3,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "model.layers.3.self_attn.o_proj.weight",
+          "file": "model-00007.safetensors",
+          "offset": 1388619436,
+          "bytes": 15728640,
+          "sha256": "cd995dac361af02ed624b5d474e8ae11e0dcffefb1bd302a1ce37ce231c8ff63",
+          "dtype": "U32",
+          "shape": [
+            2560,
+            1536
+          ]
+        },
+        "s": {
+          "tensor": "model.layers.3.self_attn.o_proj.scales",
+          "file": "model-00007.safetensors",
+          "offset": 6854237708,
+          "bytes": 491520,
+          "sha256": "83ce6c314dd302d140cf48391aee4e6c1d9a8cda47b325092fb1dadcce290df1",
+          "dtype": "BF16",
+          "shape": [
+            2560,
+            96
+          ]
+        },
+        "b": {
+          "tensor": "model.layers.3.self_attn.o_proj.biases",
+          "file": "model-00007.safetensors",
+          "offset": 1388127916,
+          "bytes": 491520,
+          "sha256": "216da2eb2733fda335e24136ee4e321ffbd23b8699165a0b2fbf2ce3b5774a9e",
+          "dtype": "BF16",
+          "shape": [
+            2560,
+            96
+          ]
+        },
+        "x": {
+          "file": "4-x.bin",
+          "bytes": 98304,
+          "sha256": "74dd4948cc734eb19529d3437e610c777072956e73f78dcb79bc29788426eb7b"
+        }
+      }
+    },
+    {
+      "name": "gdn_qkv",
+      "frequency": 36,
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "model.layers.0.linear_attn.in_proj_qkv.weight",
+          "file": "model-00001.safetensors",
+          "offset": 5277154519,
+          "bytes": 26214400,
+          "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0",
+          "dtype": "U32",
+          "shape": [
+            10240,
+            640
+          ]
+        },
+        "s": {
+          "tensor": "model.layers.0.linear_attn.in_proj_qkv.scales",
+          "file": "model-00001.safetensors",
+          "offset": 9507287783,
+          "bytes": 819200,
+          "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc",
+          "dtype": "BF16",
+          "shape": [
+            10240,
+            40
+          ]
+        },
+        "b": {
+          "tensor": "model.layers.0.linear_attn.in_proj_qkv.biases",
+          "file": "model-00001.safetensors",
+          "offset": 9222191431,
+          "bytes": 819200,
+          "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c",
+          "dtype": "BF16",
+          "shape": [
+            10240,
+            40
+          ]
+        },
+        "x": {
+          "file": "0-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "name": "gdn_z",
+      "frequency": 36,
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "model.layers.0.linear_attn.in_proj_z.weight",
+          "file": "model-00001.safetensors",
+          "offset": 5206124479,
+          "bytes": 15728640,
+          "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982",
+          "dtype": "U32",
+          "shape": [
+            6144,
+            640
+          ]
+        },
+        "s": {
+          "tensor": "model.layers.0.linear_attn.in_proj_z.scales",
+          "file": "model-00001.safetensors",
+          "offset": 5205632959,
+          "bytes": 491520,
+          "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0",
+          "dtype": "BF16",
+          "shape": [
+            6144,
+            40
+          ]
+        },
+        "b": {
+          "tensor": "model.layers.0.linear_attn.in_proj_z.biases",
+          "file": "model-00001.safetensors",
+          "offset": 5205141439,
+          "bytes": 491520,
+          "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6",
+          "dtype": "BF16",
+          "shape": [
+            6144,
+            40
+          ]
+        },
+        "x": {
+          "file": "1-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "name": "gdn_out",
+      "frequency": 36,
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "tensor": "model.layers.0.linear_attn.out_proj.weight",
+          "file": "model-00001.safetensors",
+          "offset": 5232363711,
+          "bytes": 15728640,
+          "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde",
+          "dtype": "U32",
+          "shape": [
+            2560,
+            1536
+          ]
+        },
+        "s": {
+          "tensor": "model.layers.0.linear_attn.out_proj.scales",
+          "file": "model-00001.safetensors",
+          "offset": 5231872191,
+          "bytes": 491520,
+          "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9",
+          "dtype": "BF16",
+          "shape": [
+            2560,
+            96
+          ]
+        },
+        "b": {
+          "tensor": "model.layers.0.linear_attn.out_proj.biases",
+          "file": "model-00001.safetensors",
+          "offset": 6829919151,
+          "bytes": 491520,
+          "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac",
+          "dtype": "BF16",
+          "shape": [
+            2560,
+            96
+          ]
+        },
+        "x": {
+          "file": "2-x.bin",
+          "bytes": 98304,
+          "sha256": "c62a494943141fc7d675bdddf659625aee5e9da9e704502ebbf7dd1008c11481"
+        }
+      }
+    }
+  ]
+}

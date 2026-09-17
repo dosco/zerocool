@@ -1,0 +1,110 @@
+{
+  "kind": "mtp_continuation_analysis_v1",
+  "cases": [
+    {
+      "name": "merge_intervals",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01",
+      "case": 0,
+      "prompt_tokens": 72,
+      "generated_tokens": 128,
+      "serial_tps": 4.117266526670976,
+      "candidate_tps": 4.403844300279601,
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 0.9349255436686466,
+      "acceptance_rate": 0.8666666666666667,
+      "mean_committed_per_cycle": 3.4594594594594597,
+      "rejected_cycles": 7,
+      "component_ms_per_token": {
+        "draft": 9.4659886328125,
+        "verify": 199.3119837265625,
+        "recovery": 16.6811940234375,
+        "wall": 227.0743313828125
+      },
+      "peak_physical_bytes": 10490385472,
+      "accepted_prefix_histogram": {
+        "0": 2,
+        "1": 3,
+        "2": 2,
+        "3": 28
+      },
+      "hypothetical_zero_recovery_tps": 4.753006740385682,
+      "including_reporting_tps": 4.393792157620927,
+      "priming_seconds": 16.599473667,
+      "source_seal_sha256": "63fe586117570c88c30904da60ee59da125bb7cd83a25ed19e33884a0b748ad8"
+    },
+    {
+      "name": "lru_cache",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/screen-01",
+      "case": 1,
+      "prompt_tokens": 198,
+      "generated_tokens": 128,
+      "serial_tps": 4.062916236047538,
+      "candidate_tps": 3.198707099303706,
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 1.270174514237941,
+      "acceptance_rate": 0.6666666666666666,
+      "mean_committed_per_cycle": 2.909090909090909,
+      "rejected_cycles": 22,
+      "component_ms_per_token": {
+        "draft": 11.5016344140625,
+        "verify": 245.686569671875,
+        "recovery": 53.5618776484375,
+        "wall": 312.6263108671875
+      },
+      "peak_physical_bytes": 10492007488,
+      "accepted_prefix_histogram": {
+        "0": 6,
+        "1": 8,
+        "2": 8,
+        "3": 20
+      },
+      "hypothetical_zero_recovery_tps": 3.8600435713057357,
+      "including_reporting_tps": 3.193210954105613,
+      "priming_seconds": 44.065986083,
+      "source_seal_sha256": "63fe586117570c88c30904da60ee59da125bb7cd83a25ed19e33884a0b748ad8"
+    },
+    {
+      "name": "retry_backoff",
+      "source": "docs/benchmarks/2026-09-16-mtp-continuation/retry-backoff-01",
+      "case": 0,
+      "prompt_tokens": 93,
+      "generated_tokens": 128,
+      "serial_tps": 3.9437074939667425,
+      "candidate_tps": 3.6896732746009446,
+      "exact_all_logits_tokens_and_state": true,
+      "candidate_to_serial_ratio": 1.068850058110707,
+      "acceptance_rate": 0.8240740740740741,
+      "mean_committed_per_cycle": 3.282051282051282,
+      "rejected_cycles": 13,
+      "component_ms_per_token": {
+        "draft": 9.827619125,
+        "verify": 220.5440719609375,
+        "recovery": 38.9591829296875,
+        "wall": 271.026707671875
+      },
+      "peak_physical_bytes": 10493138048,
+      "accepted_prefix_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 23
+      },
+      "hypothetical_zero_recovery_tps": 4.309090645539213,
+      "including_reporting_tps": 3.6825982167368903,
+      "priming_seconds": 20.548240625,
+      "source_seal_sha256": "5862b0c1b21332137e29e3d29bc23f0a19c2842aeda94f6d537f07ebc5727555"
+    }
+  ],
+  "all_three_cases_have_a_fresh_exact_pair": true,
+  "whole_original_suite_complete": false,
+  "timing_samples_pooled": false,
+  "paired_confidence_qualified": false,
+  "all_candidates_reach_5_tps": false,
+  "production_promoted": false,
+  "limitations": [
+    "The original screen retains resource_blocked status after a thermal preflight; the final case uses its own newly measured pair.",
+    "One fresh pair per distinct case, not repeated confidence-bounded performance.",
+    "Zero-recovery throughput is a hypothetical upper bound with all other measured costs fixed, not a forecast.",
+    "128 tokens after short prompts, no EOS reached; no 2K/4K/7K or sustained-session qualification."
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "kind": "block_cache_review_v1",
+  "complete": true,
+  "focused_tests_passed": 7,
+  "native_sources_changed": false,
+  "changes": [
+    "Reject noninteger trace identities, pin counts and counters; reconstruct snapshot JSON with native types/order.",
+    "Apply the 10-percent selection threshold with integer arithmetic so an exact boundary is not rejected by float rounding."
+  ],
+  "tools": [
+    {
+      "path": "scripts/qwen/block_cache_replay.py",
+      "sha256": "5717fc0c8e6904bd674205c53270cca226053f6f8d9d739b66d3465bf9c8b0cc"
+    },
+    {
+      "path": "scripts/qwen/capture_block_cache.py",
+      "sha256": "d0cab06b28dc1c57edf915103626ff56687486dc4c242d33862fecf180149ad2"
+    },
+    {
+      "path": "scripts/qwen/test_block_cache.py",
+      "sha256": "2c0dfe06c626a910de79579c86c71a88f802f50ca9e9eee1423c84125702af64"
+    }
+  ],
+  "source_summary_sha256": "a3d6f1225307ec83bf39d93254f97fe75ad6853c8c816ea5d96dbf3122c21304",
+  "source_seal_sha256": "0ebf2abea0e25ab0793bfd06e6fbfaf749f9ae5ad4bd61d26cb84a97f57d5fb9",
+  "reaudited_source": "audit-02-reviewed.json",
+  "reaudited_sha256": "d924377e2cbe28431e464588717340e29ee0aef898b6c7623480c6f3554658ca",
+  "result_unchanged": true,
+  "additional_gpu_work": false
+}

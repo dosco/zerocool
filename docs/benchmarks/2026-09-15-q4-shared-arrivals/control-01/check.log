@@ -1,0 +1,4 @@
+2026-09-14 21:58:08.054 qwen_q4_check[64318:207838773] Metal API Validation Enabled
+2026-09-14 21:58:08.055 qwen_q4_check[64318:207838773] Metal GPU Validation Enabled
+check pair 0 group 1 hits 2
+check pair 0 group 4 hits 2

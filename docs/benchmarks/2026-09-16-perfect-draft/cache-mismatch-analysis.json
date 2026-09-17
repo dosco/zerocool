@@ -1,0 +1,29 @@
+{
+  "kind": "perfect_verifier_cache_control_review_v1",
+  "complete": true,
+  "sources": {
+    "docs/benchmarks/2026-09-16-perfect-draft/screen-03/validate-1.json": "437154ab7d86a4266c1f902f71ee2343fdcb1e02b545702f14b7cb4e3bfc3247",
+    "docs/benchmarks/2026-09-16-perfect-draft/screen-03/validate-2.json": "1b0e1cd71637cfe83c0ca4f0f89d1fef2c760d4d690821268336f2024a2f6dc3"
+  },
+  "checks": {
+    "prime_logits": true,
+    "prime_state": true,
+    "prime_routes": true,
+    "prime_cache": false,
+    "all_four_logit_rows": true,
+    "matching_prefix_state": true,
+    "matching_prefix_routes": true,
+    "checkpoint_allocation": true,
+    "logits_reservation": true,
+    "causal_prefix": true,
+    "zero_accept": true,
+    "one_accept": true
+  },
+  "status": "cache_control_failed",
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "limitations": [
+    "Cache identity covers slot keys, references, hand, pins and readiness; the hashes alone cannot identify which fields differed.",
+    "The stage remains failed. No timing process ran, and instrumented validation durations do not qualify performance."
+  ]
+}

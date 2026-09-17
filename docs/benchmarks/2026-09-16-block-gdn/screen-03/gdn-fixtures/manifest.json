@@ -1,0 +1,136 @@
+{
+  "kind": "captured_affine_operators",
+  "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "bytes": 61456384,
+  "byte_limit": 268435456,
+  "case_limit": 32,
+  "normal_request_latency_qualified": false,
+  "filter": {
+    "phase": "decode",
+    "operator": "gdn",
+    "layer": 0
+  },
+  "cases": [
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 10240,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "file": "0-w.bin",
+          "bytes": 26214400,
+          "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+        },
+        "s": {
+          "file": "0-s.bin",
+          "bytes": 819200,
+          "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+        },
+        "b": {
+          "file": "0-b.bin",
+          "bytes": 819200,
+          "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+        },
+        "x": {
+          "file": "0-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 2560,
+        "N": 6144,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "file": "1-w.bin",
+          "bytes": 15728640,
+          "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+        },
+        "s": {
+          "file": "1-s.bin",
+          "bytes": 491520,
+          "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+        },
+        "b": {
+          "file": "1-b.bin",
+          "bytes": 491520,
+          "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+        },
+        "x": {
+          "file": "1-x.bin",
+          "bytes": 40960,
+          "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+        }
+      }
+    },
+    {
+      "matrix": {
+        "K": 6144,
+        "N": 2560,
+        "rows": 4,
+        "group": 64,
+        "bits": 8,
+        "fused": false,
+        "gathered": false
+      },
+      "phase": "decode",
+      "context": {
+        "stage": "gdn",
+        "layer": 0,
+        "tokens": 4,
+        "offset": 72
+      },
+      "tensors": {
+        "w": {
+          "file": "2-w.bin",
+          "bytes": 15728640,
+          "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+        },
+        "s": {
+          "file": "2-s.bin",
+          "bytes": 491520,
+          "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+        },
+        "b": {
+          "file": "2-b.bin",
+          "bytes": 491520,
+          "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+        },
+        "x": {
+          "file": "2-x.bin",
+          "bytes": 98304,
+          "sha256": "c62a494943141fc7d675bdddf659625aee5e9da9e704502ebbf7dd1008c11481"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "kind": "q8_expanded_screen_v1",
+  "complete": true,
+  "status": "worth_verifier_screen",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-16T21:50:58.037541+00:00",
+  "time_limit_seconds": 420,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [],
+  "workload": {
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7734,
+      264,
+      12654,
+      709,
+      10562,
+      87682,
+      1494,
+      40798,
+      8,
+      421,
+      78161,
+      48142,
+      7629,
+      26126,
+      13,
+      3301,
+      10300,
+      26126,
+      1973,
+      93183,
+      279,
+      1879,
+      13,
+      13365,
+      449,
+      4147,
+      1103,
+      321,
+      26126,
+      421,
+      5615,
+      506,
+      449,
+      14456,
+      13,
+      28763,
+      279,
+      7873,
+      321,
+      2250,
+      2526,
+      52992,
+      7262,
+      4147,
+      1879,
+      11,
+      48142,
+      26126,
+      11,
+      321,
+      632,
+      27379,
+      81859,
+      26126,
+      13,
+      79091,
+      279,
+      854,
+      22373,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198,
+      248068,
+      271,
+      248069,
+      271
+    ],
+    "continuation_ids": [
+      71093,
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142
+    ],
+    "expected_next_ids": [
+      12305,
+      198,
+      727,
+      10562,
+      87682,
+      1494,
+      40798,
+      1590,
+      198,
+      262,
+      4071,
+      198,
+      262,
+      38754,
+      48142,
+      7629
+    ],
+    "expected_prompt_id": 71093
+  },
+  "criteria": {
+    "cases": [
+      {
+        "name": "head",
+        "stage": "logits",
+        "layer": -1,
+        "K": 2560,
+        "N": 248320,
+        "frequency": 1,
+        "tensor": "lm_head"
+      },
+      {
+        "name": "attention_q",
+        "stage": "attention",
+        "layer": 3,
+        "K": 2560,
+        "N": 12288,
+        "frequency": 12,
+        "tensor": "model.layers.3.self_attn.q_proj"
+      },
+      {
+        "name": "attention_o",
+        "stage": "attention",
+        "layer": 3,
+        "K": 6144,
+        "N": 2560,
+        "frequency": 12,
+        "tensor": "model.layers.3.self_attn.o_proj"
+      },
+      {
+        "name": "gdn_qkv",
+        "stage": "gdn",
+        "layer": 0,
+        "K": 2560,
+        "N": 10240,
+        "frequency": 36,
+        "tensor": "model.layers.0.linear_attn.in_proj_qkv"
+      },
+      {
+        "name": "gdn_z",
+        "stage": "gdn",
+        "layer": 0,
+        "K": 2560,
+        "N": 6144,
+        "frequency": 36,
+        "tensor": "model.layers.0.linear_attn.in_proj_z"
+      },
+      {
+        "name": "gdn_out",
+        "stage": "gdn",
+        "layer": 0,
+        "K": 6144,
+        "N": 2560,
+        "frequency": 36,
+        "tensor": "model.layers.0.linear_attn.out_proj"
+      }
+    ],
+    "variant": {
+      "candidate": "q8_expanded_t4_w8",
+      "control": "q8_mm_t4",
+      "reference": "q8_mm",
+      "token_tile": 4,
+      "output_rows": 1,
+      "lane_width": 8,
+      "weight_load_bits": 32
+    },
+    "pairs": 5,
+    "repeats": 32,
+    "minimum_projection_ms_per_token": 10,
+    "paired_ratio_upper_below": 1,
+    "operator_gpu_bytes": 1073741824,
+    "operator_physical_bytes": 2147483648,
+    "input_capture_bytes": 1048576,
+    "engine_bytes": 12884901888,
+    "expert_slots": 1460,
+    "capture_seconds": 150,
+    "operator_seconds": 90,
+    "stage_seconds": 420,
+    "source_timing_reused": false,
+    "production_promoted": false
+  },
+  "limitations": [
+    "The operator screen uses one four-token input block, layer 0 GDN, layer 3 attention and the output head; other inputs and contexts need full-model validation.",
+    "Frequency-weighted savings and paired intervals describe repeated isolated kernels, not complete requests. Pairs in one process may be temporally dependent.",
+    "All six cases are remeasured together. No earlier GDN timing or memory samples are pooled.",
+    "The input capture reports exact numerical identity separately from its resource status; no capture timing qualifies speed.",
+    "A passing screen authorizes a fresh perfect-proposal verifier comparison, not production promotion or a real speculative throughput claim."
+  ],
+  "build_directory": "/repo/.cache/q8-expanded-build-02",
+  "host_preflight": [
+    {
+      "source": "validate-host.json",
+      "sha256": "97e991a2b3a1e8a0fee3a5a7284f36c263bc7ed00f2eaad8889241b7bb906d1b",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5199118012822500,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "timing-host.json",
+      "sha256": "dbb4ec9ef48dfc8ca0c0786d9d713cc6ac74ac0bfee45617867556625bc6c590",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5199120130711375,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "source_timing_reused": false,
+  "token_source": {
+    "path": "/repo/docs/benchmarks/2026-09-15-q4-request-context/capture-02",
+    "source_seal_sha256": "82ad1f44affaba36ea4db1a89fb29dcba63c7306ccba61b330cc0b2f662688a6",
+    "raw_sha256": "0c9d82785b25baf06366ab9b399f9438237e8b29c4f71ba32b625ce4dd6540e1",
+    "source_build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "recorded_stage_complete": false,
+    "recorded_stage_status": "resource_blocked",
+    "use": "fixed tokens and artifact identity only; no timing reused"
+  },
+  "source_proof": {
+    "path": "/repo/docs/benchmarks/2026-09-16-q8-expanded/capture-01",
+    "seal_sha256": "b5bedb3e0545ecce78ea19ae0dd1a84d94a286cea962e2ec1b840c4aa5b3dc60",
+    "recorded_complete": false,
+    "recorded_status": "resource_blocked",
+    "exact": {
+      "exact_logits_state_routes": true,
+      "exact_initial_cache": true,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10225898048,
+      "peak_compressed_bytes": 89784320
+    },
+    "manifest_sha256": "1e5f9ac792e3f7bfefa795537b31eb0ca024d7ca92b42d7e0eda750b4a1d329e",
+    "use": "input bytes and numerical identity only"
+  },
+  "native_model_loaded": false,
+  "validate": {
+    "exact": true,
+    "clean_memory": true,
+    "clean_host": true,
+    "cases": [
+      {
+        "name": "head",
+        "paired_ratios": [
+          0.8829207383074255
+        ]
+      },
+      {
+        "name": "attention_q",
+        "paired_ratios": [
+          0.9077168947671075
+        ]
+      },
+      {
+        "name": "attention_o",
+        "paired_ratios": [
+          0.8676371041202967
+        ]
+      },
+      {
+        "name": "gdn_qkv",
+        "paired_ratios": [
+          0.9144669608137665
+        ]
+      },
+      {
+        "name": "gdn_z",
+        "paired_ratios": [
+          0.9651747418616549
+        ]
+      },
+      {
+        "name": "gdn_out",
+        "paired_ratios": [
+          0.8379365147545208
+        ]
+      }
+    ],
+    "peak_physical_bytes": 744819584,
+    "normal_request_latency_qualified": false,
+    "production_promoted": false
+  },
+  "timing": {
+    "exact": true,
+    "clean_memory": true,
+    "clean_host": true,
+    "cases": [
+      {
+        "name": "head",
+        "paired_ratios": [
+          0.3010474688523029,
+          0.30119597653985647,
+          0.30103109768493,
+          0.30085108536166627,
+          0.30131816095365155
+        ]
+      },
+      {
+        "name": "attention_q",
+        "paired_ratios": [
+          0.6661091972681851,
+          0.6785904619422833,
+          0.6794040633454047,
+          0.6792205100015154,
+          0.6757811322690146
+        ]
+      },
+      {
+        "name": "attention_o",
+        "paired_ratios": [
+          0.7795426381268868,
+          0.7668012492717975,
+          0.7777656536040506,
+          0.7808941545742827,
+          0.7784682411080109
+        ]
+      },
+      {
+        "name": "gdn_qkv",
+        "paired_ratios": [
+          0.7192283182183785,
+          0.7203130536696368,
+          0.719438472060057,
+          0.7270665644277771,
+          0.7410183407232507
+        ]
+      },
+      {
+        "name": "gdn_z",
+        "paired_ratios": [
+          0.8251066505532686,
+          0.8204149131690485,
+          0.8270525547750599,
+          0.8139583153683491,
+          0.822063338927092
+        ]
+      },
+      {
+        "name": "gdn_out",
+        "paired_ratios": [
+          0.7685674092693252,
+          0.7758646839539551,
+          0.7750181657813764,
+          0.7772574754227787,
+          0.7768419566413016
+        ]
+      }
+    ],
+    "peak_physical_bytes": 694717440,
+    "normal_request_latency_qualified": false,
+    "production_promoted": false,
+    "status": "worth_verifier_screen",
+    "advance_to_verifier_screen": true,
+    "shape_frequency_projection_ms": [
+      26.150072437499993,
+      26.043175640625,
+      25.945277507812506,
+      25.889192257812503,
+      25.55854142968751
+    ],
+    "median_projection_ms_per_token": 25.945277507812506,
+    "weighted_ratios": [
+      0.5817133888930234,
+      0.5832296646040883,
+      0.5836145721556794,
+      0.5841706497548272,
+      0.5872304685365639
+    ],
+    "confidence_95": {
+      "geometric_mean": 0.5839889386959576,
+      "low": 0.5814802901485763,
+      "high": 0.5865084101682788,
+      "pairs": 5,
+      "method": "paired log-ratio Student-t interval, two-sided 95%, df=4",
+      "assumptions": "Independent approximately normal pair log-ratios; temporal host effects may violate this. Marginal intervals are not simultaneous coverage."
+    },
+    "limitations": [
+      "The operator screen uses one four-token input block, layer 0 GDN, layer 3 attention and the output head; other inputs and contexts need full-model validation.",
+      "Frequency-weighted savings and paired intervals describe repeated isolated kernels, not complete requests. Pairs in one process may be temporally dependent.",
+      "All six cases are remeasured together. No earlier GDN timing or memory samples are pooled.",
+      "The input capture reports exact numerical identity separately from its resource status; no capture timing qualifies speed.",
+      "A passing screen authorizes a fresh perfect-proposal verifier comparison, not production promotion or a real speculative throughput claim."
+    ]
+  },
+  "advance_to_verifier_screen": true,
+  "elapsed_seconds": 26.90388770867139
+}

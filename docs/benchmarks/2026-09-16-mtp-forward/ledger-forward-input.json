@@ -1,0 +1,20 @@
+{
+  "hypothesis": "The original trained MTP head can amortize target verification enough to improve real greedy generation under the same memory budget.",
+  "expected_effect": "Preserve target output/state while making three actual proposals per four-input verifier block.",
+  "controlled_change": "Native prepared MTP Q4 experts/Q8 dense head, 32 draft slots and 1460 target slots, delayed host checkpoint commitment; shared target embedding/head and total 12GiB admission.",
+  "correctness": "Independent NumPy equations pass 22 synthetic and 22 real-hidden boundaries; exact serial/block state, eviction, causal prefix and rollback checks; forced target rejection replay; final target state equals fresh serial.",
+  "outcome": "One clean short pair: serial 3.639327 tokens/s, real MTP 4.790415 tokens/s, latency ratio 0.759710. All12 proposals accepted over16 committed inputs. Validation peak9.824GiB; timing peaks9.766/9.696GiB. Two earlier128-slot runs remain compression-blocked.",
+  "decision": "promising",
+  "smallest_experiment": "Skip unused attention-query/MoE/output work during target-aligned draft state catch-up; prove identical cache bytes and future proposals before a fresh paired screen.",
+  "limitations": [
+    "Single72-token prompt and16-token continuation; one timing pair has no confidence qualification.",
+    "The5-token/s target, long contexts, sustained sessions, tool-use and non-greedy sampling remain unqualified.",
+    "Prepared draft-only quantization is not originalBF16 equivalence. Production is unchanged."
+  ],
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/joint-03/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/fixture-03/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/joint-01/summary.json",
+    "/repo/docs/benchmarks/2026-09-16-mtp-forward/joint-02/summary.json"
+  ]
+}

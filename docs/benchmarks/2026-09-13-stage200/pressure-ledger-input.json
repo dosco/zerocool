@@ -1,0 +1,17 @@
+{
+  "hypothesis": "OS pressure events can trigger bounded cache release at safe coordinator boundaries before memory disturbance persists.",
+  "expected_effect": "Release eligible expert ownership while preserving all GPU and I/O users and exact inference.",
+  "controlled_change": "Observe versus shrink at a fixed 1460-slot capacity, two alternating pairs, without artificial pressure.",
+  "correctness": "Policy/coalescing/floor and leased-buffer tests passed. All paired output IDs and event/accounting checks passed.",
+  "outcome": "All four processes were clean and received zero pressure notifications. Real shrinking was not exercised; no stability improvement is established.",
+  "decision": "inconclusive",
+  "smallest_experiment": "Require a naturally observed warning and drain/release evidence before evaluating or promoting the live pressure policy.",
+  "evidence": [
+    "/repo/docs/benchmarks/2026-09-13-stage200/pressure-01/summary.json",
+    "/repo/docs/benchmarks/2026-09-13-stage200/verification.json"
+  ],
+  "limitations": [
+    "Single M1 Pro host; short screens cannot qualify 2K/4K generation or sustained coding.",
+    "No production default is promoted."
+  ]
+}

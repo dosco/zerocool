@@ -1,0 +1,21 @@
+{
+  "complete": true,
+  "focused_tests": 8,
+  "test_modules": [
+    "test_block_gdn",
+    "test_q8_block_packed"
+  ],
+  "audit_passed": true,
+  "native_build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "production_binary_sha256": "05495d0baf993b1f7f1bc4b9365753e88603909ac66db3309a1380ea8c7c519f",
+  "production_promoted": false,
+  "reviewed_contracts": [
+    "word alignment and lane/group bounds for all admitted shapes",
+    "scalar addition and final reduction order preserved",
+    "separate source-copy Metal backend linked before native archive",
+    "native dispatch counts verify both arms",
+    "fresh-process reference hashes identical",
+    "no old timing or memory samples reused",
+    "materiality gate evaluated without pooling prior experiments"
+  ]
+}

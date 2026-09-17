@@ -1,0 +1,31 @@
+{
+  "kind": "block_compute_audit_v1",
+  "complete": true,
+  "audit_passed": true,
+  "recorded_complete": false,
+  "recorded_status": "failed",
+  "source_seal_sha256": "b801f251290c8db5ee1eee89a3a92d2e74516b7b7cc1ace4d7151b85b8384d2d",
+  "source_provenance": {
+    "native_source_version": "current",
+    "tooling_files": 193,
+    "archived_tooling": [
+      {
+        "original": "scripts/qwen/block_compute_profile.py",
+        "sha256": "53fd6586205b94c1d1c631387afb1747356b17e7171ad5a3d3d17f65f916f7e6",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-compute/screen-sources/scripts/qwen/block_compute_profile.py"
+      },
+      {
+        "original": "scripts/qwen/capture_block_profile.py",
+        "sha256": "283a42c1ac47aeb959ee1320a047ee0acecb5e751340062de50c8ba67add11af",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-compute/screen-sources/scripts/qwen/capture_block_profile.py"
+      },
+      {
+        "original": "scripts/qwen/test_block_compute.py",
+        "sha256": "eeced8c3da14cfecfdd3a9c29feba7a66d1685dd5bc9cf5937f4223daccc340b",
+        "available_at": "/repo/docs/benchmarks/2026-09-16-block-compute/screen-sources/scripts/qwen/test_block_compute.py"
+      }
+    ]
+  },
+  "performance_measurement": false,
+  "production_promoted": false
+}

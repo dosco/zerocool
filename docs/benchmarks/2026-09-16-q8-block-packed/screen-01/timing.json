@@ -1,0 +1,1637 @@
+{
+  "kind": "q8_block_packed_operator_v1",
+  "complete": true,
+  "production_promoted": false,
+  "normal_request_latency_qualified": false,
+  "variant": {
+    "candidate": "q8_block_packed_t4_w8",
+    "control": "q8_mm_t4",
+    "lane_width": 8,
+    "output_rows": 1,
+    "reference": "q8_mm",
+    "token_tile": 4,
+    "weight_load_bits": 32
+  },
+  "validation": false,
+  "build": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+  "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+  "host_before": {
+    "monotonic_ns": 5198095105126458,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  },
+  "memory_before": {
+    "physical_footprint_bytes": 1754112,
+    "resident_bytes": 5357568,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 618,
+    "pageins": 1,
+    "physical_footprint_peak_bytes": 1754112,
+    "resident_peak_bytes": 5357568,
+    "system_swap_used_bytes": 3732799488,
+    "reclaimable_bytes": 18428968960
+  },
+  "source": {
+    "kind": "captured_affine_operators",
+    "build_fingerprint": "51877f96f015386dd642fd4e63fbc39ff2e75c1156f5ae1bcba764f546963594",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "bytes": 61456384,
+    "byte_limit": 268435456,
+    "case_limit": 32,
+    "normal_request_latency_qualified": false,
+    "filter": {
+      "phase": "decode",
+      "operator": "gdn",
+      "layer": 0
+    },
+    "cases": [
+      {
+        "matrix": {
+          "K": 2560,
+          "N": 10240,
+          "rows": 4,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 4,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "0-w.bin",
+            "bytes": 26214400,
+            "sha256": "7569e42715eb74211a8fa43c917d0e27d2d03d9f7208cc97a5028159efc5e2b0"
+          },
+          "s": {
+            "file": "0-s.bin",
+            "bytes": 819200,
+            "sha256": "8b0b7b598ad470686cac7b51d28e47b1fe975b90a8ca9a2469eb5407843591fc"
+          },
+          "b": {
+            "file": "0-b.bin",
+            "bytes": 819200,
+            "sha256": "143d2b0c6a3fefd8f02b854fcd796ddf845f31e32a4659f773ae7e086e1f621c"
+          },
+          "x": {
+            "file": "0-x.bin",
+            "bytes": 40960,
+            "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+          }
+        }
+      },
+      {
+        "matrix": {
+          "K": 2560,
+          "N": 6144,
+          "rows": 4,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 4,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "1-w.bin",
+            "bytes": 15728640,
+            "sha256": "db012ffb424a9b3fdc2a65ca177664e3a3d71a1cc7ea882633692fb1cccda982"
+          },
+          "s": {
+            "file": "1-s.bin",
+            "bytes": 491520,
+            "sha256": "c62b253405f68aa8c112677086c412f3b77567cd9782c1b10cad23037538afb0"
+          },
+          "b": {
+            "file": "1-b.bin",
+            "bytes": 491520,
+            "sha256": "4cc22409e4e86ea7599d8f149a8b6ccf60eac9382e0c0e61c40f90e3997fe9a6"
+          },
+          "x": {
+            "file": "1-x.bin",
+            "bytes": 40960,
+            "sha256": "8a357811f4dc49dc3018b262e3067b2428666884418852c17845cbeec791fe19"
+          }
+        }
+      },
+      {
+        "matrix": {
+          "K": 6144,
+          "N": 2560,
+          "rows": 4,
+          "group": 64,
+          "bits": 8,
+          "fused": false,
+          "gathered": false
+        },
+        "phase": "decode",
+        "context": {
+          "stage": "gdn",
+          "layer": 0,
+          "tokens": 4,
+          "offset": 72
+        },
+        "tensors": {
+          "w": {
+            "file": "2-w.bin",
+            "bytes": 15728640,
+            "sha256": "d7a9ff3de2818245ab8e16134cc5897b8491cab32bf2de09e77027d1bba83fde"
+          },
+          "s": {
+            "file": "2-s.bin",
+            "bytes": 491520,
+            "sha256": "fb1b7d83ce5f9e9f9d9efb22758d01837f732fbbff1753413a7438934d7a71b9"
+          },
+          "b": {
+            "file": "2-b.bin",
+            "bytes": 491520,
+            "sha256": "ddc6254485c4b716252e329904a450e725c590efac54edf2373df40cf36834ac"
+          },
+          "x": {
+            "file": "2-x.bin",
+            "bytes": 98304,
+            "sha256": "c62a494943141fc7d675bdddf659625aee5e9da9e704502ebbf7dd1008c11481"
+          }
+        }
+      }
+    ]
+  },
+  "cases": [
+    {
+      "K": 2560,
+      "N": 10240,
+      "tokens": 4,
+      "reference_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+      "pairs": [
+        {
+          "pair": 0,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 52751916,
+              "wall_ns": 53063834,
+              "memory_before": {
+                "physical_footprint_bytes": 36767296,
+                "resident_bytes": 45318144,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3181,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36767296,
+                "resident_peak_bytes": 45318144,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3186,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 36543333,
+              "wall_ns": 36806000,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3186,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3190,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            }
+          ]
+        },
+        {
+          "pair": 1,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 36558625,
+              "wall_ns": 36800459,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3190,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3194,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 49880124,
+              "wall_ns": 50153666,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3194,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3197,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            }
+          ]
+        },
+        {
+          "pair": 2,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 51357583,
+              "wall_ns": 51646958,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3197,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3201,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 36575708,
+              "wall_ns": 36834417,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3201,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3205,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              }
+            }
+          ]
+        },
+        {
+          "pair": 3,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 36528292,
+              "wall_ns": 36777875,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3205,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18428968960
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3209,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18459410432
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 51618250,
+              "wall_ns": 51893375,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3209,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18459410432
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3212,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18460065792
+              }
+            }
+          ]
+        },
+        {
+          "pair": 4,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 51133249,
+              "wall_ns": 51514083,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3212,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18460082176
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3216,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 36517499,
+              "wall_ns": 36852542,
+              "memory_before": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3216,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 36783680,
+                "resident_bytes": 45334528,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 3220,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 36783680,
+                "resident_peak_bytes": 45334528,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        }
+      ],
+      "warmup": [
+        {
+          "candidate": false,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+          "kernel_dispatches": {
+            "q8_mm_t4": 1
+          },
+          "gpu_ns": 2522166,
+          "wall_ns": 2821708,
+          "memory_before": {
+            "physical_footprint_bytes": 36570688,
+            "resident_bytes": 45105152,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 3161,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 36570688,
+            "resident_peak_bytes": 45105152,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18428968960
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 36750912,
+            "resident_bytes": 45301760,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 3177,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 36750912,
+            "resident_peak_bytes": 45301760,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18428968960
+          }
+        },
+        {
+          "candidate": true,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "4d061b1f92a7122ac55a52d9d8b3a2e3856173560d2b2d5b37e398c6dafa507b",
+          "kernel_dispatches": {
+            "q8_block_packed_t4_w8": 1
+          },
+          "gpu_ns": 1521166,
+          "wall_ns": 1730250,
+          "memory_before": {
+            "physical_footprint_bytes": 36750912,
+            "resident_bytes": 45301760,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 3177,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 36750912,
+            "resident_peak_bytes": 45301760,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18428968960
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 36767296,
+            "resident_bytes": 45318144,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 3181,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 36767296,
+            "resident_peak_bytes": 45318144,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18428968960
+          }
+        }
+      ]
+    },
+    {
+      "K": 2560,
+      "N": 6144,
+      "tokens": 4,
+      "reference_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+      "pairs": [
+        {
+          "pair": 0,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 26679665,
+              "wall_ns": 26952375,
+              "memory_before": {
+                "physical_footprint_bytes": 25527936,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4262,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 21770791,
+              "wall_ns": 22124166,
+              "memory_before": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 1,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 21764750,
+              "wall_ns": 22115083,
+              "memory_before": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 26460499,
+              "wall_ns": 26718209,
+              "memory_before": {
+                "physical_footprint_bytes": 25544320,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4263,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 2,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 26627374,
+              "wall_ns": 26874625,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 21771041,
+              "wall_ns": 22022125,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 3,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 21759875,
+              "wall_ns": 22008750,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 26731791,
+              "wall_ns": 26999542,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 4,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 26482666,
+              "wall_ns": 26802959,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 21747125,
+              "wall_ns": 22052875,
+              "memory_before": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25560704,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 4264,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        }
+      ],
+      "warmup": [
+        {
+          "candidate": false,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+          "kernel_dispatches": {
+            "q8_mm_t4": 1
+          },
+          "gpu_ns": 841416,
+          "wall_ns": 1097916,
+          "memory_before": {
+            "physical_footprint_bytes": 25429632,
+            "resident_bytes": 33964032,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 4253,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 25527936,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 4262,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          }
+        },
+        {
+          "candidate": true,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "960ffc07a929f6f7a89d983f719bafc034a79cccd172ce7eb0da05cf48d8bc59",
+          "kernel_dispatches": {
+            "q8_block_packed_t4_w8": 1
+          },
+          "gpu_ns": 683832,
+          "wall_ns": 894333,
+          "memory_before": {
+            "physical_footprint_bytes": 25527936,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 4262,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 25527936,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 4262,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          }
+        }
+      ]
+    },
+    {
+      "K": 6144,
+      "N": 2560,
+      "tokens": 4,
+      "reference_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+      "pairs": [
+        {
+          "pair": 0,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 30724999,
+              "wall_ns": 30956250,
+              "memory_before": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 23692750,
+              "wall_ns": 23961583,
+              "memory_before": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 1,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 23965791,
+              "wall_ns": 24276167,
+              "memory_before": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 30591499,
+              "wall_ns": 30883375,
+              "memory_before": {
+                "physical_footprint_bytes": 25511488,
+                "resident_bytes": 34062336,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5297,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25527872,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5298,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 2,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 30601874,
+              "wall_ns": 30868458,
+              "memory_before": {
+                "physical_footprint_bytes": 25527872,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5298,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25527872,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5298,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 23741125,
+              "wall_ns": 24006167,
+              "memory_before": {
+                "physical_footprint_bytes": 25527872,
+                "resident_bytes": 34078720,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5298,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 3,
+          "arms": [
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 23678957,
+              "wall_ns": 23942541,
+              "memory_before": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 30497457,
+              "wall_ns": 30749750,
+              "memory_before": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        },
+        {
+          "pair": 4,
+          "arms": [
+            {
+              "candidate": false,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_mm_t4": 32
+              },
+              "gpu_ns": 31277041,
+              "wall_ns": 31550125,
+              "memory_before": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            },
+            {
+              "candidate": true,
+              "repeats": 32,
+              "exact": true,
+              "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+              "kernel_dispatches": {
+                "q8_block_packed_t4_w8": 32
+              },
+              "gpu_ns": 23683916,
+              "wall_ns": 23927834,
+              "memory_before": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              },
+              "memory_after": {
+                "physical_footprint_bytes": 25544256,
+                "resident_bytes": 34095104,
+                "compressed_bytes": 0,
+                "compressed_peak_bytes": 0,
+                "decompressions": 0,
+                "page_faults": 5299,
+                "pageins": 94,
+                "physical_footprint_peak_bytes": 51644032,
+                "resident_peak_bytes": 60080128,
+                "system_swap_used_bytes": 3732799488,
+                "reclaimable_bytes": 18461491200
+              }
+            }
+          ]
+        }
+      ],
+      "warmup": [
+        {
+          "candidate": false,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+          "kernel_dispatches": {
+            "q8_mm_t4": 1
+          },
+          "gpu_ns": 903333,
+          "wall_ns": 1120208,
+          "memory_before": {
+            "physical_footprint_bytes": 25462336,
+            "resident_bytes": 34013184,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 5294,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 25511488,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 5297,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          }
+        },
+        {
+          "candidate": true,
+          "repeats": 1,
+          "exact": true,
+          "output_sha256": "3e1feded2333acd33f782321229317ef16bb04106948566c0aee2423ec416abf",
+          "kernel_dispatches": {
+            "q8_block_packed_t4_w8": 1
+          },
+          "gpu_ns": 739874,
+          "wall_ns": 938708,
+          "memory_before": {
+            "physical_footprint_bytes": 25511488,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 5297,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          },
+          "memory_after": {
+            "physical_footprint_bytes": 25511488,
+            "resident_bytes": 34062336,
+            "compressed_bytes": 0,
+            "compressed_peak_bytes": 0,
+            "decompressions": 0,
+            "page_faults": 5297,
+            "pageins": 94,
+            "physical_footprint_peak_bytes": 51644032,
+            "resident_peak_bytes": 60080128,
+            "system_swap_used_bytes": 3732799488,
+            "reclaimable_bytes": 18461491200
+          }
+        }
+      ]
+    }
+  ],
+  "peak_gpu_bytes": 28229632,
+  "device": "Apple M1 Pro",
+  "memory_after_destroy": {
+    "physical_footprint_bytes": 24331840,
+    "resident_bytes": 17137664,
+    "compressed_bytes": 0,
+    "compressed_peak_bytes": 0,
+    "decompressions": 0,
+    "page_faults": 5300,
+    "pageins": 94,
+    "physical_footprint_peak_bytes": 51644032,
+    "resident_peak_bytes": 60080128,
+    "system_swap_used_bytes": 3732799488,
+    "reclaimable_bytes": 18461491200
+  },
+  "host_after": {
+    "monotonic_ns": 5198096538408083,
+    "thermal_state": 0,
+    "low_power_mode": false,
+    "power_source": "AC Power",
+    "source": "NSProcessInfo and IOPowerSources",
+    "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+  }
+}
