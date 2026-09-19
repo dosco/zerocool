@@ -11,6 +11,11 @@ public:
     std::string decode(std::span<const int> ids) const;
     std::string render(Json messages,const Json& tools=Json::array(),bool thinking=false,
                        const std::string& effort="xhigh") const;
+    // Chat input must never let message text become a real turn boundary.
+    // Control-token text inside messages and tools is encoded as ordinary
+    // bytes; only the template itself produces special ids.
+    std::vector<int> encode_chat(Json messages,const Json& tools=Json::array(),bool thinking=false,
+                                 const std::string& effort="xhigh") const;
 private:
     struct Impl;
     std::unique_ptr<Impl> impl_;
@@ -48,6 +53,11 @@ public:
     Result generate(const std::vector<int>& prompt,const Options& options,
                     const std::function<void(int)>& on_token={},const std::atomic<bool>* cancel=nullptr);
     void clear();
+    // Retained history can be continued only while its state is committed.
+    // A failure that leaves the recurrence unrollable makes this false.
+    bool reusable() const { return state_ && state_->valid; }
+    // Optional UI telemetry at existing boundaries; never retains GPU buffers.
+    void progress(std::function<void(const Json&)> observer) { observer_=std::move(observer); }
     // Benchmark priming shares normal ingestion and creates no pending output.
     Result prime(const std::vector<int>& prompt,const std::atomic<bool>* cancel=nullptr);
 private:
@@ -58,7 +68,6 @@ private:
     std::vector<int> retained_;
     std::vector<float> last_logits_;
     std::optional<int> pending_token_;
+    std::function<void(const Json&)> observer_;
 };
-
-void serve(Model& model,Tokenizer& tokenizer,const Options& options,uint16_t port,const std::atomic<bool>* stop=nullptr);
 } // namespace freellm::qwen

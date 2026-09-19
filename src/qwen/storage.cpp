@@ -219,7 +219,7 @@ void Checkpoint::validate() const {
         {"indexer_compress_ratio",4}, {"ngram_size",3}, {"heads_per_ngram",8},
         {"split_ngram_parts",128}, {"ple_embed_dim",2560}, {"ple_conv_kernel_size",4},
         {"shared_expert_intermediate_size",640}, {"output_gate_type","sigmoid"},
-        {"ple_layer_ids",Json::array({2})}, {"eos_token_id",248044}, {"rms_norm_eps",1e-6}};
+        {"ple_layer_ids",Json::array({2})}, {"eos_token_id",EndOfText}, {"rms_norm_eps",1e-6}};
     for (auto it = required.begin(); it != required.end(); ++it)
         if (!t.contains(it.key()) || t.at(it.key()) != it.value())
             throw std::runtime_error("unsupported Qwen configuration: " + it.key());
@@ -739,10 +739,9 @@ NgramStore::NgramStore(const Checkpoint& cp,ReadPool& reads,uint64_t cache_bytes
 }
 std::vector<std::array<int64_t,16>> NgramStore::row_ids(std::span<const int> tokens,std::array<int,2> history) const {
     std::vector<std::array<int64_t,16>> result(tokens.size());
-    constexpr int eos=248044;
     for(size_t t=0;t<tokens.size();++t) {
         if(tokens[t]<0 || tokens[t]>=Vocab) throw std::out_of_range("token outside vocabulary");
-        const int prev=history[1], prev2=prev==eos ? eos : history[0];
+        const int prev=history[1], prev2=prev==EndOfText ? EndOfText : history[0];
         const std::array<int,3> window={tokens[t],prev,prev2};
         uint64_t mix=uint64_t(window[0])*uint64_t(multipliers_[0]);
         for(int n=1;n<3;++n) {

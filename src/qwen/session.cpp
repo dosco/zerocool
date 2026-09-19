@@ -139,11 +139,19 @@ Json Result::json() const {
 Session::Session(Model& model,Tokenizer& tokenizer) : model_(model),tokenizer_(tokenizer) {}
 void Session::clear() {state_.reset();retained_.clear();last_logits_.clear();pending_token_.reset();}
 void Session::ingest(const std::vector<int>& prompt,Result& result,const std::atomic<bool>* cancel) {
-    bool reuse=state_ && prompt.size()>=retained_.size() && std::equal(retained_.begin(),retained_.end(),prompt.begin());
+    size_t matched=0;
+    if(observer_) while(matched<std::min(prompt.size(),retained_.size()) && prompt[matched]==retained_[matched]) ++matched;
+    bool reuse=state_ && state_->valid && prompt.size()>=retained_.size() && std::equal(retained_.begin(),retained_.end(),prompt.begin());
     if(!reuse) {clear();state_=model_.make_state();}
     result.reused_tokens=retained_.size();
     result.pending_tokens_ingested=reuse && pending_token_ && prompt.size()>retained_.size() && prompt[retained_.size()]==*pending_token_?1:0;
     model_.phase(retained_.empty()?"prefill":"append");
+    auto publish=[&] {
+        if(observer_) observer_({{"phase",result.reused_tokens?"append":"prefill"},
+            {"prompt_tokens",prompt.size()},{"completed_prompt_tokens",retained_.size()},
+            {"reused_tokens",result.reused_tokens},{"matched_prefix_tokens",matched}});
+    };
+    publish();
     try {
         model_.prepare_ingest(prompt.size()-retained_.size());
         for(size_t at=retained_.size();at<prompt.size();) {
@@ -155,6 +163,7 @@ void Session::ingest(const std::vector<int>& prompt,Result& result,const std::at
             retained_.insert(retained_.end(),batch.begin(),batch.end());
             if(last) last_logits_=std::move(logits);
             at+=n;
+            publish();
         }
     pending_token_.reset();
         model_.finish_ingest();
@@ -170,7 +179,7 @@ Result Session::prime(const std::vector<int>& prompt,const std::atomic<bool>* ca
     try {
         ingest(prompt,result,cancel);result.prefill_ms=ms(start);result.request_ms=result.prefill_ms;result.finish_reason="primed";
         result.phases["ingest"]={{"before",before},{"after",model_.stats()}};return result;
-    } catch(...) {clear();throw;}
+    } catch(...) {if(!reusable())clear();throw;}
 }
 Result Session::generate(const std::vector<int>& prompt,const Options& o,
                          const std::function<void(int)>& on_token,const std::atomic<bool>* cancel) {
@@ -189,12 +198,18 @@ Result Session::generate(const std::vector<int>& prompt,const Options& o,
             const int id=sample(last_logits_,o.temperature,o.top_k,o.top_p,rng);
             if(i==0) result.first_token_ms=ms(start);
             result.tokens.push_back(id);
-            if(id!=248044 && id!=248046 && on_token) on_token(id);
+            if(observer_) {
+                const double elapsed=ms(start),decode=elapsed-result.first_token_ms;
+                observer_({{"phase","generating"},{"output_tokens",result.tokens.size()},
+                    {"elapsed_ms",elapsed},{"time_to_first_token_ms",result.first_token_ms},
+                    {"generation_tokens_per_second",i && decode>0?Json(i*1000.0/decode):Json()}});
+            }
+            if(!is_stop_token(id) && on_token) on_token(id);
             if(i==0) {
                 result.phases["ingest"]={{"before",before},{"after",model_.stats()}};
                 model_.phase("decode");
             }
-            if(id==248044 || id==248046) {result.finish_reason="stop";break;}
+            if(is_stop_token(id)) {result.finish_reason="stop";break;}
             if(i+1==o.max_tokens) {result.finish_reason="length";break;}
             const bool observe=result.diagnose_decode && result.decode_samples.size()<32;
             Json counters;if(observe) counters=model_.decode_counters();
@@ -215,9 +230,13 @@ Result Session::generate(const std::vector<int>& prompt,const Options& o,
         result.phases["decode"]={{"before",result.phases["ingest"]["after"]},{"after",model_.stats()}};
         if(!result.tokens.empty()) pending_token_=result.tokens.back();
         auto emitted=std::span<const int>(result.tokens);
-        if(!emitted.empty() && (emitted.back()==248044 || emitted.back()==248046)) emitted=emitted.first(emitted.size()-1);
+        if(!emitted.empty() && is_stop_token(emitted.back())) emitted=emitted.first(emitted.size()-1);
         result.text=tokenizer_.decode(emitted);
         return result;
-    } catch(...) {clear();throw;}
+    } catch(...) {
+        // Cancellation between decode steps leaves committed history usable;
+        // only an unrollable state forces a full replay on the next request.
+        if(!reusable())clear();throw;
+    }
 }
 } // namespace freellm::qwen

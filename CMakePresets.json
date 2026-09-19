@@ -1,0 +1,48 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {"major": 3, "minor": 20, "patch": 0},
+  "configurePresets": [
+    {
+      "name": "release",
+      "displayName": "Release (the build every measurement uses)",
+      "binaryDir": "${sourceDir}/build/qwen",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Debug"}
+    },
+    {
+      "name": "asan",
+      "displayName": "Address sanitizer (tests only; timings are not evidence)",
+      "binaryDir": "${sourceDir}/build/asan",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "RelWithDebInfo", "FREELLM_SANITIZE": "address"}
+    },
+    {
+      "name": "tsan",
+      "displayName": "Thread sanitizer (server and pipeline checks)",
+      "binaryDir": "${sourceDir}/build/tsan",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "RelWithDebInfo", "FREELLM_SANITIZE": "thread"}
+    },
+    {
+      "name": "no-tui",
+      "displayName": "Engine and server without the terminal client",
+      "binaryDir": "${sourceDir}/build/no-tui",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Release", "FREELLM_BUILD_TUI": "OFF"}
+    }
+  ],
+  "buildPresets": [
+    {"name": "release", "configurePreset": "release"},
+    {"name": "debug", "configurePreset": "debug"},
+    {"name": "asan", "configurePreset": "asan"},
+    {"name": "tsan", "configurePreset": "tsan"},
+    {"name": "no-tui", "configurePreset": "no-tui"}
+  ],
+  "testPresets": [
+    {"name": "release", "configurePreset": "release", "output": {"outputOnFailure": true}},
+    {"name": "asan", "configurePreset": "asan", "output": {"outputOnFailure": true}},
+    {"name": "tsan", "configurePreset": "tsan", "output": {"outputOnFailure": true}}
+  ]
+}

@@ -25,6 +25,10 @@ inline constexpr uint64_t GiB = 1024ull * 1024 * 1024;
 inline constexpr uint64_t MiB = 1024ull * 1024;
 inline constexpr int Layers = 48, Hidden = 2560, Experts = 512, TopK = 10;
 inline constexpr int Intermediate = 640, Vocab = 248320, Hyper = 10240;
+// The pinned context bound, and the two pinned ids that end a generated turn.
+inline constexpr int MaxContext = 8192;
+inline constexpr int EndOfText = 248044, ImEnd = 248046;
+constexpr bool is_stop_token(int id) { return id == EndOfText || id == ImEnd; }
 inline constexpr uint64_t ExpertBytes = 2764800;
 inline constexpr uint64_t ExpertStride = 2768896;
 inline constexpr const char* ModelRevision = "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c";

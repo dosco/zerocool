@@ -12,7 +12,7 @@ struct Options {
     std::filesystem::path model;
     std::filesystem::path prepared;
     uint64_t memory = 22*GiB;
-    int context = 8192;
+    int context = MaxContext;
     int chunk = 128;
     int panel = 0; // Explicit experiment until request-level qualification; 256/512/1024.
     int short_append = 32;
@@ -63,7 +63,7 @@ std::vector<std::byte> sparse_mask(std::span<const float> scores,uint32_t tokens
 struct State {
     Artifact artifact = Artifact::Q4;
     std::array<LayerState,Layers> layers;
-    std::array<int,2> history{248044,248044};
+    std::array<int,2> history{EndOfText,EndOfText};
     uint32_t tokens = 0;
     uint64_t trace_session_id = 0; // Diagnostic identity; never part of model arithmetic.
     bool valid = false; // Only make_state() or a committed update makes this reusable.

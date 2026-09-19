@@ -14,6 +14,10 @@ std::string utf8(uint32_t cp) {
     else {s+=char(0xe0|(cp>>12));s+=char(0x80|((cp>>6)&63));s+=char(0x80|(cp&63));}
     return s;
 }
+// Private-use markers stand in for control-token text while the chat template
+// renders. They are valid UTF-8 and valid JSON, so tool arguments still parse,
+// and no chat template inspects them.
+constexpr std::string_view GuardOpen = "\xee\x80\x80", GuardClose = "\xee\x80\x81";
 }
 struct Tokenizer::Impl {
     std::unordered_map<std::string,int> vocab,merges;
@@ -72,6 +76,21 @@ struct Tokenizer::Impl {
         }
         if(cursor!=value.length) throw std::runtime_error("pre-tokenizer left unmatched input");
     }
+    // Control-token text is recognized anywhere, so this is only ever applied
+    // to the rendered template, never to untrusted message text.
+    void with_special(const std::string& text,std::vector<int>& tokens) const {
+        size_t cursor=0;
+        while(cursor<text.size()) {
+            size_t first=text.size(); const std::pair<std::string,int>* selected=nullptr;
+            for(const auto& s:special) {
+                const auto at=text.find(s.first,cursor);
+                if(at<first) {first=at;selected=&s;}
+            }
+            ordinary(text.substr(cursor,first-cursor),tokens);
+            if(!selected) break;
+            tokens.push_back(selected->second); cursor=first+selected->first.size();
+        }
+    }
 };
 Tokenizer::Tokenizer(const std::filesystem::path& model) : impl_(std::make_unique<Impl>()) {
     @autoreleasepool {
@@ -129,18 +148,7 @@ Tokenizer::Tokenizer(const std::filesystem::path& model) : impl_(std::make_uniqu
 Tokenizer::~Tokenizer()=default;
 std::vector<int> Tokenizer::encode(const std::string& text) const {
     @autoreleasepool {
-        std::vector<int> tokens; size_t cursor=0;
-        while(cursor<text.size()) {
-            size_t first=text.size(); const std::pair<std::string,int>* selected=nullptr;
-            for(const auto& s:impl_->special) {
-                const auto at=text.find(s.first,cursor);
-                if(at<first) {first=at;selected=&s;}
-            }
-            impl_->ordinary(text.substr(cursor,first-cursor),tokens);
-            if(!selected) break;
-            tokens.push_back(selected->second); cursor=first+selected->first.size();
-        }
-        return tokens;
+        std::vector<int> tokens; impl_->with_special(text,tokens); return tokens;
     }
 }
 std::string Tokenizer::decode(std::span<const int> ids) const {
@@ -171,5 +179,60 @@ std::string Tokenizer::render(Json messages,const Json& tools,bool thinking,cons
     Json input={{"messages",messages},{"tools",tools},{"add_generation_prompt",true},
         {"enable_thinking",thinking},{"preserve_thinking",true},{"reasoning_effort",effort},{"add_vision_id",false}};
     return impl_->tmpl->render(minja::Context::make(minja::Value(input)));
+}
+std::vector<int> Tokenizer::encode_chat(Json messages,const Json& tools,bool thinking,const std::string& effort) const {
+    @autoreleasepool {
+        if(!messages.is_array() || !tools.is_array()) throw std::invalid_argument("messages/tools must be arrays");
+        // Replace control-token text with a marker naming the token. The marker
+        // survives rendering, and the split below encodes the original bytes as
+        // ordinary text, so message content cannot forge a turn boundary.
+        auto guard=[&](const std::string& text,bool keep_tool_response) {
+            if(text.find(GuardOpen)!=std::string::npos || text.find(GuardClose)!=std::string::npos)
+                throw std::invalid_argument("message text contains a reserved private-use marker");
+            std::string out; size_t cursor=0;
+            while(cursor<text.size()) {
+                size_t first=text.size(),selected=impl_->special.size();
+                for(size_t k=0;k<impl_->special.size();++k) {
+                    // The template itself tests for a tool-response wrapper, so
+                    // that pair keeps its meaning inside tool results.
+                    const auto& token=impl_->special[k].first;
+                    if(keep_tool_response && (token=="<tool_response>" || token=="</tool_response>")) continue;
+                    const auto at=text.find(token,cursor);
+                    if(at<first) {first=at;selected=k;}
+                }
+                out+=text.substr(cursor,first-cursor);
+                if(selected==impl_->special.size()) break;
+                out+=std::string(GuardOpen)+std::to_string(selected)+std::string(GuardClose);
+                cursor=first+impl_->special[selected].first.size();
+            }
+            return out;
+        };
+        const std::function<void(Json&,bool)> walk=[&](Json& value,bool keep) {
+            if(value.is_string()) value=guard(value.get<std::string>(),keep);
+            else if(value.is_array() || value.is_object()) for(auto& item:value) walk(item,keep);
+        };
+        for(auto& message:messages) {
+            if(!message.is_object()) throw std::invalid_argument("invalid message");
+            const bool tool=message.value("role","")=="tool";
+            for(const char* key:{"content","reasoning_content","tool_calls"})
+                if(message.contains(key)) walk(message[key],tool);
+        }
+        Json declared=tools; walk(declared,false);
+        const auto rendered=render(std::move(messages),declared,thinking,effort);
+        std::vector<int> tokens; size_t cursor=0;
+        for(;;) {
+            const auto at=rendered.find(GuardOpen,cursor);
+            if(at==std::string::npos) break;
+            const auto end=rendered.find(GuardClose,at+GuardOpen.size());
+            if(end==std::string::npos) throw std::runtime_error("chat template damaged a control marker");
+            const auto index=std::stoull(rendered.substr(at+GuardOpen.size(),end-at-GuardOpen.size()));
+            if(index>=impl_->special.size()) throw std::runtime_error("chat template produced an unknown control marker");
+            impl_->with_special(rendered.substr(cursor,at-cursor),tokens);
+            impl_->ordinary(impl_->special[index].first,tokens);
+            cursor=end+GuardClose.size();
+        }
+        impl_->with_special(rendered.substr(cursor),tokens);
+        return tokens;
+    }
 }
 } // namespace freellm::qwen
