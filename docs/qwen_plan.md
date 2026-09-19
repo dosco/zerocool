@@ -1,7 +1,23 @@
 # FreeLLM: quality-preserving inference beyond RAM on a 32GB M1 Pro
 
 Current execution priority: the [200ms/token generation stage](qwen_decode_target_stage.md).
-Current experimental work: [coordinate memory, cache admission and verification windows](benchmarks/2026-09-17-verifier-horizon/README.md).
+Current experimental work: [exact embedding storage in real MTP](benchmarks/2026-09-18-streamed-mtp/README.md).
+All six original-producer full-model numerical pairs now match, including actual
+draft proposals, rejected-row logits, EOS and persistent target/draft state.
+Some diagnostics contain compression, so clean full qualification remains open.
+The first normal storage pair has clean processes at 9.734/9.107GiB physical
+peak, but mismatched starting draft-cache state invalidates the comparison.
+No speed result is accepted. A separate native producer now uses the existing
+fixed-batch scheduler only for draft warm-up; generation keeps its normal
+completion-driven scheduler. It builds and passes ten clean real embedding
+checks, but full-model admission stops at 7.15GiB available versus 13.5GiB required.
+Validate this producer and compare its state with the saved original before new
+timing. The evidence query tool now audits storage comparisons and excludes raw
+resource-disturbed throughput estimates. All 546 Python tests pass. Keep the
+saved 642.15625MiB unused until the separate cache experiment; no production
+promotion or historical timing reuse.
+
+Previous broader exploration: [coordinate memory, cache admission and verification windows](benchmarks/2026-09-17-verifier-horizon/README.md).
 The broader reassessment now includes exact token-row streaming, an eight-token
 verifier, and a separate four-token compute tile within that wider storage window.
 Streaming removes 675,446,784 bytes of resident allocation and adds a 2MiB host

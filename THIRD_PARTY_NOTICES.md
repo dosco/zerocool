@@ -9,7 +9,7 @@ sources. The model files are downloaded separately and are not committed.
   reference. [Qwen Community License 1.0](docs/licenses/qwen.txt).
 - Slotstream, revision `9342e70cec78db060f61098ffe011f722ef77cf0`:
   checkpoint manifest, layout descriptions, and the adapted gated-delta kernel
-  in `Sources/Slotstream/Vendored/GatedDelta.swift`.
+  from its `Sources/Slotstream/Vendored/GatedDelta.swift`.
   [MIT, Carlos Galarza](docs/licenses/slotstream.txt).
 - The gated-delta implementation traces to mlx-swift-lm and mlx-lm.
   [MIT, ml-explore](docs/licenses/mlx-swift-lm.txt) and
@@ -22,11 +22,23 @@ sources. The model files are downloaded separately and are not committed.
   partial sums). [MIT, Apple](docs/licenses/mlx.txt).
 - minja, revision `021c2293c187789ef13d56c6cfd89c9b134fd80f`, provides Jinja
   parsing. [MIT, Google](docs/licenses/minja.txt).
-- nlohmann/json 3.11.3 is fetched by CMake under its MIT license. The fetched
-  source retains its `LICENSE.MIT` notice. Existing doctest and legacy
-  dependencies retain their own notices.
+- nlohmann/json 3.11.3, revision `9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03`, is
+  fetched by CMake under its MIT license. The fetched source retains its
+  `LICENSE.MIT` notice, which is also installed as
+  `share/freellm/licenses/nlohmann-json.txt`.
+- doctest 2.4.12 (`external/doctest.h`) is the test framework and is not linked
+  into the engine or the client. [MIT, Viktor Kirilov](docs/licenses/doctest.txt).
+- libcurl from the macOS SDK provides HTTP for the terminal client. It is a
+  system library, dynamically linked, under the curl license.
 
 ds4 (`f62ca29a308724cde5bc99134ede19104b2a3260`) informed cache ownership,
 bounded reads, and scheduling experiments. No ds4 source was copied. Lily's
 packed-weight and fusion ideas informed the fused gate/up design; no Lily
 source was copied. Future source reuse must carry the corresponding notices.
+
+## FTXUI (optional terminal client)
+
+The terminal client uses FTXUI v7.0.3, revision
+`f921fad208912747c17d129a8ef75ec7624b6eec`, under the MIT license.
+The license is retained in `docs/licenses/ftxui.txt`. FTXUI is linked only into
+terminal-client executables, not the native inference library.
