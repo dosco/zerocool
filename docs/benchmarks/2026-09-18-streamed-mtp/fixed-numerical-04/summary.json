@@ -1,0 +1,1597 @@
+{
+  "kind": "streamed_mtp_validation_v1",
+  "complete": true,
+  "status": "numerically_exact",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-18T20:40:49.157096+00:00",
+  "time_limit_seconds": 1800,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "resident"
+    },
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "rows"
+    }
+  ],
+  "workload": [
+    [
+      1,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 1
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 1
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 2
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 3
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 4
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          71093
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "immediate-eos",
+        "force_prefix": 1
+      }
+    ]
+  ],
+  "execution_capsule": {
+    "path": "/repo/.cache/streamed-mtp-capsule-20260918-01",
+    "seal_sha256": "4144920fc107e65366bcf3070c2bf71362bcbb01946d5e9c32ae10bf5239f925",
+    "producer_source": "/repo/.cache/streamed-mtp-capsule-20260918-01/producer.json",
+    "kind": "streamed_mtp_execution_capsule_v1",
+    "complete": true,
+    "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01",
+    "source_seal_sha256": "476a0b5160cf5dc2beb324d3ca2f4d9b9692fbb3f47a5f416f154da360ffcdfa",
+    "binary_sha256": "8183345d1f6e374c4c939da912f233feb7ededa2bc2f00049b63c6e7e9310832",
+    "host_binary_sha256": "9e8a8ca463f83e8d638e663d25cdb583033e4f602669036ee5187b7869107b48",
+    "base_native_fingerprint": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "runtime_policy": "unchanged sealed executables; embedded Metal shaders; verified model assets",
+    "relinked": false,
+    "historical_timing_reused": false,
+    "production_promoted": false
+  },
+  "samples": [
+    {
+      "source": "case-0-resident.json",
+      "input": "case-0-resident.input.json",
+      "sha256": "b3768ac1cff3aac9d663d14f4fb6b904598eca017a21fc1fe2a943319d229782",
+      "width": 1,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10507130112,
+      "tokens_per_second": 1.4148051941499746,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 697.7390834285715,
+        "recovery": 4.8955655714285715,
+        "wall": 706.811089,
+        "checkpoint_save": 0.0,
+        "other": 4.17644
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 4.895512
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 739781485.7142857,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-0-rows.json",
+      "input": "case-0-rows.input.json",
+      "sha256": "93ba3be3c6f04e7d5fc1b13310f7b8a1ef2fb0f295d2b1a12145e86ce0fba4d4",
+      "width": 1,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 9831321664,
+      "tokens_per_second": 1.4460268289178508,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 682.396482,
+        "recovery": 4.851452285714285,
+        "wall": 691.5501012857143,
+        "checkpoint_save": 0.0,
+        "other": 4.302167
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 4.851375
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 739781485.7142857,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-1-resident.json",
+      "input": "case-1-resident.input.json",
+      "sha256": "1ef29c4e29abcaead167849d639fe98c8b73d92274dc83e1c9d14a41989585e6",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10507572480,
+      "tokens_per_second": 1.214702138869599,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 35.65263685714286,
+        "verify": 681.6212142857142,
+        "recovery": 100.77295828571428,
+        "wall": 823.2470891428572,
+        "checkpoint_save": 1.860851142857143,
+        "other": 3.3394285714285714
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.520875,
+        "target_repair": 96.61417857142857,
+        "draft_restore": 0.0007202857142857143,
+        "draft_catchup": 3.6370712857142857
+      },
+      "repeated_target_rows": 1,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 925813028.5714285,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-1-rows.json",
+      "input": "case-1-rows.input.json",
+      "sha256": "fe873cc1b2ab5137fb58bc79446249d5652ef410d28e2b1331d1cde9e299ca0c",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9830125504,
+      "tokens_per_second": 1.0757333363747286,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 40.05882142857143,
+        "verify": 759.5443392857143,
+        "recovery": 124.18067271428572,
+        "wall": 929.5984108571428,
+        "checkpoint_save": 1.430892857142857,
+        "other": 4.383684571428572
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.6786725714285715,
+        "target_repair": 118.33102385714285,
+        "draft_restore": 0.0013274285714285714,
+        "draft_catchup": 5.169577428571428
+      },
+      "repeated_target_rows": 1,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 925813028.5714285,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-2-resident.json",
+      "input": "case-2-resident.input.json",
+      "sha256": "ae7e8771964fa3d55b1de6f9fb18b5ce5876be6e138c3883f59f79f4a4d14771",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10508850432,
+      "tokens_per_second": 0.9818245916383517,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 42.04910114285714,
+        "verify": 747.2473332857143,
+        "recovery": 223.77651785714286,
+        "wall": 1018.5118691428572,
+        "checkpoint_save": 1.3777142857142857,
+        "other": 4.061202571428572
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.5071011428571428,
+        "target_repair": 218.85965485714286,
+        "draft_restore": 0.0007024285714285714,
+        "draft_catchup": 4.408964285714285
+      },
+      "repeated_target_rows": 2,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 910014171.4285715,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-2-rows.json",
+      "input": "case-2-rows.input.json",
+      "sha256": "577db9132933917c5cb78e0e1c08d703c54923c92c423acbe4840b0a9fc28bcc",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 9836580864,
+      "tokens_per_second": 1.0170781589330646,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 42.49610128571428,
+        "verify": 708.2789107142858,
+        "recovery": 227.94426185714286,
+        "wall": 983.2086071428572,
+        "checkpoint_save": 1.4433332857142858,
+        "other": 3.046
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.5631964285714285,
+        "target_repair": 223.418994,
+        "draft_restore": 0.0007262857142857144,
+        "draft_catchup": 3.9612857142857143
+      },
+      "repeated_target_rows": 2,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 910014171.4285715,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-3-resident.json",
+      "input": "case-3-resident.input.json",
+      "sha256": "70c84f949c8881eed7e41241d1473f86063c03c0227a961fe73a82fec8c99f9e",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10507654400,
+      "tokens_per_second": 1.0322901273523426,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 42.871446428571424,
+        "verify": 593.7940595714285,
+        "recovery": 328.59775,
+        "wall": 968.7199107142857,
+        "checkpoint_save": 0.8681727142857143,
+        "other": 2.588482
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.5211964285714286,
+        "target_repair": 324.489744,
+        "draft_restore": 0.0007618571428571429,
+        "draft_catchup": 3.5859701428571427
+      },
+      "repeated_target_rows": 3,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 856693028.5714285,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-3-rows.json",
+      "input": "case-3-rows.input.json",
+      "sha256": "6acd8398bb39e56a4f7b4b22b68a5d2213e38dfe914fd5cc11329c83d186e940",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9831764096,
+      "tokens_per_second": 1.0347026392009004,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 45.569119,
+        "verify": 587.6116012857143,
+        "recovery": 329.58061314285715,
+        "wall": 966.4612441428571,
+        "checkpoint_save": 1.1632142857142858,
+        "other": 2.5366964285714286
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.5024642857142857,
+        "target_repair": 325.5164285714286,
+        "draft_restore": 0.0007915714285714286,
+        "draft_catchup": 3.5608272857142858
+      },
+      "repeated_target_rows": 3,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 856693028.5714285,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-4-resident.json",
+      "input": "case-4-resident.input.json",
+      "sha256": "753836f8146a4177ac00f763e4bd14918ea9796a8eda3447af0291fb3ed8d3b2",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10503099648,
+      "tokens_per_second": 1.6619729610138327,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 18.048119142857143,
+        "verify": 575.4442024285714,
+        "recovery": 3.592125142857143,
+        "wall": 601.6945061428572,
+        "checkpoint_save": 1.4798035714285713,
+        "other": 3.130255857142857
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0004047142857142857,
+        "draft_catchup": 3.5917027142857143
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 1,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 757950171.4285715,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-4-rows.json",
+      "input": "case-4-rows.input.json",
+      "sha256": "202a464b54391adc4e0397a0ff4c0f55c4c4a3fefbe2c0d4ee0fb806b038fa48",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9826897984,
+      "tokens_per_second": 1.6471058951030135,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 18.16767257142857,
+        "verify": 581.5887738571428,
+        "recovery": 3.5785474285714285,
+        "wall": 607.125506,
+        "checkpoint_save": 0.7924522857142857,
+        "other": 2.998059857142857
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.000363,
+        "draft_catchup": 3.5781311428571425
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 1,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 757950171.4285715,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-5-resident.json",
+      "input": "case-5-resident.input.json",
+      "sha256": "2b2c6929a46ed1c659949ade45d93d5471e814c36d0977a4b5a56308bd67069b",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10501510336,
+      "tokens_per_second": 1.087562808451505,
+      "generated_tokens": 1,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 908.645375,
+        "recovery": 5.5305,
+        "wall": 919.487125,
+        "checkpoint_save": 0.0,
+        "other": 5.31125
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 5.530417
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": false,
+      "stop_reason": "eos",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 1197158400.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-5-rows.json",
+      "input": "case-5-rows.input.json",
+      "sha256": "8ad2486b9dac8631e8bb2445b221aa8713e3e2fb0aab6ef6488ef95c3101e058",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9825423424,
+      "tokens_per_second": 1.0893313433994805,
+      "generated_tokens": 1,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 908.965417,
+        "recovery": 4.877875,
+        "wall": 917.994333,
+        "checkpoint_save": 0.0,
+        "other": 4.151041
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 4.877834
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": false,
+      "stop_reason": "eos",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 1197158400.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    }
+  ],
+  "comparisons": [
+    {
+      "case": 0,
+      "width": 1,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 1,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 2,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 3,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 4,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 5,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    }
+  ],
+  "controlled_change": "embedding_storage",
+  "real_mtp": true,
+  "historical_timing_reused": false,
+  "advancement_allowed": false,
+  "diagnostic_only": true,
+  "resource_qualified": false,
+  "performance_measurement": false,
+  "numerical_parent": {
+    "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-validation-02",
+    "seal_sha256": "106aa83732f914eb71d6a63e2d1db52510d5d6c4a9df61fa5a870008a385bcbf",
+    "source_sha256": "b3768ac1cff3aac9d663d14f4fb6b904598eca017a21fc1fe2a943319d229782",
+    "timing_used": false
+  },
+  "reused_validation": [
+    {
+      "case": 0,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-0-rows.json",
+      "sha256": "93ba3be3c6f04e7d5fc1b13310f7b8a1ef2fb0f295d2b1a12145e86ce0fba4d4",
+      "timing_used": false
+    },
+    {
+      "case": 1,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-1-resident.json",
+      "sha256": "1ef29c4e29abcaead167849d639fe98c8b73d92274dc83e1c9d14a41989585e6",
+      "timing_used": false
+    },
+    {
+      "case": 1,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-1-rows.json",
+      "sha256": "fe873cc1b2ab5137fb58bc79446249d5652ef410d28e2b1331d1cde9e299ca0c",
+      "timing_used": false
+    },
+    {
+      "case": 2,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-2-resident.json",
+      "sha256": "ae7e8771964fa3d55b1de6f9fb18b5ce5876be6e138c3883f59f79f4a4d14771",
+      "timing_used": false
+    },
+    {
+      "case": 2,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-2-rows.json",
+      "sha256": "577db9132933917c5cb78e0e1c08d703c54923c92c423acbe4840b0a9fc28bcc",
+      "timing_used": false
+    },
+    {
+      "case": 3,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-3-resident.json",
+      "sha256": "70c84f949c8881eed7e41241d1473f86063c03c0227a961fe73a82fec8c99f9e",
+      "timing_used": false
+    },
+    {
+      "case": 3,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01/case-3-rows.json",
+      "sha256": "6acd8398bb39e56a4f7b4b22b68a5d2213e38dfe914fd5cc11329c83d186e940",
+      "timing_used": false
+    }
+  ],
+  "host_preflight": [
+    {
+      "source": "case-4-resident-host.json",
+      "sha256": "2466b8094111a88183ae3b1190de4db26deeea15909a3cb1575a606c2c83801d",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335326972354291,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-4-rows-host.json",
+      "sha256": "912fb64f7cb0abbd502acf1b5b0e8035ce9eeb92437e0f41ead08fad03f5f97f",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335366618132916,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-5-resident-host.json",
+      "sha256": "85ca75278aa419b013834dfdc637e9f56a640a6530adba1ab045a9d804807672",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335405721057750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-5-rows-host.json",
+      "sha256": "2423e99063c89ec9759e3db1393fba82a0e8226a6c18f0d779b931282c96e9cc",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335440912296458,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "elapsed_seconds": 152.40594804193825
+}

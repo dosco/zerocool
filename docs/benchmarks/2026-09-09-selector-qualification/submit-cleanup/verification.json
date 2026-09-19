@@ -1,9 +1,0 @@
-{
-  "build": "c4f983f03f28974dd2c4a935d6d5233f1b28a1f5e7cb4800fe7529a64c058c2b",
-  "source_directory": "/repo/.cache/benchmarks/selector-qualification/2026-09-09-submit-cleanup",
-  "logs_sha256": {
-    "regression.log": "f772a09d81e946f539b139a7a386232c084eea2acc4b65133729141d3c6a9065",
-    "python-tests.log": "e52f6ec08afb6df8c2c13c073733863bf93df0bea286f958c4c9843a4c5c638a",
-    "native-tests.log": "934929ba3f0d3d50fc04b6a72d75c9ad91d73db981332de1bf53f132054d71a7"
-  }
-}

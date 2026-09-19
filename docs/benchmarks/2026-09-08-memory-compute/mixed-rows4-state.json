@@ -1,8 +1,0 @@
-{
-  "passed": true,
-  "build_fingerprint": "6d60860fdeb4945ce8d6563add992dce83a89eb002d5da6a23e8d6bb2476ba34",
-  "reference_sha256": "49fab9f6c4bb27ae68d537f7c61474f64d57ecb524acbde21d916818ca184a5e",
-  "candidate_sha256": "01b67da0b1be4f8c4f5e4894a51ae8b889dccdc438ca1196ad297368963bad8b",
-  "reference": ".cache/benchmarks/phase-memory/qualify-mixed/reference.json",
-  "candidate": ".cache/benchmarks/phase-memory/qualify-mixed/rows4.json"
-}

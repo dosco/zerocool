@@ -1,6 +1,0 @@
-{"phase":"load_model","consumed_tokens":0,"monotonic_ns":5153960714804750}
-{"phase":"prime","consumed_tokens":0,"monotonic_ns":5153962410854208}
-{"phase":"verify_block","consumed_tokens":0,"monotonic_ns":5153989926083666}
-{"phase":"rollback_validation","consumed_tokens":0,"monotonic_ns":5153991931313625}
-{"phase":"destroy_model","consumed_tokens":0,"monotonic_ns":5154000460720166}
-{"phase":"complete","consumed_tokens":4,"monotonic_ns":5154000604870000}

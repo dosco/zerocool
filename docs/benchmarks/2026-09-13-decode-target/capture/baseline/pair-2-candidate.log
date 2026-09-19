@@ -1,4 +1,0 @@
-Loading pinned Qwen trunk; routed experts and ngram rows remain on SSD.
-Expert slots: 1848. Total planned memory: 12.00 GiB.
-coding_routes_32: 3.51 tokens/s, first token 14.1s, 0 tokens reused
-append_128: 3.38 tokens/s, first token 23.9s, 104 tokens reused

@@ -1,3 +1,0 @@
-2026-09-14 18:54:50.419 qwen_q4_check[52342:207288948] Metal API Validation Enabled
-2026-09-14 18:54:50.419 qwen_q4_check[52342:207288948] Metal GPU Validation Enabled
-64 native Q4 expert/input cases passed

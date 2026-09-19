@@ -1,3 +1,0 @@
-2026-09-08 02:48:13.414 qwen_panel_check[29075:187931205] Metal API Validation Enabled
-2026-09-08 02:48:13.414 qwen_panel_check[29075:187931205] Metal GPU Validation Enabled
-panel check: memory admission requires at least 2280062976 bytes including 32 expert slots; available engine budget is 1961426944 bytes

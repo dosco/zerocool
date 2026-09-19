@@ -1,0 +1,308 @@
+{
+  "kind": "streamed_mtp_priming_audit_v1",
+  "complete": true,
+  "status": "exact_against_original_priming",
+  "controlled_change": "draft_prompt_priming_schedule",
+  "performance_measurement": false,
+  "timing_used": false,
+  "resource_qualified": false,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "sources": [
+    {
+      "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05",
+      "seal_sha256": "134657ed73ba8ae678f96172f09bc24a13a4cdc7acff66b3683b47304f4a6463"
+    },
+    {
+      "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04",
+      "seal_sha256": "587720e92145032aba3fbcf3606bc8ac6a8c0abfef2589590905f563d47d2816"
+    }
+  ],
+  "comparisons": [
+    {
+      "case": 0,
+      "arm": "resident",
+      "width": 1,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-0-resident.json",
+          "sha256": "cca92835b6d7ec605a527a3018f696717f3a2cb278248b9cc27d80d438aa4e62"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-0-resident.json",
+          "sha256": "b3768ac1cff3aac9d663d14f4fb6b904598eca017a21fc1fe2a943319d229782"
+        }
+      ]
+    },
+    {
+      "case": 0,
+      "arm": "rows",
+      "width": 1,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-0-rows.json",
+          "sha256": "c656b00b064040ddd2b812befb6033b58fc9ce8110abd43e9d41a408f5ffa3c4"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-0-rows.json",
+          "sha256": "93ba3be3c6f04e7d5fc1b13310f7b8a1ef2fb0f295d2b1a12145e86ce0fba4d4"
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "arm": "resident",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-1-resident.json",
+          "sha256": "105cf4f1758b35f5fb5a23e13a7f75696fc4180b2ae5cb09397793273a275adc"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-1-resident.json",
+          "sha256": "1ef29c4e29abcaead167849d639fe98c8b73d92274dc83e1c9d14a41989585e6"
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "arm": "rows",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-1-rows.json",
+          "sha256": "95375227ae549c06f1c9bfdf4ee9c6be97a8e5c751af508968b15da1eaacc9e0"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-1-rows.json",
+          "sha256": "fe873cc1b2ab5137fb58bc79446249d5652ef410d28e2b1331d1cde9e299ca0c"
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "arm": "resident",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-2-resident.json",
+          "sha256": "a9819fe435865ec85f226eed96994fbb63ca8ef3a1f1d7a0fcdfcd5f909fddc6"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-2-resident.json",
+          "sha256": "ae7e8771964fa3d55b1de6f9fb18b5ce5876be6e138c3883f59f79f4a4d14771"
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "arm": "rows",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-2-rows.json",
+          "sha256": "653289fba49e5eb8e1bf06759ef1b63b4235a7b2f7bbc0101eb81e45ce31681e"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-2-rows.json",
+          "sha256": "577db9132933917c5cb78e0e1c08d703c54923c92c423acbe4840b0a9fc28bcc"
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "arm": "resident",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-3-resident.json",
+          "sha256": "a4ac88d73aa79e712bd613c27daf2071fa3fee9235f74231c78d0715d76cddfa"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-3-resident.json",
+          "sha256": "70c84f949c8881eed7e41241d1473f86063c03c0227a961fe73a82fec8c99f9e"
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "arm": "rows",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-3-rows.json",
+          "sha256": "b9fbaf7dc1bc7770b033dc7c18eccb29f5408a201e33ea51198bc0601893d4fd"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-3-rows.json",
+          "sha256": "6acd8398bb39e56a4f7b4b22b68a5d2213e38dfe914fd5cc11329c83d186e940"
+        }
+      ]
+    },
+    {
+      "case": 4,
+      "arm": "resident",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-4-resident.json",
+          "sha256": "37e60f0c52757bc1a54c958a8716af497f21a1ccf63b3e5d78653299ce5939cf"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-4-resident.json",
+          "sha256": "753836f8146a4177ac00f763e4bd14918ea9796a8eda3447af0291fb3ed8d3b2"
+        }
+      ]
+    },
+    {
+      "case": 4,
+      "arm": "rows",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-4-rows.json",
+          "sha256": "827437515b2859bc23f9d7b81f892f866ffa07e8d14f05ba33ebf8482512d5df"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-4-rows.json",
+          "sha256": "202a464b54391adc4e0397a0ff4c0f55c4c4a3fefbe2c0d4ee0fb806b038fa48"
+        }
+      ]
+    },
+    {
+      "case": 5,
+      "arm": "resident",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-5-resident.json",
+          "sha256": "bf3481b19570b653ae2ab417c2a48555531429a45e2fdcdced006146b1facaac"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-5-resident.json",
+          "sha256": "2b2c6929a46ed1c659949ade45d93d5471e814c36d0977a4b5a56308bd67069b"
+        }
+      ]
+    },
+    {
+      "case": 5,
+      "arm": "rows",
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      },
+      "sources": [
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05/case-5-rows.json",
+          "sha256": "3d4576b1955667bfa5ad46cd79ee8fe5d19e15695800405c20fb6b382821ea43"
+        },
+        {
+          "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04/case-5-rows.json",
+          "sha256": "8ad2486b9dac8631e8bb2445b221aa8713e3e2fb0aab6ef6488ef95c3101e058"
+        }
+      ]
+    }
+  ],
+  "compared_fields": [
+    "input_sha256",
+    "requested_width",
+    "mode",
+    "validation",
+    "target_recovery",
+    "draft_manifest_sha256",
+    "prompt_tokens",
+    "requested_tokens",
+    "eos_ids",
+    "prime_logits_sha256",
+    "committed_token_ids",
+    "row_logits_sha256",
+    "initial_target_state",
+    "initial_draft_state",
+    "final_target_state",
+    "final_draft_state",
+    "boundaries",
+    "generated_tokens",
+    "next_id",
+    "stop_reason",
+    "host_checkpoint_allocated_bytes",
+    "target_recovery_journal",
+    "ngram_before_decode",
+    "ngram_after_decode",
+    "admission"
+  ],
+  "compared_cycle_fields": [
+    "offset",
+    "width",
+    "proposals",
+    "unforced_proposals",
+    "draft_row_logits_sha256",
+    "verified_row_logits_sha256",
+    "accepted_proposals",
+    "committed_tokens",
+    "forced_rejection",
+    "next_id",
+    "target_recovery_forward_calls"
+  ],
+  "limitations": [
+    "Numerical evidence only; original and replacement diagnostic resources differ.",
+    "Priming may change cache placement; outputs and model state must remain exact.",
+    "No timing values are compared or reused."
+  ]
+}

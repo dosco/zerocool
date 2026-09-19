@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/freellm.dir/src/qwen/main.cpp.o -o bin/freellm  libfreellm_lib.a -framework Metal -framework Foundation -framework IOKit

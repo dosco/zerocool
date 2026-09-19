@@ -1,0 +1,763 @@
+{
+  "kind": "streamed_mtp_screen_v1",
+  "complete": true,
+  "status": "storage_cost_measured",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-18T20:43:49.130394+00:00",
+  "time_limit_seconds": 1200,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "resident"
+    },
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "rows"
+    }
+  ],
+  "workload": {
+    "name": "merge_intervals",
+    "prompt_text": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity.",
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7734,
+      264,
+      12654,
+      709,
+      10562,
+      87682,
+      1494,
+      40798,
+      8,
+      421,
+      78161,
+      48142,
+      7629,
+      26126,
+      13,
+      3301,
+      10300,
+      26126,
+      1973,
+      93183,
+      279,
+      1879,
+      13,
+      13365,
+      449,
+      4147,
+      1103,
+      321,
+      26126,
+      421,
+      5615,
+      506,
+      449,
+      14456,
+      13,
+      28763,
+      279,
+      7873,
+      321,
+      2250,
+      2526,
+      52992,
+      7262,
+      4147,
+      1879,
+      11,
+      48142,
+      26126,
+      11,
+      321,
+      632,
+      27379,
+      81859,
+      26126,
+      13,
+      79091,
+      279,
+      854,
+      22373,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198,
+      248068,
+      271,
+      248069,
+      271
+    ],
+    "eos_ids": [
+      248046,
+      248044
+    ],
+    "max_tokens": 64,
+    "draft_slots": 32,
+    "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+  },
+  "execution_capsule": {
+    "path": "/repo/.cache/streamed-mtp-capsule-20260918-01",
+    "seal_sha256": "4144920fc107e65366bcf3070c2bf71362bcbb01946d5e9c32ae10bf5239f925",
+    "producer_source": "/repo/.cache/streamed-mtp-capsule-20260918-01/producer.json",
+    "kind": "streamed_mtp_execution_capsule_v1",
+    "complete": true,
+    "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-01",
+    "source_seal_sha256": "476a0b5160cf5dc2beb324d3ca2f4d9b9692fbb3f47a5f416f154da360ffcdfa",
+    "binary_sha256": "8183345d1f6e374c4c939da912f233feb7ededa2bc2f00049b63c6e7e9310832",
+    "host_binary_sha256": "9e8a8ca463f83e8d638e663d25cdb583033e4f602669036ee5187b7869107b48",
+    "base_native_fingerprint": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "runtime_policy": "unchanged sealed executables; embedded Metal shaders; verified model assets",
+    "relinked": false,
+    "historical_timing_reused": false,
+    "production_promoted": false
+  },
+  "samples": [
+    {
+      "source": "width-4-pair-0-resident.json",
+      "input": "width-4-pair-0-resident.input.json",
+      "sha256": "3648df1f5cf430d824f69cce0a8256e6bda757974bffbe465d0e8b1c72405e71",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10454586432,
+      "tokens_per_second": 4.003014540903347,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 9.757718734375,
+        "verify": 210.1936959375,
+        "recovery": 28.08078846875,
+        "wall": 249.811733078125,
+        "checkpoint_save": 1.098646515625,
+        "other": 0.680883421875
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.25687890625,
+        "target_repair": 26.799227890625,
+        "draft_restore": 0.000762328125,
+        "draft_catchup": 1.023868546875
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "width-4-pair-0-rows.json",
+      "input": "width-4-pair-0-rows.input.json",
+      "sha256": "8a9178c35b3d81e42d208eaf2f5d56951f90a4d29923732a44b2b663456c9d39",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9776533312,
+      "tokens_per_second": 4.151937470623858,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 10.0206829375,
+        "verify": 201.343751328125,
+        "recovery": 27.6857011875,
+        "wall": 240.8514114375,
+        "checkpoint_save": 1.065597640625,
+        "other": 0.73567834375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.2516581875,
+        "target_repair": 26.365087921875,
+        "draft_restore": 0.000738265625,
+        "draft_catchup": 1.068082671875
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "width-4-pair-1-rows.json",
+      "input": "width-4-pair-1-rows.input.json",
+      "sha256": "c51d66bf63a7dcb2db04d347e409c991679da74317d7b9147bf0dba942ad5df9",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9779777280,
+      "tokens_per_second": 3.770969472184574,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 10.055327515625,
+        "verify": 223.886306640625,
+        "recovery": 29.578601515625,
+        "wall": 265.183796203125,
+        "checkpoint_save": 0.973457015625,
+        "other": 0.690103515625
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.255021484375,
+        "target_repair": 28.272615234375,
+        "draft_restore": 0.000752578125,
+        "draft_catchup": 1.05016278125
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "width-4-pair-1-resident.json",
+      "input": "width-4-pair-1-resident.input.json",
+      "sha256": "373d490981e57abd41922ba1f5b7a334f74996516af1d29f553ec7f994e939a8",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10456634560,
+      "tokens_per_second": 3.9139408198947043,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 9.999343734375,
+        "verify": 213.52308659375,
+        "recovery": 30.194589890625,
+        "wall": 255.496964828125,
+        "checkpoint_save": 1.070466796875,
+        "other": 0.7094778125
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.258175140625,
+        "target_repair": 28.897529296875,
+        "draft_restore": 0.00067059375,
+        "draft_catchup": 1.038154328125
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "width-1-pair-0-resident.json",
+      "input": "width-1-pair-0-resident.input.json",
+      "sha256": "869b6c4ac8e6897569115144d031ab3d43cea1ef63a4a6e66b55e1b4d59d508b",
+      "width": 1,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10449573056,
+      "tokens_per_second": 4.032369034692068,
+      "generated_tokens": 64,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 244.630447953125,
+        "recovery": 2.451440859375,
+        "wall": 247.993175078125,
+        "checkpoint_save": 0.0,
+        "other": 0.911286265625
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.45139321875
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 567345600.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "width-1-pair-0-rows.json",
+      "input": "width-1-pair-0-rows.input.json",
+      "sha256": "d8b95903557b9a108b2b10c5a2577e874ae5c17a5d27931cd5bf446787f92f2a",
+      "width": 1,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9774124864,
+      "tokens_per_second": 4.235663199572365,
+      "generated_tokens": 64,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 232.816487640625,
+        "recovery": 2.35124353125,
+        "wall": 236.09053715625,
+        "checkpoint_save": 0.0,
+        "other": 0.922805984375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.351207765625
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 567345600.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "width-1-pair-1-rows.json",
+      "input": "width-1-pair-1-rows.input.json",
+      "sha256": "233db99e7f86a429fb28edfe78b093d89d2c394d023a3d8240f85a536f8da4f8",
+      "width": 1,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9772699392,
+      "tokens_per_second": 4.104583658496874,
+      "generated_tokens": 64,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 240.207912734375,
+        "recovery": 2.513313125,
+        "wall": 243.630069015625,
+        "checkpoint_save": 0.0,
+        "other": 0.90884315625
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.513272765625
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 567345600.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "width-1-pair-1-resident.json",
+      "input": "width-1-pair-1-resident.input.json",
+      "sha256": "8c1b877c51c508791f1542b100551838189641922e7d303e861585d715c3e8ae",
+      "width": 1,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10450539712,
+      "tokens_per_second": 4.32583924550413,
+      "generated_tokens": 64,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 227.9474029375,
+        "recovery": 2.306311796875,
+        "wall": 231.16901559375,
+        "checkpoint_save": 0.0,
+        "other": 0.915300859375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 2.30627275
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 567345600.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    }
+  ],
+  "comparisons": [],
+  "controlled_change": "embedding_storage",
+  "real_mtp": true,
+  "historical_timing_reused": false,
+  "advancement_allowed": false,
+  "performance_measurement": true,
+  "preliminary": true,
+  "pairs": [
+    {
+      "width": 4,
+      "pair": 0,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": true,
+      "latency_ratio": 0.9641317021814072,
+      "control_tps": 4.003014540903347,
+      "candidate_tps": 4.151937470623858,
+      "physical_peak_saved_bytes": 678053120,
+      "planned_saving_bytes": 673349632,
+      "normal_request_latency_qualified": false
+    },
+    {
+      "width": 4,
+      "pair": 1,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": true,
+      "latency_ratio": 1.0379136847340493,
+      "control_tps": 3.9139408198947043,
+      "candidate_tps": 3.770969472184574,
+      "physical_peak_saved_bytes": 676857280,
+      "planned_saving_bytes": 673349632,
+      "normal_request_latency_qualified": false
+    },
+    {
+      "width": 1,
+      "pair": 0,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": true,
+      "latency_ratio": 0.9520041714126797,
+      "control_tps": 4.032369034692068,
+      "candidate_tps": 4.235663199572365,
+      "physical_peak_saved_bytes": 675448192,
+      "planned_saving_bytes": 673349632,
+      "normal_request_latency_qualified": false
+    },
+    {
+      "width": 1,
+      "pair": 1,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": true,
+      "latency_ratio": 1.0539045139326704,
+      "control_tps": 4.32583924550413,
+      "candidate_tps": 4.104583658496874,
+      "physical_peak_saved_bytes": 677840320,
+      "planned_saving_bytes": 673349632,
+      "normal_request_latency_qualified": false
+    }
+  ],
+  "full_clean_correctness": false,
+  "numerical_validation": {
+    "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/fixed-numerical-04",
+    "seal_sha256": "587720e92145032aba3fbcf3606bc8ac6a8c0abfef2589590905f563d47d2816"
+  },
+  "host_preflight": [
+    {
+      "source": "width-4-pair-0-resident-host.json",
+      "sha256": "27da6a13185ef4844b49c1cafe5ab8814f8616497b8cad03d13d1eeeed0a61aa",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335506064481750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-4-pair-0-rows-host.json",
+      "sha256": "df94620e9f72f4a653c1f638afd550481e261952662362fed2fa516bd983883a",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335544557281666,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-4-pair-1-rows-host.json",
+      "sha256": "330904a7ca996f13c09a47c5a289e040ca8d48dd9597ff428eb8d9908cef9203",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335581796447916,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-4-pair-1-resident-host.json",
+      "sha256": "61be35abe32aa9fb9859d1d8bc5eb51d7cdb3f048ae4a4f4784f40c286ceee71",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335620612714250,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-1-pair-0-resident-host.json",
+      "sha256": "72b4bb7ecf47828a21382ea85265d3f5f7d61d51551cbd4cedb1df1021333f3b",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335659157115750,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-1-pair-0-rows-host.json",
+      "sha256": "3ab20a1020ecaa9038d16012455d0771c36aa198d881152329ad5977b566310c",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335697236425416,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-1-pair-1-rows-host.json",
+      "sha256": "6ea6888efa1b6a1afdac050a1aaebeff142d338bf9a78650512591c7bb9b4792",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335734176926291,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-1-pair-1-resident-host.json",
+      "sha256": "550d871aaa087b56b44e4fd629590d0b63329bc97f50420da0d2da9d861c0a1a",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5335771641724125,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "by_width": {
+    "4": {
+      "pairs": 2,
+      "geometric_latency_ratio": 1.000342685073478,
+      "measured_peak_savings_bytes": [
+        678053120,
+        676857280
+      ]
+    },
+    "1": {
+      "pairs": 2,
+      "geometric_latency_ratio": 1.0016593700128575,
+      "measured_peak_savings_bytes": [
+        675448192,
+        677840320
+      ]
+    }
+  },
+  "limitations": [
+    "Two short alternating pairs at most per width, one coding workload, no confidence-bounded promotion.",
+    "Width-one/four results are separate comparisons; no widths or historical samples are pooled.",
+    "Exact row storage may free memory without improving latency at unchanged expert capacity.",
+    "Long context, retained conversation, cancellation and sustained coding remain unqualified."
+  ],
+  "elapsed_seconds": 304.8532962910831
+}

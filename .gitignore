@@ -1,81 +1,25 @@
-# Build directories
+# Build output
 build/
-.cache/
 cmake-build-*/
 out/
-
-# Python runtime caches
-__pycache__/
-*.pyc
-*.pyo
-
-# CMake
+compile_commands.json
 CMakeCache.txt
 CMakeFiles/
+CTestTestfile.cmake
+Testing/
 cmake_install.cmake
-Makefile
-*.cmake
-!cmake/*.cmake
-
-# Compiled Object files
+install_manifest.txt
 *.o
-*.obj
-*.ko
-*.elf
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Libraries
-*.lib
 *.a
-*.la
-*.lo
-*.dll
-*.so
-*.so.*
 *.dylib
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.dylib
-
-# Fortran module files
-*.mod
-*.smod
-
-# IDE specific files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Debug files
 *.dSYM/
-*.su
-*.idb
-*.pdb
 
-# Compiler output
-compile_commands.json
-
-# Model files (can be large)
+# Local assets, environments and scratch state. .cache holds the 100GB+ pinned
+# checkpoints, prepared records and ad-hoc experiment directories.
+.cache/
+.venv/
+__pycache__/
+*.pyc
 models/
 *.safetensors
 *.gguf
@@ -83,57 +27,27 @@ models/
 *.pt
 *.pth
 
-# Test output
-Testing/
-CTestTestfile.cmake
+# Benchmark evidence. Only the stage report and its small summaries are
+# versioned; raw captures, fixtures, logs, snapshots of the source tree and
+# archived build trees stay on disk and are published separately. See
+# docs/README.md.
+docs/benchmarks/**
+!docs/benchmarks/**/
+!docs/benchmarks/**/*.md
+!docs/benchmarks/**/summary.json
+!docs/benchmarks/**/analysis.json
+!docs/benchmarks/**/decision.json
+docs/benchmarks/**/*-sources/**
+docs/benchmarks/**/archive/**
+docs/experiments/
 
-# External dependencies (downloaded by CMake)
-external/llama.cpp/
-_deps/
-
-# Keep doctest header
-!external/doctest.h
-
-# macOS
-.AppleDouble
-.LSOverride
-Thumbs.db
-
-# Backup files
-*.bak
-*.backup
-*.tmp
-*.temp
-
-# Log files
+# Editor, tool and OS state
+.vscode/
+.idea/
+.claude/settings.local.json
+*.swp
+*~
+.DS_Store
 *.log
-!docs/benchmarks/2026-09-09-selector-qualification/**/*.log
-!docs/benchmarks/2026-09-10-memory-balance/**/*.log
-!docs/benchmarks/2026-09-11-q8-steady/**/*.log
-!docs/benchmarks/2026-09-11-q8-confirmation/**/*.log
-!docs/benchmarks/2026-09-11-memory-budget/**/*.log
-!docs/benchmarks/2026-09-11-route-selection/**/*.log
-!docs/benchmarks/2026-09-11-route-selection/raw/fixtures/*.bin
-!docs/benchmarks/2026-09-12-route-confirmation/**/*.log
-!docs/benchmarks/2026-09-12-route-confirmation/raw/screen/fixtures/*.bin
-!docs/benchmarks/2026-09-12-route-five-pairs/**/*.log
-!docs/benchmarks/2026-09-12-route-five-pairs/raw/screen/fixtures/*.bin
-!docs/benchmarks/2026-09-13-decode-target/**/*.log
-
-!docs/benchmarks/2026-09-13-decode-target/capture/baseline/screen/fixtures/*.bin
-!docs/benchmarks/2026-09-13-expert-tail/**/*.log
-!docs/benchmarks/2026-09-13-buffer-costs/**/*.log
-!docs/benchmarks/2026-09-13-decode-scratch/**/*.log
-!docs/benchmarks/2026-09-13-scratch-confirmation/**/*.log
-!docs/benchmarks/2026-09-13-ingestion-memory/**/*.log
-!docs/benchmarks/2026-09-13-stage200/**/*.log
-!docs/benchmarks/2026-09-13-stage200/q3-02/tuning/*.bin
-!docs/benchmarks/2026-09-14-submission/**/*.log
-!docs/benchmarks/2026-09-14-native-q4-replay/**/*.log
-# Local executables are retained for replay; source and hashes are versioned.
-docs/benchmarks/2026-09-14-native-q4-replay/qwen_q4_check
-docs/benchmarks/2026-09-14-native-q4-replay/qwen_q4_check_coordinator
-
-!docs/benchmarks/2026-09-14-q4-read-arrivals/**/*.log
-
-!docs/benchmarks/2026-09-15-q4-shared-arrivals/**/*.log
+*.bak
+*.tmp

@@ -1,0 +1,1563 @@
+{
+  "kind": "streamed_mtp_validation_v1",
+  "complete": true,
+  "status": "numerically_exact",
+  "phase": "finished",
+  "measurements": [],
+  "started_at": "2026-09-18T19:46:08.925457+00:00",
+  "time_limit_seconds": 1800,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "resident"
+    },
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "rows"
+    }
+  ],
+  "workload": [
+    [
+      1,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 1
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 1
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 2
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 3
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          248046,
+          248044
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "irregular-seven",
+        "force_prefix": 4
+      }
+    ],
+    [
+      4,
+      {
+        "prompt_ids": [
+          248045,
+          846,
+          198,
+          7734,
+          264,
+          12654,
+          709,
+          10562,
+          87682,
+          1494,
+          40798,
+          8,
+          421,
+          78161,
+          48142,
+          7629,
+          26126,
+          13,
+          3301,
+          10300,
+          26126,
+          1973,
+          93183,
+          279,
+          1879,
+          13,
+          13365,
+          449,
+          4147,
+          1103,
+          321,
+          26126,
+          421,
+          5615,
+          506,
+          449,
+          14456,
+          13,
+          28763,
+          279,
+          7873,
+          321,
+          2250,
+          2526,
+          52992,
+          7262,
+          4147,
+          1879,
+          11,
+          48142,
+          26126,
+          11,
+          321,
+          632,
+          27379,
+          81859,
+          26126,
+          13,
+          79091,
+          279,
+          854,
+          22373,
+          13,
+          248046,
+          198,
+          248045,
+          74455,
+          198,
+          248068,
+          271,
+          248069,
+          271
+        ],
+        "continuation_ids": [
+          71093,
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142
+        ],
+        "expected_next_ids": [
+          12305,
+          198,
+          727,
+          10562,
+          87682,
+          1494,
+          40798,
+          1590,
+          198,
+          262,
+          4071,
+          198,
+          262,
+          38754,
+          48142,
+          7629
+        ],
+        "expected_prompt_id": 71093,
+        "eos_ids": [
+          71093
+        ],
+        "max_tokens": 7,
+        "draft_slots": 32,
+        "target_prepared": "/repo/.cache/prepared/q4-records-v1",
+        "name": "immediate-eos",
+        "force_prefix": 1
+      }
+    ]
+  ],
+  "samples": [
+    {
+      "source": "case-0-resident.json",
+      "input": "case-0-resident.input.json",
+      "sha256": "cca92835b6d7ec605a527a3018f696717f3a2cb278248b9cc27d80d438aa4e62",
+      "width": 1,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10510161216,
+      "tokens_per_second": 1.1356485096479019,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 869.7118154285714,
+        "recovery": 5.938571285714286,
+        "wall": 880.5541428571428,
+        "checkpoint_save": 0.0,
+        "other": 4.903756142857143
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 5.938434285714285
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 739781485.7142857,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-0-rows.json",
+      "input": "case-0-rows.input.json",
+      "sha256": "c656b00b064040ddd2b812befb6033b58fc9ce8110abd43e9d41a408f5ffa3c4",
+      "width": 1,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9831141376,
+      "tokens_per_second": 1.2287830135912257,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 804.3117914285715,
+        "recovery": 5.063797571428572,
+        "wall": 813.8133331428572,
+        "checkpoint_save": 0.0,
+        "other": 4.4377441428571425
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 5.063720142857143
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 1,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 739781485.7142857,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-1-resident.json",
+      "input": "case-1-resident.input.json",
+      "sha256": "105cf4f1758b35f5fb5a23e13a7f75696fc4180b2ae5cb09397793273a275adc",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10509620736,
+      "tokens_per_second": 1.1949681342217817,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 36.11264285714286,
+        "verify": 696.9830834285715,
+        "recovery": 98.78696442857144,
+        "wall": 836.8423988571428,
+        "checkpoint_save": 1.6920475714285714,
+        "other": 3.2676605714285714
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.49504771428571426,
+        "target_repair": 94.66404157142857,
+        "draft_restore": 0.0006548571428571429,
+        "draft_catchup": 3.6271545714285716
+      },
+      "repeated_target_rows": 1,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 925813028.5714285,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-1-rows.json",
+      "input": "case-1-rows.input.json",
+      "sha256": "95375227ae549c06f1c9bfdf4ee9c6be97a8e5c751af508968b15da1eaacc9e0",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9831862336,
+      "tokens_per_second": 1.1978296268313666,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 37.27428571428572,
+        "verify": 700.1534881428572,
+        "recovery": 93.21480342857143,
+        "wall": 834.8432678571428,
+        "checkpoint_save": 0.8365951428571429,
+        "other": 3.364095428571429
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.516613,
+        "target_repair": 89.05210128571429,
+        "draft_restore": 0.0007678571428571429,
+        "draft_catchup": 3.6451128571428573
+      },
+      "repeated_target_rows": 1,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 925813028.5714285,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-2-resident.json",
+      "input": "case-2-resident.input.json",
+      "sha256": "a9819fe435865ec85f226eed96994fbb63ca8ef3a1f1d7a0fcdfcd5f909fddc6",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10509964608,
+      "tokens_per_second": 0.9018125112510934,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 43.412982285714286,
+        "verify": 772.8713212857143,
+        "recovery": 286.822524,
+        "wall": 1108.8779402857144,
+        "checkpoint_save": 1.8755772857142856,
+        "other": 3.8955354285714288
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 1.0818392857142858,
+        "target_repair": 281.2848154285714,
+        "draft_restore": 0.0008511428571428571,
+        "draft_catchup": 4.454910714285715
+      },
+      "repeated_target_rows": 2,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 910014171.4285715,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-2-rows.json",
+      "input": "case-2-rows.input.json",
+      "sha256": "653289fba49e5eb8e1bf06759ef1b63b4235a7b2f7bbc0101eb81e45ce31681e",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9834172480,
+      "tokens_per_second": 0.9150243368696083,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 48.235583428571424,
+        "verify": 747.8578751428572,
+        "recovery": 289.669363,
+        "wall": 1092.867107142857,
+        "checkpoint_save": 3.3060415714285716,
+        "other": 3.798244
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.8683868571428571,
+        "target_repair": 285.0353928571429,
+        "draft_restore": 0.001392857142857143,
+        "draft_catchup": 3.764113
+      },
+      "repeated_target_rows": 2,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 910014171.4285715,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-3-resident.json",
+      "input": "case-3-resident.input.json",
+      "sha256": "a4ac88d73aa79e712bd613c27daf2071fa3fee9235f74231c78d0715d76cddfa",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10511832384,
+      "tokens_per_second": 0.9431311562259714,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 44.643845285714285,
+        "verify": 606.7714881428572,
+        "recovery": 403.8080475714286,
+        "wall": 1060.2979165714285,
+        "checkpoint_save": 2.1704165714285715,
+        "other": 2.904119
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.49001185714285717,
+        "target_repair": 399.18160714285716,
+        "draft_restore": 0.0011905714285714286,
+        "draft_catchup": 4.135119
+      },
+      "repeated_target_rows": 3,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 856693028.5714285,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-3-rows.json",
+      "input": "case-3-rows.input.json",
+      "sha256": "b9fbaf7dc1bc7770b033dc7c18eccb29f5408a201e33ea51198bc0601893d4fd",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 9837891648,
+      "tokens_per_second": 1.2557163590127025,
+      "generated_tokens": 7,
+      "rejected_cycles": 1,
+      "component_ms_per_token": {
+        "draft": 37.06207142857143,
+        "verify": 499.570131,
+        "recovery": 255.50816657142857,
+        "wall": 796.3581845714285,
+        "checkpoint_save": 1.7892917142857143,
+        "other": 2.4285238571428573
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.5480237142857143,
+        "target_repair": 252.02223214285712,
+        "draft_restore": 0.0010417142857142858,
+        "draft_catchup": 2.936833285714286
+      },
+      "repeated_target_rows": 3,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "2": {
+          "proposed": 2,
+          "accepted": 2
+        },
+        "3": {
+          "proposed": 2,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 856693028.5714285,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-4-resident.json",
+      "input": "case-4-resident.input.json",
+      "sha256": "37e60f0c52757bc1a54c958a8716af497f21a1ccf63b3e5d78653299ce5939cf",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10503689536,
+      "tokens_per_second": 1.6107280778265665,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 18.477077285714287,
+        "verify": 594.3748392857143,
+        "recovery": 3.556583142857143,
+        "wall": 620.837256,
+        "checkpoint_save": 1.371982142857143,
+        "other": 3.056774142857143
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.000375,
+        "draft_catchup": 3.5561845714285716
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 1,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 757950171.4285715,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-4-rows.json",
+      "input": "case-4-rows.input.json",
+      "sha256": "827437515b2859bc23f9d7b81f892f866ffa07e8d14f05ba33ebf8482512d5df",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9832190016,
+      "tokens_per_second": 1.644571522093982,
+      "generated_tokens": 7,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 17.768755857142857,
+        "verify": 582.9689641428572,
+        "recovery": 3.546756,
+        "wall": 608.061119,
+        "checkpoint_save": 0.8475118571428572,
+        "other": 2.929131142857143
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0003631428571428572,
+        "draft_catchup": 3.5463451428571426
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "2": {
+          "proposed": 1,
+          "accepted": 1
+        },
+        "3": {
+          "proposed": 1,
+          "accepted": 1
+        }
+      },
+      "target_expert_bytes_per_committed_token": 757950171.4285715,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    },
+    {
+      "source": "case-5-resident.json",
+      "input": "case-5-resident.input.json",
+      "sha256": "bf3481b19570b653ae2ab417c2a48555531429a45e2fdcdced006146b1facaac",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 10502608128,
+      "tokens_per_second": 1.044129479886477,
+      "generated_tokens": 1,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 948.965209,
+        "recovery": 4.769458,
+        "wall": 957.735625,
+        "checkpoint_save": 0.0,
+        "other": 4.000958
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 4.769458
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": false,
+      "stop_reason": "eos",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 1197158400.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "case-5-rows.json",
+      "input": "case-5-rows.input.json",
+      "sha256": "3d4576b1955667bfa5ad46cd79ee8fe5d19e15695800405c20fb6b382821ea43",
+      "width": 4,
+      "clean_memory": false,
+      "clean_host": true,
+      "peak_physical_bytes": 9826734272,
+      "tokens_per_second": 1.0745512942433064,
+      "generated_tokens": 1,
+      "rejected_cycles": 0,
+      "component_ms_per_token": {
+        "draft": 0.0,
+        "verify": 921.658875,
+        "recovery": 4.902209,
+        "wall": 930.621,
+        "checkpoint_save": 0.0,
+        "other": 4.059916
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.0,
+        "target_repair": 0.0,
+        "draft_restore": 0.0,
+        "draft_catchup": 4.902209
+      },
+      "repeated_target_rows": 0,
+      "target_recovery_read_bytes": 0,
+      "completed_requested_length": false,
+      "stop_reason": "eos",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "2": {
+          "proposed": 0,
+          "accepted": 0
+        },
+        "3": {
+          "proposed": 0,
+          "accepted": 0
+        }
+      },
+      "target_expert_bytes_per_committed_token": 1197158400.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    }
+  ],
+  "comparisons": [
+    {
+      "case": 0,
+      "width": 1,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 1,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 2,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 3,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    },
+    {
+      "case": 4,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": false
+      }
+    },
+    {
+      "case": 5,
+      "width": 4,
+      "exact_proposals_logits_and_state": true,
+      "timing_used": false,
+      "initial_cache_equal": {
+        "before": true,
+        "draft_before": true
+      }
+    }
+  ],
+  "controlled_change": "embedding_storage",
+  "real_mtp": true,
+  "historical_timing_reused": false,
+  "advancement_allowed": false,
+  "diagnostic_only": true,
+  "resource_qualified": false,
+  "performance_measurement": false,
+  "numerical_parent": {
+    "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/validation-02",
+    "seal_sha256": "2a551be6c60c239a1b5a5209df421157de6ba830151ddb4bbf23965c5724b788",
+    "source_sha256": "cca92835b6d7ec605a527a3018f696717f3a2cb278248b9cc27d80d438aa4e62",
+    "timing_used": false
+  },
+  "reused_validation": [
+    {
+      "case": 0,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-0-rows.json",
+      "sha256": "c656b00b064040ddd2b812befb6033b58fc9ce8110abd43e9d41a408f5ffa3c4",
+      "timing_used": false
+    },
+    {
+      "case": 1,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-1-resident.json",
+      "sha256": "105cf4f1758b35f5fb5a23e13a7f75696fc4180b2ae5cb09397793273a275adc",
+      "timing_used": false
+    },
+    {
+      "case": 1,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-1-rows.json",
+      "sha256": "95375227ae549c06f1c9bfdf4ee9c6be97a8e5c751af508968b15da1eaacc9e0",
+      "timing_used": false
+    },
+    {
+      "case": 2,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-2-resident.json",
+      "sha256": "a9819fe435865ec85f226eed96994fbb63ca8ef3a1f1d7a0fcdfcd5f909fddc6",
+      "timing_used": false
+    },
+    {
+      "case": 2,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-2-rows.json",
+      "sha256": "653289fba49e5eb8e1bf06759ef1b63b4235a7b2f7bbc0101eb81e45ce31681e",
+      "timing_used": false
+    },
+    {
+      "case": 3,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-3-resident.json",
+      "sha256": "a4ac88d73aa79e712bd613c27daf2071fa3fee9235f74231c78d0715d76cddfa",
+      "timing_used": false
+    },
+    {
+      "case": 3,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-3-rows.json",
+      "sha256": "b9fbaf7dc1bc7770b033dc7c18eccb29f5408a201e33ea51198bc0601893d4fd",
+      "timing_used": false
+    },
+    {
+      "case": 4,
+      "arm": "resident",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-4-resident.json",
+      "sha256": "37e60f0c52757bc1a54c958a8716af497f21a1ccf63b3e5d78653299ce5939cf",
+      "timing_used": false
+    },
+    {
+      "case": 4,
+      "arm": "rows",
+      "source": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-04/case-4-rows.json",
+      "sha256": "827437515b2859bc23f9d7b81f892f866ffa07e8d14f05ba33ebf8482512d5df",
+      "timing_used": false
+    }
+  ],
+  "host_preflight": [
+    {
+      "source": "case-5-resident-host.json",
+      "sha256": "0a2bb026229d72d929082867d84be6519054f407495ad142c7810137ef12e00a",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5332048546143416,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "case-5-rows-host.json",
+      "sha256": "34de78ee1aa064c51decf103f2b3717bfd23990d7c7c33f19fa90cb95cf76ba3",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5332083906773166,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "elapsed_seconds": 75.22932833433151
+}

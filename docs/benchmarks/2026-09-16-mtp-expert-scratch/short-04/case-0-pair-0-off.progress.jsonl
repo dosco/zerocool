@@ -1,8 +1,0 @@
-{"phase":"load_target","consumed_tokens":0,"monotonic_ns":5217685193969083}
-{"phase":"prime_target","consumed_tokens":0,"monotonic_ns":5217687587042583}
-{"phase":"prime_draft","consumed_tokens":0,"monotonic_ns":5217703808462333}
-{"phase":"draft_verify","consumed_tokens":0,"monotonic_ns":5217704258611791}
-{"phase":"draft_verify","consumed_tokens":4,"monotonic_ns":5217705121953250}
-{"phase":"draft_verify","consumed_tokens":8,"monotonic_ns":5217705930912666}
-{"phase":"draft_verify","consumed_tokens":12,"monotonic_ns":5217706790309625}
-{"phase":"complete","consumed_tokens":0,"monotonic_ns":5217707953602583}

@@ -1,8 +1,0 @@
-{"phase":"load_model","consumed_tokens":0,"monotonic_ns":5177719800867166}
-{"phase":"prime","consumed_tokens":0,"monotonic_ns":5177721729603583}
-{"phase":"verify_block","consumed_tokens":0,"monotonic_ns":5177749318709208}
-{"phase":"verify_block","consumed_tokens":1,"monotonic_ns":5177750410378875}
-{"phase":"verify_block","consumed_tokens":2,"monotonic_ns":5177751374903541}
-{"phase":"verify_block","consumed_tokens":3,"monotonic_ns":5177752224031208}
-{"phase":"destroy_model","consumed_tokens":0,"monotonic_ns":5177753415456416}
-{"phase":"complete","consumed_tokens":4,"monotonic_ns":5177753581328416}

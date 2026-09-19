@@ -1,4 +1,0 @@
-[ 85%] Built target freellm_lib
-[ 92%] Building CXX object CMakeFiles/qwen_memory_check.dir/scripts/qwen/check_memory.cpp.o
-[100%] Linking CXX executable qwen_memory_check
-[100%] Built target qwen_memory_check

@@ -1,1 +1,0 @@
-{"monotonic_ns":5233800892281416,"thermal_state":0,"low_power_mode":false,"power_source":"AC Power","source":"NSProcessInfo and IOPowerSources","limitation":"OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"}

@@ -1,7 +1,0 @@
-# Diagnostic tooling only; the native engine has no Python dependency.
-mlx==0.31.1
-mlx-lm==0.31.1
-numpy==2.4.0
-tokenizers==0.23.2
-Jinja2==3.1.6
-huggingface-hub==1.30.0

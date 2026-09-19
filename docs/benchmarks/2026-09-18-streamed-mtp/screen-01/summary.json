@@ -1,0 +1,291 @@
+{
+  "kind": "streamed_mtp_screen_v1",
+  "complete": false,
+  "status": "failed",
+  "phase": "width-4-pair-0-rows",
+  "measurements": [],
+  "started_at": "2026-09-18T19:47:42.089588+00:00",
+  "time_limit_seconds": 1200,
+  "normal_request_latency_qualified": false,
+  "production_promoted": false,
+  "identity": {
+    "build": "99343650bcd68336f82b6122774a12b8fe03e21e9bb41e759ab1cdfa27677e18",
+    "artifact_revision": "b2c422f3c643e36f04227a64d61796b44a4b1029",
+    "prepared_manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "budget_bytes": 12884901888,
+    "device": "Apple M1 Pro",
+    "physical_bytes": 34359738368
+  },
+  "configurations": [
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "resident"
+    },
+    {
+      "memory_bytes": 12884901888,
+      "context": 8192,
+      "expert_slots": 1460,
+      "artifact": "mixed-4_8bit",
+      "q4_decode": "reference",
+      "q8_decode_rows": 2,
+      "route_selection": "simd",
+      "residency": "core-cache",
+      "decode_scratch": "reuse",
+      "token_tile": 4,
+      "cache_policy": "clock",
+      "ready_group": 4,
+      "io_workers": 8,
+      "panel": 512,
+      "chunk": 128,
+      "decode_submission": "immediate",
+      "embedding_storage": "rows"
+    }
+  ],
+  "workload": {
+    "name": "merge_intervals",
+    "prompt_text": "Write a Python function merge_intervals(intervals) that merges overlapping closed intervals. Return sorted intervals without mutating the input. Handle an empty list and intervals that touch at an endpoint. Include the implementation and three small assertions testing empty input, overlapping intervals, and unsorted disjoint intervals. Explain the time complexity.",
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7734,
+      264,
+      12654,
+      709,
+      10562,
+      87682,
+      1494,
+      40798,
+      8,
+      421,
+      78161,
+      48142,
+      7629,
+      26126,
+      13,
+      3301,
+      10300,
+      26126,
+      1973,
+      93183,
+      279,
+      1879,
+      13,
+      13365,
+      449,
+      4147,
+      1103,
+      321,
+      26126,
+      421,
+      5615,
+      506,
+      449,
+      14456,
+      13,
+      28763,
+      279,
+      7873,
+      321,
+      2250,
+      2526,
+      52992,
+      7262,
+      4147,
+      1879,
+      11,
+      48142,
+      26126,
+      11,
+      321,
+      632,
+      27379,
+      81859,
+      26126,
+      13,
+      79091,
+      279,
+      854,
+      22373,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198,
+      248068,
+      271,
+      248069,
+      271
+    ],
+    "eos_ids": [
+      248046,
+      248044
+    ],
+    "max_tokens": 64,
+    "draft_slots": 32,
+    "target_prepared": "/repo/.cache/prepared/q4-records-v1"
+  },
+  "samples": [
+    {
+      "source": "width-4-pair-0-resident.json",
+      "input": "width-4-pair-0-resident.input.json",
+      "sha256": "73c171aaf07ec92b59de2db7a6f6ed2e46edeae1efef176131cdb37eb6bac252",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 10451719104,
+      "tokens_per_second": 4.146578684203367,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 9.844889984375,
+        "verify": 201.697743546875,
+        "recovery": 27.87462565625,
+        "wall": 241.162673171875,
+        "checkpoint_save": 1.05055275,
+        "other": 0.694861234375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.24960809375,
+        "target_repair": 26.595927078125,
+        "draft_restore": 0.00073828125,
+        "draft_catchup": 1.028293609375
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 0,
+      "embedding_storage": "resident"
+    },
+    {
+      "source": "width-4-pair-0-rows.json",
+      "input": "width-4-pair-0-rows.input.json",
+      "sha256": "9078e351eae279778cc6bba792cd2fbcf3dd64aad2fd88bb8555bc2854c4ca6e",
+      "width": 4,
+      "clean_memory": true,
+      "clean_host": true,
+      "peak_physical_bytes": 9778794368,
+      "tokens_per_second": 3.9731197133123954,
+      "generated_tokens": 64,
+      "rejected_cycles": 5,
+      "component_ms_per_token": {
+        "draft": 10.15969075,
+        "verify": 211.708842453125,
+        "recovery": 28.063470671875,
+        "wall": 251.691384140625,
+        "checkpoint_save": 1.069128921875,
+        "other": 0.69025134375
+      },
+      "recovery_children_ms_per_token": {
+        "target_restore": 0.24937696875,
+        "target_repair": 26.76063934375,
+        "draft_restore": 0.000694703125,
+        "draft_catchup": 1.052708328125
+      },
+      "repeated_target_rows": 12,
+      "target_recovery_read_bytes": 221184000,
+      "completed_requested_length": true,
+      "stop_reason": "length",
+      "requested_width": 4,
+      "acceptance_by_position": {
+        "1": {
+          "proposed": 18,
+          "accepted": 18
+        },
+        "2": {
+          "proposed": 18,
+          "accepted": 15
+        },
+        "3": {
+          "proposed": 18,
+          "accepted": 13
+        }
+      },
+      "target_expert_bytes_per_committed_token": 656899200.0,
+      "planned_saving_bytes": 673349632,
+      "embedding_storage": "rows"
+    }
+  ],
+  "comparisons": [],
+  "controlled_change": "embedding_storage",
+  "real_mtp": true,
+  "historical_timing_reused": false,
+  "advancement_allowed": false,
+  "performance_measurement": true,
+  "preliminary": true,
+  "pairs": [],
+  "full_clean_correctness": false,
+  "numerical_validation": {
+    "path": "/repo/docs/benchmarks/2026-09-18-streamed-mtp/numerical-05",
+    "seal_sha256": "134657ed73ba8ae678f96172f09bc24a13a4cdc7acff66b3683b47304f4a6463"
+  },
+  "host_preflight": [
+    {
+      "source": "width-4-pair-0-resident-host.json",
+      "sha256": "e7bf740535c7d43998f05268fb8e342a39dd8ad8ac0f12debc3f4c17ceec679b",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5332141211595041,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    },
+    {
+      "source": "width-4-pair-0-rows-host.json",
+      "sha256": "c10d104988b455faf8f7f71392c252be3b6d8a521931a70c84180384ce9157a4",
+      "observation": {
+        "clean_host": true,
+        "host": {
+          "monotonic_ns": 5332178974342083,
+          "thermal_state": 0,
+          "low_power_mode": false,
+          "power_source": "AC Power",
+          "source": "NSProcessInfo and IOPowerSources",
+          "limitation": "OS may report nominal/false when thermal or low-power status is unsupported or unknown; no frequency or wattage measurement"
+        },
+        "reasons": []
+      }
+    }
+  ],
+  "error": "Changed initial cache state",
+  "elapsed_seconds": 80.41213812492788
+}

@@ -1,1 +1,0 @@
-[{"name":"core-cache","kernel_policy":"candidate","token_tile":8,"gdn_path":"precompute","panel":512,"chunk":128,"ready_group":4,"io_workers":8,"residency":"core-cache","expert_slots":1848} ]
