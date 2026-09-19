@@ -6,7 +6,8 @@ from evidence_index import read, parse, digest, terminal_result
 
 WIDTH_KIND = 'native_mtp_width_v1'
 NATIVE = {'native_mtp_continuation_v1', 'native_mtp_continuation_v2', WIDTH_KIND}
-SCREENS = {'mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1'}
+SCREENS = {'mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1',
+           'streamed_mtp_screen_v1'}
 ROOT_PHASES = ('draft', 'verify', 'recovery')
 RECOVERY_PARTS = ('target_restore', 'target_repair', 'draft_restore', 'draft_catchup')
 
@@ -33,10 +34,10 @@ def child(root, name):
 
 
 def screening_context(data):
-    if data.get('kind')=='mtp_width_screen_v1':
+    if data.get('kind') in ('mtp_width_screen_v1', 'streamed_mtp_screen_v1'):
         need(data.get('preliminary') is True and data.get('advancement_allowed') is False and
              data.get('production_promoted') is False and type(data.get('full_clean_correctness')) is bool,
-             'Width screening cannot claim adoption')
+             'Preliminary screening cannot claim adoption')
         return dict(preliminary=True, full_correctness_stage_passed=data['full_clean_correctness'], advancement_allowed=False)
     early = data.get('stage') == 'early' or data.get('preliminary') is True
     if not early:
@@ -132,12 +133,26 @@ def records(index, selector):
     for s in data.get('samples', []):
         sha = s.get('sha256'); need(isinstance(sha, str) and len(sha) == 64 and sha not in seen, 'Duplicate or missing raw run hash')
         seen.add(sha); raw, ref = original(child(root, s['source']), sha)
-        result.append((raw, ref, {k: s[k] for k in ('case', 'pair', 'arm')}))
+        if data['kind'] == 'streamed_mtp_screen_v1':
+            from streamed_mtp_evidence import labels
+            sample_labels = labels(s)
+        else: sample_labels = {k: s[k] for k in ('case', 'pair', 'arm')}
+        result.append((raw, ref, sample_labels))
     return result, source, data
 
 
 def cycles(index, selector):
     runs, source, data = records(index, selector)
+    def measurement(raw):
+        from screen_mtp_forward import clean
+        result = account(raw)
+        try:
+            resources = clean(raw)
+            result.update(resources, resource_qualified=resources['clean_memory'] and resources['clean_host'])
+        except (KeyError, TypeError, ValueError) as error:
+            result.update(resource_qualified=None, resource_error=str(error))
+        if result['resource_qualified'] is not True: result['measured_tps'] = None
+        return result
     def identity(raw):
         before=raw.get('before',{});metal=before.get('metal',{})
         return dict(workload_sha256=raw.get('input_sha256'),draft_manifest_sha256=raw.get('draft_manifest_sha256'),
@@ -145,15 +160,17 @@ def cycles(index, selector):
             native_build=metal.get('build_fingerprint'),producer_binary_sha256=raw.get('producer_binary_sha256'),
             admission=raw.get('admission'),device=metal.get('device'),kernel_policy=metal.get('kernels'),
             validation=raw.get('validation'),mode=raw.get('mode'),target_recovery=raw.get('target_recovery'),
-            direct_output=raw.get('direct_output_after',{}).get('enabled'), requested_width=raw.get('requested_width'))
+            direct_output=raw.get('direct_output_after',{}).get('enabled'), requested_width=raw.get('requested_width'),
+            embedding_storage=raw.get('embedding_storage'))
     context = screening_context(data)
     result = dict(status='measured' if terminal_result(data) else 'partial_diagnostic', **context,
-        runs=[dict(**labels, source=ref, identity=identity(raw), **account(raw)) for raw, ref, labels in runs], sources=[source],
+        runs=[dict(**labels, source=ref, identity=identity(raw), **measurement(raw)) for raw, ref, labels in runs], sources=[source],
         limitations=['Milliseconds are amortized per committed token, not individual token-delivery latencies.',
             'Recovery children are included in recovery and must not be added again.',
             'Legacy checkpoint saving is inside other overhead; separate subdivisions are unavailable.',
             'Expert bytes are application reads, not observed device traffic.',
-            'Incomplete cycles and runs do not establish a request throughput result.'], production_promoted=False)
+            'Incomplete cycles and runs do not establish a request throughput result.',
+            'Missing or disturbed resource observations exclude throughput and opportunity estimates.'], production_promoted=False)
     if context['preliminary']:
         result['limitations'].append('Early screen only; full correctness eligibility is reported separately and production remains unqualified.')
     return result
@@ -168,7 +185,7 @@ def opportunity(index, selector, target_tps=5, phase='recovery'):
         available = r['recovery_part_ns'] if phase in RECOVERY_PARTS else r['phase_ns']
         remove = available.get(phase) if available is not None else None
         if phase == 'checkpoint_save' and not r['checkpoint_save_measured']: remove = None
-        eligible = parent_complete and r['complete'] and r['timing_mode'] and remove is not None
+        eligible = parent_complete and r['complete'] and r['timing_mode'] and r['resource_qualified'] is True and remove is not None
         r['opportunity'] = dict(target_tps=target_tps, budget_ms_per_token=1000/target_tps, removable_phase=phase,
             gap_ms_per_token=max(0, wall/n/1e6-1000/target_tps) if eligible else None,
             optimistic_zero_phase_tps=n*1e9/(wall-remove) if eligible and wall > remove else None,
@@ -184,6 +201,9 @@ def compare(index, selector, control, candidate, changes, case=None):
     from screen_residency import paired_log_interval
     runs, source, data = records(index, selector)
     need(terminal_result(data), 'Unfinished experiment cannot establish a paired result')
+    if data['kind'] == 'streamed_mtp_screen_v1':
+        from streamed_mtp_evidence import compare as compare_storage
+        return compare_storage(runs, source, data, control, candidate, changes, case)
     direct = data['kind'] == 'mtp_direct_output_screen_v1'
     widths = data['kind'] == 'mtp_width_screen_v1'
     if widths:
@@ -271,7 +291,23 @@ def next_experiment(index, selector):
         out['smallest_experiment'] = 'Resolve the recorded blocker and collect a complete screen; this partial report selects no winner.'
     else:
         _,_,data=records(index,selector)
-        if data.get('kind')=='mtp_width_screen_v1':
+        if any(r['resource_qualified'] is not True for r in out['runs']):
+            out.update(hypothesis='Resource-disturbed or incomplete observations cannot rank performance candidates.',
+                smallest_experiment='Collect a fresh clean sample after the recorded resource issue is resolved.',
+                missing_evidence=['Clean memory, unchanged swap, nominal thermal state and AC power observations'])
+            return out
+        if data.get('kind')=='streamed_mtp_screen_v1':
+            checked=compare(index,selector,'resident','rows',['embedding_storage'])
+            out.update(validated_comparison=checked,
+                hypothesis='Exact row storage can free memory for a separately tested cache policy.',
+                smallest_experiment=('Investigate the measured storage overhead before spending the saved memory.'
+                    if data.get('status')=='early_cost_regression' else
+                    'Capture complete current cache leases and compare admission or phase-workspace changes at the same total budget.'),
+                missing_evidence=['Clean full-model correctness' ] if not data['full_clean_correctness'] else [])
+            out['missing_evidence'] += ['Current four/eight-token cache traces',
+                'Fresh paired request timings for a changed cache policy',
+                'Five paired repetitions, long-context and sustained qualification']
+        elif data.get('kind')=='mtp_width_screen_v1':
             checked=compare(index,selector,'4',str(data['candidate_width']),['requested_width'])
             clean=data['full_clean_correctness']
             remaining=['Longer fresh paired requests on the other coding workloads',

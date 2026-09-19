@@ -1,6 +1,5 @@
 import argparse
 import contextlib
-import copy
 import io
 import json
 from pathlib import Path

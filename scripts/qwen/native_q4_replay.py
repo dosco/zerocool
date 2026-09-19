@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Bounded native expert replay diagnostics; no request or production promotion."""
 import argparse
-import math
 from pathlib import Path
 import statistics
 

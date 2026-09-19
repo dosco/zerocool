@@ -1,6 +1,5 @@
 import copy
 import unittest
-from pathlib import Path
 
 from screen_mtp_continuation import compare,observe,select_cases,workloads,ROOT
 

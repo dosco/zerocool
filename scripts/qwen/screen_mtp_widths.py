@@ -2,7 +2,6 @@
 """Bounded fixed-width validation and early rejection on the retained recovery baseline."""
 import argparse
 import hashlib
-import json
 from pathlib import Path
 
 import build_mtp_widths as builder

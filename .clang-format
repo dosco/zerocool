@@ -1,0 +1,21 @@
+# Matches the engine's existing dense style: compact control flow, long-ish
+# lines, and no reflowing of the comment blocks that carry the design notes.
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++20
+ColumnLimit: 120
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AccessModifierOffset: -4
+PointerAlignment: Left
+SpaceBeforeParens: Never
+SpacesBeforeTrailingComments: 1
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortBlocksOnASingleLine: Always
+AllowShortCaseLabelsOnASingleLine: true
+BreakBeforeBraces: Attach
+ReflowComments: false
+SortIncludes: false

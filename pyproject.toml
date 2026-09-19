@@ -1,0 +1,19 @@
+# The Python tree is developer tooling for the native engine: evidence capture,
+# screening and reference implementations. It ships nothing.
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = [".venv", ".cache", "build", "docs/benchmarks"]
+
+[tool.ruff.lint]
+# Correctness first. The compact one-line style is deliberate, so formatting
+# rules that would rewrite it are left out.
+select = ["E4", "E7", "E9", "F", "B", "UP032", "RUF100"]
+# The compact one-line style and the single-letter loop names are
+# deliberate, and import order carries no meaning in these scripts.
+ignore = ["E701", "E702", "E731", "E741", "B008", "B905", "B904", "B007",
+# Every flagged closure is called inside the iteration that defines it.
+          "B023"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["qualification_evidence", "build_identity", "evidence_queries", "mtp_source"]

@@ -25,7 +25,8 @@ def compare(index, selector, control, candidate, changes, case=None):
     try:
         if not isinstance(data, dict): raise ValueError('Select a report object, not a workload array')
         if not terminal_result(data): raise ValueError('Report is unfinished, failed or lacks a completed result')
-        if data.get('kind') in ('mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1'):
+        if data.get('kind') in ('mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1',
+                               'streamed_mtp_screen_v1'):
             from mtp_evidence import compare as mtp_compare
             return mtp_compare(index, selector, control, candidate, changes, case)
         if data.get('kind') in ('expert_tail_screen_v1','decode_scratch_screen_v1','decode_scratch_confirmation_v1'):
@@ -356,7 +357,8 @@ def next_experiment(index, selector):
         from capture_mtp_width_profile import query
         return query(index,selector)
     if data.get('kind') in ('native_mtp_continuation_v1', 'native_mtp_continuation_v2', 'native_mtp_width_v1',
-                            'mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1'):
+                            'mtp_direct_output_screen_v1', 'mtp_target_recovery_screen_v1', 'mtp_width_screen_v1',
+                            'streamed_mtp_screen_v1'):
         from mtp_evidence import next_experiment as mtp_next
         return mtp_next(index, selector)
     limits = ['No request speedup is inferred from cached kernels or summed overlapping waits.',

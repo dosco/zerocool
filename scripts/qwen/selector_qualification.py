@@ -11,7 +11,7 @@ import sys
 
 import benchmark_exact as normal
 from qualification_evidence import (EvidenceGuard, ResourceBlocked, GiB, identity, save, sha,
-                                    seal, verify_seal, import_sealed, confined)
+                                    seal, import_sealed, confined)
 from summarize_decode_profile import summarize as summarize_profile
 from qualify_exact_sessions import check_configuration, compare as compare_sessions
 

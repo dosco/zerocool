@@ -1,4 +1,3 @@
-import copy
 import unittest
 
 from screen_hyper_fusion import analyze

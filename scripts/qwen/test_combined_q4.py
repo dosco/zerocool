@@ -1,4 +1,3 @@
-import copy
 import unittest
 from benchmark_exact import config_args, is_original_control
 from combined_q4 import ORDER, configs, decide

@@ -6,7 +6,7 @@ from pathlib import Path
 
 from cache_residency import configs, memory_observation, require
 from capture_routes import load
-from qualification_evidence import ResourceBlocked, save, sha, verify_seal
+from qualification_evidence import ResourceBlocked, sha, verify_seal
 from screen_cache import validate_request
 from stage200 import Experiment
 

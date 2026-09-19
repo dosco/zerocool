@@ -4,7 +4,7 @@ import unittest
 from native_q4_replay import COUNTERS
 from q4_read_arrivals import analyze as base_analyze
 from q4_shared_arrivals import analyze as shared_analyze
-from q4_scratch_lifetime import PASSES, SCRATCH_BYTES_PER_PASS, analyze
+from q4_scratch_lifetime import SCRATCH_BYTES_PER_PASS, analyze
 from test_q4_shared_arrivals import fixture as shared_fixture
 
 

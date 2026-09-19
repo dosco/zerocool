@@ -6,7 +6,7 @@ import unittest
 import shutil
 
 from evidence_index import Index
-from mtp_evidence import account, compare, opportunity
+from mtp_evidence import account, compare, opportunity, next_experiment
 from qualification_evidence import seal
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,6 +53,24 @@ class MtpEvidenceTests(unittest.TestCase):
     def test_partial_runs_remain_diagnostic(self):
         r=self.raw();r['complete']=False;r['cycles']=r['cycles'][:2]
         a=account(r);self.assertFalse(a['complete']);self.assertIsNone(a['measured_tps'])
+
+    def test_disturbed_or_missing_resources_cannot_supply_a_raw_run_ceiling(self):
+        for mode in ('compression', 'power', 'missing'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as d:
+                raw = self.raw()
+                if mode == 'compression': raw['after_destroy']['compressed_peak_bytes'] = 16384
+                elif mode == 'power': raw['host_after']['power_source'] = 'Battery Power'
+                else: raw['after_destroy'].pop('decompressions')
+                path = Path(d)/'raw.json';path.write_text(json.dumps(raw))
+                index = Index(Path(d)/'index.sqlite');index.import_paths([path])
+                try:
+                    result = opportunity(index, str(path))['runs'][0]
+                    self.assertIsNot(result['resource_qualified'], True)
+                    self.assertIsNone(result['measured_tps'])
+                    self.assertIsNone(result['opportunity']['optimistic_zero_phase_tps'])
+                    self.assertIsNone(result['opportunity']['gap_ms_per_token'])
+                    self.assertIn('fresh clean sample', next_experiment(index, str(path))['smallest_experiment'])
+                finally: index.close()
 
     def test_eos_shortened_run(self):
         r=self.raw();r['requested_tokens']=256;r['stop_reason']='eos';r['eos_ids']=[r['committed_token_ids'][-1]]

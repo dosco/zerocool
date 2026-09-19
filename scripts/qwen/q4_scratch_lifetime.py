@@ -105,7 +105,7 @@ def lifetime_proof(raw, scope):
                 final_used = (index+1)*SCRATCH_BUFFERS_PER_PASS if scope == 'forward' else SCRATCH_BUFFERS_PER_PASS
                 final_active = 0 if scope == 'forward' and index < PASSES-1 else -1
                 a = scratch_snapshot(entering, retained, entering_used, entering_active)
-                b = scratch_snapshot(prepared, retained, entering_used, entering_active)
+                scratch_snapshot(prepared, retained, entering_used, entering_active)
                 c = scratch_snapshot(done, retained, final_used, final_active)
                 require(entering == prepared, 'Read preparation changed a live scratch arena')
                 require(entering['live_buffer_bytes'] == done['live_buffer_bytes'] == states[0]['live_buffer_bytes'] and

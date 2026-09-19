@@ -93,7 +93,10 @@ class HeldoutPolicyTest(unittest.TestCase):
                 validate_heldout(policy,report)
 
     def test_failed_heldout_cli_returns_failure(self):
-        import json, subprocess, sys, tempfile
+        import json
+        import subprocess
+        import sys
+        import tempfile
         from pathlib import Path
         from select_shape_rules import select
         report=self.report();policy=select(report)

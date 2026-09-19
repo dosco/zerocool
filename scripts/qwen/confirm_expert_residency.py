@@ -12,7 +12,7 @@ from screen_cache import CHECKS, correctness_case
 from screen_decode_scratch import SCRATCH_CHECKS, check_state_workspace
 from screen_expert_residency import configs, observe
 from screen_coalesced import decide as screen_decision
-from stage200 import Experiment, ORDER, SOURCE, clean_memory
+from stage200 import Experiment, SOURCE, clean_memory
 
 
 def require(ok,message):

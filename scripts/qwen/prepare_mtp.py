@@ -6,7 +6,6 @@ stay in their ORIGINAL zero-centred representation; the manifest requires the
 future consumer to apply 1+w once. This is not a runnable draft model.
 """
 import argparse
-import hashlib
 import json
 import math
 import os
@@ -248,7 +247,7 @@ def verify(output):
             tensor['format']==precision(name,source_tensor),'Changed MTP tensor format or shape')
         if tensor['format']=='affine-Q8': require(tensor['bits']==8 and tensor['group_size']==64,'Changed affine recipe')
         else: require(tensor['norm_convention']==m['memory_plan']['tensors'][name]['norm_convention'],'Changed RMS convention')
-        rows=tensor['shape'][0];n=math.prod(tensor['shape'])
+        n=math.prod(tensor['shape'])
         sizes={'weight':n*2} if tensor['format']=='BF16' else {'weight':n,'scales':n//64*2,'biases':n//64*2}
         require(set(tensor['parts'])==set(sizes),'Invalid tensor parts')
         for name,entry in tensor['parts'].items():

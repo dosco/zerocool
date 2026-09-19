@@ -3,8 +3,8 @@ import unittest
 
 from q4_shared_arrivals import analyze
 from q4_read_arrivals import SHARED_KERNELS, SHARED_LAYERS, analyze as base_analyze
-from native_q4_replay import COUNTERS, PACKED
-from shared_expert_reference import LAYERS, REVISION, TOLERANCE, WIDTHS
+from native_q4_replay import PACKED
+from shared_expert_reference import LAYERS
 from test_q4_read_arrivals import fixture as arrival_fixture
 
 

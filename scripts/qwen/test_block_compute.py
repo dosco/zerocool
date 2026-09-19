@@ -1,6 +1,5 @@
 import copy
 import json
-from pathlib import Path
 import unittest
 
 import block_compute_profile as profile

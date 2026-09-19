@@ -14,7 +14,7 @@ from capture_routes import load
 from combined_q4 import freeze
 from perfect_draft_capacity import counters
 from qualification_evidence import ResourceBlocked, save, sha, verify_seal
-from q8_expanded_contract import ROOT, BASE, CASES, KERNEL
+from q8_expanded_contract import CASES, KERNEL
 from stage200 import Experiment
 from verify_stage200 import verify_sources
 

@@ -322,6 +322,8 @@ def run(recipe_path,output,resume=None,index=None):
             report['build_directory']=str(directory);save(output/'summary.json',report);print('build: compiling isolated target recovery candidate',flush=True)
             builder.build(directory)
         report['build_directory']=str(directory)
+        # Later stages consume the directories the earlier ones produced.
+        fixtures=correctness=None
         for name in ('fixtures','correctness','short','all_accepted','long'):
             report['phase']=name;save(output/'summary.json',report)
             print(f'trial phase {name}; stage budget {r["stage_seconds"][name]}s',flush=True)

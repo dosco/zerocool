@@ -143,7 +143,7 @@ class RouteTraceTest(unittest.TestCase):
         self.assertEqual(coverage['missing_route_passes'],0)
 
     def test_capture_requires_32_actual_decode_forwards_and_bound_output(self):
-        trace=decode(encoded(fixture(32))); evidence=trace['identity'];config={}
+        trace=decode(encoded(fixture(32))); evidence=trace['identity']
         work=[dict(name='coding_routes_32',tokens=[760],max_tokens=33)]
         state=dict(diagnostic_stream_trunk=False, memory_plan=dict(panel_tokens=512), phase_memory=dict(pressure_resizes=0))
         raw=dict(complete=True,workloads=work,model_revision=evidence['artifact_revision'],

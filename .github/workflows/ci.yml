@@ -1,0 +1,46 @@
+name: checks
+
+# The engine is Apple Silicon and Metal only, so every job runs on macOS.
+# Nothing here touches the pinned 104GB checkpoint: these are the model-free
+# checks. Real-model numerical and performance gates stay manual.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    name: build and model-free tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Create the reference environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install numpy tokenizers jinja2
+      - name: Configure
+        run: cmake --preset release
+      - name: Build
+        run: cmake --build --preset release --parallel 4
+      - name: Test
+        run: ctest --preset release
+
+  lint:
+    name: python lint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pipx install ruff
+      - run: ruff check scripts

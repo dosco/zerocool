@@ -6,7 +6,7 @@ from pathlib import Path
 
 from capacity_experiment import decide as timing_decision
 from capture_routes import load
-from qualification_evidence import ResourceBlocked, save, sha
+from qualification_evidence import ResourceBlocked, sha
 from screen_cache import validate_request
 from stage200 import Experiment, ORDER, SOURCE, clean_memory, configuration
 
