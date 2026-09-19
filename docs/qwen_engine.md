@@ -215,13 +215,12 @@ API and shader validation. Normal performance and the sustained coding-session
 acceptance gates remain open; memory admission has also refused normal startup
 when other applications leave too little reclaimable memory.
 
-## Scope and preserved work
+## Scope
 
-The default target is C++23/Metal on a 32GiB Apple M1 Pro, one active
-conversation, an 8192-token input-plus-output limit, and a maximum 22GiB
-engine budget. The old implementation remains in place behind
-`FREELLM_BUILD_LEGACY=ON`. No existing model or backend was deleted. The
-initial uncommitted work was also backed up before the new implementation.
+The target is C++23/Metal on a 32GiB Apple M1 Pro, one active conversation, an
+8192-token input-plus-output limit, and a maximum 22GiB engine budget. This is
+the only implementation: the earlier educational CPU/CUDA multi-backend tree was
+removed once the engine superseded it, and its history remains in git.
 
 `freellm_lib` provides the native library. `include/qwen/` exposes checkpoint,
 model, tokenizer, session, and local-server interfaces. The production path
