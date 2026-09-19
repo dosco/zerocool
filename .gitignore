@@ -39,7 +39,6 @@ docs/benchmarks/**
 !docs/benchmarks/**/decision.json
 docs/benchmarks/**/*-sources/**
 docs/benchmarks/**/archive/**
-docs/experiments/
 
 # Editor, tool and OS state
 .vscode/
