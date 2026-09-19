@@ -213,7 +213,7 @@ std::vector<int> Tokenizer::encode_chat(Json messages,const Json& tools,bool thi
         };
         for(auto& message:messages) {
             if(!message.is_object()) throw std::invalid_argument("invalid message");
-            const bool tool=message.value("role","")=="tool";
+            const bool tool=message.contains("role") && message["role"].is_string() && message["role"]=="tool";
             for(const char* key:{"content","reasoning_content","tool_calls"})
                 if(message.contains(key)) walk(message[key],tool);
         }
