@@ -4,6 +4,7 @@
 
 | Document | What it covers |
 |---|---|
+| [building-the-engine.md](building-the-engine.md) | How the engine works and why, for readers building something similar |
 | [qwen_plan.md](qwen_plan.md) | The plan of record: goals, architecture, milestones and success criteria |
 | [qwen_engine.md](qwen_engine.md) | What the engine actually implements, and its qualification limits |
 | [qwen_usability.md](qwen_usability.md) | Terminal chat controls, the HTTP API contract, and usability gates |

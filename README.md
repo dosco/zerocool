@@ -113,6 +113,10 @@ build/qwen/bin/freellm bench --prompt 'The capital of France is' --max-tokens 25
 | `scripts/qwen` | Developer tooling: download, verification, screens, references |
 | `docs` | Plan, engine reference, stage reports and measurement evidence |
 
+For how the engine works and why it is built this way, including the Apple
+Silicon constraints, the Qwen architecture and which optimizations were measured
+and kept, see [docs/building-the-engine.md](docs/building-the-engine.md).
+
 The original MLX oracle uses `mlx==0.31.1` and `mlx-lm==0.31.1`. Python is not a
 production inference dependency. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for model and adapted-code
