@@ -56,10 +56,11 @@ foreach(input IN LISTS FREELLM_BUILD_INPUTS)
 endforeach()
 # How the sources were compiled is part of the identity: an unoptimized or
 # sanitized build must never report the same fingerprint as a measured one.
+string(TOUPPER "${CMAKE_BUILD_TYPE}" FREELLM_BUILD_TYPE_UPPER)
 string(APPEND FREELLM_BUILD_IDENTITY
     "toolchain:${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}\n"
     "build_type:${CMAKE_BUILD_TYPE}\n"
-    "flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}}\n"
+    "flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${FREELLM_BUILD_TYPE_UPPER}}\n"
     "sanitizer:${FREELLM_SANITIZE}\n")
 string(SHA256 FREELLM_BUILD_FINGERPRINT "${FREELLM_BUILD_IDENTITY}")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${FREELLM_BUILD_INPUTS})

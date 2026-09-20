@@ -1,0 +1,42 @@
+{
+  "kind": "horizon_cache_stage_review_v1",
+  "complete": true,
+  "implementation_verified": true,
+  "full_model_capture_complete": false,
+  "python_tests": 565,
+  "ctest_suites_passed": 3,
+  "ruff_passed": true,
+  "cpp_format_passed": true,
+  "producer": "/repo/.cache/horizon-cache-build-20260919-03/producer.json",
+  "producer_sha256": "0456c02c31ebeb292367a4faaf29bbdd4a5a4c8e49be1be96b131c0711b13dbf",
+  "attempt_seals": {
+    "capture-01": "0fa92b86575ba8a3f4bdd0ff61233bcb40af40dcc7f2b33bff27fcc00d9523d7",
+    "capture-02": "364ad88e71bfa837777b2b4bfd0404b019c9984cc061e7542f3100494a89ef5b"
+  },
+  "parser_audit_sha256": "6565aa5753f807e55e9347e923d97bb09000f7514ed40fb87480e7e5bd092a80",
+  "latest_host": {
+    "source": "latest-host.json",
+    "available_bytes": 10138255360,
+    "required_bytes": 14495514624
+  },
+  "sources": {
+    "cmake/qwen.cmake": "405f0dd7f0598fe1f1573112dbe6ca66988ee9b3f18d8d49e6a2f4cb5b3f6146",
+    "scripts/qwen/build_identity.py": "7f530a3284d8ee2da9a2da7fcdf5103b45b9a0ae50cf6f672bf36015d303911c",
+    "scripts/qwen/test_build_identity.py": "8545045c961b2b4a60f1a17976725b46b9137da4a49afbf40e3a7e9b102b5988",
+    "scripts/qwen/build_horizon_cache_trace.py": "e27f9e46f0626c190a99b060bc475b8736e83d60842db36ca7497693f9007ea2",
+    "scripts/qwen/horizon_cache_trace.hpp": "d6842a7b1cec67838d841e05e05c5b041402929a4dd3efd924d409718ac79d8d",
+    "scripts/qwen/horizon_cache_replay.py": "d1547e5e7d8ff109b9c152d14806e843389db22c81bbe4d8831da9f1e7aad24f",
+    "scripts/qwen/capture_horizon_cache.py": "5fed0792d0917fdab9cd0f9e7c03d39e3e6ccea8cb1a0a02a1f9b9c48a77a2ed",
+    "scripts/qwen/test_horizon_cache.py": "fabab2b5618b7f7668413872f6f6e7a06c0adbb421fe1515bfd015edec10365b",
+    "scripts/qwen/block_cache_replay.py": "bf0701a196549bc9c75a474c127d110fc851af14a90ad61a657a13db91dd59c2",
+    "scripts/qwen/build_block_cache_trace.py": "98106f6689754baba242510a8cb241b9f1d1649d92c55581faf753c3cb832c4d",
+    "scripts/qwen/screen_verifier_horizon.py": "474b45e79c1535e15cf867c3932ad9d21d55ee775a85b2eca79c4c7250d2c4ec",
+    "scripts/qwen/test_block_cache.py": "f59abc844d51879d2c2216d44476d0898627a6bab55d7b729b048bd6a89103ae"
+  },
+  "performance_measurement": false,
+  "production_promoted": false,
+  "limitations": [
+    "Review verifies implementation, small fixtures and saved-trace parser compatibility; no fresh full-model horizon capture.",
+    "Instrumented and simulated results cannot establish throughput or promote a larger cache."
+  ]
+}

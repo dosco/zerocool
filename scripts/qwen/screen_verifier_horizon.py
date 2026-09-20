@@ -47,7 +47,7 @@ def prefix(work,count):
     return result
 
 
-def validate(raw,work,input_sha,producer_sha,width,validation,streamed=False):
+def validate(raw,work,input_sha,producer_sha,width,validation,streamed=False,*,trace_workspace_bytes=0):
     require(type(width) is int and width in (1,4,8) and
         raw.get('kind')=='native_verifier_horizon_v1' and raw.get('complete') is True and
         raw['perfect_proposals_only'] is True and raw['normal_request_latency_qualified'] is False and
@@ -76,6 +76,8 @@ def validate(raw,work,input_sha,producer_sha,width,validation,streamed=False):
     require(raw['initial_draft_state']==raw['final_draft_state'] and raw['draft_before']==raw['draft_after'],
         'Horizon performed draft work')
     admission=raw['admission'];plan=admission['target']
+    require(type(trace_workspace_bytes) is int and trace_workspace_bytes in (0,32*1024**2) and
+        admission.get('trace_workspace_bytes',0)==trace_workspace_bytes,'Undeclared trace workspace')
     require(plan['limit_bytes']==12*1024**3 and plan['expert_slots']==1460 and admission['draft_slots']==32 and
         admission['checkpoint_rows']==8 and admission['combined_bytes']<=12*1024**3 and
         0<raw['host_checkpoint_allocated_bytes']<=128*1024**2,'Horizon memory controls differ')
@@ -96,7 +98,7 @@ def validate(raw,work,input_sha,producer_sha,width,validation,streamed=False):
         admission['draft_bytes']==318234624 and admission['expert_scratch_reserve_bytes']==2*1024**2 and
         admission['target_recovery_reserve_bytes']==16*1024**2 and
         admission['combined_bytes']==plan['planned_bytes']+admission['host_checkpoint_logits_bytes']+
-        admission['draft_bytes']+admission['expert_scratch_reserve_bytes']+admission['target_recovery_reserve_bytes'],
+        admission['draft_bytes']+admission['expert_scratch_reserve_bytes']+admission['target_recovery_reserve_bytes']+trace_workspace_bytes,
         'Unaccounted horizon memory change')
     state=raw['final_target_state'];require(state['valid'] is True and state['tokens']==offset+count and
         state['history']==(work['prompt_ids']+work['continuation_ids'])[-2:] and len(state['layers'])==48 and

@@ -1,0 +1,29 @@
+{
+  "kind": "cache_parser_regression_audit_v1",
+  "complete": true,
+  "source": "/repo/docs/benchmarks/2026-09-16-block-cache/capture-02",
+  "source_seal_sha256": "0ebf2abea0e25ab0793bfd06e6fbfaf749f9ae5ad4bd61d26cb84a97f57d5fb9",
+  "parser_sha256": "bf0701a196549bc9c75a474c127d110fc851af14a90ad61a657a13db91dd59c2",
+  "captures": [
+    {
+      "slots": 1072,
+      "report_sha256": "a0be56df0d784564c6a4dc1e3ed0806e0217f5aade8cf46c88d13cb7c2ae6106",
+      "trace_sha256": "1a78b4a2a4a7f4b13cefd5f15d0dbb7792340c963b8c5c76efcac86f1e63d2ea",
+      "same_saved_curves": true,
+      "snapshots": 7,
+      "native_counts_exact": true,
+      "native_slot_state_exact": true
+    },
+    {
+      "slots": 1460,
+      "report_sha256": "a5e29b243d86f2eb1850f228bdbf479bfcb7e9e449421c2fc30db3887ffc95c0",
+      "trace_sha256": "2f32852ce4fbf2718b9bfdaf6f63359c16553faaeb3ed86b83006163e350a600",
+      "same_saved_curves": true,
+      "snapshots": 7,
+      "native_counts_exact": true,
+      "native_slot_state_exact": true
+    }
+  ],
+  "current_horizon_measured": false,
+  "performance_measurement": false
+}

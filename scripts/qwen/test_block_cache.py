@@ -12,13 +12,17 @@ from cache_simulation import Clock,SegmentedLRU
 from test_perfect_draft import fixture
 
 
-def synthetic_trace():
-    raw,_,work=fixture(4);cache=replay.Cache(1072);events=[];histories=[[] for _ in range(48)]
+def synthetic_trace(sizes=(72,4,4,4,4),capacity=1072):
+    raw,_,work=fixture(4);cache=replay.Cache(capacity);events=[];histories=[[] for _ in range(48)]
+    work['prompt_ids']=work['prompt_ids'][:sizes[0]]
+    work['continuation_ids']=list(range(sum(sizes[1:])))
+    raw['configuration']['expert_slots']=capacity;raw['blocks']=[{} for _ in sizes[1:]]
     def emit(name,detail):events.append(dict(sequence=len(events)+1,event=name,detail=detail))
-    emit('begin',dict(kind='qwen_block_cache_events_v1',capacity=1072,policy='clock',build='build',
+    emit('begin',dict(kind='qwen_block_cache_events_v1',capacity=capacity,policy='clock',build='build',
         payload_bytes=replay.PAYLOAD_BYTES,slot_bytes=replay.SLOT_BYTES,workspace_bound_bytes=32*1024**2))
     all_tokens=work['prompt_ids']+work['continuation_ids']
-    for f,(offset,count) in enumerate([(0,72),(72,4),(76,4),(80,4),(84,4)]):
+    offset=0
+    for f,count in enumerate(sizes):
         emit('forward_begin',dict(offset=offset,tokens=count,input=all_tokens[offset:offset+count],phase='prefill' if f==0 else 'decode'))
         for layer in range(48):
             routes=list(range(10))*count
@@ -40,6 +44,7 @@ def synthetic_trace():
         if f==0:raw['before']['expert_cache']=stats;raw['prime']['routes']=target
         else:raw['blocks'][f-1]['routes']=target
         emit('forward_end',dict(position=offset+count))
+        offset+=count
     raw['after']['expert_cache']=stats
     emit('end',dict(complete=True))
     return events,raw,work

@@ -1,21 +1,30 @@
 # FreeLLM: quality-preserving inference beyond RAM on a 32GB M1 Pro
 
 Current execution priority: the [200ms/token generation stage](qwen_decode_target_stage.md).
-Current experimental work: [exact embedding storage in real MTP](benchmarks/2026-09-18-streamed-mtp/README.md).
-All six original-producer full-model numerical pairs now match, including actual
-draft proposals, rejected-row logits, EOS and persistent target/draft state.
-Some diagnostics contain compression, so clean full qualification remains open.
-The first normal storage pair has clean processes at 9.734/9.107GiB physical
-peak, but mismatched starting draft-cache state invalidates the comparison.
-No speed result is accepted. A separate native producer now uses the existing
-fixed-batch scheduler only for draft warm-up; generation keeps its normal
-completion-driven scheduler. It builds and passes ten clean real embedding
-checks, but full-model admission stops at 7.15GiB available versus 13.5GiB required.
-Validate this producer and compare its state with the saved original before new
-timing. The evidence query tool now audits storage comparisons and excludes raw
-resource-disturbed throughput estimates. All 546 Python tests pass. Keep the
-saved 642.15625MiB unused until the separate cache experiment; no production
-promotion or historical timing reuse.
+Current experimental work: [complete verifier cache-window traces](benchmarks/2026-09-19-horizon-cache/README.md).
+The [exact embedding storage screen](benchmarks/2026-09-18-streamed-mtp/README.md)
+now completes six fixed-priming numerical pairs and twelve exact cross-producer
+checks. Some diagnostics contain compression, so clean full qualification remains
+open. All eight fresh timing processes are clean: two alternating 64-token pairs
+per width save **644–647MiB of physical peak memory**, with essentially unchanged
+latency (rows/resident geometric ratios 1.00034 at width four and 1.00166 at width
+one). This establishes a preliminary storage cost, not a speedup or the 5-token/s
+target. The evidence query independently reproduces the separate comparisons.
+
+Keep 1460 target / 32 draft slots and the 12GiB admission. Capture complete
+four/eight-token cache lifetimes with four-row compute tiles, check full logits,
+state and routes against trace-off controls, then replay CLOCK exactly before
+simulating 1909/2048 slots. Neither capacity growth nor a smaller generation
+workspace is implemented yet. The new trace path has bounded accounting and
+does not use instrumented timings for speed claims. No production promotion or
+historical timing reuse.
+
+The isolated trace producer builds and passes the real embedding/kernel fixtures
+with Metal validation and clean resources. CMake/Python build identity drift is
+fixed and regression-tested. All 565 Python tests, native tests and chat tests
+pass. The first full-model capture remains blocked before loading at 7.952GiB
+available versus 13.5GiB required; no current window trace or larger-cache result
+is claimed. Saved native traces still replay exactly with the extended parser.
 
 Previous broader exploration: [coordinate memory, cache admission and verification windows](benchmarks/2026-09-17-verifier-horizon/README.md).
 The broader reassessment now includes exact token-row streaming, an eight-token

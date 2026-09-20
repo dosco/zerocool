@@ -44,44 +44,59 @@ Both storage arms use this setup, and fixed-priming counters must remain unchang
 during generation. Cache equality remains required for every new comparison.
 This is benchmark setup, not a claimed prompt-speed optimization.
 
-The replacement build compiles successfully and passes all ten real embedding
-checks with Metal validation and clean resources. They cover repeated IDs,
-vocabulary boundaries, 128-row gathers, FIFO eviction, eviction before GPU
-submission, failed reads and owner destruction. Full-model admission stopped
-before loading: **7.15GiB available; 13.5GiB required**. Its own numerical matrix
-and fresh timing pairs remain pending. Earlier producer timings are never reused.
+The replacement producer completes all six numerical pairs in
+[`fixed-numerical-04`](fixed-numerical-04/summary.json), including identical
+initial target and draft caches. The independent
+[`priming-audit-01`](priming-audit-01/summary.json) compares all twelve processes
+against the original producer: proposals, logits, state, boundaries and admission
+match exactly. Some full-model diagnostics contain compression; clean full
+correctness qualification remains open. The earlier memory and thermal stops
+are preserved as incomplete attempts.
+
+Its ten real embedding checks pass with Metal validation and clean resources.
+They cover repeated IDs, vocabulary boundaries, 128-row gathers, FIFO eviction,
+eviction before GPU submission, failed reads and owner destruction.
+
+The fresh normal [`fixed-screen-01`](fixed-screen-01/summary.json) is complete:
+two alternating pairs per width, 64 generated tokens, and all eight processes
+have clean host/memory observations and identical numerical results. Initial
+target and draft caches match within every pair. The execution
+[capsule](capsule-protocol.md) preserves the linked experimental executable
+despite unrelated changes to the shared build.
+
+| MTP width | Resident / rows tokens/s, pair 0 | Resident / rows tokens/s, pair 1 | Geometric latency ratio, rows/resident |
+|---|---|---|---|
+| Four | 4.003 / 4.152 | 3.914 / 3.771 | 1.00034 |
+| One | 4.032 / 4.236 | 4.326 / 4.105 | 1.00166 |
+
+Peak physical memory falls by **644–647MiB**. Average latency is essentially
+unchanged; neither width demonstrates a speedup. These are separate preliminary
+comparisons on one short coding workload, without confidence bounds or long-
+context qualification. No historical timings are reused.
 
 The evidence query tool now independently recomputes storage comparisons,
 verifies their numerical prerequisite, and keeps widths separate. It also
 withholds raw-run throughput/opportunity estimates when resource measurements
 are missing or disturbed. Production defaults remain unchanged.
-All **546 Python tests pass**, including the priming-scope checks and adversarial
-evidence comparisons. This does not substitute for the pending full-model runs.
-The [second audit](review-02/summary.json) rechecks all ten attempt seals, both
-native producers and the numerical matrix, and archives the current sources.
+The independent evidence query recomputes both completed latency ratios and
+their memory savings. It keeps clean correctness, production promotion and
+normal-request acceptance unqualified. The earlier
+[second audit](review-02/summary.json) remains a record of its original ten
+attempt seals and source snapshot, not an audit of the later completed screen.
 
-## Resume
+## Next experiment
 
 `--resume` verifies source seals, producer, workloads and resource checks before
 reusing numerical samples. Timing samples are never reused. The replacement
 producer requires new native evidence, so the original matrix cannot substitute
 for its validation.
 
-Once native memory, power and thermal gauges pass:
-
-```sh
-.venv/bin/python scripts/qwen/screen_streamed_mtp.py validate \
-  --build .cache/streamed-mtp-fixed-build-20260918-01 \
-  --output docs/benchmarks/2026-09-18-streamed-mtp/fixed-validation-02
-```
-
-Recheck new model state/proposals against the saved original producer as well.
-If this producer needs the existing diagnostic allowance, use its own sealed
-attempt containing a resident numerical process and clean embedding fixture;
-`fixed-validation-01` contains only the fixture and cannot serve that purpose.
-A complete numerical matrix permits an explicitly preliminary cost screen, whose
-timing processes still require clean resources and identical initial caches.
-It does not authorize promotion.
+Storage-cost measurement is complete. The
+[complete cache-window trace](../2026-09-19-horizon-cache/protocol.md) now asks
+whether the saved memory can reduce expert rereads at verifier widths four and
+eight. It checks trace-on versus trace-off arithmetic, reproduces native CLOCK
+decisions, and only then simulates larger capacities. It changes no production
+cache size. The compressed numerical diagnostics still cannot authorize promotion.
 
 The query interface supports `compare` with `--control resident --candidate rows
 --change embedding_storage`, `cycles`, `opportunity` and `next`. An unfinished
@@ -100,8 +115,8 @@ Current streamed allocation arithmetic admits at most 1915 slots at width four
 or 1909 at width eight. A hypothetical reduction of generation workspace from
 512MiB to 128MiB would admit 2060 / 2054 slots respectively, including the existing
 driver reserve. That workspace transition and cache growth are **not implemented
-or qualified**. First finish the row-provider checks and capture current complete
-lease traces; only then test phase-specific workspace or admission bypass.
+or qualified**. Capture current complete lease traces before testing
+phase-specific workspace or admission bypass.
 
 The reproducible offline analysis is
 [`cache-budget-verified.json`](cache-budget-verified.json), generated by

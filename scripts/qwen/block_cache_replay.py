@@ -67,7 +67,7 @@ class Cache:
                      queue=0,previous=None,next=None) for i,e in enumerate(self.slots)])
 
 
-def decode(data,raw,work,fingerprint):
+def decode(data,raw,work,fingerprint,*,expected_patterns=None):
     require(len(data)<=32*1024**2,'Oversized block trace')
     lines=data.splitlines();require(2<=len(lines)<=100000,'Missing or excessive events')
     events=[json.loads(line) for line in lines]
@@ -84,18 +84,26 @@ def decode(data,raw,work,fingerprint):
                       performance_measurement=False),'Native trace receipt differs')
     cache=Cache(capacity);forwards=[];active=None;pending_pin=None;snapshots=[]
     histories=[[] for _ in range(LAYERS)];requests=[];max_pins=0
-    patterns=[(0,72,'prefill')]+[(i,4,'decode') for i in (72,76,80,84)]
+    patterns=expected_patterns if expected_patterns is not None else [(0,72,'prefill')]+[(i,4,'decode') for i in (72,76,80,84)]
+    require(isinstance(patterns,list) and 2<=len(patterns)<=65,'Missing bounded forward coverage')
+    position=0
+    for i,(at,count,phase) in enumerate(patterns):
+        integer(at,0,8191,'forward offset');integer(count,1,128,'forward tokens')
+        require(at==position and phase==('prefill' if i==0 else 'decode'),'Noncontiguous expected forwards')
+        position+=count
+    require(position==len(work['prompt_ids'])+len(work['continuation_ids']) and
+        patterns[0][1]==len(work['prompt_ids']), 'Expected coverage does not match workload')
     tokens=work['prompt_ids']+work['continuation_ids']
     for event in events[1:-1]:
         name,d=event['event'],event['detail']
         require(pending_pin is None or name=='pin','Acquisition was not pinned immediately')
         if name=='forward_begin':
-            require(active is None and cache.pins()==0 and len(forwards)<5,'Overlapping/extra forward or live prior leases')
+            require(active is None and cache.pins()==0 and len(forwards)<len(patterns),'Overlapping/extra forward or live prior leases')
             at,count,phase=patterns[len(forwards)]
             expected=dict(offset=at,tokens=count,input=tokens[at:at+count],phase=phase)
             require(json.dumps(d,sort_keys=True)==json.dumps(expected,sort_keys=True),'Changed forward coverage or tokens')
             active=dict(offset=at,tokens=count,phase=phase,layers=0,selected=[],index=0,
-                        hits_before=cache.hits,misses_before=cache.misses,demands=[])
+                        hits_before=cache.hits,misses_before=cache.misses,demands=[],snapshots=0)
         elif name=='layer':
             require(active is not None and cache.pins()==0 and active['index']==len(active['selected']),
                     'Layer boundary omitted demands or live users')
@@ -134,6 +142,10 @@ def decode(data,raw,work,fingerprint):
             if not release:pending_pin=None
             requests.append(dict(event=name,key=key,forward=len(forwards)))
         elif name=='snapshot':
+            if active is not None:
+                require(active['layers']==48 and active['index']==len(active['selected']),
+                        'Snapshot precedes completed layer work')
+                active['snapshots']+=1
             state=cache.state();encoded=json.dumps(state,separators=(',',':'))
             require(json.dumps(d['state'],separators=(',',':'))==encoded,'Native cache state does not replay')
             digest=hashlib.sha256(encoded.encode()).hexdigest();stats=d['stats']
@@ -148,7 +160,8 @@ def decode(data,raw,work,fingerprint):
             snapshots.append(dict(hash=digest,hits=cache.hits,misses=cache.misses))
         elif name=='forward_end':
             require(active is not None and active['layers']==48 and active['index']==len(active['selected']) and
-                    cache.pins()==0 and d==dict(position=active['offset']+active['tokens']), 'Incomplete forward')
+                    active['snapshots']>=1 and cache.pins()==0 and
+                    d==dict(position=active['offset']+active['tokens']), 'Incomplete forward')
             target=raw['prime']['routes'] if not forwards else raw['blocks'][len(forwards)-1]['routes']
             expected=[dict(layer=i,tokens=d['position'],sha256=hashlib.sha256(
                 struct.pack('<'+'i'*len(v),*v)).hexdigest()) for i,v in enumerate(histories)]
@@ -158,7 +171,7 @@ def decode(data,raw,work,fingerprint):
                 distinct_records=len(set(active['demands'])),demands=active['demands']))
             active=None
         else:raise ValueError('Unknown cache trace event '+name)
-    require(active is None and pending_pin is None and len(forwards)==5 and cache.pins()==0,'Incomplete terminal state')
+    require(active is None and pending_pin is None and len(forwards)==len(patterns) and cache.pins()==0,'Incomplete terminal state')
     for prefix,state in [('before',forwards[:1]),('after',forwards)]:
         hits=sum(f['hits'] for f in state);misses=sum(f['misses'] for f in state);actual=raw[prefix]['expert_cache']
         require((actual['hits'],actual['misses'],actual['application_read_bytes'])==(hits,misses,misses*PAYLOAD_BYTES) and

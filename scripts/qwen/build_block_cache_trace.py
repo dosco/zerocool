@@ -30,7 +30,11 @@ def model_source(source):
 
 
 def storage_source(source):
-    out=INCLUDE+base.instrument_storage(source)
+    return instrument_cache(INCLUDE+base.instrument_storage(source))
+
+
+def instrument_cache(out):
+    """Add lease events to an already instrumented cache without replacing storage."""
     out=replace(out,'    result["diagnostic_cache_state"]=std::move(hexadecimal);',
         '    result["diagnostic_cache_state"]=std::move(hexadecimal);\n    block_trace::snapshot(diagnostic,result);')
     out=replace(out,'{ ++entry_->pins; }','{ ++entry_->pins; block_trace::lease(entry_->key.value(),entry_->pins,false,false); }')

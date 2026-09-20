@@ -8,6 +8,7 @@
 | [qwen_engine.md](qwen_engine.md) | What the engine actually implements, and its qualification limits |
 | [qwen_usability.md](qwen_usability.md) | Terminal chat controls, the HTTP API contract, and usability gates |
 | [qwen_evidence_queries.md](qwen_evidence_queries.md) | How to query the recorded benchmark evidence |
+| [audit-2026-09-20.md](audit-2026-09-20.md) | Repository-wide audit: findings, what was fixed, and what remains open |
 
 ## Stage reports
 
@@ -42,6 +43,10 @@ when you need to reproduce a number.
 
 Headline results so far, all with stated limits in their reports:
 
+- The [exact streamed-embedding screen](benchmarks/2026-09-18-streamed-mtp/README.md)
+  saves 644–647MiB of physical peak memory with essentially flat latency in two
+  alternating pairs per width. The [next cache-window trace](benchmarks/2026-09-19-horizon-cache/README.md)
+  has passed its small native fixtures; full-model capture awaits memory admission.
 - Full-model agreement with the MLX reference is exact for both artifacts on the
   saved five-token fixture, across storage layouts, cache sizes, token batching
   and short session continuations.
