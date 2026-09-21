@@ -107,35 +107,6 @@ build/qwen/bin/zerocool bench --storage --repetitions 3 --json storage.json
 build/qwen/bin/zerocool bench --prompt 'The capital of France is' --max-tokens 256 --repetitions 3 --json generation.json
 ```
 
-## A note on the name
-
-This project was called FreeLLM until September 2026, and the rename went all
-the way down: the `zerocool::engine` namespace, the `zerocool` binary, the
-`ZEROCOOL_*` variables, the HTTP surface, and the prepared-storage format id,
-which is now `zc-affine-records-v1`.
-
-Renaming that format id meant rewriting a hash chain, because the manifest it
-lives in is hash-pinned. All of it was regenerated locally, and the 93GB of
-prepared records were never touched:
-
-1. `manifest.json` carries the format id, so its SHA-256 moved to `3ceca18e…`.
-2. That hash is pinned in `verification.json` and in `models.lock.json`.
-3. Editing `models.lock.json` moved its own SHA-256 to `bc631072…`, which is
-   pinned in turn by `file_locks_sha256` in `mixed-payload-reuse.lock.json`.
-4. That last pin exists so a lock file cannot change without renewed evidence,
-   so the payload-equivalence proof was re-run: all 816 routed-expert and ngram
-   tensors compared byte for byte, 186.17GiB of reads, 143.7s. It is recorded in
-   `docs/benchmarks/2026-09-21-rename-revalidation/`.
-
-Nothing under `docs/benchmarks/` or `docs/experiments/` was edited. The
-September 8 proof still records what it measured; the re-run was added beside it
-at a new path, and the lock now points at the new one.
-
-Old material refers to paths under `.../src/freellm`, and the build fingerprint
-is now `82cb0373…`, matching none of the nine recorded in `docs/`. That is the
-fingerprint working as designed: the real-model numerical, M1 performance and
-session gates still have to be re-run before any of them count as evidence.
-
 ## Layout
 
 | Path | Contents |
