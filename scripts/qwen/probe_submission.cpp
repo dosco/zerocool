@@ -1,12 +1,12 @@
 // Bounded real-Q4-weight ownership experiment. No SSD/request-speed claim.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <csignal>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::atomic<bool> stopped=false;
 void interrupt(int) {stopped=true;}

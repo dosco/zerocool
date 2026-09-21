@@ -82,7 +82,7 @@ def run(output,directory,reference_run):
         freeze(exp,[*builder.inputs(cfg),*builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],*host['files'],
             PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',BASE/'protocol.md',BASE/'profile-protocol.md',
             path,input_path,reference_run/'producer.json',reference_run/'evidence-files.json'])
-        exp.env['FREELLM_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
+        exp.env['ZEROCOOL_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
         require(sha(exp.out/'workload.json')==sha(input_path),'Changed profile workload bytes')
         exp.report.update(performance_measurement=False,reference_source=str(path),reference_sha256=sha(path),timing_samples_reused=False)
         host_check(exp,host,'profile')

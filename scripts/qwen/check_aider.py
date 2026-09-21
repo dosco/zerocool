@@ -34,7 +34,7 @@ def main():
     args=ap.parse_args();out=args.out.resolve();out.mkdir(parents=True,exist_ok=False)
     def get(path):
         with urllib.request.urlopen(args.url+path,timeout=5) as f:return json.load(f)
-    initial=get('/freellm/status');model='openai/'+get('/v1/models')['data'][0]['id']
+    initial=get('/zerocool/status');model='openai/'+get('/v1/models')['data'][0]['id']
     if not args.transport_only:
         blocked=admission_error(initial)
         if blocked:
@@ -86,7 +86,7 @@ def main():
             run('recovery','The latest tests fail: add(2, 3) returned 6, expected 5, and add(-2, 3) returned 2, expected 1. Re-read maths.py and repair add. Change only maths.py.', ['--edit-format','whole','maths.py'])
             result['after_recovery']=verify_add(path);assert result['after_recovery']['passed']
             result['limitations']=['A small two-invocation coding fixture; not a general coding-quality or sustained-session qualification.']
-        result.update(complete=True,passed=True,final_status=get('/freellm/status'))
+        result.update(complete=True,passed=True,final_status=get('/zerocool/status'))
     except Exception as e:result.update(complete=True,passed=False,error=str(e))
     save();print(json.dumps({k:result[k] for k in ('complete','passed','transport_only')},indent=2));return 0 if result['passed'] else 1
 

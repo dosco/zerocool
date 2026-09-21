@@ -1,13 +1,13 @@
 // Isolated lifetime/timing experiment using the existing scratch pool.
 // This is synthetic allocation pressure, not a model or recorded-route replay.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <array>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 constexpr uint32_t Groups=48, Buffers=64, Repeats=8;
 constexpr std::array<uint32_t,4> Widths{2560,6144,10240,768};

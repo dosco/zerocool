@@ -1,11 +1,11 @@
-#include "qwen/session.hpp"
-#include "qwen/q3_probe.hpp"
+#include "engine/session.hpp"
+#include "engine/q3_probe.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <csignal>
 #include <fstream>
 #include <print>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::atomic<bool> stopped=false;
 void interrupt(int) {stopped=true;}

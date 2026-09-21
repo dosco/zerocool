@@ -48,7 +48,7 @@ def download(url, limit, byte_range=None, total=None):
         start, end = byte_range
         headers['Range'] = f'bytes={start}-{end}'
         # A distinct URL also avoids intermediary caches returning a prior range.
-        url += f'?freellm_range={start}-{end}'
+        url += f'?zerocool_range={start}-{end}'
     with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=60) as response:
         if byte_range and (response.status != 206 or
                            response.headers.get('Content-Range') != f'bytes {start}-{end}/{total}'):

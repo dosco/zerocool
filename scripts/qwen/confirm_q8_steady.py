@@ -98,7 +98,7 @@ def run(args, *, kind=KIND, screen=SCREEN, configs=configs, screen_files=screen_
                 report['phase']=stem.name;save(out/'summary.json',report);print(stem.name,flush=True)
                 common=['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
                 with stem.with_suffix('.admission.log').open('w') as log:
-                    path=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,frozen['budget_bytes'],512,log,guard,remaining)
+                    path=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,frozen['budget_bytes'],512,log,guard,remaining)
                 if load(path)['current_admission']['expert_slots'] != 1848:raise ResourceBlocked('Explicit capacity not admitted')
                 last=0
                 def pulse():
@@ -107,7 +107,7 @@ def run(args, *, kind=KIND, screen=SCREEN, configs=configs, screen_files=screen_
                         print(f'{stem.name}: elapsed {time.monotonic()-started:.0f}s; remaining {max(0,TIME_LIMIT-(time.monotonic()-started)):.0f}s',flush=True)
                         last=time.monotonic()
                 with stem.with_suffix('.log').open('w') as log:
-                    guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json',
+                    guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json',
                         '--repetitions','1','--temperature','0','--seed','0','--gpu-reference','off',
                         '--bench-progress',stem.with_suffix('.progress.jsonl'),'--json',stem.with_suffix('.json')],
                         stdout=log,timeout=min(150,remaining()),env=env,progress=pulse)

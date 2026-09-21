@@ -1,6 +1,10 @@
-# FreeLLM: one large model on a 32GB M1 Pro
+# ZeroCool
 
-FreeLLM is an experimental C++23/Metal engine that runs pinned
+A native C++23/Metal inference engine for Apple Silicon. No Python in the
+serving path, no cloud, and one process that holds the model for as long as
+you keep talking to it.
+
+It is being proved on a deliberately hard case first. ZeroCool runs pinned
 Qwen3.8-Flash-Next checkpoints of about 104–106GB on a 32GiB M1 Pro. Routed
 experts and ngram tables stay on the internal SSD. The engine holds a bounded
 working set of at most 22GiB, reduced further by the memory actually available.
@@ -37,8 +41,8 @@ cmake --preset release && cmake --build --preset release --parallel 8
 
 Presets: `release`, `debug`, `asan`, `tsan`, `no-tui`. A build with a sanitizer
 or without optimization reports a different build fingerprint, so its timings
-can never be mistaken for evidence. Use `-DFREELLM_BUILD_TUI=OFF` to build
-without the terminal client, and `-DFREELLM_BUILD_DIAGNOSTICS=OFF` to skip the
+can never be mistaken for evidence. Use `-DZEROCOOL_BUILD_TUI=OFF` to build
+without the terminal client, and `-DZEROCOOL_BUILD_DIAGNOSTICS=OFF` to skip the
 replay and probe executables.
 
 ## Get the model
@@ -46,7 +50,7 @@ replay and probe executables.
 ```sh
 bash scripts/qwen/download.sh
 python3 scripts/qwen/verify_checkpoint.py
-build/qwen/bin/freellm inspect --model .cache/models/qwen38-flash-next
+build/qwen/bin/zerocool inspect --model .cache/models/qwen38-flash-next
 ```
 
 `models.lock.json` pins every required file and hash. Verification writes a
@@ -57,20 +61,20 @@ local receipt, and startup rejects files that changed since it was written.
 Interactive terminal chat, which starts its own local server:
 
 ```sh
-build/qwen/bin/freellm chat
+build/qwen/bin/zerocool chat
 ```
 
 Chat defaults to `.cache/models/qwen38-flash-next` and
 `.cache/prepared/q4-records-v1`, requests 12GiB, and keeps the Q4 and native
 execution defaults. Enter inserts a newline, Ctrl+D sends, Ctrl+C cancels, and
 Ctrl+Q quits. To attach to a server you already started, use
-`freellm chat --connect http://127.0.0.1:8080`.
+`zerocool chat --connect http://127.0.0.1:8080`.
 
 One-shot generation and the local API server:
 
 ```sh
-build/qwen/bin/freellm run --model .cache/models/qwen38-flash-next
-build/qwen/bin/freellm serve --model .cache/models/qwen38-flash-next --port 8080
+build/qwen/bin/zerocool run --model .cache/models/qwen38-flash-next
+build/qwen/bin/zerocool serve --model .cache/models/qwen38-flash-next --port 8080
 ```
 
 The API exposes `/v1/models` and `/v1/chat/completions`, including streaming,
@@ -78,7 +82,7 @@ sampling, reasoning text and structured tool calls. Model IDs are
 `qwen3.8-flash-next:4bit` and `qwen3.8-flash-next:mixed-4_8bit`. The listener
 binds `127.0.0.1`, runs one conversation at a time, refuses cross-origin and
 non-loopback requests, and requires `Content-Type: application/json` on POST.
-FreeLLM never executes a tool; a coding client does that. See
+ZeroCool never executes a tool; a coding client does that. See
 [docs/qwen_usability.md](docs/qwen_usability.md) for the full contract.
 
 Memory values are GiB. Context covers input plus output and cannot exceed 8192
@@ -99,15 +103,44 @@ performance, session or coding evidence is missing or outside its limits.
 
 ```sh
 MTL_DEBUG_LAYER=1 MTL_SHADER_VALIDATION=1 build/qwen/test_qwen
-build/qwen/bin/freellm bench --storage --repetitions 3 --json storage.json
-build/qwen/bin/freellm bench --prompt 'The capital of France is' --max-tokens 256 --repetitions 3 --json generation.json
+build/qwen/bin/zerocool bench --storage --repetitions 3 --json storage.json
+build/qwen/bin/zerocool bench --prompt 'The capital of France is' --max-tokens 256 --repetitions 3 --json generation.json
 ```
+
+## A note on the name
+
+This project was called FreeLLM until September 2026, and the rename went all
+the way down: the `zerocool::engine` namespace, the `zerocool` binary, the
+`ZEROCOOL_*` variables, the HTTP surface, and the prepared-storage format id,
+which is now `zc-affine-records-v1`.
+
+Renaming that format id meant rewriting a hash chain, because the manifest it
+lives in is hash-pinned. All of it was regenerated locally, and the 93GB of
+prepared records were never touched:
+
+1. `manifest.json` carries the format id, so its SHA-256 moved to `3ceca18e…`.
+2. That hash is pinned in `verification.json` and in `models.lock.json`.
+3. Editing `models.lock.json` moved its own SHA-256 to `bc631072…`, which is
+   pinned in turn by `file_locks_sha256` in `mixed-payload-reuse.lock.json`.
+4. That last pin exists so a lock file cannot change without renewed evidence,
+   so the payload-equivalence proof was re-run: all 816 routed-expert and ngram
+   tensors compared byte for byte, 186.17GiB of reads, 143.7s. It is recorded in
+   `docs/benchmarks/2026-09-21-rename-revalidation/`.
+
+Nothing under `docs/benchmarks/` or `docs/experiments/` was edited. The
+September 8 proof still records what it measured; the re-run was added beside it
+at a new path, and the lock now points at the new one.
+
+Old material refers to paths under `.../src/freellm`, and the build fingerprint
+is now `82cb0373…`, matching none of the nine recorded in `docs/`. That is the
+fingerprint working as designed: the real-model numerical, M1 performance and
+session gates still have to be re-run before any of them count as evidence.
 
 ## Layout
 
 | Path | Contents |
 |---|---|
-| `src/qwen`, `include/qwen` | The engine: storage, Metal, model, pipeline, session, server, CLI |
+| `src/engine`, `include/engine` | The engine: storage, Metal, model, pipeline, session, server, CLI |
 | `kernels/metal/qwen.metal` | Every compute kernel, embedded at build time |
 | `tests` | Native and transport tests, plus captured numerical fixtures |
 | `scripts/qwen` | Developer tooling: download, verification, screens, references |

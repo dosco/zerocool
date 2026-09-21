@@ -165,9 +165,9 @@ class Experiment:
     def bench(self,c,stem,extra=(),limit=150):
         common=['--model',self.model,'--artifact','mixed-4_8bit','--prepared',self.prepared,'--memory-gb','12','--context','8192',*config_args(c)]
         with (self.out/(stem+'.admission.log')).open('w') as log:
-            p=inspect_admission(ROOT/'build/qwen/bin/freellm',common,self.out/stem,12*1024**3,512,log,self.guard,self.left)
+            p=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,self.out/stem,12*1024**3,512,log,self.guard,self.left)
         if load(p)['current_admission']['expert_slots']!=c['expert_slots']:raise ResourceBlocked('Requested capacity not admitted')
-        self.command([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',self.out/'workload.json',
+        self.command([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',self.out/'workload.json',
             '--repetitions','1','--temperature','0','--seed','0','--bench-progress',self.out/(stem+'.progress.jsonl'),
             '--json',self.out/(stem+'.json'),*extra],stem,limit)
         return load(self.out/(stem+'.json'))

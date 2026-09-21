@@ -1,7 +1,7 @@
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <fstream>
 #include <print>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 // Isolated production-operator replay; no full-model or performance claim.
 int main(int argc,char** argv) {
  try {

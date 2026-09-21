@@ -33,7 +33,7 @@ def hash_file(path):
 
 
 def verify(model, lock, cached=False):
-    receipt_path = model / 'freellm-verification.json'
+    receipt_path = model / 'zerocool-verification.json'
     old = json.loads(receipt_path.read_text()) if cached and receipt_path.exists() else {}
     result = dict(schema=1, revision=lock['revision'], verified_at=int(time.time()), files={})
     for entry in lock['files']:

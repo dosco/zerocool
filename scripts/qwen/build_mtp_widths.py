@@ -92,7 +92,7 @@ def generated(output):
     b = s.index('\n}\n\n}\nint main(', a)+2
     joint = s[a:b]
     joint = replace(joint, '    const ContinuationInput work(input,mode);',
-        '    const char* width_setting=std::getenv("FREELLM_MTP_WIDTH");\n'
+        '    const char* width_setting=std::getenv("ZEROCOOL_MTP_WIDTH");\n'
         '    check(width_setting && (std::string_view(width_setting)=="1" || std::string_view(width_setting)=="2" ||\n'
         '        std::string_view(width_setting)=="4"),"explicit MTP width must be 1, 2 or 4");\n'
         '    const uint32_t requested_width=uint32_t(width_setting[0]-\'0\');\n'

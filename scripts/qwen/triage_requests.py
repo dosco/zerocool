@@ -116,9 +116,9 @@ def worker(output):
                       *normal.config_args(config)]
             print(f'{name}: prime 4096, append 128, generate 8',flush=True)
             with stem.with_suffix('.log').open('w') as log:
-                admission = normal.inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,
+                admission = normal.inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,
                     evidence['budget_bytes'],512,log,guard)
-                guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',inputs,
+                guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',inputs,
                            '--repetitions','1','--temperature','0','--seed','0','--json',raw_path],
                           stdout=log,timeout=900,env=env)
             raw = load(raw_path)

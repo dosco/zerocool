@@ -136,12 +136,12 @@ class HorizonTests(unittest.TestCase):
 
     def test_tile_four_keeps_eight_row_storage_and_complete_two_slice_dispatch(self):
         import build_tiled_verifier_horizon as tiled
-        s=tiled.generated(Path('/tmp/freellm-tiled-check'))
-        self.assertIn('t0=gid.y*4',s[Path('/tmp/freellm-tiled-check/metal.mm').resolve()])
+        s=tiled.generated(Path('/tmp/zerocool-tiled-check'))
+        self.assertIn('t0=gid.y*4',s[Path('/tmp/zerocool-tiled-check/metal.mm').resolve()])
         self.assertIn('x[(t0+t)*K+base+i]',tiled.shader())
         self.assertIn('out[(t0+t)*N+row]',tiled.shader())
-        self.assertIn('l.output*32,tokens/4);',s[Path('/tmp/freellm-tiled-check/metal.mm').resolve()])
-        self.assertIn('std::min(4u,uint32_t(ids.size()))',s[Path('/tmp/freellm-tiled-check/model.cpp').resolve()])
+        self.assertIn('l.output*32,tokens/4);',s[Path('/tmp/zerocool-tiled-check/metal.mm').resolve()])
+        self.assertIn('std::min(4u,uint32_t(ids.size()))',s[Path('/tmp/zerocool-tiled-check/model.cpp').resolve()])
 
 
 if __name__=='__main__':unittest.main()

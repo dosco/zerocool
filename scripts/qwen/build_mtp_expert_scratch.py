@@ -36,7 +36,7 @@ def generated(output):
         '        }\n        mtp_scratch::retained_group_owner=group_reuse?&gpu_:nullptr;')
     s=replace(s,'        if(scratch_started) {','        if(scratch_started || group_reuse) {\n            mtp_scratch::retained_group_owner=nullptr;')
     sources[path]=s
-    path=output/'pipeline.cpp';s=INCLUDE+(ROOT/'src/qwen/pipeline.cpp').read_text()
+    path=output/'pipeline.cpp';s=INCLUDE+(ROOT/'src/engine/pipeline.cpp').read_text()
     s=replace(s,'    auto state=std::make_unique<ExpertTail::Impl>(gpu,reads,detailed);',
         '    const bool pooled=mtp_scratch::target==&gpu;bool scratch_started=false;\n'
         '    if(pooled && (tail || coalesce_reads || encode_group)) throw std::logic_error("unsupported pooled expert schedule");\n'
@@ -64,7 +64,7 @@ def generated(output):
     s=replace(s,'struct ContinuationInput {',TEST.read_text()+'\nstruct ContinuationInput {')
     s=replace(s,'    const ContinuationInput work(input,mode);const auto& prompt=work.prompt;',
         '    const ContinuationInput work(input,mode);const auto& prompt=work.prompt;\n'
-        '    const char* setting=std::getenv("FREELLM_MTP_EXPERT_SCRATCH");\n'
+        '    const char* setting=std::getenv("ZEROCOOL_MTP_EXPERT_SCRATCH");\n'
         '    check(setting && (std::string_view(setting)=="off" || std::string_view(setting)=="on"),"explicit expert scratch arm required");\n'
         '    mtp_scratch::enabled=std::string_view(setting)=="on";\n'
         '    report["expert_scratch_before"]=mtp_scratch::counters();')
@@ -87,10 +87,10 @@ def settings(output):
     c=base.base.settings(output);source=c['output']/'pipeline.cpp';obj=c['output']/'pipeline.o'
     command=c['compiler'][0].copy();command[command.index('-o')+1]=str(obj);command[-1]=str(source)
     c['compiler'].append(command);c['objects'].append(obj)
-    c['linker'].insert(c['linker'].index('libfreellm_lib.a'),str(obj));return c
+    c['linker'].insert(c['linker'].index('libzerocool_lib.a'),str(obj));return c
 
 
-def inputs(c):return [*base.inputs(c),Path(__file__).resolve(),HEADER,TEST,ROOT/'src/qwen/pipeline.cpp']
+def inputs(c):return [*base.inputs(c),Path(__file__).resolve(),HEADER,TEST,ROOT/'src/engine/pipeline.cpp']
 
 
 def proof(c):

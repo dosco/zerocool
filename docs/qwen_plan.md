@@ -1,4 +1,4 @@
-# FreeLLM: quality-preserving inference beyond RAM on a 32GB M1 Pro
+# ZeroCool: quality-preserving inference beyond RAM on a 32GB M1 Pro
 
 Current execution priority: the [200ms/token generation stage](qwen_decode_target_stage.md).
 Current experimental work: [complete verifier cache-window traces](benchmarks/2026-09-19-horizon-cache/README.md).

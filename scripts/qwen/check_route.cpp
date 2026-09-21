@@ -1,4 +1,4 @@
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <algorithm>
 #include <cmath>
@@ -7,7 +7,7 @@
 #include <numeric>
 #include <print>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::string hash(const Buf& b) {
     unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(b->data,CC_LONG(b->bytes),digest);

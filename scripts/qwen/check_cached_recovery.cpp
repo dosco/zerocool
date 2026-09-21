@@ -1,11 +1,11 @@
-#include "qwen/model.hpp"
+#include "engine/model.hpp"
 #include "cached_recovery_checks.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <thread>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 
 // Explicit real-model check: missing artifacts fail instead of skipping.
 int main(int argc,char** argv) {

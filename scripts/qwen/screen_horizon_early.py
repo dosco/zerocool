@@ -51,8 +51,8 @@ def run(output,directory,source,tiled=False):
         freeze(exp,[*producer_builder.inputs(cfg),*producer_builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],*host['files'],PROTOCOL,
             PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',
             *[p for p in source.iterdir() if p.is_file()]])
-        exp.env.update(FREELLM_Q8_EXPANDED='packed',FREELLM_MTP_NGRAM_INIT='lazy',FREELLM_MTP_EXPERT_SCRATCH='off',
-                       FREELLM_MTP_DIRECT_OUTPUT='on',FREELLM_TARGET_RECOVERY='full-replay')
+        exp.env.update(ZEROCOOL_Q8_EXPANDED='packed',ZEROCOOL_MTP_NGRAM_INIT='lazy',ZEROCOOL_MTP_EXPERT_SCRATCH='off',
+                       ZEROCOOL_MTP_DIRECT_OUTPUT='on',ZEROCOOL_TARGET_RECOVERY='full-replay')
         exp.report.update(samples=[],comparisons=[],perfect_proposals_only=True,production_promoted=False,
             advance_to_real_draft=False,qualification_blocked=True,
             compute_tile_cap=4 if tiled else 8,
@@ -71,7 +71,7 @@ def run(output,directory,source,tiled=False):
             if not resources['clean_memory'] or not resources['clean_host']:raise ResourceBlocked(resource_failure(kernel,'kernel'))
         def sample(width,count,stem,validation):
             values=prefix(work,count);input_path=exp.out/(stem+'.input.json');save(input_path,values);freeze(exp,[input_path])
-            host_check(exp,host,stem);exp.env['FREELLM_VERIFIER_HORIZON']=str(width);path=exp.out/(stem+'.json')
+            host_check(exp,host,stem);exp.env['ZEROCOOL_VERIFIER_HORIZON']=str(width);path=exp.out/(stem+'.json')
             exp.command([cfg['binary'],exp.model,PREPARED,input_path,path,'fast-validate' if validation else 'fast-timing'],
                         stem,limit=180,validation=validation)
             raw=read(path);result=validate(raw,values,sha(input_path),proof['binary_sha256'],width,validation,True)

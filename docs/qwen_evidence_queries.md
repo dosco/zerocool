@@ -315,7 +315,7 @@ The model is deliberately fixed and inspectable:
 
 - Only the pinned Q4 and mixed-4/8 revisions are supported. Both use fixed-size
   Q4 expert payloads: **2,764,800 read bytes** and **2,768,896 aligned slot bytes**
-  per expert, matching `include/qwen/storage.hpp`. No lower-bit estimate is used.
+  per expert, matching `include/engine/storage.hpp`. No lower-bit estimate is used.
 - Preserve the file's layer-pass order. A pass groups its token rows by selected
   expert; repeated selections within that pass are grouped work, not cache hits.
   Each policy sees the same ascending expert-ID order within a pass. Native

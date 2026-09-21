@@ -84,7 +84,7 @@ def setup(exp,directory):
     shutil.copyfile(PROTOCOL,exp.out/'protocol.md')
     exp.report.update(criteria=CRITERIA,limitations=LIMITATIONS,build_directory=str(directory),host_preflight=[],source_timing_reused=False)
     freeze(exp,[*proof['files'],*host['files'],PROTOCOL,exp.out/'protocol.md',exp.out/'producer.json',exp.out/'host-producer.json',ANCHOR])
-    exp.env.pop('FREELLM_Q8_EXPANDED',None);exp.persist();exp.guard.check_resources(initial=True)
+    exp.env.pop('ZEROCOOL_Q8_EXPANDED',None);exp.persist();exp.guard.check_resources(initial=True)
     return cfg,host
 
 

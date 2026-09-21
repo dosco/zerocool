@@ -32,8 +32,8 @@ def settings(output):
     v['binary'] = cfg['output']/'probe-expanded-verifier'
     v['linker'] = list(c['linker']); v['linker'][v['linker'].index('-o')+1] = str(v['binary'])
     v['linker'] = [x for x in v['linker'] if x not in map(str,c['objects'])]
-    v['linker'][v['linker'].index('libfreellm_lib.a'):v['linker'].index('libfreellm_lib.a')] = list(map(str,v['objects']))
-    for link in (c['linker'],v['linker']): link.insert(link.index('libfreellm_lib.a'),str(cfg['objects'][0]))
+    v['linker'][v['linker'].index('libzerocool_lib.a'):v['linker'].index('libzerocool_lib.a')] = list(map(str,v['objects']))
+    for link in (c['linker'],v['linker']): link.insert(link.index('libzerocool_lib.a'),str(cfg['objects'][0]))
     cfg['compiler'] = [*cfg['compiler'], *c['compiler'], v['compiler'][0], v['compiler'][2]]
     cfg['linkers'] = [cfg['linker'], c['linker'], v['linker']]
     cfg['all_objects'] = list(dict.fromkeys([*cfg['objects'],*c['objects'],*v['objects']]))
@@ -55,7 +55,7 @@ def metal_source():
         '    bool retained_references=true;\n    bool expanded_q8=false,expanded_scope=false;')
     value=replace(value, 'Metal::Metal() : impl_(std::make_unique<Impl>()) {',
         'Metal::Metal() : impl_(std::make_unique<Impl>()) {\n'
-        '    if(const char* mode=std::getenv("FREELLM_Q8_EXPANDED")) {\n'
+        '    if(const char* mode=std::getenv("ZEROCOOL_Q8_EXPANDED")) {\n'
         '        if(std::string_view(mode)!="packed") throw std::runtime_error("invalid expanded Q8 mode");\n'
         '        impl_->expanded_q8=true;\n    }')
     marker='void Metal::label(std::string stage,int layer,uint32_t tokens,uint32_t offset,std::span<const uint32_t> experts) {'
@@ -81,7 +81,7 @@ def sources(cfg):
     v=cfg['verifier']; result[v['generated']]=verifier.instrument(v['source'].read_text())
     raw=(ROOT/'scripts/qwen/probe_perfect_draft.cpp').read_text()
     raw=replace(raw,'        phase(output,"load_model");const auto setup_start=monotonic_ns();',
-        '        report["expanded_q8"]=std::getenv("FREELLM_Q8_EXPANDED")!=nullptr;\n'
+        '        report["expanded_q8"]=std::getenv("ZEROCOOL_Q8_EXPANDED")!=nullptr;\n'
         '        phase(output,"load_model");const auto setup_start=monotonic_ns();')
     result[cfg['output']/'probe.expanded-verifier.cpp']=raw
     return result

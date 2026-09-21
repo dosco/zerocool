@@ -54,7 +54,7 @@ def prepare(model, output, force_verify=False):
     revision = lock['revision']
     output.mkdir(parents=True, exist_ok=True)
     # Fail on a different preparation's output rather than mixing recipes.
-    identity = dict(schema=1, source_revision=revision, format='freellm-affine-records-v1')
+    identity = dict(schema=1, source_revision=revision, format='zc-affine-records-v1')
     identity_path = output / 'preparation.json'
     if identity_path.exists() and json.loads(identity_path.read_text()) != identity:
         raise ValueError('Output belongs to a different preparation')

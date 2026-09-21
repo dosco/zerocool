@@ -1,9 +1,9 @@
 // Test-only executable. Never installed or selectable by the production engine.
-#include "qwen/chat.hpp"
+#include "engine/chat.hpp"
 #include "chat_test_executor.hpp"
 #include <csignal>
 #include <print>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {std::atomic<bool> stop=false;void interrupt(int){stop=true;}}
 int main(int argc,char** argv) {
     try {

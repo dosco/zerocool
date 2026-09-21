@@ -136,7 +136,7 @@ def run(args):
                 guard.run(cmd,stdout=log,timeout=min(limit,remaining()),env=dict(env,MTL_DEBUG_LAYER='1',MTL_SHADER_VALIDATION='1') if validation else env,progress=pulse)
         def admission(c,stem):
             with stem.with_suffix('.admission.log').open('w') as log:
-                p=inspect_admission(ROOT/'build/qwen/bin/freellm',common(c),stem,12*1024**3,512,log,guard,remaining)
+                p=inspect_admission(ROOT/'build/qwen/bin/zerocool',common(c),stem,12*1024**3,512,log,guard,remaining)
             if load(p)['current_admission']['expert_slots']!=1848:raise ResourceBlocked('Expected expert capacity not admitted')
         with (ROOT/'.cache/qwen-qualification.lock').open('a') as lock:
             try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -144,7 +144,7 @@ def run(args):
             guard.check_resources(initial=True);deadline=time.monotonic()+LIMITS['operators']
             fixtures=out/'fixtures';fixtures.mkdir();admission(configs()[0],out/'capture')
             with tempfile.TemporaryDirectory(dir=out,prefix='temporary-trace-') as temporary:
-                execute([ROOT/'build/qwen/bin/freellm','bench',*common(configs()[0]),'--workload-file',out/'capture-workload.json',
+                execute([ROOT/'build/qwen/bin/zerocool','bench',*common(configs()[0]),'--workload-file',out/'capture-workload.json',
                     '--temperature','0','--seed','0','--repetitions','1','--trace-dir',temporary,'--json',out/'capture.json'],out/'capture',90)
                 cases=[]
                 for phase,layer,tokens in [('decode',l,1) for l in range(48)]+[('prefill',l,72) for l in (0,47)]:
@@ -161,7 +161,7 @@ def run(args):
             deadline=time.monotonic()+LIMITS['requests'];expected={}
             for pair,name in order(2):
                 c=next(c for c in configs() if c['name']==name);stem=out/f'pair-{pair}-{name}';admission(c,stem)
-                execute([ROOT/'build/qwen/bin/freellm','bench',*common(c),'--workload-file',out/'workload.json','--repetitions','1',
+                execute([ROOT/'build/qwen/bin/zerocool','bench',*common(c),'--workload-file',out/'workload.json','--repetitions','1',
                     '--temperature','0','--seed','0','--gpu-reference','off','--bench-progress',stem.with_suffix('.progress.jsonl'),'--json',stem.with_suffix('.json')],stem,150)
                 report['measurements'].append(dict(pair=pair,configuration=name,requests=observations(load(stem.with_suffix('.json')),frozen,c,workload,expected),**source(stem.with_suffix('.json'))))
                 save(out/'summary.json',report)

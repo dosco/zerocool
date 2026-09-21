@@ -15,12 +15,12 @@ from cache_residency import require
 from qualification_evidence import save, sha
 
 ROOT = Path(__file__).resolve().parents[2]
-CAPTURE_ENV = 'FREELLM_HYPER_CAPTURE_DIR'
+CAPTURE_ENV = 'ZEROCOOL_HYPER_CAPTURE_DIR'
 HOOK = r'''
     // Developer source-copy capture: four complete, raw single-token blocks.
     // It is deliberately distinct from production inference and its timings.
     if(tokens==1 && phase_=="decode") {
-        const char* capture_dir=std::getenv("FREELLM_HYPER_CAPTURE_DIR");
+        const char* capture_dir=std::getenv("ZEROCOOL_HYPER_CAPTURE_DIR");
         const std::array<std::string,4> capture_bases={
             "model.layers.0.attn_hyper_connection","model.layers.0.mlp_hyper_connection",
             "model.layers.3.attn_hyper_connection","model.layers.3.mlp_hyper_connection"};
@@ -71,16 +71,16 @@ def instrument(source):
 def build(output, *, root=ROOT):
     output, root = Path(output).resolve(), Path(root).resolve()
     output.mkdir(parents=True, exist_ok=False)
-    source = root/'src/qwen/model.cpp'
+    source = root/'src/engine/model.cpp'
     build_dir = root/'build/qwen'
     commands_path = build_dir/'compile_commands.json'
-    link_path = build_dir/'CMakeFiles/freellm.dir/link.txt'
+    link_path = build_dir/'CMakeFiles/zerocool.dir/link.txt'
     commands = json.loads(commands_path.read_text())
     entries = [entry for entry in commands if Path(entry['file']).resolve() == source]
     require(len(entries) == 1, 'Missing unique native model compile command')
     original = entries[0]
     require(Path(original['directory']).resolve() == build_dir, 'Unexpected native build directory')
-    generated, obj, binary = (output/name for name in ('model.capture.cpp', 'model.capture.o', 'freellm-hyper-capture'))
+    generated, obj, binary = (output/name for name in ('model.capture.cpp', 'model.capture.o', 'zerocool-hyper-capture'))
     generated.write_text(instrument(source.read_text()))
     compile_command = shlex.split(original['command'])
     require(compile_command.count('-o') == compile_command.count('-c') == 1 and
@@ -88,12 +88,12 @@ def build(output, *, root=ROOT):
     compile_command[compile_command.index('-o')+1] = str(obj)
     compile_command[-1] = str(generated)
     link_command = shlex.split(link_path.read_text())
-    require(link_command.count('-o') == 1 and link_command.count('libfreellm_lib.a') == 1,
+    require(link_command.count('-o') == 1 and link_command.count('libzerocool_lib.a') == 1,
             'Unexpected CLI linker command')
     link_command[link_command.index('-o')+1] = str(binary)
-    link_command.insert(link_command.index('libfreellm_lib.a'), str(obj))
-    inputs = [source, commands_path, link_path, build_dir/'libfreellm_lib.a',
-              build_dir/'CMakeFiles/freellm.dir/src/qwen/main.cpp.o', build_dir/'bin/freellm']
+    link_command.insert(link_command.index('libzerocool_lib.a'), str(obj))
+    inputs = [source, commands_path, link_path, build_dir/'libzerocool_lib.a',
+              build_dir/'CMakeFiles/zerocool.dir/src/engine/main.cpp.o', build_dir/'bin/zerocool']
     frozen = {str(path): sha(path) for path in inputs}
     producer = dict(kind='hyper_capture_producer_v1', complete=False,
         instrumentation='developer source-copy Model::hyper hook; production build unchanged',

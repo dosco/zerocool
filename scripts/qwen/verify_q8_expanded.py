@@ -99,8 +99,8 @@ def run(output,directory,source):
         freeze(exp,[source/'summary.json',source/'evidence-files.json',verifier.PRIME_REFERENCE]);exp.persist()
         for mode,pair,arm,width,packed,stem in stages():
             operators.host_check(exp,host,stem)
-            if packed:exp.env['FREELLM_Q8_EXPANDED']='packed'
-            else:exp.env.pop('FREELLM_Q8_EXPANDED',None)
+            if packed:exp.env['ZEROCOOL_Q8_EXPANDED']='packed'
+            else:exp.env.pop('ZEROCOOL_Q8_EXPANDED',None)
             path=exp.out/(stem+'.json')
             try:exp.command([cfg['verifier']['binary'],exp.model,exp.prepared,exp.out/'workload.json',path,str(width),mode,'1460'],
                 stem,limit=150 if mode=='validate' else 90,validation=mode=='validate')

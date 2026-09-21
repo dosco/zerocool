@@ -159,9 +159,9 @@
     }
   ],
   "prepared_control": {
-    "format": "freellm-affine-records-v1",
+    "format": "zc-affine-records-v1",
     "recipe": "q4-control-lossless",
-    "manifest_sha256": "c4bb4db3220a0de2218128738b2a6ac650a3d65086690c8dc2e8c23d097160da",
+    "manifest_sha256": "3ceca18ea0b243e6da01ba2b338243404d7f6e7e3e0213bdb01fd6127285d642",
     "prepared_bytes": 100048541696
   }
 }

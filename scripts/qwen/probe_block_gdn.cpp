@@ -1,12 +1,12 @@
 // Developer-only four-token Q8 row-pair screen with actual captured inputs.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 void check(bool ok,const char* text) { if(!ok) throw std::runtime_error(text); }
 std::string hash(const void* data,size_t bytes) {

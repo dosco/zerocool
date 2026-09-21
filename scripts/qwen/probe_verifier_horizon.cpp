@@ -37,7 +37,7 @@ void joint(const std::filesystem::path& model_path,const std::filesystem::path& 
            const std::filesystem::path& output,const std::string& mode,Json& report) {
     check(mode=="fast-validate" || mode=="fast-timing","invalid horizon mode");
     const bool validation=mode=="fast-validate";
-    const char* setting=std::getenv("FREELLM_VERIFIER_HORIZON");
+    const char* setting=std::getenv("ZEROCOOL_VERIFIER_HORIZON");
     check(setting && (std::string_view(setting)=="1" || std::string_view(setting)=="4" ||
                       std::string_view(setting)=="8"),"explicit horizon must be 1, 4 or 8");
     const uint32_t requested_width=uint32_t(setting[0]-'0');

@@ -2,7 +2,7 @@
 #pragma once
 #include "block_cache_trace.hpp"
 
-namespace freellm::qwen::horizon_trace {
+namespace zerocool::engine::horizon_trace {
 inline bool enabled = false, active = false;
 inline Json forwards = Json::array();
 struct ForwardScope {
@@ -44,4 +44,4 @@ inline void forward_end(uint32_t position, Json routes) {
     if(active) block_trace::forward_end(position);
 }
 inline Json finish() { return enabled ? block_trace::finish() : Json(nullptr); }
-} // namespace freellm::qwen::horizon_trace
+} // namespace zerocool::engine::horizon_trace

@@ -1,8 +1,8 @@
 // Read benchmark prerequisites without constructing Metal or loading a model.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <fstream>
 #include <iostream>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 int main(int argc,char** argv) {
     try {
         if(argc!=2 || std::filesystem::exists(argv[1]))

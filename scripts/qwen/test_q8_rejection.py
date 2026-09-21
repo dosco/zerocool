@@ -16,7 +16,7 @@ def run(args):
     checks = []
     for name, expected in [('missing_weight', 'No such file or directory'), ('truncated_weight', 'fixture size mismatch'),
                            ('changed_weight', 'fixture hash mismatch'), ('wrong_source', 'unpinned Q8 fixture')]:
-        with tempfile.TemporaryDirectory(prefix='freellm-q8-rejection-') as directory:
+        with tempfile.TemporaryDirectory(prefix='zerocool-q8-rejection-') as directory:
             root = Path(directory)
             shutil.copyfile(args.fixture/'manifest.json', root/'manifest.json')
             for file in manifest['files']:

@@ -89,7 +89,7 @@ def correctness_stage(trial, output, directory, recipe_path, fixture, sources):
                         seal_sha256=entry['seal_sha256'],sample=str(entry['path']),sha256=trial.sha(path)))
                     print(f'correctness case {i} {arm}: reusing complete clean validation',flush=True)
                 else:
-                    trial.host_check(exp,host,stem);exp.env['FREELLM_TARGET_RECOVERY']=arm
+                    trial.host_check(exp,host,stem);exp.env['ZEROCOOL_TARGET_RECOVERY']=arm
                     exp.command([cfg['binary'],exp.model,trial.PREPARED,input_path,path,'fast-validate'],
                                 stem,limit=300,validation=True)
                 raw=trial.read(path);observed=trial.observe(raw,work,trial.sha(input_path),True)

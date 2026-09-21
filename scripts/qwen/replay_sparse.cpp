@@ -1,9 +1,9 @@
-#include "qwen/model.hpp"
+#include "engine/model.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <cstring>
 #include <fstream>
 #include <print>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::string hash(const Buf& b) {
     unsigned char d[32];CC_SHA256(b->data,CC_LONG(b->bytes),d);std::string s;

@@ -1,10 +1,10 @@
-#include "qwen/model.hpp"
+#include "engine/model.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <fstream>
 #include <print>
 #include <thread>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::string hash(std::span<const std::byte> bytes) {
     unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(bytes.data(),CC_LONG(bytes.size()),digest);
@@ -112,7 +112,7 @@ int main(int argc,char** argv) {
         }
         // Deliberately fail after layer-zero recurrent work and expert execution.
         // This exercises the production partial-panel failure path without altering weights.
-        const auto dir=std::filesystem::temp_directory_path()/("freellm-panel-fault-"+std::to_string(monotonic_ns()));
+        const auto dir=std::filesystem::temp_directory_path()/("zerocool-panel-fault-"+std::to_string(monotonic_ns()));
         std::filesystem::create_directory(dir);
         struct Cleanup {std::filesystem::path path;~Cleanup(){std::filesystem::remove_all(path);}} cleanup{dir};
         options.panel=1024;options.dependency_trace=dir;

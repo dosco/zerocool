@@ -258,7 +258,7 @@ class TargetRecoveryTests(unittest.TestCase):
         self.assertIn('target_recovery_forward_calls=recovery_target_forward_calls-forwards_before',probe)
         self.assertIn('checkpoint.commit_prefix',probe)
         self.assertIn('replay_recovery_fixture(argv[2],hash_file(argv[0]))',probe)
-        self.assertNotIn('recovery_target_forward_calls',(ROOT/'src/qwen/model.cpp').read_text())
+        self.assertNotIn('recovery_target_forward_calls',(ROOT/'src/engine/model.cpp').read_text())
 
     def test_trial_preserves_blocker_and_stops_before_later_stages(self):
         def stage(output,*args,**kwargs):

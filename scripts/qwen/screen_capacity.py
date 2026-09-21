@@ -113,10 +113,10 @@ def run(args):
                         stem = directory/f'pair-{pair}-{name}'; config = next(c for c in configs() if c['name']==name)
                         common = ['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
                         with stem.with_suffix('.log').open('w') as log:
-                            admission_path=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,frozen['budget_bytes'],512,log,guard,remaining)
+                            admission_path=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,frozen['budget_bytes'],512,log,guard,remaining)
                         admission=load(admission_path)['current_admission']
                         if admission['expert_slots']!=config['expert_slots']: raise ResourceBlocked('Explicit capacity not admitted')
-                        run_process([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json',
+                        run_process([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json',
                             '--repetitions','1','--temperature','0','--seed','0','--gpu-reference',probe,
                             '--bench-progress',stem.with_suffix('.progress.jsonl'),'--json',stem.with_suffix('.json')],stem,150)
                         raw = load(stem.with_suffix('.json'))

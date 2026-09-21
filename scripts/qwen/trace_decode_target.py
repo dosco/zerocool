@@ -59,9 +59,9 @@ def run(out):
             for name in ('normal','traced'):
                 report['phase']=name;save(out/'summary.json',report);stem=out/name
                 with stem.with_suffix('.log').open('w') as log:
-                    inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,12*1024**3,512,log,guard,remaining)
+                    inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,12*1024**3,512,log,guard,remaining)
                     extra=['--decode-diagnostics','--phase-profile',out/'commands.json','--dependency-trace',out/'dependencies.jsonl'] if name=='traced' else []
-                    guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json',
+                    guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json',
                         '--repetitions','1','--temperature','0','--seed','0','--bench-progress',stem.with_suffix('.progress.jsonl'),
                         '--json',stem.with_suffix('.json'),*extra],stdout=log,timeout=min(150,remaining()),env=env)
                 raw=load(stem.with_suffix('.json'))

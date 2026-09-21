@@ -1,17 +1,17 @@
 // Isolated developer recovery journal. No production state or kernel changes.
 #pragma once
-#include "qwen/model.hpp"
+#include "engine/model.hpp"
 #include <deque>
 #include <cstring>
 
-namespace freellm::qwen {
+namespace zerocool::engine {
 inline thread_local uint64_t recovery_target_forward_calls=0;
 struct TargetRecoveryAccess {
     static uint64_t reads(const Model& model) {return model.cache_->stats().bytes;}
 };
 }
 
-namespace freellm::qwen::mtp_recovery {
+namespace zerocool::engine::mtp_recovery {
 constexpr uint64_t ReserveBytes=16*MiB;
 inline uint64_t charged(uint64_t n) {return (n+16383)/16384*16384;}
 inline void require(bool v,const char* s) {if(!v) throw std::runtime_error(s);}
@@ -131,4 +131,4 @@ struct Capture {
     void finish(){if(journal){journal->finish();capturing=nullptr;journal=nullptr;}}
     ~Capture(){if(journal) journal->abort();capturing=nullptr;}
 };
-} // namespace freellm::qwen::mtp_recovery
+} // namespace zerocool::engine::mtp_recovery

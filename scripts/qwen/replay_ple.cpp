@@ -1,7 +1,7 @@
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <fstream>
 #include <print>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 
 // Bounded real PLE isolation: use production kernels without loading the
 // embedding table, vocabulary projection, or unrelated decoder weights.

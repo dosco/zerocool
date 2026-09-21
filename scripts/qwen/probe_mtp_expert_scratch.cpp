@@ -3,7 +3,7 @@ Json expert_scratch_test(const std::filesystem::path& prepared) {
     check(std::getenv("MTL_DEBUG_LAYER") && std::getenv("MTL_SHADER_VALIDATION"),"scratch fixture requires Metal validation");
     Metal gpu;gpu.budget(256*MiB);ReadPool reads(4);gpu.prepare_pipelines();
     const auto before=process_memory();const auto manifest=read_json(prepared/"manifest.json");
-    check(manifest.at("format")=="freellm-affine-records-v1","wrong expert fixture artifact");
+    check(manifest.at("format")=="zc-affine-records-v1","wrong expert fixture artifact");
     const auto& layout=manifest.at("experts").at(0);
     check(layout.at("length")==ExpertBytes && layout.at("stride")==ExpertStride,"changed expert layout");
     File file(prepared/layout.at("file").get<std::string>());

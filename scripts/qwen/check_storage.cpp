@@ -1,11 +1,11 @@
-#include "qwen/pipeline.hpp"
+#include "engine/pipeline.hpp"
 #include <algorithm>
 #include <CommonCrypto/CommonDigest.h>
 #include <cstring>
 #include <fstream>
 #include <print>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 // Explicit real-asset diagnostic: missing files fail. This checks every routed
 // projection and ngram decoding, but is not a full-model or latency release gate.
 int main(int argc,char** argv) {

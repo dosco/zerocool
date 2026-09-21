@@ -6,7 +6,7 @@ import re
 from evidence_index import MAX_LINES, metadata, parse
 
 # Current Q4 and mixed-4/8 checkpoints have identical fixed-size Q4 experts.
-# Byte accounting matches include/qwen/storage.hpp; this is NOT a Q3 model.
+# Byte accounting matches include/engine/storage.hpp; this is NOT a Q3 model.
 LAYERS, EXPERTS, TOP_K = 48, 512, 10
 PAYLOAD_BYTES, SLOT_BYTES = 2_764_800, 2_768_896
 REVISIONS = {'aa7c790e804bbf9d491ddb109c3d61bc4a555f7c',

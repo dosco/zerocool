@@ -120,10 +120,10 @@ def commands(root, output, harness):
     """Use current native compiler/linker flags; do not link the production main."""
     root, output, harness = map(lambda path: Path(path).resolve(), (root, output, harness))
     build_dir = root/'build/qwen'
-    source = root/'src/qwen/model.cpp'
-    storage_source = root/'src/qwen/storage.cpp'
+    source = root/'src/engine/model.cpp'
+    storage_source = root/'src/engine/storage.cpp'
     compile_path = build_dir/'compile_commands.json'
-    link_path = build_dir/'CMakeFiles/freellm.dir/link.txt'
+    link_path = build_dir/'CMakeFiles/zerocool.dir/link.txt'
     database = json.loads(compile_path.read_text())
     entries = [entry for entry in database
                if Path(entry['file']).resolve() == source]
@@ -149,13 +149,13 @@ def commands(root, output, harness):
         command[-1] = str(input_path)
         compile_commands.append(command)
     link = shlex.split(link_path.read_text())
-    main = 'CMakeFiles/freellm.dir/src/qwen/main.cpp.o'
-    require(link.count('-o') == link.count('libfreellm_lib.a') == link.count(main) == 1,
+    main = 'CMakeFiles/zerocool.dir/src/engine/main.cpp.o'
+    require(link.count('-o') == link.count('libzerocool_lib.a') == link.count(main) == 1,
             'Unexpected native CLI linker command')
     link.remove(main)
     binary = output/'probe-perfect-draft'
     link[link.index('-o')+1] = str(binary)
-    index = link.index('libfreellm_lib.a')
+    index = link.index('libzerocool_lib.a')
     link[index:index] = [str(object_paths[2]), str(object_paths[0]), str(object_paths[1])]
     return dict(directory=build_dir, source=source, generated=generated, binary=binary,
         storage_source=storage_source, storage_generated=storage_generated,
@@ -166,8 +166,8 @@ def commands(root, output, harness):
 def frozen_inputs(settings, harness):
     build_dir = settings['directory']
     return [settings['source'], settings['storage_source'], harness, Path(__file__).resolve(),
-        settings['compile_database'], settings['native_link_command'], build_dir/'libfreellm_lib.a',
-        build_dir/'CMakeFiles/freellm.dir/src/qwen/main.cpp.o', build_dir/'bin/freellm']
+        settings['compile_database'], settings['native_link_command'], build_dir/'libzerocool_lib.a',
+        build_dir/'CMakeFiles/zerocool.dir/src/engine/main.cpp.o', build_dir/'bin/zerocool']
 
 
 def contracts():

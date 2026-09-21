@@ -69,7 +69,7 @@ REPAIR=r'''            if(keep<width) {
 
 
 def generated(output):
-    s=base.generated(output);p=output/'include/qwen/model.hpp'
+    s=base.generated(output);p=output/'include/engine/model.hpp'
     s[p]=replace(s[p],'    friend struct DraftAccess;','    friend struct DraftAccess;\n    friend struct TargetRecoveryAccess;')
     p=output/'model.cpp';t='#include "mtp_target_recovery.hpp"\n'+s[p]
     t=replace(t,'std::vector<float> Model::forward(std::span<const int> ids,State& state,bool logits,const std::atomic<bool>* cancel) {',
@@ -89,7 +89,7 @@ def generated(output):
     t=replace(t,'"native_mtp_continuation_v1"','"native_mtp_continuation_v2"')
     t=replace(t,'    const ContinuationInput work(input,mode);const auto& prompt=work.prompt;',
         '    const ContinuationInput work(input,mode);const auto& prompt=work.prompt;\n'
-        '    const char* recovery_setting=std::getenv("FREELLM_TARGET_RECOVERY");\n'
+        '    const char* recovery_setting=std::getenv("ZEROCOOL_TARGET_RECOVERY");\n'
         '    check(recovery_setting && (std::string_view(recovery_setting)=="full-replay" || std::string_view(recovery_setting)=="state-only"),"explicit target recovery arm required");\n'
         '    const bool state_only=std::string_view(recovery_setting)=="state-only";\n'
         '    const uint32_t forced_keep=input.value("force_prefix",1u);check(forced_keep>=1 && forced_keep<=4,"invalid forced prefix");\n'

@@ -123,7 +123,7 @@ def run(args):
     for key in ('MTL_DEBUG_LAYER', 'MTL_SHADER_VALIDATION'):
         env.pop(key, None)
     try:
-        binary = ROOT/'build/qwen/bin/freellm'
+        binary = ROOT/'build/qwen/bin/zerocool'
         model, prepared = ROOT/'.cache/qwen-mixed-reference', ROOT/'.cache/prepared/q4-records-v1'
         config = configurations()[0]
         save(output/'chat.json', dict(messages=[dict(role='user', content=PROMPT)], enable_thinking=False))

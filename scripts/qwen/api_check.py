@@ -37,12 +37,12 @@ def main():
     def get(path):
         start=time.monotonic()
         with urllib.request.urlopen(args.url+path,timeout=5) as f:r=json.load(f)
-        if path=='/freellm/status':status_latency.append((time.monotonic()-start)*1000)
+        if path=='/zerocool/status':status_latency.append((time.monotonic()-start)*1000)
         return r
 
     models=get('/v1/models')['data']
     if len(models)!=1:raise SystemExit('Expected exactly one selected model')
-    identity=get('/freellm/status');model=models[0]['id']
+    identity=get('/zerocool/status');model=models[0]['id']
     report=dict(kind='native_api_usability_v1',complete=False,passed=False,model=model,
         initial_status=identity,checks=records,limitations=['Functional checks do not qualify request latency or coding quality.'])
 
@@ -59,7 +59,7 @@ def main():
         return urllib.request.urlopen(req,timeout=600)
 
     def reset():
-        req=urllib.request.Request(args.url+'/freellm/session/reset',data=b'{}',headers={'Content-Type':'application/json'})
+        req=urllib.request.Request(args.url+'/zerocool/session/reset',data=b'{}',headers={'Content-Type':'application/json'})
         with urllib.request.urlopen(req,timeout=30) as f:assert json.load(f)['status']=='ready'
 
     def check(name,fn):
@@ -107,7 +107,7 @@ def main():
         kept=plain(dict(prompt,messages=messages))
         assert kept['usage']['prompt_tokens_details']['cached_tokens']>0,kept
         reset();fresh=plain(dict(prompt,messages=messages))
-        assert kept['freellm']['output_token_ids']==fresh['freellm']['output_token_ids']
+        assert kept['zerocool']['output_token_ids']==fresh['zerocool']['output_token_ids']
         changed=plain(dict(prompt,messages=[dict(role='system',content='Follow the user request exactly.'),*messages]))
         assert changed['usage']['prompt_tokens_details']['cached_tokens']==0
         return dict(retained=kept,fresh=fresh,edited=changed)
@@ -130,14 +130,14 @@ def main():
             request_id=f.headers.get('X-Request-Id');assert request_id,'Missing streaming request identity'
             deadline=time.monotonic()+120
             while time.monotonic()<deadline:
-                state=get('/freellm/status')
+                state=get('/zerocool/status')
                 if state['phase']==phase and state.get('active_request_id')==request_id:break
                 time.sleep(.05)
             else:raise AssertionError(f'Never observed {phase}')
         started=time.monotonic();ack=None;states=[]
         deadline=started+120
         while time.monotonic()<deadline:
-            state=get('/freellm/status');states.append(state)
+            state=get('/zerocool/status');states.append(state)
             if ack is None and cancellation_observed(state,request_id):ack=(time.monotonic()-started)*1000
             if not state['busy']:break
             time.sleep(.05)
@@ -151,7 +151,7 @@ def main():
     save()
     for name,fn in [('chat',plain),('stream',stream),('invalid_requests',invalid),('retained_and_edited_history',retained),('tool_result_continuation',tools),
                     ('cancel_prefill',lambda:disconnect('prefill')),('cancel_generation',lambda:disconnect('generating'))]:check(name,fn)
-    report.update(complete=True,passed=all(r['passed'] for r in records),final_status=get('/freellm/status'))
+    report.update(complete=True,passed=all(r['passed'] for r in records),final_status=get('/zerocool/status'))
     if status_latency:report['status_p95_ms']=sorted(status_latency)[min(len(status_latency)-1,int(len(status_latency)*.95))]
     save();return 0 if report['passed'] else 1
 

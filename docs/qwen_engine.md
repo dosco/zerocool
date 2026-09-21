@@ -222,12 +222,12 @@ The target is C++23/Metal on a 32GiB Apple M1 Pro, one active conversation, an
 the only implementation: the earlier educational CPU/CUDA multi-backend tree was
 removed once the engine superseded it, and its history remains in git.
 
-`freellm_lib` provides the native library. `include/qwen/` exposes checkpoint,
+`zerocool_lib` provides the native library. `include/engine/` exposes checkpoint,
 model, tokenizer, session, and local-server interfaces. The production path
 has no Python or MLX dependency. Independent reference tooling uses Python.
 `cmake --install build/qwen --prefix /your/prefix` installs the static library,
 public headers (including its JSON header dependency), CLI, and third-party
-notices. A native client links `freellm_lib` and the Foundation, Metal, and
+notices. A native client links `zerocool_lib` and the Foundation, Metal, and
 IOKit frameworks using C++23.
 
 Metal source and the model lock are embedded in the binary, so installation
@@ -285,7 +285,7 @@ contains local file fingerprints and is regenerated after a full verification.
   --output .cache/prepared/q4-records-v1
 .cache/qwen-reference-venv/bin/python scripts/qwen/prepare_storage.py \
   --output .cache/prepared/q4-records-v1 --verify
-build/qwen/bin/freellm inspect --prepared .cache/prepared/q4-records-v1
+build/qwen/bin/zerocool inspect --prepared .cache/prepared/q4-records-v1
 ```
 
 Preparation requires NumPy, uses bounded panels, resumes completed unchanged
@@ -450,19 +450,19 @@ outstanding GPU/I/O uses before releasing resources.
 ctest --test-dir build/qwen --output-on-failure
 MTL_DEBUG_LAYER=1 MTL_SHADER_VALIDATION=1 build/qwen/test_qwen
 python3 scripts/qwen/verify_checkpoint.py
-build/qwen/bin/freellm inspect --json inspect.json
-build/qwen/bin/freellm bench --storage --repetitions 3 --json storage.json
+build/qwen/bin/zerocool inspect --json inspect.json
+build/qwen/bin/zerocool bench --storage --repetitions 3 --json storage.json
 ```
 
 The model-free suite requires a real Metal device and fails when it is
-unavailable. Configure `FREELLM_REAL_MODEL_TESTS=ON` to add a real-generation
+unavailable. Configure `ZEROCOOL_REAL_MODEL_TESTS=ON` to add a real-generation
 CTest smoke case. That smoke case is not the release gate.
 
 Run `bash scripts/qwen/setup_reference.sh` to install pinned diagnostic dependencies
 in their own environment. For numerical diagnosis, provide a JSON array of token IDs:
 
 ```sh
-build/qwen/bin/freellm bench --tokens-file tokens.json --chunk 8 \
+build/qwen/bin/zerocool bench --tokens-file tokens.json --chunk 8 \
   --context 256 --expert-slots 32 --memory-gb 3 --stream-trunk \
   --logits-file native.f32 --trace-dir native-trace --json native.json
 .cache/qwen-reference-venv/bin/python scripts/qwen/reference_mlx.py \
@@ -510,7 +510,7 @@ For performance qualification:
 
 ```sh
 .cache/qwen-reference-venv/bin/python scripts/qwen/prepare_benchmarks.py --out workloads.json
-build/qwen/bin/freellm bench --workload-file workloads.json \
+build/qwen/bin/zerocool bench --workload-file workloads.json \
   --context 8192 --repetitions 3 --json performance.json
 .cache/qwen-reference-venv/bin/python scripts/qwen/api_check.py --out api.json
 .cache/qwen-reference-venv/bin/python scripts/qwen/release_check.py \
@@ -548,7 +548,7 @@ changing the default worker count.
 At eight workers, cold ngram reads cost about 0.88ms per token in the indexed
 read probe. Device counters are recorded separately from application read
 bytes and include other processes; they are not attributed solely to
-FreeLLM. Per-layer cache hits and misses accompany inference measurements.
+ZeroCool. Per-layer cache hits and misses accompany inference measurements.
 
 ## Qualification limitations
 

@@ -62,6 +62,6 @@ if __name__=='__main__':
     ap.add_argument('manifests',type=Path,nargs='+');ap.add_argument('--output',type=Path,required=True)
     ap.add_argument('--rows',type=int,choices=[2,4,8],nargs='+',default=[2,4,8])
     ap.add_argument('--repetitions',type=int,choices=[5,10],default=5)
-    ap.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/freellm')
+    ap.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/zerocool')
     ap.add_argument('--artifact',choices=['q4-control','mixed-4_8bit'],default='mixed-4_8bit')
     run(ap.parse_args())

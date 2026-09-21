@@ -170,8 +170,8 @@ def setup(exp, directory):
         BASE/'cache-state-protocol.md'])
     if proof['kind'] == 'streamed_mtp_fixed_priming_producer_v1': freeze(exp, [BASE/'fixed-priming-protocol.md'])
     if isolated: freeze(exp, [BASE/'capsule-protocol.md'])
-    exp.env.update(FREELLM_Q8_EXPANDED='packed', FREELLM_MTP_NGRAM_INIT='lazy', FREELLM_MTP_EXPERT_SCRATCH='off',
-        FREELLM_MTP_DIRECT_OUTPUT='on', FREELLM_TARGET_RECOVERY='full-replay')
+    exp.env.update(ZEROCOOL_Q8_EXPANDED='packed', ZEROCOOL_MTP_NGRAM_INIT='lazy', ZEROCOOL_MTP_EXPERT_SCRATCH='off',
+        ZEROCOOL_MTP_DIRECT_OUTPUT='on', ZEROCOOL_TARGET_RECOVERY='full-replay')
     exp.report.update(samples=[], comparisons=[], controlled_change='embedding_storage', real_mtp=True,
         historical_timing_reused=False, advancement_allowed=False)
     exp.guard.check_resources(initial=True)
@@ -184,7 +184,7 @@ def sample(exp, cfg, proof, host, width, arm, work, stem, validation, diagnostic
     save(inp, work)
     freeze(exp, [inp])
     host_check(exp, host, stem)
-    exp.env.update(FREELLM_MTP_WIDTH=str(width), FREELLM_MTP_EMBEDDINGS=arm)
+    exp.env.update(ZEROCOOL_MTP_WIDTH=str(width), ZEROCOOL_MTP_EMBEDDINGS=arm)
     path = exp.out/(stem+'.json')
     exp.command([cfg['binary'], exp.model, PREPARED, inp, path, 'fast-validate' if validation else 'fast-timing'],
         stem, limit=180, validation=validation)

@@ -97,7 +97,7 @@ def main():
     if not 0<len(tokens)<=32: raise ValueError('Reference requires 1..32 tokens')
     mx.set_cache_limit(64*1024**2)
     mx.set_memory_limit(768*1024**2)
-    spec=importlib.util.spec_from_file_location('freellm_pinned_qwen_reference',args.model/'qwen4_exp.py')
+    spec=importlib.util.spec_from_file_location('zerocool_pinned_qwen_reference',args.model/'qwen4_exp.py')
     ref=importlib.util.module_from_spec(spec);sys.modules[spec.name]=ref;spec.loader.exec_module(ref)
     config=json.loads((args.model/'config.json').read_text())
     cfg=ref.ModelArgs.from_dict(config).text

@@ -1,12 +1,12 @@
 // Developer prepared-MTP format check, using the existing native Q4/Q8 kernels.
 // One-hot inputs expose decoded matrix columns without sharing GPU dot code.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 void require(bool v,const char* message) {if(!v) throw std::runtime_error(message);}
 std::string hash(std::span<const std::byte> bytes) {

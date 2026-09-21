@@ -142,9 +142,9 @@ def run(out):
                 c=next(c for c in configs() if c['name']==name);stem=out/f'pair-{pair}-{name}'
                 common=['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(c)]
                 with stem.with_suffix('.admission.log').open('w') as log:
-                    p=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,12*1024**3,512,log,guard,remaining)
+                    p=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,12*1024**3,512,log,guard,remaining)
                 if load(p)['current_admission']['expert_slots']!=1848:raise ResourceBlocked('Expected expert capacity not admitted')
-                execute([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json','--repetitions','1',
+                execute([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json','--repetitions','1',
                     '--temperature','0','--seed','0','--gpu-reference','off','--bench-progress',stem.with_suffix('.progress.jsonl'),
                     '--json',stem.with_suffix('.json')],stem,150)
                 report['measurements'].append(dict(pair=pair,configuration=name,

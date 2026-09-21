@@ -1,8 +1,8 @@
 #pragma once
-#include "qwen/storage.hpp"
+#include "engine/storage.hpp"
 #include <sstream>
 
-namespace freellm::qwen {
+namespace zerocool::engine {
 // Validate completed coordinator records, not the watcher's intended timing.
 inline Json recovery_trace_evidence(const std::string& text,size_t target,size_t observed,
                                     const std::string& build,const std::string& artifact) {
@@ -22,4 +22,4 @@ inline Json recovery_trace_evidence(const std::string& text,size_t target,size_t
     return {{"target_records",target},{"observed_records",observed},{"completed_records",count},
             {"window",target==1?"reference_setup":"warmup_control"},{"validated",true}};
 }
-} // namespace freellm::qwen
+} // namespace zerocool::engine

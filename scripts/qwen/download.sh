@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 TASK_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-TASK_PYTHON="${FREELLM_PYTHON:-$TASK_ROOT/.cache/qwen-download-venv/bin/python}"
+TASK_PYTHON="${ZEROCOOL_PYTHON:-$TASK_ROOT/.cache/qwen-download-venv/bin/python}"
 if [ ! -x "$TASK_PYTHON" ]; then
     python3 -m venv "$TASK_ROOT/.cache/qwen-download-venv"
 fi

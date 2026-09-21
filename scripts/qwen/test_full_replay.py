@@ -15,7 +15,7 @@ from check_full_replay import run
 
 class FullReplayEvidence(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory(prefix='freellm-replay-evidence-')
+        self.temp=tempfile.TemporaryDirectory(prefix='zerocool-replay-evidence-')
         self.addCleanup(self.temp.cleanup)
         self.path=Path(self.temp.name)
         root=Path(__file__).resolve().parents[2]

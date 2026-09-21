@@ -32,7 +32,7 @@ def generated(output):
     s=replace(s,'    mtp_scratch::enabled=std::string_view(setting)=="on";',
         '    check(std::string_view(setting)=="off","direct-output trial requires scratch off");\n'
         '    mtp_scratch::enabled=false;\n'
-        '    const char* direct_setting=std::getenv("FREELLM_MTP_DIRECT_OUTPUT");\n'
+        '    const char* direct_setting=std::getenv("ZEROCOOL_MTP_DIRECT_OUTPUT");\n'
         '    check(direct_setting && (std::string_view(direct_setting)=="off" || std::string_view(direct_setting)=="on"),"explicit direct-output arm required");\n'
         '    mtp_direct::enabled=std::string_view(direct_setting)=="on";')
     s=replace(s,'    report["ngram_before_decode"]=NgramAudit::summary(model);',

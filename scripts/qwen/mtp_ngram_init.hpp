@@ -1,8 +1,8 @@
 // Developer-only visibility into logical cache state; no layout changes.
 #pragma once
-#include "qwen/model.hpp"
+#include "engine/model.hpp"
 #include <stdexcept>
-namespace freellm::qwen {
+namespace zerocool::engine {
 struct NgramAudit {
     static Json summary(const NgramStore& s) {
         return {{"capacity_rows",s.rows_.capacity()},{"constructed_rows",s.rows_.size()},

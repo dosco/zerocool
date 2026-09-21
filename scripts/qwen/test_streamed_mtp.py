@@ -123,10 +123,10 @@ class StreamedMtpTests(unittest.TestCase):
             with self.assertRaises(ValueError): compare(a, bad)
 
     def test_same_binary_has_explicit_storage_and_retains_four_row_verifier(self):
-        out = Path('/tmp/freellm-streamed-mtp-test').resolve()
+        out = Path('/tmp/zerocool-streamed-mtp-test').resolve()
         sources = builder.generated(out)
         probe = sources[out/'probe.cpp']
-        self.assertIn('FREELLM_MTP_EMBEDDINGS', probe)
+        self.assertIn('ZEROCOOL_MTP_EMBEDDINGS', probe)
         self.assertIn('requested_width==1 || requested_width==4', probe)
         self.assertLess(probe.index('std::unique_ptr<embedding_rows::Scope> embedding_owner'),
                         probe.index('phase(output,"load_target")'))
@@ -161,7 +161,7 @@ class StreamedMtpTests(unittest.TestCase):
             else: bad['draft_priming_before']['peak_leases'] = 33
             with self.subTest(change=change), self.assertRaises(ValueError):
                 observe(bad, work, bad['input_sha256'], bad['producer_binary_sha256'], 4, 'rows', False, fixed.POLICY)
-        out = Path('/tmp/freellm-fixed-priming-test').resolve()
+        out = Path('/tmp/zerocool-fixed-priming-test').resolve()
         sources = fixed.generated(out);probe = sources[out/'probe.cpp']
         self.assertIn('mtp_fixed_priming::execute(selected,*cache_', sources[out/'mtp_draft.cpp'])
         self.assertLess(probe.index('mtp_fixed_priming::Scope fixed_draft_priming'), probe.index('report["draft_priming_before"]'))

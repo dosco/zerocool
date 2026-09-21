@@ -18,13 +18,13 @@ TEST=ROOT/'scripts/qwen/probe_mtp_ngram_init.cpp'
 
 def generated(output):
     s=base.generated(output)
-    p=output/'include/qwen/storage.hpp'
-    s[p]=replace((ROOT/'include/qwen/storage.hpp').read_text(),'class NgramStore {','class NgramStore {\n    friend struct NgramAudit;')
-    p=output/'include/qwen/model.hpp'
+    p=output/'include/engine/storage.hpp'
+    s[p]=replace((ROOT/'include/engine/storage.hpp').read_text(),'class NgramStore {','class NgramStore {\n    friend struct NgramAudit;')
+    p=output/'include/engine/model.hpp'
     s[p]=replace(s[p],'    friend struct DraftAccess;','    friend struct DraftAccess;\n    friend struct NgramAudit;')
     p=output/'storage.cpp';text='#include <cstdlib>\n'+s[p]
     text=replace(text,'    rows_.resize(count); lookup_.reserve(count);',
-        '    const char* setting=std::getenv("FREELLM_MTP_NGRAM_INIT");\n'
+        '    const char* setting=std::getenv("ZEROCOOL_MTP_NGRAM_INIT");\n'
         '    if(!setting || (std::string_view(setting)!="eager" && std::string_view(setting)!="lazy"))\n'
         '        throw std::invalid_argument("explicit ngram initialization mode required");\n'
         '    if(std::string_view(setting)=="lazy") rows_.reserve(count);else rows_.resize(count);\n'
@@ -39,7 +39,7 @@ def generated(output):
     text=replace(text,'struct ContinuationInput {',TEST.read_text()+'\nstruct ContinuationInput {')
     text=replace(text,'    report["priming_wall_ns"]=monotonic_ns()-prime_start;',
         '    report["ngram_before_decode"]=NgramAudit::summary(model);\n'
-        '    report["ngram_initialization"]=std::getenv("FREELLM_MTP_NGRAM_INIT");\n'
+        '    report["ngram_initialization"]=std::getenv("ZEROCOOL_MTP_NGRAM_INIT");\n'
         '    report["priming_wall_ns"]=monotonic_ns()-prime_start;')
     text=replace(text,'    report["expert_scratch_after"]=mtp_scratch::counters();',
         '    report["ngram_after_decode"]=NgramAudit::summary(model);\n'

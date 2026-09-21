@@ -20,7 +20,7 @@ TOKENS = 16
 
 def generated(output):
     sources = base.generated(output)
-    p = output/'include/qwen/model.hpp'
+    p = output/'include/engine/model.hpp'
     sources[p] = replace(sources[p], '    Json take_profile();',
         '    Json take_profile();\n'
         '    void profile_window(bool active) {\n'

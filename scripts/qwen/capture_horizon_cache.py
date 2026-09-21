@@ -70,8 +70,8 @@ def run(output, directory):
             *host['files'], PREPARED/'manifest.json', PREPARED/'dense.bin', PREPARED/'experts.bin', PROTOCOL,
             exp.out/'protocol.md', exp.out/'producer.json', exp.out/'host-producer.json',
             Path(work['reference']['path']), SOURCE/'evidence-files.json'])
-        exp.env.update(FREELLM_Q8_EXPANDED='packed', FREELLM_MTP_NGRAM_INIT='lazy', FREELLM_MTP_EXPERT_SCRATCH='off',
-                       FREELLM_MTP_DIRECT_OUTPUT='on', FREELLM_TARGET_RECOVERY='full-replay')
+        exp.env.update(ZEROCOOL_Q8_EXPANDED='packed', ZEROCOOL_MTP_NGRAM_INIT='lazy', ZEROCOOL_MTP_EXPERT_SCRATCH='off',
+                       ZEROCOOL_MTP_DIRECT_OUTPUT='on', ZEROCOOL_TARGET_RECOVERY='full-replay')
         exp.report.update(samples=[], comparisons=[], simulations=[], performance_measurement=False,
             perfect_proposals_only=True, limitations=LIMITATIONS, protocol_sha256=sha(PROTOCOL))
         exp.guard.check_resources(initial=True)
@@ -81,7 +81,7 @@ def run(output, directory):
             for mode in ('off', 'on'):
                 stem = f'width-{width}-{mode}'; path = exp.out/(stem+'.json')
                 host_check(exp, host, stem)
-                exp.env.update(FREELLM_VERIFIER_HORIZON=str(width), FREELLM_HORIZON_CACHE_TRACE=mode)
+                exp.env.update(ZEROCOOL_VERIFIER_HORIZON=str(width), ZEROCOOL_HORIZON_CACHE_TRACE=mode)
                 exp.command([cfg['binary'], exp.model, PREPARED, exp.out/'workload.json', path, 'fast-timing'],
                             stem, limit=180)
                 raw = read(path)

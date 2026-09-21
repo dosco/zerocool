@@ -49,7 +49,7 @@ class ExpandedTest(unittest.TestCase):
 
     def test_source_copy_scope_and_link_ownership(self):
         cfg=builder.settings(Path('/tmp/q8-expanded-test'));sources=builder.sources(cfg)
-        for link in cfg['linkers']:self.assertLess(link.index(str(cfg['objects'][0])),link.index('libfreellm_lib.a'))
+        for link in cfg['linkers']:self.assertLess(link.index(str(cfg['objects'][0])),link.index('libzerocool_lib.a'))
         text=sources[cfg['generated'][0]]
         self.assertIn('impl_->expanded_scope && impl_->request_phase=="decode" && tokens==4',text)
         self.assertIn('tile==4 && policy.rows==1',text)

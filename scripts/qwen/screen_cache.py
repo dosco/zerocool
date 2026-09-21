@@ -214,11 +214,11 @@ def run(args):
                 stem=output/f'pair-{pair}-{p}';phase(f'timing_pair_{pair}_{p}')
                 common=['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
                 with stem.with_suffix('.log').open('w') as log:
-                    guard.run([ROOT/'build/qwen/bin/freellm','inspect',*common,'--json',stem.with_suffix('.admission.json')],stdout=log,timeout=remaining(),env=env)
+                    guard.run([ROOT/'build/qwen/bin/zerocool','inspect',*common,'--json',stem.with_suffix('.admission.json')],stdout=log,timeout=remaining(),env=env)
                     admission=load(stem.with_suffix('.admission.json'))
                     if admission['current_admission']['limit_bytes']!=evidence['budget_bytes'] or admission['current_admission']['panel_tokens']!=512 or admission['cache_policy']!=p:
                         raise ResourceBlocked('Requested cache policy budget/panel is not admitted')
-                    guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',output/'workload.json','--repetitions','1',
+                    guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',output/'workload.json','--repetitions','1',
                         '--temperature','0','--seed','0','--json',stem.with_suffix('.json')],stdout=log,timeout=min(150,remaining()),env=env)
                 raw=load(stem.with_suffix('.json'))
                 requests=validate_request(raw,evidence,config,workload,expected)

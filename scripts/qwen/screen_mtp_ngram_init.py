@@ -19,7 +19,7 @@ original_comparison=screen.comparison
 
 def setup(exp,directory):
     cfg,host=original_setup(exp,directory)
-    freeze(exp,[BASE/'protocol.md']);exp.env['FREELLM_MTP_NGRAM_INIT']='lazy'
+    freeze(exp,[BASE/'protocol.md']);exp.env['ZEROCOOL_MTP_NGRAM_INIT']='lazy'
     verify_seal(REFERENCE,sha(REFERENCE/'evidence-files.json'))
     freeze(exp,[REFERENCE/p for p in ('summary.json','case-0.json','case-0-pair-0-off.json','case-0-pair-0-on.json','evidence-files.json')])
     exp.report.update(ngram_initialization='lazy',numerical_reference=str(REFERENCE),

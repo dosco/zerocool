@@ -52,7 +52,7 @@ class DirectOutputTests(unittest.TestCase):
             with self.assertRaises(ValueError):short_rejected(ratios)
 
     def test_kernels_layout_and_previous_producer_unchanged(self):
-        output=Path('/tmp/freellm-direct-render-test');s=builder.generated(output);old=builder.base.generated(output)
+        output=Path('/tmp/zerocool-direct-render-test');s=builder.generated(output);old=builder.base.generated(output)
         changed={p.name for p in s if s[p]!=old[p]}
         self.assertEqual(changed,{'pipeline.cpp','model.cpp','probe.cpp'})
         self.assertIn('mtp_direct::Scope direct_scope(ids.size()==4 && phase_=="decode")',s[output/'model.cpp'])

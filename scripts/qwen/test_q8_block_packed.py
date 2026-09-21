@@ -49,7 +49,7 @@ class PackedBlockTest(unittest.TestCase):
     def test_build_links_isolated_metal_before_archive(self):
         cfg = builder.settings(Path('/tmp/q8-block-packed-test')); sources = builder.sources(cfg)
         self.assertIn('-fobjc-arc', cfg['compiler'][0])
-        self.assertLess(cfg['linker'].index(str(cfg['objects'][0])), cfg['linker'].index('libfreellm_lib.a'))
+        self.assertLess(cfg['linker'].index(str(cfg['objects'][0])), cfg['linker'].index('libzerocool_lib.a'))
         self.assertIn('std::string(MetalSource)+', sources[cfg['generated'][0]])
         self.assertIn('cfg.affine_rows=1;', sources[cfg['generated'][1]])
         self.assertIn('else gpu.linear_into(l,x,4,{out});', sources[cfg['generated'][1]])

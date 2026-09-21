@@ -15,7 +15,7 @@ ROOT = base.ROOT
 
 def generated(output):
     sources = base.generated(output)
-    p = output/'include/qwen/model.hpp'
+    p = output/'include/engine/model.hpp'
     sources[p] = replace(sources[p],
         'options_.kernels.profile=active;options_.kernels.counter_profile=false;',
         'options_.kernels.profile=active;options_.kernels.counter_profile=active;')

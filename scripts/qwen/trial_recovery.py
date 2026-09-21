@@ -50,8 +50,8 @@ def setup(exp, directory, recipe_path):
     freeze(exp,[*builder.inputs(cfg),*builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],*host['files'],
         PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',Path(recipe_path).resolve(),
         exp.model/'tokenizer.json',exp.model/'generation_config.json'])
-    exp.env.update(FREELLM_Q8_EXPANDED='packed',FREELLM_MTP_NGRAM_INIT='lazy',FREELLM_MTP_EXPERT_SCRATCH='off',
-        FREELLM_MTP_DIRECT_OUTPUT='on')
+    exp.env.update(ZEROCOOL_Q8_EXPANDED='packed',ZEROCOOL_MTP_NGRAM_INIT='lazy',ZEROCOOL_MTP_EXPERT_SCRATCH='off',
+        ZEROCOOL_MTP_DIRECT_OUTPUT='on')
     exp.report.update(historical_timing_reused=False,controlled_change='target_recovery',paired_confidence_qualified=False)
     exp.guard.check_resources(initial=True);return cfg,host
 
@@ -143,7 +143,7 @@ def fixture_stage(output,directory,recipe_path,source=None):
     with exp:
         cfg,host=setup(exp,directory,recipe_path)
         if source is None:
-            host_check(exp,host,'capture-recovery');exp.env['FREELLM_TARGET_RECOVERY']='full-replay'
+            host_check(exp,host,'capture-recovery');exp.env['ZEROCOOL_TARGET_RECOVERY']='full-replay'
             exp.command([cfg['binary'],exp.model,PREPARED,exp.out/'workload.json',exp.out/'capture.json','fast-validate'],
                 'capture',limit=min(600,exp.left()),validation=True)
             raw=read(exp.out/'capture.json')
@@ -248,7 +248,7 @@ def samples(exp,cfg,host,work,case,pair,validation):
     else:save(input_path,work);freeze(exp,[input_path])
     values={};mode='fast-validate' if validation else 'fast-timing'
     for arm in (ARMS if (case+pair)%2==0 else ARMS[::-1]):
-        stem=f'case-{case}-pair-{pair}-{arm}';host_check(exp,host,stem);exp.env['FREELLM_TARGET_RECOVERY']=arm
+        stem=f'case-{case}-pair-{pair}-{arm}';host_check(exp,host,stem);exp.env['ZEROCOOL_TARGET_RECOVERY']=arm
         exp.command([cfg['binary'],exp.model,PREPARED,input_path,exp.out/(stem+'.json'),mode],stem,
             limit=300 if validation else 360,validation=validation)
         raw=read(exp.out/(stem+'.json'));observed=observe(raw,work,sha(input_path),validation)

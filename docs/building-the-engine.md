@@ -1,6 +1,6 @@
 # Building an inference engine for a 104GB model on a 32GB laptop
 
-This is a walkthrough of how FreeLLM runs Qwen3.8-Flash-Next on an Apple M1 Pro
+This is a walkthrough of how ZeroCool runs Qwen3.8-Flash-Next on an Apple M1 Pro
 with 32GiB of unified memory, written for someone who wants to build something
 like it. It covers the machine, the model architecture, the design that follows
 from putting those two together, the optimizations that were tried, and what the
@@ -417,12 +417,12 @@ In order:
 
 | Where | What |
 |---|---|
-| `include/qwen/storage.hpp`, `src/qwen/storage.cpp` | Checkpoint parsing, prepared sidecar, expert and ngram stores, read pool, memory plan |
-| `include/qwen/metal.hpp`, `src/qwen/metal.mm` | The Metal wrapper: allocation classes, budget, residency, scratch arenas, dispatch and completion |
-| `include/qwen/model.hpp`, `src/qwen/model.cpp` | The forward pass, layer by layer |
-| `src/qwen/pipeline.cpp` | Completion-driven expert execution and its ownership rules |
-| `src/qwen/prefill.cpp` | Layer-major panel prefill |
-| `src/qwen/session.cpp` | State reuse, sampling, streaming output parsing |
+| `include/engine/storage.hpp`, `src/engine/storage.cpp` | Checkpoint parsing, prepared sidecar, expert and ngram stores, read pool, memory plan |
+| `include/engine/metal.hpp`, `src/engine/metal.mm` | The Metal wrapper: allocation classes, budget, residency, scratch arenas, dispatch and completion |
+| `include/engine/model.hpp`, `src/engine/model.cpp` | The forward pass, layer by layer |
+| `src/engine/pipeline.cpp` | Completion-driven expert execution and its ownership rules |
+| `src/engine/prefill.cpp` | Layer-major panel prefill |
+| `src/engine/session.cpp` | State reuse, sampling, streaming output parsing |
 | `kernels/metal/qwen.metal` | Every compute kernel |
 | `tests/test_qwen.cpp` | The exactness and ownership checks, which are the real specification |
 

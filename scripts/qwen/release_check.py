@@ -97,11 +97,11 @@ def performance():
 def evidence(name):
     data=load(name+'.json');assert data['passed'] is True,f'{name} did not pass'
     if name=='api':
-        responses=[c.get('detail',{}) for c in data['checks'] if isinstance(c.get('detail'),dict) and 'freellm' in c['detail']]
+        responses=[c.get('detail',{}) for c in data['checks'] if isinstance(c.get('detail'),dict) and 'zerocool' in c['detail']]
         assert responses,'API evidence lacks real inference statistics'
         for response in responses:
-            current(response['freellm']['after']['metal'].get('build_fingerprint'))
-            assert response['freellm']['after'].get('artifact_revision')==selected_lock['revision'],'API artifact differs'
+            current(response['zerocool']['after']['metal'].get('build_fingerprint'))
+            assert response['zerocool']['after'].get('artifact_revision')==selected_lock['revision'],'API artifact differs'
     elif name in ('moe-replay','attention-replay'): current(data['native'].get('build_fingerprint'))
     else: current(data.get('build_fingerprint'))
     assert data.get('checks'),f'{name} lacks individual checks'

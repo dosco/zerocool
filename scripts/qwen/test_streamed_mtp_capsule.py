@@ -86,7 +86,7 @@ class CapsuleTests(unittest.TestCase):
 
     def test_unrelated_checkout_rebuild_does_not_change_executed_binary(self):
         guard, _, _ = self.guard()
-        (self.root/'libfreellm_lib.a').write_bytes(b'unrelated rebuilt library')
+        (self.root/'libzerocool_lib.a').write_bytes(b'unrelated rebuilt library')
         guard.check_identity()
 
     def test_changed_runner_is_rejected(self):

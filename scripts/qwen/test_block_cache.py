@@ -111,14 +111,14 @@ class BlockCacheTest(unittest.TestCase):
 
     def test_builder_rejects_drift_and_preserves_production_inputs(self):
         root=builder.ROOT
-        storage=(root/'src/qwen/storage.cpp').read_text();generated=builder.storage_source(storage)
+        storage=(root/'src/engine/storage.cpp').read_text();generated=builder.storage_source(storage)
         self.assertIn('block_trace::acquire(key.value(),selected,trace_victim,0)',generated)
         self.assertEqual(generated.count('block_trace::lease'),3)
         with self.assertRaises(ValueError):builder.storage_source(storage.replace('        return Lease(e,0);','return {};'))
         harness=builder.harness_source(builder.TEMPLATE.read_text())
         self.assertIn('logits_bound+block_trace::workspace_bytes<=12*GiB',harness)
         self.assertIn('check(width==4 && !validation',harness)
-        self.assertIn('block_trace::forward_end(state.tokens)',builder.model_source((root/'src/qwen/model.cpp').read_text()))
+        self.assertIn('block_trace::forward_end(state.tokens)',builder.model_source((root/'src/engine/model.cpp').read_text()))
 
     def test_selection_requires_both_orders_and_joint_memory_headroom(self):
         def captures(a,b):

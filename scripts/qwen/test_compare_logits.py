@@ -15,7 +15,7 @@ from compare_logits import run
 
 class LogitEvidence(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='freellm-logit-evidence-')
+        self.temp = tempfile.TemporaryDirectory(prefix='zerocool-logit-evidence-')
         self.addCleanup(self.temp.cleanup)
         root = Path(self.temp.name)
         self.args = SimpleNamespace(**{name: root / name for name in

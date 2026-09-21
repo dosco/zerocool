@@ -14,7 +14,7 @@ from qualification_evidence import save, sha
 ROOT = Path(__file__).resolve().parents[2]
 SHADER = ROOT/'scripts/qwen/probe_q8_block_packed.metal'
 TEMPLATE = ROOT/'scripts/qwen/probe_block_gdn.cpp'
-METAL = ROOT/'src/qwen/metal.mm'
+METAL = ROOT/'src/engine/metal.mm'
 KERNEL = 'q8_block_packed_t4_w8'
 VARIANT = dict(candidate=KERNEL, control='q8_mm_t4', reference='q8_mm',
     token_tile=4, output_rows=1, lane_width=8, weight_load_bits=32)
@@ -22,20 +22,20 @@ VARIANT = dict(candidate=KERNEL, control='q8_mm_t4', reference='q8_mm',
 
 def settings(output):
     output = Path(output).resolve(); directory = ROOT/'build/qwen'
-    database = directory/'compile_commands.json'; native_link = directory/'CMakeFiles/freellm.dir/link.txt'
+    database = directory/'compile_commands.json'; native_link = directory/'CMakeFiles/zerocool.dir/link.txt'
     entries = json.loads(database.read_text()); compiler = []; objects = []
     generated = [output/'metal.packed.mm', output/'probe.packed.cpp']
-    for source, target in zip((METAL, ROOT/'src/qwen/model.cpp'), generated):
+    for source, target in zip((METAL, ROOT/'src/engine/model.cpp'), generated):
         rows = [e for e in entries if Path(e['file']).resolve() == source]
         require(len(rows) == 1 and Path(rows[0]['directory']).resolve() == directory, 'Missing native compiler command')
         cmd = shlex.split(rows[0]['command'])
         require(cmd.count('-o') == cmd.count('-c') == 1 and Path(cmd[-1]).resolve() == source, 'Changed compile command')
         obj = target.with_suffix('.o'); cmd[-1] = str(target); cmd[cmd.index('-o')+1] = str(obj)
         compiler.append(cmd); objects.append(obj)
-    linker = shlex.split(native_link.read_text()); main = 'CMakeFiles/freellm.dir/src/qwen/main.cpp.o'
-    require(linker.count(main) == linker.count('-o') == linker.count('libfreellm_lib.a') == 1, 'Changed native linker')
+    linker = shlex.split(native_link.read_text()); main = 'CMakeFiles/zerocool.dir/src/engine/main.cpp.o'
+    require(linker.count(main) == linker.count('-o') == linker.count('libzerocool_lib.a') == 1, 'Changed native linker')
     linker.remove(main); binary = output/'probe-q8-block-packed'; linker[linker.index('-o')+1] = str(binary)
-    at = linker.index('libfreellm_lib.a'); linker[at:at] = list(map(str, objects))
+    at = linker.index('libzerocool_lib.a'); linker[at:at] = list(map(str, objects))
     return dict(directory=directory, output=output, database=database, native_link=native_link,
         generated=generated, objects=objects, compiler=compiler, linker=linker, binary=binary)
 
@@ -77,8 +77,8 @@ def sources(cfg):
 def inputs(cfg):
     return [Path(__file__).resolve(), SHADER, TEMPLATE, METAL, ROOT/'scripts/qwen/build_block_cache_trace.py',
         ROOT/'scripts/qwen/build_identity.py', cfg['database'], cfg['native_link'],
-        cfg['directory']/'generated/qwen_embedded.hpp', cfg['directory']/'libfreellm_lib.a',
-        cfg['directory']/'bin/freellm', *sorted((ROOT/'include/qwen').glob('*.hpp'))]
+        cfg['directory']/'generated/qwen_embedded.hpp', cfg['directory']/'libzerocool_lib.a',
+        cfg['directory']/'bin/zerocool', *sorted((ROOT/'include/engine').glob('*.hpp'))]
 
 
 def proof(cfg):

@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class ReleaseRejections(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='freellm-release-test-')
+        self.temp = tempfile.TemporaryDirectory(prefix='zerocool-release-test-')
         self.addCleanup(self.temp.cleanup)
         self.directory = Path(self.temp.name)
         self.fingerprint = build_fingerprint(ROOT)

@@ -114,10 +114,10 @@ def run(out):
             for name in ('normal','measured'):
                 report['phase']=name;save(out/'summary.json',report);print(name,flush=True);stem=out/name
                 with stem.with_suffix('.log').open('w') as log:
-                    p=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,12*1024**3,512,log,guard,remaining)
+                    p=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,12*1024**3,512,log,guard,remaining)
                     if load(p)['current_admission']['expert_slots']!=1848:raise ResourceBlocked('Fixed expert capacity not admitted')
                     extra=['--decode-diagnostics'] if name=='measured' else []
-                    guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json',
+                    guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json',
                         '--repetitions','1','--temperature','0','--seed','0','--bench-progress',stem.with_suffix('.progress.jsonl'),
                         '--json',stem.with_suffix('.json'),*extra],stdout=log,timeout=min(150,remaining()),env=env)
                 raw=load(stem.with_suffix('.json'));validate_request(raw,frozen,config,work,expected,instrumented=name=='measured')

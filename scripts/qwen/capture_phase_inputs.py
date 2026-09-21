@@ -58,7 +58,7 @@ def run(args):
 if __name__=='__main__':
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output',type=Path,required=True)
-    ap.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/freellm')
+    ap.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/zerocool')
     ap.add_argument('--model',type=Path,default=ROOT/'.cache/qwen-mixed-reference')
     ap.add_argument('--prepared',type=Path,default=ROOT/'.cache/prepared/q4-records-v1')
     ap.add_argument('--artifact',choices=['q4-control','mixed-4_8bit'],default='mixed-4_8bit')

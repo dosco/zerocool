@@ -86,16 +86,16 @@ MTL_DEBUG_LAYER=1 MTL_SHADER_VALIDATION=1 build/qwen/test_qwen
 
 # Normal fresh-process screen: reference, GDN preparation, tiled + GDN.
 python3 scripts/qwen/benchmark_exact.py --mode screen --pairs 1 --memory-gb 8 \
-  --cases prompt_2k --output /tmp/freellm-exact-screen
+  --cases prompt_2k --output /tmp/zerocool-exact-screen
 
 # Real mixed-weight operators with five alternating repetitions.
-build/qwen/bin/freellm bench --kernel-bench --artifact mixed-4_8bit \
+build/qwen/bin/zerocool bench --kernel-bench --artifact mixed-4_8bit \
   --model .cache/qwen-mixed-reference --prepared .cache/prepared/q4-records-v1 \
-  --repetitions 5 --json /tmp/freellm-operators.json
+  --repetitions 5 --json /tmp/zerocool-operators.json
 
 # All-layer native parity, including fresh replay, cancellation and priming.
 python3 scripts/qwen/qualify_exact_sessions.py --case short --memory-gb 8 \
-  --output /tmp/freellm-exact-session
+  --output /tmp/zerocool-exact-session
 ```
 
 Use `--case boundary`, `append`, or `7k` for the long session cases. These

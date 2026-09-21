@@ -1,9 +1,9 @@
 #pragma once
 // Developer-only trained MTP path. Not included by the production build.
-#include "qwen/model.hpp"
-#include "qwen/pipeline.hpp"
+#include "engine/model.hpp"
+#include "engine/pipeline.hpp"
 
-namespace freellm::qwen {
+namespace zerocool::engine {
 struct DraftAccess {
     static Metal& gpu(Model& m) { return m.gpu_; }
     static Resident& resident(Model& m) { return *m.resident_; }
@@ -68,4 +68,4 @@ private:
     DraftOutput execute(std::span<const int>,const Buf&,DraftState&,bool,
                         const std::atomic<bool>*,bool state_only);
 };
-} // namespace freellm::qwen
+} // namespace zerocool::engine

@@ -75,7 +75,7 @@ class BlockComputeTest(unittest.TestCase):
         with self.assertRaises(ValueError): profile.analyze_block(b, p, 'b', 'r', 'commands')
 
     def test_builder_scope_and_seam_drift(self):
-        model = (builder.ROOT/'src/qwen/model.cpp').read_text(); harness = builder.TEMPLATE.read_text()
+        model = (builder.ROOT/'src/engine/model.cpp').read_text(); harness = builder.TEMPLATE.read_text()
         for mode in builder.MODES:
             copied = builder.model_source(model, mode); probe = builder.harness_source(harness, mode)
             self.assertIn('verifier_kernels.profile=phase_=="decode"', copied)

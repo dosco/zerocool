@@ -133,10 +133,10 @@ class SharedExpertReferenceTest(unittest.TestCase):
             receipt = dict(revision=REVISION, files={e['path']: dict(fingerprint(path/e['path']), sha256=e['sha256'])
                                                    for e in entries})
             (path/'lock.json').write_text(json.dumps(lock))
-            (path/'freellm-verification.json').write_text(json.dumps(receipt))
+            (path/'zerocool-verification.json').write_text(json.dumps(receipt))
             weights = SelectedWeights(path, path/'lock.json'); weights.proof(); weights.close()
             changed = copy.deepcopy(receipt); changed['files']['config.json']['mtime_ns'] -= 1
-            (path/'freellm-verification.json').write_text(json.dumps(changed))
+            (path/'zerocool-verification.json').write_text(json.dumps(changed))
             with self.assertRaisesRegex(ValueError, 'Stale checkpoint receipt'):
                 SelectedWeights(path, path/'lock.json')
 

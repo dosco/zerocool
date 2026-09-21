@@ -85,7 +85,7 @@ def capture_proof(capture, producer_path, report_path):
             sha(Path(producer['source_file'])) == producer['instrumented_model_sha256'] and
             sha(ROOT/'scripts/qwen/capture_hyper_inputs.py') == producer['helper_sha256'],
             'Capture binary, source copy or helper changed')
-    source = ROOT/'src/qwen/model.cpp'
+    source = ROOT/'src/engine/model.cpp'
     require(sha(source) == producer['original_model_sha256'] and
             Path(producer['source_file']).read_text() == instrument(source.read_text()),
             'Capture source contains changes beyond the declared raw-input hook')

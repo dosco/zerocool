@@ -33,12 +33,12 @@ class UsabilityEvidenceTests(unittest.TestCase):
 
     def test_comparison_rejects_missing_or_incompatible_evidence(self):
         row=dict(complete=True,memory_plan={'limit_bytes':12},elapsed_ms=10,
-            response=dict(freellm=dict(output_token_ids=[1,2]),usage=dict(prompt_tokens=5)))
+            response=dict(zerocool=dict(output_token_ids=[1,2]),usage=dict(prompt_tokens=5)))
         rows=[dict(copy.deepcopy(row),pair=i,arm=arm) for i in range(2) for arm in (('old','new') if i==0 else ('new','old'))]
         self.assertEqual(compare(rows,2)['decision'],'short_screen_within_3_percent')
         self.assertFalse(compare(rows,2)['qualified'])
         for change in [lambda r:r.pop(),lambda r:r[1].update(complete=False),lambda r:r[1].update(memory_plan={}),
-                       lambda r:r[1]['response']['freellm'].update(output_token_ids=[3]),
+                       lambda r:r[1]['response']['zerocool'].update(output_token_ids=[3]),
                        lambda r:r[1].update(elapsed_ms=float('inf'))]:
             broken=copy.deepcopy(rows);change(broken)
             with self.assertRaises(ValueError):compare(broken,2)

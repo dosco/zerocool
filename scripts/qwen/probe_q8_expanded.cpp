@@ -1,10 +1,10 @@
 // Developer-only six-case replay. Weight bytes come directly from pinned ranges.
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 void check(bool ok,const char* message) {if(!ok) throw std::runtime_error(message);}
 std::string hash(const void* data,uint64_t bytes) {
@@ -23,7 +23,7 @@ int main(int argc,char** argv) {
         check(validation || std::string_view(argv[4])=="timing","invalid mode");
         check(validation?(getenv("MTL_DEBUG_LAYER") && getenv("MTL_SHADER_VALIDATION")):
             (!getenv("MTL_DEBUG_LAYER") && !getenv("MTL_SHADER_VALIDATION")),"wrong validation mode");
-        check(!getenv("FREELLM_Q8_EXPANDED"),"operator probe requires explicit arm selection");
+        check(!getenv("ZEROCOOL_Q8_EXPANDED"),"operator probe requires explicit arm selection");
         const auto manifest=read_json(input),cases=Json::parse(R"CASES(@CASES@)CASES");
         check(manifest.at("kind")=="q8_expanded_fixture_v1" && manifest.at("build_fingerprint")==build_fingerprint() &&
             manifest.at("artifact_revision")==artifact_revision(Artifact::Mixed) && manifest.at("cases").size()==cases.size(),"fixture identity");

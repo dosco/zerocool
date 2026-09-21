@@ -52,23 +52,23 @@ class HostPreflightTest(unittest.TestCase):
 
     def test_builder_uses_native_flags_without_production_main(self):
         with tempfile.TemporaryDirectory() as directory:
-            root=Path(directory).resolve();native=root/'build/qwen';(native/'CMakeFiles/freellm.dir').mkdir(parents=True)
-            for folder in ('scripts/qwen','include/qwen'):(root/folder).mkdir(parents=True)
+            root=Path(directory).resolve();native=root/'build/qwen';(native/'CMakeFiles/zerocool.dir').mkdir(parents=True)
+            for folder in ('scripts/qwen','include/engine'):(root/folder).mkdir(parents=True)
             for name in ('benchmark_host.cpp','build_identity.py','qualification_evidence.py'):(root/'scripts/qwen'/name).write_text('fixture')
-            source=root/'src/qwen/model.cpp'
+            source=root/'src/engine/model.cpp'
             (native/'compile_commands.json').write_text(json.dumps([dict(file=str(source),directory=str(native),
                 command=f'/usr/bin/c++ -std=c++23 -fno-fast-math -o model.o -c {source}')]))
-            (native/'CMakeFiles/freellm.dir/link.txt').write_text('/usr/bin/c++ CMakeFiles/freellm.dir/src/qwen/main.cpp.o -o freellm libfreellm_lib.a')
-            (native/'libfreellm_lib.a').write_text('fixture')
+            (native/'CMakeFiles/zerocool.dir/link.txt').write_text('/usr/bin/c++ CMakeFiles/zerocool.dir/src/engine/main.cpp.o -o zerocool libzerocool_lib.a')
+            (native/'libzerocool_lib.a').write_text('fixture')
             def compile(command,**kwargs):Path(command[command.index('-o')+1]).write_text('binary')
             with patch.object(host,'ROOT',root),patch.object(host,'build_fingerprint',return_value='build'),\
                     patch.object(host.subprocess,'run',side_effect=compile):
                 proof=host.build_probe(root/'probe')
             self.assertTrue(proof['producer']['complete'])
             self.assertIn('-fno-fast-math',proof['producer']['compiler'])
-            self.assertNotIn('CMakeFiles/freellm.dir/src/qwen/main.cpp.o',proof['producer']['linker'])
+            self.assertNotIn('CMakeFiles/zerocool.dir/src/engine/main.cpp.o',proof['producer']['linker'])
             self.assertLess(proof['producer']['linker'].index(str(root/'probe/host.o')),
-                proof['producer']['linker'].index('libfreellm_lib.a'))
+                proof['producer']['linker'].index('libzerocool_lib.a'))
 
 
 if __name__=='__main__':unittest.main()

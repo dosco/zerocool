@@ -29,7 +29,7 @@ def verify_sources(directory,frozen,source_snapshot=None):
         require(match is not None,'Missing frozen tooling source: '+str(relative))
         checked.append(dict(original=str(relative),sha256=digest,available_at=str(match)))
     source_root=root if source_snapshot is None else Path(source_snapshot)
-    paths=sorted([*(source_root/'src/qwen').glob('*'),*(source_root/'include/qwen').glob('*')])
+    paths=sorted([*(source_root/'src/engine').glob('*'),*(source_root/'include/engine').glob('*')])
     paths += [source_root/p for p in ('kernels/metal/qwen.metal','models.lock.json','mixed-models.lock.json','mixed-payload-reuse.lock.json','cmake/qwen.cmake')]
     versions={}
     for mode in ('current','initial'):

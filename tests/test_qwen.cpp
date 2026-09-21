@@ -1,13 +1,13 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "qwen/session.hpp"
-#include "qwen/cli.hpp"
-#include "qwen/pipeline.hpp"
-#include "qwen/bench.hpp"
-#include "qwen/cached_progress.hpp"
-#include "qwen/route_trace.hpp"
-#include "qwen/memory_trace.hpp"
-#include "qwen/q3_probe.hpp"
+#include "engine/session.hpp"
+#include "engine/cli.hpp"
+#include "engine/pipeline.hpp"
+#include "engine/bench.hpp"
+#include "engine/cached_progress.hpp"
+#include "engine/route_trace.hpp"
+#include "engine/memory_trace.hpp"
+#include "engine/q3_probe.hpp"
 #include "../scripts/qwen/cached_recovery_checks.hpp"
 #include <bit>
 #include <cmath>
@@ -16,7 +16,7 @@
 #include <latch>
 #include <CommonCrypto/CommonDigest.h>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 TEST_CASE("pressure events coalesce throttle and never regrow capacity") {
     PressureInbox inbox;PressurePolicy p;
     inbox.publish(1);inbox.publish(0);inbox.publish(2);inbox.publish(1);
@@ -97,7 +97,7 @@ TEST_CASE("pressure resizing preserves survivors and refuses outstanding leases"
 }
 TEST_CASE("memory tracing observes queued work and bounds detail without hiding cleanup") {
     CHECK_FALSE(Options{}.memory_observer);
-    const auto path=std::filesystem::temp_directory_path()/("freellm-memory-"+std::to_string(monotonic_ns()));
+    const auto path=std::filesystem::temp_directory_path()/("zerocool-memory-"+std::to_string(monotonic_ns()));
     struct Cleanup {std::filesystem::path p;~Cleanup(){std::filesystem::remove(p);}} cleanup{path};
     Metal gpu;gpu.buffer_diagnostics(true);
     auto a=gpu.zeros(32,AllocationClass::Resident),b=gpu.zeros(32);
@@ -178,7 +178,7 @@ TEST_CASE("decode diagnostics observe counters without submitting or reaping GPU
     CHECK(after["gpu_command_ns"].get<uint64_t>()>=before["gpu_command_ns"].get<uint64_t>());
 }
 TEST_CASE("route trace commits complete forwards and keeps aborted work incomplete") {
-    const auto dir=std::filesystem::temp_directory_path()/("freellm-routes-"+std::to_string(monotonic_ns()));
+    const auto dir=std::filesystem::temp_directory_path()/("zerocool-routes-"+std::to_string(monotonic_ns()));
     std::filesystem::create_directory(dir);
     struct Cleanup {std::filesystem::path dir;~Cleanup(){std::filesystem::remove_all(dir);}} cleanup{dir};
     auto read=[&](const char* name) {std::ifstream in(dir/name);std::vector<Json> rows;std::string line;
@@ -212,7 +212,7 @@ TEST_CASE("route trace commits complete forwards and keeps aborted work incomple
     CHECK(rows.back()["details"]["status"]=="incomplete");
 }
 TEST_CASE("cached progress flushes live phases and preserves interrupted evidence") {
-    const auto dir=std::filesystem::temp_directory_path()/("freellm-progress-"+std::to_string(monotonic_ns()));
+    const auto dir=std::filesystem::temp_directory_path()/("zerocool-progress-"+std::to_string(monotonic_ns()));
     std::filesystem::create_directory(dir);
     struct Cleanup {std::filesystem::path dir;~Cleanup(){std::filesystem::remove_all(dir);}} cleanup{dir};
     auto read=[&](const char* name) {std::ifstream in(dir/name);std::vector<Json> rows;std::string line;
@@ -1470,7 +1470,7 @@ TEST_CASE("heavy expert rows exercise production microbatch scatter with distinc
 TEST_CASE("expert integration stress drains two workspaces eviction cancellation and recovery") {
     Metal gpu;ReadPool reads(8);constexpr uint32_t T=513;
     std::array<Buf,5> records;for(uint32_t i=0;i<5;++i) records[i]=expert_fixture(gpu,i+31);
-    const auto directory=std::filesystem::temp_directory_path()/("freellm-expert-stress-"+std::to_string(monotonic_ns()));
+    const auto directory=std::filesystem::temp_directory_path()/("zerocool-expert-stress-"+std::to_string(monotonic_ns()));
     REQUIRE(std::filesystem::create_directory(directory));
     struct Cleanup {std::filesystem::path path;~Cleanup(){std::error_code error;std::filesystem::remove_all(path,error);}} cleanup{directory};
     {
@@ -1590,27 +1590,27 @@ TEST_CASE("command line rules are enforced before any model or GPU work") {
         validate_cli(cli);
         return cli;
     };
-    const auto bench=parse({"freellm","bench","--prompt","hi"});
+    const auto bench=parse({"zerocool","bench","--prompt","hi"});
     CHECK(bench.command=="bench");CHECK(bench.raw);CHECK(bench.repetitions==3);
     CHECK(bench.options.context==MaxContext);CHECK(bench.options.artifact==Artifact::Q4);
-    CHECK(parse({"freellm","bench","--prompt","hi","--memory-gb","12"}).options.memory==12*GiB);
-    CHECK(parse({"freellm","run","--artifact","mixed-4_8bit"}).options.artifact==Artifact::Mixed);
-    CHECK(parse({"freellm","serve","--port","0","--control-fd","7"}).control_fd==7);
-    CHECK_THROWS(parse({"freellm","run","--nonsense","1"}));
-    CHECK_THROWS(parse({"freellm","run","--model"}));
-    CHECK_THROWS(parse({"freellm","bench","--memory-gb","99"}));
-    CHECK_THROWS(parse({"freellm","bench","--memory-gb","0"}));
-    CHECK_THROWS(parse({"freellm","serve","--port","70000"}));
-    CHECK_THROWS(parse({"freellm","bench","--repetitions","0"}));
-    CHECK_THROWS(parse({"freellm","bench","--artifact","q3"}));
+    CHECK(parse({"zerocool","bench","--prompt","hi","--memory-gb","12"}).options.memory==12*GiB);
+    CHECK(parse({"zerocool","run","--artifact","mixed-4_8bit"}).options.artifact==Artifact::Mixed);
+    CHECK(parse({"zerocool","serve","--port","0","--control-fd","7"}).control_fd==7);
+    CHECK_THROWS(parse({"zerocool","run","--nonsense","1"}));
+    CHECK_THROWS(parse({"zerocool","run","--model"}));
+    CHECK_THROWS(parse({"zerocool","bench","--memory-gb","99"}));
+    CHECK_THROWS(parse({"zerocool","bench","--memory-gb","0"}));
+    CHECK_THROWS(parse({"zerocool","serve","--port","70000"}));
+    CHECK_THROWS(parse({"zerocool","bench","--repetitions","0"}));
+    CHECK_THROWS(parse({"zerocool","bench","--artifact","q3"}));
     // Experiments stay out of the serving path.
-    CHECK_THROWS(parse({"freellm","serve","--decode-path","direct"}));
-    CHECK_THROWS(parse({"freellm","serve","--phase-memory","reclaim"}));
-    CHECK_THROWS(parse({"freellm","serve","--kernel-policy","candidate"}));
-    CHECK_THROWS(parse({"freellm","run","--control-fd","7"}));
+    CHECK_THROWS(parse({"zerocool","serve","--decode-path","direct"}));
+    CHECK_THROWS(parse({"zerocool","serve","--phase-memory","reclaim"}));
+    CHECK_THROWS(parse({"zerocool","serve","--kernel-policy","candidate"}));
+    CHECK_THROWS(parse({"zerocool","run","--control-fd","7"}));
     // Diagnostics that need a normal benchmark workload refuse anything else.
-    CHECK_THROWS(parse({"freellm","bench","--route-trace","routes.json"}));
-    CHECK_THROWS(parse({"freellm","bench","--decode-diagnostics"}));
-    CHECK_THROWS(parse({"freellm","bench","--soak-seconds","60"}));
-    CHECK_THROWS(parse({"freellm","bench","--phase-memory","reclaim"}));
+    CHECK_THROWS(parse({"zerocool","bench","--route-trace","routes.json"}));
+    CHECK_THROWS(parse({"zerocool","bench","--decode-diagnostics"}));
+    CHECK_THROWS(parse({"zerocool","bench","--soak-seconds","60"}));
+    CHECK_THROWS(parse({"zerocool","bench","--phase-memory","reclaim"}));
 }

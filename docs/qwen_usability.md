@@ -14,7 +14,7 @@ The implementation is available; real-model API, coding, request-latency and
 From the project folder, use an interactive terminal with existing verified assets:
 
 ```sh
-build/qwen/bin/freellm chat
+build/qwen/bin/zerocool chat
 ```
 
 The default model directory is `.cache/models/qwen38-flash-next` and prepared
@@ -36,9 +36,9 @@ or silently attach to a different server.
 To manage the server separately:
 
 ```sh
-build/qwen/bin/freellm serve --model .cache/models/qwen38-flash-next \
+build/qwen/bin/zerocool serve --model .cache/models/qwen38-flash-next \
   --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --port 8080
-build/qwen/bin/freellm chat --connect http://127.0.0.1:8080
+build/qwen/bin/zerocool chat --connect http://127.0.0.1:8080
 ```
 
 Connected chat never terminates that server. The current client accepts IPv4
@@ -103,8 +103,8 @@ workers read immutable status snapshots and never touch Metal objects.
 | `GET /v1/models` | One selected model; available during initialization |
 | `GET /health` | 503 while loading or failed, 200 after initialization; includes current phase |
 | `POST /v1/chat/completions` | Nonstreaming JSON or SSE; busy requests receive 429 |
-| `GET /freellm/status` | Version 1 snapshot; available while loading, generating, cancelling and draining |
-| `POST /freellm/session/reset` | Reset retained state while idle; 409 while busy; 503 before ready |
+| `GET /zerocool/status` | Version 1 snapshot; available while loading, generating, cancelling and draining |
+| `POST /zerocool/session/reset` | Reset retained state while idle; 409 while busy; 503 before ready |
 
 The listener is reachable from a browser, so every request is filtered before
 any work: a request carrying an `Origin` header is refused with 403, a `Host`
@@ -130,7 +130,7 @@ Chat supports text-only system/user/assistant/tool messages, `model`, `stream`,
 `temperature`, `top_p`, `top_k`, `seed`, `n=1`, `tools`, and `tool_choice` of
 `auto` or `none`. Thinking uses `enable_thinking` (also accepted under
 `chat_template_kwargs`) and the existing `reasoning_effort` template control.
-No tool executes inside FreeLLM. Tool calls appear as structured function calls;
+No tool executes inside ZeroCool. Tool calls appear as structured function calls;
 the client supplies tool-result messages on continuation.
 
 The model IDs are `qwen3.8-flash-next:4bit` and
@@ -145,12 +145,12 @@ Reasoning uses `reasoning_content`. Tool calls preserve indices in streamed
 deltas and receive request-specific IDs. Streaming finishes with a finish-reason
 chunk and `[DONE]`; when requested, a final `choices: []` chunk contains usage,
 and preceding chunks have `usage: null`. Diagnostics are in the nonstreaming
-`freellm` extension and status, never ordinary content deltas. The finish-reason
+`zerocool` extension and status, never ordinary content deltas. The finish-reason
 and final usage chunks are released only after GPU/I/O draining succeeds.
 Errors before
 headers use JSON HTTP errors; errors after headers use an SSE error object.
 
-Status includes an `instance_id`. Chat sends it in `X-FreeLLM-Instance-Id` on
+Status includes an `instance_id`. Chat sends it in `X-ZeroCool-Instance-Id` on
 subsequent requests; a mismatch returns 409 before reset or generation admission.
 Ordinary API clients do not need this header.
 
@@ -171,8 +171,8 @@ ordinary generation can be retried after drain; no second inference is queued.
 
 FTXUI v7.0.3 is pinned at commit
 `f921fad208912747c17d129a8ef75ec7624b6eec`; HTTP uses macOS system libcurl.
-These dependencies stay outside `freellm_lib`. Build with
-`-DFREELLM_BUILD_TUI=OFF` to omit the client. FetchContent needs network access
+These dependencies stay outside `zerocool_lib`. Build with
+`-DZEROCOOL_BUILD_TUI=OFF` to omit the client. FetchContent needs network access
 on the first build or an explicit `FETCHCONTENT_SOURCE_DIR_FTXUI` checkout.
 The test-only `chat_fixture` uses the same transport and TUI with an injected
 executor; it is not installed, and production has no fake-inference option.
@@ -222,7 +222,7 @@ Create a workload JSON with `messages`, `max_tokens` (up to 256), and optional
 
 ```sh
 .venv/bin/python scripts/qwen/check_api_performance.py paired \
-  --baseline .cache/usability-stage/baseline/freellm \
+  --baseline .cache/usability-stage/baseline/zerocool \
   --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 \
   --workload /path/to/fixed-chat-workload.json --out .cache/api-paired-screen
 

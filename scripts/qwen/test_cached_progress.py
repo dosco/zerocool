@@ -65,7 +65,7 @@ class CachedProgressTest(unittest.TestCase):
             with self.assertRaises(ValueError):self.query(rows)
 
     def test_native_load_failure_is_flushed_and_existing_trace_is_preserved(self):
-        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/freellm'
+        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/zerocool'
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);tokens=root/'tokens.json';tokens.write_text('[760,369]')
             trace=root/'progress.jsonl'
@@ -82,7 +82,7 @@ class CachedProgressTest(unittest.TestCase):
             self.assertEqual(trace.read_bytes(),original)
 
     def test_native_progress_is_cached_bench_only_and_requires_separate_output(self):
-        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/freellm'
+        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/zerocool'
         for args,message in [(['run','--cached-progress','x'],'cached progress requires'),
                              (['bench','--cached-progress','x'],'cached progress requires'),
                              (['bench','--cached-token-replay','--tokens-file','x','--cached-progress','x','--json','x'],'separate output')]:

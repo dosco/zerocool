@@ -82,7 +82,7 @@ def run(args):
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2]
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--binary', type=Path, default=root / 'build/qwen/bin/freellm')
+    ap.add_argument('--binary', type=Path, default=root / 'build/qwen/bin/zerocool')
     ap.add_argument('--model', type=Path, default=root / '.cache/models/qwen38-flash-next')
     ap.add_argument('--prepared', type=Path, required=True)
     ap.add_argument('--routes', type=Path, required=True)

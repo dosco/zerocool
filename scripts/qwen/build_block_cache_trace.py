@@ -76,7 +76,7 @@ def sources(cfg):
 def inputs(cfg):
     return [*base.frozen_inputs(cfg,TEMPLATE),HEADER,Path(__file__).resolve(),
             ROOT/'scripts/qwen/build_identity.py',ROOT/'scripts/qwen/qualification_evidence.py',
-            *sorted((ROOT/'include/qwen').glob('*.hpp'))]
+            *sorted((ROOT/'include/engine').glob('*.hpp'))]
 
 
 def build(output):

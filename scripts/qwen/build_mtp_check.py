@@ -13,15 +13,15 @@ from mtp_source import ROOT, require
 def build(output):
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
     native=ROOT/'build/qwen';harness=ROOT/'scripts/qwen/check_mtp.cpp'
-    db=native/'compile_commands.json';link_file=native/'CMakeFiles/freellm.dir/link.txt'
-    entries=[e for e in json.loads(db.read_text()) if Path(e['file']).resolve()==ROOT/'src/qwen/model.cpp']
+    db=native/'compile_commands.json';link_file=native/'CMakeFiles/zerocool.dir/link.txt'
+    entries=[e for e in json.loads(db.read_text()) if Path(e['file']).resolve()==ROOT/'src/engine/model.cpp']
     require(len(entries)==1,'Missing native compiler command')
     command=shlex.split(entries[0]['command']);command[command.index('-o')+1]=str(output/'check.o');command[-1]=str(harness)
-    link=shlex.split(link_file.read_text());main='CMakeFiles/freellm.dir/src/qwen/main.cpp.o'
+    link=shlex.split(link_file.read_text());main='CMakeFiles/zerocool.dir/src/engine/main.cpp.o'
     require(link.count(main)==1,'Unexpected native link command');link[link.index(main)]=str(output/'check.o')
     binary=output/'check-mtp';link[link.index('-o')+1]=str(binary)
-    paths=[harness,Path(__file__),db,link_file,native/'libfreellm_lib.a',native/'bin/freellm',
-        *sorted((ROOT/'include/qwen').glob('*.hpp'))]
+    paths=[harness,Path(__file__),db,link_file,native/'libzerocool_lib.a',native/'bin/zerocool',
+        *sorted((ROOT/'include/engine').glob('*.hpp'))]
     frozen={str(p.resolve()):sha(p) for p in paths}
     report=dict(kind='native_mtp_check_producer_v1',complete=False,base_native_fingerprint=build_fingerprint(ROOT),
         files=frozen,compiler=command,linker=link,binary=str(binary),production_promoted=False)

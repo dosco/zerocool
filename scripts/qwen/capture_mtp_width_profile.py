@@ -201,8 +201,8 @@ def run(output,directory,case,mode='commands'):
         if mode=='dispatch':
             freeze(exp,[ROOT/'docs/benchmarks/2026-09-17-mtp-width-profile/counter-protocol.md'])
         require(sha(exp.out/'workload.json')==sha(source/work_name),'Profile workload bytes differ')
-        exp.env.update(FREELLM_Q8_EXPANDED='packed',FREELLM_MTP_NGRAM_INIT='lazy',FREELLM_MTP_EXPERT_SCRATCH='off',
-            FREELLM_MTP_DIRECT_OUTPUT='on',FREELLM_TARGET_RECOVERY='full-replay',FREELLM_MTP_WIDTH=str(width))
+        exp.env.update(ZEROCOOL_Q8_EXPANDED='packed',ZEROCOOL_MTP_NGRAM_INIT='lazy',ZEROCOOL_MTP_EXPERT_SCRATCH='off',
+            ZEROCOOL_MTP_DIRECT_OUTPUT='on',ZEROCOOL_TARGET_RECOVERY='full-replay',ZEROCOOL_MTP_WIDTH=str(width))
         exp.report.update(performance_measurement=False,reference_source=str(source/name),
             reference_sha256=sha(source/name),timing_samples_reused=False,requested_width=width)
         exp.guard.check_resources(initial=True);host_check(exp,host,'profile')

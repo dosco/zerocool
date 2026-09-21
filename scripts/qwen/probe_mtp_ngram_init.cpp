@@ -4,9 +4,9 @@ Json ngram_init_test(const std::filesystem::path& model,const std::filesystem::p
     // A small ring forces many wraparounds; full capacity checks that unused
     // payload stays unconstructed. Both stores read the same real packed tables.
     for(uint64_t budget:{64*1024ull,64*MiB}) {
-        check(!setenv("FREELLM_MTP_NGRAM_INIT","eager",1),"cannot select eager fixture");
+        check(!setenv("ZEROCOOL_MTP_NGRAM_INIT","eager",1),"cannot select eager fixture");
         NgramStore eager(cp,reads,budget,artifact);
-        check(!setenv("FREELLM_MTP_NGRAM_INIT","lazy",1),"cannot select lazy fixture");
+        check(!setenv("ZEROCOOL_MTP_NGRAM_INIT","lazy",1),"cannot select lazy fixture");
         NgramStore lazy(cp,reads,budget,artifact);
         const auto initial=NgramAudit::summary(lazy);check(initial.at("constructed_rows")==0,"lazy constructor touched rows");
         check(initial.at("capacity_rows")==NgramAudit::summary(eager).at("capacity_rows"),"cache capacities differ");

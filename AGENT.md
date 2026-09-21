@@ -1,7 +1,7 @@
-# Agent instructions for FreeLLM
+# Agent instructions for ZeroCool
 
-FreeLLM runs Qwen3.8-Flash-Next on a 32GiB M1 Pro. There is one product: the
-native C++23/Metal engine in `src/qwen`, `include/qwen` and
+ZeroCool runs Qwen3.8-Flash-Next on a 32GiB M1 Pro. There is one product: the
+native C++23/Metal engine in `src/engine`, `include/engine` and
 `kernels/metal/qwen.metal`. The earlier educational CPU/CUDA/TinyLLaMA tree has
 been removed; do not reintroduce a second model, backend or tokenizer path.
 
@@ -13,12 +13,40 @@ been removed; do not reintroduce a second model, backend or tokenizer path.
 - In scope: contiguous prepared storage, completion-driven expert execution,
   layer-major prefill, and offline calibrated affine-Q3 experts.
 - Keep the engine budget at or below 22GiB and the context at or below 8192
-  tokens (`MaxContext` in `include/qwen/storage.hpp`).
+  tokens (`MaxContext` in `include/engine/storage.hpp`).
 - Preserve each artifact's bytes, its exact router-selected experts, and its
   recurrent state. Never silently switch precision, substitute a smaller model,
   drop experts, or change OS memory limits.
 - Offline candidate quantization must not overwrite the Q4 control. A different
   recipe may produce different routes and needs fresh session state.
+
+## Naming
+
+The project was renamed from FreeLLM to ZeroCool in September 2026. The
+directory split now carries meaning, so keep it:
+
+- `src/engine`, `include/engine` and the `zerocool::engine` namespace are the
+  model-independent engine.
+- `kernels/metal/qwen.metal`, `scripts/qwen/` and the `qwen_*` diagnostic
+  targets are Qwen-specific and keep that name. A second model family would sit
+  beside them, not replace them.
+- `build/qwen` and `cmake/qwen.cmake` also keep their names; they are disposable
+  output and a build definition.
+
+The prepared-storage format id is `zc-affine-records-v1`. If it ever changes
+again, four pins move with it and the last one is not local arithmetic:
+`manifest.json`'s SHA-256, its copies in `verification.json` and
+`models.lock.json`, and then `file_locks_sha256` in
+`mixed-payload-reuse.lock.json`, which pins `models.lock.json`'s own bytes.
+That last pin exists to force renewed evidence whenever a lock file changes, so
+clearing it means re-running `verify_mixed_payloads.py` (both checkpoints, about
+190GiB of reads, roughly two and a half minutes locally). Re-run it; never
+hand-edit a recorded hash to make the check pass, because the pin's only value
+is that it has never been typed by hand.
+
+Record new evidence at a new dated path under `docs/benchmarks/` and re-point
+the lock at it. Do not edit files under `docs/benchmarks/` or `docs/experiments/`
+in place; they record what a run actually observed.
 
 ## Working rules
 

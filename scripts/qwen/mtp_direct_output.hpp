@@ -1,9 +1,9 @@
 // Isolated developer trial; no production class or buffer layout changes.
 #pragma once
-#include "qwen/pipeline.hpp"
+#include "engine/pipeline.hpp"
 #include <stdexcept>
 
-namespace freellm::qwen::mtp_direct {
+namespace zerocool::engine::mtp_direct {
 inline thread_local bool enabled=false,in_verifier=false;
 inline thread_local uint64_t forwards=0,eligible=0,direct_writes=0;
 struct Scope {

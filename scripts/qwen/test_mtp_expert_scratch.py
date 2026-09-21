@@ -40,9 +40,9 @@ class ScratchTests(unittest.TestCase):
             with self.subTest(change=change),self.assertRaises(ValueError):comparison(a,b)
 
     def test_source_copy_preserves_public_layout_and_submission_ownership(self):
-        output=Path('/tmp/freellm-scratch-render-test')
+        output=Path('/tmp/zerocool-scratch-render-test')
         sources=builder.generated(output);baseline=builder.base.generated(output)
-        self.assertEqual(sources[output/'include/qwen/model.hpp'],baseline[output/'include/qwen/model.hpp'])
+        self.assertEqual(sources[output/'include/engine/model.hpp'],baseline[output/'include/engine/model.hpp'])
         pipeline=sources[output/'pipeline.cpp']
         self.assertIn('group.completion=gpu.submit();\n                // End only after submit:',pipeline)
         self.assertIn('if(pooled) {try {gpu.release_scratch();}',pipeline)

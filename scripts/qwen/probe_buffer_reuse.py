@@ -55,11 +55,11 @@ def run(out):
     try:
         if binary.exists():raise ValueError('Probe binary already exists')
         command=['clang++','-std=c++23','-O2','-Wall','-Wextra','-Werror','-Iinclude','-Ibuild/_deps/json-src/include',
-            'scripts/qwen/probe_buffer_reuse.cpp','build/qwen/libfreellm_lib.a',
+            'scripts/qwen/probe_buffer_reuse.cpp','build/qwen/libzerocool_lib.a',
             '-framework','Metal','-framework','Foundation','-framework','IOKit','-o',str(binary)]
         save(out/'compile-command.json',command)
         with (out/'compile.log').open('w') as log:subprocess.run(command,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,timeout=30,check=True)
-        paths=[*sorted((ROOT/'scripts/qwen').glob('*.py')),ROOT/'scripts/qwen/probe_buffer_reuse.cpp',ROOT/'build/qwen/libfreellm_lib.a',binary]
+        paths=[*sorted((ROOT/'scripts/qwen').glob('*.py')),ROOT/'scripts/qwen/probe_buffer_reuse.cpp',ROOT/'build/qwen/libzerocool_lib.a',binary]
         frozen=dict(root=str(ROOT),build=build_fingerprint(ROOT),files={str(p):sha(p) for p in paths},assets={})
         save(out/'identity.json',frozen);guard=EvidenceGuard(frozen,out)
         env=dict(os.environ)

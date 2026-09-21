@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstring>
 
-namespace freellm::qwen {
+namespace zerocool::engine {
 namespace {
 void need(bool value,const char* message) {if(!value) throw std::runtime_error(message);}
 void cancelled(const std::atomic<bool>* flag) {if(flag && flag->load()) throw std::runtime_error("MTP cancelled");}
@@ -229,4 +229,4 @@ DraftOutput MtpDraft::execute(std::span<const int> ids,const Buf& hidden,DraftSt
 Json MtpDraft::stats() const {return {{"recipe",manifest_["recipe"]},{"expert_cache",cache_->json()},
     {"expert_read_bytes",experts_->read_bytes.load()},{"budget_bytes",budget_bytes(cache_->capacity(),context_)},
     {"context",context_},{"norm_convention","BF16(1+w), once at load"}};}
-} // namespace freellm::qwen
+} // namespace zerocool::engine

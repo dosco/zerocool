@@ -122,7 +122,7 @@ def run(args):
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--binary', type=Path, default=root/'build/qwen/bin/freellm')
+    parser.add_argument('--binary', type=Path, default=root/'build/qwen/bin/zerocool')
     parser.add_argument('--model', type=Path, default=root/'.cache/models/qwen38-flash-next')
     parser.add_argument('--artifact', choices=('q4-control','mixed-4_8bit'), default='q4-control')
     parser.add_argument('--prepared', type=Path, required=True)

@@ -155,12 +155,12 @@ def run(args):
                 phase(f'timing_pair_{pair}_{mode}')
                 common=['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
                 with stem.with_suffix('.log').open('w') as log:
-                    admission_path=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,evidence['budget_bytes'],512,log,guard,remaining)
+                    admission_path=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,evidence['budget_bytes'],512,log,guard,remaining)
                     admission=load(admission_path)
                     if (admission['current_admission'].get('limit_bytes')!=evidence['budget_bytes'] or
                         admission['current_admission'].get('panel_tokens')!=512 or admission.get('cache_policy')!='clock'):
                         raise ResourceBlocked('Fixed CLOCK budget/panel not admitted')
-                    guard.run([ROOT/'build/qwen/bin/freellm','bench',*common,'--workload-file',out/'workload.json','--repetitions','1',
+                    guard.run([ROOT/'build/qwen/bin/zerocool','bench',*common,'--workload-file',out/'workload.json','--repetitions','1',
                         '--temperature','0','--seed','0','--json',stem.with_suffix('.json')],stdout=log,timeout=min(150,remaining()),env=env)
                 raw=load(stem.with_suffix('.json'));requests=validate_request(raw,evidence,config,workload,expected)
                 check_residency(raw,mode)

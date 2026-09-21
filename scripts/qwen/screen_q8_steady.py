@@ -173,7 +173,7 @@ def run(args):
             return ['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(config)]
         def admission(config, stem):
             with stem.with_suffix('.admission.log').open('w') as log:
-                path = inspect_admission(ROOT/'build/qwen/bin/freellm',common(config),stem,frozen['budget_bytes'],512,log,guard,remaining)
+                path = inspect_admission(ROOT/'build/qwen/bin/zerocool',common(config),stem,frozen['budget_bytes'],512,log,guard,remaining)
             if load(path)['current_admission']['expert_slots'] != 1848: raise ResourceBlocked('Explicit capacity not admitted')
         with (ROOT/'.cache/qwen-qualification.lock').open('a') as lock:
             try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -182,7 +182,7 @@ def run(args):
             deadline = time.monotonic()+LIMITS['operators']
             for layer, stage in CAPTURES:
                 stem = out/f'capture-{layer}-{stage}'; progress(stem.name); admission(configs()[0],stem)
-                execute([ROOT/'build/qwen/bin/freellm','bench',*common(configs()[0]),'--workload-file',out/'capture-workload.json',
+                execute([ROOT/'build/qwen/bin/zerocool','bench',*common(configs()[0]),'--workload-file',out/'capture-workload.json',
                     '--repetitions','1','--temperature','0','--seed','0','--operator-capture',stem,
                     '--capture-phase','decode','--capture-layer',str(layer),'--capture-operator',stage,'--json',stem.with_suffix('.json')],stem,100)
                 manifest = stem/'manifest.json'; captured = load(manifest)
@@ -191,7 +191,7 @@ def run(args):
                         path = stem/tensor['file']; frozen['files'][str(path.resolve())] = sha(path)
                 frozen['files'][str(manifest.resolve())] = sha(manifest); save(out/'identity.json', frozen)
                 replay = out/f'operators-{layer}-{stage}'; progress(replay.name)
-                execute([ROOT/'build/qwen/bin/freellm','bench','--artifact','mixed-4_8bit','--operator-fixtures',manifest,
+                execute([ROOT/'build/qwen/bin/zerocool','bench','--artifact','mixed-4_8bit','--operator-fixtures',manifest,
                     '--kernel-policy','candidate','--q8-decode-rows','2','--repetitions',str(repetitions),'--json',replay.with_suffix('.json')],replay,30)
                 cases = operators(load(replay.with_suffix('.json')), frozen, layer, stage, repetitions)
                 report['operator_sources'].append(dict(**source(replay.with_suffix('.json')),layer=layer,stage=stage,cases=cases))
@@ -209,7 +209,7 @@ def run(args):
             for pair, name in order(2):
                 config = next(c for c in configs() if c['name']==name); stem = out/f'pair-{pair}-{name}'; progress(stem.name)
                 admission(config,stem)
-                execute([ROOT/'build/qwen/bin/freellm','bench',*common(config),'--workload-file',out/'workload.json',
+                execute([ROOT/'build/qwen/bin/zerocool','bench',*common(config),'--workload-file',out/'workload.json',
                     '--repetitions','1','--temperature','0','--seed','0','--gpu-reference','off',
                     '--bench-progress',stem.with_suffix('.progress.jsonl'),'--json',stem.with_suffix('.json')],stem,150)
                 requests = observations(load(stem.with_suffix('.json')),frozen,config,workload,expected)

@@ -132,7 +132,7 @@ class Experiment:
     def __init__(self,args):
         self.args=args;self.output=args.output.resolve();self.configs=configurations()
         self.model=ROOT/'.cache/qwen-mixed-reference';self.prepared=ROOT/'.cache/prepared/q4-records-v1'
-        self.binary=ROOT/'build/qwen/bin/freellm'
+        self.binary=ROOT/'build/qwen/bin/zerocool'
         self.evidence=identity(ROOT,self.configs,self.model,self.prepared,WORKLOAD)
         self.evidence['files'][str(CONFIG.resolve())]=sha(CONFIG)
         self.guard=EvidenceGuard(self.evidence,self.output)

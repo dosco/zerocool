@@ -19,8 +19,8 @@ SOURCE = ('std::pair<Buf,Buf> Model::hyper(int x) {\n'
 
 def capture_fixture(root):
     capture = root/'capture'; capture.mkdir()
-    (root/'src/qwen').mkdir(parents=True)
-    source = root/'src/qwen/model.cpp'; source.write_text(SOURCE)
+    (root/'src/engine').mkdir(parents=True)
+    source = root/'src/engine/model.cpp'; source.write_text(SOURCE)
     (root/'scripts/qwen').mkdir(parents=True)
     helper = root/'scripts/qwen/capture_hyper_inputs.py'; helper.write_text('helper')
     instrumented = root/'instrumented.cpp'; instrumented.write_text(capture_tool.instrument(SOURCE))

@@ -1,10 +1,10 @@
 #pragma once
-#include "qwen/server.hpp"
+#include "engine/server.hpp"
 #include <chrono>
 #include <mutex>
 #include <set>
 #include <thread>
-namespace freellm::qwen::chat_test {
+namespace zerocool::engine::chat_test {
 using namespace std::chrono_literals;
 struct Control {
     std::atomic<bool> loading=false,fail_load=false,hold=false,draining=false,hold_drain=false,fail_drain=false,cancelled=false;

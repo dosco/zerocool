@@ -23,7 +23,7 @@ import pyte
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--fixture',type=Path,default=Path('build/qwen/chat_fixture'))
-    ap.add_argument('--native',type=Path,default=Path('build/qwen/bin/freellm'))
+    ap.add_argument('--native',type=Path,default=Path('build/qwen/bin/zerocool'))
     ap.add_argument('--out',type=Path,required=True)
     args=ap.parse_args();binary=args.fixture.resolve();out=args.out.resolve()
     out.mkdir(parents=True,exist_ok=False)

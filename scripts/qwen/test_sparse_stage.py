@@ -27,7 +27,7 @@ class SparseStageTest(unittest.TestCase):
         with self.assertRaises(ValueError):check_cached(report,'build','artifact',tokens,'q8_decode_rows')
 
     def test_native_cli_rejects_invalid_and_production_candidates(self):
-        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/freellm'
+        binary=Path(__file__).resolve().parents[2]/'build/qwen/bin/zerocool'
         for args,message in [(['inspect','--sparse-selection','wrong'],'sparse selection'),
                              (['inspect','--attention-score-tiles','wrong'],'attention score tiles'),
                              (['serve','--sparse-selection','gpu'],'execution experiments'),

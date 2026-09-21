@@ -27,7 +27,7 @@ def check(args):
     ]
     results = []
     for name, mutate in cases:
-        with tempfile.TemporaryDirectory(prefix='freellm-prepared-rejection-') as tmp:
+        with tempfile.TemporaryDirectory(prefix='zerocool-prepared-rejection-') as tmp:
             root = Path(tmp)
             for entry in manifest['files']:
                 (root / entry['path']).symlink_to((args.prepared / entry['path']).resolve())
@@ -48,7 +48,7 @@ def check(args):
                                      '--prepared', str(root)], capture_output=True, text=True, timeout=30)
             if result.returncode == 0:
                 raise AssertionError(f'Invalid prepared artifact accepted: {name}')
-            if 'freellm:' not in result.stderr or 'Metal device unavailable' in result.stderr:
+            if 'zerocool:' not in result.stderr or 'Metal device unavailable' in result.stderr:
                 raise AssertionError(f'{name} did not reach artifact validation: {result.stderr}')
             results.append(dict(name=name, passed=True, error=result.stderr.strip()))
     args.output.write_text(json.dumps(dict(kind='prepared_rejection_checks', passed=True, checks=results), indent=2) + '\n')
@@ -57,7 +57,7 @@ def check(args):
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2]
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--binary', type=Path, default=root / 'build/qwen/bin/freellm')
+    ap.add_argument('--binary', type=Path, default=root / 'build/qwen/bin/zerocool')
     ap.add_argument('--model', type=Path, default=root / '.cache/models/qwen38-flash-next')
     ap.add_argument('--prepared', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)

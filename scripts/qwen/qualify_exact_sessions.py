@@ -147,7 +147,7 @@ if __name__=="__main__":
     ap.add_argument("--model",type=Path,default=ROOT/".cache/qwen-mixed-reference")
     ap.add_argument("--prepared",type=Path,default=ROOT/".cache/prepared/q4-records-v1")
     ap.add_argument("--binary",type=Path,default=ROOT/"build/qwen/qwen_panel_check")
-    ap.add_argument("--runner",type=Path,default=ROOT/"build/qwen/bin/freellm")
+    ap.add_argument("--runner",type=Path,default=ROOT/"build/qwen/bin/zerocool")
     ap.add_argument("--panel",type=int,default=512);ap.add_argument("--chunk",type=int,default=128)
     ap.add_argument("--token-tile",type=int,default=8);ap.add_argument("--gdn-path",default="precompute")
     ap.add_argument("--gdn-rows",type=int,default=4);ap.add_argument("--gdn-block",type=int,default=8)

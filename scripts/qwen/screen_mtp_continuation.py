@@ -56,7 +56,7 @@ def setup(exp,directory):
     freeze(exp,[*builder.inputs(cfg),*builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],*host['files'],
         PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',BASE/'protocol.md',
         exp.model/'tokenizer.json',exp.model/'generation_config.json'])
-    exp.env['FREELLM_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
+    exp.env['ZEROCOOL_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
     return cfg,host
 
 

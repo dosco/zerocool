@@ -5,7 +5,7 @@ sources. The model files are downloaded separately and are not committed.
 
 - Qwen3.8-Flash-Next checkpoint and `qwen4_exp.py`, revision
   `aa7c790e804bbf9d491ddb109c3d61bc4a555f7c`: architecture equations used by
-  `src/qwen/model.cpp`, `kernels/metal/qwen.metal`, and the independent CPU
+  `src/engine/model.cpp`, `kernels/metal/qwen.metal`, and the independent CPU
   reference. [Qwen Community License 1.0](docs/licenses/qwen.txt).
 - Slotstream, revision `9342e70cec78db060f61098ffe011f722ef77cf0`:
   checkpoint manifest, layout descriptions, and the adapted gated-delta kernel
@@ -25,7 +25,7 @@ sources. The model files are downloaded separately and are not committed.
 - nlohmann/json 3.11.3, revision `9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03`, is
   fetched by CMake under its MIT license. The fetched source retains its
   `LICENSE.MIT` notice, which is also installed as
-  `share/freellm/licenses/nlohmann-json.txt`.
+  `share/zerocool/licenses/nlohmann-json.txt`.
 - doctest 2.4.12 (`external/doctest.h`) is the test framework and is not linked
   into the engine or the client. [MIT, Viktor Kirilov](docs/licenses/doctest.txt).
 - libcurl from the macOS SDK provides HTTP for the terminal client. It is a

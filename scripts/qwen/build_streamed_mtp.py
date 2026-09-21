@@ -48,7 +48,7 @@ def generated(output):
     s = '#include "streamed_embeddings.hpp"\n'+sources[p]
     marker = '    const ContinuationInput work(input,mode);'
     s = replace(s, marker,
-        '    const char* storage=std::getenv("FREELLM_MTP_EMBEDDINGS");\n'
+        '    const char* storage=std::getenv("ZEROCOOL_MTP_EMBEDDINGS");\n'
         '    check(storage && (std::string_view(storage)=="resident" || std::string_view(storage)=="rows"),"explicit embedding storage required");\n'
         '    check(requested_width==1 || requested_width==4,"embedding trial requires width one or four");\n'
         '    check(!input.contains("capture_recovery"),"embedding trial does not capture recovery fixtures");\n'

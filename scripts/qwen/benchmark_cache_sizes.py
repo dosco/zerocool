@@ -50,6 +50,6 @@ if __name__=="__main__":
     ap.add_argument("--artifact",choices=["q4-control","mixed-4_8bit"],default="mixed-4_8bit")
     ap.add_argument("--model",type=Path,default=bench.ROOT/".cache/qwen-mixed-reference")
     ap.add_argument("--prepared",type=Path,default=bench.ROOT/".cache/prepared/q4-records-v1")
-    ap.add_argument("--binary",type=Path,default=bench.ROOT/"build/qwen/bin/freellm")
+    ap.add_argument("--binary",type=Path,default=bench.ROOT/"build/qwen/bin/zerocool")
     ap.add_argument("--workload",type=Path,default=bench.ROOT/"docs/benchmarks/2026-09-08-validation/workload-2k.json")
     run(ap.parse_args())

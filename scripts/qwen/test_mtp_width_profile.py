@@ -134,14 +134,14 @@ class WidthProfileTests(unittest.TestCase):
     def test_counter_builder_changes_only_mode_and_native_report_identity(self):
         import build_mtp_width_profile as commands
         import build_mtp_width_counters as counters
-        output=Path('/tmp/freellm-counter-source-test')
+        output=Path('/tmp/zerocool-counter-source-test')
         a,b=commands.generated(output),counters.generated(output)
         self.assertEqual(set(a),set(b))
         self.assertEqual({p.name for p in a if a[p]!=b[p]},{'model.hpp','probe.cpp'})
         self.assertEqual(a[output/'probe.cpp'].replace('native_mtp_width_profile_v1',
             'native_mtp_width_counter_profile_v1'),b[output/'probe.cpp'])
-        self.assertEqual(a[output/'include/qwen/model.hpp'].replace('counter_profile=false;',
-            'counter_profile=active;'),b[output/'include/qwen/model.hpp'])
+        self.assertEqual(a[output/'include/engine/model.hpp'].replace('counter_profile=false;',
+            'counter_profile=active;'),b[output/'include/engine/model.hpp'])
 
     def test_resource_blocked_profile_does_not_select_an_optimization(self):
         source=ROOT/'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/summary.json'

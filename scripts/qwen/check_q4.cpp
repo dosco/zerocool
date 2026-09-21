@@ -1,5 +1,5 @@
-#include "qwen/model.hpp"
-#include "qwen/pipeline.hpp"
+#include "engine/model.hpp"
+#include "engine/pipeline.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <cstring>
 #include <fstream>
@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 void require(bool value,const char* message) {if(!value) throw std::runtime_error(message);}
 std::string hash(std::span<const std::byte> bytes) {

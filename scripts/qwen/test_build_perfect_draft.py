@@ -9,7 +9,7 @@ import build_perfect_draft as builder
 
 class PerfectDraftBuilderTest(unittest.TestCase):
     def test_only_guarded_decode_path_is_added_and_original_body_is_retained(self):
-        original = (builder.ROOT/'src/qwen/model.cpp').read_text()
+        original = (builder.ROOT/'src/engine/model.cpp').read_text()
         generated = builder.instrument(original)
         self.assertEqual(generated.replace(builder.ALL_ROWS,'',1).replace(builder.CONFIGURE,'',1),original)
         self.assertEqual(generated.count(builder.ALL_ROWS),1)
@@ -30,22 +30,22 @@ class PerfectDraftBuilderTest(unittest.TestCase):
     def test_objects_precede_archive_and_production_main_is_excluded(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve(); build_dir = root/'build/qwen'
-            (build_dir/'CMakeFiles/freellm.dir').mkdir(parents=True)
-            (root/'src/qwen').mkdir(parents=True)
-            model = root/'src/qwen/model.cpp'
+            (build_dir/'CMakeFiles/zerocool.dir').mkdir(parents=True)
+            (root/'src/engine').mkdir(parents=True)
+            model = root/'src/engine/model.cpp'
             compile_entry = dict(directory=str(build_dir),file=str(model),command=
                 f'/usr/bin/c++ -I{root}/include -O3 -std=c++23 -fno-fast-math '
-                f'-o CMakeFiles/freellm_lib.dir/model.cpp.o -c {model}')
-            storage_entry = dict(compile_entry,file=str(root/'src/qwen/storage.cpp'),
+                f'-o CMakeFiles/zerocool_lib.dir/model.cpp.o -c {model}')
+            storage_entry = dict(compile_entry,file=str(root/'src/engine/storage.cpp'),
                 command=compile_entry['command'].replace('model.cpp','storage.cpp'))
             (build_dir/'compile_commands.json').write_text(json.dumps([compile_entry,storage_entry]))
-            (build_dir/'CMakeFiles/freellm.dir/link.txt').write_text(
-                '/usr/bin/c++ -O3 CMakeFiles/freellm.dir/src/qwen/main.cpp.o '
-                '-o bin/freellm libfreellm_lib.a -framework Metal -framework Foundation')
+            (build_dir/'CMakeFiles/zerocool.dir/link.txt').write_text(
+                '/usr/bin/c++ -O3 CMakeFiles/zerocool.dir/src/engine/main.cpp.o '
+                '-o bin/zerocool libzerocool_lib.a -framework Metal -framework Foundation')
             output = root/'developer'
             commands = builder.commands(root,output,root/'probe.cpp')
-            self.assertNotIn('CMakeFiles/freellm.dir/src/qwen/main.cpp.o',commands['linker'])
-            archive = commands['linker'].index('libfreellm_lib.a')
+            self.assertNotIn('CMakeFiles/zerocool.dir/src/engine/main.cpp.o',commands['linker'])
+            archive = commands['linker'].index('libzerocool_lib.a')
             self.assertEqual(commands['linker'][archive-3:archive],
                 [str(output/'probe.perfect-draft.o'),str(output/'model.perfect-draft.o'),str(output/'storage.perfect-draft.o')])
             for command in commands['compiler']:
@@ -57,7 +57,7 @@ class PerfectDraftBuilderTest(unittest.TestCase):
             self.assertEqual(commands['compiler'][2][-1],str(root/'probe.cpp'))
 
     def test_cache_hash_hook_retains_native_behavior_and_covers_eviction_state(self):
-        original = (builder.ROOT/'src/qwen/storage.cpp').read_text()
+        original = (builder.ROOT/'src/engine/storage.cpp').read_text()
         generated = builder.instrument_storage(original)
         self.assertEqual(generated.replace(builder.CACHE_STATE,'',1),original)
         for field in ('slots_', 'lookup_', 'hand_', 'policy_', 'stride_', 'protected_', 'oldest_', 'newest_',
@@ -79,18 +79,18 @@ class PerfectDraftBuilderTest(unittest.TestCase):
     def test_producer_verification_rejects_omissions_and_self_consistent_tampering(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory).resolve();build_dir=root/'build/qwen'
-            for relative in ('src/qwen','scripts/qwen','build/qwen/bin','build/qwen/CMakeFiles/freellm.dir/src/qwen'):
+            for relative in ('src/engine','scripts/qwen','build/qwen/bin','build/qwen/CMakeFiles/zerocool.dir/src/engine'):
                 (root/relative).mkdir(parents=True)
             for name in ('model.cpp','storage.cpp'):
-                (root/'src/qwen'/name).write_text((builder.ROOT/'src/qwen'/name).read_text())
+                (root/'src/engine'/name).write_text((builder.ROOT/'src/engine'/name).read_text())
             harness=root/'scripts/qwen/probe_perfect_draft.cpp';harness.write_text('int main() {}')
-            entries=[dict(directory=str(build_dir),file=str(root/'src/qwen'/name),command=
-                f'/usr/bin/c++ -std=c++23 -o {name}.o -c {root}/src/qwen/{name}')
+            entries=[dict(directory=str(build_dir),file=str(root/'src/engine'/name),command=
+                f'/usr/bin/c++ -std=c++23 -o {name}.o -c {root}/src/engine/{name}')
                 for name in ('model.cpp','storage.cpp')]
             (build_dir/'compile_commands.json').write_text(json.dumps(entries))
-            (build_dir/'CMakeFiles/freellm.dir/link.txt').write_text('/usr/bin/c++ '
-                'CMakeFiles/freellm.dir/src/qwen/main.cpp.o -o bin/freellm libfreellm_lib.a')
-            for relative in ('libfreellm_lib.a','CMakeFiles/freellm.dir/src/qwen/main.cpp.o','bin/freellm'):
+            (build_dir/'CMakeFiles/zerocool.dir/link.txt').write_text('/usr/bin/c++ '
+                'CMakeFiles/zerocool.dir/src/engine/main.cpp.o -o bin/zerocool libzerocool_lib.a')
+            for relative in ('libzerocool_lib.a','CMakeFiles/zerocool.dir/src/engine/main.cpp.o','bin/zerocool'):
                 (build_dir/relative).write_bytes(relative.encode())
             output=root/'developer'
             def compile_stub(command, **kwargs):

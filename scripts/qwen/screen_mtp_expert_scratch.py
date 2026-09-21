@@ -28,7 +28,7 @@ def setup(exp,directory):
     freeze(exp,[*builder.inputs(cfg),*builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],*host['files'],
         PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',BASE/'protocol.md',
         exp.model/'tokenizer.json',exp.model/'generation_config.json'])
-    exp.env['FREELLM_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
+    exp.env['ZEROCOOL_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
     return cfg,host
 
 
@@ -107,7 +107,7 @@ def run(output,directory,fixture_source,validation_source=None,long=False,select
                 values={}
                 for arm in (('off','on') if (i+pair)%2==0 else ('on','off')):
                     stem=f'case-{i}-pair-{pair}-{arm}';host_check(exp,host,stem)
-                    exp.env['FREELLM_MTP_EXPERT_SCRATCH']=arm
+                    exp.env['ZEROCOOL_MTP_EXPERT_SCRATCH']=arm
                     exp.command([cfg['binary'],exp.model,PREPARED,input_path,exp.out/(stem+'.json'),mode],stem,
                         limit=200 if validation else 360,validation=validation)
                     raw=json.loads((exp.out/(stem+'.json')).read_text());observed=observe(raw,work,sha(input_path),mode)

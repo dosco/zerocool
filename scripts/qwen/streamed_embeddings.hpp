@@ -1,10 +1,10 @@
 // Developer-only exact token-row storage. Target and MTP share one bounded cache.
 #pragma once
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <cstring>
 #include <memory>
 
-namespace freellm::qwen::embedding_rows {
+namespace zerocool::engine::embedding_rows {
 constexpr uint64_t Reserve=2*MiB;
 constexpr size_t Capacity=256,MaxRowBytes=2720;
 inline thread_local bool enabled=false;
@@ -84,4 +84,4 @@ inline uint64_t planned_resident(const Checkpoint& cp,uint64_t original) {
     Store geometry(cp);need(original>=geometry.removed_allocation(),"missing resident embedding allocation");
     return original-geometry.removed_allocation()+Reserve;
 }
-} // namespace freellm::qwen::embedding_rows
+} // namespace zerocool::engine::embedding_rows

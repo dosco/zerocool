@@ -62,7 +62,7 @@ def read_json_bytes(raw):
 
 
 def get(url, limit, span=None, opener=urllib.request.urlopen):
-    headers = {'Accept-Encoding':'identity','User-Agent':'FreeLLM-MTP-preparation/1'}
+    headers = {'Accept-Encoding':'identity','User-Agent':'ZeroCool-MTP-preparation/1'}
     if span is not None:
         start, count, total = span
         require(type(start) is int and start >= 0 and type(count) is int and 0 < count <= limit and

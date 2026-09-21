@@ -32,7 +32,7 @@ def compare(rows,pairs):
         a,b=grouped[i,'old'],grouped[i,'new']
         require(a['complete'] is True and b['complete'] is True,'Incomplete request')
         require(a['memory_plan']==b['memory_plan'],'Different admitted memory plans')
-        require(a['response']['freellm']['output_token_ids']==b['response']['freellm']['output_token_ids'],'Generated tokens differ')
+        require(a['response']['zerocool']['output_token_ids']==b['response']['zerocool']['output_token_ids'],'Generated tokens differ')
         require(a['response']['usage']['prompt_tokens']==b['response']['usage']['prompt_tokens'],'Different prompt tokenization')
         require(all(type(r['elapsed_ms']) in (int,float) and math.isfinite(r['elapsed_ms']) and r['elapsed_ms']>0 for r in (a,b)),'Missing or invalid request latency')
         ratios.append(b['elapsed_ms']/a['elapsed_ms'])
@@ -51,7 +51,7 @@ def clean_memory(observations):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode',choices=['paired','soak'])
-    p.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/freellm')
+    p.add_argument('--binary',type=Path,default=ROOT/'build/qwen/bin/zerocool')
     p.add_argument('--baseline',type=Path)
     p.add_argument('--model',type=Path,required=True)
     p.add_argument('--artifact',choices=['4bit','mixed-4_8bit'],default='4bit')
@@ -63,13 +63,13 @@ def main():
     a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     require(a.mode!='paired' or a.baseline,'Paired mode requires the preserved old binary')
     require(a.seconds>=1200,'Soak must cover at least 1200 seconds')
-    require(not any(k.startswith(('FREELLM_','MTL_')) for k in os.environ),'Unset experimental and Metal validation environment variables')
+    require(not any(k.startswith(('ZEROCOOL_','MTL_')) for k in os.environ),'Unset experimental and Metal validation environment variables')
     work=json.loads(a.workload.read_text());require(isinstance(work.get('messages'),list) and work['messages'],'Workload needs messages')
     count=work.get('max_tokens',64);require(type(count) is int and 1<=count<=256,'Use 1..256 output tokens')
     binaries=dict(new=a.binary.resolve())
     if a.baseline:binaries['old']=a.baseline.resolve()
     model=a.model.resolve();prepared=a.prepared.resolve()
-    files=[Path(__file__),a.workload.resolve(),model/'freellm-verification.json',prepared/'manifest.json',prepared/'verification.json',*binaries.values()]
+    files=[Path(__file__),a.workload.resolve(),model/'zerocool-verification.json',prepared/'manifest.json',prepared/'verification.json',*binaries.values()]
     frozen={str(path):sha(path) for path in files}
     report=dict(kind='api_usability_performance_v1',complete=False,status='running',qualified=False,mode=a.mode,files=frozen,
         configuration=dict(artifact=a.artifact,memory_gib=12,context=8192,max_tokens=count,temperature=0,seed=0,thinking=False),measurements=[])
@@ -118,7 +118,7 @@ def main():
         def poll():
             while not quit.is_set():
                 began=time.monotonic()
-                try:samples.append(get(url,'/freellm/status'));latency.append((time.monotonic()-began)*1000)
+                try:samples.append(get(url,'/zerocool/status'));latency.append((time.monotonic()-began)*1000)
                 except Exception as error:errors.append(str(error))
                 quit.wait(1)
         thread=threading.Thread(target=poll)
@@ -133,7 +133,7 @@ def main():
             if thread.is_alive():thread.join()
             save(out/(stem+'-status.json'),dict(samples=samples,latency_ms=latency,errors=errors))
         require(not errors,'Status polling failed during inference')
-        diagnostics=response['freellm'];mem=[diagnostics['after']['process']]
+        diagnostics=response['zerocool'];mem=[diagnostics['after']['process']]
         for phase in diagnostics['phases'].values():mem.extend([phase['before']['process'],phase['after']['process']])
         mem.extend(s['process'] for s in samples if s.get('process'))
         row=dict(complete=True,elapsed_ms=elapsed,response=response,peak_physical_bytes=max(m['physical_footprint_peak_bytes'] for m in mem),

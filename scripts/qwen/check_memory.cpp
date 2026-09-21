@@ -1,11 +1,11 @@
-#include "qwen/session.hpp"
-#include "qwen/memory_trace.hpp"
+#include "engine/session.hpp"
+#include "engine/memory_trace.hpp"
 #include <csignal>
 #include <fstream>
 #include <print>
 #include <thread>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {std::atomic<bool> stopped=false;void interrupt(int) {stopped=true;}}
 int main(int argc,char** argv) {
     if(argc!=7) {std::println(stderr,"usage: qwen_memory_check MODEL PREPARED WORKLOAD MODE REPORT TRACE");return 2;}

@@ -18,8 +18,8 @@ SCRIPTS=ROOT/'scripts/qwen'
 
 
 def generated(output):
-    header=replace((ROOT/'include/qwen/model.hpp').read_text(),'class Model {\n','class Model {\n    friend struct DraftAccess;\n')
-    model=verifier.instrument((ROOT/'src/qwen/model.cpp').read_text())
+    header=replace((ROOT/'include/engine/model.hpp').read_text(),'class Model {\n','class Model {\n    friend struct DraftAccess;\n')
+    model=verifier.instrument((ROOT/'src/engine/model.cpp').read_text())
     model='#include "mtp_draft.hpp"\n'+model
     marker='        if(!logits) {gpu_.finish();finish_expert_tail();update.commit();return {};}\n'
     model=replace(model,marker,'        capture_mtp_hidden(gpu_,h,T,state.tokens);\n'+marker)
@@ -29,24 +29,24 @@ def generated(output):
                   (SCRIPTS/'mtp_draft.metal').read_text()+'\n)PACKED_Q8";')
     helpers=(SCRIPTS/'probe_perfect_draft.cpp').read_text().split('int main(int argc,char** argv) {')[0]
     harness='#include "mtp_draft.hpp"\n'+helpers+(SCRIPTS/'probe_mtp_forward.cpp').read_text()
-    return {output/'include/qwen/model.hpp':header,output/'model.cpp':model,
-            output/'metal.mm':metal,output/'storage.cpp':verifier.instrument_storage((ROOT/'src/qwen/storage.cpp').read_text()),
+    return {output/'include/engine/model.hpp':header,output/'model.cpp':model,
+            output/'metal.mm':metal,output/'storage.cpp':verifier.instrument_storage((ROOT/'src/engine/storage.cpp').read_text()),
             output/'probe.cpp':harness}
 
 
 def settings(output):
     output=Path(output).resolve();native=ROOT/'build/qwen'
-    db=native/'compile_commands.json';link_file=native/'CMakeFiles/freellm.dir/link.txt'
+    db=native/'compile_commands.json';link_file=native/'CMakeFiles/zerocool.dir/link.txt'
     entries=json.loads(db.read_text());commands=[];objects=[]
     for source in (output/'model.cpp',output/'metal.mm',output/'storage.cpp',SCRIPTS/'mtp_draft.cpp',output/'probe.cpp'):
-        original=ROOT/'src/qwen'/('metal.mm' if source.suffix=='.mm' else 'model.cpp')
+        original=ROOT/'src/engine'/('metal.mm' if source.suffix=='.mm' else 'model.cpp')
         entry=[e for e in entries if Path(e['file']).resolve()==original];require(len(entry)==1,'Missing compiler')
         cmd=shlex.split(entry[0]['command']);obj=output/(source.stem+'.o')
         cmd[1:1]=['-I'+str(output/'include'),'-I'+str(SCRIPTS)]
         cmd[cmd.index('-o')+1]=str(obj);cmd[-1]=str(source);commands.append(cmd);objects.append(obj)
-    link=shlex.split(link_file.read_text());link.remove('CMakeFiles/freellm.dir/src/qwen/main.cpp.o')
+    link=shlex.split(link_file.read_text());link.remove('CMakeFiles/zerocool.dir/src/engine/main.cpp.o')
     binary=output/'probe-mtp-forward';link[link.index('-o')+1]=str(binary)
-    at=link.index('libfreellm_lib.a');link[at:at]=list(map(str,objects))
+    at=link.index('libzerocool_lib.a');link[at:at]=list(map(str,objects))
     return dict(output=output,native=native,db=db,link_file=link_file,compiler=commands,linker=link,objects=objects,binary=binary)
 
 
@@ -55,9 +55,9 @@ def inputs(c):
         'build_perfect_draft.py','build_block_cache_trace.py','probe_perfect_draft.cpp',
         'mtp_draft.hpp','mtp_draft.cpp','mtp_draft.metal','probe_mtp_forward.cpp',
         'capture_q8_expanded.inc','probe_q8_block_packed.metal','q8_expanded_contract.py']
-    return [*[SCRIPTS/p for p in dependencies],*sorted((ROOT/'include/qwen').glob('*.hpp')),
-        *[ROOT/'src/qwen'/p for p in ('model.cpp','storage.cpp','metal.mm')],ROOT/'kernels/metal/qwen.metal',
-        c['db'],c['link_file'],c['native']/'libfreellm_lib.a',c['native']/'bin/freellm']
+    return [*[SCRIPTS/p for p in dependencies],*sorted((ROOT/'include/engine').glob('*.hpp')),
+        *[ROOT/'src/engine'/p for p in ('model.cpp','storage.cpp','metal.mm')],ROOT/'kernels/metal/qwen.metal',
+        c['db'],c['link_file'],c['native']/'libzerocool_lib.a',c['native']/'bin/zerocool']
 
 
 def proof(c):

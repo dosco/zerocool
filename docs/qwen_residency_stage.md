@@ -80,7 +80,7 @@ Outputs are bound to native build/artifact and each payload has a byte count
 and SHA-256. Existing nonempty output directories are rejected.
 
 ```sh
-build/qwen/bin/freellm bench --operator-fixtures CAPTURE/manifest.json \
+build/qwen/bin/zerocool bench --operator-fixtures CAPTURE/manifest.json \
   --artifact mixed-4_8bit --repetitions 5 --json operators.json
 python3 scripts/qwen/select_shape_rules.py operators.json --output shape-policy.json
 ```

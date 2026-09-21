@@ -7,7 +7,7 @@ Json direct_output_test(const std::filesystem::path& prepared) {
     KernelConfig config;config.policy="candidate";config.token_tile=4;gpu.configure(config);gpu.request_phase("decode");
     ReadPool reads(4);gpu.prepare_pipelines();const auto before=process_memory();
     const auto manifest=read_json(prepared/"manifest.json");const auto& layout=manifest.at("experts").at(0);
-    check(manifest.at("format")=="freellm-affine-records-v1" && layout.at("length")==ExpertBytes &&
+    check(manifest.at("format")=="zc-affine-records-v1" && layout.at("length")==ExpertBytes &&
         layout.at("stride")==ExpertStride,"changed real expert layout");
     File file(prepared/layout.at("file").get<std::string>());
     std::array<Buf,8> records;Json hashes=Json::array();std::vector<ExpertKey> keys;

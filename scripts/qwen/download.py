@@ -9,7 +9,7 @@ from verify_checkpoint import ROOT, fingerprint, hash_file, verify
 
 def preflight(model, lock):
     entries = [f for f in lock['files'] if not f.get('optional')]
-    receipt_path = model/'freellm-verification.json'
+    receipt_path = model/'zerocool-verification.json'
     receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else {}
     if receipt and receipt.get('revision') != lock['revision']:
         raise ValueError('Refusing to replace a different verified artifact; choose its own directory')

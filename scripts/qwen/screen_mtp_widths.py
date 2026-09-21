@@ -92,16 +92,16 @@ def setup(exp, directory):
     freeze(exp, [*builder.inputs(cfg), *builder.generated(cfg['output']), *cfg['objects'], cfg['binary'],
                  *host['files'], PREPARED/'manifest.json', PREPARED/'dense.bin', PREPARED/'experts.bin',
                  Path(__file__), exp.model/'tokenizer.json', exp.model/'generation_config.json'])
-    exp.env.update(FREELLM_Q8_EXPANDED='packed', FREELLM_MTP_NGRAM_INIT='lazy',
-                   FREELLM_MTP_EXPERT_SCRATCH='off', FREELLM_MTP_DIRECT_OUTPUT='on',
-                   FREELLM_TARGET_RECOVERY='full-replay')
+    exp.env.update(ZEROCOOL_Q8_EXPANDED='packed', ZEROCOOL_MTP_NGRAM_INIT='lazy',
+                   ZEROCOOL_MTP_EXPERT_SCRATCH='off', ZEROCOOL_MTP_DIRECT_OUTPUT='on',
+                   ZEROCOOL_TARGET_RECOVERY='full-replay')
     exp.guard.check_resources(initial=True)
     return cfg, host
 
 
 def sample(exp, cfg, host, width, work, stem, validation):
     input_path = exp.out/(stem+'.input.json'); save(input_path, work); freeze(exp,[input_path])
-    host_check(exp,host,stem); exp.env['FREELLM_MTP_WIDTH']=str(width)
+    host_check(exp,host,stem); exp.env['ZEROCOOL_MTP_WIDTH']=str(width)
     path = exp.out/(stem+'.json')
     exp.command([cfg['binary'],exp.model,PREPARED,input_path,path,'fast-validate' if validation else 'fast-timing'],
                 stem,limit=180,validation=validation)

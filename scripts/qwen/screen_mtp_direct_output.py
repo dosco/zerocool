@@ -36,7 +36,7 @@ def setup(exp,directory):
     verify_seal(REFERENCE,sha(REFERENCE/'evidence-files.json'))
     require(json.loads((REFERENCE/'summary.json').read_text())['status']=='numerically_validated','Unqualified numerical reference')
     freeze(exp,[REFERENCE/p for p in ('summary.json','case-0.json','case-0-pair-0-off.json','evidence-files.json')])
-    exp.env.update(FREELLM_Q8_EXPANDED='packed',FREELLM_MTP_NGRAM_INIT='lazy',FREELLM_MTP_EXPERT_SCRATCH='off')
+    exp.env.update(ZEROCOOL_Q8_EXPANDED='packed',ZEROCOOL_MTP_NGRAM_INIT='lazy',ZEROCOOL_MTP_EXPERT_SCRATCH='off')
     exp.report.update(numerical_reference=str(REFERENCE),historical_timing_reused=False,ngram_initialization='lazy',expert_scratch=False)
     exp.guard.check_resources(initial=True);return cfg,host
 
@@ -140,7 +140,7 @@ def run(output,directory,fixture_source,validation_source=None,long=False,select
                 values={}
                 for arm in (('off','on') if (i+pair)%2==0 else ('on','off')):
                     stem=f'case-{i}-pair-{pair}-{arm}';host_check(exp,host,stem)
-                    exp.env['FREELLM_MTP_DIRECT_OUTPUT']=arm
+                    exp.env['ZEROCOOL_MTP_DIRECT_OUTPUT']=arm
                     exp.command([cfg['binary'],exp.model,PREPARED,input_path,exp.out/(stem+'.json'),mode],stem,
                         limit=200 if validation else 360,validation=validation)
                     raw=json.loads((exp.out/(stem+'.json')).read_text());observed=observe(raw,work,sha(input_path),mode)

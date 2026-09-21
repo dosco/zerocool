@@ -83,7 +83,7 @@ def run(args):
     args.output.mkdir(parents=True,exist_ok=False)
     configs=json.loads(CONFIG.read_text());build=build_fingerprint(ROOT)
     seed=json.loads((ROOT/'docs/benchmarks/2026-09-08-validation/workload-2k.json').read_text())[0]['tokens']
-    model=ROOT/'.cache/qwen-mixed-reference';prepared=ROOT/'.cache/prepared/q4-records-v1';binary=ROOT/'build/qwen/bin/freellm'
+    model=ROOT/'.cache/qwen-mixed-reference';prepared=ROOT/'.cache/prepared/q4-records-v1';binary=ROOT/'build/qwen/bin/zerocool'
     shared=['--model',str(model),'--artifact','mixed-4_8bit','--prepared',str(prepared),'--memory-gb','12','--context','8192']
     hashes={};completed=[]
     def save(name,obj):

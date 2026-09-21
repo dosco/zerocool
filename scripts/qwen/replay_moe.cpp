@@ -1,7 +1,7 @@
-#include "qwen/metal.hpp"
+#include "engine/metal.hpp"
 #include <fstream>
 #include <print>
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 // Bounded numerical diagnostic, linked to the production Metal executor.
 // Input traces must come from a five-token native forward pass. This replays
 // isolated operators on recorded inputs; it does not verify the full model.

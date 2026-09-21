@@ -51,6 +51,7 @@ docs/benchmarks/**/archive/**
 !docs/benchmarks/2026-09-14-combined-q4/integration-origin.json
 !docs/benchmarks/2026-09-16-perfect-draft/screen-03/validate-1.json
 !docs/benchmarks/2026-09-17-verifier-horizon/tiled-early-01/pair-0-width-8.json
+!docs/benchmarks/2026-09-21-rename-revalidation/payload-equivalence.json
 
 # Editor, tool and OS state
 .vscode/

@@ -55,7 +55,7 @@ class SelectedWeights:
     def __init__(self, model, lock_path):
         self.model = Path(model)
         lock = json.loads(Path(lock_path).read_text())
-        receipt_path = self.model/'freellm-verification.json'
+        receipt_path = self.model/'zerocool-verification.json'
         receipt = json.loads(receipt_path.read_text())
         require(lock.get('revision') == receipt.get('revision') == REVISION, 'Wrong mixed checkpoint revision')
         self.lock = {e['path']: e for e in lock['files'] if not e.get('optional')}
@@ -119,7 +119,7 @@ class SelectedWeights:
         return bf(x.astype(np.float64) @ matrix.T)
 
     def proof(self):
-        require(sha(self.model/'freellm-verification.json') == self.receipt_sha256 and
+        require(sha(self.model/'zerocool-verification.json') == self.receipt_sha256 and
                 self.states == {name: fingerprint(self.model/name) for name in self.states},
                 'Checkpoint changed during shared reference computation')
         return dict(receipt_sha256=self.receipt_sha256,

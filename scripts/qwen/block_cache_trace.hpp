@@ -1,11 +1,11 @@
 // Developer-only coordinator trace. Never included by production sources.
 #pragma once
-#include "qwen/storage.hpp"
+#include "engine/storage.hpp"
 #include <cstdio>
 #include <fcntl.h>
 #include <unistd.h>
 
-namespace freellm::qwen::block_trace {
+namespace zerocool::engine::block_trace {
 inline std::FILE* stream=nullptr;
 inline std::array<char,128*1024> buffer{};
 inline uint64_t sequence=0,bytes=0;

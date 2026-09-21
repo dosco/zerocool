@@ -21,7 +21,7 @@ def settings(output):
     command = list(cfg['compiler'][-1]); command[-1] = str(PROBE); command[command.index('-o')+1] = str(obj)
     link = [v for v in cfg['linker'] if v not in map(str, cfg['objects'])]
     binary = cfg['binary'].parent/'probe-block-gdn'; link[link.index('-o')+1] = str(binary)
-    link.insert(link.index('libfreellm_lib.a'), str(obj))
+    link.insert(link.index('libzerocool_lib.a'), str(obj))
     cfg.update(operator_binary=binary, operator_object=obj, operator_compiler=command, operator_linker=link)
     return cfg
 

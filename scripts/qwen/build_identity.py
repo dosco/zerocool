@@ -17,17 +17,17 @@ def configuration_identity(build: Path) -> str:
         values = re.findall(r'^set\('+re.escape(name)+r' "([^"\n]*)"\)$', compiler, re.MULTILINE)
         if len(values) != 1 or not values[0]: raise ValueError('Missing configured '+name)
         return values[0]
-    for key in ('CMAKE_BUILD_TYPE', 'CMAKE_CXX_FLAGS', 'FREELLM_SANITIZE'):
+    for key in ('CMAKE_BUILD_TYPE', 'CMAKE_CXX_FLAGS', 'ZEROCOOL_SANITIZE'):
         if key not in cache: raise ValueError('Missing configured '+key)
     mode = cache['CMAKE_BUILD_TYPE']
     flags = cache['CMAKE_CXX_FLAGS']+' '+cache.get('CMAKE_CXX_FLAGS_'+mode.upper(), '')
     return (f'toolchain:{setting("CMAKE_CXX_COMPILER_ID")}-{setting("CMAKE_CXX_COMPILER_VERSION")}\n'
-            f'build_type:{mode}\nflags:{flags}\nsanitizer:{cache["FREELLM_SANITIZE"]}\n')
+            f'build_type:{mode}\nflags:{flags}\nsanitizer:{cache["ZEROCOOL_SANITIZE"]}\n')
 
 
 def build_fingerprint(root: Path) -> str:
     root = Path(root)
-    paths = sorted(list((root / 'src/qwen').glob('*')) + list((root / 'include/qwen').glob('*')))
+    paths = sorted(list((root / 'src/engine').glob('*')) + list((root / 'include/engine').glob('*')))
     paths += [root / p for p in ('kernels/metal/qwen.metal', 'models.lock.json', 'mixed-models.lock.json',
         'mixed-payload-reuse.lock.json', 'cmake/qwen.cmake', 'cmake/qwen_embedded.hpp.in', 'CMakeLists.txt')]
     identity = ''.join(f'{p.relative_to(root)}:{hashlib.sha256(p.read_bytes()).hexdigest()}\n' for p in paths)

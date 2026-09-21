@@ -1,5 +1,5 @@
 // Standalone optimistic verifier screen. Never linked into production inference.
-#include "qwen/session.hpp"
+#include "engine/session.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <malloc/malloc.h>
 #include <csignal>
@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iostream>
 
-using namespace freellm::qwen;
+using namespace zerocool::engine;
 namespace {
 std::atomic<bool> stopped=false;
 void interrupt(int) { stopped=true; }

@@ -22,7 +22,7 @@ if not 0<T<=32: raise SystemExit('Use 1..32 tokens')
 mx.set_cache_limit(64*1024**2)
 mx.set_memory_limit(768*1024**2)
 verify(args.model,json.loads(args.lock.read_text()),cached=True)
-spec=importlib.util.spec_from_file_location('freellm_pinned_stages',args.model/'qwen4_exp.py')
+spec=importlib.util.spec_from_file_location('zerocool_pinned_stages',args.model/'qwen4_exp.py')
 ref=importlib.util.module_from_spec(spec);sys.modules[spec.name]=ref;spec.loader.exec_module(ref)
 config=json.loads((args.model/'config.json').read_text())
 cfg=ref.ModelArgs.from_dict(config).text

@@ -53,7 +53,7 @@ def run(output,directory,validation=False,after_tokens=None):
     exp=s.Experiment(output,'mtp_startup_memory_attribution_v1',[s.configuration(4,expert_slots=1460)],work,220)
     with exp:
         cfg,host=stage.setup(exp,directory);freeze(exp,[stage.BASE/'memory-protocol.md'])
-        s.host_check(exp,host,'native');exp.env['FREELLM_MTP_EXPERT_SCRATCH']='off'
+        s.host_check(exp,host,'native');exp.env['ZEROCOOL_MTP_EXPERT_SCRATCH']='off'
         reference=stage.REFERENCE if validation else s.ROOT/'docs/benchmarks/2026-09-16-mtp-continuation/short-reference-01'
         verify_seal(reference,sha(reference/'evidence-files.json'))
         refpath=reference/('case-0-pair-0-off.json' if validation else 'case-0-fast-timing.json')

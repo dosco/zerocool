@@ -53,7 +53,7 @@ def tree_bytes(directory):
 def identity(root, configs, model, prepared, workload):
     root, model, prepared = Path(root), Path(model), Path(prepared)
     lock = json.loads((root/'mixed-models.lock.json').read_text())
-    receipt = json.loads((model/'freellm-verification.json').read_text())
+    receipt = json.loads((model/'zerocool-verification.json').read_text())
     manifest = json.loads((prepared/'manifest.json').read_text())
     prepared_receipt = json.loads((prepared/'verification.json').read_text())
     if receipt.get('revision') != lock['revision']:
@@ -80,9 +80,9 @@ def identity(root, configs, model, prepared, workload):
     paths = [*sorted((root/'scripts/qwen').glob('*.py')),
              *sorted((root/'scripts/qwen').glob('*.cpp')), *sorted((root/'scripts/qwen').glob('*.hpp')),
              root/'tests/test_qwen.cpp', root/'mixed-models.lock.json', root/'models.lock.json',
-             root/'mixed-payload-reuse.lock.json', model/'freellm-verification.json',
+             root/'mixed-payload-reuse.lock.json', model/'zerocool-verification.json',
              prepared/'manifest.json', prepared/'verification.json', Path(workload)]
-    paths += [root/'build/qwen'/name for name in ('bin/freellm','test_qwen','qwen_cached_recovery','qwen_sparse_replay','qwen_panel_check')]
+    paths += [root/'build/qwen'/name for name in ('bin/zerocool','test_qwen','qwen_cached_recovery','qwen_sparse_replay','qwen_panel_check')]
     return dict(protocol='selector-qualification-v1', root=str(root.resolve()),
                 build=build_fingerprint(root), artifact_revision=lock['revision'],
                 prepared_manifest_sha256=sha(prepared/'manifest.json'),

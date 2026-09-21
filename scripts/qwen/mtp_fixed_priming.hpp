@@ -1,8 +1,8 @@
 // Developer benchmark only: deterministic cache seeding before timed decode.
 #pragma once
-#include "qwen/pipeline.hpp"
+#include "engine/pipeline.hpp"
 
-namespace freellm::qwen::mtp_fixed_priming {
+namespace zerocool::engine::mtp_fixed_priming {
 inline thread_local bool active=false;
 inline thread_local uint64_t calls=0,batches=0,experts=0,peak_leases=0;
 struct Scope {

@@ -40,7 +40,7 @@ def generated(output):
         '    mtp_fixed_priming::execute(selected,*cache_,reads_,gpu_,4,')
     p = output/'probe.cpp'; s = INCLUDE+'#include "mtp_fixed_priming.hpp"\n'+sources[p]
     s = trace.replace(s, '    embedding_rows::Scope streamed_scope;',
-        '    const char* trace_setting=std::getenv("FREELLM_HORIZON_CACHE_TRACE");\n'
+        '    const char* trace_setting=std::getenv("ZEROCOOL_HORIZON_CACHE_TRACE");\n'
         '    check(trace_setting && (std::string_view(trace_setting)=="on" || std::string_view(trace_setting)=="off"),"explicit cache trace mode required");\n'
         '    horizon_trace::open(output,std::string_view(trace_setting)=="on");\n'
         '    report["cache_trace_enabled"]=horizon_trace::enabled;report["performance_measurement"]=false;\n'

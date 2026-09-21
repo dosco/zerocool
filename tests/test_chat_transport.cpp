@@ -1,8 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "qwen/server.hpp"
+#include "engine/server.hpp"
 #include "chat_test_executor.hpp"
-#include "qwen/chat_client.hpp"
+#include "engine/chat_client.hpp"
 #include <chrono>
 #include <arpa/inet.h>
 #include <condition_variable>
@@ -14,12 +14,12 @@
 #include <thread>
 #include <sys/socket.h>
 #include <unistd.h>
-using namespace freellm::qwen;
-namespace client=freellm::chat;
+using namespace zerocool::engine;
+namespace client=zerocool::chat;
 using namespace std::chrono_literals;
 namespace {
-using freellm::qwen::chat_test::Control;
-using freellm::qwen::chat_test::TestExecutor;
+using zerocool::engine::chat_test::Control;
+using zerocool::engine::chat_test::TestExecutor;
 struct Server {
     std::shared_ptr<Control> control=std::make_shared<Control>();
     int pair[2]={-1,-1};std::thread thread;std::string url;std::atomic<bool> stop=false;
@@ -35,7 +35,7 @@ struct Server {
     }
     ~Server(){control->loading=false;control->hold=false;control->hold_drain=false;stop=true;thread.join();close(pair[0]);close(pair[1]);}
     client::HttpResult get(const std::string& path){return client::http(url+path,"GET","",stop);}
-    Json status(){return Json::parse(get("/freellm/status").body);}
+    Json status(){return Json::parse(get("/zerocool/status").body);}
     void wait_phase(const std::string& phase) {
         for(int i=0;i<200;++i) {if(status()["phase"]==phase)return;std::this_thread::sleep_for(5ms);}
         throw std::runtime_error("phase did not reach "+phase);
@@ -58,7 +58,7 @@ TEST_CASE("terminal text cannot issue escapes and saves never overwrite") {
     CHECK(client::terminal_text("a\x1b[2J\t\x7f\xc2\x9b\n🦉")=="a?[2J    ??\n🦉");
     CHECK_THROWS(client::endpoint("https://example.com"));CHECK_THROWS(client::endpoint("http://127.0.0.1:8080/path"));
     CHECK(client::endpoint("http://127.0.0.1:8080/")=="http://127.0.0.1:8080");
-    auto path=std::filesystem::temp_directory_path()/("freellm-chat-"+std::to_string(monotonic_ns())+".json");
+    auto path=std::filesystem::temp_directory_path()/("zerocool-chat-"+std::to_string(monotonic_ns())+".json");
     client::save_transcript(path,{{"content","private"}});CHECK_THROWS(client::save_transcript(path,{{"content","overwrite"}}));
     std::ifstream f(path);client::Json j;f>>j;CHECK(j["content"]=="private");std::filesystem::remove(path);
 }
@@ -83,7 +83,7 @@ TEST_CASE("chat envelopes usage and tool streams use one owning inference thread
     CHECK(events[1]["choices"][0]["delta"]["reasoning_content"]=="Check café 🦉 first.");
     CHECK_FALSE(events.back().contains("usage"));
     CHECK(s.control->owners.size()==1);
-    auto reset=client::http(s.url+"/freellm/session/reset","POST","{}",s.stop);CHECK(reset.status==200);CHECK(s.control->resets==1);
+    auto reset=client::http(s.url+"/zerocool/session/reset","POST","{}",s.stop);CHECK(reset.status==200);CHECK(s.control->resets==1);
 }
 TEST_CASE("HTTP accepts fragmented Unicode requests and rejects ambiguous lengths") {
     Server s;
@@ -101,17 +101,17 @@ TEST_CASE("HTTP accepts fragmented Unicode requests and rejects ambiguous length
     const auto json="Content-Type: application/json\r\n";
     const auto response=raw("POST /v1/chat/completions HTTP/1.1\r\n"+std::string(json)+"Content-Length: "+std::to_string(body.size())+"\r\n\r\n"+body);
     CHECK(response.starts_with("HTTP/1.1 200 OK"));CHECK(response.find("OK 🦉")!=std::string::npos);
-    CHECK(response.find("X-Request-Id: chatcmpl-freellm-")!=std::string::npos);
+    CHECK(response.find("X-Request-Id: chatcmpl-zerocool-")!=std::string::npos);
     CHECK(raw("POST /v1/chat/completions HTTP/1.1\r\n"+std::string(json)+"Content-Length: 0\r\nContent-Length: 0\r\n\r\n").starts_with("HTTP/1.1 400 Bad Request"));
     // A page in a browser must not be able to drive or reset the local engine.
     CHECK(raw("POST /v1/chat/completions HTTP/1.1\r\nContent-Length: "+std::to_string(body.size())+"\r\n\r\n"+body)
         .starts_with("HTTP/1.1 415 Unsupported Media Type"));
     CHECK(raw("POST /v1/chat/completions HTTP/1.1\r\n"+std::string(json)+"Origin: https://example.com\r\nContent-Length: "+
         std::to_string(body.size())+"\r\n\r\n"+body).starts_with("HTTP/1.1 403 Forbidden"));
-    CHECK(raw("GET /freellm/status HTTP/1.1\r\nHost: attacker.example\r\n\r\n").starts_with("HTTP/1.1 403 Forbidden"));
-    CHECK(raw("GET /freellm/status HTTP/1.1\r\nHost: 127.0.0.1:1234\r\n\r\n").starts_with("HTTP/1.1 200 OK"));
-    CHECK(raw("GET /freellm/status HTTP/1.1\r\nHOST: localhost\r\n\r\n").starts_with("HTTP/1.1 200 OK"));
-    CHECK(raw("POST /freellm/session/reset HTTP/1.1\r\nContent-Length: 2\r\n\r\n{}").starts_with("HTTP/1.1 415"));
+    CHECK(raw("GET /zerocool/status HTTP/1.1\r\nHost: attacker.example\r\n\r\n").starts_with("HTTP/1.1 403 Forbidden"));
+    CHECK(raw("GET /zerocool/status HTTP/1.1\r\nHost: 127.0.0.1:1234\r\n\r\n").starts_with("HTTP/1.1 200 OK"));
+    CHECK(raw("GET /zerocool/status HTTP/1.1\r\nHOST: localhost\r\n\r\n").starts_with("HTTP/1.1 200 OK"));
+    CHECK(raw("POST /zerocool/session/reset HTTP/1.1\r\nContent-Length: 2\r\n\r\n{}").starts_with("HTTP/1.1 415"));
 }
 TEST_CASE("request parameters are rejected by type rather than coerced") {
     const Options options;
@@ -144,7 +144,7 @@ TEST_CASE("busy rejection cancellation and draining precede reuse") {
     Server s;s.control->hold=true;s.control->hold_drain=true;
     std::atomic<bool> cancel=false;std::thread request([&]{try {client::http(s.url+"/v1/chat/completions","POST",s.request("hello",true).dump(),cancel,[](const auto&) {},0);}catch(...) {}});
     s.wait_phase("prefill");CHECK(s.post(s.request()).status==429);
-    CHECK(client::http(s.url+"/freellm/session/reset","POST","{}",s.stop).status==409);
+    CHECK(client::http(s.url+"/zerocool/session/reset","POST","{}",s.stop).status==409);
     const auto start=std::chrono::steady_clock::now();cancel=true;request.join();
     CHECK(std::chrono::steady_clock::now()-start<500ms);s.wait_phase("draining");CHECK(s.control->cancelled);
     CHECK(s.post(s.request()).status==429);s.control->hold=false;s.control->hold_drain=false;s.wait_phase("ready");
@@ -181,9 +181,9 @@ TEST_CASE("a pinned client cannot use a different server instance") {
     const auto first=a.status().at("instance_id").get<std::string>();
     const auto second=b.status().at("instance_id").get<std::string>();
     CHECK_FALSE(first.empty());CHECK(first!=second);
-    CHECK(client::http(a.url+"/freellm/status","GET","",a.stop,{},3000,first).status==200);
-    CHECK(client::http(b.url+"/freellm/status","GET","",b.stop,{},3000,first).status==409);
-    CHECK(client::http(b.url+"/freellm/session/reset","POST","{}",b.stop,{},3000,first).status==409);
+    CHECK(client::http(a.url+"/zerocool/status","GET","",a.stop,{},3000,first).status==200);
+    CHECK(client::http(b.url+"/zerocool/status","GET","",b.stop,{},3000,first).status==409);
+    CHECK(client::http(b.url+"/zerocool/session/reset","POST","{}",b.stop,{},3000,first).status==409);
     CHECK(client::http(b.url+"/v1/chat/completions","POST",b.request().dump(),b.stop,{},3000,first).status==409);
     CHECK(b.control->resets==0);CHECK_FALSE(b.status()["busy"].get<bool>());
     CHECK(b.post(b.request()).status==200); // Ordinary OpenAI clients need no extension header.

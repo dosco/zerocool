@@ -17,18 +17,18 @@ def require(ok,message):
 def build_probe(output):
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
     native=ROOT/'build/qwen';source=ROOT/'scripts/qwen/benchmark_host.cpp'
-    db=native/'compile_commands.json';link_path=native/'CMakeFiles/freellm.dir/link.txt'
-    entries=[e for e in json.loads(db.read_text()) if Path(e['file']).resolve()==ROOT/'src/qwen/model.cpp']
+    db=native/'compile_commands.json';link_path=native/'CMakeFiles/zerocool.dir/link.txt'
+    entries=[e for e in json.loads(db.read_text()) if Path(e['file']).resolve()==ROOT/'src/engine/model.cpp']
     require(len(entries)==1 and Path(entries[0]['directory']).resolve()==native,'Missing native compiler command')
     compile=shlex.split(entries[0]['command']);obj=output/'host.o';binary=output/'benchmark-host'
-    require(compile.count('-o')==compile.count('-c')==1 and Path(compile[-1]).resolve()==ROOT/'src/qwen/model.cpp',
+    require(compile.count('-o')==compile.count('-c')==1 and Path(compile[-1]).resolve()==ROOT/'src/engine/model.cpp',
         'Unexpected native compiler command')
     compile[compile.index('-o')+1]=str(obj);compile[-1]=str(source)
-    link=shlex.split(link_path.read_text());main='CMakeFiles/freellm.dir/src/qwen/main.cpp.o'
+    link=shlex.split(link_path.read_text());main='CMakeFiles/zerocool.dir/src/engine/main.cpp.o'
     require(link.count(main)==link.count('-o')==1,'Unexpected native linker command')
     link[link.index(main)]=str(obj);link[link.index('-o')+1]=str(binary)
     inputs=[source,Path(__file__),ROOT/'scripts/qwen/build_identity.py',ROOT/'scripts/qwen/qualification_evidence.py',
-        db,link_path,native/'libfreellm_lib.a',*sorted((ROOT/'include/qwen').glob('*.hpp'))]
+        db,link_path,native/'libzerocool_lib.a',*sorted((ROOT/'include/engine').glob('*.hpp'))]
     frozen={str(p.resolve()):sha(p) for p in inputs};base=build_fingerprint(ROOT)
     report=dict(kind='benchmark_host_producer_v1',complete=False,base_native_fingerprint=base,
         files=frozen,compiler=compile,linker=link,binary=str(binary),model_loaded=False,gpu_used=False)

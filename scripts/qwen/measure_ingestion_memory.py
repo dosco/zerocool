@@ -152,7 +152,7 @@ def run(out):
                 name=c['name'];stem=out/name;report['phase']=name;save(out/'summary.json',report);print(name,flush=True)
                 common=['--model',model,'--artifact','mixed-4_8bit','--prepared',prepared,'--memory-gb','12','--context','8192',*config_args(c)]
                 with stem.with_suffix('.log').open('w') as log:
-                    p=inspect_admission(ROOT/'build/qwen/bin/freellm',common,stem,12*1024**3,512,log,guard,remaining)
+                    p=inspect_admission(ROOT/'build/qwen/bin/zerocool',common,stem,12*1024**3,512,log,guard,remaining)
                     if load(p)['current_admission']['expert_slots']!=1848:raise ResourceBlocked('Fixed expert capacity not admitted')
                     guard.run([ROOT/'build/qwen/qwen_memory_check',model,prepared,out/'workload.json',c['decode_scratch'],
                         stem.with_suffix('.json'),stem.with_suffix('.jsonl')],stdout=log,timeout=min(150,remaining()),env=env)

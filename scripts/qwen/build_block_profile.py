@@ -75,7 +75,7 @@ def sources(cfg, mode):
 def inputs(cfg):
     return [*base.frozen_inputs(cfg, TEMPLATE), Path(__file__).resolve(),
         ROOT/'scripts/qwen/build_block_cache_trace.py',
-        *sorted((ROOT/'include/qwen').glob('*.hpp'))]
+        *sorted((ROOT/'include/engine').glob('*.hpp'))]
 
 
 def proof(cfg, mode):

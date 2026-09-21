@@ -58,7 +58,7 @@ def setup(exp,directory):
     host=build_probe(ROOT/'.cache/benchmark-host'/hashlib.sha256(str(exp.out).encode()).hexdigest())
     files=[*builder.inputs(cfg),*builder.generated(cfg['output']),*cfg['objects'],cfg['binary'],
         *host['files'],PREPARED/'manifest.json',PREPARED/'dense.bin',PREPARED/'experts.bin',BASE/'protocol.md']
-    freeze(exp,files);exp.env['FREELLM_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
+    freeze(exp,files);exp.env['ZEROCOOL_Q8_EXPANDED']='packed';exp.guard.check_resources(initial=True)
     return cfg,host
 
 

@@ -1,10 +1,10 @@
 // Developer-only experiment. Never included by the production build.
 #pragma once
-#include "qwen/pipeline.hpp"
+#include "engine/pipeline.hpp"
 #include <chrono>
 #include <thread>
 
-namespace freellm::qwen::mtp_scratch {
+namespace zerocool::engine::mtp_scratch {
 constexpr uint64_t PoolBytes=MiB, ReserveBytes=2*PoolBytes;
 inline thread_local bool enabled=false;
 inline thread_local Metal* target=nullptr;
