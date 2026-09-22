@@ -1,135 +1,179 @@
+<div align="center">
+
 # ZeroCool
 
-A native C++23/Metal inference engine for Apple Silicon. No Python in the
-serving path, no cloud, and one process that holds the model for as long as
-you keep talking to it.
+### A 105GB model. A 32GB laptop. No cloud.
 
-It is being proved on a deliberately hard case first. ZeroCool runs pinned
-Qwen3.8-Flash-Next checkpoints of about 104–106GB on a 32GiB M1 Pro. Routed
-experts and ngram tables stay on the internal SSD. The engine holds a bounded
-working set of at most 22GiB, reduced further by the memory actually available.
+[![checks](https://github.com/dosco/zerocool/actions/workflows/ci.yml/badge.svg)](https://github.com/dosco/zerocool/actions/workflows/ci.yml)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![platform](https://img.shields.io/badge/platform-Apple%20Silicon-111111?logo=apple&logoColor=white)](#requirements)
+[![C++23](https://img.shields.io/badge/C%2B%2B-23-00599C.svg)](#requirements)
 
-Two artifacts are pinned: an affine-Q4 control, which is the default, and a
-mixed 4/8-bit quality reference selected with `--artifact mixed-4_8bit`.
+</div>
 
-**Status: the acceptance plan has not passed.** Full-model checks match all 48
-layers and all 248,320 logits exactly against the original MLX reference for
-both artifacts on the saved five-token fixture, and native generation and API
-smoke tests pass. Long-context numerical agreement, sustained coding quality,
-and 5–8 tokens/s at the specified contexts remain open gates. Measured results
-and their limits are in [docs/README.md](docs/README.md).
+---
 
-## Requirements
+ZeroCool is a native **C++23 / Metal** inference engine for Apple Silicon. One
+process holds the model, serves on a loopback socket, and hands the memory back
+when you close it. No Python in the serving path. Nothing leaves the machine.
 
-Apple Silicon, macOS 15 or later, a C++23-capable Apple toolchain, CMake 3.20 or
-later, and libcurl from the SDK. Metal source is embedded and compiled at
-runtime, so no standalone `metal` command is needed. About 104GB of free disk is
-required for the checkpoint.
+It is being proved on a deliberately unreasonable case: **Qwen3.8-Flash-Next —
+about 104–106GB of weights — on a 32GiB M1 Pro.** Routed experts and ngram
+tables stay on the internal SSD and stream in on demand, so the engine never
+holds more than a bounded working set. Everything smaller is the easy case.
 
-## Build
+| | |
+|:--|--:|
+| Checkpoint on disk | ~104 GB |
+| Prepared expert records | 100,048,541,696 bytes |
+| **Peak working set** | **≤ 22 GiB** |
+| Machine it targets | 32 GiB M1 Pro |
+| Context window | 8192 tokens |
+
+## Status: not done yet
+
+This is an engineering log, not a launch. Full-model checks match **all 48
+layers and all 248,320 logits exactly** against the MLX reference, for both
+artifacts, on the saved five-token fixture. Native generation and API smoke
+tests pass. The rest is open:
+
+| Gate | State |
+|:--|:--|
+| Bit-exact logits vs MLX (five-token fixture) | ✅ passing |
+| Native generation + API smoke | ✅ passing |
+| Long-context numerical agreement | ⬜ open |
+| Sustained coding quality | ⬜ open |
+| 5–8 tokens/s at the specified contexts | ⬜ open |
+
+Measured results and their limits are in [docs/README.md](docs/README.md). A
+number counts here only when a build fingerprint and a real-model run back it.
+
+## Quick start
+
+> **Heads up:** this wants ~200GB of free disk and a long afternoon. The engine
+> is a 3MB binary. The model is all the rest.
 
 ```sh
+git clone https://github.com/dosco/zerocool.git && cd zerocool
 ./build.sh
 ```
 
-`build.sh` configures `build/qwen` in Release and builds everything. CMake
-presets are also available:
+Fetch and prepare the checkpoint. Every file is hash-pinned by
+`models.lock.json`, and startup rejects anything that changed since:
 
 ```sh
-cmake --preset release && cmake --build --preset release --parallel 8
-```
-
-Presets: `release`, `debug`, `asan`, `tsan`, `no-tui`. A build with a sanitizer
-or without optimization reports a different build fingerprint, so its timings
-can never be mistaken for evidence. Use `-DZEROCOOL_BUILD_TUI=OFF` to build
-without the terminal client, and `-DZEROCOOL_BUILD_DIAGNOSTICS=OFF` to skip the
-replay and probe executables.
-
-## Get the model
-
-```sh
-bash scripts/qwen/download.sh
+bash scripts/qwen/download.sh                                                  # ~104GB
 python3 scripts/qwen/verify_checkpoint.py
-build/qwen/bin/zerocool inspect --model .cache/models/qwen38-flash-next
+python3 scripts/qwen/prepare_storage.py --output .cache/prepared/q4-records-v1  # ~100GB
 ```
 
-`models.lock.json` pins every required file and hash. Verification writes a
-local receipt, and startup rejects files that changed since it was written.
-
-## Use it
-
-Interactive terminal chat, which starts its own local server:
+Talk to it:
 
 ```sh
 build/qwen/bin/zerocool chat
 ```
 
-Chat defaults to `.cache/models/qwen38-flash-next` and
-`.cache/prepared/q4-records-v1`, requests 12GiB, and keeps the Q4 and native
-execution defaults. Enter inserts a newline, Ctrl+D sends, Ctrl+C cancels, and
-Ctrl+Q quits. To attach to a server you already started, use
-`zerocool chat --connect http://127.0.0.1:8080`.
+`Enter` inserts a newline, `Ctrl+D` sends, `Ctrl+C` cancels, `Ctrl+Q` quits.
 
-One-shot generation and the local API server:
+<details>
+<summary><b>Why no <code>brew install</code>?</b></summary>
+
+<br>
+
+There is no tap yet, so `brew install zerocool` would fail — better to say so
+than to ship a command that doesn't work. The formula name is free and a
+source-build tap is the plan, since building locally sidesteps Gatekeeper
+notarization entirely.
+
+Worth saying plainly though: a package manager saves about ninety seconds here.
+The install is a 3MB binary; the real cost is a 104GB download and a 100GB
+preparation pass. A `zerocool setup` that drives those end to end, resumably,
+would help far more than `brew install` ever could.
+
+</details>
+
+## Use it
+
+Nothing is installed to `PATH`, so either use the built path or alias it:
 
 ```sh
-build/qwen/bin/zerocool run --model .cache/models/qwen38-flash-next
-build/qwen/bin/zerocool serve --model .cache/models/qwen38-flash-next --port 8080
+alias zerocool=$PWD/build/qwen/bin/zerocool
+
+zerocool run     --model .cache/models/qwen38-flash-next   # one-shot generation
+zerocool serve   --model .cache/models/qwen38-flash-next --port 8080
+zerocool chat    --connect http://127.0.0.1:8080           # attach to a server
+zerocool inspect --model .cache/models/qwen38-flash-next   # identity and budgets
 ```
 
-The API exposes `/v1/models` and `/v1/chat/completions`, including streaming,
-sampling, reasoning text and structured tool calls. Model IDs are
-`qwen3.8-flash-next:4bit` and `qwen3.8-flash-next:mixed-4_8bit`. The listener
-binds `127.0.0.1`, runs one conversation at a time, refuses cross-origin and
-non-loopback requests, and requires `Content-Type: application/json` on POST.
-ZeroCool never executes a tool; a coding client does that. See
-[docs/qwen_usability.md](docs/qwen_usability.md) for the full contract.
+The server speaks an OpenAI-shaped API — `/v1/models` and
+`/v1/chat/completions`, with streaming, sampling, reasoning text and structured
+tool calls. Model IDs are `qwen3.8-flash-next:4bit` and
+`qwen3.8-flash-next:mixed-4_8bit`. Two artifacts are pinned: an affine-Q4
+control (the default) and a mixed 4/8-bit quality reference via
+`--artifact mixed-4_8bit`.
 
-Memory values are GiB. Context covers input plus output and cannot exceed 8192
-tokens. No code raises macOS wired-memory limits; if admission fails, `inspect`
-reports the current limit.
+**ZeroCool never executes a tool.** It emits structured tool calls; a client
+decides what to do with them. The listener binds `127.0.0.1`, serves one
+conversation at a time, and refuses cross-origin and non-loopback requests. Full
+contract in [docs/qwen_usability.md](docs/qwen_usability.md).
 
-## Test and measure
+## Requirements
+
+Apple Silicon · macOS 15 or later · a C++23-capable Apple toolchain · CMake
+3.20+ · libcurl from the SDK. Metal source is embedded and compiled at runtime,
+so no standalone `metal` command is needed.
+
+## Build and test
 
 ```sh
+cmake --preset release && cmake --build --preset release --parallel 8
 ctest --preset release
 ```
 
-That runs the native engine tests, the chat transport tests, and the model-free
-Python checks. The Python checks need NumPy; create the environment with
-`bash scripts/qwen/setup_reference.sh`. Model-free tests are not a release
-check. `scripts/qwen/release_check.py` fails when numerical, real-M1
-performance, session or coding evidence is missing or outside its limits.
+Presets: `release`, `debug`, `asan`, `tsan`, `no-tui`. A sanitized or
+unoptimized build reports a different fingerprint on purpose, so its timings can
+never be mistaken for evidence.
 
-```sh
-MTL_DEBUG_LAYER=1 MTL_SHADER_VALIDATION=1 build/qwen/test_qwen
-build/qwen/bin/zerocool bench --storage --repetitions 3 --json storage.json
-build/qwen/bin/zerocool bench --prompt 'The capital of France is' --max-tokens 256 --repetitions 3 --json generation.json
-```
+`ctest` runs the native engine tests, the chat transport tests and the
+model-free Python checks. Checks that read recorded benchmark evidence skip
+cleanly on a fresh clone, naming exactly what they'd need. None of it is a
+release pass — [`scripts/qwen/release_check.py`](scripts/qwen/release_check.py)
+is, and it fails closed without real-model numerical, M1 performance and session
+evidence.
 
 ## Layout
 
 | Path | Contents |
-|---|---|
+|:--|:--|
 | `src/engine`, `include/engine` | The engine: storage, Metal, model, pipeline, session, server, CLI |
 | `kernels/metal/qwen.metal` | Every compute kernel, embedded at build time |
+| `scripts/qwen` | Download, verification, screens and CPU references |
 | `tests` | Native and transport tests, plus captured numerical fixtures |
-| `scripts/qwen` | Developer tooling: download, verification, screens, references |
 | `docs` | Plan, engine reference, stage reports and measurement evidence |
 
-For how the engine works and why it is built this way, including the Apple
-Silicon constraints, the Qwen architecture and which optimizations were measured
-and kept, see [docs/building-the-engine.md](docs/building-the-engine.md).
+For how it works and why — the Apple Silicon constraints, the Qwen
+architecture, and which optimizations were measured and kept — see
+[docs/building-the-engine.md](docs/building-the-engine.md).
 
-The original MLX oracle uses `mlx==0.31.1` and `mlx-lm==0.31.1`. Python is not a
-production inference dependency. See
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for model and adapted-code
-licenses.
+## Why "ZeroCool"
+
+Dade Murphy's handle in *Hackers* (1995). It also happens to describe the
+engine twice over:
+
+- **Zero-copy** — prepared expert records are mapped straight out of contiguous
+  SSD storage. Weights are not unpacked into a second buffer on the way in.
+- **Cool** — a bounded working set means the machine isn't swapping itself to
+  death or spinning its fans to keep 105GB resident.
+
+It was called FreeLLM once. "Free" said nothing true about it.
 
 ## License
 
-[Apache License 2.0](LICENSE). The engine's own source is Apache-2.0; the
-adapted kernels and tooling carry the upstream MIT notices collected in
+[Apache License 2.0](LICENSE). The adapted kernels and tooling keep their
+upstream MIT notices, collected in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Model weights are downloaded
-separately and are not covered by this licence: the checkpoint is governed by
-the [Qwen Community License](docs/licenses/qwen.txt).
+separately and are **not** covered by this license — the checkpoint is governed
+by the [Qwen Community License](docs/licenses/qwen.txt).
+
+The MLX oracle used for verification pins `mlx==0.31.1` and `mlx-lm==0.31.1`.
+Python is not a production inference dependency.
