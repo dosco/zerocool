@@ -20,7 +20,7 @@
   "started_at": "2026-09-17T06:41:02.847664+00:00",
   "related_experiments": [
     {
-      "id": "eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0",
+      "id": "fda0682eaa8c5e3a5b2cbfdbe1495acbddf50febfaf4d0232e22b77f1949917f",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -29,10 +29,10 @@
       "outcome": "Both alternating short pairs pass: candidate 5.0408/5.0394 versus control 4.8390/4.9254 tokens/s, geometric-mean latency reduction 3.1374%. Exactly 3110 scatters and 6220 allocations removed. Longer 128-token pairs: merge 4.4128 to 4.4042 (+0.1967% latency), LRU 3.0916 to 3.1595 (-2.1492%), retry 3.6269 to 3.7164 (-2.4102%). Across-case latency reduction 1.4612%, not a repeated-pair confidence bound. Peak footprint 9.7273GiB; expert reads remain 627.91/762.11/718.90MiB per committed token. All longer candidates miss 5 tokens/s.",
       "sources": [
         {
-          "path": "/repo/docs/experiments/eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0.json",
-          "sha256": "eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0",
+          "path": "/repo/docs/experiments/fda0682eaa8c5e3a5b2cbfdbe1495acbddf50febfaf4d0232e22b77f1949917f.json",
+          "sha256": "fda0682eaa8c5e3a5b2cbfdbe1495acbddf50febfaf4d0232e22b77f1949917f",
           "aliases": [
-            "/repo/docs/experiments/eddb5e1c190027459bcb6eac202ff3b6cf2033bc5f6ad7d6bfbbaeb929b4e6d0.json"
+            "/repo/docs/experiments/fda0682eaa8c5e3a5b2cbfdbe1495acbddf50febfaf4d0232e22b77f1949917f.json"
           ],
           "unavailable_aliases": []
         }
@@ -40,7 +40,7 @@
       "stale": false
     },
     {
-      "id": "7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e",
+      "id": "a4eeaf2655a074754d84365e9c0ff8ffa92ffcab70e9a7e622a8f58bd85150a7",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -67,10 +67,10 @@
       "rerun_rationale": "Separates target recovery from earlier draft catch-up and direct-output experiments; resumes retain only compatible correctness evidence",
       "sources": [
         {
-          "path": "/repo/docs/experiments/7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e.json",
-          "sha256": "7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e",
+          "path": "/repo/docs/experiments/a4eeaf2655a074754d84365e9c0ff8ffa92ffcab70e9a7e622a8f58bd85150a7.json",
+          "sha256": "a4eeaf2655a074754d84365e9c0ff8ffa92ffcab70e9a7e622a8f58bd85150a7",
           "aliases": [
-            "/repo/docs/experiments/7282d8fe795eb726d30bc2687b31300a38a25fb9ce1340a2318c28a50beb153e.json"
+            "/repo/docs/experiments/a4eeaf2655a074754d84365e9c0ff8ffa92ffcab70e9a7e622a8f58bd85150a7.json"
           ],
           "unavailable_aliases": []
         }
@@ -78,7 +78,7 @@
       "stale": false
     },
     {
-      "id": "8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819",
+      "id": "b9fb6ba62fb208c4d70d2fe63318b64fce2127f600dff6345dbc719415f2d5a8",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -87,10 +87,10 @@
       "outcome": "Fresh timing stops at the first memory gate: clean control 4.841001 tokens/s; candidate 4.319057 tokens/s with 53.859MiB peak compression and 73 decompressions, unchanged swap. Zero usable pairs. The candidate numerical validation also had 76.219MiB peak compression. Original reports remain resource_blocked; no historical timings pooled.",
       "sources": [
         {
-          "path": "/repo/docs/experiments/8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819.json",
-          "sha256": "8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819",
+          "path": "/repo/docs/experiments/b9fb6ba62fb208c4d70d2fe63318b64fce2127f600dff6345dbc719415f2d5a8.json",
+          "sha256": "b9fb6ba62fb208c4d70d2fe63318b64fce2127f600dff6345dbc719415f2d5a8",
           "aliases": [
-            "/repo/docs/experiments/8605107877ea081d603322f6147a14339fee539ae687707f953b03f30f7ec819.json"
+            "/repo/docs/experiments/b9fb6ba62fb208c4d70d2fe63318b64fce2127f600dff6345dbc719415f2d5a8.json"
           ],
           "unavailable_aliases": []
         }
@@ -98,7 +98,7 @@
       "stale": false
     },
     {
-      "id": "867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda",
+      "id": "53d0ef9d913a78ae76f535b70e30666a3e411b7aaadb69b4c59ffe25a6f8529a",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -127,10 +127,10 @@
       "rerun_rationale": "The native candidate removes whole target replay work, a different mechanism from rejected expert scratch reuse. The current stop is resource admission, not a measured rejection.",
       "sources": [
         {
-          "path": "/repo/docs/experiments/867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda.json",
-          "sha256": "867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda",
+          "path": "/repo/docs/experiments/53d0ef9d913a78ae76f535b70e30666a3e411b7aaadb69b4c59ffe25a6f8529a.json",
+          "sha256": "53d0ef9d913a78ae76f535b70e30666a3e411b7aaadb69b4c59ffe25a6f8529a",
           "aliases": [
-            "/repo/docs/experiments/867b7c3053bbe2dd4fabb45b711d77547b7b654faa649c66ea5d66742638cdda.json"
+            "/repo/docs/experiments/53d0ef9d913a78ae76f535b70e30666a3e411b7aaadb69b4c59ffe25a6f8529a.json"
           ],
           "unavailable_aliases": []
         }
@@ -176,7 +176,7 @@
       "stale": false
     },
     {
-      "id": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+      "id": "1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -185,10 +185,10 @@
       "outcome": "Full fixture initializes 564160 row bytes instead of 51914200 after 123 tokens, retaining the full reserve. Short prompt initializes 375232 bytes before decode. Lazy validation-01/02 remain compression-blocked; three diagnostic maps do not identify a compressed owner. Fresh validation-03 and short-01 are clean. No independent eager/lazy speed effect is established.",
       "sources": [
         {
-          "path": "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json",
-          "sha256": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+          "path": "/repo/docs/experiments/1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267.json",
+          "sha256": "1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267",
           "aliases": [
-            "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json"
+            "/repo/docs/experiments/1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267.json"
           ],
           "unavailable_aliases": []
         }
@@ -196,7 +196,7 @@
       "stale": false
     },
     {
-      "id": "caf07c4f1568ff580a565d5503666e9d1588b9b6122b995f36e42cb67496d299",
+      "id": "194f23d3021e0b64c6defd5944ce705639ca6a5ac89ec194fe0c796213e2b4ef",
       "kind": "experiment_ledger_v1",
       "status": "unknown",
       "complete": null,
@@ -205,10 +205,10 @@
       "outcome": "The first clean pair is control 4.8719318 and candidate 4.9712945 tokens/s, ratio 0.9800127. Catch-up is 6.150 versus 0.893ms/token. Zero compression/decompression and unchanged swap. The absolute floor fails and the screen stops after this one pair. Earlier disturbed attempts remain separate.",
       "sources": [
         {
-          "path": "/repo/docs/experiments/caf07c4f1568ff580a565d5503666e9d1588b9b6122b995f36e42cb67496d299.json",
-          "sha256": "caf07c4f1568ff580a565d5503666e9d1588b9b6122b995f36e42cb67496d299",
+          "path": "/repo/docs/experiments/194f23d3021e0b64c6defd5944ce705639ca6a5ac89ec194fe0c796213e2b4ef.json",
+          "sha256": "194f23d3021e0b64c6defd5944ce705639ca6a5ac89ec194fe0c796213e2b4ef",
           "aliases": [
-            "/repo/docs/experiments/caf07c4f1568ff580a565d5503666e9d1588b9b6122b995f36e42cb67496d299.json"
+            "/repo/docs/experiments/194f23d3021e0b64c6defd5944ce705639ca6a5ac89ec194fe0c796213e2b4ef.json"
           ],
           "unavailable_aliases": []
         }

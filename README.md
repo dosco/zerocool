@@ -125,3 +125,11 @@ The original MLX oracle uses `mlx==0.31.1` and `mlx-lm==0.31.1`. Python is not a
 production inference dependency. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for model and adapted-code
 licenses.
+
+## License
+
+[Apache License 2.0](LICENSE). The engine's own source is Apache-2.0; the
+adapted kernels and tooling carry the upstream MIT notices collected in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Model weights are downloaded
+separately and are not covered by this licence: the checkpoint is governed by
+the [Qwen Community License](docs/licenses/qwen.txt).

@@ -128,7 +128,7 @@ Original reports and reconstructed audits:
 - [Verified-storage two-hit report](storage-hits2-01/summary.json), [audit](storage-hits2-audit.json).
 - [Source-bound condition comparison](comparison.json).
 - [Independent raw-evidence review](independent-review.json).
-- [Experiment ledger](../../experiments/bc88175f11bbd12bcf573b0124dd00085afbdd7ab0d4998f2d0a0545ecba2e63.json).
+- [Experiment ledger](../../experiments/126fdc7140d50d611162a1aca9f6abc34543a0105d07013e03aa20b1ff85b859.json).
 
 ## Next bounded experiment
 

@@ -118,7 +118,7 @@ shared-output/provenance cases, dispatch counts, mixed-command joins and trace
 instrumentation checks. Historical arrival audits still reproduce their original
 results. [Test log](python-tests.log), [native build log](build.log),
 [shared audit](shared-audit.json), [control audit](control-audit.json),
-[experiment ledger](../../experiments/37f15924dfa97cfb232c9c891983ed3016d74ad42421a24ccf8d8c4893def1d6.json).
+[experiment ledger](../../experiments/51536c545fcd195f413d4a6f1344984e632c8d0940193eeb47f434d42b22ea72.json).
 The [independent raw-evidence review](independent-review.json) also passes. It
 recomputes the paired intervals and command joins, checks all frozen sources
 and asset metadata, and rehashes the selected real weight and fixture bytes.

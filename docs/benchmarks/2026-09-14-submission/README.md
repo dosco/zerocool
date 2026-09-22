@@ -186,8 +186,8 @@ new condition; it does not erase the earlier failures with residency off.
 Long-context, 5 tokens/s and sustained coding acceptance remain open.
 
 The agent's experiment ledger records the rejected
-[ownership](../../experiments/d6d6a6597198b7144dbddde2251dbe86ed55df87a32de0dd9d20bfaff45ae06a.json)
-and [coalescing](../../experiments/6e1fed966862ac3e67f4f12a32138f3c1a21533c473bf836aa9f89086e0feee6.json)
+[ownership](../../experiments/242273a01dfcec2af0f7b5cff302be2335e6ab597517be03793762cceaef16db.json)
+and [coalescing](../../experiments/8556caf1c8573c4822f3093a73bf6fcbd0b26dc9a52b6162c32227b2dd7c6c62.json)
 hypotheses and the promising but below-target
-[residency result](../../experiments/7ec2bc01afad254866d731d1c257d704284db77151219faad8afe4cd754cc9df.json).
+[residency result](../../experiments/5977e9dc6a408b015a18dc5de76d162176fb475c48c697538e7452abe3a5372d.json).
 Raw evidence remains authoritative; the SQLite index is rebuildable.

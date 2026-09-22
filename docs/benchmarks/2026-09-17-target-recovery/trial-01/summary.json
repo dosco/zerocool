@@ -46,7 +46,7 @@
       ]
     },
     {
-      "id": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+      "id": "1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267",
       "decision": "inconclusive",
       "production_promoted": false,
       "hypothesis": "Reserve ngram row capacity but construct rows only on insertion to avoid eagerly touching unused host cache payload.",
@@ -162,10 +162,10 @@
       "stale": false,
       "sources": [
         {
-          "path": "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json",
-          "sha256": "155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67",
+          "path": "/repo/docs/experiments/1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267.json",
+          "sha256": "1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267",
           "aliases": [
-            "/repo/docs/experiments/155171480639f9cfe2693942236578682c113e5cf34fc0dd4e8a22c903dbae67.json"
+            "/repo/docs/experiments/1377bc9fe12e7445522a686ddf2703d0d815872a870b3c81a5c03d5441472267.json"
           ],
           "unavailable_aliases": []
         }
@@ -190,7 +190,7 @@
       ]
     },
     {
-      "id": "1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48",
+      "id": "39f72f3fedb29637f3270ca5ebd46e4afcef133b3f285a44aa4e3123d49e63cb",
       "decision": "inconclusive",
       "production_promoted": false,
       "hypothesis": "Saved expert routes can distinguish insufficient cache capacity from a replacement-policy opportunity.",
@@ -245,17 +245,17 @@
       "stale": false,
       "sources": [
         {
-          "path": "/repo/docs/experiments/1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48.json",
-          "sha256": "1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48",
+          "path": "/repo/docs/experiments/39f72f3fedb29637f3270ca5ebd46e4afcef133b3f285a44aa4e3123d49e63cb.json",
+          "sha256": "39f72f3fedb29637f3270ca5ebd46e4afcef133b3f285a44aa4e3123d49e63cb",
           "aliases": [
-            "/repo/docs/experiments/1d3e146229d907da4697e649056f5865caf4101a8165b25a0ca345227d78bf48.json"
+            "/repo/docs/experiments/39f72f3fedb29637f3270ca5ebd46e4afcef133b3f285a44aa4e3123d49e63cb.json"
           ],
           "unavailable_aliases": []
         }
       ]
     },
     {
-      "id": "2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3",
+      "id": "daedf13d59f82553cde60d2620bf5d8872bf8d5ffb08ee5c3c65a8de5ead2f5c",
       "decision": "promising",
       "production_promoted": false,
       "hypothesis": "Extending exact packed Q8 word loads to attention and the vocabulary projection can move the four-token perfect-proposal verifier beyond 5 tokens/s within the existing memory budget.",
@@ -313,10 +313,10 @@
       "stale": false,
       "sources": [
         {
-          "path": "/repo/docs/experiments/2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3.json",
-          "sha256": "2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3",
+          "path": "/repo/docs/experiments/daedf13d59f82553cde60d2620bf5d8872bf8d5ffb08ee5c3c65a8de5ead2f5c.json",
+          "sha256": "daedf13d59f82553cde60d2620bf5d8872bf8d5ffb08ee5c3c65a8de5ead2f5c",
           "aliases": [
-            "/repo/docs/experiments/2645e7748b0e903fa7511fb902f45a782ddc9073bfd6df8d0b9380099dc019e3.json"
+            "/repo/docs/experiments/daedf13d59f82553cde60d2620bf5d8872bf8d5ffb08ee5c3c65a8de5ead2f5c.json"
           ],
           "unavailable_aliases": []
         }

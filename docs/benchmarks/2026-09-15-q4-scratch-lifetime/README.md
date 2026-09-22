@@ -42,7 +42,7 @@ separates actual measured counters from longer-context shape estimates.
 | [batch-01](batch-01/summary.json) | Yes | no_clear_arrival_gain | [Audit](batch-audit.json) |
 
 [Source-bound comparison](comparison.json),
-[experiment ledger](../../experiments/855e04d9c686699bfe2e4498fd7d7e6b8c349874a85135b9cf65214772638a68.json).
+[experiment ledger](../../experiments/dbc6a7fa3dc750078a29502b77ad27b52eff13186a5321a9a446c2c45035a456.json).
 
 The first forward attempt held 27.7–28.0MiB of compressed process memory across
 check boundaries. The single unchanged retry held 27.6–27.9MiB. Each records 23

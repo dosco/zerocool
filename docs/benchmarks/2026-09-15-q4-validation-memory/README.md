@@ -73,7 +73,7 @@ No earlier samples are pooled, removed, or replaced.
 [batch report](batch-01/summary.json), [batch audit](batch-audit.json),
 [independent lifetime review](independent-lifetime-review.json),
 [source-bound comparison](comparison.json),
-[experiment ledger](../../experiments/94a00f52974ea768d9f920816c0f66be8cebba9de41a4b478a1cc9e48577544a.json).
+[experiment ledger](../../experiments/6664a3d862dfead4539d48e9173f570d86bf6c811c533ca90830443daad297f6.json).
 Forward completes in 30.66 seconds with diagnostic_gain. Batch completes in
 31.62 seconds with no_clear_arrival_gain: its group-one wall upper bound
 exceeds the unchanged 1.03 guard. The low and high observations remain in

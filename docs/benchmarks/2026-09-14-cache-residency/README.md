@@ -185,7 +185,7 @@ Production defaults, long-context acceptance and the 5 tokens/s target remain
 unchanged.
 
 The experiment ledger preserves the
-[capacity result](../../experiments/53758dab1158f00ed15aae0e94f441dfaad135ab6438d97fe3526d3951f92e5e.json)
-and the [next resident-operator hypothesis](../../experiments/49f05235f2606702c2a97ef69f958a5c0d2763fe480a66f231c213ce38482d93.json),
+[capacity result](../../experiments/bdad217354f9348b95ae697d2f8f2e7b6a674c2022bfcc6f9b0576568e0b90b9.json)
+and the [next resident-operator hypothesis](../../experiments/47191042269582e96434a80e3e2553b835c26bf72b1474890099162b70c3e7ef.json),
 including the failed advancement gate and weak prefetch overlap. Both entries
 are available through the local evidence query tool.

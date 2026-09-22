@@ -157,10 +157,10 @@ Release accounting measures buffer ownership; physical reclamation can lag.
   fixture hashes/operator results. This is not an independent full-model
   logit/state or coding-quality qualification.
 - Four source-bound experiment ledger entries record
-  [capacity](../../experiments/76385ef1b82dac75a1c8488b992b58c7d3e90bd2c5e81b0e7e79442c5a82769f.json),
-  [pressure](../../experiments/99b09fb7b95dbbcd46c9212aaa15283f8a7adc342e7619a1e4c45ddddf443494.json),
-  [dependencies](../../experiments/6595195cabd3d8a84d4376f3f240b1988c323bd375b437e420ed0f08e2c12c2f.json)
-  and [Q3](../../experiments/ee28754125c150a610d1e294af3bef9dfd517713fdeac48d0dcb8d41182a71b7.json)
+  [capacity](../../experiments/24cf40565de3f4475c04b0f2ab592e99f909c2e0239a6e47bfe1729def722d6b.json),
+  [pressure](../../experiments/30ca4feea9d027a890bffab8e5c206377cf0660d789891e682549d32ae739626.json),
+  [dependencies](../../experiments/ec0081a910737faecd2884c5bd5b559573433a8f228c0231616f616b177d8e1d.json)
+  and [Q3](../../experiments/436dea78bfc7101b9be42609b9c4e49bf199f007b87aebb76766d95666dc826c.json)
   as inconclusive results. They are indexed for agent queries.
   Historical native binaries are not archived; their captured hashes remain in
   each identity file. Raw model/prepared artifacts remain pinned and unchanged.
