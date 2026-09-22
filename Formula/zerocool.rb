@@ -62,6 +62,8 @@ class Zerocool < Formula
   end
 
   test do
-    assert_match "ZeroCool", shell_output("#{bin}/zerocool 2>&1", 1)
+    # Bare invocation prints usage and exits 0; an unknown subcommand exits 1.
+    assert_match "ZeroCool", shell_output("#{bin}/zerocool")
+    assert_match "zerocool:", shell_output("#{bin}/zerocool nonsense 2>&1", 1)
   end
 end
