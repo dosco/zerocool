@@ -5,6 +5,11 @@ import unittest
 from decode_timeline import partition,BUCKETS,summarize
 from screen_cache import validate_request
 from screen_route_selection import configs
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-0-candidate.json')
 
 
 class DecodeTimelineTest(unittest.TestCase):

@@ -14,6 +14,15 @@ from confirm_decode_scratch import KIND,configs,decide,revalidate,run,screen_fil
 from evidence_queries import compare
 from check_scratch_slice import validate as validate_slice
 from screen_decode_scratch import correctness as validate_full_state
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-13-decode-scratch/raw/prior-output-control.json',
+        'docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/control.json',
+    )
+
 
 ROOT=Path(__file__).resolve().parents[2]
 DISTURBED=ROOT/'docs/benchmarks/2026-09-13-decode-scratch/raw'

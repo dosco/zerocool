@@ -5,6 +5,13 @@ import unittest
 import block_compute_profile as profile
 import build_block_profile as builder
 from capture_block_profile import admission_failure, ANCHOR, SOURCE
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-16-perfect-draft-capacity/screen-02/pair-0-slots-1460-width-4.json',
+    )
 
 
 def fixture(mode='commands'):

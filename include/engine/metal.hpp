@@ -66,6 +66,11 @@ public:
     // Opt-in scalar instrumentation, configured before any engine allocation.
     void buffer_diagnostics(bool enabled);
     void residency(const std::string& mode);
+    // Hardware capability probes. Virtualized GPUs, including the ones CI runs
+    // on, have no stage-boundary counter sampling and no residency sets. A check
+    // that needs either skips instead of reporting the absent feature as a fault.
+    bool stage_timestamps_supported() const;
+    bool residency_supported() const;
     // Two coordinator-owned temporary pools. The previous GPU user must finish
     // before a pool is reset; persistent allocations always bypass the pools.
     void begin_scratch(size_t slot, uint64_t capacity);

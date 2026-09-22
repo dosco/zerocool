@@ -9,6 +9,11 @@ import horizon_cache_replay as replay
 from screen_verifier_horizon import validate
 from test_block_cache import synthetic_trace
 from test_verifier_horizon import fixture
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
 
 
 def trace_fixture(width=4, count=16):

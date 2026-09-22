@@ -11,6 +11,15 @@ from qualification_evidence import sha
 from test_block_compute import fixture
 from evidence_index import Index
 from evidence_queries import next_experiment
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
+    )
+
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01'

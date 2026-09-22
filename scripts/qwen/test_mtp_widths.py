@@ -10,6 +10,20 @@ from mtp_evidence import account, compare, next_experiment
 from screen_mtp_widths import compare_widths, observed, validation_cases, reusable_validation
 from target_recovery_checks import observe
 from qualification_evidence import sha as file_digest
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+        'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+        'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+    )
+
 
 ROOT=Path(__file__).resolve().parents[2]
 REFERENCE=ROOT/'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01'

@@ -6,6 +6,11 @@ import unittest
 from capacity_experiment import decide, order
 from confirm_q8_steady import KIND, SCREEN, revalidate, screen_files
 from screen_q8_steady import configs, observations
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-11-q8-steady/raw/correctness-control.json')
 
 
 class Q8ConfirmationTest(unittest.TestCase):

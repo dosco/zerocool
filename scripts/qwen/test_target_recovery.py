@@ -12,6 +12,16 @@ from qualification_evidence import save, seal
 from qualification_evidence import sha
 from evidence_index import Index
 from mtp_evidence import compare as evidence_compare
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+    )
+
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/benchmarks/2026-09-16-mtp-direct-output/long-01'

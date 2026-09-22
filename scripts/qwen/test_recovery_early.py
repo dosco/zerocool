@@ -6,6 +6,11 @@ from unittest.mock import patch
 import trial_recovery as trial
 from qualification_evidence import save, seal
 from screen_recovery_early import diagnostic_pair
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json')
 
 
 class EarlyRecoveryTests(unittest.TestCase):

@@ -10,6 +10,12 @@ import numpy as np
 import mtp_source as source
 import prepare_mtp as prep
 from verify_mtp import clean_memory_observations
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-15-mtp-preparation/native-01/manifest.json')
+
 
 class Response(io.BytesIO):
     def __init__(self,body,status=206,headers=None):

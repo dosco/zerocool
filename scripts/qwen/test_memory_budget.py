@@ -6,6 +6,11 @@ import unittest
 from capacity_experiment import order,decide
 from screen_cache import validate_request
 from screen_memory_budget import KIND,BUDGETS,SLOTS,SOURCE,configs,observations,revalidate,source_files
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-11-q8-confirmation/raw/screen/correctness-control.json')
 
 
 class MemoryBudgetTest(unittest.TestCase):

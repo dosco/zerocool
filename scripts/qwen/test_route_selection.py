@@ -7,6 +7,11 @@ from capacity_experiment import decide,order
 from screen_memory_budget import SOURCE,source_files
 from screen_route_selection import KIND,configs,operators,observations,revalidate
 from qualify_exact_sessions import check_configuration
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-11-q8-confirmation/raw/screen/correctness-control.json')
 
 
 class RouteSelectionTest(unittest.TestCase):

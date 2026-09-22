@@ -6,6 +6,12 @@ import unittest
 
 import build_verifier_horizon as builder
 from screen_verifier_horizon import compare, prefix, validate
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
+
 
 ROOT=builder.ROOT
 BASE=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01'

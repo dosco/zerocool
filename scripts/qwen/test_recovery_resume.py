@@ -6,6 +6,11 @@ from unittest.mock import patch
 import trial_recovery as trial
 from qualification_evidence import save, seal, sha
 from resume_recovery_correctness import validation_inventory
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json')
 
 
 class RecoveryResumeTests(unittest.TestCase):

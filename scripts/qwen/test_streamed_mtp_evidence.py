@@ -11,6 +11,12 @@ from mtp_evidence import compare, cycles, next_experiment
 from qualification_evidence import save, seal, sha
 from screen_streamed_mtp import SAVING, compare as compare_pair, observe
 from streamed_mtp_evidence import labels
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0.json')
+
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01'

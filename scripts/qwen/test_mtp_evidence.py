@@ -8,6 +8,15 @@ import shutil
 from evidence_index import Index
 from mtp_evidence import account, compare, opportunity, next_experiment
 from qualification_evidence import seal
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require(
+        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+    )
+
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT/'docs/benchmarks/2026-09-16-mtp-direct-output/long-01'

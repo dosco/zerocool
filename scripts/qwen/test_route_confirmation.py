@@ -9,6 +9,11 @@ from capacity_experiment import decide,order
 from confirm_route_selection import KIND,SCREEN,configs,observations,revalidate,screen_files
 from evidence_index import Index
 from evidence_queries import compare
+import evidence_fixture
+
+
+def setUpModule():
+    evidence_fixture.require('docs/benchmarks/2026-09-11-route-selection/raw/operators.json')
 
 
 class RouteConfirmationTest(unittest.TestCase):

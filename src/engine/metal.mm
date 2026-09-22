@@ -231,6 +231,12 @@ Json KernelConfig::json() const {
         {"capture_filter",{{"phase",capture_phase},{"operator",capture_operator},{"layer",capture_layer}}},
         {"profile",profile},{"profile_decode_only",profile_decode_only},{"counter_profile",counter_profile},{"automatic_rules_promoted",false}};
 }
+bool Metal::stage_timestamps_supported() const {
+    if(![impl_->device supportsCounterSampling:MTLCounterSamplingPointAtStageBoundary]) return false;
+    for(id<MTLCounterSet> set in impl_->device.counterSets)
+        if([set.name isEqualToString:MTLCommonCounterSetTimestamp]) return true;
+    return false;
+}
 void Metal::configure(KernelConfig config) {
     config.validate();
     if(config.counter_profile && !impl_->timestamps) {
@@ -353,6 +359,13 @@ Buf Metal::zeros(uint64_t floats) {
     return zeros(floats,AllocationClass::Temporary);
 }
 Buf Metal::zeros(uint64_t floats,AllocationClass kind) {auto b=allocate(checked_mul(floats,4),kind);std::memset(b->data,0,b->bytes);return b;}
+bool Metal::residency_supported() const {
+    if(@available(macOS 15.0,*)) {
+        NSError* error=nil;
+        return [impl_->device newResidencySetWithDescriptor:[MTLResidencySetDescriptor new] error:&error]!=nil;
+    }
+    return false;
+}
 void Metal::residency(const std::string& mode) {
     if(mode!="off" && mode!="core" && mode!="core-cache") throw std::invalid_argument("invalid residency mode");
     if(allocated() || impl_->residency->mode!="off") throw std::logic_error("configure residency before allocating buffers");

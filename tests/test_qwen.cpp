@@ -1055,7 +1055,9 @@ TEST_CASE("profiling distinguishes unquantized storage from affine weight precis
 }
 
 TEST_CASE("dispatch timestamps preserve data and command submission boundaries") {
-    Metal gpu;KernelConfig config;config.counter_profile=true;CHECK_THROWS(config.validate());
+    Metal gpu;
+    if(!gpu.stage_timestamps_supported()) {MESSAGE("skipped: no GPU stage timestamp sampling on this device");return;}
+    KernelConfig config;config.counter_profile=true;CHECK_THROWS(config.validate());
     config.profile=true;gpu.configure(config);gpu.request_phase("cached_replay");gpu.label("fixture",2,1,2048);
     auto input=gpu.zeros(32),middle=gpu.zeros(32),output=gpu.zeros(32);input->floats()[3]=7;
     gpu.copy(input,0,middle,0,128);gpu.copy(middle,0,output,0,128);gpu.finish();
@@ -1164,7 +1166,9 @@ TEST_CASE("deep snapshots restore replacement state without sharing storage") {
 TEST_CASE("residency follows buffer ownership through GPU use and executor teardown") {
     Buf survivor;
     {
-        Metal gpu;gpu.residency("core-cache");
+        Metal gpu;
+        if(!gpu.residency_supported()) {MESSAGE("skipped: Metal residency sets unavailable on this device");return;}
+        gpu.residency("core-cache");
         auto persistent=gpu.zeros(16,AllocationClass::State),expert=gpu.allocate(16384,AllocationClass::Expert);
         const auto original=gpu.statistics()["residency"]["registered_bytes"].get<uint64_t>();CHECK(original>=32768);
         auto alias=expert;gpu.copy(persistent,0,expert,0,64);gpu.submit();expert.reset();
@@ -1178,7 +1182,9 @@ TEST_CASE("residency follows buffer ownership through GPU use and executor teard
     CHECK_THROWS(core.residency("core-cache"));
 }
 TEST_CASE("command submission releases physical buffers from plain C++ callers") {
-    Metal gpu;gpu.budget(256*MiB);gpu.residency("core-cache");
+    Metal gpu;
+    if(!gpu.residency_supported()) {MESSAGE("skipped: Metal residency sets unavailable on this device");return;}
+    gpu.budget(256*MiB);gpu.residency("core-cache");
     auto cycle=[&](bool asynchronous) {
         auto input=gpu.allocate(64*MiB,AllocationClass::Expert);
         auto output=gpu.allocate(64*MiB,AllocationClass::State);
