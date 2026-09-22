@@ -69,7 +69,7 @@ configure_file(cmake/qwen_embedded.hpp.in generated/qwen_embedded.hpp @ONLY)
 find_package(CURL REQUIRED)
 
 add_library(zerocool_lib STATIC
-    src/engine/fetch.cpp src/engine/storage.cpp src/engine/metal.mm src/engine/pressure.mm src/engine/model.cpp src/engine/prefill.cpp
+    src/engine/fetch.cpp src/engine/prepare.cpp src/engine/storage.cpp src/engine/metal.mm src/engine/pressure.mm src/engine/model.cpp src/engine/prefill.cpp
     src/engine/pipeline.cpp src/engine/bench.cpp src/engine/kernel_bench.cpp src/engine/cached_replay.cpp
     src/engine/tokenizer.mm src/engine/session.cpp src/engine/server.cpp src/engine/chat_executor.cpp src/engine/cli.cpp)
 target_include_directories(zerocool_lib PUBLIC include PRIVATE ${minja_SOURCE_DIR}/include ${CMAKE_BINARY_DIR}/generated)

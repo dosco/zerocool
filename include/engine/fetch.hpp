@@ -17,8 +17,9 @@ struct FetchProgress {
     std::string name;       // the file this update concerns
     uint64_t done = 0;      // bytes settled across every file, including resumed
     uint64_t total = 0;     // bytes the lock pins across every file
-    unsigned active = 0;    // transfers in flight; zero while verifying
+    unsigned active = 0;    // transfers in flight; zero outside a download
     bool resumed = false;   // this file continued a partial transfer
+    const char* phase = ""; // what happened to it: fetched, verified, prepared, reused
 };
 using ProgressFn = std::function<void(const FetchProgress&)>;
 
@@ -53,5 +54,17 @@ Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact
 Json download_checkpoint(const std::filesystem::path& directory, Artifact artifact,
                          const std::atomic<bool>& cancel, const ProgressFn& progress = {},
                          unsigned jobs = DefaultFetchJobs);
+
+// Repack the pinned checkpoint's routed experts and ngram tables into the
+// contiguous records the engine reads. Nothing is requantized: the checkpoint
+// is already affine Q4, so this moves bytes into a layout that can be reached
+// with one seek. Each file is published atomically with its digest, so an
+// interrupted run reuses whatever finished. With `verify_only`, payloads are
+// rehashed and nothing is converted or written except the receipt.
+//
+// The emitted manifest must serialize to the digest `models.lock.json` pins;
+// preparation fails rather than publish records the engine would reject.
+Json prepare_storage(const std::filesystem::path& model, const std::filesystem::path& output,
+                     bool verify_only, const std::atomic<bool>& cancel, const ProgressFn& progress = {});
 
 } // namespace zerocool::engine

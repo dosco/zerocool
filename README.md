@@ -72,24 +72,23 @@ git clone https://github.com/dosco/zerocool.git && cd zerocool
 
 </details>
 
-**2. Get the model.** `download` fetches every file the lock pins, **resumes a
-partial transfer** from wherever it stopped, and verifies every hash before it
-returns. No Python, no repository checkout — the lock is compiled into the
-binary, so this works from any directory:
+**2. Get the model.** No Python, no repository checkout — the lock is compiled
+into the binary, so this works from any directory:
 
 ```sh
-zerocool download                  # ~104GB, 4 files at a time, resumable
-zerocool download --jobs 8         # more concurrency if your link allows
-zerocool verify --check-receipt    # optional: recheck without rehashing 104GB
+zerocool setup                     # download, verify, then prepare: one command
 ```
 
-Preparation is still Python. A Homebrew install puts the tooling in
-`$(brew --prefix)/share/zerocool/qwen`; a source checkout keeps it in
-`scripts/qwen`:
+`setup` fetches the ~104GB checkpoint four files at a time, verifies every
+pinned hash, and repacks the routed experts and ngram tables into the ~100GB of
+contiguous records the engine reads. Interrupt it and rerun: a partial transfer
+continues from where it stopped and a finished record is never rebuilt. The
+steps are separately available when you want them:
 
 ```sh
-python3 $(brew --prefix)/share/zerocool/qwen/prepare_storage.py \
-  --output ~/.zerocool/prepared/q4-records-v1                     # ~100GB
+zerocool download --jobs 8         # more concurrency if your link allows
+zerocool verify --check-receipt    # recheck without rehashing 104GB
+zerocool prepare --output DIR      # repack only
 ```
 
 **3. Talk to it:**

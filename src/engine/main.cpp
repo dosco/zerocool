@@ -115,7 +115,7 @@ Json checkpoint_storage_bench(const Options& o,int repeats) {
 // Acquire and verify a pinned checkpoint without an interpreter. Parsed apart
 // from the engine options because neither command opens a model or a GPU.
 int checkpoint_main(const std::string& command,int argc,char** argv) {
-    std::filesystem::path model;
+    std::filesystem::path model,prepared;
     auto artifact=Artifact::Q4;
     bool cached=false;
     unsigned jobs=DefaultFetchJobs;
@@ -123,7 +123,7 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
         const std::string arg=argv[i];
         auto value=[&]{ if(i+1>=argc) throw std::invalid_argument("missing value for "+arg); return std::string(argv[++i]); };
         if(arg=="--model") model=value();
-        else if(arg=="--jobs" && command=="download") {
+        else if(arg=="--jobs" && (command=="download" || command=="setup")) {
             const auto n=std::stoul(value());
             if(n<1 || n>MaxFetchJobs) throw std::invalid_argument("--jobs must be between 1 and "+std::to_string(MaxFetchJobs));
             jobs=unsigned(n);
@@ -135,10 +135,14 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
             else throw std::invalid_argument("artifact must be q4-control or mixed-4_8bit");
         }
         else if(arg=="--check-receipt" && command=="verify") cached=true;
+        else if(arg=="--output" && (command=="prepare" || command=="setup")) prepared=value();
+        else if(arg=="--verify" && command=="prepare") cached=true;
         else throw std::invalid_argument("unknown option for "+command+": "+arg);
     }
     if(model.empty())
         model=artifact==Artifact::Mixed?".cache/qwen-mixed-reference":".cache/models/qwen38-flash-next";
+    if(command=="setup" && prepared.empty()) prepared=".cache/prepared/q4-records-v1";
+    if(command=="prepare" && prepared.empty()) throw std::invalid_argument("prepare requires --output DIR");
 
     uint64_t last=0;
     const ProgressFn progress=[&](const FetchProgress& p) {
@@ -151,9 +155,24 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
             std::println("{:5.1f}%  {:.1f}/{:.1f} GiB  {} transfers  {}{}",percent,double(p.done)/double(GiB),
                          double(p.total)/double(GiB),p.active,p.name,p.resumed?" (resumed)":"");
         else
-            std::println("{:5.1f}%  verified {}",percent,p.name);
+            std::println("{:5.1f}%  {} {}",percent,p.phase,p.name);
         std::fflush(stdout);
     };
+    if(command=="setup") {
+        const auto fetched=download_checkpoint(model,artifact,cancelled,progress,jobs);
+        std::println("fetched and verified {} files at {}",fetched.at("files").size(),model.string());
+        const auto manifest=prepare_storage(model,prepared,false,cancelled,progress);
+        std::println("prepared {} records, {} bytes at {}\nready: zerocool chat --model {} --prepared {}",
+                     manifest.at("files").size(),manifest.at("prepared_bytes").get<uint64_t>(),
+                     prepared.string(),model.string(),prepared.string());
+        return 0;
+    }
+    if(command=="prepare") {
+        const auto manifest=prepare_storage(model,prepared,cached,cancelled,progress);
+        std::println("prepared {} files, {} bytes at {}",manifest.at("files").size(),
+                     manifest.at("prepared_bytes").get<uint64_t>(),prepared.string());
+        return 0;
+    }
     const auto receipt=command=="download" ? download_checkpoint(model,artifact,cancelled,progress,jobs)
                                            : verify_checkpoint(model,artifact,cached,cancelled,progress);
     std::println("{} {} files at {}",command=="download"?"downloaded and verified":"verified",
@@ -166,8 +185,10 @@ int main(int argc,char** argv) {
     try {
         if(argc<2 || std::string(argv[1])=="--help") {
             std::println("ZeroCool — Qwen3.8-Flash-Next on Apple Silicon\n"
+                "  zerocool setup [--model DIR] [--output DIR] [--jobs 4]  (download, then prepare)\n"
                 "  zerocool download [--model DIR] [--artifact q4-control|mixed-4_8bit] [--jobs 4]\n"
                 "  zerocool verify [--model DIR] [--artifact ...] [--check-receipt]\n"
+                "  zerocool prepare --output DIR [--model DIR] [--verify]\n"
                 "  zerocool inspect --model DIR\n"
                 "  zerocool run --model DIR [--prompt TEXT] [--raw]\n"
                 "  zerocool bench --model DIR --prompt-file FILE [--repetitions 3]\n"
@@ -219,7 +240,7 @@ int main(int argc,char** argv) {
             throw std::invalid_argument("this build omits the TUI; use run or serve");
 #endif
         }
-        if(command=="download" || command=="verify") {
+        if(command=="download" || command=="verify" || command=="prepare" || command=="setup") {
             std::signal(SIGINT,interrupt); std::signal(SIGTERM,interrupt);
             return checkpoint_main(command,argc,argv);
         }

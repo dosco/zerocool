@@ -100,7 +100,7 @@ void report(Fleet& fleet, const Transfer& transfer, bool force) {
     if(!fleet.progress || !*fleet.progress) return;
     if(!force && fleet.done - fleet.reported < 128 * MiB) return;
     fleet.reported = fleet.done;
-    (*fleet.progress)(FetchProgress{transfer.name, fleet.done, fleet.total, fleet.active, transfer.resumed > 0});
+    (*fleet.progress)(FetchProgress{transfer.name, fleet.done, fleet.total, fleet.active, transfer.resumed > 0, "fetched"});
 }
 
 size_t on_body(char* data, size_t size, size_t count, void* raw) {
@@ -279,7 +279,7 @@ Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact
         record["sha256"] = digest;
         result["files"][name] = record;
         hashed += size;
-        if(progress) progress(FetchProgress{name, hashed, pinned, 0, false});
+        if(progress) progress(FetchProgress{name, hashed, pinned, 0, false, "verified"});
     }
     write_json_atomic(receipt_path, result);
     return result;
