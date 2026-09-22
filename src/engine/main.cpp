@@ -118,10 +118,16 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
     std::filesystem::path model;
     auto artifact=Artifact::Q4;
     bool cached=false;
+    unsigned jobs=DefaultFetchJobs;
     for(int i=2;i<argc;i++) {
         const std::string arg=argv[i];
         auto value=[&]{ if(i+1>=argc) throw std::invalid_argument("missing value for "+arg); return std::string(argv[++i]); };
         if(arg=="--model") model=value();
+        else if(arg=="--jobs" && command=="download") {
+            const auto n=std::stoul(value());
+            if(n<1 || n>MaxFetchJobs) throw std::invalid_argument("--jobs must be between 1 and "+std::to_string(MaxFetchJobs));
+            jobs=unsigned(n);
+        }
         else if(arg=="--artifact") {
             const auto name=value();
             if(name=="q4-control") artifact=Artifact::Q4;
@@ -136,16 +142,19 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
 
     uint64_t last=0;
     const ProgressFn progress=[&](const FetchProgress& p) {
-        const auto done=p.resumed+p.received;
         const auto now=uint64_t(std::chrono::duration_cast<std::chrono::seconds>(
             std::chrono::steady_clock::now().time_since_epoch()).count());
-        if(done<p.total && now==last) return;
+        if(p.done<p.total && now==last) return;
         last=now;
-        std::println("{} {:.1f}/{:.1f} GiB{}",p.name,double(done)/double(GiB),double(p.total)/double(GiB),
-                     p.resumed&&p.received?" (resumed)":"");
+        const auto percent=p.total?100.0*double(p.done)/double(p.total):100.0;
+        if(p.active)
+            std::println("{:5.1f}%  {:.1f}/{:.1f} GiB  {} transfers  {}{}",percent,double(p.done)/double(GiB),
+                         double(p.total)/double(GiB),p.active,p.name,p.resumed?" (resumed)":"");
+        else
+            std::println("{:5.1f}%  verified {}",percent,p.name);
         std::fflush(stdout);
     };
-    const auto receipt=command=="download" ? download_checkpoint(model,artifact,cancelled,progress)
+    const auto receipt=command=="download" ? download_checkpoint(model,artifact,cancelled,progress,jobs)
                                            : verify_checkpoint(model,artifact,cached,cancelled,progress);
     std::println("{} {} files at {}",command=="download"?"downloaded and verified":"verified",
                  receipt.at("files").size(),model.string());
@@ -157,7 +166,7 @@ int main(int argc,char** argv) {
     try {
         if(argc<2 || std::string(argv[1])=="--help") {
             std::println("ZeroCool — Qwen3.8-Flash-Next on Apple Silicon\n"
-                "  zerocool download [--model DIR] [--artifact q4-control|mixed-4_8bit]\n"
+                "  zerocool download [--model DIR] [--artifact q4-control|mixed-4_8bit] [--jobs 4]\n"
                 "  zerocool verify [--model DIR] [--artifact ...] [--check-receipt]\n"
                 "  zerocool inspect --model DIR\n"
                 "  zerocool run --model DIR [--prompt TEXT] [--raw]\n"

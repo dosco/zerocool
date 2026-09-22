@@ -78,7 +78,8 @@ returns. No Python, no repository checkout — the lock is compiled into the
 binary, so this works from any directory:
 
 ```sh
-zerocool download                  # ~104GB, resumable; ^C and rerun to continue
+zerocool download                  # ~104GB, 4 files at a time, resumable
+zerocool download --jobs 8         # more concurrency if your link allows
 zerocool verify --check-receipt    # optional: recheck without rehashing 104GB
 ```
 
