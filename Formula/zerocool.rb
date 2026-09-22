@@ -41,28 +41,23 @@ class Zerocool < Formula
            *std_cmake_args
     system "cmake", "--build", "build", "--target", "zerocool", "--parallel"
 
+    # The engine acquires and prepares the checkpoint itself and carries the
+    # pinned locks compiled in, so nothing else needs installing.
     bin.install "build/bin/zerocool"
-    pkgshare.install "models.lock.json", "mixed-models.lock.json", "scripts/qwen"
     doc.install "README.md", "THIRD_PARTY_NOTICES.md"
   end
 
   def caveats
     <<~EOS
-      This installs the engine only. The checkpoint is about 104GB and is
-      prepared into roughly 100GB of records before first use.
+      This installs the engine only. Fetch the checkpoint and build the records
+      it reads with:
 
-      Fetching and verifying need nothing else installed; the transfer resumes
-      if it is interrupted:
+        zerocool setup
 
-        zerocool download
-
-      Preparation still uses the bundled Python tooling:
-
-        python3 #{opt_pkgshare}/qwen/prepare_storage.py \\
-          --output ~/.zerocool/prepared/q4-records-v1
-
-      Around 200GB of free disk is needed. The engine targets a 32GiB machine
-      and holds a bounded working set of at most 22GiB.
+      That is about 104GB downloaded and 100GB written, so allow roughly 200GB
+      of free disk. Interrupting it is safe: a partial transfer resumes and a
+      finished record is not rebuilt. The engine targets a 32GiB machine and
+      holds a bounded working set of at most 22GiB.
     EOS
   end
 
