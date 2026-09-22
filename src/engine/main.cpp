@@ -5,6 +5,7 @@
 #endif
 #include "engine/bench.hpp"
 #include "engine/cached_progress.hpp"
+#include "engine/fetch.hpp"
 #include "engine/route_trace.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <algorithm>
@@ -111,12 +112,53 @@ Json checkpoint_storage_bench(const Options& o,int repeats) {
     return {{"kind","checkpoint_storage_probe"},{"revision",cp.revision()},{"os_cache_policy","F_NOCACHE"},{"cases",cases},
         {"note","Hit-rate bounds leave zero time for computation and are necessary, not sufficient. Device counters include other processes."}};
 }
+// Acquire and verify a pinned checkpoint without an interpreter. Parsed apart
+// from the engine options because neither command opens a model or a GPU.
+int checkpoint_main(const std::string& command,int argc,char** argv) {
+    std::filesystem::path model;
+    auto artifact=Artifact::Q4;
+    bool cached=false;
+    for(int i=2;i<argc;i++) {
+        const std::string arg=argv[i];
+        auto value=[&]{ if(i+1>=argc) throw std::invalid_argument("missing value for "+arg); return std::string(argv[++i]); };
+        if(arg=="--model") model=value();
+        else if(arg=="--artifact") {
+            const auto name=value();
+            if(name=="q4-control") artifact=Artifact::Q4;
+            else if(name=="mixed-4_8bit") artifact=Artifact::Mixed;
+            else throw std::invalid_argument("artifact must be q4-control or mixed-4_8bit");
+        }
+        else if(arg=="--check-receipt" && command=="verify") cached=true;
+        else throw std::invalid_argument("unknown option for "+command+": "+arg);
+    }
+    if(model.empty())
+        model=artifact==Artifact::Mixed?".cache/qwen-mixed-reference":".cache/models/qwen38-flash-next";
+
+    uint64_t last=0;
+    const ProgressFn progress=[&](const FetchProgress& p) {
+        const auto done=p.resumed+p.received;
+        const auto now=uint64_t(std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now().time_since_epoch()).count());
+        if(done<p.total && now==last) return;
+        last=now;
+        std::println("{} {:.1f}/{:.1f} GiB{}",p.name,double(done)/double(GiB),double(p.total)/double(GiB),
+                     p.resumed&&p.received?" (resumed)":"");
+        std::fflush(stdout);
+    };
+    const auto receipt=command=="download" ? download_checkpoint(model,artifact,cancelled,progress)
+                                           : verify_checkpoint(model,artifact,cached,cancelled,progress);
+    std::println("{} {} files at {}",command=="download"?"downloaded and verified":"verified",
+                 receipt.at("files").size(),model.string());
+    return 0;
+}
 }
 int main(int argc,char** argv) {
     std::unique_ptr<CachedProgress> bench_progress;
     try {
         if(argc<2 || std::string(argv[1])=="--help") {
             std::println("ZeroCool — Qwen3.8-Flash-Next on Apple Silicon\n"
+                "  zerocool download [--model DIR] [--artifact q4-control|mixed-4_8bit]\n"
+                "  zerocool verify [--model DIR] [--artifact ...] [--check-receipt]\n"
                 "  zerocool inspect --model DIR\n"
                 "  zerocool run --model DIR [--prompt TEXT] [--raw]\n"
                 "  zerocool bench --model DIR --prompt-file FILE [--repetitions 3]\n"
@@ -167,6 +209,10 @@ int main(int argc,char** argv) {
 #else
             throw std::invalid_argument("this build omits the TUI; use run or serve");
 #endif
+        }
+        if(command=="download" || command=="verify") {
+            std::signal(SIGINT,interrupt); std::signal(SIGTERM,interrupt);
+            return checkpoint_main(command,argc,argv);
         }
         if(command!="inspect" && command!="run" && command!="bench" && command!="serve") throw std::invalid_argument("unknown command: "+command);
         auto cli=parse_cli(argc,argv);

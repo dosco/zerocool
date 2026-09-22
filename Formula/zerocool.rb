@@ -49,10 +49,15 @@ class Zerocool < Formula
   def caveats
     <<~EOS
       This installs the engine only. The checkpoint is about 104GB and is
-      prepared into roughly 100GB of records before first use:
+      prepared into roughly 100GB of records before first use.
 
-        bash #{opt_pkgshare}/qwen/download.sh
-        python3 #{opt_pkgshare}/qwen/verify_checkpoint.py
+      Fetching and verifying need nothing else installed; the transfer resumes
+      if it is interrupted:
+
+        zerocool download
+
+      Preparation still uses the bundled Python tooling:
+
         python3 #{opt_pkgshare}/qwen/prepare_storage.py \\
           --output ~/.zerocool/prepared/q4-records-v1
 

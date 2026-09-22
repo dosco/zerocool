@@ -72,17 +72,23 @@ git clone https://github.com/dosco/zerocool.git && cd zerocool
 
 </details>
 
-**2. Get the model.** Every file is hash-pinned by `models.lock.json`, and
-startup rejects anything that changed since. From a Homebrew install the tooling
-lives in `$(brew --prefix)/share/zerocool/qwen`; from a source checkout it is
+**2. Get the model.** `download` fetches every file the lock pins, **resumes a
+partial transfer** from wherever it stopped, and verifies every hash before it
+returns. No Python, no repository checkout — the lock is compiled into the
+binary, so this works from any directory:
+
+```sh
+zerocool download                  # ~104GB, resumable; ^C and rerun to continue
+zerocool verify --check-receipt    # optional: recheck without rehashing 104GB
+```
+
+Preparation is still Python. A Homebrew install puts the tooling in
+`$(brew --prefix)/share/zerocool/qwen`; a source checkout keeps it in
 `scripts/qwen`:
 
 ```sh
-TOOLS=$(brew --prefix)/share/zerocool/qwen
-
-bash    $TOOLS/download.sh                                            # ~104GB
-python3 $TOOLS/verify_checkpoint.py
-python3 $TOOLS/prepare_storage.py --output ~/.zerocool/prepared/q4-records-v1   # ~100GB
+python3 $(brew --prefix)/share/zerocool/qwen/prepare_storage.py \
+  --output ~/.zerocool/prepared/q4-records-v1                     # ~100GB
 ```
 
 **3. Talk to it:**
@@ -93,10 +99,9 @@ zerocool chat
 
 `Enter` inserts a newline, `Ctrl+D` sends, `Ctrl+C` cancels, `Ctrl+Q` quits.
 
-> A package manager only saves you the first step. The engine is a 3MB binary;
-> the 104GB fetch and the 100GB preparation pass are the real cost, which is why
-> they are plain resumable scripts rather than something buried in an install
-> hook.
+> The 104GB fetch and the 100GB preparation pass are the real cost, not the
+> install. They stay explicit and resumable rather than buried in a package
+> manager's install hook, so interrupting one loses nothing.
 
 ## Use it
 

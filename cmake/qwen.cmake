@@ -66,12 +66,14 @@ string(SHA256 ZEROCOOL_BUILD_FINGERPRINT "${ZEROCOOL_BUILD_IDENTITY}")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${ZEROCOOL_BUILD_INPUTS})
 configure_file(cmake/qwen_embedded.hpp.in generated/qwen_embedded.hpp @ONLY)
 
+find_package(CURL REQUIRED)
+
 add_library(zerocool_lib STATIC
-    src/engine/storage.cpp src/engine/metal.mm src/engine/pressure.mm src/engine/model.cpp src/engine/prefill.cpp
+    src/engine/fetch.cpp src/engine/storage.cpp src/engine/metal.mm src/engine/pressure.mm src/engine/model.cpp src/engine/prefill.cpp
     src/engine/pipeline.cpp src/engine/bench.cpp src/engine/kernel_bench.cpp src/engine/cached_replay.cpp
     src/engine/tokenizer.mm src/engine/session.cpp src/engine/server.cpp src/engine/chat_executor.cpp src/engine/cli.cpp)
 target_include_directories(zerocool_lib PUBLIC include PRIVATE ${minja_SOURCE_DIR}/include ${CMAKE_BINARY_DIR}/generated)
-target_link_libraries(zerocool_lib PUBLIC nlohmann_json::nlohmann_json PRIVATE zerocool_warnings zerocool_arithmetic
+target_link_libraries(zerocool_lib PUBLIC nlohmann_json::nlohmann_json PRIVATE zerocool_warnings zerocool_arithmetic CURL::libcurl
     "-framework Metal" "-framework Foundation" "-framework IOKit")
 set_source_files_properties(src/engine/metal.mm src/engine/pressure.mm src/engine/tokenizer.mm PROPERTIES COMPILE_FLAGS "-fobjc-arc")
 
@@ -80,7 +82,6 @@ target_link_libraries(zerocool PRIVATE zerocool_lib zerocool_warnings zerocool_a
 
 option(ZEROCOOL_BUILD_TUI "Build the local terminal chat client" ON)
 if(ZEROCOOL_BUILD_TUI)
-    find_package(CURL REQUIRED)
     set(FTXUI_BUILD_DOCS OFF CACHE BOOL "" FORCE)
     set(FTXUI_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
     set(FTXUI_BUILD_TESTS OFF CACHE BOOL "" FORCE)
