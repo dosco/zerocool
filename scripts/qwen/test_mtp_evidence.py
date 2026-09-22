@@ -120,6 +120,10 @@ class MtpEvidenceTests(unittest.TestCase):
         with self.assertRaises(ValueError):account(r)
 
     def test_changed_raw_duplicate_pair_missing_phase_and_false_summary_fail(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         for mode in ('changed_raw','duplicate','missing_phase','false_summary','instrumentation','unfinished','wrong_axis'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as d:
                 root=Path(d)/'evidence';shutil.copytree(BASE,root)
