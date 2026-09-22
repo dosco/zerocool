@@ -13,18 +13,6 @@ from qualification_evidence import sha as file_digest
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
-        'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
-    )
-
-
 ROOT=Path(__file__).resolve().parents[2]
 REFERENCE=ROOT/'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01'
 
@@ -73,6 +61,15 @@ class WidthTests(unittest.TestCase):
         self.assertFalse(result['complete']);self.assertIsNone(result['measured_tps'])
 
     def test_original_recovery_observer_does_not_accept_width_schema(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         raw=json.loads((REFERENCE/'case-0-full-replay.json').read_text())
         work=json.loads((REFERENCE/'case-0.json').read_text())
         raw.update(kind='native_mtp_width_v1',requested_width=4)
@@ -82,6 +79,15 @@ class WidthTests(unittest.TestCase):
         with self.assertRaises(ValueError):observe(raw,work,raw['input_sha256'],True)
 
     def test_width_comparison_rejects_changed_identity_and_outputs(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         raw=json.loads((REFERENCE/'case-0-full-replay.json').read_text())
         raw.update(kind='native_mtp_width_v1',requested_width=4,validation=False,mode='fast-timing')
         self.assertTrue(compare_widths(raw,raw)['exact_all_logits_tokens_and_state'])
@@ -95,6 +101,15 @@ class WidthTests(unittest.TestCase):
             with self.assertRaises(ValueError):compare_widths(raw,changed)
 
     def test_validation_inventory_has_every_prefix_eos_and_odd_tail(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         cases=validation_cases()
         normal=[(w,v['force_prefix']) for w,v in cases if v['name']=='irregular-seven']
         self.assertEqual(normal,[(1,1),(2,1),(2,2),(4,1),(4,2),(4,3),(4,4)])
@@ -102,6 +117,15 @@ class WidthTests(unittest.TestCase):
         self.assertTrue(all(v['max_tokens']==7 for w,v in cases))
 
     def test_real_width_two_shape_metadata_is_not_a_policy_change(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         source=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/numerical-01'
         a,b=[json.loads((source/f'case-{i}.json').read_text()) for i in range(2)]
         self.assertEqual(b['after']['metal']['kernels']['token_tile'],2)
@@ -111,6 +135,15 @@ class WidthTests(unittest.TestCase):
             with self.assertRaises(ValueError):compare_widths(a,wrong)
 
     def test_clean_native_validation_can_survive_python_checker_correction(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         source=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/numerical-01'
         proof=json.loads((source/'producer.json').read_text())
         # Native compiler outputs are local, disposable files. Mock only their
@@ -128,6 +161,15 @@ class WidthTests(unittest.TestCase):
         with self.assertRaises(ValueError):reusable_validation(source,changed)
 
     def test_eos_is_valid_numerically_but_not_a_fixed_length_speed_sample(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         source=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/validation-03'
         raw=json.loads((source/'case-7.json').read_text())
         self.assertTrue(compare_widths(raw,raw)['exact_all_logits_tokens_and_state'])
@@ -138,6 +180,15 @@ class WidthTests(unittest.TestCase):
             compare_widths(raw,raw)
 
     def test_real_width_queries_keep_incomplete_screens_separate(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         base=ROOT/'docs/benchmarks/2026-09-17-mtp-widths'
         with tempfile.TemporaryDirectory() as d:
             index=Index(Path(d)/'index.sqlite')
@@ -162,6 +213,15 @@ class WidthTests(unittest.TestCase):
             finally:index.close()
 
     def test_completed_coding_screen_routes_back_to_target_profiling(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/case-0.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/numerical-01/producer.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/validation-03/case-7.json',
+            'docs/benchmarks/2026-09-17-target-recovery/numerical-diagnostic-01/case-0-full-replay.json',
+        )
         path=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/summary.json'
         with tempfile.TemporaryDirectory() as d:
             index=Index(Path(d)/'index.sqlite')

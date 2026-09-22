@@ -10,14 +10,6 @@ from qualification_evidence import ResourceBlocked
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
-        'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
-    )
-
-
 SOURCE = builder.ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01'
 
 
@@ -42,6 +34,11 @@ def fixture():
 
 class StreamedMtpTests(unittest.TestCase):
     def test_exact_storage_is_the_only_comparison_axis(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         a, b, work = fixture()
         for arm, raw in (('resident', a), ('rows', b)):
             r = observe(raw, work, raw['input_sha256'], raw['producer_binary_sha256'], 4, arm, False)
@@ -58,6 +55,11 @@ class StreamedMtpTests(unittest.TestCase):
             with self.assertRaises(ValueError): compare(a, bad)
 
     def test_missing_reads_owner_or_memory_accounting_fails(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         a, b, work = fixture()
         for edit in (lambda r: r.update(embedding_owner_released=False),
                      lambda r: r['embedding_rows_after'].update(application_read_bytes=2720),
@@ -73,6 +75,11 @@ class StreamedMtpTests(unittest.TestCase):
             observe(a, work, a['input_sha256'], a['producer_binary_sha256'], 4, 'resident', False)
 
     def test_compression_remains_unqualified(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         _, b, work = fixture()
         b['after_destroy']['compressed_peak_bytes'] = 16384
         r = observe(b, work, b['input_sha256'], b['producer_binary_sha256'], 4, 'rows', False)
@@ -84,6 +91,11 @@ class StreamedMtpTests(unittest.TestCase):
             sample(None, None, None, None, 4, 'rows', work, 'never-run', False, diagnostic=True)
 
     def test_completion_counters_can_change_but_starting_cache_cannot(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         a, b, _ = fixture()
         b['after']['expert_cache']['ready_hits'] -= 1
         b['after']['expert_cache']['loading_joins'] += 1
@@ -92,6 +104,11 @@ class StreamedMtpTests(unittest.TestCase):
         with self.assertRaises(ValueError): compare(a, b)
 
     def test_thermal_stop_is_a_resource_block_not_a_numerical_failure(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         _, b, work = fixture()
         b['host_after']['thermal_state'] = 1
         result = observe(b, work, b['input_sha256'], b['producer_binary_sha256'], 4, 'rows', False)
@@ -105,6 +122,11 @@ class StreamedMtpTests(unittest.TestCase):
                 self.assertEqual(main(args), expected)
 
     def test_resume_rechecks_real_samples_and_never_reuses_a_disturbed_process(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         source = builder.ROOT/'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02'
         proof = json.loads((source/'producer.json').read_text())
         self.assertEqual(set(reusable_samples(source, proof, False)), {(0, 'rows'), (1, 'rows')})
@@ -114,6 +136,11 @@ class StreamedMtpTests(unittest.TestCase):
         with self.assertRaises(ValueError): reusable_samples(source, changed, True)
 
     def test_validation_compares_rejected_rows_and_primed_state(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         a, b, _ = fixture()
         for r in (a, b):
             r.update(validation=True, mode='fast-validate', initial_target_state={'tokens': 71}, initial_draft_state={'position': 70})
@@ -147,6 +174,11 @@ class StreamedMtpTests(unittest.TestCase):
         self.assertIn('return embedding_rows::store->gather(*this,l,ids,copies)', sources[out/'metal.mm'])
 
     def test_cases_cover_serial_all_rejections_tail_and_eos(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         rows = cases()
         self.assertEqual(len(rows), 6)
         self.assertEqual([w['force_prefix'] for width, w in rows[1:5]], [1, 2, 3, 4])
@@ -155,6 +187,11 @@ class StreamedMtpTests(unittest.TestCase):
         self.assertIn(rows[-1][1]['expected_prompt_id'], rows[-1][1]['eos_ids'])
 
     def test_fixed_priming_is_explicit_bounded_and_ends_before_generation(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json',
+            'docs/benchmarks/2026-09-18-streamed-mtp/numerical-02/producer.json',
+        )
         import build_streamed_mtp_fixed_priming as fixed
         a, b, work = fixture()
         for r in (a, b):

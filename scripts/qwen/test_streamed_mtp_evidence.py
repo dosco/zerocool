@@ -14,10 +14,6 @@ from streamed_mtp_evidence import labels
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0.json')
-
-
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01'
 
@@ -77,6 +73,7 @@ def fixture(directory, edit=None):
 
 class StreamedEvidenceTests(unittest.TestCase):
     def test_recomputes_pairs_without_pooling_widths_or_promoting_diagnostics(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0.json')
         with tempfile.TemporaryDirectory() as d, patch('streamed_mtp_evidence.prerequisite', return_value=([], False)):
             root = fixture(Path(d));index = Index(Path(d)/'index.sqlite');index.import_paths([root])
             try:
@@ -94,6 +91,7 @@ class StreamedEvidenceTests(unittest.TestCase):
             finally: index.close()
 
     def test_rejects_changed_payload_resources_and_unaccounted_memory(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0.json')
         for mode in ('logits', 'compression', 'power', 'memory', 'producer'):
             def edit(raw, width, pair, arm):
                 if (width, pair, arm) != (4, 0, 'rows'): return
@@ -111,6 +109,7 @@ class StreamedEvidenceTests(unittest.TestCase):
                 finally: index.close()
 
     def test_rejects_forged_summary_and_missing_numerical_evidence(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0.json')
         for mode in ('ratio', 'duplicate', 'order', 'numerical', 'qualification'):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as d, \
                     patch('streamed_mtp_evidence.prerequisite', return_value=([], False)):

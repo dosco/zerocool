@@ -9,10 +9,6 @@ from screen_verifier_horizon import compare, prefix, validate
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
-
-
 ROOT=builder.ROOT
 BASE=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/other-coding-01'
 
@@ -39,6 +35,7 @@ def fixture(width=8):
 
 class HorizonTests(unittest.TestCase):
     def test_numerical_allowance_does_not_change_timing_cleanliness(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         from screen_horizon_early import diagnostic_resources
         raw,work=fixture();raw['after_destroy']['compressed_peak_bytes']=40*1024**2
         result=validate(raw,work,raw['input_sha256'],raw['producer_binary_sha256'],8,False)
@@ -51,6 +48,7 @@ class HorizonTests(unittest.TestCase):
         with self.assertRaises(ValueError):diagnostic_resources(result,raw)
 
     def test_ceiling_is_distinct_and_every_token_is_checked(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         raw,work=fixture()
         self.assertTrue(validate(raw,work,raw['input_sha256'],raw['producer_binary_sha256'],8,False)['perfect_proposals_only'])
         changes=[lambda r:r.update(kind='native_mtp_width_v1'),lambda r:r.update(complete=False),
@@ -65,12 +63,14 @@ class HorizonTests(unittest.TestCase):
         with self.assertRaises(ValueError):validate(raw,work,raw['input_sha256'],raw['producer_binary_sha256'],True,False)
 
     def test_resources_are_observed_without_relabelling_bad_runs(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         raw,work=fixture();raw['after_destroy']['compressed_peak_bytes']=16384
         result=validate(raw,work,raw['input_sha256'],raw['producer_binary_sha256'],8,False)
         self.assertFalse(result['clean_memory'])
         self.assertFalse(result['normal_request_latency_qualified'])
 
     def test_streaming_is_an_explicit_fully_accounted_axis(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         raw,work=fixture();entry=dict(storage='exact-packed-rows',capacity=256,host_reserve_bytes=2*1024**2,
             fixed_host_bytes=700000,row_bytes=2720,removed_resident_allocation_bytes=675446784,hits=0,misses=0,evictions=0,application_read_bytes=0)
         raw['embedding_rows_before']=dict(entry);raw['embedding_rows_after']=dict(entry,hits=7,misses=1,application_read_bytes=2720)
@@ -85,6 +85,7 @@ class HorizonTests(unittest.TestCase):
         with self.assertRaises(ValueError):validate(raw,*args,streamed=True)
 
     def test_comparison_requires_equal_allocations_state_and_starting_cache(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         a,_=fixture(4);b,_=fixture(8)
         self.assertTrue(compare(a,b)['exact_logits_and_state'])
         for edit in (lambda r:r['admission'].update(checkpoint_rows=4),lambda r:r['final_target_state'].update(tokens=1),
@@ -95,6 +96,7 @@ class HorizonTests(unittest.TestCase):
         with self.assertRaises(ValueError):compare(a,b,numerical_across_producers=True)
 
     def test_prefix_drops_uncovered_final_state_and_keeps_reference(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         _,work=fixture();work['reference']={'sha256':'source'}
         short=prefix(work,9)
         self.assertNotIn('final_target_state',short)

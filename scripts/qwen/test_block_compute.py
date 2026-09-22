@@ -8,12 +8,6 @@ from capture_block_profile import admission_failure, ANCHOR, SOURCE
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-16-perfect-draft-capacity/screen-02/pair-0-slots-1460-width-4.json',
-    )
-
-
 def fixture(mode='commands'):
     groups, deps = [], []
     for layer in range(48):
@@ -100,6 +94,9 @@ class BlockComputeTest(unittest.TestCase):
         self.assertFalse(admission_failure(dict(raw, error='Metal execution failed')))
 
     def test_real_reference_projection_requires_explicit_profile_flags(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-perfect-draft-capacity/screen-02/pair-0-slots-1460-width-4.json',
+        )
         raw = json.loads(ANCHOR.read_text()); frozen = json.loads((SOURCE/'identity.json').read_text())
         work = json.loads((SOURCE/'workload.json').read_text()); control = copy.deepcopy(raw)
         raw.update(block_profile_mode='commands', profile_workspace_bytes=builder.WORKSPACE)

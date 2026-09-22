@@ -1,4 +1,4 @@
-"""Skip a model-free check when the benchmark evidence it reads is not present.
+"""Skip a model-free check when a local input it reads is not present.
 
 `docs/benchmarks/**` is deliberately unversioned, so a clean checkout carries
 these checks but not the recorded runs they read as fixed inputs. Erroring there
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def require(*paths):
-    """Skip the calling module unless every path exists under the repository root."""
+    """Skip the caller unless every path exists under the repository root."""
     missing = sorted({str(p) for p in paths if not (ROOT/p).exists()})
     if missing:
-        raise unittest.SkipTest('unversioned benchmark evidence absent: '+', '.join(missing))
+        raise unittest.SkipTest('required local input absent: '+', '.join(missing))

@@ -14,13 +14,6 @@ from evidence_queries import next_experiment
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
-        'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
-    )
-
-
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01'
 
@@ -60,6 +53,10 @@ class WidthProfileTests(unittest.TestCase):
         return raw,reference,work
 
     def test_full_request_reference_and_explicit_profile_admission(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
+        )
         raw,reference,work=self.request();before=copy.deepcopy(raw)
         result,selected,coverage=validate_request(raw,reference,work,sha(BASE/'case-0.json'),'0'*64)
         self.assertTrue(result['exact_logits_tokens_draft_and_target_state'])
@@ -69,6 +66,10 @@ class WidthProfileTests(unittest.TestCase):
         self.assertEqual(raw,before)
 
     def test_changed_outputs_coverage_admission_and_instrumentation_fail(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
+        )
         edits=[lambda r:r.update(performance_measurement=True),
                lambda r:r.update(producer_binary_sha256='bad'),
                lambda r:r['admission'].update(draft_slots=31),
@@ -134,6 +135,10 @@ class WidthProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):counter_operations(blocks,0)
 
     def test_counter_request_cannot_be_relabelled_as_commands(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
+        )
         raw,reference,work=self.request();raw['kind']='native_mtp_width_counter_profile_v1'
         result,_,_=validate_request(raw,reference,work,sha(BASE/'case-0.json'),'0'*64,'dispatch')
         self.assertTrue(result['exact_logits_tokens_draft_and_target_state'])
@@ -153,6 +158,10 @@ class WidthProfileTests(unittest.TestCase):
             'counter_profile=active;'),b[output/'include/engine/model.hpp'])
 
     def test_resource_blocked_profile_does_not_select_an_optimization(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/evidence-files.json',
+            'docs/benchmarks/2026-09-17-mtp-widths/long-lru-01/pair-0-width-1.json',
+        )
         source=ROOT/'docs/benchmarks/2026-09-17-mtp-width-profile/lru-01/summary.json'
         with tempfile.TemporaryDirectory() as d:
             index=Index(Path(d)/'index.sqlite')

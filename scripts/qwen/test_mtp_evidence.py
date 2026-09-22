@@ -11,13 +11,6 @@ from qualification_evidence import seal
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
-        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
-    )
-
-
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT/'docs/benchmarks/2026-09-16-mtp-direct-output/long-01'
 
@@ -27,6 +20,10 @@ class MtpEvidenceTests(unittest.TestCase):
         return json.loads((BASE/'case-1-pair-0-on.json').read_text())
 
     def test_real_reports_reproduce_comparisons_and_ceilings(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         with tempfile.TemporaryDirectory() as d:
             index = Index(Path(d)/'index.sqlite')
             index.import_paths([BASE/'summary.json'])
@@ -39,6 +36,10 @@ class MtpEvidenceTests(unittest.TestCase):
             index.close()
 
     def test_legacy_missing_components_and_known_replay_count(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         a=account(self.raw());self.assertEqual(a['repeated_target_rows'],46)
         self.assertEqual(a['discarded_verification_rows'],42)
         self.assertIsNone(a['recovery_children_ms_per_token'])
@@ -47,6 +48,10 @@ class MtpEvidenceTests(unittest.TestCase):
         self.assertIsNone(a['phase_ns']['checkpoint_save'])
 
     def test_invalid_coverage_and_timing_rejected(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         for kind in ('overlap','offset','negative','sum','throughput','stop','kind','bool'):
             r=self.raw()
             if kind=='overlap':r['cycles'][0]['draft_ns']=r['cycles'][0]['wall_ns']
@@ -60,10 +65,18 @@ class MtpEvidenceTests(unittest.TestCase):
             with self.subTest(kind=kind),self.assertRaises(ValueError):account(r)
 
     def test_partial_runs_remain_diagnostic(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         r=self.raw();r['complete']=False;r['cycles']=r['cycles'][:2]
         a=account(r);self.assertFalse(a['complete']);self.assertIsNone(a['measured_tps'])
 
     def test_disturbed_or_missing_resources_cannot_supply_a_raw_run_ceiling(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         for mode in ('compression', 'power', 'missing'):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as d:
                 raw = self.raw()
@@ -82,10 +95,18 @@ class MtpEvidenceTests(unittest.TestCase):
                 finally: index.close()
 
     def test_eos_shortened_run(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         r=self.raw();r['requested_tokens']=256;r['stop_reason']='eos';r['eos_ids']=[r['committed_token_ids'][-1]]
         self.assertTrue(account(r)['complete'])
 
     def test_nested_parts_not_double_counted(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-0-pair-0-off.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+        )
         r=self.raw();r.update(kind='native_mtp_continuation_v2',request_id='test')
         for i,c in enumerate(r['cycles']):
             c.update(cycle_id=i,request_id='test',checkpoint_save_ns=0,target_restore_ns=0,

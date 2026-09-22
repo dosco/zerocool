@@ -13,10 +13,6 @@ from verify_mtp import clean_memory_observations
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require('docs/benchmarks/2026-09-15-mtp-preparation/native-01/manifest.json')
-
-
 class Response(io.BytesIO):
     def __init__(self,body,status=206,headers=None):
         super().__init__(body);self.status=status;self.headers=headers or {}
@@ -130,6 +126,7 @@ class MtpQuantizationTest(unittest.TestCase):
 
 class MtpPreparedValidationTest(unittest.TestCase):
     def test_same_sized_dense_tensors_cannot_exchange_bindings(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-15-mtp-preparation/native-01/manifest.json')
         saved=source.ROOT/'docs/benchmarks/2026-09-15-mtp-preparation/native-01'
         manifest=json.loads((saved/'manifest.json').read_text())
         inventory=json.loads((saved/'source-inventory.json').read_text())
@@ -145,6 +142,7 @@ class MtpPreparedValidationTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'canonical layout'):prep.verify(output)
 
     def test_dense_dtype_is_part_of_the_binding(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-15-mtp-preparation/native-01/manifest.json')
         saved=source.ROOT/'docs/benchmarks/2026-09-15-mtp-preparation/native-01'
         manifest=json.loads((saved/'manifest.json').read_text())
         inventory=json.loads((saved/'source-inventory.json').read_text())

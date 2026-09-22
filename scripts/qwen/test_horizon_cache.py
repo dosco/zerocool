@@ -12,10 +12,6 @@ from test_verifier_horizon import fixture
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
-
-
 def trace_fixture(width=4, count=16):
     work = dict(prompt_ids=list(range(72)), continuation_ids=list(range(count)))
     coverage = replay.patterns(work, width)
@@ -74,6 +70,7 @@ class HorizonCacheTests(unittest.TestCase):
             with self.assertRaises(ValueError): decode(bad, raw, work)
 
     def test_trace_allowance_is_explicit_and_in_combined_admission(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         raw, work = fixture()
         args = (work, raw['input_sha256'], raw['producer_binary_sha256'], 8, False)
         with self.assertRaises(ValueError): validate(raw, *args, trace_workspace_bytes=replay.WORKSPACE)
@@ -91,6 +88,7 @@ class HorizonCacheTests(unittest.TestCase):
         with self.assertRaises(ValueError): decode(events, raw, work)
 
     def test_comparison_never_uses_trace_timing_and_requires_exact_routes(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-17-mtp-widths/other-coding-01/case-0-pair-0-width-4.json')
         a, _ = fixture(4)
         a.update(cache_trace_enabled=False, performance_measurement=False, compute_tile_cap=4,
             trace_forwards=[{'routes': ['route']}], draft_priming_before={'calls': 2},

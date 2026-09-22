@@ -15,14 +15,6 @@ from mtp_evidence import compare as evidence_compare
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
-        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
-        'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
-    )
-
-
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/benchmarks/2026-09-16-mtp-direct-output/long-01'
 
@@ -56,6 +48,11 @@ class TargetRecoveryTests(unittest.TestCase):
         self.assertNotIn('system swap',message)
 
     def test_external_fixture_retains_original_capture_resources_and_provenance(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         with tempfile.TemporaryDirectory() as d:
             root=Path(d).resolve();bundle=root/'bundle';bundle.mkdir();manifest=bundle/'manifest.json'
             work=json.loads((BASE/'case-1.json').read_text());save(root/'workload.json',work)
@@ -130,6 +127,11 @@ class TargetRecoveryTests(unittest.TestCase):
             with self.assertRaises(ValueError):resumed_stages(dict(stages=[item,item]),{})
 
     def test_correctness_prerequisite_requires_all_distinct_cases_and_raw_samples(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         # Stub numerical calculations only: exercise the real inventory, source,
         # workload, seal and producer checks without running the model.
         with tempfile.TemporaryDirectory() as d,patch('trial_recovery.observe',return_value=dict(clean_host=True,clean_memory=True)),\
@@ -179,6 +181,11 @@ class TargetRecoveryTests(unittest.TestCase):
         return r
 
     def test_raw_validator_and_comparison(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         work=json.loads((BASE/'case-1.json').read_text());a,b=(self.fixture(arm) for arm in ('full-replay','state-only'))
         for r in (a,b):self.assertTrue(observe(r,work,r['input_sha256'],False)['clean_memory'])
         result=comparison(a,b);self.assertEqual(result['eliminated_target_forward_calls'],46)
@@ -186,6 +193,11 @@ class TargetRecoveryTests(unittest.TestCase):
         self.assertTrue(result['exact_all_logits_tokens_and_state'])
 
     def test_new_recovery_summary_revalidates_from_raw_sources(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);work=json.loads((BASE/'case-1.json').read_text());save(root/'case-0.json',work)
             values=[];samples=[];binary_hash='a'*64
@@ -220,6 +232,11 @@ class TargetRecoveryTests(unittest.TestCase):
             finally:index.close()
 
     def test_reject_reads_forwards_unbounded_journal_missing_modes_and_dirty_state(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         work=json.loads((BASE/'case-1.json').read_text())
         edits=[lambda r:r['cycles'][0].update(target_recovery_forward_calls=1),
             lambda r:r['cycles'][0].update(target_recovery_read_bytes=1),
@@ -234,6 +251,11 @@ class TargetRecoveryTests(unittest.TestCase):
                 observe(r,work,r['input_sha256'],False)
 
     def test_outputs_and_capacity_must_match(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-15-q4-request-context/capture-02/evidence-files.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1-pair-0-on.json',
+            'docs/benchmarks/2026-09-16-mtp-direct-output/long-01/case-1.json',
+        )
         for key in ('row_logits_sha256','committed_token_ids'):
             a,b=self.fixture(),self.fixture('state-only');b[key][0]='changed'
             with self.assertRaises(ValueError):comparison(a,b)

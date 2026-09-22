@@ -1,6 +1,8 @@
 import copy
 import unittest
 
+import evidence_fixture
+
 from screen_mtp_continuation import compare,observe,select_cases,workloads,ROOT
 
 
@@ -76,6 +78,7 @@ class ContinuationTests(unittest.TestCase):
         self.assertFalse(observe(raw,work,'input','fast-timing')['clean_memory'])
 
     def test_prompt_suite_includes_a_panel_boundary(self):
+        evidence_fixture.require('.cache/qwen-mixed-reference/tokenizer.json')
         rows=workloads(ROOT/'.cache/qwen-mixed-reference',128)
         self.assertEqual(len(rows),3)
         self.assertEqual(len(rows[0]['prompt_ids']),72)

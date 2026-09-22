@@ -8,10 +8,6 @@ from screen_route_selection import configs
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require('docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-0-candidate.json')
-
-
 class DecodeTimelineTest(unittest.TestCase):
     def fixture(self):
         groups=[];dependencies=[]
@@ -84,6 +80,7 @@ class DecodeTimelineTest(unittest.TestCase):
         self.assertEqual(summarize(native,profile,deps)['mean_layer_boundary_submission_gap_ms'],original)
 
     def test_explicit_short_output_keeps_default_confirmation_length(self):
+        evidence_fixture.require('docs/benchmarks/2026-09-12-route-five-pairs/raw/pair-0-candidate.json')
         root=Path(__file__).resolve().parents[2]/'docs/benchmarks/2026-09-12-route-five-pairs/raw'
         raw=json.loads((root/'pair-0-candidate.json').read_text());evidence=json.loads((root/'summary.json').read_text())['identity']
         raw['runs']=raw['runs'][:1];raw['workloads']=raw['workloads'][:1]

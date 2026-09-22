@@ -17,13 +17,6 @@ from screen_decode_scratch import correctness as validate_full_state
 import evidence_fixture
 
 
-def setUpModule():
-    evidence_fixture.require(
-        'docs/benchmarks/2026-09-13-decode-scratch/raw/prior-output-control.json',
-        'docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/control.json',
-    )
-
-
 ROOT=Path(__file__).resolve().parents[2]
 DISTURBED=ROOT/'docs/benchmarks/2026-09-13-decode-scratch/raw'
 
@@ -37,6 +30,10 @@ def synthetic_rows():
 
 class ScratchConfirmationTest(unittest.TestCase):
     def test_real_slice_revalidates_remainder_but_cannot_qualify_full_state(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-13-decode-scratch/raw/prior-output-control.json',
+            'docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/control.json',
+        )
         root=ROOT/'docs/benchmarks/2026-09-13-scratch-confirmation/state-slice'
         evidence=json.loads((root/'summary.json').read_text())['identity']
         reports=[json.loads((root/(n+'.json')).read_text()) for n in ('control','candidate')]
@@ -100,6 +97,10 @@ class ScratchConfirmationTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'passing short screen'):revalidate(summary,originals.__getitem__)
 
     def test_actual_disturbed_screen_cannot_launch_inference(self):
+        evidence_fixture.require(
+            'docs/benchmarks/2026-09-13-decode-scratch/raw/prior-output-control.json',
+            'docs/benchmarks/2026-09-13-scratch-confirmation/state-slice/control.json',
+        )
         prior,files=screen_files(DISTURBED)
         self.assertEqual(prior['status'],'memory_disturbed')
         self.assertIn(prior['prior_output_control']['sha256'],files)
