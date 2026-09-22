@@ -175,8 +175,6 @@ engine twice over:
 - **Cool** — a bounded working set means the machine isn't swapping itself to
   death or spinning its fans to keep 105GB resident.
 
-It was called FreeLLM once. "Free" said nothing true about it.
-
 ## License
 
 [Apache License 2.0](LICENSE). The adapted kernels and tooling keep their
