@@ -53,52 +53,57 @@ number counts here only when a build fingerprint and a real-model run back it.
 > **Heads up:** this wants ~200GB of free disk and a long afternoon. The engine
 > is a 3MB binary. The model is all the rest.
 
+**1. Install the engine** — this repo is its own Homebrew tap:
+
+```sh
+brew tap dosco/zerocool https://github.com/dosco/zerocool
+brew install --HEAD zerocool
+```
+
+<details>
+<summary>or build from source</summary>
+
+<br>
+
 ```sh
 git clone https://github.com/dosco/zerocool.git && cd zerocool
-./build.sh
+./build.sh                      # binary lands in build/qwen/bin/zerocool
 ```
 
-Fetch and prepare the checkpoint. Every file is hash-pinned by
-`models.lock.json`, and startup rejects anything that changed since:
+</details>
+
+**2. Get the model.** Every file is hash-pinned by `models.lock.json`, and
+startup rejects anything that changed since. From a Homebrew install the tooling
+lives in `$(brew --prefix)/share/zerocool/qwen`; from a source checkout it is
+`scripts/qwen`:
 
 ```sh
-bash scripts/qwen/download.sh                                                  # ~104GB
-python3 scripts/qwen/verify_checkpoint.py
-python3 scripts/qwen/prepare_storage.py --output .cache/prepared/q4-records-v1  # ~100GB
+TOOLS=$(brew --prefix)/share/zerocool/qwen
+
+bash    $TOOLS/download.sh                                            # ~104GB
+python3 $TOOLS/verify_checkpoint.py
+python3 $TOOLS/prepare_storage.py --output ~/.zerocool/prepared/q4-records-v1   # ~100GB
 ```
 
-Talk to it:
+**3. Talk to it:**
 
 ```sh
-build/qwen/bin/zerocool chat
+zerocool chat
 ```
 
 `Enter` inserts a newline, `Ctrl+D` sends, `Ctrl+C` cancels, `Ctrl+Q` quits.
 
-<details>
-<summary><b>Why no <code>brew install</code>?</b></summary>
-
-<br>
-
-There is no tap yet, so `brew install zerocool` would fail — better to say so
-than to ship a command that doesn't work. The formula name is free and a
-source-build tap is the plan, since building locally sidesteps Gatekeeper
-notarization entirely.
-
-Worth saying plainly though: a package manager saves about ninety seconds here.
-The install is a 3MB binary; the real cost is a 104GB download and a 100GB
-preparation pass. A `zerocool setup` that drives those end to end, resumably,
-would help far more than `brew install` ever could.
-
-</details>
+> A package manager only saves you the first step. The engine is a 3MB binary;
+> the 104GB fetch and the 100GB preparation pass are the real cost, which is why
+> they are plain resumable scripts rather than something buried in an install
+> hook.
 
 ## Use it
 
-Nothing is installed to `PATH`, so either use the built path or alias it:
+A Homebrew install puts `zerocool` on `PATH`. From a source checkout, alias it
+first with `alias zerocool=$PWD/build/qwen/bin/zerocool`.
 
 ```sh
-alias zerocool=$PWD/build/qwen/bin/zerocool
-
 zerocool run     --model .cache/models/qwen38-flash-next   # one-shot generation
 zerocool serve   --model .cache/models/qwen38-flash-next --port 8080
 zerocool chat    --connect http://127.0.0.1:8080           # attach to a server
