@@ -161,14 +161,14 @@ int checkpoint_main(const std::string& command,int argc,char** argv) {
     if(command=="setup") {
         const auto fetched=download_checkpoint(model,artifact,cancelled,progress,jobs);
         std::println("fetched and verified {} files at {}",fetched.at("files").size(),model.string());
-        const auto manifest=prepare_storage(model,prepared,false,cancelled,progress);
-        std::println("prepared {} records, {} bytes at {}\nready: zerocool chat --model {} --prepared {}",
+        const auto manifest=prepare_storage(model,prepared,false,cancelled,progress,artifact);
+        std::println("prepared {} records, {} bytes at {}\nready: zerocool chat --model {} --prepared {} --artifact {}",
                      manifest.at("files").size(),manifest.at("prepared_bytes").get<uint64_t>(),
-                     prepared.string(),model.string(),prepared.string());
+                     prepared.string(),model.string(),prepared.string(),artifact==Artifact::Mixed?"mixed-4_8bit":"q4-control");
         return 0;
     }
     if(command=="prepare") {
-        const auto manifest=prepare_storage(model,prepared,cached,cancelled,progress);
+        const auto manifest=prepare_storage(model,prepared,cached,cancelled,progress,artifact);
         std::println("prepared {} files, {} bytes at {}",manifest.at("files").size(),
                      manifest.at("prepared_bytes").get<uint64_t>(),prepared.string());
         return 0;
@@ -185,10 +185,10 @@ int main(int argc,char** argv) {
     try {
         if(argc<2 || std::string(argv[1])=="--help") {
             std::println("ZeroCool — Qwen3.8-Flash-Next on Apple Silicon\n"
-                "  zerocool setup [--model DIR] [--output DIR] [--jobs 4]  (download, then prepare)\n"
+                "  zerocool setup [--model DIR] [--output DIR] [--artifact ...] [--jobs 4]  (download, then prepare)\n"
                 "  zerocool download [--model DIR] [--artifact q4-control|mixed-4_8bit] [--jobs 4]\n"
                 "  zerocool verify [--model DIR] [--artifact ...] [--check-receipt]\n"
-                "  zerocool prepare --output DIR [--model DIR] [--verify]\n"
+                "  zerocool prepare --output DIR [--model DIR] [--artifact ...] [--verify]\n"
                 "  zerocool inspect --model DIR\n"
                 "  zerocool run --model DIR [--prompt TEXT] [--raw]\n"
                 "  zerocool bench --model DIR --prompt-file FILE [--repetitions 3]\n"

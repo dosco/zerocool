@@ -291,6 +291,28 @@ Json Checkpoint::inspect() const {
         {"identity_status","pinned hash receipt and current file fingerprints validated"}};
 }
 
+void verify_prepared_compatibility(Artifact consumer,const std::string& manifest_sha256) {
+    if(consumer==Artifact::Mixed) {
+        // All 816 expert/ngram tensors were compared in full before this
+        // compatibility receipt was pinned. Resident weights still come from
+        // the independently verified mixed checkpoint. Any source-lock change
+        // requires renewed evidence; a matching layout alone cannot admit reuse.
+        const auto reuse=Json::parse(MixedReuseLock);
+        const auto sha=[](std::string_view value) {
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(value.data(),CC_LONG(value.size()),digest);
+            std::string result;constexpr char digits[]="0123456789abcdef";
+            for(auto c:digest) {result+=digits[c>>4];result+=digits[c&15];}return result;
+        };
+        if(reuse.at("schema")!=1 || reuse.at("source_revision")!=ModelRevision ||
+           reuse.at("consumer_revision")!=artifact_revision(consumer) || reuse.at("prepared_manifest_sha256")!=manifest_sha256 ||
+           reuse.at("file_locks_sha256").at("models.lock.json")!=sha(ModelLock) ||
+           reuse.at("file_locks_sha256").at("mixed-models.lock.json")!=sha(MixedModelLock) ||
+           reuse.at("tensor_count")!=816 || reuse.at("expert_payload_bytes")!=ExpertBytes*Layers*Experts ||
+           reuse.at("ngram_payload_bytes")!=32000153600ull)
+            throw std::runtime_error("prepared payload compatibility needs renewed mixed/Q4 verification");
+    }
+}
+
 PreparedArtifact::PreparedArtifact(const std::filesystem::path& dir,const Checkpoint& source) : consumer_(source.artifact()) {
     const auto text=read_text(dir/"manifest.json");manifest_=Json::parse(text);
     unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(text.data(),CC_LONG(text.size()),digest);
@@ -304,25 +326,7 @@ PreparedArtifact::PreparedArtifact(const std::filesystem::path& dir,const Checkp
     const auto lock=Json::parse(ModelLock);
     if(lock.at("prepared_control").at("manifest_sha256")!=identity_)
         throw std::runtime_error("prepared manifest differs from pinned lossless Q4 control");
-    if(consumer_==Artifact::Mixed) {
-        // All 816 expert/ngram tensors were compared in full before this
-        // compatibility receipt was pinned. Resident weights still come from
-        // the independently verified mixed checkpoint. Any source-lock change
-        // requires renewed evidence; a matching layout alone cannot admit reuse.
-        const auto reuse=Json::parse(MixedReuseLock);
-        const auto sha=[](std::string_view value) {
-            unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(value.data(),CC_LONG(value.size()),digest);
-            std::string result;constexpr char digits[]="0123456789abcdef";
-            for(auto c:digest) {result+=digits[c>>4];result+=digits[c&15];}return result;
-        };
-        if(reuse.at("schema")!=1 || reuse.at("source_revision")!=ModelRevision ||
-           reuse.at("consumer_revision")!=source.revision() || reuse.at("prepared_manifest_sha256")!=identity_ ||
-           reuse.at("file_locks_sha256").at("models.lock.json")!=sha(ModelLock) ||
-           reuse.at("file_locks_sha256").at("mixed-models.lock.json")!=sha(MixedModelLock) ||
-           reuse.at("tensor_count")!=816 || reuse.at("expert_payload_bytes")!=ExpertBytes*Layers*Experts ||
-           reuse.at("ngram_payload_bytes")!=32000153600ull)
-            throw std::runtime_error("prepared payload compatibility needs renewed mixed/Q4 verification");
-    }
+    verify_prepared_compatibility(consumer_,identity_);
     for(const auto& entry:lock.at("files")) if(!entry.value("optional",false)) {
         const auto name=entry.at("path").get<std::string>();
         if(manifest_.at("source_files").at(name)!=entry.at("sha256"))

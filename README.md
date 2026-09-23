@@ -82,7 +82,10 @@ zerocool setup                     # download, verify, then prepare: one command
 `setup` fetches the ~104GB checkpoint four files at a time, verifies every
 pinned hash, and repacks the routed experts and ngram tables into the ~100GB of
 contiguous records the engine reads. Interrupt it and rerun: a partial transfer
-continues from where it stopped and a finished record is never rebuilt. The
+continues from where it stopped and an unchanged finished record is reused.
+Completed downloads are checked against their pinned hashes (or unchanged
+verification receipts). A corrupt download is replaced only after the new
+bytes verify; bad partial files are discarded so a retry can recover. The
 steps are separately available when you want them:
 
 ```sh
@@ -90,6 +93,19 @@ zerocool download --jobs 8         # more concurrency if your link allows
 zerocool verify --check-receipt    # recheck without rehashing 104GB
 zerocool prepare --output DIR      # repack only
 ```
+
+To use the pinned mixed 4/8-bit checkpoint, select it explicitly:
+
+```sh
+zerocool setup --artifact mixed-4_8bit
+zerocool chat --artifact mixed-4_8bit
+```
+
+Mixed setup uses its own checkpoint directory and the same byte-identical
+expert/ngram records, backed by the pinned payload-equivalence check. It does
+not need a second Q4 download or requantize any weights. The printed `ready`
+command includes the selected artifact and paths. `prepare` also accepts
+`--artifact mixed-4_8bit` for an already downloaded mixed checkpoint.
 
 **3. Talk to it:**
 

@@ -101,7 +101,7 @@ install(TARGETS zerocool zerocool_lib RUNTIME DESTINATION bin ARCHIVE DESTINATIO
 install(DIRECTORY include/engine DESTINATION include)
 
 enable_testing()
-add_executable(test_qwen tests/test_qwen.cpp)
+add_executable(test_qwen tests/test_qwen.cpp tests/test_checkpoint_io.cpp)
 target_include_directories(test_qwen PRIVATE external)
 target_link_libraries(test_qwen PRIVATE zerocool_lib zerocool_warnings zerocool_arithmetic)
 add_test(NAME QwenNative COMMAND test_qwen)

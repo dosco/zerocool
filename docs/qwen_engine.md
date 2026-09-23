@@ -276,26 +276,45 @@ requires that much additional disk space while preserving the source checkpoint.
 
 `models.lock.json` pins the prepared manifest SHA256. Startup validates that pin,
 source hashes, ranges/formats, payload receipts, and current file identities.
-`prepare_storage.py --verify` rehashes every prepared payload. The manifest
-contains source hashes and each prepared file's hash; the verification receipt
-contains local file fingerprints and is regenerated after a full verification.
+The native `prepare --verify` command rehashes every prepared payload.
 
 ```sh
-.cache/qwen-reference-venv/bin/python scripts/qwen/prepare_storage.py \
-  --output .cache/prepared/q4-records-v1
-.cache/qwen-reference-venv/bin/python scripts/qwen/prepare_storage.py \
-  --output .cache/prepared/q4-records-v1 --verify
+build/qwen/bin/zerocool prepare --output .cache/prepared/q4-records-v1
+build/qwen/bin/zerocool prepare --output .cache/prepared/q4-records-v1 --verify
 build/qwen/bin/zerocool inspect --prepared .cache/prepared/q4-records-v1
 ```
 
-Preparation requires NumPy, uses bounded panels, resumes completed unchanged
-files, and publishes each file atomically. Production inference stays native.
+Native preparation supports `--artifact q4-control` (the default) and
+`--artifact mixed-4_8bit`. The mixed path first requires the pinned complete
+payload-equivalence proof and independently verifies the mixed checkpoint.
+Both inputs must produce the same pinned canonical manifest and payload hashes;
+expert codes, scales, biases and ngram bytes are copied without quantization.
+The canonical manifest's `source_revision` and `source_files` identify the Q4
+control. The separate `verification.json` records the actual verified
+`input_revision` and `input_files`, as well as the prepared-file fingerprints.
+The checkpoint's own receipt keeps its actual artifact revision. Existing
+canonical records can be reused across these two verified inputs; sensitive
+resident weights continue to come from the explicitly selected checkpoint.
 
-`verify_checkpoint.py` hashes every required file and writes a receipt.
-Native startup checks that receipt against the embedded lock and current
-file identity, size, and modification/change times. A release check rehashes
-all files; the receipt is a startup optimization, not an independent trust
-boundary against a local user modifying both receipt and files.
+Preparation uses bounded buffers, resumes completed unchanged files, and
+publishes each file atomically. The native path needs no Python or NumPy.
+The offline Python preparer remains available for Q4 developer workflows.
+
+`setup` chains native download, verification and preparation, and prints a
+chat command containing the selected artifact and paths. Downloads resume
+`.part` files, hash them before publishing their final filenames, and save
+completed verification entries through interruptions. A same-size corrupt
+completed file is repaired by downloading and verifying a replacement first.
+Corrupt complete parts are discarded before retry; corrupt newly downloaded
+parts fail verification and are discarded so the next retry starts clean.
+A server that ignores Range is retried from zero. A directory already holding
+a receipt for another revision is still rejected.
+
+Native startup checks receipts against the embedded lock and current file
+identity, size, and modification/change times. A release check rehashes all
+files; the receipt is a startup optimization, not an independent trust boundary
+against a local user modifying both receipt and files. Native model-free tests
+exercise these paths with tiny pinned checkpoints and a loopback HTTP server.
 
 ## Memory and ownership
 

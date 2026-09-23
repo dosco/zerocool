@@ -1,4 +1,4 @@
-#include "engine/fetch.hpp"
+#include "checkpoint_io.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <curl/curl.h>
 #include <cstdio>
@@ -25,7 +25,9 @@ void check(bool ok, const std::string& message) {
 Json file_fingerprint(const std::filesystem::path& path) {
     struct stat st{};
     check(::stat(path.c_str(), &st) == 0, "missing file: " + path.string());
-    return Json{{"size", uint64_t(st.st_size)}, {"device", uint64_t(st.st_dev)}, {"inode", uint64_t(st.st_ino)},
+    return Json{{"size", uint64_t(st.st_size)},
+                {"device", uint64_t(st.st_dev)},
+                {"inode", uint64_t(st.st_ino)},
                 {"mtime_ns", uint64_t(st.st_mtimespec.tv_sec) * 1000000000 + uint64_t(st.st_mtimespec.tv_nsec)},
                 {"ctime_ns", uint64_t(st.st_ctimespec.tv_sec) * 1000000000 + uint64_t(st.st_ctimespec.tv_nsec)}};
 }
@@ -33,7 +35,9 @@ Json file_fingerprint(const std::filesystem::path& path) {
 std::string file_digest(const std::filesystem::path& path, const std::atomic<bool>& cancel) {
     struct Fd {
         int value;
-        ~Fd() { if(value >= 0) ::close(value); }
+        ~Fd() {
+            if(value >= 0) ::close(value);
+        }
     } fd{::open(path.c_str(), O_RDONLY)};
     check(fd.value >= 0, "cannot open: " + path.string());
     // Verification reads the whole checkpoint; leaving 104GB in the page cache
@@ -54,16 +58,21 @@ std::string file_digest(const std::filesystem::path& path, const std::atomic<boo
     CC_SHA256_Final(digest, &context);
     static constexpr char hex[] = "0123456789abcdef";
     std::string out;
-    for(auto c : digest) { out += hex[c >> 4]; out += hex[c & 15]; }
+    for(auto c : digest) {
+        out += hex[c >> 4];
+        out += hex[c & 15];
+    }
     return out;
 }
 
 void write_json_atomic(const std::filesystem::path& path, const Json& value) {
     const auto temporary = std::filesystem::path(path).concat(".tmp");
-    { std::ofstream out(temporary, std::ios::binary | std::ios::trunc);
-      if(!out) throw std::runtime_error("cannot write: " + temporary.string());
-      out << value.dump(2) << "\n";
-      if(!out) throw std::runtime_error("cannot write: " + temporary.string()); }
+    {
+        std::ofstream out(temporary, std::ios::binary | std::ios::trunc);
+        if(!out) throw std::runtime_error("cannot write: " + temporary.string());
+        out << value.dump(2) << "\n";
+        if(!out) throw std::runtime_error("cannot write: " + temporary.string());
+    }
     std::filesystem::rename(temporary, path);
 }
 
@@ -74,33 +83,57 @@ void require_safe_name(const std::string& name) {
           "unsafe artifact filename: " + name);
 }
 
-// One in-flight transfer. Each owns its own part file and easy handle, so a
-// failure or a resume decision on one says nothing about the others.
+// A receipt is an integrity cache. Only the pinned digest with the current
+// fingerprint can avoid a rehash; equal length alone never qualifies a file.
+Json verified_file(const std::filesystem::path& path, uint64_t size, const std::string& digest, const Json& saved,
+                   const std::atomic<bool>& cancel) {
+    const auto before = file_fingerprint(path);
+    if(before.at("size").get<uint64_t>() != size) return nullptr;
+    auto expected = before;
+    expected["sha256"] = digest;
+    const bool valid = saved == expected || file_digest(path, cancel) == digest;
+    check(file_fingerprint(path) == before, "file changed during verification: " + path.string());
+    return valid ? expected : Json(nullptr);
+}
+
+// One in-flight transfer owns its part and easy handle, including startup errors.
 struct Transfer {
-    std::string url, name;
+    std::string url, name, digest;
     std::filesystem::path part, target;
     uint64_t total = 0, resumed = 0, received = 0;
     std::FILE* file = nullptr;
     CURL* easy = nullptr;
+    Json complete_part;
     bool checked_code = false;
     std::exception_ptr error;
-    ~Transfer() { if(file) std::fclose(file); }
+    ~Transfer() {
+        if(easy) curl_easy_cleanup(easy);
+        if(file) std::fclose(file);
+    }
 };
 
-// `settled` counts bytes that are already on disk for good: completed files
-// plus the part each in-flight transfer resumed from. Live progress adds what
-// the running transfers have received since.
+// Settled bytes belong to verified complete files. Partial bytes are counted
+// only while their transfer is live, so restarting a range cannot double count.
 struct Fleet {
     uint64_t settled = 0, done = 0, total = 0, reported = 0;
     unsigned active = 0;
     const ProgressFn* progress = nullptr;
 };
 
+void close_part(Transfer& transfer) {
+    check(std::fflush(transfer.file) == 0 && ::fsync(::fileno(transfer.file)) == 0,
+          "cannot flush partial download: " + transfer.name);
+    auto* file = transfer.file;
+    transfer.file = nullptr;
+    check(std::fclose(file) == 0, "cannot close partial download: " + transfer.name);
+}
+
 void report(Fleet& fleet, const Transfer& transfer, bool force) {
     if(!fleet.progress || !*fleet.progress) return;
-    if(!force && fleet.done - fleet.reported < 128 * MiB) return;
+    if(!force && fleet.done >= fleet.reported && fleet.done - fleet.reported < 128 * MiB) return;
     fleet.reported = fleet.done;
-    (*fleet.progress)(FetchProgress{transfer.name, fleet.done, fleet.total, fleet.active, transfer.resumed > 0, "fetched"});
+    (*fleet.progress)(
+        FetchProgress{transfer.name, fleet.done, fleet.total, fleet.active, transfer.resumed > 0, "fetched"});
 }
 
 size_t on_body(char* data, size_t size, size_t count, void* raw) {
@@ -125,13 +158,19 @@ size_t on_body(char* data, size_t size, size_t count, void* raw) {
         check(std::fwrite(data, 1, bytes, transfer.file) == bytes, "short write for " + transfer.name);
         transfer.received += bytes;
         return bytes;
-    } catch(...) { transfer.error = std::current_exception(); return 0; }
+    } catch(...) {
+        transfer.error = std::current_exception();
+        return 0;
+    }
 }
 
 void start(Transfer& transfer, const std::atomic<bool>& cancel, curl_slist* headers) {
     uint64_t resume = std::filesystem::exists(transfer.part) ? uint64_t(std::filesystem::file_size(transfer.part)) : 0;
     // A stale part longer than the pinned size cannot be a prefix of it.
-    if(resume > transfer.total) { std::filesystem::remove(transfer.part); resume = 0; }
+    if(resume > transfer.total) {
+        std::filesystem::remove(transfer.part);
+        resume = 0;
+    }
     transfer.resumed = resume;
     transfer.file = std::fopen(transfer.part.c_str(), resume ? "r+b" : "wb");
     check(transfer.file != nullptr, "cannot open: " + transfer.part.string());
@@ -141,10 +180,10 @@ void start(Transfer& transfer, const std::atomic<bool>& cancel, curl_slist* head
     check(transfer.easy != nullptr, "cannot create HTTP client");
     auto* easy = transfer.easy;
     curl_easy_setopt(easy, CURLOPT_URL, transfer.url.c_str());
-    curl_easy_setopt(easy, CURLOPT_FOLLOWLOCATION, 1L);   // the hub redirects to a CDN
+    curl_easy_setopt(easy, CURLOPT_FOLLOWLOCATION, 1L); // the hub redirects to a CDN
     curl_easy_setopt(easy, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(easy, CURLOPT_CONNECTTIMEOUT_MS, 20000L);
-    curl_easy_setopt(easy, CURLOPT_LOW_SPEED_LIMIT, 1L);  // fail a stalled transfer rather than hang
+    curl_easy_setopt(easy, CURLOPT_LOW_SPEED_LIMIT, 1L); // fail a stalled transfer rather than hang
     curl_easy_setopt(easy, CURLOPT_LOW_SPEED_TIME, 120L);
     curl_easy_setopt(easy, CURLOPT_WRITEFUNCTION, &on_body);
     curl_easy_setopt(easy, CURLOPT_WRITEDATA, &transfer);
@@ -152,31 +191,47 @@ void start(Transfer& transfer, const std::atomic<bool>& cancel, curl_slist* head
     if(resume) curl_easy_setopt(easy, CURLOPT_RESUME_FROM_LARGE, curl_off_t(resume));
     curl_easy_setopt(easy, CURLOPT_NOPROGRESS, 0L);
     curl_easy_setopt(easy, CURLOPT_XFERINFODATA, const_cast<std::atomic<bool>*>(&cancel));
-    curl_easy_setopt(easy, CURLOPT_XFERINFOFUNCTION,
-        +[](void* raw, curl_off_t, curl_off_t, curl_off_t, curl_off_t) -> int {
+    curl_easy_setopt(
+        easy, CURLOPT_XFERINFOFUNCTION, +[](void* raw, curl_off_t, curl_off_t, curl_off_t, curl_off_t) -> int {
             return static_cast<std::atomic<bool>*>(raw)->load() ? 1 : 0;
         });
     if(headers) curl_easy_setopt(easy, CURLOPT_HTTPHEADER, headers);
 }
 
-// Run every transfer, at most `jobs` at a time. A finished file is renamed only
-// once its full pinned length is present, so an interrupted run leaves parts
-// that the next run continues rather than a short file that looks complete.
-void fetch_all(std::vector<std::unique_ptr<Transfer>>& queue, unsigned jobs,
-               const std::atomic<bool>& cancel, const ProgressFn& progress) {
+// Publish only after a full hash. In particular a corrupt final file remains
+// intact until its replacement is verified, and a bad part cannot poison retries.
+void publish(Transfer& transfer, Json& receipt, const std::filesystem::path& receipt_path) {
+    auto fingerprint = transfer.complete_part;
+    fingerprint.erase("sha256");
+    check(file_fingerprint(transfer.part) == fingerprint, "partial file changed before publication: " + transfer.name);
+    std::filesystem::rename(transfer.part, transfer.target);
+    auto record = file_fingerprint(transfer.target);
+    record["sha256"] = transfer.digest;
+    receipt["files"][transfer.name] = record;
+    write_json_atomic(receipt_path, receipt);
+}
+
+// Run at most `jobs` transfers at a time. Interrupted files remain resumable;
+// completed ones are verified before receiving their final names and receipts.
+void fetch_all(std::vector<std::unique_ptr<Transfer>>& queue, unsigned jobs, const std::atomic<bool>& cancel,
+               const ProgressFn& progress, Json& receipt, const std::filesystem::path& receipt_path, uint64_t total,
+               uint64_t settled) {
     static std::once_flag initialized;
-    std::call_once(initialized, [] { check(curl_global_init(CURL_GLOBAL_DEFAULT) == CURLE_OK, "curl initialization failed"); });
+    std::call_once(initialized,
+                   [] { check(curl_global_init(CURL_GLOBAL_DEFAULT) == CURLE_OK, "curl initialization failed"); });
 
     std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)> headers(nullptr, curl_slist_free_all);
-    if(const char* token = std::getenv("HF_TOKEN"); token && *token) {
+    if(const char* token = std::getenv("HF_TOKEN");
+       token && *token && !queue.empty() && queue.front()->url.starts_with("https://huggingface.co/")) {
         headers.reset(curl_slist_append(nullptr, ("Authorization: Bearer " + std::string(token)).c_str()));
         check(bool(headers), "cannot allocate HTTP headers");
     }
 
     Fleet fleet;
     fleet.progress = &progress;
-    for(const auto& transfer : queue) fleet.total += transfer->total;
-
+    fleet.total = total;
+    fleet.settled = settled;
+    fleet.done = settled;
     using Multi = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
     Multi multi(curl_multi_init(), curl_multi_cleanup);
     check(bool(multi), "cannot create HTTP client");
@@ -186,36 +241,47 @@ void fetch_all(std::vector<std::unique_ptr<Transfer>>& queue, unsigned jobs,
     struct Guard {
         CURLM* multi;
         std::vector<Transfer*>& running;
-        ~Guard() { for(auto* t : running) { curl_multi_remove_handle(multi, t->easy); curl_easy_cleanup(t->easy); t->easy = nullptr; } }
+        ~Guard() {
+            for(auto* t : running) {
+                curl_multi_remove_handle(multi, t->easy);
+                curl_easy_cleanup(t->easy);
+                t->easy = nullptr;
+            }
+        }
     } guard{multi.get(), running};
+    const auto update = [&] {
+        fleet.done = fleet.settled;
+        for(const auto* t : running) fleet.done += t->resumed + t->received;
+        fleet.active = unsigned(running.size());
+    };
 
     while(next < queue.size() || !running.empty()) {
         check(!cancel.load(), "cancelled");
         while(running.size() < std::max(1u, jobs) && next < queue.size()) {
             auto& transfer = *queue[next++];
-            if(std::filesystem::exists(transfer.target)) { fleet.settled += transfer.total; continue; }
-            start(transfer, cancel, headers.get());
-            if(transfer.resumed == transfer.total) {   // already complete on disk
-                std::fclose(transfer.file); transfer.file = nullptr;
-                curl_easy_cleanup(transfer.easy); transfer.easy = nullptr;
-                std::filesystem::rename(transfer.part, transfer.target);
+            if(!transfer.complete_part.is_null()) {
+                publish(transfer, receipt, receipt_path);
                 fleet.settled += transfer.total;
+                update();
+                report(fleet, transfer, true);
                 continue;
             }
-            fleet.settled += transfer.resumed;
+            start(transfer, cancel, headers.get());
             check(curl_multi_add_handle(multi.get(), transfer.easy) == CURLM_OK, "cannot schedule transfer");
             running.push_back(&transfer);
-            fleet.active = unsigned(running.size());
+            update();
             report(fleet, transfer, true);
         }
         if(running.empty()) continue;
 
         int alive = 0;
         check(curl_multi_perform(multi.get(), &alive) == CURLM_OK, "transfer progress failed");
-        fleet.done = fleet.settled;
-        for(const auto* t : running) fleet.done += t->received;
-        if(!running.empty()) report(fleet, *running.front(), false);
-        if(alive) { int fds = 0; check(curl_multi_poll(multi.get(), nullptr, 0, 100, &fds) == CURLM_OK, "transfer poll failed"); }
+        update();
+        report(fleet, *running.front(), false);
+        if(alive) {
+            int fds = 0;
+            check(curl_multi_poll(multi.get(), nullptr, 0, 100, &fds) == CURLM_OK, "transfer poll failed");
+        }
 
         int left = 0;
         while(CURLMsg* message = curl_multi_info_read(multi.get(), &left)) {
@@ -228,17 +294,34 @@ void fetch_all(std::vector<std::unique_ptr<Transfer>>& queue, unsigned jobs,
             curl_easy_cleanup(transfer->easy);
             transfer->easy = nullptr;
             if(transfer->error) std::rethrow_exception(transfer->error);
+            if(result == CURLE_RANGE_ERROR && transfer->resumed > 0) {
+                // Some servers ignore Range; libcurl can reject their 200 before
+                // invoking on_body. Retry once from zero, never append that body.
+                close_part(*transfer);
+                std::filesystem::remove(transfer->part);
+                transfer->received = 0;
+                transfer->checked_code = false;
+                start(*transfer, cancel, headers.get());
+                check(curl_multi_add_handle(multi.get(), transfer->easy) == CURLM_OK, "cannot restart transfer");
+                running.push_back(transfer);
+                update();
+                report(fleet, *transfer, true);
+                continue;
+            }
             check(result == CURLE_OK, "fetch failed for " + transfer->name + ": " + curl_easy_strerror(result));
-            std::fflush(transfer->file);
-            std::fclose(transfer->file);
-            transfer->file = nullptr;
+            close_part(*transfer);
             const auto have = transfer->resumed + transfer->received;
             check(have == transfer->total, "short transfer for " + transfer->name + ": " + std::to_string(have) +
-                                           " of " + std::to_string(transfer->total) + " bytes; rerun to resume");
-            std::filesystem::rename(transfer->part, transfer->target);
-            fleet.settled += transfer->received;
-            fleet.done = fleet.settled;
-            fleet.active = unsigned(running.size());
+                                               " of " + std::to_string(transfer->total) + " bytes; rerun to resume");
+            transfer->complete_part = verified_file(transfer->part, transfer->total, transfer->digest, nullptr, cancel);
+            if(transfer->complete_part.is_null()) {
+                std::filesystem::remove(transfer->part);
+                throw std::runtime_error("hash mismatch for " + transfer->name +
+                                         "; discarded corrupt partial file; rerun to retry");
+            }
+            publish(*transfer, receipt, receipt_path);
+            fleet.settled += transfer->total;
+            update();
             report(fleet, *transfer, true);
         }
     }
@@ -246,13 +329,14 @@ void fetch_all(std::vector<std::unique_ptr<Transfer>>& queue, unsigned jobs,
 
 } // namespace
 
-Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact, bool cached,
-                       const std::atomic<bool>& cancel, const ProgressFn& progress) {
-    const auto lock = artifact_lock(artifact);
+Json checkpoint_io::verify(const std::filesystem::path& directory, const Json& lock, bool cached,
+                           const std::atomic<bool>& cancel, const ProgressFn& progress) {
     const auto receipt_path = directory / "zerocool-verification.json";
     Json old = cached && std::filesystem::exists(receipt_path) ? read_json(receipt_path) : Json::object();
-    Json result{{"schema", 1}, {"revision", lock.at("revision")},
-                {"verified_at", uint64_t(std::time(nullptr))}, {"files", Json::object()}};
+    Json result{{"schema", 1},
+                {"revision", lock.at("revision")},
+                {"verified_at", uint64_t(std::time(nullptr))},
+                {"files", Json::object()}};
     uint64_t hashed = 0, pinned = 0;
     for(const auto& entry : lock.at("files"))
         if(!entry.value("optional", false)) pinned += entry.at("size").get<uint64_t>();
@@ -285,52 +369,81 @@ Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact
     return result;
 }
 
-Json download_checkpoint(const std::filesystem::path& directory, Artifact artifact,
-                         const std::atomic<bool>& cancel, const ProgressFn& progress, unsigned jobs) {
+Json checkpoint_io::download(const std::filesystem::path& directory, const Json& lock, const std::string& base_url,
+                             const std::atomic<bool>& cancel, const ProgressFn& progress, unsigned jobs) {
     check(jobs >= 1 && jobs <= MaxFetchJobs, "concurrent jobs must be between 1 and " + std::to_string(MaxFetchJobs));
-    const auto lock = artifact_lock(artifact);
-    const auto repo = lock.at("repo").get<std::string>();
+    check(!cancel.load(), "cancelled");
     const auto revision = lock.at("revision").get<std::string>();
     std::filesystem::create_directories(directory);
-
-    // Refuse to mix a second pinned artifact into a directory that already
-    // holds one, and refuse to overwrite a file that is not simply absent.
     const auto receipt_path = directory / "zerocool-verification.json";
-    if(std::filesystem::exists(receipt_path)) {
-        const auto receipt = read_json(receipt_path);
-        check(receipt.value("revision", std::string()) == revision,
+    const auto old = std::filesystem::exists(receipt_path) ? read_json(receipt_path) : Json::object();
+    if(!old.empty())
+        check(old.value("revision", std::string()) == revision,
               "refusing to replace a different verified artifact; choose its own directory");
-    }
-    uint64_t remaining = 0;
+    Json receipt{{"schema", 1}, {"revision", revision}, {"files", Json::object()}};
+    uint64_t remaining = 0, total = 0, settled = 0;
+    for(const auto& entry : lock.at("files"))
+        if(!entry.value("optional", false)) total += entry.at("size").get<uint64_t>();
     std::vector<std::unique_ptr<Transfer>> queue;
     for(const auto& entry : lock.at("files")) {
         if(entry.value("optional", false)) continue;
+        check(!cancel.load(), "cancelled");
         const auto name = entry.at("path").get<std::string>();
         require_safe_name(name);
         const auto size = entry.at("size").get<uint64_t>();
+        const auto digest = entry.at("sha256").get<std::string>();
         const auto target = directory / name;
         if(std::filesystem::exists(target)) {
             check(uint64_t(std::filesystem::file_size(target)) == size,
                   "refusing to replace a different existing artifact file: " + name);
-            continue;
+            const Json saved =
+                old.contains("files") && old.at("files").contains(name) ? old.at("files").at(name) : Json(nullptr);
+            const auto verified = verified_file(target, size, digest, saved, cancel);
+            if(!verified.is_null()) {
+                receipt["files"][name] = verified;
+                settled += size;
+                if(progress) progress(FetchProgress{name, settled, total, 0, false, "verified"});
+                continue;
+            }
         }
-        const auto part = std::filesystem::path(target).concat(".part");
-        const auto have = std::filesystem::exists(part) ? uint64_t(std::filesystem::file_size(part)) : 0;
-        remaining += size - std::min(have, size);
         auto transfer = std::make_unique<Transfer>();
-        transfer->url = "https://huggingface.co/" + repo + "/resolve/" + revision + "/" + name;
+        transfer->url = base_url + name;
         transfer->name = name;
-        transfer->part = part;
+        transfer->part = std::filesystem::path(target).concat(".part");
         transfer->target = target;
         transfer->total = size;
+        transfer->digest = digest;
+        auto have = std::filesystem::exists(transfer->part) ? uint64_t(std::filesystem::file_size(transfer->part)) : 0;
+        if(have == size && std::filesystem::exists(transfer->part))
+            transfer->complete_part = verified_file(transfer->part, size, digest, nullptr, cancel);
+        if(have > size || (have == size && transfer->complete_part.is_null())) {
+            std::filesystem::remove(transfer->part);
+            have = 0;
+        }
+        remaining += size - have;
         queue.push_back(std::move(transfer));
     }
     const auto space = std::filesystem::space(directory);
     check(space.available >= remaining + DiskReserve,
           "insufficient disk space for the pinned checkpoint plus a 5GiB reserve");
+    // Preserve completed hashes through interruptions, including later files
+    // failing. Final verification checks every current fingerprint against pins.
+    write_json_atomic(receipt_path, receipt);
+    fetch_all(queue, jobs, cancel, progress, receipt, receipt_path, total, settled);
+    return checkpoint_io::verify(directory, lock, true, cancel, progress);
+}
 
-    fetch_all(queue, jobs, cancel, progress);
-    return verify_checkpoint(directory, artifact, false, cancel, progress);
+Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact, bool cached,
+                       const std::atomic<bool>& cancel, const ProgressFn& progress) {
+    return checkpoint_io::verify(directory, artifact_lock(artifact), cached, cancel, progress);
+}
+
+Json download_checkpoint(const std::filesystem::path& directory, Artifact artifact, const std::atomic<bool>& cancel,
+                         const ProgressFn& progress, unsigned jobs) {
+    const auto lock = artifact_lock(artifact);
+    const auto base = "https://huggingface.co/" + lock.at("repo").get<std::string>() + "/resolve/" +
+                      lock.at("revision").get<std::string>() + "/";
+    return checkpoint_io::download(directory, lock, base, cancel, progress, jobs);
 }
 
 } // namespace zerocool::engine

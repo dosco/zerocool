@@ -43,28 +43,30 @@ void write_json_atomic(const std::filesystem::path& path, const Json& value);
 // reread, which keeps a repeat check off a 104GB scan. Release checks always
 // pass cached=false: the receipt is a local integrity cache, not a trust
 // boundary. Throws when a file is missing, the wrong size, or hashes wrong.
-Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact,
-                       bool cached, const std::atomic<bool>& cancel, const ProgressFn& progress = {});
+Json verify_checkpoint(const std::filesystem::path& directory, Artifact artifact, bool cached,
+                       const std::atomic<bool>& cancel, const ProgressFn& progress = {});
 
-// Fetch every required file that is absent or partial, then verify the result.
-// A partial transfer resumes from its own length with a ranged request; a file
-// that is already complete and verified is never refetched. Refuses to write
-// into a directory holding a different pinned revision, and refuses to start
+// Fetch missing or corrupt required files, then verify the complete checkpoint.
+// A partial transfer resumes from its own length with a ranged request. Completed
+// files are verified before reuse; corrupt files are replaced only after the new
+// bytes pass the pinned hash. Refuses to write into a directory holding a
+// different pinned revision, and refuses to start
 // without room for the remainder plus a reserve.
-Json download_checkpoint(const std::filesystem::path& directory, Artifact artifact,
-                         const std::atomic<bool>& cancel, const ProgressFn& progress = {},
-                         unsigned jobs = DefaultFetchJobs);
+Json download_checkpoint(const std::filesystem::path& directory, Artifact artifact, const std::atomic<bool>& cancel,
+                         const ProgressFn& progress = {}, unsigned jobs = DefaultFetchJobs);
 
 // Repack the pinned checkpoint's routed experts and ngram tables into the
 // contiguous records the engine reads. Nothing is requantized: the checkpoint
-// is already affine Q4, so this moves bytes into a layout that can be reached
-// with one seek. Each file is published atomically with its digest, so an
+// routed experts and ngrams are already affine Q4, so this moves their bytes
+// into records reached with one seek. Each file is published atomically, so an
 // interrupted run reuses whatever finished. With `verify_only`, payloads are
-// rehashed and nothing is converted or written except the receipt.
+// rehashed and no payload is rewritten; manifest and receipts are refreshed.
 //
-// The emitted manifest must serialize to the digest `models.lock.json` pins;
-// preparation fails rather than publish records the engine would reject.
-Json prepare_storage(const std::filesystem::path& model, const std::filesystem::path& output,
-                     bool verify_only, const std::atomic<bool>& cancel, const ProgressFn& progress = {});
+// Both artifacts produce the canonical record manifest pinned by models.lock.json.
+// Mixed inputs require the existing pinned payload-equivalence proof. The receipt
+// records the actual verified input separately from that canonical output identity.
+Json prepare_storage(const std::filesystem::path& model, const std::filesystem::path& output, bool verify_only,
+                     const std::atomic<bool>& cancel, const ProgressFn& progress = {},
+                     Artifact artifact = Artifact::Q4);
 
 } // namespace zerocool::engine

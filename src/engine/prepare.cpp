@@ -1,4 +1,4 @@
-#include "engine/fetch.hpp"
+#include "checkpoint_io.hpp"
 #include <CommonCrypto/CommonDigest.h>
 #include <cstring>
 #include <ctime>
@@ -14,8 +14,7 @@ namespace {
 // The record geometry the engine reads. ExpertBytes is the nine projection
 // pieces back to back; Stride pads that to an alignment boundary so one expert
 // is one aligned read.
-constexpr uint64_t Alignment = 16384, RecordBytes = 2764800, RecordStride = 2768896;
-constexpr uint64_t PrepareLayers = 48, PrepareExperts = 512, NgramShards = 128;
+constexpr uint64_t Alignment = 16384;
 constexpr uint64_t NgramRow = 100, NgramChunk = 32768;
 constexpr uint64_t WriteHeadroom = 2 * GiB;
 constexpr const char* NgramBase = "model.layers.1.ple.ple_embedding.ngram_embedding.shard_";
@@ -32,10 +31,16 @@ struct Fd {
     Fd& operator=(const Fd&) = delete;
     Fd(Fd&& other) noexcept : value(other.value) { other.value = -1; }
     Fd& operator=(Fd&& other) noexcept {
-        if(this != &other) { if(value >= 0) ::close(value); value = other.value; other.value = -1; }
+        if(this != &other) {
+            if(value >= 0) ::close(value);
+            value = other.value;
+            other.value = -1;
+        }
         return *this;
     }
-    ~Fd() { if(value >= 0) ::close(value); }
+    ~Fd() {
+        if(value >= 0) ::close(value);
+    }
 };
 
 struct Ref {
@@ -61,7 +66,9 @@ public:
         for(uint64_t left = bytes; left;) {
             const auto n = ::write(fd_.value, at, size_t(left));
             check(n > 0, "short prepared write: " + temporary_.string());
-            at += n; left -= uint64_t(n); written_ += uint64_t(n);
+            at += n;
+            left -= uint64_t(n);
+            written_ += uint64_t(n);
         }
     }
     std::string finish() {
@@ -72,7 +79,10 @@ public:
         CC_SHA256_Final(digest, &context_);
         static constexpr char hex[] = "0123456789abcdef";
         std::string out;
-        for(auto c : digest) { out += hex[c >> 4]; out += hex[c & 15]; }
+        for(auto c : digest) {
+            out += hex[c >> 4];
+            out += hex[c & 15];
+        }
         return out;
     }
 
@@ -85,13 +95,25 @@ private:
 
 } // namespace
 
-Json prepare_storage(const std::filesystem::path& model, const std::filesystem::path& output,
-                     bool verify_only, const std::atomic<bool>& cancel, const ProgressFn& progress) {
-    const auto lock = artifact_lock(Artifact::Q4);
-    const auto source = verify_checkpoint(model, Artifact::Q4, true, cancel);
+Json checkpoint_io::prepare(const std::filesystem::path& model, const std::filesystem::path& output,
+                            const Json& source_lock, const Json& canonical_lock, const Geometry& geometry,
+                            bool verify_only, const std::atomic<bool>& cancel, const ProgressFn& progress) {
+    const auto pinned_manifest = canonical_lock.at("prepared_control").at("manifest_sha256").get<std::string>();
+    check(geometry.layers && geometry.experts && geometry.ngram_shards && geometry.record_bytes &&
+              geometry.record_bytes <= geometry.record_stride && geometry.record_stride % Alignment == 0,
+          "invalid prepared geometry");
+    const auto source = checkpoint_io::verify(model, source_lock, true, cancel);
+    // The output identity is canonical Q4, including when its byte-identical
+    // payload is read from the verified mixed checkpoint. Input provenance is
+    // recorded separately; never write a Q4 verification receipt for mixed input.
+    Json input_files = Json::object();
+    for(auto it = source.at("files").begin(); it != source.at("files").end(); ++it)
+        input_files[it.key()] = it.value().at("sha256");
+    const Json provenance{{"input_revision", source.at("revision")}, {"input_files", input_files}};
     std::filesystem::create_directories(output);
 
-    const Json identity{{"schema", 1}, {"source_revision", lock.at("revision")}, {"format", "zc-affine-records-v1"}};
+    const Json identity{
+        {"schema", 1}, {"source_revision", canonical_lock.at("revision")}, {"format", "zc-affine-records-v1"}};
     const auto identity_path = output / "preparation.json";
     if(std::filesystem::exists(identity_path))
         check(read_json(identity_path) == identity, "output belongs to a different preparation");
@@ -124,7 +146,9 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
             if(it.key() == "__metadata__") continue;
             auto key = it.key();
             if(key.starts_with("language_model.")) key.erase(0, 15);
-            refs[key] = Ref{name, it.value().at("dtype").get<std::string>(), 8 + header,
+            refs[key] = Ref{name,
+                            it.value().at("dtype").get<std::string>(),
+                            8 + header,
                             it.value().at("data_offsets").at(0).get<uint64_t>(),
                             it.value().at("data_offsets").at(1).get<uint64_t>(),
                             it.value().at("shape").get<std::vector<uint64_t>>()};
@@ -138,14 +162,19 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
     };
     // Read `count` rows of a tensor. Row width comes from the declared shape,
     // so a checkpoint whose geometry moved is rejected rather than misread.
-    const auto part = [&](const std::string& key, uint64_t row, uint64_t count, std::byte* into) -> uint64_t {
+    const auto part = [&](const std::string& key, uint64_t row, uint64_t count, uint64_t expected_width,
+                          std::byte* into) -> uint64_t {
         const auto& ref = find(key);
-        check(!ref.shape.empty() && ref.shape[0] > 0, "unsupported source shape: " + key);
+        check(!ref.shape.empty() && ref.shape[0] > 0 && ref.end >= ref.begin &&
+                  (ref.end - ref.begin) % ref.shape[0] == 0,
+              "unsupported source shape: " + key);
         const auto width = (ref.end - ref.begin) / ref.shape[0];
-        check(row + count <= ref.shape[0], "source row out of bounds: " + key);
+        check(width == expected_width, "unexpected source row width: " + key);
+        check(row <= ref.shape[0] && count <= ref.shape[0] - row, "source row out of bounds: " + key);
         const auto bytes = count * width;
         check(uint64_t(::pread(shards.at(ref.file).value, into, size_t(bytes),
-                               off_t(ref.base + ref.begin + row * width))) == bytes, "short source read: " + key);
+                               off_t(ref.base + ref.begin + row * width))) == bytes,
+              "short source read: " + key);
         return width;
     };
 
@@ -159,18 +188,25 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
         for(const auto* piece : Pieces) {
             const auto name = std::string(projection) + "." + piece;
             const auto& ref = find("model.layers.0.mlp.switch_mlp." + name);
-            const auto size = (ref.end - ref.begin) / PrepareExperts;
-            layout.push_back(Json{{"name", name}, {"offset", cursor}, {"length", size},
+            check(!ref.shape.empty() && ref.shape[0] == geometry.experts && ref.end >= ref.begin &&
+                      (ref.end - ref.begin) % geometry.experts == 0,
+                  "unsupported expert shape");
+            const auto size = (ref.end - ref.begin) / geometry.experts;
+            layout.push_back(Json{{"name", name},
+                                  {"offset", cursor},
+                                  {"length", size},
                                   {"shape", std::vector<uint64_t>(ref.shape.begin() + 1, ref.shape.end())},
-                                  {"dtype", ref.dtype}, {"bits", 4}, {"group_size", 64}});
+                                  {"dtype", ref.dtype},
+                                  {"bits", 4},
+                                  {"group_size", 64}});
             pieces.push_back(name);
             cursor += size;
         }
-    check(cursor == RecordBytes, "unsupported expert format");
+    check(cursor == geometry.record_bytes, "unsupported expert format");
 
-    uint64_t expected_bytes = PrepareLayers * PrepareExperts * RecordStride;
-    std::vector<uint64_t> shard_rows(NgramShards);
-    for(uint64_t shard = 0; shard < NgramShards; ++shard) {
+    uint64_t expected_bytes = geometry.layers * geometry.experts * geometry.record_stride;
+    std::vector<uint64_t> shard_rows(geometry.ngram_shards);
+    for(uint64_t shard = 0; shard < geometry.ngram_shards; ++shard) {
         shard_rows[shard] = find(NgramBase + std::to_string(shard) + ".weight").shape.at(0);
         expected_bytes += shard_rows[shard] * NgramRow;
     }
@@ -205,7 +241,8 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
             if(reused) {
                 check(uint64_t(std::filesystem::file_size(path)) == expected, "completed file size mismatch: " + name);
                 if(verify_only)
-                    check(file_digest(path, cancel) == saved.value("sha256", std::string()), "corrupt prepared file: " + name);
+                    check(file_digest(path, cancel) == saved.value("sha256", std::string()),
+                          "corrupt prepared file: " + name);
                 entry = saved;
             }
         }
@@ -220,31 +257,40 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
         produced[name] = entry;
         old["files"][name] = entry;
         Json interim = identity;
+        interim.update(provenance);
         interim["files"] = old.at("files");
-        write_json_atomic(receipt_path, interim);   // an interrupted run keeps what finished
+        write_json_atomic(receipt_path, interim); // an interrupted run keeps what finished
         files.push_back(Json{{"path", name}, {"size", expected}, {"sha256", entry.at("sha256")}});
         published += expected;
-        if(progress) progress(FetchProgress{name, published, expected_bytes, 0, reused, reused ? "reused" : "prepared"});
+        if(progress)
+            progress(FetchProgress{name, published, expected_bytes, 0, reused, reused ? "reused" : "prepared"});
     };
 
     Json experts = Json::array();
-    std::vector<std::byte> record(RecordStride);
-    for(uint64_t layer = 0; layer < PrepareLayers; ++layer) {
+    std::vector<std::byte> record(geometry.record_stride);
+    for(uint64_t layer = 0; layer < geometry.layers; ++layer) {
         char name[32];
         std::snprintf(name, sizeof name, "experts-%02llu.bin", static_cast<unsigned long long>(layer));
-        publish(name, RecordStride * PrepareExperts, [&](Publisher& out) {
+        publish(name, geometry.record_stride * geometry.experts, [&](Publisher& out) {
             const auto prefix = "model.layers." + std::to_string(layer) + ".mlp.switch_mlp.";
-            for(uint64_t expert = 0; expert < PrepareExperts; ++expert) {
+            for(uint64_t expert = 0; expert < geometry.experts; ++expert) {
                 check(!cancel.load(), "cancelled");
-                std::memset(record.data(), 0, record.size());   // the pad after the nine pieces is zero
+                std::memset(record.data(), 0, record.size()); // the pad after the nine pieces is zero
                 uint64_t at = 0;
-                for(const auto& piece : pieces) at += part(prefix + piece, expert, 1, record.data() + at);
-                check(at == RecordBytes, "unexpected expert record size");
-                out.write(record.data(), RecordStride);
+                for(size_t p = 0; p < pieces.size(); ++p)
+                    at += part(prefix + pieces[p], expert, 1, layout.at(p).at("length").get<uint64_t>(),
+                               record.data() + at);
+                check(at == geometry.record_bytes, "unexpected expert record size");
+                out.write(record.data(), geometry.record_stride);
             }
         });
-        experts.push_back(Json{{"layer", layer}, {"file", name}, {"count", PrepareExperts}, {"offset", 0},
-                               {"length", RecordBytes}, {"stride", RecordStride}, {"alignment", Alignment}});
+        experts.push_back(Json{{"layer", layer},
+                               {"file", name},
+                               {"count", geometry.experts},
+                               {"offset", 0},
+                               {"length", geometry.record_bytes},
+                               {"stride", geometry.record_stride},
+                               {"alignment", Alignment}});
     }
 
     // Each ngram row interleaves three sources into one hundred contiguous
@@ -252,7 +298,7 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
     static constexpr std::array<std::pair<uint64_t, uint64_t>, 3> Fields{{{0, 80}, {80, 10}, {90, 10}}};
     Json ngrams = Json::array();
     std::vector<std::byte> rows(NgramChunk * NgramRow), field(NgramChunk * 80);
-    for(uint64_t shard = 0; shard < NgramShards; ++shard) {
+    for(uint64_t shard = 0; shard < geometry.ngram_shards; ++shard) {
         const auto count = shard_rows[shard];
         char name[32];
         std::snprintf(name, sizeof name, "ngram-%03llu.bin", static_cast<unsigned long long>(shard));
@@ -264,17 +310,24 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
                 std::memset(rows.data(), 0, n * NgramRow);
                 for(size_t f = 0; f < Fields.size(); ++f) {
                     const auto [begin, width] = Fields[f];
-                    check(part(prefix + Pieces[f], at, n, field.data()) == width, "unexpected ngram field width");
+                    check(part(prefix + Pieces[f], at, n, width, field.data()) == width,
+                          "unexpected ngram field width");
                     for(uint64_t row = 0; row < n; ++row)
                         std::memcpy(rows.data() + row * NgramRow + begin, field.data() + row * width, size_t(width));
                 }
                 out.write(rows.data(), n * NgramRow);
             }
         });
-        ngrams.push_back(Json{{"shard", shard}, {"file", name}, {"count", count}, {"offset", 0}, {"stride", NgramRow},
-                              {"fields", Json::array({Json{{"offset", 0}, {"length", 80}, {"dtype", "U32"}, {"shape", Json::array({20})}},
-                                                      Json{{"offset", 80}, {"length", 10}, {"dtype", "BF16"}, {"shape", Json::array({5})}},
-                                                      Json{{"offset", 90}, {"length", 10}, {"dtype", "BF16"}, {"shape", Json::array({5})}}})}});
+        ngrams.push_back(Json{
+            {"shard", shard},
+            {"file", name},
+            {"count", count},
+            {"offset", 0},
+            {"stride", NgramRow},
+            {"fields",
+             Json::array({Json{{"offset", 0}, {"length", 80}, {"dtype", "U32"}, {"shape", Json::array({20})}},
+                          Json{{"offset", 80}, {"length", 10}, {"dtype", "BF16"}, {"shape", Json::array({5})}},
+                          Json{{"offset", 90}, {"length", 10}, {"dtype", "BF16"}, {"shape", Json::array({5})}}})}});
     }
 
     for(auto it = source.at("files").begin(); it != source.at("files").end(); ++it) {
@@ -284,8 +337,8 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
     }
 
     Json source_files = Json::object();
-    for(auto it = source.at("files").begin(); it != source.at("files").end(); ++it)
-        source_files[it.key()] = it.value().at("sha256");
+    for(const auto& entry : canonical_lock.at("files"))
+        if(!entry.value("optional", false)) source_files[entry.at("path").get<std::string>()] = entry.at("sha256");
     Json manifest = identity;
     manifest["recipe"] = "q4-control-lossless";
     manifest["expert_layout"] = layout;
@@ -301,18 +354,27 @@ Json prepare_storage(const std::filesystem::path& model, const std::filesystem::
     CC_SHA256(serialized.data(), CC_LONG(serialized.size()), digest);
     static constexpr char hex[] = "0123456789abcdef";
     std::string manifest_sha;
-    for(auto c : digest) { manifest_sha += hex[c >> 4]; manifest_sha += hex[c & 15]; }
-    if(lock.contains("prepared_control") && lock.at("prepared_control").contains("manifest_sha256"))
-        check(manifest_sha == lock.at("prepared_control").at("manifest_sha256").get<std::string>(),
-              "prepared manifest differs from the pinned lossless control");
+    for(auto c : digest) {
+        manifest_sha += hex[c >> 4];
+        manifest_sha += hex[c & 15];
+    }
+    check(manifest_sha == pinned_manifest, "prepared manifest differs from the pinned lossless control");
     write_json_atomic(output / "manifest.json", manifest);
 
     Json receipt = identity;
+    receipt.update(provenance);
     receipt["files"] = produced;
     receipt["manifest_sha256"] = file_digest(output / "manifest.json", cancel);
     receipt["verified_at"] = uint64_t(std::time(nullptr));
     write_json_atomic(receipt_path, receipt);
     return manifest;
+}
+
+Json prepare_storage(const std::filesystem::path& model, const std::filesystem::path& output, bool verify_only,
+                     const std::atomic<bool>& cancel, const ProgressFn& progress, Artifact artifact) {
+    const auto canonical = artifact_lock(Artifact::Q4);
+    verify_prepared_compatibility(artifact, canonical.at("prepared_control").at("manifest_sha256").get<std::string>());
+    return checkpoint_io::prepare(model, output, artifact_lock(artifact), canonical, {}, verify_only, cancel, progress);
 }
 
 } // namespace zerocool::engine

@@ -37,6 +37,8 @@ Json artifact_lock(Artifact artifact);
 const char* artifact_revision(Artifact artifact);
 const char* artifact_model_id(Artifact artifact);
 const char* build_fingerprint();
+// Check the pinned proof before admitting canonical Q4 records for another artifact.
+void verify_prepared_compatibility(Artifact consumer, const std::string& manifest_sha256);
 
 uint64_t checked_add(uint64_t a, uint64_t b);
 uint64_t checked_mul(uint64_t a, uint64_t b);
