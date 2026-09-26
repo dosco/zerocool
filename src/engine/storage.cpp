@@ -457,6 +457,18 @@ std::shared_future<void> ReadPool::submit(std::function<void()> work, ReadPriori
     ready_.notify_one();
     return result;
 }
+bool ReadPool::promote(const std::shared_ptr<ReadTiming>& timing) {
+    if(!timing) return false;
+    std::lock_guard lock(mutex_);
+    for(auto it=future_.begin();it!=future_.end();++it) if(it->timing==timing) {
+        demand_.push_back(std::move(*it));future_.erase(it);ready_.notify_one();return true;
+    }
+    return false;
+}
+bool ReadPool::queued(const std::shared_ptr<ReadTiming>& timing) {
+    std::lock_guard lock(mutex_);
+    return timing && std::any_of(future_.begin(),future_.end(),[&](const Task& t){return t.timing==timing;});
+}
 void ReadPool::worker() {
     for (;;) {
         Task task;
@@ -505,6 +517,8 @@ void ExpertStore::read(ExpertKey key, const Buf& into) const {
 Json CacheStats::json() const {
     return {{"hits",hits},{"misses",misses},{"evictions",evictions},{"application_read_bytes",bytes},
         {"ready_hits",ready_hits},{"loading_joins",loading_joins},
+        {"prefetches",prefetches},{"prefetch_claims",prefetch_claims},{"prefetch_unclaimed",prefetch_unclaimed},
+        {"prefetch_promotions",prefetch_promotions},
         {"hit_rate",hits+misses ? double(hits)/double(hits+misses) : 0.0},
         {"layer_hits",layer_hits},{"layer_misses",layer_misses}};
 }
@@ -515,6 +529,7 @@ struct ExpertCache::Entry {
     std::shared_ptr<ReadTiming> timing=std::make_shared<ReadTiming>();
     unsigned pins = 0;
     bool referenced = true;
+    bool prefetched = false; // Loaded speculatively and not yet claimed by demand.
     unsigned queue = 0; // 0 unlisted, 1 probation, 2 protected.
     Entry *previous = nullptr, *next = nullptr;
 };
@@ -592,27 +607,57 @@ ExpertCache::ExpertCache(size_t slots, Allocator allocator, ReadPool& reads,
     (void)cache_policy_name(policy_);
 }
 ExpertCache::~ExpertCache() { reads_.drain(); }
+void ExpertCache::place(size_t slot,const std::shared_ptr<Entry>& e) {
+    auto& old=slots_[slot];
+    if (old) {
+        if(old->prefetched) ++stats_.prefetch_unclaimed;
+        unlink(old.get());lookup_.erase(old->key.value());++stats_.evictions;
+    }
+    old=e;lookup_[e->key.value()]=slot;
+}
+size_t ExpertCache::clock_victim() {
+    for (size_t trial=0;trial<slots_.size()*2+1;++trial) {
+        const size_t slot=hand_;hand_=(hand_+1)%slots_.size();
+        auto& old=slots_[slot];
+        if (old) {
+            if (old->pins) continue;
+            if (old->future.wait_for(std::chrono::seconds(0)) != std::future_status::ready) continue;
+            if (old->referenced) { old->referenced=false; continue; }
+        }
+        return slot;
+    }
+    return slots_.size();
+}
 ExpertCache::Lease ExpertCache::acquire(ExpertKey key) {
     if (key.layer >= Layers || key.expert >= Experts) throw std::out_of_range("invalid expert id");
     if (auto it=lookup_.find(key.value()); it!=lookup_.end()) {
         auto e=slots_[it->second]; touch(e.get()); ++stats_.hits; ++stats_.layer_hits[key.layer];
         const bool ready=e->future.wait_for(std::chrono::seconds(0))==std::future_status::ready;
         if(ready) ++stats_.ready_hits; else ++stats_.loading_joins;
+        if(e->prefetched) {
+            e->prefetched=false;++stats_.prefetch_claims;
+            if(!ready && reads_.promote(e->timing)) ++stats_.prefetch_promotions;
+        }
         return Lease(e,ready?1:2);
     }
     size_t selected=slots_.size();
     if(policy_==ExpertCachePolicy::SegmentedLRU && occupancy()==capacity()) {
         if(auto* victim=slru_victim()) selected=lookup_.at(victim->key.value());
-    } else for (size_t trial=0;trial<slots_.size()*2+1;++trial) {
-        const size_t slot=hand_;hand_=(hand_+1)%slots_.size();
-        auto& old=slots_[slot];
-        if (old) {
-            if(policy_==ExpertCachePolicy::SegmentedLRU) continue; // Fill free capacity first.
-            if (old->pins) continue;
-            if (old->future.wait_for(std::chrono::seconds(0)) != std::future_status::ready) continue;
-            if (old->referenced) { old->referenced=false; continue; }
+    } else if(policy_==ExpertCachePolicy::SegmentedLRU) {
+        // Fill free capacity first.
+        for (size_t trial=0;trial<slots_.size();++trial) {
+            const size_t slot=hand_;hand_=(hand_+1)%slots_.size();
+            if(!slots_[slot]) {selected=slot;break;}
         }
-        selected=slot;break;
+    } else selected=clock_victim();
+    while(selected==slots_.size() && policy_==ExpertCachePolicy::Clock) {
+        // Unclaimed guesses load without a lease. Wait for one to complete
+        // rather than failing an admission that would fit once it does.
+        auto it=std::find_if(slots_.begin(),slots_.end(),[](const auto& e){
+            return e && !e->pins && e->prefetched && e->future.wait_for(std::chrono::seconds(0))!=std::future_status::ready;});
+        if(it==slots_.end()) break;
+        reads_.promote((*it)->timing);(*it)->future.wait();
+        selected=clock_victim();
     }
     if(selected<slots_.size()) {
         auto& old=slots_[selected];
@@ -620,13 +665,31 @@ ExpertCache::Lease ExpertCache::acquire(ExpertKey key) {
         e->buffer=old ? old->buffer : allocator_(stride_);
         const auto loader=loader_; const auto buffer=e->buffer;
         e->future=reads_.submit([loader,key,buffer]{loader(key,buffer);},ReadPriority::Demand,e->timing);
-        if (old) {unlink(old.get());lookup_.erase(old->key.value());++stats_.evictions;}
-        old=e;lookup_[key.value()]=selected;
+        place(selected,e);
         if(policy_==ExpertCachePolicy::SegmentedLRU) link(e.get(),1);
         ++stats_.misses; ++stats_.layer_misses[key.layer]; stats_.bytes+=ExpertBytes;
         return Lease(e,0);
     }
     throw std::runtime_error("expert cache exhausted by outstanding leases; finish a batch before acquiring more");
+}
+bool ExpertCache::prefetch(ExpertKey key) {
+    if (key.layer >= Layers || key.expert >= Experts) throw std::out_of_range("invalid expert id");
+    if(policy_!=ExpertCachePolicy::Clock || lookup_.contains(key.value())) return false;
+    const auto selected=clock_victim();
+    if(selected==slots_.size()) return false;
+    auto e=std::make_shared<Entry>(); e->key=key;
+    // Unreferenced: an unclaimed speculative record is the next CLOCK victim.
+    e->referenced=false;e->prefetched=true;
+    e->buffer=slots_[selected] ? slots_[selected]->buffer : allocator_(stride_);
+    const auto loader=loader_; const auto buffer=e->buffer;
+    e->future=reads_.submit([loader,key,buffer]{loader(key,buffer);},ReadPriority::Future,e->timing);
+    place(selected,e);
+    ++stats_.prefetches; stats_.bytes+=ExpertBytes;
+    return true;
+}
+bool ExpertCache::queued_prefetch(ExpertKey key) {
+    const auto it=lookup_.find(key.value());
+    return it!=lookup_.end() && slots_[it->second]->prefetched && reads_.queued(slots_[it->second]->timing);
 }
 void ExpertCache::clear() {
     for (const auto& e:slots_) if (e && e->pins) throw std::logic_error("cannot clear leased expert slots");
@@ -662,15 +725,17 @@ void ExpertCache::resize(size_t slots) {
 }
 
 MemoryPlan MemoryPlan::make(uint64_t requested,uint64_t physical,uint64_t metal_limit,
-                            uint64_t resident,int context,int chunk,int panel,int layers,uint64_t kernel_scratch,bool double_pipeline,uint64_t decode_scratch,bool snapshot) {
+                            uint64_t resident,int context,int chunk,int panel,int layers,uint64_t kernel_scratch,bool double_pipeline,uint64_t decode_scratch,bool snapshot,
+                            uint32_t control_pages) {
     if (!requested || requested>22*GiB || context<1 || context>8192 || chunk<1 || chunk>256)
         throw std::invalid_argument("limits: memory <=22GiB, context 1..8192, chunk 1..256");
     if(panel!=0 && panel!=256 && panel!=512 && panel!=1024)
         throw std::invalid_argument("panel must be 0, 256, 512, or 1024");
     if(layers<1 || layers>Layers) throw std::invalid_argument("layers must be 1..48");
     if (physical<=8*GiB || !metal_limit) throw std::runtime_error("insufficient usable unified memory");
+    if(control_pages<1 || control_pages>2) throw std::invalid_argument("control pages must be 1..2");
     MemoryPlan p;
-    p.limit=std::min({requested,physical-8*GiB,metal_limit}); p.resident=resident;
+    p.limit=std::min({requested,physical-8*GiB,metal_limit}); p.resident=resident;p.runtime_control=16384ull*control_pages;
     // FP32 recurrent state and activations; KV is FP32 in the correctness path.
     const auto aligned=[](uint64_t n){return (n+16383)/16384*16384;};
     const auto attention_layers=uint64_t(layers/4),recurrent_layers=uint64_t(layers)-attention_layers;

@@ -1,6 +1,20 @@
 # ZeroCool: quality-preserving inference beyond RAM on a 32GB M1 Pro
 
-Current execution priority: the [200ms/token generation stage](qwen_decode_target_stage.md).
+Current execution priority: qualify the generation target reached by the
+[decode speed stage](qwen_decode_speed_stage.md) on the Q4 control.
+- **Measured so far.** 5.3–5.5 tokens/s after the short coding prompt. On the
+  2K/256 workload, 5.86 tokens/s in one clean run with enough memory for 1,977
+  expert slots.
+- **Mechanisms, now the defaults.** A GPU clock keep-warm, exact single-token
+  row kernels and next-layer expert prefetch. Every one keeps logits, routes
+  and state bit-identical.
+- **Still needed.** Repeated 2K/4K pairs, the 7K report and the sustained coding
+  workflow.
+- **Then.** Generation is SSD-bound. Next come bytes per token: fewer wasted
+  guesses, and more expert slots within the budget.
+
+The [200ms/token stage](qwen_decode_target_stage.md) records the investigation
+that preceded it.
 Current experimental work: [complete verifier cache-window traces](benchmarks/2026-09-19-horizon-cache/README.md).
 The [exact embedding storage screen](benchmarks/2026-09-18-streamed-mtp/README.md)
 now completes six fixed-priming numerical pairs and twelve exact cross-producer
@@ -440,6 +454,16 @@ Use one bounded scheduler with eight workers initially. Current dependencies
 outrank future reads. Reserve half the queue for demand, cap prefetch, and prevent
 large ngram lookups from filling the demand queue before routed experts.
 
+During generation, begin the next layer's reads before its router runs:
+- predict with the next layer's router on the current post-attention stream;
+- read the predicted records at future priority;
+- promote a guess once demand needs it.
+
+Prediction only warms the cache and never chooses which experts are computed.
+Keep the GPU clock up with a model-independent keep-warm queue while forwards
+run. The router boundaries otherwise leave it idling down between the short
+command groups of single-token decode.
+
 This applies PowerInfer's completion-to-task mechanism at expert granularity,
 without its model-specific neuron skipping or moved router.
 [Implementation](https://github.com/Tiiny-AI/PowerInfer/blob/8bd56d69906c9d2dba4d3bf6899763401e01a9a4/smallthinker/powerinfer/moe_sparse_pipeline/expert_cache.cpp#L119-L128)
@@ -683,7 +707,8 @@ reusable shared buffers, overlapped hit/miss work, and bounded resource lifetime
 Avoid serial duplicate read-ahead before worker submission. Use M1-compatible
 Metal rather than M5-only TensorOps. Adapt fusion, packed computation, and fewer
 intermediate dispatches to this artifact's affine format; IQ2/Q4_K kernels are
-not interchangeable. ds4 comparisons on larger Macs justify experiments, not
+not interchangeable. Measure kernels inside the decode loop or with the GPU held
+busy: tight benchmark loops run at a clock that bursty decode never reaches. ds4 comparisons on larger Macs justify experiments, not
 M1 performance claims. Preserve MIT/Apache notices when reusing code.
 
 Vision, extra models/backends, neuron pruning, training, speculative decoding,

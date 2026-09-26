@@ -17,6 +17,9 @@
 #include <CommonCrypto/CommonDigest.h>
 
 using namespace zerocool::engine;
+// The original kernels: per-row Q4 dispatch and serial route selection. Default
+// configuration now selects the exact row kernels and SIMD routing.
+KernelConfig reference_kernels() {KernelConfig c;c.q4_rows=false;c.route_selection="serial";return c;}
 TEST_CASE("pressure events coalesce throttle and never regrow capacity") {
     PressureInbox inbox;PressurePolicy p;
     inbox.publish(1);inbox.publish(0);inbox.publish(2);inbox.publish(1);
@@ -768,7 +771,7 @@ TEST_CASE("parallel routes preserve ties, exceptional scores and irregular token
         values[t*512+e]=v;
     }
     auto input=gpu.upload(values),ids=gpu.allocate(T*40),weights=gpu.allocate(T*40);
-    gpu.route(input,ids,weights,T);gpu.finish();
+    gpu.configure(reference_kernels());gpu.route(input,ids,weights,T);gpu.finish();
     for(uint32_t t=0;t<T;++t) {
         std::vector<int> cpu;
         for(int e=0;e<512;++e) if(values[t*512+e]>-INFINITY) cpu.push_back(e);
@@ -776,8 +779,7 @@ TEST_CASE("parallel routes preserve ties, exceptional scores and irregular token
         cpu.resize(10,-1);
         for(uint32_t j=0;j<10;++j) CHECK(reinterpret_cast<int*>(ids->data)[t*10+j]==cpu[j]);
     }
-    KernelConfig c;c.route_selection="simd";CHECK_THROWS(gpu.configure(c));
-    c.policy="candidate";gpu.configure(c);
+    KernelConfig c;CHECK(c.route_selection=="simd");CHECK_NOTHROW(gpu.configure(c));
     for(auto [offset,count]:std::array<std::pair<uint32_t,uint32_t>,5>{{{0,1},{1,7},{8,31},{39,97},{136,1}}}) {
         auto x=gpu.upload(std::span(values).subspan(offset*512,count*512));
         auto a=gpu.allocate(count*40),b=gpu.allocate(count*40);gpu.route(x,a,b,count);gpu.finish();
@@ -975,7 +977,7 @@ TEST_CASE("token tiles preserve packed Q4 Q8 arithmetic including gathered row t
         auto rows=gpu.allocate(T*4);
         for(uint32_t i=0;i<T;++i) reinterpret_cast<int*>(rows->data)[i]=int((T-i)%4);
         Linear l{{w},{s},{b},K,N,G,0,true,bits};
-        gpu.configure({});auto ref=gpu.linear(l,x,T),fp=gpu.linear(l,x,T,true);
+        gpu.configure(reference_kernels());auto ref=gpu.linear(l,x,T),fp=gpu.linear(l,x,T,true);
         auto fused=gpu.gated_linear(l,l,x,T),gathered=gpu.gated_linear(l,l,x,T,rows);gpu.finish();
         for(uint32_t tile:{2u,4u,8u}) {
             KernelConfig c;c.policy="candidate";c.token_tile=tile;gpu.configure(c);
@@ -991,12 +993,12 @@ TEST_CASE("token tiles preserve packed Q4 Q8 arithmetic including gathered row t
             auto r=gpu.linear(l,x,T),f=gpu.linear(l,x,T,true);gpu.finish();
             CHECK(std::memcmp(r->data,ref->data,r->bytes)==0);CHECK(std::memcmp(f->data,fp->data,f->bytes)==0);
         }
-        gpu.configure({});auto one=gpu.linear(l,x,1),pair=gpu.gated_linear(l,l,x,1,rows);gpu.finish();
+        gpu.configure(reference_kernels());auto one=gpu.linear(l,x,1),pair=gpu.gated_linear(l,l,x,1,rows);gpu.finish();
         KernelConfig c;c.policy="candidate";c.affine_rows=2;c.gate_pair=true;gpu.configure(c);
         auto r=gpu.linear(l,x,1),g=gpu.gated_linear(l,l,x,1,rows);gpu.finish();
         CHECK(std::memcmp(r->data,one->data,r->bytes)==0);CHECK(std::memcmp(g->data,pair->data,g->bytes)==0);
         if(bits==8) {
-            gpu.configure({});auto fp_one=gpu.linear(l,x,1,true);gpu.finish();
+            gpu.configure(reference_kernels());auto fp_one=gpu.linear(l,x,1,true);gpu.finish();
             for(uint32_t output_rows:{2u,4u,8u}) {
                 c={};c.policy="candidate";c.q8_decode_rows=output_rows;gpu.configure(c);
                 auto packed=gpu.linear(l,x,1),packed_fp=gpu.linear(l,x,1,true);gpu.finish();
@@ -1095,6 +1097,59 @@ TEST_CASE("direct expert outputs preserve all destinations and reject aliasing")
     CHECK_THROWS(gpu.linear_into(expert_linear(record,2),input,1,{out,out->bytes-4}));
     CHECK_THROWS(gpu.linear_into(expert_linear(record,2),input,1,{record}));
 }
+TEST_CASE("single-token row kernels match the reference kernels bit for bit") {
+    Metal gpu;std::mt19937 rng(17);
+    auto bf=[](float v){uint32_t u=std::bit_cast<uint32_t>(v);u=(u+0x7fff+((u>>16)&1))&0xffff0000u;return uint16_t(u>>16);};
+    const std::array<std::pair<uint32_t,uint32_t>,9> shapes={{{2560,640},{640,2560},{2560,10240},{6144,2560},{10240,320},{320,10240},{2560,512},{512,1024},{704,2560}}};
+    for(auto [K,N]:shapes) {
+        auto w=gpu.allocate(uint64_t(K)*N/2),s=gpu.allocate(uint64_t(K/64)*N*2),b=gpu.allocate(s->bytes);
+        auto uw=gpu.allocate(w->bytes),us=gpu.allocate(s->bytes),ub=gpu.allocate(s->bytes);
+        for(auto buffer:{w,uw}) for(size_t i=0;i<buffer->bytes/4;++i) reinterpret_cast<uint32_t*>(buffer->data)[i]=rng();
+        std::normal_distribution<float> normal(0,1);
+        for(auto [scale,bias]:{std::pair{s,b},std::pair{us,ub}}) for(size_t i=0;i<scale->bytes/2;++i) {
+            reinterpret_cast<uint16_t*>(scale->data)[i]=bf(0.01f*std::abs(normal(rng))+1e-4f);
+            reinterpret_cast<uint16_t*>(bias->data)[i]=bf(-0.08f*std::abs(normal(rng)));
+        }
+        auto x=gpu.zeros(K);for(auto& v:x->floats()) v=round_bf16(0.7f*normal(rng));
+        const Linear l{{w},{s},{b},K,N,64,0,true,4},u{{uw},{us},{ub},K,N,64,0,true,4};
+        const bool gate=K%512==0;
+        gpu.configure(reference_kernels());
+        auto r=gpu.linear(l,x,1),rf=gpu.linear(l,x,1,true);Buf rg=gate?gpu.gated_linear(l,u,x,1):Buf{};gpu.finish();
+        gpu.configure({});const auto before=gpu.statistics()["kernel_dispatches"];
+        auto c=gpu.linear(l,x,1),cf=gpu.linear(l,x,1,true);Buf cg=gate?gpu.gated_linear(l,u,x,1):Buf{};gpu.finish();
+        const auto after=gpu.statistics()["kernel_dispatches"];
+        CHECK(std::memcmp(r->data,c->data,r->bytes)==0);
+        CHECK(std::memcmp(rf->data,cf->data,rf->bytes)==0); // FP32 sums before output rounding
+        if(gate) {CHECK(std::memcmp(rg->data,cg->data,rg->bytes)==0);CHECK(after.value("q4_gate_mv_r2",0u)==before.value("q4_gate_mv_r2",0u)+1);}
+        CHECK(after.value("q4_mm",0u)==before.value("q4_mm",0u));
+    }
+    // Small plain projections: exact plain_mm lane chains through threadgroup memory.
+    for(auto [K,N]:std::array<std::pair<uint32_t,uint32_t>,4>{{{10240,4},{2560,1},{2560,48},{2560,64}}}) {
+        auto w=gpu.allocate(uint64_t(K)*N*2);std::normal_distribution<float> normal(0,1);
+        for(size_t i=0;i<uint64_t(K)*N;++i) reinterpret_cast<uint16_t*>(w->data)[i]=bf(0.02f*normal(rng));
+        auto x=gpu.zeros(K);for(auto& v:x->floats()) v=round_bf16(normal(rng));
+        Linear l;l.weight={w};l.input=K;l.output=N;l.dtype=0;
+        gpu.configure(reference_kernels());auto r=gpu.linear(l,x,1,true);gpu.finish();
+        gpu.configure({});auto c=gpu.linear(l,x,1,true);gpu.finish();
+        CHECK(std::memcmp(r->data,c->data,r->bytes)==0);
+    }
+    // Grouped RMS norm, including a group that is not a multiple of 128.
+    for(auto [D,width,tokens]:std::array<std::tuple<uint32_t,uint32_t,uint32_t>,4>{{{2560,10240,1},{2560,10240,3},{512,1024,2},{320,640,1}}}) {
+        auto x=gpu.zeros(uint64_t(width)*tokens),w=gpu.allocate(width*2);std::normal_distribution<float> normal(0,1);
+        for(auto& v:x->floats()) v=round_bf16(3*normal(rng));
+        for(uint32_t i=0;i<width;++i) reinterpret_cast<uint16_t*>(w->data)[i]=bf(1+0.1f*normal(rng));
+        auto a=gpu.allocate(x->bytes),b=gpu.allocate(x->bytes);const uint32_t threads=32*((D+127)/128);
+        gpu.dispatch("norm",{{x},{w},{a}},{D,width,tokens,0,1},tokens*(width/D)*32);
+        gpu.dispatch("norm_wide",{{x},{w},{b}},{D,width,tokens,0,1},tokens*(width/D)*threads,1,1,threads);gpu.finish();
+        CHECK(std::memcmp(a->data,b->data,a->bytes)==0);
+    }
+    // An explicitly forced output-row variant keeps its own kernel.
+    KernelConfig forced;forced.policy="candidate";forced.affine_rows=2;gpu.configure(forced);
+    auto w=gpu.allocate(2560ull*640/2),s=gpu.zeros(2560/64*640/2),b=gpu.zeros(2560/64*640/2),x=gpu.zeros(2560);
+    const Linear l{{w},{s},{b},2560,640,64,0,true,4};
+    const auto before=gpu.statistics()["kernel_dispatches"];gpu.linear(l,x,1);gpu.finish();
+    CHECK(gpu.statistics()["kernel_dispatches"].value("q4_mm_r2_t1",0u)==before.value("q4_mm_r2_t1",0u)+1);
+}
 TEST_CASE("packed Q4 decode selects exact shapes and preserves fallback paths") {
     Metal gpu;KernelConfig config;config.q4_decode="packed-r2";CHECK_THROWS(config.validate());
     config.policy="candidate";CHECK_NOTHROW(config.validate());config.q4_decode="unknown";CHECK_THROWS(config.validate());
@@ -1105,7 +1160,7 @@ TEST_CASE("packed Q4 decode selects exact shapes and preserves fallback paths") 
     input->floats()[0]=1;input->floats()[1]=1.0f/512;input->floats()[2]=-1;
     const auto gate=expert_linear(record,0),up=expert_linear(record,1),down=expert_linear(record,2);
     for(const auto phase:{"unspecified","prefill","append","decode"}) for(uint32_t n:{1u,2u}) for(bool gathered:{false,true}) {
-        gpu.request_phase(phase);gpu.configure({});
+        gpu.request_phase(phase);gpu.configure(reference_kernels());
         auto ref=gpu.gated_linear(gate,up,input,n,gathered?rows:Buf{});auto output=gpu.linear(down,ref,n,true);gpu.finish();
         gpu.configure(config);const auto before=gpu.statistics()["kernel_dispatches"];
         auto candidate=gpu.gated_linear(gate,up,input,n,gathered?rows:Buf{});auto actual=gpu.linear(down,candidate,n,true);gpu.finish();
@@ -1124,7 +1179,7 @@ TEST_CASE("packed Q4 decode selects exact shapes and preserves fallback paths") 
         std::fill_n(reinterpret_cast<uint16_t*>(scale->data),scale->bytes/2,0x3b80);
         Linear l{{weight},{scale},{bias},width,Hidden,group,0,true,bits};auto x=gpu.zeros(width);
         std::fill(x->floats().begin(),x->floats().end(),.125f);
-        gpu.configure({});auto reference=gpu.linear(l,x,1);gpu.finish();gpu.configure(config);
+        gpu.configure(reference_kernels());auto reference=gpu.linear(l,x,1);gpu.finish();gpu.configure(config);
         const auto before=gpu.statistics()["kernel_dispatches"].value("q4_down_packed_r2",0u);
         auto actual=gpu.linear(l,x,1);gpu.finish();CHECK(std::memcmp(actual->data,reference->data,actual->bytes)==0);
         CHECK(gpu.statistics()["kernel_dispatches"].value("q4_down_packed_r2",0u)-before==uint32_t(bits==4 && group==64 && width==640));
@@ -1218,7 +1273,11 @@ TEST_CASE("two scratch workspaces wait before reuse and preserve persistent allo
     gpu.begin_scratch(0,65536);CHECK_THROWS(gpu.allocate(65537));gpu.end_scratch();
 }
 TEST_CASE("single-token scratch configuration keeps unsupported schedules outside the experiment") {
-    Options options;CHECK(options.decode_scratch=="none");CHECK_NOTHROW(options.validate_decode_scratch());
+    Options options;CHECK(options.decode_scratch=="auto");
+    {auto resolved=options;resolved.resolve();CHECK(resolved.decode_scratch=="reuse");CHECK(resolved.expert_prefetch=="next-hyper");}
+    {auto other=options;other.expert_tail="overlap";other.resolve();CHECK(other.decode_scratch=="none");}
+    {auto other=options;other.cache_policy="slru";other.resolve();CHECK(other.expert_prefetch=="off");}
+    options.decode_scratch="none";CHECK_NOTHROW(options.validate_decode_scratch());
     options.decode_scratch="reuse";CHECK_NOTHROW(options.validate_decode_scratch());
     for(int change=0;change<8;++change) {
         auto bad=options;

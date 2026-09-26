@@ -156,6 +156,10 @@ public:
     ~ReadPool();
     std::shared_future<void> submit(std::function<void()> work,
         ReadPriority priority = ReadPriority::Demand, std::shared_ptr<ReadTiming> timing = {});
+    // Move a queued future-priority task, identified by its timing record, to
+    // the back of the demand queue. A started or finished task is unaffected.
+    bool promote(const std::shared_ptr<ReadTiming>& timing);
+    bool queued(const std::shared_ptr<ReadTiming>& timing); // Still waiting in the future queue.
     void drain();
     std::shared_ptr<CompletionEvents> events() const { return events_; }
 private:
@@ -189,6 +193,9 @@ private:
 struct CacheStats {
     uint64_t hits = 0, misses = 0, evictions = 0, bytes = 0;
     uint64_t ready_hits = 0, loading_joins = 0;
+    // Speculative reads: issued, later claimed by demand, evicted unclaimed,
+    // and claimed while still queued (moved to demand priority).
+    uint64_t prefetches = 0, prefetch_claims = 0, prefetch_unclaimed = 0, prefetch_promotions = 0;
     std::array<uint64_t, Layers> layer_hits{}, layer_misses{};
     Json json() const;
 };
@@ -225,6 +232,12 @@ public:
                 uint64_t stride = ExpertStride, ExpertCachePolicy policy = ExpertCachePolicy::Clock);
     ~ExpertCache();
     Lease acquire(ExpertKey key);
+    // Speculatively load an absent expert at future priority into an unleased,
+    // completed, unreferenced slot. Never evicts a leased or loading entry and
+    // never changes which experts are computed; returns false when skipped.
+    bool prefetch(ExpertKey key);
+    // Diagnostic: an unclaimed speculative read that has not started yet.
+    bool queued_prefetch(ExpertKey key);
     bool ready(ExpertKey key) const;
     void clear();
     void resize(size_t slots);
@@ -238,6 +251,8 @@ private:
     void touch(Entry* entry);
     void demote();
     Entry* slru_victim() const;
+    size_t clock_victim();
+    void place(size_t slot, const std::shared_ptr<Entry>& entry);
     std::vector<std::shared_ptr<Entry>> slots_;
     std::unordered_map<uint64_t, size_t> lookup_;
     size_t hand_ = 0;
@@ -258,7 +273,9 @@ struct MemoryPlan {
     uint64_t ngram = 64 * MiB, reserve = GiB, experts = 0;
     uint64_t panel_scratch = 0, kernel_scratch = 0;
     uint64_t pipeline_scratch = 0, snapshot = 0;
-    uint64_t runtime_control = 16384; // One aligned GPU status allocation, all configurations.
+    // Aligned GPU control allocations: the sparse status word, plus the clock
+    // keep-warm sink when that is enabled.
+    uint64_t runtime_control = 16384;
     uint32_t panel_tokens = 0;
     size_t slots = 0;
     void cap_experts(size_t count);
@@ -266,7 +283,8 @@ struct MemoryPlan {
     static MemoryPlan make(uint64_t requested, uint64_t physical,
                            uint64_t metal_limit, uint64_t resident,
                            int context, int chunk, int panel = 0, int layers = Layers, uint64_t kernel_scratch = 0,
-                           bool double_pipeline = false, uint64_t decode_scratch = 0, bool snapshot = false);
+                           bool double_pipeline = false, uint64_t decode_scratch = 0, bool snapshot = false,
+                           uint32_t control_pages = 1);
     Json json() const;
 };
 

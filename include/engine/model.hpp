@@ -21,10 +21,22 @@ struct Options {
     bool completion_pipeline = true;
     std::string expert_tail="wait"; // Explicit single-token encode-ahead experiment.
     std::string decode_submission="immediate"; // Benchmark-only coalesced read experiment.
-    std::string decode_scratch="none"; // Explicit bounded single-token temporary reuse.
+    // Bounded single-token temporary reuse; auto selects reuse whenever the
+    // schedule supports it (see resolve()).
+    std::string decode_scratch="auto";
     std::string memory_pressure_policy="observe"; // Benchmark experiment; no automatic regrowth.
+    // Single-token speculative expert reads for the next layer: off, next (its
+    // router on this layer's MLP input) or next-hyper (its router on its own
+    // MLP hyper-connection of this layer's post-attention stream). Reads only
+    // warm the cache; routes, experts and arithmetic are unchanged.
+    std::string expert_prefetch="auto"; // auto: next-hyper when supported.
+    int prefetch_depth=10; // Prefetch only the next router's top-N guesses; lower ranks miss more often.
+    void validate_expert_prefetch() const;
     void validate_decode_scratch() const;
     void validate_decode_submission() const;
+    // Resolve auto settings to the fastest supported choice for this schedule.
+    // Every choice keeps logits, routes and state bit-identical.
+    void resolve();
     std::filesystem::path dependency_trace;
     std::filesystem::path route_trace;
     int max_tokens = 256;
@@ -45,7 +57,11 @@ struct Options {
     // Developer fixture capture; invoked after data/GPU completion, never used by production CLI.
     std::function<void(ExpertKey,const Buf&,const Buf&,uint32_t,const std::string&,uint32_t)> expert_observer;
     std::string gpu_reference="off"; // Benchmark-only boundary instrumentation.
-    std::string residency="off", decode_path="reference", prefill_pipeline="serial", phase_memory="fixed";
+    bool gpu_warm=true; // Hold the GPU clock up during forwards; no arithmetic change.
+    // auto: core-cache where Metal residency sets exist. Registered buffers are
+    // kept resident for the GPU, which also keeps the system from compressing
+    // the trunk and expert cache during long ingestion.
+    std::string residency="auto", decode_path="reference", prefill_pipeline="serial", phase_memory="fixed";
     bool cached_token_replay=false;
     bool cached_compare=false;
     std::string cached_compare_axis="q8_decode_rows";
@@ -137,7 +153,7 @@ private:
     Buf conv(const Buf& x,Buf& state,const std::string& weight,uint32_t width,uint32_t tokens,uint32_t dilation);
     Buf gdn(const Buf& x,LayerState& state,int layer,uint32_t tokens);
     Buf attention(const Buf& x,LayerState& state,int layer,uint32_t tokens,uint32_t offset);
-    Buf moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* cancel);
+    Buf moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* cancel,const Buf& predict={});
     Buf ple(const Buf& x,const Buf& embedding,LayerState& state,uint32_t tokens);
     void trace(const std::string& name,const Buf& buffer);
     Options options_;
@@ -178,5 +194,8 @@ private:
     std::vector<int> tail_routes_;
     std::unique_ptr<RouteTrace> route_trace_;
     uint64_t trace_session_sequence_=0;
+    std::vector<int> predicted_,stale_;std::vector<bool> predicted_issued_;int predicted_layer_=-1;
+    uint64_t prefetch_predicted_=0,prefetch_correct_=0,prefetch_issued_=0,prefetch_stale_queued_=0;
+    std::array<uint64_t,TopK> prefetch_rank_issued_{},prefetch_rank_useful_{},prefetch_rank_correct_{};
 };
 } // namespace zerocool::engine

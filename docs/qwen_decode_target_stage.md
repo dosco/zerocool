@@ -1,5 +1,15 @@
 # Generation target: 200ms per token
 
+Status: reached in the [decode speed stage](qwen_decode_speed_stage.md). The
+missing time was largely a low GPU clock between decode's short command
+groups, plus reads that could not start before each layer's router. A GPU
+keep-warm, exact row kernels and next-layer prefetch are now defaults.
+- **Short prompt.** Q4 generation measures 5.3–5.5 tokens/s after the 72-token
+  prompt, about 185ms per token.
+- **2K prompt.** 5.86 tokens/s over 256 tokens in one clean run.
+
+The investigation below is kept as it was recorded.
+
 Continuation: [current-build implementation and experiment gates](qwen_stage200.md).
 The [submission/residency follow-up](benchmarks/2026-09-14-submission/README.md)
 confirms a 4.35% short-request gain, but misses the 20ms/token append gate and

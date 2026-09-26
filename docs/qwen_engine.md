@@ -3,6 +3,21 @@
 This is the specialized engine authorized in the September 2026 plan. It is
 experimental. The presence of all four commands does **not** mean that the
 numerical, coding-quality, or M1 performance acceptance gates have passed.
+
+The [decode speed stage](qwen_decode_speed_stage.md) changed the defaults:
+- a GPU clock keep-warm (`--gpu-warm`);
+- exact single-token row kernels (`--q4-rows`, `plain_mv`, `norm_wide`);
+- SIMD route selection;
+- next-hyper expert prefetch (`--expert-prefetch`, `--prefetch-depth`);
+- bounded decode scratch reuse (`--decode-scratch auto`);
+- core-plus-expert residency where Metal supports it (`--residency auto`),
+  which also removes the ingestion-time compression seen on 2K prompts.
+
+Each can be switched off, and none changes logits, routes or state; the
+full-model logits and all layer state match the previous defaults bit for bit.
+Q4 generation measured 5.3–5.5 tokens/s initially and 4.9 after the append in
+short screens at 850 expert slots, against 2.40/2.27 before. The history below
+predates this change.
 The latest [submission/residency follow-up](benchmarks/2026-09-14-submission/README.md)
 measured 4.35% lower short-conversation latency with core-plus-expert residency
 across five fresh alternating pairs (95% interval: 3.21–5.48% reduction).
@@ -347,6 +362,29 @@ Decoded ngram cache rows now hold BF16 values (the existing decoder already
 rounds to BF16), with an explicit allowance for index overhead. Duplicate rows,
 including queued ones in a lookup, share the same read and decoded result.
 
+Single-token forwards also insert speculative entries (next-layer prefetch).
+
+- A guess is issued only after every expert the current layer selected holds a
+  lease.
+- It takes a CLOCK victim by the same rules as demand, so it never evicts a
+  leased or loading slot.
+- It enters unreferenced.
+- A demand acquire that finds it still queued promotes its read to demand
+  priority.
+- An admission that finds only leased or loading slots waits for an unclaimed
+  guess to finish rather than failing.
+
+The cache reports prefetches, claims, unclaimed evictions and promotions
+separately from demand hits and misses. Prefetch requires CLOCK; `auto` turns it
+off under SLRU.
+
+Residency defaults to `auto`: core-plus-expert residency (`core-cache`) where
+Metal residency sets are available, otherwise `off`. Besides its small latency
+gain, it keeps the system from compressing the trunk and expert cache during
+long ingestion. The memory plan's `runtime_control_bytes` counts two 16KiB
+control pages when the GPU keep-warm is enabled: the sparse status word and the
+keep-warm sink.
+
 The fixed allocation budget is enforced at each Metal allocation. Process
 physical footprint, compressed memory, swap counters, and live/peak Metal
 allocations are also reported; the CPU/driver reserve is an estimate that
@@ -382,8 +420,18 @@ MLX 0.31.1 small-prefill arithmetic for this checkpoint. Keeping that geometry
 fixed avoids chunk-dependent routing arithmetic. Expert sums follow MLX's
 eight-part reduction: combine positions 0/8 and 1/9 before positions 2–7. Expert execution
 order can change with cache availability. Contributions are stored by
-selection position and reduced in a fixed order. There is no pruning,
-expert prediction, speculative decoding, or lossy storage rearrangement.
+selection position and reduced in a fixed order. The next-layer predictor only
+decides which expert records to read early; the experts that are computed are
+always the ones the router selects. There is no pruning, speculative decoding,
+or lossy storage rearrangement.
+
+Single-token Q4 projections use row kernels (`q4_mv_r{4,8}_w{8,16}`,
+`q4_gate_mv_r2`) by default. Small BF16 projections use `plain_mv`, and grouped
+RMS norms of 256 elements or more use `norm_wide`. Each keeps the reference
+kernel's lane partition, per-output expression order, BF16 boundaries and SIMD
+reduction, so outputs are bit-identical. `--q4-rows off` selects the reference
+kernels. Explicitly forced kernel variants (`--affine-rows`, `--gate-pair`,
+shape tables, `--q4-decode packed-r2`) keep their own kernels.
 
 Numerical agreement is checked separately from coding quality. Small
 operator checks cannot establish full-model agreement, and coherent text
@@ -395,7 +443,7 @@ passing one fixture is necessary but does not cover all contexts or sessions.
 
 | Path | Current behavior |
 |---|---|
-| One-token generation | Compact router readback, direct expert input, missing reads overlap available/shared GPU work |
+| One-token generation | Compact router readback, direct expert input, missing reads overlap available/shared GPU work, next layer's predicted experts read early |
 | Short append | Group selected token rows by expert; consume live hits first |
 | Large prefill | Default chunk-major forward pass, or explicitly requested layer-major panels |
 
@@ -408,8 +456,25 @@ reuse dependencies rather than after every kernel.
 
 This incorporates ds4's cache-lifetime, ordinary prefill-seeding, and bounded
 I/O lessons. It does not claim ds4's measured gains on another model and
-machine. Whole-layer lookahead and larger matrix tiling remain measured
-optimization candidates; they are not silently enabled.
+machine. Larger matrix tiling remains a measured optimization candidate and is
+not silently enabled.
+
+Next-layer expert prefetch is on by default (`--expert-prefetch auto` resolves
+to `next-hyper`).
+- **Predictor.** At each single-token router boundary, the next layer's router
+  runs on that layer's own MLP hyper-connection of the current post-attention
+  stream.
+- **Reads.** Its top guesses, up to `--prefetch-depth` (default 10), start
+  future-priority reads when not cached.
+- **Status.** The reads share the router's existing CPU boundary. `next`
+  selects the older predictor (the next router on this layer's MLP input), and
+  `off` disables prefetch.
+
+A second command queue, used only while forwards run, holds the GPU clock up
+(`--gpu-warm`, default on). It carries a single-SIMD-group integer loop with an
+accounted 16KiB sink. Decode's short, CPU-dependent command groups otherwise
+leave the GPU at a low performance state. Single-row expert contributions are
+written in place rather than through `scatter_experts`.
 
 The default expert executor admits at most 32 leases and two GPU groups. Readers
 and GPU callbacks publish completion events; the inference coordinator encodes
@@ -417,7 +482,8 @@ ready experts, reaps completed buffers/leases, and admits replacements without
 waiting for a whole batch. `--ready-group` accepts 1, 2, 4 (default), or 8.
 `--legacy-schedule` keeps the previous batch schedule available for comparisons.
 The one eight-worker read pool reserves half its queue for demand and always
-services queued demand before future ngram/prefetch work. Outstanding work is
+services queued demand before future ngram/prefetch work; a queued guess that
+demand needs is moved to the demand queue. Outstanding work is
 drained before cancellation can release its resources.
 
 `--dependency-trace FILE` appends bounded per-layer JSON records including actual

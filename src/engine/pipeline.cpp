@@ -12,6 +12,9 @@ void encode_expert_rows(Metal& gpu,const Buf& record,const Buf& input,const Buf&
         throw std::invalid_argument("invalid expert row encoding geometry");
     for(auto p:positions) if(p<0 || uint64_t(p)>=uint64_t(tokens)*TopK) throw std::invalid_argument("expert destination outside input");
     auto ints=[&](std::span<const int> values) {auto b=gpu.allocate(values.size_bytes());std::memcpy(b->data,values.data(),values.size_bytes());return b;};
+    // Row kernels write a single row's contribution in place: the same bytes
+    // the scatter copy would place there.
+    direct=direct || gpu.direct_rows();
     for(size_t at=0;at<positions.size();at+=chunk) {
         if(cancel && cancel->load()) throw std::runtime_error("generation cancelled");
         const auto pos=positions.subspan(at,std::min<size_t>(chunk,positions.size()-at));
@@ -134,7 +137,8 @@ Json ExpertTail::finish() {
 Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
                      ReadPool& reads, Metal& gpu, size_t group_size,
                      const std::function<void(ExpertKey,const Buf&)>& encode,
-                     const std::atomic<bool>* cancel, bool detailed,const EncodeReadyGroup& encode_group,ExpertTail* tail,bool coalesce_reads) {
+                     const std::atomic<bool>* cancel, bool detailed,const EncodeReadyGroup& encode_group,ExpertTail* tail,bool coalesce_reads,
+                     const std::function<void()>& admitted) {
     if(group_size!=1 && group_size!=2 && group_size!=4 && group_size!=8)
         throw std::invalid_argument("expert group size must be 1, 2, 4, or 8");
     if(tail && tail->pending()) throw std::logic_error("previous expert tail must drain before admission");
@@ -149,6 +153,7 @@ Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
     auto& ready_delay=state->ready_delay;auto& waits=state->waits;auto& wait_ns=state->wait_ns;
     const auto events=reads.events();gpu.completion_events(events);
     const auto window=std::min<size_t>(32,cache.capacity());
+    bool announced=!admitted;
     try {
         while(next<selected.size() || !waiting.empty() || !groups.empty()) {
             const auto ticket=events->ticket();
@@ -159,6 +164,7 @@ Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
                 waiting.push_back({cache.acquire(selected[next++]),monotonic_ns(),0});++leased;
                 peak_leases=std::max(peak_leases,leased);progress=true;
             }
+            if(!announced && next==selected.size()) {announced=true;admitted();}
             // Single-token experiment: launch the initial ready/shared work,
             // then assemble remaining selected experts into one command group.
             // Every read was admitted above; no completion is needed to admit

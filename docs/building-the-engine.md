@@ -6,10 +6,11 @@ like it. It covers the machine, the model architecture, the design that follows
 from putting those two together, the optimizations that were tried, and what the
 measurements actually showed.
 
-**On the numbers.** Generation speed has gone from 1.75 tokens/s on the first
-working build to a best measured 4.37 tokens/s, with a typical recent figure
-near 3.8 initially and 3.3 after an append. The 5 tokens/s target has not been
-reached and remains an open gate. Where this document gives a number, it is a
+**On the numbers.** Generation has gone from 1.75 tokens/s on the first
+working build to 5.3–5.5 tokens/s after a short prompt, and 4.9 after an
+append, with the current defaults. One clean 2K/256 run measured 5.86 tokens/s
+(section 10). The 5 tokens/s gate is defined over repeated 2K and 4K runs and
+remains open until those are qualified. Where this document gives a number, it is a
 measured one with its conditions; where it gives a target, it says so. That
 distinction is the most transferable habit in the project, so it is kept here.
 
@@ -105,12 +106,29 @@ explains why, rather than running into swap. No code raises macOS wired-memory
 limits, because a program that quietly reconfigures the machine it runs on
 cannot produce an honest measurement.
 
-**One device, one command queue.** The engine wraps a single `MTLDevice` and a
-single `MTLCommandQueue`; the expert executor keeps at most two GPU groups in
-flight against it. Dispatching is cheap; the expensive act is waiting. So the rule is: *encode
+**One device, one work queue.** The engine wraps a single `MTLDevice`, and all
+model work goes through a single `MTLCommandQueue`; the expert executor keeps at
+most two GPU groups in flight against it. Dispatching is cheap; the expensive act is waiting. So the rule is: *encode
 freely, wait only at real dependencies.* Those dependencies are routing (the CPU
 must read which experts were selected), sparse selection, and any point where a
 buffer is about to be reused. Not after every kernel.
+
+**The GPU clock follows the shape of the work.** Single-token decode cannot
+avoid its waits: every layer's router result has to reach the CPU before that
+layer's experts can be chosen and read. That is 48 CPU dependencies per token,
+plus read and completion waits. The GPU therefore sees a long stream of short
+command groups separated by idle gaps, and Apple's performance controller treats
+that as a light load and holds a low clock.
+
+The effect is large and easy to miss. The same kernels ran about three times
+slower inside the engine than in a benchmark loop. One 14.7MB projection took
+363µs dispatched alone per command buffer and 108–119µs once the GPU had
+sustained work, and adding gaps between dispatches changed nothing further. The
+engine therefore runs a second queue that exists only to hold the clock: while a
+forward has started within the last 250ms, it keeps one 32-thread SIMD group
+spinning on dependent integer arithmetic. It reads no model data. That halved
+whole-token GPU time. Any kernel timing taken in a tight loop describes a faster
+GPU than the one decode actually gets.
 
 **Completion, not submission, is what releases a resource.** A GPU buffer
 remains in use until its command group completes; a cache slot cannot be
@@ -220,8 +238,12 @@ Around that sit three smaller decisions that each earned their place:
   inconclusive results precisely because the first reads were served from the
   OS cache.
 - **Eight persistent I/O workers**, with **half the queue reserved for demand**.
-  Speculative ngram prefetch must never delay a read that the GPU is currently
-  waiting on. Queued demand is always serviced first.
+  Speculative ngram and expert prefetch must never delay a read that the GPU is
+  currently waiting on. Queued demand is always serviced first, and a guess that
+  demand turns out to need is moved to the demand queue. Sixteen workers
+  measured the same as eight once the SSD was saturated. Splitting one expert
+  read across workers did not help either: the controller already parallelizes
+  a lone 2.76MB read, which takes about 0.9ms.
 - **Page-aligned coalescing.** Requests that begin on the same 4KiB page merge
   into one bounded range, while a lone row still reads only its 100 bytes.
 
@@ -249,6 +271,23 @@ If you build one of these, write the ownership model before the replacement
 policy, and test it adversarially. A hit-rate bug costs you speed; an ownership
 bug costs you correctness in a way that looks like the model being bad.
 
+Prefetch (section 7) adds a fourth kind of entry: a **speculative** record that
+is loading but has no lease. Its rules follow from the ones above:
+
+- A guess is issued only after every expert the current layer selected already
+  holds a lease, so it can never evict a hit that is about to be used.
+- It takes a victim by the same rules as demand, so it never evicts a leased or
+  loading slot.
+- It enters CLOCK unreferenced, so a guess nobody claims is the next thing
+  evicted.
+- A demand acquire that finds its expert still queued as a guess promotes that
+  read to demand priority.
+- An admission that finds only leased or loading slots waits for an unclaimed
+  guess to finish instead of failing.
+
+Claims, unclaimed evictions and promotions are counted separately from demand
+hits and misses, so the cost of guessing stays visible.
+
 ## 7. Scheduling: three different problems wearing one interface
 
 A request is not one workload. The engine recognizes three shapes and schedules
@@ -256,7 +295,7 @@ each differently:
 
 | Shape | Situation | Strategy |
 |---|---|---|
-| **Single-token generation** | Ordinary decoding | Compact router readback, feed expert input directly, overlap missing reads with available and shared GPU work |
+| **Single-token generation** | Ordinary decoding | Compact router readback, feed expert input directly, overlap missing reads with available and shared GPU work, and start reads for the next layer's predicted experts |
 | **Short append** (≤32 tokens) | Continuing a conversation | Group the token rows by expert; consume live cache hits *before* admitting misses, so a miss cannot evict a hit you are about to use |
 | **Large prefill** | First message | Chunk-major by default, or explicitly requested layer-major "panels" |
 
@@ -268,6 +307,32 @@ That leaves the GPU idle for the slowest read in every batch. Instead:
 - Readers and GPU completion callbacks publish events.
 - The coordinator encodes experts *as they become ready*, reaps finished
   buffers, and admits replacements without waiting for a batch boundary.
+
+**Cross-layer prefetch** attacks the dependency that completion-driven
+scheduling cannot remove. A layer's reads can start only after its own router
+runs. With a few thousand cache slots, that meant only four or five misses in
+flight per layer, an SSD far from saturation, and a GPU idle on every miss.
+
+So at each router boundary the engine also runs the *next* layer's router, on
+that layer's own MLP hyper-connection of the current post-attention stream. That
+skips only the current layer's expert output and the next layer's attention. It
+then starts future-priority reads for the predicted experts that are not cached.
+This input matched 77% of the next layer's actual top ten. Feeding the next
+router this layer's MLP input instead matched 63%. Precision falls with rank,
+from 99% for the first guess to 44% for the tenth. Demand misses fell from 263
+to 86 per token.
+
+A guess only warms the cache. The experts that are computed are still exactly
+the ones the real router picks, so a wrong guess costs bandwidth and one slot,
+never correctness. Once the SSD is saturated, though, every unclaimed guess is
+bytes a demand read could have used, so depth and precision matter. Depths of
+6, 8 and 10 were screened, and 10 stays the default.
+
+The same pressure explains a failed idea. An offline replay of captured routes
+predicted about 10% fewer demand misses from per-layer LFU with equal quotas.
+With prefetch running, it did worse: each layer's guesses evicted that layer's
+own hot experts from a quota of about 18 slots. Global CLOCK takes prefetch
+victims from the globally coldest entries.
 
 The **panel** idea is worth explaining because it targets a different cost.
 Normally the forward pass walks chunk by chunk through all 48 layers, so a long
@@ -296,18 +361,36 @@ decisions rather than plumbing:
   score tiles.
 - **A SIMD router** preserving top-ten identity, tie order and softmax
   arithmetic exactly.
+- **Single-token row kernels.** The reference Q4 matrix-vector kernel gives each
+  output row its own SIMD group, so every row reloads the whole input vector and
+  recomputes its BF16 input sums. Cache traffic for the input was about eight
+  times the weight traffic. The row kernels load each lane's input chunk and bias
+  sum once per block and apply them to four or eight rows (two for fused
+  gate/up). The per-row arithmetic is untouched. Two latency-bound shapes get
+  the same treatment:
+  - `plain_mv`, for BF16 projections with four or fewer rows, stages its operands
+    in threadgroup memory. Previously a 10,240-long serial chain paid one memory
+    round trip per step.
+  - `norm_wide` spreads the grouped RMS norm over twenty SIMD groups instead of
+    four.
 
-Now the part that is usually left out of write-ups. Several of these were
-measured and **rejected**:
+Now the part that is usually left out of write-ups: the outcome of each measured
+change, including those **rejected**:
 
 | Change | Isolated result | End-to-end result | Outcome |
 |---|---|---|---|
-| Packed Q4 decode kernels | 43–47% less expert GPU time, byte-exact on 64 real cases | 1.98% *slower* for whole conversations | Rejected; default stays `reference` |
+| Packed Q4 decode kernels | 43–47% less expert GPU time, byte-exact on 64 real cases | 1.98% *slower* for whole conversations | Rejected at the time |
 | Coalescing expert reads | — | Failed its speed gate | Rejected |
 | Q8 resident load-ahead | — | Failed | Rejected |
 | Larger expert cache (1460 vs 1072 slots) | 1.77% lower conversation latency | Directional only, missed the stage gate | Not promoted |
-| SIMD router selection | — | 1.85–2.00% lower conversation time | Promoted behind a flag |
-| Core-plus-expert residency | — | 4.35% lower latency (95% CI 3.21–5.48%) | Promoted behind a flag |
+| SIMD router selection | — | 1.85–2.00% lower conversation time | Default |
+| Core-plus-expert residency | — | 4.35% lower latency (95% CI 3.21–5.48%); removes ingestion compression on 2K prompts | Default where Metal supports residency sets |
+| GPU clock keep-warm | Same projection 363µs → 108–119µs | 3.37 → 4.88 tokens/s; GPU time 200 → 93ms/token | Default |
+| Single-token row kernels | 2.6–3.1× on resident projections, ~2× experts; bit-identical in raw FP32 | GPU time 93 → 66ms/token with the clock held | Default |
+| Next-layer expert prefetch | 77% of next-layer experts predicted | Demand misses 263 → 86 per token | Default |
+| Splitting one expert read across workers | A lone read already takes ~0.9ms | No change | Rejected |
+| Sixteen I/O workers | — | No change once the SSD is saturated | Not adopted |
+| Per-layer LFU replacement | ~10% fewer misses in replay, without prefetch | 88 → 113 demand misses per token with prefetch; slower | Rejected |
 
 The packed Q4 line is the most instructive result in the project. A kernel that
 was nearly twice as fast in isolation made the whole system slower. The reason
@@ -315,12 +398,23 @@ is visible in a command trace: **72–77% of expert-bearing GPU groups contain
 exactly one expert.** Decode is a long sequence of tiny GPU groups, each waiting
 on a read. Making the arithmetic inside those groups faster optimizes a part of
 the token that was never the constraint, while the change's effect on
-occupancy, register pressure and scheduling costs more than it saves.
+occupancy, register pressure and scheduling costs more than it saves. The clock
+finding in section 3 may be part of the story: isolated benchmarks ran at a
+clock that decode never reached. The packed kernels were not re-measured with
+the clock held; the row kernels that replaced them were.
 
 A per-token breakdown from a clean diagnostic run puts it plainly: GPU execution
 occupies about 126–145ms per token, and *pending-read idle* accounts for another
 58–62ms. The largest mixed GPU class contains resident work before routing —
 that is, work the engine does while waiting for expert reads to arrive.
+
+**The GPU clock is part of the whole request.** Much of that 126–145ms turned out
+not to be arithmetic at all, but the low clock described in section 3. A
+per-dispatch profile put single-token GPU work at about ten times the
+memory-bandwidth bound for the ~3.9GB a token reads. Kernels timed in place were
+about three times slower than the same kernels timed alone. Only after the clock
+was held did kernel structure pay off end to end: the row kernels then took
+whole-token GPU time from about 93 to 66ms.
 
 **The lesson: measure the whole request.** An isolated kernel benchmark, a
 cached replay with no SSD traffic, or a profiled run with instrumentation
@@ -358,6 +452,22 @@ The rule the project settled on: **every optimization must preserve logits,
 routes and persistent state bit for bit within an artifact.** An optimization
 that changes numerics is a different model, and must be qualified as one.
 
+That rule still leaves room for kernel work. What must not change is the
+arithmetic each output sees, not which thread computes it. A row kernel keeps
+the reference kernel's lane partition, including its rule for the lane width
+(sixteen when K is a multiple of 512, else eight). It also keeps each row's
+expression order, BF16 boundaries and final SIMD reduction. Only the loads are
+shared.
+
+Proving it takes two levels, and the first has a trap. Rounding outputs to BF16
+hides most arithmetic differences. A deliberately wrong lane width changed only
+one to three of 10,240 rounded outputs, yet it changed nearly every raw sum. So
+operator checks compare raw FP32 sums, before output rounding, on every shape
+the dispatch admits. Then the whole model runs one token at a time (`--chunk 1`,
+so every token takes the single-token path) and compares all 248,320 logits and
+every layer's recurrent, convolution and attention state against the reference
+configuration.
+
 ## 10. What actually moved the number
 
 The measured arc, each figure with its conditions:
@@ -370,9 +480,15 @@ The measured arc, each figure with its conditions:
 | Submission/residency follow-up | 3.80 tok/s | 3.31 tok/s | Five fresh alternating pairs |
 | Cache capacity 1072 slots | 4.11 tok/s | 3.69 tok/s | Two clean pairs, 12GiB |
 | Cache capacity 1460 slots | 4.37 tok/s | 3.87 tok/s | Same, directional screen only |
+| Previous defaults, Q4, 850 slots | 2.40 tok/s | 2.27 tok/s | 96/48 outputs, busy host, ~7GiB admitted |
+| GPU keep-warm, row kernels, next-layer prefetch (new defaults) | 5.29–5.41 tok/s | 4.89 tok/s | Same conditions, identical tokens |
+| New defaults, 2K prompt | 5.86 tok/s | — | 2K/256, 1,977 slots, one clean run; 4.89 at 900 slots |
 
-Target: 5 tokens/s. **Not reached.** First-token latency on a 2K prompt is still
-measured in minutes, which is a separate open problem from generation speed.
+Target: 5 tokens/s. Measured in short screens and in a clean 2K run. It is not
+yet qualified by repeated 2K/4K runs, and on this laptop it depends on how much
+memory other applications leave for the expert cache. First-token latency on a
+2K prompt is still measured in minutes (about 194 seconds). That is a separate
+open problem from generation speed.
 
 Ranked by what produced those gains:
 
@@ -385,7 +501,11 @@ Ranked by what produced those gains:
 4. **Hit-ordered short appends and panels**, which cut how many reads are needed
    rather than how fast they are.
 5. **Kernel-level arithmetic**, which produced large isolated improvements and
-   small or negative end-to-end ones.
+   small or negative end-to-end ones, until the GPU clock was held up. Then
+   exact row kernels cut whole-token GPU time by about a third.
+6. **Holding the GPU clock and prefetching the next layer's experts**, which
+   together took generation past 5 tokens/s in short screens. Both left every
+   byte of the computation unchanged.
 
 That ordering is the opposite of where intuition sends most people, and it is
 the single most useful thing to take from this project.
@@ -410,16 +530,26 @@ In order:
    evaluate an optimization you cannot prove is neutral.
 7. **Never promote on an isolated benchmark.** Screen cheaply, qualify with
    paired, fresh-process, whole-request measurements in a known memory state.
-8. **Treat memory compression as measurement failure.** On macOS, a run with
-   compression is not a slower run, it is a different experiment.
+8. **Check the GPU clock before optimizing kernels.** If kernels timed inside
+   your decode loop run several times slower than the same kernels timed alone,
+   the GPU is idling down between command groups. Keep it busy while generating.
+9. **Start the next layer's reads before its router runs.** Predict with the
+   next router on a stream you already have. A guess only warms the cache, so it
+   can be wrong without being incorrect.
+10. **Once the GPU is fast, count bytes per token again.** SSD bandwidth becomes
+    the ceiling, and cache capacity and wasted guesses are the levers.
+11. **Treat memory compression as measurement failure.** On macOS, a run with
+    compression is not a slower run, it is a different experiment. On Metal,
+    residency sets kept the trunk and expert cache from being compressed during
+    long ingestion.
 
 ## 12. Reading the code
 
 | Where | What |
 |---|---|
-| `include/engine/storage.hpp`, `src/engine/storage.cpp` | Checkpoint parsing, prepared sidecar, expert and ngram stores, read pool, memory plan |
-| `include/engine/metal.hpp`, `src/engine/metal.mm` | The Metal wrapper: allocation classes, budget, residency, scratch arenas, dispatch and completion |
-| `include/engine/model.hpp`, `src/engine/model.cpp` | The forward pass, layer by layer |
+| `include/engine/storage.hpp`, `src/engine/storage.cpp` | Checkpoint parsing, prepared sidecar, expert and ngram stores, read pool with demand promotion, expert cache with speculative entries, memory plan |
+| `include/engine/metal.hpp`, `src/engine/metal.mm` | The Metal wrapper: allocation classes, budget, residency, scratch arenas, kernel selection, dispatch and completion, and the GPU clock keep-warm |
+| `include/engine/model.hpp`, `src/engine/model.cpp` | The forward pass, layer by layer, the next-layer predictor, and `Options::resolve()` for the defaults |
 | `src/engine/pipeline.cpp` | Completion-driven expert execution and its ownership rules |
 | `src/engine/prefill.cpp` | Layer-major panel prefill |
 | `src/engine/session.cpp` | State reuse, sampling, streaming output parsing |

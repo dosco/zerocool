@@ -20,7 +20,12 @@ struct KernelConfig {
     uint32_t affine_rows=1;
     uint32_t q8_decode_rows=0; // 0 keeps the existing path; 2/4/8 use packed T1 loads.
     std::string q4_decode="reference"; // packed-r2: exact, fixed expert shapes during decode only.
-    std::string route_selection="serial";
+    // Single-token Q4: several output rows per SIMD group share each lane's
+    // input chunk and bias sum. Per-row arithmetic and lane partition are the
+    // reference's, so outputs are bit-identical; only load reuse changes.
+    bool q4_rows=true;
+    // SIMD selection keeps top-ten identity, tie order and softmax arithmetic.
+    std::string route_selection="simd";
     bool gate_pair=false;
     std::string gdn="original";
     std::string attention_score_tiles="full";
@@ -80,6 +85,12 @@ public:
     void release_scratch();
     void wait(const std::shared_ptr<Completion>& completion);
     void configure(KernelConfig config);
+    bool direct_rows() const; // Single-row expert output written in place (q4 rows).
+    // Keep the GPU clock up while inference runs: a dedicated queue spins one
+    // SIMD group until `warm()` has not been called for the hold interval.
+    // Model arithmetic, buffers and the main queue are untouched.
+    void keep_warm(bool enabled);
+    void warm();
     // Developer probe: engine-owned bindings and pipelines outlive GPU users.
     // Change only at a drained boundary; retained references remain the default.
     void command_references(bool retained);

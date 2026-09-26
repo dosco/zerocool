@@ -51,6 +51,7 @@ def config_args(config):
     allowed = {"memory_pressure_policy", "decode_scratch", "expert_tail", "cache_policy", "kernel_policy", "token_tile", "gdn_path", "gdn_rows", "gdn_block", "panel", "chunk", "ready_group", "io_workers", "residency", "decode_path", "prefill_pipeline", "expert_slots", "shape_policy", "phase_memory", "affine_rows", "gate_pair", "q8_decode_rows", "route_selection", "sparse_selection", "attention_score_tiles"}
     allowed.add("decode_submission")
     allowed.add("q4_decode")
+    allowed |= {"q4_rows", "gpu_warm", "expert_prefetch", "prefetch_depth"}
     if set(config) - allowed - {"name"}:
         raise ValueError("Unknown experiment option")
     result = []
@@ -128,12 +129,20 @@ def validate(report, config, expected, budget, output):
         validate_phase_memory(row, config, budget)
         execution=state.get("execution", {})
         if execution.get("cached_token_replay", False):raise ValueError("Cached replay cannot qualify normal requests")
-        for key,default in [("cache_policy","clock"),("residency","off"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed"),("sparse_selection","cpu")]:
+        for key,default in [("cache_policy","clock"),("decode_path","reference"),("prefill_pipeline","serial"),("phase_memory","fixed"),("sparse_selection","cpu")]:
             if execution.get(key,default)!=config.get(key,default):raise ValueError("Execution candidate changed")
+        # Residency defaults to auto: core-cache where residency sets exist, else off.
+        residency=config.get("residency","auto")
+        if execution.get("residency","off") not in (("core-cache","off") if residency=="auto" else (residency,)):
+            raise ValueError("Execution candidate changed")
+        # Builds before the decode-speed defaults report neither field.
+        if "gpu_warm" in state and state["gpu_warm"]!=(config.get("gpu_warm","on")=="on"):raise ValueError("GPU keep-warm changed")
         if config.get("expert_slots") and plan["expert_slots"]!=config["expert_slots"]:
             raise ValueError("Fixed expert capacity changed")
         kernels = machine["kernels"]
-        if kernels.get('route_selection','serial')!=config.get('route_selection','serial'):raise ValueError('Route selection changed')
+        current='q4_rows' in kernels  # SIMD routing and row kernels became defaults together.
+        if kernels.get('route_selection','serial')!=config.get('route_selection','simd' if current else 'serial'):raise ValueError('Route selection changed')
+        if current and kernels['q4_rows']!=(config.get('q4_rows','on')=='on'):raise ValueError('Q4 row kernels changed')
         if kernels.get('attention_score_tiles','full')!=config.get('attention_score_tiles','full'):raise ValueError('Attention score tiles changed')
         if kernels.get('q8_decode_rows',0)!=config.get('q8_decode_rows',0):raise ValueError('Q8 decode variant changed')
         if kernels.get('q4_decode','reference')!=config.get('q4_decode','reference'):raise ValueError('Q4 decode variant changed')

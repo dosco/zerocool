@@ -61,6 +61,9 @@ Cli parse_cli(int argc,char** argv) {
         else if(arg=="--residency") o.residency=value;
         else if(arg=="--expert-tail") o.expert_tail=value;
         else if(arg=="--decode-scratch") o.decode_scratch=value;
+        else if(arg=="--expert-prefetch") o.expert_prefetch=value;
+        else if(arg=="--prefetch-depth") o.prefetch_depth=std::stoi(value);
+        else if(arg=="--gpu-warm") {if(value!="on" && value!="off") throw std::invalid_argument("gpu warm must be on or off");o.gpu_warm=value=="on";}
         else if(arg=="--memory-pressure-policy") {
             if(value!="observe" && value!="shrink") throw std::invalid_argument("memory-pressure-policy must be observe or shrink");
             o.memory_pressure_policy=value;
@@ -82,6 +85,7 @@ Cli parse_cli(int argc,char** argv) {
         else if(arg=="--sparse-capture") {o.sparse_capture=value;o.kernels.profile=true;}
         else if(arg=="--q8-decode-rows") o.kernels.q8_decode_rows=std::stoul(value);
         else if(arg=="--q4-decode") o.kernels.q4_decode=value;
+        else if(arg=="--q4-rows") {if(value!="on" && value!="off") throw std::invalid_argument("q4 rows must be on or off");o.kernels.q4_rows=value=="on";}
         else if(arg=="--route-selection") o.kernels.route_selection=value;
         else if(arg=="--soak-seconds") soak_seconds=std::stoi(value);
         else if(arg=="--panel") o.panel=std::stoi(value);
@@ -130,6 +134,7 @@ void validate_cli(Cli& cli) {
     auto& raw=cli.raw;auto& thinking=cli.thinking;
     (void)tokenize;(void)render_path;(void)control_fd;(void)raw;(void)thinking;(void)prompt;(void)replay_hits;
     if(repetitions<1 || repetitions>20 || port<0 || port>65535) throw std::invalid_argument("invalid repetitions or port");
+    o.resolve();
     o.kernels.validate();
     if(o.sparse_selection!="cpu" && o.sparse_selection!="gpu") throw std::invalid_argument("sparse selection must be cpu or gpu");
     if(o.cached_compare_axis!="q8_decode_rows" && o.cached_compare_axis!="sparse_selection" && o.cached_compare_axis!="attention_score_tiles")
@@ -153,7 +158,7 @@ void validate_cli(Cli& cli) {
        (o.cached_compare_axis=="sparse_selection" && o.sparse_selection!="gpu") ||
        (o.cached_compare_axis=="attention_score_tiles" && o.kernels.attention_score_tiles!="skip-masked")))
         throw std::invalid_argument("cached comparison requires an unprofiled candidate and at least five pairs");
-    if((o.memory_pressure_policy!="observe" || o.decode_scratch!="none" || o.expert_tail!="wait" || o.cache_policy!="clock" || o.residency!="off" || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay ||
+    if((o.memory_pressure_policy!="observe" || o.expert_tail!="wait" || o.cache_policy!="clock" || (o.residency!="off" && o.residency!="auto") || o.decode_path!="reference" || o.prefill_pipeline!="serial" || o.phase_memory!="fixed" || o.cached_token_replay ||
         o.sparse_selection!="cpu" || o.kernels.attention_score_tiles!="full" || !o.sparse_capture.empty()) && command!="bench" && command!="inspect")
         throw std::invalid_argument("execution experiments require bench or inspect");
     if(o.cached_token_replay && ((command!="bench" && command!="inspect") || (command=="bench" && tokens_path.empty()) || kernel_probe || storage || !io_path.empty() || !o.operator_fixtures.empty() || !logits_path.empty() || probe || !replay_routes.empty() || !workloads_path.empty() || !o.trace_dir.empty() || !o.kernels.operator_capture.empty()))
@@ -167,9 +172,10 @@ void validate_cli(Cli& cli) {
         throw std::invalid_argument("route trace and benchmark report must use different files");
     if((o.kernels.policy=="candidate" || o.kernels.profile) && command!="bench" && command!="inspect")
         throw std::invalid_argument("experimental kernels and profiling require bench or inspect");
-    if(o.residency!="off" && o.residency!="core" && o.residency!="core-cache") throw std::invalid_argument("invalid residency mode");
+    if(o.residency!="auto" && o.residency!="off" && o.residency!="core" && o.residency!="core-cache") throw std::invalid_argument("invalid residency mode");
     o.validate_decode_scratch();
     o.validate_decode_submission();
+    o.validate_expert_prefetch();
     if(o.decode_submission!="immediate" && command!="bench" && command!="inspect")
         throw std::invalid_argument("coalesced decode is a benchmark experiment");
     if(o.expert_tail!="wait" && o.expert_tail!="overlap") throw std::invalid_argument("expert tail must be wait or overlap");

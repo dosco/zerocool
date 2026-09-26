@@ -2,6 +2,14 @@
 #include <metal_stdlib>
 #include <metal_simdgroup_matrix>
 using namespace metal;
+// Clock keep-warm: one SIMD group of dependent integer work on its own queue.
+// It keeps the GPU's performance controller from idling down between the
+// short, CPU-dependent command groups of single-token decode. No model data.
+kernel void gpu_keepwarm(device uint* sink [[buffer(0)]],constant uint& n [[buffer(1)]],
+    uint tid [[thread_position_in_grid]]) {
+    uint v=tid; for(uint i=0;i<n;++i) v=v*1664525u+1013904223u;
+    if(v==0xdeadbeefu) sink[0]=v;
+}
 kernel void copy_words(device const uint* source [[buffer(0)]],device uint* destination [[buffer(1)]],
     constant uint* p [[buffer(2)]],uint i [[thread_position_in_grid]]) {
     if(i<p[0]) destination[i]=source[i];
@@ -273,6 +281,153 @@ kernel void q##Bits##_gate_up_pair(device const uchar* gw [[buffer(0)]],device c
 }
 AFFINE_PAIR(4)
 AFFINE_PAIR(8)
+
+// Single-token affine Q4 row kernels (--q4-rows on). Per output row, the arithmetic is
+// affine_dot's: same lane partition, same scalar expression order, same BF16
+// input-sum boundaries, same final simd_sum. Only load reuse changes: each lane
+// loads its input chunk and bias sum once per block and applies it to R rows.
+template<uint R,uint W>
+inline void q4_rows(device const uint* w,device const ushort* s,device const ushort* b,
+    device const float* x,uint row0,uint K,uint N,uint lane,thread float* result) {
+    #pragma unroll
+    for(uint r=0;r<R;++r) result[r]=0;
+    for(uint base=lane*W;base<K;base+=32*W) {
+        float4 v[W/4];
+        #pragma unroll
+        for(uint j=0;j<W/4;++j) v[j]=*(device const float4*)(x+base+4*j);
+        float sum=0;
+        #pragma unroll
+        for(uint j=0;j<W/4;++j) {float a=v[j].x,c=v[j].y,d=v[j].z,e=v[j].w;sum+=bf(bf(bf(a+c)+d)+e);}
+        #pragma unroll
+        for(uint r=0;r<R;++r) {
+            const uint row=row0+r;
+            uint words[W/8];
+            #pragma unroll
+            for(uint j=0;j<W/8;++j) words[j]=w[row*(K/8)+base/8+j];
+            float dot=0;
+            #pragma unroll
+            for(uint j=0;j<W/4;++j) {
+                const uint packed=(words[j/2]>>(16*(j%2)))&0xffff;
+                float a=v[j].x,c=v[j].y,d=v[j].z,e=v[j].w;
+                dot+=a*float(packed&15)+c*float((packed>>4)&15)+d*float((packed>>8)&15)+e*float((packed>>12)&15);
+            }
+            const uint g=row*(K/64)+base/64;
+            result[r]+=b16(s[g])*dot+sum*b16(b[g]);
+        }
+    }
+    #pragma unroll
+    for(uint r=0;r<R;++r) result[r]=simd_sum(result[r]);
+}
+#define Q4_MV(R,W) \
+kernel void q4_mv_r##R##_w##W(device const uint* w [[buffer(0)]],device const ushort* s [[buffer(1)]], \
+    device const ushort* b [[buffer(2)]],device const float* x [[buffer(3)]],device float* out [[buffer(4)]], \
+    constant uint* p [[buffer(5)]],uint tid [[thread_position_in_grid]]) { \
+    const uint row0=(tid/32)*R,lane=tid%32,K=p[0],N=p[1]; \
+    if(row0>=N) return; \
+    float result[R];q4_rows<R,W>(w,s,b,x,row0,K,N,lane,result); \
+    if(!lane) for(uint r=0;r<R;++r) out[row0+r]=p[4]?result[r]:bf(result[r]); \
+}
+Q4_MV(4,16) Q4_MV(8,16) Q4_MV(4,8) Q4_MV(8,8)
+
+// Gate and up share each lane's input chunk and bias sum across R rows of both.
+template<uint R>
+inline void q4_gate_rows(device const uint* gw,device const ushort* gs,device const ushort* gb,
+    device const uint* uw,device const ushort* us,device const ushort* ub,
+    device const float* x,uint row0,uint K,uint lane,thread float* gate,thread float* up) {
+    #pragma unroll
+    for(uint r=0;r<R;++r) {gate[r]=0;up[r]=0;}
+    for(uint base=lane*16;base<K;base+=512) {
+        float4 v[4];
+        #pragma unroll
+        for(uint j=0;j<4;++j) v[j]=*(device const float4*)(x+base+4*j);
+        float sum=0;
+        #pragma unroll
+        for(uint j=0;j<4;++j) {float a=v[j].x,c=v[j].y,d=v[j].z,e=v[j].w;sum+=bf(bf(bf(a+c)+d)+e);}
+        #pragma unroll
+        for(uint r=0;r<R;++r) {
+            const uint row=row0+r;
+            const uint2 gwords=*(device const uint2*)(gw+row*(K/8)+base/8);
+            const uint2 uwords=*(device const uint2*)(uw+row*(K/8)+base/8);
+            float gd=0,ud=0;
+            #pragma unroll
+            for(uint j=0;j<4;++j) {
+                const uint gc=((j<2?gwords.x:gwords.y)>>(16*(j%2)))&0xffff,uc=((j<2?uwords.x:uwords.y)>>(16*(j%2)))&0xffff;
+                float a=v[j].x,c=v[j].y,d=v[j].z,e=v[j].w;
+                gd+=a*float(gc&15)+c*float((gc>>4)&15)+d*float((gc>>8)&15)+e*float((gc>>12)&15);
+                ud+=a*float(uc&15)+c*float((uc>>4)&15)+d*float((uc>>8)&15)+e*float((uc>>12)&15);
+            }
+            const uint g=row*(K/64)+base/64;
+            gate[r]+=b16(gs[g])*gd+sum*b16(gb[g]);up[r]+=b16(us[g])*ud+sum*b16(ub[g]);
+        }
+    }
+    #pragma unroll
+    for(uint r=0;r<R;++r) {gate[r]=simd_sum(gate[r]);up[r]=simd_sum(up[r]);}
+}
+#define Q4_GATE(R) \
+kernel void q4_gate_mv_r##R(device const uint* gw [[buffer(0)]],device const ushort* gs [[buffer(1)]], \
+    device const ushort* gb [[buffer(2)]],device const uint* uw [[buffer(3)]],device const ushort* us [[buffer(4)]], \
+    device const ushort* ub [[buffer(5)]],device const float* x [[buffer(6)]],device const int* rows [[buffer(7)]], \
+    device float* out [[buffer(8)]],constant uint* p [[buffer(9)]],uint tid [[thread_position_in_grid]]) { \
+    const uint row0=(tid/32)*R,lane=tid%32,K=p[0],N=p[1]; \
+    if(row0>=N) return; \
+    float gate[R],up[R];q4_gate_rows<R>(gw,gs,gb,uw,us,ub,x,row0,K,lane,gate,up); \
+    if(!lane) for(uint r=0;r<R;++r) {float g=bf(gate[r]),u=bf(up[r]);out[row0+r]=bf(bf(g*sigmoid_bf(g))*u);} \
+}
+Q4_GATE(2)
+
+// Single-token plain (BF16/F16/F32) matrix-vector for small N: one threadgroup
+// per row stages 2048-element chunks of x and the row in threadgroup memory,
+// then SIMD group 0 runs plain_mm's exact lane chain (k = lane + 32j, same
+// order, same expression) from on-chip memory instead of one DRAM trip per step.
+kernel void plain_mv(device const uchar* w [[buffer(0)]],device const float* x [[buffer(1)]],
+    device float* out [[buffer(2)]],constant uint* p [[buffer(3)]],
+    uint row [[threadgroup_position_in_grid]],uint tid [[thread_index_in_threadgroup]],
+    uint threads [[threads_per_threadgroup]]) {
+    const uint K=p[0],N=p[1],dtype=p[3];
+    threadgroup float xs[2048],ws[2048];
+    if(row>=N) return;
+    float sum=0;
+    for(uint k0=0;k0<K;k0+=2048) {
+        const uint n=min(2048u,K-k0);
+        for(uint i=tid;i<n;i+=threads) {xs[i]=x[k0+i];ws[i]=scalar(w,row*K+k0+i,dtype);}
+        threadgroup_barrier(mem_flags::mem_threadgroup);
+        if(tid<32) for(uint k=tid;k<n;k+=32) sum+=xs[k]*ws[k];
+        threadgroup_barrier(mem_flags::mem_threadgroup);
+    }
+    if(tid<32) {sum=simd_sum(sum);if(!tid) out[row]=p[4]?sum:bf(sum);}
+}
+
+// RMS norm for widths that are multiples of 128: one threadgroup per group.
+// Each SIMD group forms one 128-wide block sum exactly as rms_square_sum does;
+// the block sums then meet in one simd_sum in the same lanes as the reference.
+kernel void norm_wide(device const float* x [[buffer(0)]],device const uchar* w [[buffer(1)]],
+    device float* out [[buffer(2)]],constant uint* p [[buffer(3)]],
+    uint group [[threadgroup_position_in_grid]],uint tid [[thread_index_in_threadgroup]],
+    uint threads [[threads_per_threadgroup]]) {
+    const uint D=p[0],width=p[1],simd=tid/32,lane=tid%32;
+    threadgroup float partials[32];threadgroup float scale;
+    device const float* row=x+group*D;
+    if(simd*128<D) {
+        const uint block=simd*128;float acc=0;
+        for(uint i=0;i<4;++i) {uint d=block+lane*4+i;if(d<D) acc+=row[d]*row[d];}
+        acc=simd_sum(acc);
+        if(!lane) partials[simd]=acc;
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+    if(simd==0) {
+        const float contribution=lane<(D+127)/128?partials[lane]:0.0f;
+        const float total=simd_sum(contribution);
+        if(!lane) scale=precise::rsqrt(total/float(D)+1e-6f);
+    }
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+    const float inv=scale;
+    for(uint d=tid;d<D;d+=threads) {
+        uint i=group*D+d,wi=i%width;
+        float v=x[i]*inv;
+        v=bf(v);
+        out[i]=bf(v*scalar(w,wi,p[3]));
+    }
+}
 
 kernel void affine_embedding(device const uint* w [[buffer(0)]],device const ushort* s [[buffer(1)]],
     device const ushort* b [[buffer(2)]],device const int* ids [[buffer(3)]],device float* out [[buffer(4)]],

@@ -18,6 +18,14 @@ Buf ints(Metal& gpu,std::span<const int> values) {
     auto b=gpu.allocate(values.size_bytes()); std::memcpy(b->data,values.data(),values.size_bytes()); return b;
 }
 }
+void Options::resolve() {
+    const bool resident=!cached_token_replay && !diagnostic_stream_trunk;
+    if(decode_scratch=="auto")
+        decode_scratch=resident && completion_pipeline && expert_tail=="wait" && decode_path=="reference" &&
+            prefill_pipeline=="serial" && phase_memory=="fixed" && kernels.gdn=="original"?"reuse":"none";
+    if(expert_prefetch=="auto")
+        expert_prefetch=resident && completion_pipeline && cache_policy=="clock"?"next-hyper":"off";
+}
 void Options::validate_decode_scratch() const {
     if(decode_scratch!="none" && decode_scratch!="reuse") throw std::invalid_argument("decode scratch must be none or reuse");
     if(decode_scratch=="reuse" && (!completion_pipeline || expert_tail!="wait" || decode_path!="reference" ||
@@ -29,12 +37,20 @@ void Options::validate_decode_submission() const {
     if(decode_submission=="coalesced" && (!completion_pipeline || expert_tail!="wait" || decode_path!="reference" || cached_token_replay))
         throw std::invalid_argument("coalesced decode requires normal completion pipeline, wait tail and reference experts");
 }
-Model::Model(Options options) : options_(std::move(options)),checkpoint_(options_.model,true,options_.artifact),
+void Options::validate_expert_prefetch() const {
+    if(expert_prefetch!="off" && expert_prefetch!="next" && expert_prefetch!="next-hyper")
+        throw std::invalid_argument("expert prefetch must be off, next or next-hyper");
+    if(prefetch_depth<1 || prefetch_depth>TopK) throw std::invalid_argument("prefetch depth must be 1..10");
+    if(expert_prefetch!="off" && (!completion_pipeline || cache_policy!="clock" || cached_token_replay || diagnostic_stream_trunk))
+        throw std::invalid_argument("expert prefetch requires the completion pipeline, CLOCK and a resident trunk");
+}
+Model::Model(Options options) : options_((options.resolve(),std::move(options))),checkpoint_(options_.model,true,options_.artifact),
     reads_(options_.io_workers),
     prepared_(options_.prepared.empty()?nullptr:std::make_shared<PreparedArtifact>(options_.prepared,checkpoint_)),
     store_(checkpoint_,prepared_) {
     options_.validate_decode_scratch();
     options_.validate_decode_submission();
+    options_.validate_expert_prefetch();
     if(options_.memory_pressure_policy!="observe" && options_.memory_pressure_policy!="shrink")
         throw std::invalid_argument("memory pressure policy must be observe or shrink");
     pressure_monitor_=std::make_unique<PressureMonitor>();
@@ -70,7 +86,7 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
     const auto admitted=std::min(options_.memory,available-GiB-GiB/2);
     const auto resident_bytes=options_.diagnostic_stream_trunk?checkpoint_.diagnostic_resident_bytes(options_.probe_layers):checkpoint_.resident_bytes(options_.probe_layers);
     plan_=MemoryPlan::make(admitted,gpu_.physical(),gpu_.recommended(),resident_bytes,options_.context,options_.chunk,options_.panel,options_.probe_layers,options_.kernels.scratch_bytes(options_.chunk),options_.prefill_pipeline=="double",
-        options_.decode_path=="grouped"?2*((uint64_t(options_.ready_group)*Intermediate*4+16383)/16384)*16384:0,options_.cached_token_replay);
+        options_.decode_path=="grouped"?2*((uint64_t(options_.ready_group)*Intermediate*4+16383)/16384)*16384:0,options_.cached_token_replay,options_.gpu_warm?2:1);
     plan_.cap_experts(options_.expert_slots);
     prompt_plan_=plan_;generation_plan_=options_.phase_memory=="reclaim"?plan_.without_prompt_workspaces(options_.expert_slots):plan_;
     if(options_.phase_memory=="reclaim") plan_=generation_plan_;
@@ -89,7 +105,9 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
     }
     // Reserve includes CPU bookkeeping, tokenizer, and driver allocations.
     gpu_.budget(plan_.limit-plan_.ngram-plan_.reserve);
+    if(options_.residency=="auto") options_.residency=gpu_.residency_supported()?"core-cache":"off";
     gpu_.residency(options_.residency);
+    if(options_.gpu_warm) gpu_.keep_warm(true);
     sparse_status_=gpu_.zeros(1,AllocationClass::State);
     resident_=std::make_unique<Resident>(checkpoint_,gpu_,options_.probe_layers,options_.diagnostic_stream_trunk);
     cache_=std::make_unique<ExpertCache>(plan_.slots,[this](uint64_t n){return gpu_.allocate(n,AllocationClass::Expert);},reads_,
@@ -100,7 +118,7 @@ Model::Model(Options options) : options_(std::move(options)),checkpoint_(options
 void Model::check_sparse_status() const {
     if(*reinterpret_cast<const uint32_t*>(sparse_status_->data)) throw std::runtime_error("invalid sparse score");
 }
-Model::~Model() { try { gpu_.finish(); } catch(...) {} reads_.drain();expert_tail_.reset(); }
+Model::~Model() { gpu_.keep_warm(false); try { gpu_.finish(); } catch(...) {} reads_.drain();expert_tail_.reset(); }
 void Model::diagnostic_drain() {gpu_.finish();reads_.drain();finish_expert_tail();}
 void Model::pressure_boundary(int layer) {
     auto action=pressure_policy_.poll(pressure_monitor_->inbox().take(),monotonic_ns(),cache_->capacity(),
@@ -167,6 +185,7 @@ void Model::finish_ingest() {
     ingest_active_=false;transition_memory(false);
 }
 std::vector<float> Model::forward(std::span<const int> ids,State& state,bool logits,const std::atomic<bool>* cancel) {
+    gpu_.warm();
     const bool owned=!ingest_active_,reuse=options_.decode_scratch=="reuse" && ids.size()==1;
     bool completed=false,scratch_started=false;
     try {
@@ -297,7 +316,12 @@ void Model::capture_sparse(const Buf& q,const Buf& keys,const Buf& values,const 
 Buf Model::norm(const Buf& x,const std::string& weight,uint32_t width,uint32_t group,uint32_t tokens,bool grouped) {
     if(x->bytes<uint64_t(tokens)*width*4 || !group || width%group) throw std::invalid_argument("normalization shape");
     auto out=gpu_.allocate(uint64_t(tokens)*width*4);
-    gpu_.dispatch("norm",{{x},{resident_->at(weight)},{out}},
+    if(gpu_.direct_rows() && group>=256 && group<=4096) {
+        // One threadgroup per normalized group; identical block sums and lanes.
+        const uint32_t threads=32*((group+127)/128);
+        gpu_.dispatch("norm_wide",{{x},{resident_->at(weight)},{out}},
+            {group,width,tokens,resident_->dtype(weight),uint32_t(grouped)},tokens*(width/group)*threads,1,1,threads);
+    } else gpu_.dispatch("norm",{{x},{resident_->at(weight)},{out}},
         {group,width,tokens,resident_->dtype(weight),uint32_t(grouped)},tokens*(width/group)*32);
     return out;
 }
@@ -404,12 +428,21 @@ Buf Model::attention(const Buf& x,LayerState& state,int layer,uint32_t tokens,ui
     }
     return gpu_.linear(resident_->linear(b+".o_proj"),out,tokens);
 }
-Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* cancel) {
+Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* cancel,const Buf& predict) {
     gpu_.label("router",layer,tokens,trace_offset_);
     const auto b="model.layers."+std::to_string(layer)+".mlp";
     auto router=gpu_.linear(resident_->linear(b+".gate"),x,tokens,true);
     auto ids=gpu_.allocate(uint64_t(tokens)*TopK*4),weights=gpu_.allocate(uint64_t(tokens)*TopK*4);
     gpu_.route(router,ids,weights,tokens);
+    Buf predicted;
+    if(predict) {
+        // The next layer's router on an earlier stream: a cache hint only. It
+        // shares this CPU boundary and never feeds model arithmetic.
+        gpu_.label("prefetch_router",layer+1,tokens,trace_offset_);
+        auto logits=gpu_.linear(resident_->linear("model.layers."+std::to_string(layer+1)+".mlp.gate"),predict,tokens,true);
+        predicted=gpu_.allocate(uint64_t(tokens)*TopK*4);
+        gpu_.route(logits,predicted,gpu_.allocate(uint64_t(tokens)*TopK*4),tokens);
+    }
     gpu_.finish();finish_expert_tail(); check_sparse_status(); cancelled(cancel);
     trace("route_"+std::to_string(layer),ids);
     trace("router_"+std::to_string(layer),router);
@@ -425,6 +458,16 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     for(uint32_t p=0;p<tokens*TopK;++p) {
         if(raw[p]<0 || raw[p]>=Experts) throw std::runtime_error("invalid router output");
         positions[raw[p]].push_back(int(p));
+    }
+    stale_.clear();
+    if(predicted_layer_==layer) {
+        for(size_t r=0;r<predicted_.size();++r) {
+            const bool used=!positions[predicted_[r]].empty();
+            if(!used && predicted_issued_[r]) stale_.push_back(predicted_[r]);
+            prefetch_correct_+=used;prefetch_rank_correct_[r]+=used;
+            if(predicted_issued_[r]) {++prefetch_rank_issued_[r];prefetch_rank_useful_[r]+=used;}
+        }
+        prefetch_predicted_+=predicted_.size();predicted_layer_=-1;
     }
     auto expert_out=gpu_.allocate(uint64_t(tokens)*TopK*Hidden*4);
     std::vector<int> selected;
@@ -442,6 +485,19 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
     auto gate=gpu_.linear(resident_->linear(b+".shared_expert_gate"),x,tokens);
     if(options_.completion_pipeline) {
         std::vector<ExpertKey> keys;for(auto e:selected) keys.push_back({uint32_t(layer),uint32_t(e)});
+        std::function<void()> admitted;
+        if(predicted) admitted=[&] {
+            // Guesses for this layer that demand did not select and whose read
+            // is still queued: bandwidth a cancellation could recover.
+            for(size_t r=0;r<stale_.size();++r) prefetch_stale_queued_+=cache_->queued_prefetch({uint32_t(layer),uint32_t(stale_[r])});
+            predicted_.clear();predicted_issued_.clear();predicted_layer_=layer+1;
+            const auto guesses=std::span<const int>(reinterpret_cast<const int*>(predicted->data),TopK);
+            for(auto e:guesses) if(e>=0 && e<Experts && std::find(predicted_.begin(),predicted_.end(),e)==predicted_.end()) {
+                const bool issued=predicted_.size()<size_t(options_.prefetch_depth) && cache_->prefetch({uint32_t(layer+1),uint32_t(e)});
+                predicted_.push_back(e);
+                predicted_issued_.push_back(issued);prefetch_issued_+=issued;
+            }
+        };
         EncodeReadyGroup grouped;
         if(tokens==1 && options_.decode_path=="grouped") grouped=[&](std::span<const ReadyExpert> ready,size_t slot) {
             std::vector<Buf> records;std::vector<uint32_t> destinations,identities;
@@ -457,7 +513,7 @@ Buf Model::moe(const Buf& x,int layer,uint32_t tokens,const std::atomic<bool>* c
                 options_.decode_path!="reference",layer,trace_offset_,cancel);
         },cancel,(!options_.dependency_trace.empty() && (!options_.kernels.profile_decode_only || phase_=="decode")) || (options_.kernels.profile && detailed_passes_[phase_]<48 && detailed_reads_[phase_]<8192),grouped,
             tokens==1 && options_.expert_tail=="overlap"?expert_tail_.get():nullptr,
-            tokens==1 && options_.decode_submission=="coalesced");
+            tokens==1 && options_.decode_submission=="coalesced",admitted);
         if(timing.is_null()) {
             ++tail_deferrals_;tail_layer_=layer;tail_offset_=trace_offset_;tail_phase_=phase_;
             if(!options_.dependency_trace.empty()) tail_routes_.assign(raw.begin(),raw.end());
@@ -562,6 +618,7 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
     }
     // Each preceding forward has drained its users, including on failure.
     *reinterpret_cast<uint32_t*>(sparse_status_->data)=0;
+    predicted_layer_=-1;stale_.clear(); // Guesses never span forwards, including failed ones.
     if(ids.size()>uint64_t(options_.chunk)) return forward_panel(ids,state,logits,cancel);
     StateUpdate update(state,ids);
     trace_offset_=state.tokens;
@@ -595,7 +652,11 @@ std::vector<float> Model::forward_impl(std::span<const int> ids,State& state,boo
             gpu_.label("mlp_input",l,T,state.tokens);
             auto [mx,mi]=hyper(after,b+".mlp_hyper_connection",T);
             if(T>1) observe_memory("attention_encoded",l,T,state.tokens);
-            auto m=moe(mx,l,T,cancel);
+            Buf predict;
+            if(T==1 && options_.expert_prefetch!="off" && l+1<options_.probe_layers)
+                predict=options_.expert_prefetch=="next"?mx:
+                    hyper(after,"model.layers."+std::to_string(l+1)+".mlp_hyper_connection",T,false).first;
+            auto m=moe(mx,l,T,cancel,predict);
             gpu_.label("mlp_residual",l,T,state.tokens);
             h=gpu_.allocate(after->bytes);
             gpu_.dispatch("hc_add",{{after},{m},{mi},{h}},{T},Hyper,T);
@@ -655,6 +716,10 @@ Json Model::stats() const {
         {"diagnostic_stream_trunk",options_.diagnostic_stream_trunk},
         {"expert_tail_deferrals",tail_deferrals_},{"expert_tail_pending",expert_tail_->pending()},
         {"decode_submission",options_.decode_submission},
+        {"gpu_warm",options_.gpu_warm},
+        {"expert_prefetch",{{"mode",options_.expert_prefetch},{"depth",options_.prefetch_depth},{"predicted",prefetch_predicted_},
+            {"correct",prefetch_correct_},{"issued",prefetch_issued_},{"stale_queued",prefetch_stale_queued_},{"rank_correct",prefetch_rank_correct_},
+            {"rank_issued",prefetch_rank_issued_},{"rank_useful",prefetch_rank_useful_}}},
         {"decode_scratch_passes",decode_scratch_passes_},
         {"completion_pipeline",options_.completion_pipeline},{"ready_group",options_.ready_group},
         {"chunk_tokens",options_.chunk},{"io_workers",options_.io_workers},{"short_append_tokens",options_.short_append},

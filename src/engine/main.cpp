@@ -212,12 +212,15 @@ int main(int argc,char** argv) {
                 "  --route-trace FILE records committed routes for normal bench workloads\n"
                 "Artifact: --artifact q4-control|mixed-4_8bit (non-chat commands require matching --model DIR)\n"
                 "Dependency replay: bench --replay-routes FILE [--replay-hits 0..10]\n"
-                "Execution experiments: --residency off|core|core-cache --decode-path reference|direct|grouped\n"
+                "Execution experiments: --residency auto|off|core|core-cache --decode-path reference|direct|grouped\n"
                 "  --decode-diagnostics (first 32 decode steps per normal request; instrumented)\n"
                 "  --cache-policy clock|slru (experimental; bench/inspect only)\n"
                 "  --phase-memory fixed|reclaim --prefill-pipeline serial|double --cached-token-replay (last token is continuation)\n"
                 "  --expert-tail wait|overlap (single-token scheduling experiment)\n"
-                "  --decode-scratch none|reuse (bounded single-token temporary experiment)\n"
+                "  --decode-scratch auto|none|reuse (auto: reuse single-token temporaries when supported)\n"
+                "Decode speed (exact; all on by default): --gpu-warm on|off (hold the GPU clock during forwards)\n"
+                "  --expert-prefetch auto|off|next|next-hyper --prefetch-depth 10 (next-layer cache warming)\n"
+                "  --q4-rows on|off (single-token row kernels) --route-selection simd|serial\n"
                 "  --memory-pressure-policy observe|shrink (experimental cache release)\n"
                 "  --profile-decode-only 0|1 (command-group trace excludes ingestion)\n"
                 "  --gpu-reference off|resident-q8-v1 --bench-progress FILE (normal workload diagnostics)\n"
@@ -225,7 +228,7 @@ int main(int argc,char** argv) {
                 "Kernel experiments (bench only): --kernel-policy reference|auto|candidate --token-tile 1|2|4|8\n"
                 "  --q8-decode-rows 0|2|4|8; --q4-decode reference|packed-r2 (candidate policy)\n"
                 "  diagnostic per-pass timing: --dispatch-profile FILE\n"
-                "  --route-selection serial|simd (simd requires experimental candidate policy)\n"
+
                 "  --kernel-bench measures bounded real-weight operators, not request latency\n"
                 "  --soak-seconds 1200 repeats a workload conversation for a memory soak\n"
                 "  --gdn-path original|precompute|staged --gdn-rows 4|8 --gdn-block 4|8|16 --phase-profile FILE\n"
@@ -308,17 +311,19 @@ int main(int argc,char** argv) {
         if(o.diagnostic_stream_trunk && (command!="bench" || (logits_path.empty() && !probe)))
             throw std::invalid_argument("--stream-trunk is limited to layer/logit diagnostics; it cannot serve or benchmark generation");
         if(command=="inspect") {
-            Checkpoint cp(o.model,true,o.artifact);Metal gpu;gpu.residency(o.residency);
+            Checkpoint cp(o.model,true,o.artifact);Metal gpu;
+            if(o.residency=="auto") o.residency=gpu.residency_supported()?"core-cache":"off";
+            gpu.residency(o.residency);
             auto report=cp.inspect();
             if(!o.prepared.empty()) report["prepared"]=PreparedArtifact(o.prepared,cp).inspect();
             o.kernels.artifact_revision=cp.revision();gpu.configure(o.kernels);
-            auto planned=MemoryPlan::make(o.memory,gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay);planned.cap_experts(o.expert_slots);report["memory_plan"]=planned.json();report["cache_policy"]=o.cache_policy;
+            auto planned=MemoryPlan::make(o.memory,gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay,o.gpu_warm?2:1);planned.cap_experts(o.expert_slots);report["memory_plan"]=planned.json();report["cache_policy"]=o.cache_policy;
             if(o.phase_memory=="reclaim") {report["phase_memory"]={{"policy",o.phase_memory},{"prompt_plan",planned.json()},{"generation_plan",planned.without_prompt_workspaces(o.expert_slots).json()}};report["memory_plan"]=report["phase_memory"]["generation_plan"];}
             report["sparse_selection"]=o.sparse_selection;report["machine"]=gpu.statistics();report["process"]=process_memory();
             const auto available=available_memory();
             try {
                 if(available<=GiB+GiB/2) throw std::runtime_error("insufficient currently available memory");
-                auto admitted=MemoryPlan::make(std::min(o.memory,available-GiB-GiB/2),gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay);admitted.cap_experts(o.expert_slots);report["current_admission"]=admitted.json();
+                auto admitted=MemoryPlan::make(std::min(o.memory,available-GiB-GiB/2),gpu.physical(),gpu.recommended(),cp.resident_bytes(),o.context,o.chunk,o.panel,Layers,o.kernels.scratch_bytes(o.chunk),o.prefill_pipeline=="double",o.decode_path=="grouped"?2*((uint64_t(o.ready_group)*Intermediate*4+16383)/16384)*16384:0,o.cached_token_replay,o.gpu_warm?2:1);admitted.cap_experts(o.expert_slots);report["current_admission"]=admitted.json();
                 if(o.phase_memory=="reclaim") {report["current_phase_admission"]={{"prompt_plan",admitted.json()},{"generation_plan",admitted.without_prompt_workspaces(o.expert_slots).json()}};report["current_admission"]=report["current_phase_admission"]["generation_plan"];}
             } catch(const std::exception& e) {report["current_admission"]={{"error",e.what()},{"reclaimable_bytes",available}};}
             emit(report);return 0;

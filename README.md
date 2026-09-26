@@ -43,7 +43,15 @@ tests pass. The rest is open:
 | Native generation + API smoke | ✅ passing |
 | Long-context numerical agreement | ⬜ open |
 | Sustained coding quality | ⬜ open |
-| 5–8 tokens/s at the specified contexts | ⬜ open |
+| 5–8 tokens/s at the specified contexts | 🟡 measured, qualification open |
+
+Generation measures **5.3–5.5 tokens/s** after a short coding prompt. One clean
+run of the 2K prompt / 256-token workload measured **5.86 tokens/s**, with
+enough free memory for 1,977 expert slots, and 4.89 when pinned to 900 slots.
+The previous defaults measured 2.4 on the short prompt. Every output token,
+logit and state byte is bit-identical to them. The gate stays open until the
+repeated 2K/4K runs are done
+([decode speed stage](docs/qwen_decode_speed_stage.md)).
 
 Measured results and their limits are in [docs/README.md](docs/README.md). A
 number counts here only when a build fingerprint and a real-model run back it.

@@ -11,6 +11,8 @@
 #include <cstring>
 #include <stdexcept>
 #include <mach/mach.h>
+#include <condition_variable>
+#include <thread>
 #include <sys/sysctl.h>
 
 namespace zerocool::engine {
@@ -159,6 +161,11 @@ struct Metal::Impl {
     uint64_t peak_groups=0;
     std::shared_ptr<Accounting> accounting=std::make_shared<Accounting>();
     std::shared_ptr<ResidencyRegistry> residency=std::make_shared<ResidencyRegistry>();
+    struct KeepWarm {
+        id<MTLCommandQueue> queue=nil; id<MTLComputePipelineState> pipeline=nil; Buf sink;
+        std::thread thread; std::mutex mutex; std::condition_variable wake;
+        uint64_t until=0, command_groups=0; bool stopping=false;
+    } warm;
     struct Scratch { std::vector<Buf> buffers; size_t cursor=0; uint64_t bytes=0,capacity=0,peak=0,reuses=0,allocations=0,wait_ns=0; std::shared_ptr<Completion> last; };
     std::array<Scratch,2> scratch;
     int active_scratch=-1;
@@ -185,8 +192,6 @@ void KernelConfig::validate() const {
         throw std::invalid_argument("decode-only profiling requires command-group profiling");
     if(route_selection!="serial" && route_selection!="simd")
         throw std::invalid_argument("route selection must be serial or simd");
-    if(route_selection!="serial" && policy!="candidate")
-        throw std::invalid_argument("parallel route selection requires candidate policy");
     if(attention_score_tiles!="full" && attention_score_tiles!="skip-masked")
         throw std::invalid_argument("attention score tiles must be full or skip-masked");
     if(counter_profile && !profile) throw std::invalid_argument("counter sampling requires diagnostic profiling");
@@ -226,7 +231,7 @@ void KernelConfig::validate() const {
     if(policy!="candidate" && (token_tile!=1 || gdn!="original" || affine_rows!=1 || gate_pair)) throw std::invalid_argument("forced kernels require candidate policy");
 }
 Json KernelConfig::json() const {
-    return {{"q4_decode",q4_decode},{"route_selection",route_selection},{"attention_score_tiles",attention_score_tiles},{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
+    return {{"q4_decode",q4_decode},{"q4_rows",q4_rows},{"route_selection",route_selection},{"attention_score_tiles",attention_score_tiles},{"policy",policy},{"token_tile",token_tile},{"affine_rows",affine_rows},{"q8_decode_rows",q8_decode_rows},{"gate_pair",gate_pair},{"gdn",gdn},{"gdn_rows",gdn_rows},
         {"gdn_block",gdn_block},{"shape_table",shape_table},{"operator_capture",operator_capture.string()},
         {"capture_filter",{{"phase",capture_phase},{"operator",capture_operator},{"layer",capture_layer}}},
         {"profile",profile},{"profile_decode_only",profile_decode_only},{"counter_profile",counter_profile},{"automatic_rules_promoted",false}};
@@ -251,6 +256,7 @@ void Metal::configure(KernelConfig config) {
         throw std::invalid_argument("shape policy build/artifact identity differs");
     impl_->config=std::move(config);
 }
+bool Metal::direct_rows() const {return impl_->config.q4_rows;}
 void Metal::request_phase(std::string phase) {impl_->request_phase=std::move(phase);}
 void Metal::route(const Buf& logits,const Buf& ids,const Buf& weights,uint32_t tokens) {
     if(!tokens || tokens>8192 || !logits || !ids || !weights ||
@@ -305,7 +311,54 @@ Metal::Metal() : impl_(std::make_unique<Impl>()) {
         impl_->pipelines=[NSMutableDictionary new];
     }
 }
-Metal::~Metal() { try { finish(); } catch (...) {} impl_->residency->close(impl_->queue); }
+Metal::~Metal() {
+    keep_warm(false);
+    try { finish(); } catch (...) {} impl_->residency->close(impl_->queue);
+}
+void Metal::keep_warm(bool enabled) {
+    auto& w=impl_->warm;
+    if(!enabled) {
+        if(!w.thread.joinable()) return;
+        {std::lock_guard lock(w.mutex);w.stopping=true;}
+        w.wake.notify_all();w.thread.join();w.sink.reset();
+        return;
+    }
+    if(w.thread.joinable()) return;
+    @autoreleasepool {
+        NSError* error=nil;
+        id<MTLFunction> fn=[impl_->library newFunctionWithName:@"gpu_keepwarm"];
+        w.pipeline=fn?[impl_->device newComputePipelineStateWithFunction:fn error:&error]:nil;
+        w.queue=[impl_->device newCommandQueue];
+        if(!w.pipeline || !w.queue) throw std::runtime_error("cannot create GPU keep-warm queue");
+    }
+    // Counted as the plan's second runtime control page.
+    w.sink=allocate(64,AllocationClass::State);w.stopping=false;
+    w.thread=std::thread([&w] {
+        // About half a millisecond of dependent work per command group.
+        const uint32_t n=150000;
+        std::unique_lock lock(w.mutex);
+        while(!w.stopping) {
+            if(monotonic_ns()>=w.until) {w.wake.wait(lock,[&]{return w.stopping || monotonic_ns()<w.until;});continue;}
+            lock.unlock();
+            @autoreleasepool {
+                id<MTLCommandBuffer> cb=[w.queue commandBuffer];
+                id<MTLComputeCommandEncoder> encoder=[cb computeCommandEncoder];
+                [encoder setComputePipelineState:w.pipeline];
+                [encoder setBuffer:(__bridge id<MTLBuffer>)w.sink->metal offset:0 atIndex:0];
+                [encoder setBytes:&n length:4 atIndex:1];
+                [encoder dispatchThreads:MTLSizeMake(32,1,1) threadsPerThreadgroup:MTLSizeMake(32,1,1)];
+                [encoder endEncoding];[cb commit];[cb waitUntilCompleted];
+            }
+            lock.lock();++w.command_groups;
+        }
+    });
+}
+void Metal::warm() {
+    auto& w=impl_->warm;
+    if(!w.thread.joinable()) return;
+    {std::lock_guard lock(w.mutex);w.until=monotonic_ns()+250'000'000;}
+    w.wake.notify_one();
+}
 Buf Metal::allocate(uint64_t bytes) {return allocate(bytes,AllocationClass::Temporary);}
 Buf Metal::allocate(uint64_t bytes,AllocationClass kind) {
     if(size_t(kind)>size_t(AllocationClass::Workspace)) throw std::invalid_argument("invalid allocation class");
@@ -735,6 +788,20 @@ void Metal::linear_into(const Linear& l,const Buf& x,uint32_t tokens,Binding out
         throw std::invalid_argument("invalid or overlapping linear output");
     const auto policy=linear_policy(l,tokens,false,false);const uint32_t tile=policy.tile;
     const auto suffix=policy.rows>1?"_r"+std::to_string(policy.rows)+"_t"+std::to_string(tile):(tile==1?std::string{}:"_t"+std::to_string(tile));
+    // An explicitly requested packed-r2 decode experiment keeps its shapes.
+    const bool packed_decode=impl_->config.q4_decode=="packed-r2" && impl_->request_phase=="decode";
+    // Explicitly forced variants (shape rules, output rows) keep their kernels.
+    const bool forced=!impl_->config.shape_table.is_null() || impl_->config.affine_rows!=1;
+    if(impl_->config.q4_rows && !packed_decode && !forced && tokens==1 && l.quantized && l.bits==4 && l.group==64 &&
+       l.output%8==0 && l.weight.offset%4==0 && x->bytes>=l.input*4ull) {
+        // Width follows affine_dot's lane partition; rows only share loads.
+        const uint32_t width=(l.input%512==0 && l.output%8==0)?16:8,rows=l.output>=4096?8:4;
+        if(l.input%width==0) {
+            dispatch("q4_mv_r"+std::to_string(rows)+"_w"+std::to_string(width),{l.weight,l.scales,l.biases,{x},out},
+                {l.input,l.output,tokens,l.group,uint32_t(float_output)},32*(l.output/rows),1,1,64);
+            return;
+        }
+    }
     if(impl_->config.q4_decode=="packed-r2" && impl_->request_phase=="decode" && tokens==1 &&
        l.quantized && l.bits==4 && l.group==64 && l.input==640 && l.output==2560 && l.weight.offset%4==0) {
         dispatch("q4_down_packed_r2",{l.weight,l.scales,l.biases,{x},out},
@@ -753,6 +820,8 @@ void Metal::linear_into(const Linear& l,const Buf& x,uint32_t tokens,Binding out
         dispatch("router_mm",{l.weight,{x},{partial}},{tokens},(Experts/8)*32,(tokens+7)/8,16);
         dispatch("router_accumulate",{{partial},out},{tokens},tokens*Experts);
     }
+    else if(impl_->config.q4_rows && tokens==1 && l.output<=64)
+        dispatch("plain_mv",{l.weight,{x},out},{l.input,l.output,tokens,l.dtype,uint32_t(float_output)},256*l.output,1,1,256);
     else dispatch("plain_mm",{l.weight,{x},out},
         {l.input,l.output,tokens,l.dtype,uint32_t(float_output)},32*l.output,tokens);
 }
@@ -790,6 +859,14 @@ Buf Metal::gated_linear(const Linear& gate,const Linear& up,const Buf& x,uint32_
     if(impl_->config.profile) impl_->matrix={{"K",gate.input},{"N",gate.output},{"rows",tokens},{"quantized",true},
         {"format","affine"},{"bits",gate.bits},{"group",gate.group},{"fused",true},{"gathered",bool(rows)}};
     const auto policy=linear_policy(gate,tokens,true,bool(rows));const uint32_t tile=policy.tile;
+    if(impl_->config.q4_rows && !(impl_->config.q4_decode=="packed-r2" && impl_->request_phase=="decode") &&
+       impl_->config.shape_table.is_null() && impl_->config.affine_rows==1 && !impl_->config.gate_pair &&
+       tokens==1 && !rows && gate.bits==4 && gate.group==64 && gate.input%512==0 &&
+       gate.output%2==0 && gate.output%8==0 && gate.weight.offset%8==0 && up.weight.offset%8==0) {
+        dispatch("q4_gate_mv_r2",{gate.weight,gate.scales,gate.biases,up.weight,up.scales,up.biases,{x},{x},{out}},
+            {gate.input,gate.output,tokens,gate.group,0},32*(gate.output/2),1,1,64);
+        return out;
+    }
     if(impl_->config.q4_decode=="packed-r2" && impl_->request_phase=="decode" && tokens==1 && !rows &&
        gate.bits==4 && gate.group==64 && gate.input==2560 && gate.output==640 &&
        gate.weight.offset%4==0 && up.weight.offset%4==0) {

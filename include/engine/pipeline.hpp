@@ -21,18 +21,21 @@ private:
     struct Impl;
     std::unique_ptr<Impl> impl_;
     friend Json execute_experts(std::span<const ExpertKey>,ExpertCache&,ReadPool&,Metal&,size_t,
-        const std::function<void(ExpertKey,const Buf&)>&,const std::atomic<bool>*,bool,const EncodeReadyGroup&,ExpertTail*,bool);
+        const std::function<void(ExpertKey,const Buf&)>&,const std::atomic<bool>*,bool,const EncodeReadyGroup&,ExpertTail*,bool,
+        const std::function<void()>&);
 };
 // Run all requested experts; only execution order may change. The caller
 // scatters each contribution into its router-assigned position before reducing.
 // This is also the dependency replay path, so its timings exercise real leases,
-// reads, dispatch, completion, and resource release.
+// reads, dispatch, completion, and resource release. `admitted` runs once, after
+// every selected expert holds a lease and before any is encoded, so work it
+// starts (such as speculative reads) can never evict a selected expert.
 Json execute_experts(std::span<const ExpertKey> selected, ExpertCache& cache,
                      ReadPool& reads, Metal& gpu, size_t group_size,
                      const std::function<void(ExpertKey,const Buf&)>& encode,
                      const std::atomic<bool>* cancel = nullptr, bool detailed = false,
                      const EncodeReadyGroup& encode_group = {}, ExpertTail* tail = nullptr,
-                     bool coalesce_reads = false);
+                     bool coalesce_reads = false, const std::function<void()>& admitted = {});
 Json execute_experts_batched(std::span<const ExpertKey> selected, ExpertCache& cache,
                      ReadPool& reads, Metal& gpu,
                      const std::function<void(ExpertKey,const Buf&)>& encode,

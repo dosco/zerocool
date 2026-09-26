@@ -1,0 +1,538 @@
+{
+ "kind": "decode_speed_summary_v1",
+ "artifact": "q4-control",
+ "artifact_revision": "aa7c790e804bbf9d491ddb109c3d61bc4a555f7c",
+ "machine": "Apple M1 Pro, 32GiB, internal SSD; other applications running",
+ "final_build_fingerprint": "736c023b55960d061ef1bdf0d73de85560ec274f3562f9006f9aa480b1cc7009",
+ "runs": [
+  {
+   "tag": "final-def",
+   "role": "new defaults",
+   "workload": "coding_96 + append_128_48",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --expert-slots 850",
+   "build_fingerprint": "736c023b55960d061ef1bdf0d73de85560ec274f3562f9006f9aa480b1cc7009",
+   "report_sha256": "e07a95daec1f0326a4b25184fb54f1b9e680273d15e43cc0e6952dd019a17dad",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "core-cache",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "reuse",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": true,
+    "expert_prefetch": "next-hyper",
+    "route_selection": "simd",
+    "q4_rows": true
+   },
+   "memory_plan": {
+    "limit_bytes": 9283895296,
+    "planned_bytes": 7540326400,
+    "expert_slots": 850,
+    "panel_tokens": 0
+   },
+   "requests": [
+    {
+     "name": "coding_96",
+     "prompt_tokens": 72,
+     "reused_tokens": 0,
+     "output_tokens": 97,
+     "tokens_per_second": 5.286563970061482,
+     "decode_wall_ms": 18202.368499999997,
+     "time_to_first_token_ms": 7778.488292,
+     "p50_token_ms": 184.433791,
+     "p95_token_ms": 249.253667,
+     "decode_gpu_command_ms_per_token": 64.78082628125,
+     "decode_dispatches_per_token": 3118.0,
+     "expert_hits": 37629,
+     "expert_misses": 16112,
+     "prefetch": {
+      "predicted": 45120,
+      "correct": 34605,
+      "issued": 26299
+     },
+     "output_token_ids_sha256": "381afbe9798a3c47f775721dfc1dc850520bea65de788140534a1b4364d71505",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3751280640
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3751280640
+     }
+    },
+    {
+     "name": "append_128_48",
+     "prompt_tokens": 297,
+     "reused_tokens": 168,
+     "output_tokens": 49,
+     "tokens_per_second": 4.8848473158860175,
+     "decode_wall_ms": 9847.913334,
+     "time_to_first_token_ms": 12795.829416,
+     "p50_token_ms": 207.484958,
+     "p95_token_ms": 236.299083,
+     "decode_gpu_command_ms_per_token": 67.4811599375,
+     "decode_dispatches_per_token": 3118.0,
+     "expert_hits": 18329,
+     "expert_misses": 13946,
+     "prefetch": {
+      "predicted": 23030,
+      "correct": 16966,
+      "issued": 15896
+     },
+     "output_token_ids_sha256": "8fa0f3458f306a56ae07ce6aea0754e1f4f802eeb9b229c66b988df2f87dac2a",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3751280640
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3751280640
+     }
+    }
+   ]
+  },
+  {
+   "tag": "final-2k",
+   "role": "new defaults, unpinned",
+   "workload": "prompt_2k",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --panel 512",
+   "build_fingerprint": "736c023b55960d061ef1bdf0d73de85560ec274f3562f9006f9aa480b1cc7009",
+   "report_sha256": "90b06dbfb4b349fa1e143e84860d010ae7027bd18847540db60653c92273c369",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "core-cache",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "reuse",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": true,
+    "expert_prefetch": "next-hyper",
+    "route_selection": "simd",
+    "q4_rows": true
+   },
+   "memory_plan": {
+    "limit_bytes": 10818600960,
+    "planned_bytes": 10816061440,
+    "expert_slots": 1977,
+    "panel_tokens": 512
+   },
+   "requests": [
+    {
+     "name": "prompt_2k",
+     "prompt_tokens": 2048,
+     "reused_tokens": 0,
+     "output_tokens": 256,
+     "tokens_per_second": 5.854651363558922,
+     "decode_wall_ms": 43668.596625000006,
+     "time_to_first_token_ms": 194447.517208,
+     "p50_token_ms": 169.503833,
+     "p95_token_ms": 208.520083,
+     "decode_gpu_command_ms_per_token": 71.97133414509804,
+     "decode_dispatches_per_token": 3154.0,
+     "expert_hits": 105960,
+     "expert_misses": 76770,
+     "prefetch": {
+      "predicted": 119850,
+      "correct": 92387,
+      "issued": 54962
+     },
+     "output_token_ids_sha256": "b538b88244e699857ddc87ca89557685ef1ec63aa50e732f9c781549514ceb85",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 106905600,
+      "decompressions": 703,
+      "system_swap_used_bytes_after": 3751280640
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 106905600,
+      "compressed_bytes_after": 102662144,
+      "decompressions": 204,
+      "system_swap_used_bytes_after": 3751280640
+     }
+    }
+   ]
+  },
+  {
+   "tag": "olddefaults",
+   "role": "previous defaults (intermediate build)",
+   "workload": "coding_96 + append_128_48",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --expert-slots 850 --route-selection serial --q4-rows off --decode-scratch none --expert-prefetch off --gpu-warm off",
+   "build_fingerprint": "faabb18ab04a9e50b71e4f30f3fc0e8b696fcb1b6b8c3fc02a8c947a673e158b",
+   "report_sha256": "ff5905dbc62f3e305f4236e0dde9536154e074deb0fa1c1c48be49b3f6c78d6a",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "off",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "none",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": false,
+    "expert_prefetch": "off",
+    "route_selection": "serial",
+    "q4_rows": false
+   },
+   "memory_plan": {
+    "limit_bytes": 10399858688,
+    "planned_bytes": 7540310016,
+    "expert_slots": 850,
+    "panel_tokens": 0
+   },
+   "requests": [
+    {
+     "name": "coding_96",
+     "prompt_tokens": 72,
+     "reused_tokens": 0,
+     "output_tokens": 97,
+     "tokens_per_second": 2.397968106723585,
+     "decode_wall_ms": 40076.32345900001,
+     "time_to_first_token_ms": 7747.814833,
+     "p50_token_ms": 418.7415,
+     "p95_token_ms": 505.951041,
+     "decode_gpu_command_ms_per_token": 279.3769270416667,
+     "decode_dispatches_per_token": 3175.0,
+     "expert_hits": 20476,
+     "expert_misses": 33265,
+     "prefetch": {
+      "predicted": 0,
+      "correct": 0,
+      "issued": 0
+     },
+     "output_token_ids_sha256": "381afbe9798a3c47f775721dfc1dc850520bea65de788140534a1b4364d71505",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     }
+    },
+    {
+     "name": "append_128_48",
+     "prompt_tokens": 297,
+     "reused_tokens": 168,
+     "output_tokens": 49,
+     "tokens_per_second": 2.2693974481740344,
+     "decode_wall_ms": 21172.981041,
+     "time_to_first_token_ms": 13323.800875,
+     "p50_token_ms": 438.36025,
+     "p95_token_ms": 535.0275,
+     "decode_gpu_command_ms_per_token": 290.9211804791667,
+     "decode_dispatches_per_token": 3175.0,
+     "expert_hits": 8610,
+     "expert_misses": 23665,
+     "prefetch": {
+      "predicted": 0,
+      "correct": 0,
+      "issued": 0
+     },
+     "output_token_ids_sha256": "8fa0f3458f306a56ae07ce6aea0754e1f4f802eeb9b229c66b988df2f87dac2a",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     }
+    }
+   ]
+  },
+  {
+   "tag": "newdefaults",
+   "role": "new defaults before residency auto (intermediate build)",
+   "workload": "coding_96 + append_128_48",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --expert-slots 850 --residency off",
+   "build_fingerprint": "faabb18ab04a9e50b71e4f30f3fc0e8b696fcb1b6b8c3fc02a8c947a673e158b",
+   "report_sha256": "05e4df8fdb11df02c8f345315920e4f528881d6ee46181ad409beff4ac8d1ecb",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "off",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "reuse",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": false,
+    "expert_prefetch": "next-hyper",
+    "route_selection": "simd",
+    "q4_rows": true
+   },
+   "memory_plan": {
+    "limit_bytes": 9440083968,
+    "planned_bytes": 7540310016,
+    "expert_slots": 850,
+    "panel_tokens": 0
+   },
+   "requests": [
+    {
+     "name": "coding_96",
+     "prompt_tokens": 72,
+     "reused_tokens": 0,
+     "output_tokens": 97,
+     "tokens_per_second": 5.394826323825385,
+     "decode_wall_ms": 17837.252167,
+     "time_to_first_token_ms": 7762.660292,
+     "p50_token_ms": 177.711083,
+     "p95_token_ms": 233.650792,
+     "decode_gpu_command_ms_per_token": 64.6350921875,
+     "decode_dispatches_per_token": 3118.0,
+     "expert_hits": 37624,
+     "expert_misses": 16117,
+     "prefetch": {
+      "predicted": 45120,
+      "correct": 34605,
+      "issued": 26293
+     },
+     "output_token_ids_sha256": "381afbe9798a3c47f775721dfc1dc850520bea65de788140534a1b4364d71505",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     }
+    },
+    {
+     "name": "append_128_48",
+     "prompt_tokens": 297,
+     "reused_tokens": 168,
+     "output_tokens": 49,
+     "tokens_per_second": 4.894142605420381,
+     "decode_wall_ms": 9829.011208000002,
+     "time_to_first_token_ms": 12685.649042,
+     "p50_token_ms": 204.796833,
+     "p95_token_ms": 241.902875,
+     "decode_gpu_command_ms_per_token": 65.59395302083334,
+     "decode_dispatches_per_token": 3118.0,
+     "expert_hits": 18329,
+     "expert_misses": 13946,
+     "prefetch": {
+      "predicted": 23030,
+      "correct": 16966,
+      "issued": 15896
+     },
+     "output_token_ids_sha256": "8fa0f3458f306a56ae07ce6aea0754e1f4f802eeb9b229c66b988df2f87dac2a",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 0,
+      "decompressions": 0,
+      "system_swap_used_bytes_after": 3759669248
+     }
+    }
+   ]
+  },
+  {
+   "tag": "accept-2k-900",
+   "role": "new defaults before residency auto (intermediate build)",
+   "workload": "prompt_2k",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --panel 512 --expert-slots 900 --residency off",
+   "build_fingerprint": "985f9861c1378463583992f383124b63206759869d5d4ba049bd35d2dd851c88",
+   "report_sha256": "82ff3717d83ec1e4f60e8b787b3569dc8cb37e2056216495fe086aaa7c233d55",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "off",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "reuse",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": false,
+    "expert_prefetch": "next-hyper",
+    "route_selection": "simd",
+    "q4_rows": true
+   },
+   "memory_plan": {
+    "limit_bytes": 9833496576,
+    "planned_bytes": 7833944064,
+    "expert_slots": 900,
+    "panel_tokens": 512
+   },
+   "requests": [
+    {
+     "name": "prompt_2k",
+     "prompt_tokens": 2048,
+     "reused_tokens": 0,
+     "output_tokens": 256,
+     "tokens_per_second": 4.855359622370604,
+     "decode_wall_ms": 52631.687167,
+     "time_to_first_token_ms": 198557.339167,
+     "p50_token_ms": 202.669458,
+     "p95_token_ms": 248.687458,
+     "decode_gpu_command_ms_per_token": 72.95926205882353,
+     "decode_dispatches_per_token": 3154.0,
+     "expert_hits": 100087,
+     "expert_misses": 82643,
+     "prefetch": {
+      "predicted": 119850,
+      "correct": 92387,
+      "issued": 78139
+     },
+     "output_token_ids_sha256": "b538b88244e699857ddc87ca89557685ef1ec63aa50e732f9c781549514ceb85",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 3584409600,
+      "decompressions": 228062,
+      "system_swap_used_bytes_after": 3759669248
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 3584409600,
+      "compressed_bytes_after": 3582558208,
+      "decompressions": 65387,
+      "system_swap_used_bytes_after": 3751280640
+     }
+    }
+   ]
+  },
+  {
+   "tag": "accept-2k-res",
+   "role": "new defaults with residency (intermediate build)",
+   "workload": "prompt_2k",
+   "command": "zerocool bench --model .cache/models/qwen38-flash-next --prepared .cache/prepared/q4-records-v1 --memory-gb 12 --context 8192 --temperature 0 --seed 0 --repetitions 1 --panel 512 --expert-slots 900 --residency core-cache",
+   "build_fingerprint": "985f9861c1378463583992f383124b63206759869d5d4ba049bd35d2dd851c88",
+   "report_sha256": "360037674dee4d4394117fe448a631872eb3a280ae4819b778f6496676572784",
+   "resolved": {
+    "execution": {
+     "cache_policy": "clock",
+     "sparse_selection": "cpu",
+     "residency": "core-cache",
+     "decode_path": "reference",
+     "expert_tail": "wait",
+     "decode_scratch": "reuse",
+     "prefill_pipeline": "serial",
+     "phase_memory": "fixed",
+     "cached_token_replay": false
+    },
+    "gpu_warm": false,
+    "expert_prefetch": "next-hyper",
+    "route_selection": "simd",
+    "q4_rows": true
+   },
+   "memory_plan": {
+    "limit_bytes": 10115252224,
+    "planned_bytes": 7833944064,
+    "expert_slots": 900,
+    "panel_tokens": 512
+   },
+   "requests": [
+    {
+     "name": "prompt_2k",
+     "prompt_tokens": 2048,
+     "reused_tokens": 0,
+     "output_tokens": 256,
+     "tokens_per_second": 4.892949484302751,
+     "decode_wall_ms": 52230.02229200001,
+     "time_to_first_token_ms": 193808.523208,
+     "p50_token_ms": 203.48,
+     "p95_token_ms": 245.105334,
+     "decode_gpu_command_ms_per_token": 72.73396418823529,
+     "decode_dispatches_per_token": 3154.0,
+     "expert_hits": 100088,
+     "expert_misses": 82642,
+     "prefetch": {
+      "predicted": 119850,
+      "correct": 92387,
+      "issued": 78143
+     },
+     "output_token_ids_sha256": "b538b88244e699857ddc87ca89557685ef1ec63aa50e732f9c781549514ceb85",
+     "memory_ingest": {
+      "compressed_bytes_before": 0,
+      "compressed_bytes_after": 98304000,
+      "decompressions": 132,
+      "system_swap_used_bytes_after": 3751280640
+     },
+     "memory_decode": {
+      "compressed_bytes_before": 98304000,
+      "compressed_bytes_after": 95944704,
+      "decompressions": 156,
+      "system_swap_used_bytes_after": 3751280640
+     }
+    }
+   ]
+  }
+ ],
+ "exactness": {
+  "method": "bench --chunk 1 --expert-slots 800 --tokens-file (12 prompt tokens) --logits-file: every token takes the single-token path; compares all 248,320 final logits and SHA-256 of every layer state buffer",
+  "tokens": [
+   248045,
+   846,
+   198,
+   7734,
+   264,
+   12654,
+   709,
+   10562,
+   87682,
+   1494,
+   40798,
+   8
+  ],
+  "configurations": {
+   "orig": {
+    "configuration": "previous defaults: serial routes, reference kernels, no scratch reuse, prefetch or keep-warm",
+    "build_fingerprint": "faabb18ab04a9e50b71e4f30f3fc0e8b696fcb1b6b8c3fc02a8c947a673e158b",
+    "logits_sha256": "9d344a2965405a030c83931d964abb1f94d2bfc8e07b39fdfc765503c58fce51",
+    "state_sha256": "db14b345452d636b833a86b93be2ff1c2d06deb5823bee0e220edc3937c29de7"
+   },
+   "final": {
+    "configuration": "new defaults (final build)",
+    "build_fingerprint": "736c023b55960d061ef1bdf0d73de85560ec274f3562f9006f9aa480b1cc7009",
+    "logits_sha256": "9d344a2965405a030c83931d964abb1f94d2bfc8e07b39fdfc765503c58fce51",
+    "state_sha256": "db14b345452d636b833a86b93be2ff1c2d06deb5823bee0e220edc3937c29de7"
+   }
+  },
+  "logits_identical": true,
+  "state_identical": true
+ },
+ "note": "Raw reports stay local per the evidence policy; report_sha256 identifies each. Tokens/s is the decode rate from zerocool bench. Runs marked intermediate build used earlier fingerprints of the same change."
+}

@@ -33,6 +33,7 @@ paired normal-request evidence qualifies it.
 | [qwen_decode_target_stage.md](qwen_decode_target_stage.md) | The 200ms-per-token generation target |
 | [qwen_combined_decode_stage.md](qwen_combined_decode_stage.md) | Combining the qualified decode changes |
 | [qwen_mtp_recovery_stage.md](qwen_mtp_recovery_stage.md) | Multi-token prediction drafting and target recovery |
+| [qwen_decode_speed_stage.md](qwen_decode_speed_stage.md) | GPU clock keep-warm, exact row kernels and next-layer expert prefetch |
 
 ## Measurement evidence
 
@@ -43,6 +44,15 @@ Raw captures are large; read the stage report first and open the raw data only
 when you need to reproduce a number.
 
 Headline results so far, all with stated limits in their reports:
+
+- The [decode speed stage](qwen_decode_speed_stage.md) found the GPU idling at a
+  low clock between decode's short command groups. A keep-warm queue, exact
+  single-token row kernels and next-layer expert prefetch are now defaults.
+  Q4 generation measured 5.3–5.5 tokens/s after the 72-token coding prompt and
+  4.9 after the 128-token append, versus 2.40/2.27 with the previous defaults.
+  Tokens, logits and state are bit-identical. One clean 2K/256 run with the
+  final defaults measured 5.86 tokens/s at 1977 slots, and 4.89 when pinned to
+  900 slots. The repeated 2K/4K gates remain open.
 
 - The [exact streamed-embedding screen](benchmarks/2026-09-18-streamed-mtp/README.md)
   saves 644–647MiB of physical peak memory with essentially flat latency in two
